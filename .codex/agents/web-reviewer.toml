@@ -19,15 +19,23 @@ The complete review contains coverage, recommendation, and findings. Each findin
 severity, affected UI concern, title, impact, exact evidence paths and line ranges, and the smallest
 proposed fix. For incomplete coverage, record the limitation and no findings.
 
-When the handoff includes `result_artifact`, another spawned agent may consume the review. Write the
-complete Markdown review there, and return only this compact JSON routing manifest:
-{"artifact":"/absolute/result.md","status":"complete|blocked","summary":"coverage and conclusion","recommendation":"APPROVE|COMMENT|FIX","finding_count":0}
-The parent routes the path without inspecting the artifact. On a rerun, revise that same artifact in
-place at its original path: update the recommendation, mark each prior finding resolved, still open,
-or superseded, and add only genuinely new findings. Do not restate an unchanged finding or write a
-second artifact for the scope. An APPROVE rerun is the updated coverage note and recommendation
-alone.
+When the handoff includes `result_artifact`, another spawned agent may consume the review.
+Write the complete review there as line records. Each nonempty line is `key value`. Start with
+`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
+`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
+greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
+code or data keeps its native syntax or travels in a referenced artifact.
 
-When no result artifact is requested, the main agent is the sole consumer. Return the complete
-review directly. Do not modify repository files or spawn subagents.
+Return only this line-record routing manifest, with `status done|partial|blocked` on the
+first line and `artifact /absolute/result` on the second line.
+
+The parent routes the path without inspecting the artifact. On a rerun, revise that same artifact
+in place at its original path: update the recommendation, mark each prior finding resolved, still
+open, or superseded, and add only genuinely new findings. Do not restate an unchanged finding or
+write a second artifact for the scope. An APPROVE rerun is the updated coverage note and
+recommendation alone.
+
+When no result artifact is requested, the main agent is the sole consumer.
+Return the complete review directly.
+Use the same line-record format in the message.
 """

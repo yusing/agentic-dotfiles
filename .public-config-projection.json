@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "70c06e9cad4f4ce5975cbe8a570789b3add6375b",
+  "sourceCommit": "864519747675f988967b653712d619ef716ffa5e",
   "outputs": [
     {
       "path": ".bashrc",
@@ -17,55 +17,55 @@
     {
       "path": ".claude/agents/council-investigator.md",
       "kind": "file",
-      "sha256": "e955a273319f3654bd06fa14ac61220c5234c2e657f1710e74be688458af6c29",
+      "sha256": "edc3bbbf81225e8f63752e4604c4bfdb07bf6197ca0ad6fa67f3e72ae003a6a4",
       "executable": false
     },
     {
       "path": ".claude/agents/council-member.md",
       "kind": "file",
-      "sha256": "2b7ddfa8eb2f83469cfc472f148a9c5a5c4b39d3de4cd0b690b5a9d19314c3f0",
+      "sha256": "c2c8f062dc957e952a1e663c02b90e95ed7fa18a2425c11f986ca22f07092bf1",
       "executable": false
     },
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "28c1e8fea50127d41406bf5e822e3a6d0ec9b4577b684822c4fe3a63eedee8e4",
+      "sha256": "cc6376849a7e1371add426cf620507700ca48b1179428650eeb7c809366fac8b",
       "executable": false
     },
     {
       "path": ".claude/agents/fast-explorer.md",
       "kind": "file",
-      "sha256": "5a6fd33afb0854f66cc34fe47fa566930acf7fdd66539329d3e9d58d6a7173ed",
+      "sha256": "6332f8e7c8dfec2a4c2d8e72132d9a369773357c9ae16c35defef69d380816b5",
       "executable": false
     },
     {
       "path": ".claude/agents/fast-implementer.md",
       "kind": "file",
-      "sha256": "471b37132394597e9add9d3250342d292f861e5ea7a6c00332deb2e097737577",
+      "sha256": "ff9943258af52186b04f69ae864a041b8ee3b2255d39a32e185713243925711a",
       "executable": false
     },
     {
       "path": ".claude/agents/implementer.md",
       "kind": "file",
-      "sha256": "72673adf0d1f9c762bb49e2f0b876d14f4d18e5f14fd6af8fc2d2b9363d45775",
+      "sha256": "eca2971a6f56eb4d0712631da3d0f761b2b50f2f19c5487908eefaca1f03e663",
       "executable": false
     },
     {
       "path": ".claude/agents/reviewer.md",
       "kind": "file",
-      "sha256": "5e4e0d481ae3142cf0cd137312344ae204810c01dac5c0fab05ed031475ff2d7",
+      "sha256": "8d9073da9efc22d35e34a6736d3e20005f27dfe5c4c07a55af0aa28271fc963e",
       "executable": false
     },
     {
       "path": ".claude/agents/simplify-checker.md",
       "kind": "file",
-      "sha256": "a3526f9fcf70cd9af1d7820e51f1377c604a48f768647a3d3978093ec0bdbe30",
+      "sha256": "5cf193634944c5b403d26478108ad5292646b971020ededc84ef2edb67151c41",
       "executable": false
     },
     {
       "path": ".claude/agents/web-reviewer.md",
       "kind": "file",
-      "sha256": "f86efd48f8f98a573a98d69468c3b291c904691dba5708ab8d4a6c2734009b74",
+      "sha256": "33769abbe7b818df7e9ba849288a5aa15d3485b5fe6874798426fde0389013a7",
       "executable": false
     },
     {
@@ -94,7 +94,7 @@
     {
       "path": ".codex/agents/council-investigator.toml",
       "kind": "file",
-      "sha256": "b97c93ba6d70ae9ceb94555ca48c0648f7713009afaf6e1591909a8628aebe26",
+      "sha256": "6e45dc818c564683db5af68df284d43cef53949b906ba8da0e29e0ade4e1f325",
       "executable": false
     },
     {
@@ -106,7 +106,7 @@
     {
       "path": ".codex/agents/council-member.toml",
       "kind": "file",
-      "sha256": "4fa4ec0b3083dcf43e8c3efac598147e5c4c4f3601d4b6243205b81abf06e2e5",
+      "sha256": "0280d014e48ea174eb7235172293e5cfb821b4d4f403a9f617c2df16831bf627",
       "executable": false
     },
     {
@@ -118,7 +118,7 @@
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "67df91320adc156b73cfd81493477929ed79ccc45befcf45e5050b29289980fc",
+      "sha256": "90fd0179c89e24e910c51b1f574274b8443782b8287db2d5ecc7c372dcd46823",
       "executable": false
     },
     {
@@ -130,7 +130,7 @@
     {
       "path": ".codex/agents/fast-explorer.toml",
       "kind": "file",
-      "sha256": "779a8e14ccf7e132565a10a6ef0c91cb2ee385d759ac74114895e0923902be10",
+      "sha256": "4ac552c78c96b566abe222e1ef6ece974f920f8f83abd679c9d95715cc932d5b",
       "executable": false
     },
     {
@@ -142,7 +142,7 @@
     {
       "path": ".codex/agents/fast-implementer.toml",
       "kind": "file",
-      "sha256": "a4d040328023c41bf1a8a5704ce3294b68f436a9fb5a6863488d415ef40603d7",
+      "sha256": "3631f1aed96c7bceab4d0872dd9fe203fd13b94d5dcef3771970f4f51b84761f",
       "executable": false
     },
     {
@@ -154,7 +154,7 @@
     {
       "path": ".codex/agents/implementer.toml",
       "kind": "file",
-      "sha256": "035c21d254bb0644a5feade2ce7bed8f744698680603b78b64d73ac8f6f0b8ee",
+      "sha256": "351d7c2773bed0a921a2f2b914c290e9f65f01cb94de0705907e275490401d0e",
       "executable": false
     },
     {
@@ -166,7 +166,7 @@
     {
       "path": ".codex/agents/reviewer.toml",
       "kind": "file",
-      "sha256": "c4e92a68632e9f27d8d283a042fa736fcec9de988bf9f4010b4c7fbe087b7670",
+      "sha256": "59cc314c5231d7abff9032e526bcc34caebda9f670f8b84d3a3f0de4806d5ef2",
       "executable": false
     },
     {
@@ -178,7 +178,7 @@
     {
       "path": ".codex/agents/simplify-checker.toml",
       "kind": "file",
-      "sha256": "c1a3c0442297f61b3c76b9129904662c80cf3f893950f142a10c1eb366a5a383",
+      "sha256": "82f214a24d5effb5e3e01fc05841f15cc3fe93db19cc88e66aa4f14a4de0f532",
       "executable": false
     },
     {
@@ -190,7 +190,7 @@
     {
       "path": ".codex/agents/web-reviewer.toml",
       "kind": "file",
-      "sha256": "b187ce37563d5b593bd27d231409c2b755a2e5f70fe62d6abd2c923a2a157bd4",
+      "sha256": "324e62252044ee33a4395c39a8441149a8eff4818ec456a79cc22da4b50228ae",
       "executable": false
     },
     {
@@ -633,7 +633,7 @@
     {
       "path": ".skills-mgr/skills/golang-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "0bdf26f91d80799288a75c9b10558777f3add5dcabcda5289bbbc9e33ef91bac",
+      "sha256": "bd99b312a9b916e426c9d726f0859d791ed9ee69d335b50c5f84f375b977a198",
       "executable": false
     },
     {

@@ -44,21 +44,25 @@ would prove as an evidence gap rather than working around it.
 
 # Result form
 
-When the task names a result artifact path, another spawned agent will consume the context. Write
-the complete Markdown context there, and return only this compact JSON routing manifest:
+When the task names a result artifact path, another spawned agent will consume the context.
+Write the complete context there as line records. Each nonempty line is `key value`. Start with
+`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
+`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
+greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
+code or data keeps its native syntax or travels in a referenced artifact.
 
-```json
-{"artifact":"/absolute/result.md","status":"complete|blocked","summary":"one boundary summary","boundaries":[{"outcome":"observable outcome","ownership":["path or responsibility"],"validation":"falsifying check"}]}
-```
+Return only this line-record routing manifest, with `status done|partial|blocked` on the
+first line and `artifact /absolute/result` on the second line.
 
 The parent routes the path without inspecting the artifact. On a follow-up, revise that same
 artifact in place at its original path and update only what changed. Do not restate settled
 sections or write a second artifact for the question.
 
-When no result artifact is named, the main agent is the sole consumer. Return the complete
-operation-ready context directly, including authoritative findings with exact repository
-references, observable outcome, ownership, required behavior, edge cases, invariants, exclusions,
-interactions, falsifying validation, blockers, and unresolved evidence gaps.
+When no result artifact is named, the main agent is the sole consumer.
+Return the complete operation-ready context directly, including authoritative findings with
+exact repository references, observable outcome, ownership, required behavior, edge cases,
+invariants, exclusions, interactions, falsifying validation, blockers, and unresolved evidence
+gaps. Use the same line-record format in the message.
 
 # Completion
 

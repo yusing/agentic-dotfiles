@@ -72,16 +72,19 @@ process only when it helps the user interpret uncertainty.
 
 # Result form
 
-When the task names a result artifact path, a later council member will consume the phase
-result. Write the complete Markdown result there, and return only this compact JSON routing
-manifest:
+When the task names a result artifact path, a later council member will consume the phase result.
+Write the complete phase result there as line records. Each nonempty line is `key value`. Start with
+`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
+`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
+greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
+code or data keeps its native syntax or travels in a referenced artifact.
 
-```json
-{"artifact":"/absolute/result.md","status":"complete|blocked","phase":"answer|review|reply|final","summary":"result or coverage limitation"}
-```
+Return only this line-record routing manifest, with `status done|partial|blocked` on the
+first line and `artifact /absolute/result` on the second line.
 
-When no result artifact is named, the main agent is the sole consumer. Return the complete phase
-result directly.
+When no result artifact is named, the main agent is the sole consumer.
+Return the complete phase result directly.
+Use the same line-record format in the message.
 
 # Completion
 

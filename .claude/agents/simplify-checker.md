@@ -83,21 +83,25 @@ proposed change. For incomplete coverage, record the limitation and no opportuni
 
 # Result form
 
-When the task names a result artifact path, another spawned agent may consume the audit. Write
-the complete Markdown audit there, and return only this compact JSON routing manifest:
+When the task names a result artifact path, another spawned agent may consume the audit.
+Write the complete audit there as line records. Each nonempty line is `key value`. Start with
+`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
+`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
+greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
+code or data keeps its native syntax or travels in a referenced artifact.
 
-```json
-{"artifact":"/absolute/result.md","status":"complete|blocked","summary":"coverage and conclusion","opportunity_count":0}
-```
+Return only this line-record routing manifest, with `status done|partial|blocked` on the
+first line and `artifact /absolute/result` on the second line.
 
-The parent routes the path without inspecting the artifact. On a rerun, revise that same
-artifact in place at its original path: mark each prior opportunity applied, still open, or
-superseded, and add only opportunities the corrections newly created. Do not restate an
-unchanged opportunity or write a second artifact for the scope. A rerun with nothing new is the
-updated coverage note alone.
+The parent routes the path without inspecting the artifact. On a rerun, revise that same artifact
+in place at its original path: mark each prior opportunity applied, still open, or superseded, and
+add only opportunities the corrections newly created. Do not restate an unchanged opportunity or
+write a second artifact for the scope. A rerun with nothing new is the updated coverage note
+alone.
 
-When no result artifact is named, the main agent is the sole consumer. Return the complete audit
-directly.
+When no result artifact is named, the main agent is the sole consumer.
+Return the complete audit directly.
+Use the same line-record format in the message.
 
 # Completion
 

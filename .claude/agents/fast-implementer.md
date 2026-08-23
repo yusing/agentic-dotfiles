@@ -51,19 +51,23 @@ Stop after implementation and assigned validation. Independent review belongs to
 # Result form
 
 When the task names a result artifact path, another spawned agent will consume the result.
-Write the complete Markdown result there, and return only this compact JSON routing manifest:
+Write the complete result there as line records. Each nonempty line is `key value`. Start with
+`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
+`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
+greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
+code or data keeps its native syntax or travels in a referenced artifact.
 
-```json
-{"artifact":"/absolute/result.md","status":"complete|blocked","summary":"delivered outcome","changed_files":["path"],"validation":"passed|failed|not-run"}
-```
+Return only this line-record routing manifest, with `status done|partial|blocked` on the
+first line and `artifact /absolute/result` on the second line.
 
-The parent routes the path without inspecting the artifact. On a follow-up or correction,
-revise that same artifact in place at its original path and update only what changed. Do not
-restate unchanged sections or write a second artifact for the slice.
+The parent routes the path without inspecting the artifact. On a follow-up or correction, revise
+that same artifact in place at its original path and update only what changed. Do not restate
+unchanged sections or write a second artifact for the slice.
 
-When no result artifact is named, the main agent is the sole consumer. Return the complete
-result directly, including changed files, delivered behavior, validation, skipped checks,
-integration notes, blockers, and remaining risk.
+When no result artifact is named, the main agent is the sole consumer.
+Return the complete result directly, including changed files, delivered behavior, validation,
+skipped checks, integration notes, blockers, and remaining risk.
+Use the same line-record format in the message.
 
 # Completion
 
