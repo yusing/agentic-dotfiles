@@ -62,17 +62,16 @@ plain Git repository or an unversioned directory. Subversion and mixed `git+svn`
 still reported, because no client reports those. The task runner, language mix, and Go version
 have no harness equivalent, which is what makes the registration worth having.
 
-`.claude/hooks/skills_mgr_inventory.py` owns the `--- skills-mgr injected ---` heading on the
-Claude inventory so that list is not mistaken for Claude's own visible skills. It is the Claude
-counterpart of `.grok/hooks/skills_mgr_inventory.py`, and it passes `--claude` so
-`skills-mgr` omits skills Claude already sees. Claude has no separate post-compaction event:
-the `*` matcher covers the `compact` session source, which is where Grok needs its own
-`PostCompact` registration. Claude adds a session-start hook's stdout to context directly, so
-this hook needs no envelope and no Codex adapter.
+`.codex/hooks/skills_mgr_inventory.py` is the shared inventory hook. It owns the
+`--- skills-mgr injected ---` heading so the injected list is not mistaken for Claude's own
+visible skills. `skills-mgr list` scopes itself from the session environment, so the Claude
+registration needs no harness flag or adapter. Claude has no separate post-compaction event:
+the `*` matcher covers the `compact` session source, while the same hook is also registered for
+Claude's subagent starts and post-compaction context.
 
-`.claude/hooks/` is otherwise Herdr-managed and untracked, so the allowlist re-includes only
-this one file by name. The `SessionStart` group that reports the session to Herdr stays
-separate from these two, because Herdr rewrites its own group.
+`.claude/hooks/` remains Herdr-managed and untracked. The shared hook is covered by the existing
+`.codex/hooks/*` allowlist entry. The `SessionStart` group that reports the session to Herdr stays
+separate from the two static session-start hooks because Herdr rewrites its own group.
 
 Both are covered by `.local/tests/claude_agent_port_test.py`; `--without-git` itself belongs to
 `.codex/hooks/tests/check_project_test.sh`.

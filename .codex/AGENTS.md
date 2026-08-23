@@ -60,7 +60,7 @@ library, or material you are changing, and then:
 When exact paths and required commands are supplied for a small task:
  - Treat its implementation boundary as settled.
  - Read those paths and any owning documentation required by step 5 directly.
- - Do not listing or searching the repository or checking repository status or diffs merely to rediscover scope.
+ - Do not list or search the repository or check repository status or diffs merely to rediscover scope.
 
 ### Other tasks
 

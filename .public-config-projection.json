@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "864519747675f988967b653712d619ef716ffa5e",
+  "sourceCommit": "af4b703f331a25275c511654d34780253aefb53a",
   "outputs": [
     {
       "path": ".bashrc",
@@ -82,7 +82,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "4a1dac6c38f27773cf504b33876634056e85a44047df39482032a3770146e887",
+      "sha256": "0140bf393b87eb39b67145426ce353489001469e780e9379caee64bef903d3f2",
       "executable": false
     },
     {
@@ -274,7 +274,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "6d3ee2342a989741c711f5d16e03fcda7733744adf2d3a58d97fb81787a1d2aa",
+      "sha256": "b0721365a34f0412629733b4f8755d510d1d602d355f3db326fe8d6225a93db1",
       "executable": false
     },
     {
@@ -854,7 +854,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "508b7aa57fdcbce6b78005458a8a58d0507bbfea4929cc8a45bf302dbe4bea80",
+      "sha256": "344beb6c3be141f7db4bdbcf9512d7b318626f878b847c3418f0de1e3be93ba0",
       "executable": false
     },
     {
@@ -878,7 +878,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "9b47a6c1b2409c46e3c1befec232a5607b1c69d757aee0ac6409079b05323927",
+      "sha256": "12629738bdb5f09588c7cdcdd5703e51c263847923b046ffde7d6b4b5be849b1",
       "executable": false
     },
     {

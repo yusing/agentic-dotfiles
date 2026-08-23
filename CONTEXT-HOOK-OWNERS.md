@@ -30,7 +30,7 @@
 - Review routing: `.codex/hooks/turn_review_instruction.py` owns explicit native-role routing,
   production-change detection, the inspection risk gate, and the one-time launch approval
   prompt. Native role prompts own their inspection method and result contract.
-- User experience: `.agents/skills/user-experience/SKILL.md` owns proportional UX and
+- User experience: `.skills-mgr/skills/user-experience/SKILL.md` owns proportional UX and
   operability guidance when a user-facing workflow or interface changes.
 
 Validation commands for instruction and hook owners are listed in
