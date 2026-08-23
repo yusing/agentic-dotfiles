@@ -1,0 +1,286 @@
+#!/usr/bin/env python3
+"""Run least-privilege Grok exploration and expose only its compact manifest."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+from typing import Any
+
+PURPOSE_GUIDANCE = {
+    "diagnose": (
+        "Focus on the immediate failure mechanism and authoritative owner. Include other "
+        "diagnostic evidence only when it changes the answer."
+    ),
+    "change": (
+        "Focus on the smallest implementation boundary and the validation that can falsify it."
+    ),
+    "behavior": (
+        "Focus on observable inputs, outputs, and success and failure behavior."
+    ),
+    "owner": (
+        "Focus on the primary implementation, entry points, callers, and consumers."
+    ),
+}
+
+RESULT_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": ["status", "summary", "boundaries", "details"],
+    "properties": {
+        "status": {"type": "string", "enum": ["complete", "blocked"]},
+        "summary": {"type": "string"},
+        "boundaries": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": ["outcome", "ownership", "validation"],
+                "properties": {
+                    "outcome": {"type": "string"},
+                    "ownership": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                    },
+                    "validation": {"type": "string"},
+                },
+            },
+        },
+        "details": {"type": "string"},
+    },
+}
+
+READ_DENIES = (
+    "Read(./.ssh/**)",
+    "Read(./.gnupg/**)",
+    "Read(./.codex/auth.json)",
+    "Read(./.config/gh/hosts.yml)",
+    "Read(./**/.env)",
+    "Read(./**/.env.*)",
+    "Read(./**/*.key)",
+    "Read(./**/*.pem)",
+)
+
+
+def parse_arguments(arguments: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Write Grok exploration to an artifact and print only its compact manifest."
+    )
+    parser.add_argument("--artifact", type=Path)
+    parser.add_argument("--cwd", default=Path.cwd(), type=Path)
+    parser.add_argument("--for", dest="purpose", required=True, choices=PURPOSE_GUIDANCE)
+    parser.add_argument(
+        "--large",
+        action="store_true",
+        help="Allow Grok's task tool for exploration that benefits from read-only subagents.",
+    )
+    parser.add_argument("question", nargs="+")
+    return parser.parse_args(arguments)
+
+
+def grok_command(arguments: argparse.Namespace, cwd: Path) -> list[str]:
+    tools = ["read_file", "grep", "list_dir", "web_search", "web_fetch"]
+    if arguments.large:
+        tools.append("task")
+
+    prompt = "\n".join(
+        (
+            f"Purpose: {arguments.purpose}.",
+            PURPOSE_GUIDANCE[arguments.purpose],
+            f"Question: {' '.join(arguments.question)}",
+            (
+                "Answer the atomic question directly and proportionally. Use the purpose only to select "
+                "relevant evidence; do not expand the question to cover every purpose dimension. Inspect "
+                "only the smallest authoritative code and contract-test boundary needed, and stop as soon "
+                "as an authoritative source settles the answer. Do not gather corroborating evidence. "
+                "Put the answer with exact references and only material caveats in `details`. Keep "
+                "`summary` and `boundaries` compact enough to route the artifact without exposing the "
+                "detailed findings. Use status `blocked` when required evidence is unavailable."
+            ),
+        )
+    )
+
+    command = [
+        "grok",
+        "--cwd",
+        str(cwd),
+        "--agent",
+        "explore",
+        "--single",
+        prompt,
+        "--json-schema",
+        json.dumps(RESULT_SCHEMA, separators=(",", ":")),
+        "--permission-mode",
+        "dontAsk",
+        "--sandbox",
+        "strict",
+        "--no-memory",
+        "--no-plan",
+        "--tools",
+        ",".join(tools),
+        "--allow",
+        "Read(./**)",
+        "--allow",
+        "Grep(./**)",
+        "--allow",
+        "WebSearch",
+        "--allow",
+        "WebFetch",
+        "--allow",
+        "MCPTool(context7__*)",
+        "--deny",
+        "Bash",
+        "--deny",
+        "Edit",
+        "--deny",
+        "Write",
+    ]
+    for rule in READ_DENIES:
+        command.extend(("--deny", rule))
+    if not arguments.large:
+        command.append("--no-subagents")
+    return command
+
+
+def blocked_payload(
+    *,
+    artifact: Path,
+    summary: str,
+    returncode: int,
+    raw_output: str,
+    stderr: str,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    stored = {
+        "wrapperStatus": "blocked",
+        "summary": summary,
+        "returncode": returncode,
+        "grokOutput": raw_output,
+        "grokStderr": stderr,
+    }
+    manifest = {
+        "artifact": str(artifact),
+        "status": "blocked",
+        "summary": summary,
+        "boundaries": [],
+    }
+    return stored, manifest
+
+
+def write_json(path: Path, value: object) -> None:
+    with path.open("w", encoding="utf-8") as output:
+        json.dump(value, output, ensure_ascii=False)
+        output.write("\n")
+    path.chmod(0o600)
+
+
+def main(arguments: list[str]) -> int:
+    parsed = parse_arguments(arguments)
+    if parsed.artifact is not None:
+        if not parsed.artifact.is_absolute():
+            print("grok-explore: --artifact must be an absolute path", file=sys.stderr)
+            return 2
+        if parsed.artifact.suffix != ".json":
+            print("grok-explore: --artifact must use the .json extension", file=sys.stderr)
+            return 2
+
+    cwd = parsed.cwd.resolve()
+    if not cwd.is_dir():
+        print(f"grok-explore: --cwd is not a directory: {cwd}", file=sys.stderr)
+        return 2
+
+    artifact = parsed.artifact or Path(tempfile.mkdtemp(prefix="grok-explore-")) / "result.json"
+    if not artifact.parent.is_dir():
+        print(f"grok-explore: artifact parent does not exist: {artifact.parent}", file=sys.stderr)
+        return 2
+
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{artifact.name}.",
+        suffix=".tmp",
+        dir=artifact.parent,
+    )
+    os.fchmod(descriptor, 0o600)
+    os.close(descriptor)
+    temporary = Path(temporary_name)
+
+    try:
+        try:
+            with temporary.open("w", encoding="utf-8") as output:
+                completed = subprocess.run(
+                    grok_command(parsed, cwd),
+                    cwd=cwd,
+                    stdout=output,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                    check=False,
+                )
+        except OSError as error:
+            stored, manifest = blocked_payload(
+                artifact=artifact,
+                summary=f"could not start Grok: {error}",
+                returncode=127,
+                raw_output="",
+                stderr=str(error),
+            )
+            write_json(temporary, stored)
+            temporary.replace(artifact)
+            print(json.dumps(manifest, ensure_ascii=False, separators=(",", ":")))
+            return 127
+
+        raw_output = temporary.read_text(encoding="utf-8")
+        if completed.returncode != 0:
+            summary = f"Grok exploration exited with status {completed.returncode}"
+            stored, manifest = blocked_payload(
+                artifact=artifact,
+                summary=summary,
+                returncode=completed.returncode,
+                raw_output=raw_output,
+                stderr=completed.stderr,
+            )
+            write_json(temporary, stored)
+            temporary.replace(artifact)
+            print(json.dumps(manifest, ensure_ascii=False, separators=(",", ":")))
+            return completed.returncode
+
+        try:
+            envelope = json.loads(raw_output)
+            structured = envelope["structuredOutput"]
+            manifest = {
+                "artifact": str(artifact),
+                "status": structured["status"],
+                "summary": structured["summary"],
+                "boundaries": structured["boundaries"],
+            }
+            if not isinstance(structured["details"], str):
+                raise TypeError("structuredOutput.details is not a string")
+        except (json.JSONDecodeError, KeyError, TypeError) as error:
+            summary = f"Grok returned an invalid structured response: {error}"
+            stored, manifest = blocked_payload(
+                artifact=artifact,
+                summary=summary,
+                returncode=1,
+                raw_output=raw_output,
+                stderr=completed.stderr,
+            )
+            write_json(temporary, stored)
+            temporary.replace(artifact)
+            print(json.dumps(manifest, ensure_ascii=False, separators=(",", ":")))
+            return 1
+
+        write_json(temporary, structured)
+        temporary.replace(artifact)
+        print(json.dumps(manifest, ensure_ascii=False, separators=(",", ":")))
+        return 0
+    finally:
+        try:
+            temporary.unlink()
+        except FileNotFoundError:
+            pass
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))

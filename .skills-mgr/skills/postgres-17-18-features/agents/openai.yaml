@@ -1,0 +1,4 @@
+interface:
+  display_name: "Postgres 17 & 18 Features"
+  short_description: "Version-tagged Postgres 17 and 18 SQL features"
+  default_prompt: "Use $postgres-17-18-features to check which Postgres 17 or 18 syntax this migration should adopt."

@@ -1,0 +1,48 @@
+disabled_mcp_servers = ["brave-search"]
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+enabled = true
+
+[models]
+default = "grok-4.6"
+web_search = "grok-4.6"
+default_reasoning_effort = "high"
+
+[cli]
+installer = "internal"
+auto_update = true
+
+[ui]
+max_thoughts_width = 120
+fork_secondary_model = "grok-4.6"
+yolo = false
+compact_mode = false
+permission_mode = "always-approve"
+scroll_speed = 50
+scroll_lines = 4
+combine_queued_prompts = true
+group_tool_verbs = true
+show_timeline = true
+remember_tool_approvals = true
+theme = "oscura-midnight"
+auto_dark_theme = "oscura-midnight"
+
+[ui.contextual_hints]
+undo = true
+
+[ui.display_refresh]
+auto_cadence_enabled = true
+
+[features]
+telemetry = false
+
+[telemetry]
+trace_upload = false
+mixpanel_enabled = false
+enabled = false
+
+[harness]
+disable_workspace_teleport = true
+
+[disabled_mcp_tools]
+__managed_gateway_connectors = ["tasks"]

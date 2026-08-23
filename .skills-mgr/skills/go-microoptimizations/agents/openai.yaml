@@ -1,0 +1,4 @@
+interface:
+  display_name: "Go Microoptimizations"
+  short_description: "Tune Go hot paths with evidence"
+  default_prompt: "Use $go-microoptimizations to tune this Go hot path with call-site evidence, correctness tests, benchmarks, and assembly metrics."

@@ -1,0 +1,537 @@
+{
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
+  },
+  "prettier": {
+    "parser": ""
+  },
+  "document_symbols": "off",
+  "semantic_tokens": "combined",
+  "auto_update": false,
+  "buffer_line_height": {
+    "custom": 1.600000023841858
+  },
+  "disable_ai": false,
+  "diff_view_style": "unified",
+  "helix_mode": false,
+  "active_pane_modifiers": {
+    "inactive_opacity": 0.95
+  },
+  "code_lens": "on",
+  "outline_panel": {
+    "dock": "right"
+  },
+  "minimap": {
+    "show": "auto"
+  },
+  "toolbar": {
+    "code_actions": false,
+    "quick_actions": true,
+    "breadcrumbs": true
+  },
+  "tab_bar": {
+    "show": true
+  },
+  "buffer_font_weight": 400,
+  "text_rendering_mode": "platform_default",
+  "ui_font_weight": 500,
+  "ui_font_family": "Bear Sans UI",
+  "cli_default_open_behavior": "existing_window",
+  "document_folding_ranges": "on",
+  "indent_guides": {
+    "background_coloring": "indent_aware",
+    "coloring": "indent_aware"
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "git": {
+    "file_diff": {
+      "show_full_file": false
+    },
+    "hunk_style": "staged_hollow",
+    "gutter_debounce": 100,
+    "inline_blame": {
+      "show_commit_summary": true
+    }
+  },
+  "git_panel": {
+    "group_by": "staging",
+    "entry_primary_click_action": "file_diff",
+    "diff_stats": true,
+    "fallback_branch_name": "main",
+    "show_count_badge": false,
+    "sort_by_path": false,
+    "collapse_untracked_diff": false,
+    "file_icons": true,
+    "tree_view": true
+  },
+  "window_decorations": "server",
+  "bottom_dock_layout": "contained",
+  "preview_tabs": {
+    "enable_keep_preview_on_code_navigation": true,
+    "enabled": false
+  },
+  "tabs": {
+    "git_status": true
+  },
+  "title_bar": {
+    "button_layout": "standard",
+    "show_menus": false,
+    "show_branch_status_icon": true
+  },
+  "project_panel": {
+    "git_status_indicator": true,
+    "diagnostic_badges": true,
+    "auto_reveal_entries": true,
+    "entry_spacing": "comfortable",
+    "dock": "left"
+  },
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Catppuccin Macchiato",
+    "dark": "Catppuccin Frappé"
+  },
+  "agent": {
+    "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "default": "allow"
+        },
+        "skill": {
+          "default": "allow"
+        }
+      }
+    },
+    "auto_compact": {
+      "threshold": "90%"
+    },
+    "inline_assistant_model": {
+      "provider": "openai-subscribed",
+      "model": "gpt-5.6-sol",
+      "enable_thinking": false
+    },
+    "show_turn_stats": true,
+    "default_model": {
+      "effort": "high",
+      "provider": "openai-subscribed",
+      "model": "gpt-5.6-sol",
+      "enable_thinking": true
+    },
+    "model_parameters": []
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "terminal": {
+    "shell": {
+      "program": "fish"
+    },
+    "toolbar": {
+      "breadcrumbs": true
+    },
+    "font_weight": 600,
+    "show_count_badge": true,
+    "dock": "bottom",
+    "font_size": 12.5,
+    "font_family": "JetBrainsMono Nerd Font",
+    "font_fallbacks": [
+      "Cascadia Mono NF",
+      "JetBrainsMono Nerd Font Mono"
+    ],
+    "font_features": {
+      "liga": true,
+      "calt": true,
+      "ss01": true,
+      "ss02": true,
+      "ss03": true,
+      "ss04": true,
+      "ss05": true,
+      "ss06": true,
+      "ss07": true,
+      "ss08": true,
+      "cv01": true,
+      "cv02": true,
+      "cv03": true,
+      "cv04": true,
+      "cv05": true,
+      "cv06": true,
+      "cv07": true,
+      "cv08": true,
+      "cv09": true,
+      "cv10": true,
+      "cv11": true,
+      "cv12": true,
+      "cv13": true,
+      "cv14": true,
+      "cv15": true,
+      "cv16": true,
+      "cv17": true,
+      "cv18": true,
+      "cv19": true,
+      "cv20": true
+    }
+  },
+  "base_keymap": "Cursor",
+  "mouse_wheel_zoom": false,
+  "cursor_blink": true,
+  "autosave": "off",
+  "buffer_font_fallbacks": [
+    "Cascadia Mono NF",
+    "JetBrainsMono Nerd Font Mono"
+  ],
+  "buffer_font_family": "Cascadia Code",
+  "colorize_brackets": true,
+  "linked_edits": true,
+  "soft_wrap": "editor_width",
+  "tab_size": 2,
+  "agent_servers": {
+    "grok-build": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "default_config_options": {
+        "reasoning_effort": "medium",
+        "fast-mode": false
+      },
+      "favorite_config_option_values": {
+        "model": [
+          "gpt-5.5"
+        ]
+      },
+      "type": "registry"
+    },
+    "claude-acp": {
+      "favorite_config_option_values": {
+        "mode": [
+          "auto"
+        ]
+      },
+      "default_config_options": {
+        "mode": "auto"
+      },
+      "type": "registry"
+    }
+  },
+  "ui_font_size": 14.5,
+  "buffer_font_size": 13.5,
+  "buffer_font_features": {
+    "liga": true,
+    "calt": true,
+    "ss01": true,
+    "ss02": true,
+    "ss03": true,
+    "ss04": true,
+    "ss05": true,
+    "ss06": true,
+    "ss07": true,
+    "ss08": true,
+    "cv01": true,
+    "cv02": true,
+    "cv03": true,
+    "cv04": true,
+    "cv05": true,
+    "cv06": true,
+    "cv07": true,
+    "cv08": true,
+    "cv09": true,
+    "cv10": true,
+    "cv11": true,
+    "cv12": true,
+    "cv13": true,
+    "cv14": true,
+    "cv15": true,
+    "cv16": true,
+    "cv17": true,
+    "cv18": true,
+    "cv19": true,
+    "cv20": true
+  },
+  "theme": {
+    "mode": "dark",
+    "light": "Ayu Light",
+    "dark": "Catppuccin Mocha (Blur) [Light]"
+  },
+  "lsp": {
+    "oxlint": {
+      "initialization_options": {
+        "settings": {
+          "configPath": null,
+          "run": "onType",
+          "disableNestedConfig": false,
+          "fixKind": "safe_fix",
+          "unusedDisableDirectives": "deny"
+        }
+      }
+    },
+    "oxfmt": {
+      "initialization_options": {
+        "settings": {
+          "fmt.configPath": null,
+          "run": "onSave"
+        }
+      }
+    },
+    "gopls": {
+      "binary": {
+        "env": {
+          "CGO_ENABLED": "0",
+          "GOMEMLIMIT": "4GiB",
+          "GOFLAGS": "-tags=sonic",
+          "GOLSP_NO_ANALYTICS": "1",
+          "GOLSP_CACHE_DIR": "/tmp/gopls-cache"
+        }
+      },
+      "initialization_options": {
+        "gofumpt": true,
+        "hints": {
+          "assignVariableTypes": true,
+          "compositeLiteralFields": true,
+          "compositeLiteralTypes": true,
+          "constantValues": true,
+          "functionTypeParameters": true,
+          "parameterNames": true,
+          "rangeVariableTypes": true
+        }
+      }
+    }
+  },
+  "file_types": {
+    "Shadowtree TOML": [
+      ".shadowtree.toml",
+      "*.shadowtree.toml",
+      "**/.shadowtree.toml",
+      "**/*.shadowtree.toml",
+      "**/.shadowtree/*.toml"
+    ]
+  },
+  "languages": {
+    "TOML": {
+      "language_servers": [
+        "shadowtree-lsp",
+        "..."
+      ]
+    },
+    "CSS": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "GraphQL": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "Handlebars": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "HTML": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "JavaScript": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        },
+        {
+          "code_action": "source.fixAll.oxc"
+        }
+      ]
+    },
+    "JSON": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "JSON5": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "JSONC": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "Less": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "Markdown": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "MDX": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "SCSS": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "TypeScript": {
+      "enable_language_server": true,
+      "tasks": {
+        "prefer_lsp": true
+      },
+      "inlay_hints": {
+        "enabled": true
+      },
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "TSX": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "Vue.js": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    },
+    "YAML": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false
+      },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "oxfmt"
+          }
+        }
+      ]
+    }
+  }
+}

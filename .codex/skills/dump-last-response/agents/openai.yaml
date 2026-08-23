@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dump Last Response"
+  short_description: "Save the response before this invocation"
+  default_prompt: "Use $dump-last-response to save your previous final response to a file."

@@ -1,0 +1,23 @@
+{
+  "*.py": {
+    "tabsize": 4
+  },
+  "tabsize": 2,
+  "autosu": true,
+  "colorscheme": "catppuccin-macchiato-transparent",
+  "diffgutter": true,
+  "eofnewline": true,
+  "ignorecase": false,
+  "lsp.autocompleteDetails": false,
+  "lsp.ignoreTriggerCharacters": "signature",
+  "mkparents": true,
+  "pluginchannels": [
+    "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
+  ],
+  "pluginrepos": [],
+  "scrollbar": true,
+  "softwrap": true,
+  "statusformatr": "$(status.branch) | $(status.hash) | $(status.size)",
+  "tabstospaces": true,
+  "wordwrap": true
+}

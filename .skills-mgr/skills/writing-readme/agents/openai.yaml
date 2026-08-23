@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing README"
+  short_description: "Write a README for its actual audience"
+  default_prompt: "Use $writing-readme to create or revise this README for its intended reader and repository type."

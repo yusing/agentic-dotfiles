@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deliver Complete Change"
+  short_description: "Implement all accepted items by vertical slice"
+  default_prompt: "Use $deliver-vertical-slice to automate every accepted item through ordered inspected commits, then hand the complete range to final review."

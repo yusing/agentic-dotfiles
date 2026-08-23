@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Compatibility entry point; the session hook implementation is authoritative.
+exec "${HOME:?HOME must be set}/.codex/hooks/check_project" "$@"

@@ -1,0 +1,154 @@
+#!/bin/sh
+
+set -eu
+
+# A client that already reports whether the directory is a Git repository, and already
+# governs writes to it, passes --without-git so this hook does not report that again.
+# Subversion involvement is still reported, because no client reports it.
+without_git=0
+
+while [ "$#" -gt 0 ]; do
+	case $1 in
+		--without-git)
+			without_git=1
+			;;
+		--)
+			shift
+			break
+			;;
+		-*)
+			printf '%s\n' "check_project: unknown option: $1" >&2
+			exit 2
+			;;
+		*)
+			break
+			;;
+	esac
+	shift
+done
+
+directory=${1:-.}
+
+if [ ! -d "$directory" ]; then
+	printf '%s\n' "check_project: not a directory: $directory" >&2
+	exit 2
+fi
+
+directory=$(CDPATH='' cd -- "$directory" && pwd -P)
+ancestor=$directory
+vcs='none'
+
+while :; do
+	if [ -e "$ancestor/.git" ]; then
+		vcs='git'
+		if [ -d "$ancestor/.svn" ]; then
+			vcs='git+svn'
+		fi
+		break
+	fi
+	if [ -d "$ancestor/.svn" ]; then
+		vcs='svn'
+		break
+	fi
+	if [ "$ancestor" = / ]; then
+		break
+	fi
+	ancestor=${ancestor%/*}
+	[ -n "$ancestor" ] || ancestor=/
+done
+
+runner_directory=$directory
+task_runner='none'
+
+while :; do
+	if [ -f "$runner_directory/.shadowtree.toml" ]; then
+		task_runner='shadowtree'
+	elif [ -f "$runner_directory/Makefile" ] || [ -f "$runner_directory/makefile" ] || [ -f "$runner_directory/GNUmakefile" ]; then
+		task_runner='make'
+	elif [ -f "$runner_directory/Justfile" ] || [ -f "$runner_directory/justfile" ]; then
+		task_runner='just'
+	elif [ -f "$runner_directory/Taskfile" ] || [ -f "$runner_directory/Taskfile.yml" ] || [ -f "$runner_directory/Taskfile.yaml" ]; then
+		task_runner='task'
+	fi
+
+	if [ "$task_runner" != none ] || [ "$vcs" = none ] || [ "$runner_directory" = "$ancestor" ]; then
+		break
+	fi
+
+	runner_directory=${runner_directory%/*}
+	[ -n "$runner_directory" ] || runner_directory=/
+done
+
+# Kept out of the command substitution below: bash 3.2, which is `/bin/sh` on macOS,
+# misparses a `case` pattern inside `$( )`.
+list_files() {
+	if [ "$vcs" = git ] || [ "$vcs" = git+svn ]; then
+		git -C "$directory" ls-files --cached --others --exclude-standard
+	else
+		find "$directory" \
+			\( -type d \( -name .git -o -name .svn -o -name .cache -o -name cache \
+				-o -name node_modules -o -name vendor -o -name dist -o -name build \
+				-o -name target -o -name coverage -o -name .venv -o -name venv \
+				-o -name __pycache__ \) -prune \) -o -type f -print
+	fi
+}
+
+languages=$(
+	list_files |
+	awk '
+		BEGIN {
+			extensions = "c:c cc:cpp cpp:cpp cxx:cpp hh:cpp hpp:cpp hxx:cpp cs:csharp css:css dart:dart ex:elixir exs:elixir go:go htm:html html:html "
+			extensions = extensions "java:java js:javascript jsx:javascript mjs:javascript cjs:javascript kt:kotlin kts:kotlin lua:lua php:php py:python rb:ruby rs:rust scala:scala "
+			extensions = extensions "sh:shell bash:shell zsh:shell fish:shell sql:sql swift:swift ts:typescript tsx:typescript mts:typescript cts:typescript zig:zig"
+			count = split(extensions, entry)
+			for (i = 1; i <= count; i++) {
+				split(entry[i], pair, ":")
+				language[pair[1]] = pair[2]
+			}
+		}
+		{
+			extension = tolower($0)
+			sub(/^.*\./, "", extension)
+			if (extension in language) found[language[extension]] = 1
+		}
+		END {
+			count = split("c cpp csharp css dart elixir go html java javascript kotlin lua php python ruby rust scala shell sql swift typescript zig", order)
+			separator = ""
+			for (i = 1; i <= count; i++) {
+				if (found[order[i]]) {
+					printf "%s%s", separator, order[i]
+					separator = ","
+				}
+			}
+			if (separator == "") print "none"
+		}'
+)
+
+go_version='unknown'
+
+if [ -f "$directory/go.mod" ]; then
+	go_version=$(sed -n 's/^go //p' "$directory/go.mod" | head -1)
+	[ -n "$go_version" ] || go_version='unknown'
+fi
+
+report_vcs=1
+
+if [ "$without_git" -eq 1 ] && { [ "$vcs" = git ] || [ "$vcs" = none ]; }; then
+	report_vcs=0
+fi
+
+if [ "$report_vcs" -eq 1 ]; then
+	printf 'vcs: %s\n' "$vcs"
+fi
+
+printf 'task_runner: %s\nlanguages: %s\ngo_version: %s\nproject_instructions: |\n' "$task_runner" "$languages" "$go_version"
+
+if [ "$vcs" != none ] && [ "$report_vcs" -eq 1 ]; then
+	printf '%s\n' '  ## Version control' \
+		'  - Treat detected VCS as read-only unless user authorizes writes.'
+fi
+
+if [ "$task_runner" != none ]; then
+	printf '%s\n' '  ## Task runner' \
+		"  - Prefer \`$task_runner\` recipes over underlying raw commands."
+fi

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Assess Change Impact"
+  short_description: "Trace implicit contracts before changing code"
+  default_prompt: "Use $assess-change-impact to identify implicit breakage risks before making this code change."

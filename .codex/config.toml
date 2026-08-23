@@ -1,0 +1,64 @@
+model = "gpt-5.6-sol"
+network_access = "enabled"
+disable_response_storage = true
+model_reasoning_summary = "detailed"
+tool_output_token_limit = 20000
+experimental_compact_prompt_file = "$HOME/.skills-mgr/skills/handoff/STANDARD.md"
+personality = "friendly"
+plan_mode_reasoning_effort = "high"
+hide_agent_reasoning = false
+service_tier = "priority"
+supports_websockets = true
+approvals_reviewer = "user"
+model_instructions_file = "$HOME/.codex/overridden_base_instructions.md"
+model_reasoning_effort = "high"
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+[skills]
+include_instructions = false
+
+[analytics]
+enabled = false
+
+[memories]
+use_memories = false
+generate_memories = false
+
+[tui]
+theme = "catppuccin-mocha"
+status_line_use_colors = true
+session_picker_view = "comfortable"
+status_line = ["model-with-reasoning", "git-branch", "context-used", "fast-mode", "project-name", "run-state", "task-progress", "thread-id", "branch-changes", "weekly-limit", "codex-version"]
+
+[features]
+responses_websockets_v2 = true
+terminal_resize_reflow = true
+memories = false
+plugin_hooks = true
+apps = false
+hooks = true
+js_repl = false
+multi_agent = true
+workspace_dependencies = false
+
+[features.multi_agent_v2]
+enabled = true
+default_wait_timeout_ms = 600000
+
+# [agents]
+# max_threads = 5
+# max_depth = 1
+
+[feedback]
+enabled = false
+
+[notice]
+hide_rate_limit_model_nudge = true
+hide_full_access_warning = true
+fast_default_opt_out = true
+
+[notice.model_migrations]
+"gpt-5.4" = "gpt-5.5"
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"

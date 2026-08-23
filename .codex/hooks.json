@@ -1,0 +1,116 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "/usr/bin/python3 $HOME/.codex/hooks/turn_review_instruction.py post-tool",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "^(Bash|apply_patch|Edit|Write)$"
+      },
+      {
+        "hooks": [
+          {
+            "command": "/usr/bin/python3 $HOME/.codex/hooks/doc_read_guard.py edit",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "^(apply_patch|Edit|Write)$"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "/usr/bin/python3 $HOME/.codex/hooks/turn_review_instruction.py pre-tool",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "^(Bash|apply_patch|Edit|Write)$"
+      },
+      {
+        "hooks": [
+          {
+            "command": "/usr/bin/python3 $HOME/.codex/hooks/generated_code_guard.py",
+            "statusMessage": "Checking for generated Go files",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "^(apply_patch|Edit|Write)$"
+      },
+      {
+        "hooks": [
+          {
+            "command": "/usr/bin/python3 $HOME/.codex/hooks/subagent_exec_guard.py",
+            "statusMessage": "Checking subagent command boundary",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "/usr/bin/python3 $HOME/.codex/hooks/latest_dependency_instruction.py",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "/usr/bin/python3 $HOME/.codex/hooks/remote_vcs_guard.py",
+            "statusMessage": "Checking Git clone commands",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "/usr/bin/python3 $HOME/.codex/hooks/doc_read_guard.py",
+            "statusMessage": "Checking documentation read policy",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "^Bash$"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "$HOME/.codex/hooks/check_project",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "$HOME/go/bin/skills-mgr list",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      },
+      {}
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "command": "$HOME/go/bin/skills-mgr list",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "/usr/bin/python3 $HOME/.codex/hooks/turn_review_instruction.py prompt",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  }
+}

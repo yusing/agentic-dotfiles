@@ -1,0 +1,4 @@
+interface:
+  display_name: "Validating pjdoc documents"
+  short_description: "Apply the document schema and validate indexes"
+  default_prompt: "Use $using-pjdoc to apply the indexed document schema and validate the affected documentation."

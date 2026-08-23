@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codebase Review"
+  short_description: "Evidence-based whole-codebase review"
+  default_prompt: "Use $codebase-review to review the current working tree."

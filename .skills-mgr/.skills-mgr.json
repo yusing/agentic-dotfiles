@@ -1,0 +1,206 @@
+{
+  "schema_revision": 3,
+  "skills": {
+    "assess-change-impact": {
+      "enabled": true
+    },
+    "build-code-skeleton": {
+      "enabled": true
+    },
+    "code-review": {
+      "enabled": false
+    },
+    "code-simplifier": {
+      "enabled": true
+    },
+    "codebase-design": {
+      "enabled": true
+    },
+    "codebase-review": {
+      "enabled": true
+    },
+    "context7-mcp": {
+      "enabled": true
+    },
+    "council": {
+      "enabled": true
+    },
+    "deliver-vertical-slice": {
+      "enabled": true
+    },
+    "deslop": {
+      "enabled": true
+    },
+    "dump-last-response": {
+      "enabled": true
+    },
+    "final-review": {
+      "enabled": true
+    },
+    "frontend-design": {
+      "enabled": true
+    },
+    "gh-fix-ci": {
+      "enabled": false
+    },
+    "github": {
+      "enabled": false
+    },
+    "go": {
+      "enabled": "lang go",
+      "remote": {
+        "provider": "SkillsMP",
+        "id": "spf13-go-skills-go-skill-md",
+        "name": "go",
+        "locator": "https://github.com/spf13/go-skills/tree/main/go"
+      }
+    },
+    "go-json-v2": {
+      "enabled": "lang go"
+    },
+    "go-microoptimizations": {
+      "enabled": "lang go"
+    },
+    "golang-best-practices": {
+      "enabled": "lang go"
+    },
+    "handoff": {
+      "enabled": true
+    },
+    "herdr": {
+      "enabled": "command -v herdr && [ \"$PWD\" == \"$HOME\" ]"
+    },
+    "human-flavoured-writing": {
+      "enabled": true
+    },
+    "js-ts-best-practices": {
+      "enabled": "lang js || lang ts"
+    },
+    "juststore-rendering-optimizer": {
+      "enabled": "(lang js || lang ts) && has_dependency juststore"
+    },
+    "minimalist-ui": {
+      "enabled": "lang tsx || lang jsx || lang html || lang css"
+    },
+    "new-project": {
+      "enabled": true
+    },
+    "openai-docs": {
+      "enabled": true
+    },
+    "orchestrated-workflow": {
+      "enabled": true
+    },
+    "postgres-17-18-features": {
+      "enabled": "lang postgres"
+    },
+    "postgres-patterns": {
+      "enabled": "lang psql"
+    },
+    "read-codex-session": {
+      "enabled": true
+    },
+    "rust-async-patterns": {
+      "enabled": "lang rust"
+    },
+    "rust-best-practices": {
+      "enabled": "lang rust"
+    },
+    "rust-patterns": {
+      "enabled": "lang rust",
+      "remote": {
+        "provider": "SkillsMP",
+        "id": "affaan-m-ecc-docs-es-skills-rust-patterns-skill-md",
+        "name": "rust-patterns",
+        "locator": "https://github.com/affaan-m/ECC/tree/main/docs/es/skills/rust-patterns"
+      }
+    },
+    "session-usage": {
+      "enabled": true
+    },
+    "shadcn": {
+      "enabled": "lang node && [ -f components.json ]",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "shadcn/ui/shadcn",
+        "name": "shadcn",
+        "locator": "shadcn/ui/shadcn"
+      }
+    },
+    "shadowtree": {
+      "enabled": true
+    },
+    "skill-creator": {
+      "enabled": true
+    },
+    "sonic-json": {
+      "enabled": "lang go && has_dependency github.com/bytedance/sonic"
+    },
+    "supabase-postgres-best-practices": {
+      "enabled": "lang postgres",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "supabase/agent-skills/supabase-postgres-best-practices",
+        "name": "supabase-postgres-best-practices",
+        "locator": "supabase/agent-skills/supabase-postgres-best-practices"
+      }
+    },
+    "tauri-v2": {
+      "enabled": "has_dependency tauri '>=2 && <3' || has_dependency '@tauri-apps/api' '>=2 && <3' || has_dependency '@tauri-apps/cli' '>=2 && <3'",
+      "remote": {
+        "provider": "SkillsMP",
+        "id": "midudev-autoskills-packages-autoskills-skills-registry-tauri-v2-skill-md",
+        "name": "tauri-v2",
+        "locator": "https://github.com/midudev/autoskills/tree/main/packages/autoskills/skills-registry/tauri-v2"
+      }
+    },
+    "ui-ux-pro-max": {
+      "enabled": "lang tsx || lang jsx || lang html || lang css"
+    },
+    "user-experience": {
+      "enabled": true
+    },
+    "using-pjdoc": {
+      "enabled": true
+    },
+    "using-shadowtree": {
+      "enabled": "tooling shadowtree"
+    },
+    "vercel-react-best-practices": {
+      "enabled": "lang node && has_dependency react",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "vercel-labs/agent-skills/vercel-react-best-practices",
+        "name": "vercel-react-best-practices",
+        "locator": "vercel-labs/agent-skills/vercel-react-best-practices"
+      }
+    },
+    "vercel-react-native-skills": {
+      "enabled": "lang node && has_dependency react-native",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "vercel-labs/agent-skills/vercel-react-native-skills",
+        "name": "vercel-react-native-skills",
+        "locator": "vercel-labs/agent-skills/vercel-react-native-skills"
+      }
+    },
+    "verify-conformance": {
+      "enabled": true
+    },
+    "visualize": {
+      "enabled": true
+    },
+    "writing-for-agents": {
+      "enabled": true,
+      "remote": {
+        "provider": "skills.sh",
+        "id": "mattpocock/skills/writing-for-agents",
+        "name": "writing-for-agents",
+        "locator": "mattpocock/skills/writing-for-agents"
+      }
+    },
+    "writing-readme": {
+      "enabled": true
+    }
+  }
+}

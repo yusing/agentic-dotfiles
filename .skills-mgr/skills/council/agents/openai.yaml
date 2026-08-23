@@ -1,0 +1,7 @@
+interface:
+  display_name: "Council"
+  short_description: "Independent multi-agent deliberation"
+  default_prompt: "Use $council to deliberate independently on this question and return one synthesized answer."
+
+policy:
+  allow_implicit_invocation: false

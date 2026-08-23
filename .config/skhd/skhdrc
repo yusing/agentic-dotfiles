@@ -1,0 +1,24 @@
+# skhd -- hotkey daemon for yabai
+# Reload after edits: skhd --reload
+
+# Move the focused window one step in that direction: ahead of its neighbour
+# within the space, or onto the next display once it reaches the edge.
+ctrl + shift - left  : ~/.config/skhd/move-window.sh west
+ctrl + shift - right : ~/.config/skhd/move-window.sh east
+ctrl + shift - up    : ~/.config/skhd/move-window.sh north
+ctrl + shift - down  : ~/.config/skhd/move-window.sh south
+
+# Move focus between windows inside the current space.
+ctrl + alt - left  : yabai -m window --focus west
+ctrl + alt - right : yabai -m window --focus east
+ctrl + alt - up    : yabai -m window --focus north
+ctrl + alt - down  : yabai -m window --focus south
+
+# Swap the focused window with its neighbour, keeping the tree shape.
+ctrl + alt + shift - left  : yabai -m window --swap west
+ctrl + alt + shift - right : yabai -m window --swap east
+ctrl + alt + shift - up    : yabai -m window --swap north
+ctrl + alt + shift - down  : yabai -m window --swap south
+
+# Let a window escape tiling when a fixed size is wanted.
+ctrl + alt - f : yabai -m window --toggle float

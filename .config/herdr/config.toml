@@ -1,0 +1,44 @@
+onboarding = false
+[ui.toast]
+delivery = "terminal"
+
+[theme]
+name = "one-dark"
+auto_switch = false
+
+[terminal]
+# Match tmux: new splits and tabs inherit the active pane's directory.
+new_cwd = "follow"
+
+[remote]
+manage_ssh_config = true
+
+[keys]
+prefix = "ctrl+s"
+# Mirror tmux pane navigation behind the prefix.
+split_horizontal = "prefix+minus"
+split_vertical = "prefix+|"
+reload_config = "prefix+r"
+resize_mode = "prefix+shift+r"
+toggle_sidebar = "prefix+tab"
+focus_pane_left = "prefix+left"
+focus_pane_right = "prefix+right"
+focus_pane_up = "prefix+up"
+focus_pane_down = "prefix+down"
+
+[ui]
+mouse_capture = true
+pane_borders = true
+pane_gaps = false
+show_agent_labels_on_pane_borders = true
+agent_panel_sort = "priority"
+# Match tmux status-right: application, cpu, ram, net, uptime, date.
+tab_bar_right = [
+  { type = "command", command = "~/.config/herdr/status.sh application", interval_seconds = 5, timeout_seconds = 2 },
+  { type = "command", command = "~/.config/herdr/status.sh cpu", interval_seconds = 5, timeout_seconds = 2 },
+  { type = "command", command = "~/.config/herdr/status.sh ram", interval_seconds = 5, timeout_seconds = 2 },
+  { type = "command", command = "~/.config/herdr/status.sh net", interval_seconds = 5, timeout_seconds = 2 },
+  { type = "command", command = "~/.config/herdr/status.sh uptime", interval_seconds = 5, timeout_seconds = 2 },
+  { type = "datetime", format = "󰃰 %d.%m. %H:%M" },
+]
+tab_bar_right_separator = " · "

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Review Delivered Outcome"
+  short_description: "Inspect and close the complete committed change"
+  default_prompt: "Use $final-review to inspect the complete commit range, skip invalid scope-broadening findings, fix confirmed blockers by ordered fixups, autosquash, and report the final range."
+

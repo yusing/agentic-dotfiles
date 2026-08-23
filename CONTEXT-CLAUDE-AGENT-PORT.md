@@ -1,0 +1,78 @@
+# Claude agent port
+
+`.claude/agents/*.md` ports the Codex native roles in `.codex/agents/*.toml`. Each Claude file
+owns one complete role: Claude has no separate developer channel, so the Markdown body carries
+both the model prompt and the result contract. The Codex role remains the design owner; when a
+role's behavior changes, change both files together rather than letting them drift.
+
+Field mapping is the port's own concern. `model` and `model_reasoning_effort` become Claude's
+`model` and `effort`. `fork_turns` and `service_tier` have no Claude counterpart and are
+dropped: a Claude subagent always starts from a fresh context, which is what `fork_turns="none"`
+selects under Codex. The Codex handoff fields `input_artifacts` and `result_artifact` are
+harness structure with no Claude equivalent, so each body states the same contract in terms of
+artifact paths the parent names in the task text.
+
+Claude enforces structurally what Codex states by prompt. The `tools` allowlist omits `Agent`,
+so no role can spawn another agent, and it omits `Edit` and `NotebookEdit` for the review and
+council roles, so they cannot change repository files. `Write` stays on every role because a
+relayed result artifact is the one permitted write, and the role body owns that limit.
+
+`.codex/hooks/subagent_exec_guard.py` is registered directly as a frontmatter `PreToolUse` hook
+on each role that has `Bash`, with no adapter. The guard already emits Claude's
+`hookSpecificOutput` denial envelope and already keys on `agent_type`, which Claude sets inside
+a subagent. Unlike the Grok port, the guard does not fail open here: a frontmatter hook runs
+only inside its own subagent, so the field always names the running role. `council-member`
+reasons from its brief alone, declares no `Bash`, and therefore registers no guard, while
+`council-investigator` gathers its own repository evidence and registers the guard like the
+review roles. Policy stays in the single Codex implementation; no Claude file repeats the denial
+wording.
+
+Frontmatter hooks in user-level agents under `.claude/agents/` run without a workspace-trust
+grant, so this registration needs no per-folder approval.
+
+## Grok reads the same role files
+
+Grok resolves its subagent types from these same files, which `grok inspect --json` reports with
+`"source": {"type": "project", "path": ".../.claude/agents/<name>.md"}` for every role. There is
+therefore no `.grok/agents/` directory and no third copy of any role: this port is the role
+surface for both clients, and a native Grok role file would shadow the Claude one and split
+ownership. `[compat.claude]` in `.grok/config.toml` documents its `agents` cell as covering named
+instruction files rather than this directory, so which cell gates the discovery is unconfirmed;
+`grok inspect` is the check that it still happens.
+
+Grok drops what it has no field for. `model` and `effort` are Claude names, so a Grok subagent
+runs on the session model at the session reasoning effort. The frontmatter `Bash` matcher still
+reaches Grok, which matches `Bash` and `run_terminal_command` under one matcher name, but the
+guard fails open there for the reason `CONTEXT-GROK-HOOK-PORT.md` records, so under Grok the
+command boundary rests on the role body alone.
+
+Its focused test is `.local/tests/claude_agent_port_test.py`, which asserts the Codex-to-Claude
+role correspondence, the tool boundaries, and the guard registration. Add a Codex role and its
+Claude port together, or that test fails.
+
+## Session start
+
+`.claude/settings.json` registers two `SessionStart` hooks of its own.
+
+`.codex/hooks/check_project` runs with `--without-git`, and with no adapter, because its
+plain-text report needs none. Claude's own session context already states the working
+directory, whether it is a Git repository, the branch, the working-tree status, and recent
+commits, so the flag drops the hook's `vcs:` field and its version-control instruction for a
+plain Git repository or an unversioned directory. Subversion and mixed `git+svn` checkouts are
+still reported, because no client reports those. The task runner, language mix, and Go version
+have no harness equivalent, which is what makes the registration worth having.
+
+`.claude/hooks/skills_mgr_inventory.py` owns the `--- skills-mgr injected ---` heading on the
+Claude inventory so that list is not mistaken for Claude's own visible skills. It is the Claude
+counterpart of `.grok/hooks/skills_mgr_inventory.py`, and it passes `--claude` so
+`skills-mgr` omits skills Claude already sees. Claude has no separate post-compaction event:
+the `*` matcher covers the `compact` session source, which is where Grok needs its own
+`PostCompact` registration. Claude adds a session-start hook's stdout to context directly, so
+this hook needs no envelope and no Codex adapter.
+
+`.claude/hooks/` is otherwise Herdr-managed and untracked, so the allowlist re-includes only
+this one file by name. The `SessionStart` group that reports the session to Herdr stays
+separate from these two, because Herdr rewrites its own group.
+
+Both are covered by `.local/tests/claude_agent_port_test.py`; `--without-git` itself belongs to
+`.codex/hooks/tests/check_project_test.sh`.

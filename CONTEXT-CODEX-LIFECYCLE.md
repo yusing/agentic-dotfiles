@@ -1,0 +1,29 @@
+# Codex instruction lifecycle
+
+1. **Bootstrap and static context.** `.codex/config.toml` selects
+   `.codex/overridden_base_instructions.md` for model-level communication, turn and tool-use
+   mechanics, and safety. It uses
+   `.skills-mgr/skills/handoff/STANDARD.md`, the handoff standard, for checkpoint
+   handoffs. Codex loads
+   `.codex/AGENTS.md` for durable workflow guidance and the root `AGENTS.md` for repository context
+   routing. The routed context maps and skill bodies are loaded only when their triggers match.
+   Codex also discovers `.codex/agents/*.toml`; each role description guides the parent spawn,
+   and each role selects its paired complete model prompt before its first turn.
+2. **Session start.** `.codex/hooks.json` runs `.codex/hooks/check_project` and the automatic
+   skill-inventory reporter. They contribute project context and current skill metadata without selecting implementation or
+   validation work.
+3. **Prompt submission.** The registered `UserPromptSubmit` hook adds native review routing
+   only for an explicit review request. Nonmatching prompts remain silent.
+4. **Tool loop.** Before matched tools run, guards may reject generated-Go edits, versioned
+   dependency additions, unapproved Git clones, pre-edit Markdown reads, or container commands
+   from spawned agents. The paired review hook snapshots the worktree before each matched tool
+   and compares it afterward. The documentation hook records the first completed edit.
+5. **First production change.** `.codex/hooks/turn_review_instruction.py` compares paired
+   snapshots. On the first production or operational change, it injects the risk-gated native
+   inspection decision once; it does not select ordinary lint, build, probe, or test work.
+6. **Compaction.** `.skills-mgr/skills/handoff/STANDARD.md` preserves incomplete hook obligations
+   without copying completed hook responses. No hook-specific state rotation runs at compaction.
+
+Registration and implementation stay separate throughout this flow: `.codex/hooks.json`
+decides when a hook runs, the registered command or script owns its output and behavior, and
+`.codex/AGENTS.md` owns whole-task invariants outside hook coverage.

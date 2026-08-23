@@ -1,0 +1,921 @@
+#!/usr/bin/env bun
+
+import { randomUUIDv7 } from "bun";
+import {
+	chmod,
+	lstat,
+	mkdir,
+	mkdtemp,
+	readlink,
+	rename,
+	rm,
+	rmdir,
+	symlink,
+	unlink,
+} from "node:fs/promises";
+import { homedir, tmpdir } from "node:os";
+import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
+
+type TreeEntry = {
+	mode: string;
+	oid: string;
+	path: string;
+};
+
+type ProjectedEntry =
+	| { kind: "file"; content: Buffer; executable: boolean }
+	| { kind: "symlink"; target: string };
+
+type OutputRecord = {
+	path: string;
+	kind: "file" | "symlink";
+	sha256?: string;
+	target?: string;
+	executable?: boolean;
+};
+
+type OutputManifest = {
+	schemaVersion: 1;
+	sourceCommit: string;
+	outputs: OutputRecord[];
+};
+
+type Options = {
+	destination: string;
+	revision: string;
+	source: string;
+};
+
+const COMMAND_PATH = ".local/bin/project-public-config";
+const OUTPUT_MANIFEST_PATH = ".public-config-projection.json";
+const TEXT_EXTENSIONS = new Set([
+	".conf",
+	".fish",
+	".json",
+	".jsonc",
+	".md",
+	".micro",
+	".py",
+	".sh",
+	".swift",
+	".toml",
+	".ts",
+	".yaml",
+	".yml",
+	".zsh",
+]);
+const TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS = new Set([
+	"LICENSE",
+	".bashrc",
+	".gitconfig",
+	".gitignore_global",
+	".tmux.conf",
+	".yabairc",
+	".zshrc",
+	".config/ghostty/config",
+	".config/skhd/skhdrc",
+]);
+
+const EXACT_PATHS = new Set([
+	"AGENTS.md",
+	"CLAUDE.md",
+	"LICENSE",
+	"README.md",
+	"CONTEXT-CLAUDE-AGENT-PORT.md",
+	"CONTEXT-CODEX-LIFECYCLE.md",
+	"CONTEXT-GROK-HOOK-PORT.md",
+	"CONTEXT-HOOK-ARCHITECTURE.md",
+	"CONTEXT-HOOK-OWNERS.md",
+	"CONTEXT-INSTRUCTION-SURFACES.md",
+	"CONTEXT-SHELL.md",
+	".bashrc",
+	".bunfig.toml",
+	".gitconfig",
+	".gitignore_global",
+	".skills-mgr/.skills-mgr.json",
+	".tmux.conf",
+	".yabairc",
+	".zsh/fish-mirror.zsh",
+	".zshrc",
+	".claude/CLAUDE.md",
+	".claude/hooks/skills_mgr_inventory.py",
+	".claude/settings.json",
+	".codex/AGENTS.md",
+	".codex/config.toml",
+	".codex/hooks.json",
+	".codex/hooks/check_project",
+	".codex/hooks/doc_read_guard.py",
+	".codex/hooks/generated_code_guard.py",
+	".codex/hooks/hook_response.py",
+	".codex/hooks/latest_dependency_instruction.py",
+	".codex/hooks/locked_state.py",
+	".codex/hooks/remote_vcs_guard.py",
+	".codex/hooks/session_scope.py",
+	".codex/hooks/shell_command.py",
+	".codex/hooks/subagent_exec_guard.py",
+	".codex/hooks/turn_review_instruction.py",
+	".codex/overridden_base_instructions.md",
+	".config/atuin/config.toml",
+	".config/ccstatusline/settings.json",
+	// ".config/fish/completions/bun.fish", // bun installed
+	".config/fish/completions/codex.fish",
+	// ".config/fish/completions/grok.fish", // grok installed
+	".config/fish/completions/shadowtree.fish",
+	".config/fish/config.fish",
+	".config/gh/config.yml",
+	".config/ghostty/config",
+	".config/herdr/config.toml",
+	".config/herdr/status.sh",
+	".config/lazygit/config.yml",
+	".config/micro/bindings.json",
+	".config/micro/settings.json",
+	".config/skhd/move-window.sh",
+	".config/skhd/skhdrc",
+	".config/zed/keymap.json",
+	".config/zed/settings.json",
+	".config/zed/snippets/go.json",
+	".grok/AGENTS.md",
+	".grok/config.toml",
+	".grok/hooks/adapt_codex_hook.py",
+	".grok/hooks/codex-port.json",
+	".grok/hooks/skills-path-guard.json",
+	".grok/hooks/skills_mgr_inventory.py",
+	".grok/hooks/skills_path_guard.py",
+	".local/bin/check_project",
+	".local/bin/grok-explore",
+	COMMAND_PATH,
+]);
+
+const TREE_PREFIXES = [
+	".claude/agents",
+	".codex/agents",
+	".codex/skills/dump-last-response",
+	".codex/skills/orchestrated-workflow",
+	".codex/skills/read-codex-session",
+	".codex/skills/session-usage",
+	".config/micro/colorschemes",
+	...[
+		"assess-change-impact",
+		"build-code-skeleton",
+		"codebase-review",
+		"council",
+		"deliver-vertical-slice",
+		"deslop",
+		"final-review",
+		"go-json-v2",
+		"go-microoptimizations",
+		"golang-best-practices",
+		"handoff",
+		"human-flavoured-writing",
+		"js-ts-best-practices",
+		"juststore-rendering-optimizer",
+		"new-project",
+		"postgres-17-18-features",
+		"shadcn",
+		"shadowtree",
+		"supabase-postgres-best-practices",
+		"user-experience",
+		"using-pjdoc",
+		"writing-for-agents",
+		"writing-readme",
+	].map(name => `.skills-mgr/skills/${name}`),
+];
+
+const SKILL_NAMES = new Set(TREE_PREFIXES.filter(path => path.startsWith(".skills-mgr/skills/")).map(path => path.split("/").at(-1)!));
+
+const EXCLUDED_PATH_PARTS = new Set([
+	"__pycache__",
+	"eval",
+	"evals",
+	"fixtures",
+	"snapshot",
+	"snapshots",
+	"test",
+	"testdata",
+	"tests",
+]);
+
+const PRIVATE_LINE_TOKENS = [
+	"APPRISE_URL",
+	"GOPROXY",
+	"NODE_EXTRA_CA_CERTS",
+	"OPENAI_EMBEDDING_",
+	"claude-config-edit",
+	"claude-use",
+	"inshellisense",
+	"install_my_ca",
+	"masterpassword",
+	"pi-orc",
+	"/.config/kaku/",
+	".pve",
+];
+
+const PUBLIC_PROJECT_GUIDANCE = `--- project-doc ---
+
+# Repository guidance
+
+## Scope
+
+This is a generated, public, read-only projection of authored agent and shell configuration.
+The private source repository owns changes. The projection helper overwrites generated paths,
+so do not treat edits made only in this repository as authoritative.
+
+## Context index
+
+- Instruction surfaces: load \`CONTEXT-INSTRUCTION-SURFACES.md\` when locating static prompts,
+  skills, or native Codex, Claude, and Grok roles.
+- Hook architecture: load \`CONTEXT-HOOK-ARCHITECTURE.md\` when inspecting hook registration or
+  event coverage.
+- Hook owners: load \`CONTEXT-HOOK-OWNERS.md\` when locating an included hook or shared hook
+  infrastructure.
+- Codex lifecycle: load \`CONTEXT-CODEX-LIFECYCLE.md\` when work crosses Codex lifecycle events.
+- Grok port: load \`CONTEXT-GROK-HOOK-PORT.md\` for the Grok Codex-hook adapter.
+- Claude port: load \`CONTEXT-CLAUDE-AGENT-PORT.md\` for Claude roles also consumed by Grok.
+- Shell configuration: load \`CONTEXT-SHELL.md\` before changing Bash, Zsh, or Fish behavior.
+`;
+
+function usage(): never {
+	console.error("usage: project-public-config [--source <repo>] [--revision <commit>] <destination>");
+	process.exit(2);
+}
+
+function parseArgs(argv: string[]): Options {
+	let source = process.cwd();
+	let revision = "HEAD";
+	let destination: string | undefined;
+
+	for (let index = 0; index < argv.length; index++) {
+		const argument = argv[index];
+		if (argument === "--source" || argument === "--revision") {
+			const value = argv[++index];
+			if (!value) usage();
+			if (argument === "--source") source = value;
+			else revision = value;
+			continue;
+		}
+		if (argument === "--help" || argument === "-h") usage();
+		if (argument.startsWith("-") || destination) usage();
+		destination = argument;
+	}
+
+	if (!destination) usage();
+	return {
+		destination: resolve(destination),
+		revision,
+		source: resolve(source),
+	};
+}
+
+function git(source: string, args: string[]): Buffer {
+	const result = Bun.spawnSync({
+		cmd: ["git", "-C", source, ...args],
+		maxBuffer: 64 * 1024 * 1024,
+	});
+	if (result.exitCode !== 0) {
+		const detail = result.stderr.toString("utf8").trim();
+		throw new Error(detail || `git ${args[0]} exited ${result.exitCode}`);
+	}
+	return Buffer.from(result.stdout);
+}
+
+function listTree(source: string, commit: string): TreeEntry[] {
+	const paths = [...EXACT_PATHS, ...TREE_PREFIXES].sort();
+	const raw = git(source, ["ls-tree", "-rz", "--full-tree", commit, "--", ...paths]);
+	return raw
+		.toString("utf8")
+		.split("\0")
+		.filter(Boolean)
+		.map(record => {
+			const separator = record.indexOf("\t");
+			if (separator < 0) throw new Error(`invalid git tree record: ${record}`);
+			const [mode, type, oid] = record.slice(0, separator).split(" ");
+			if (type !== "blob" || !mode || !oid) throw new Error(`unsupported git tree record: ${record}`);
+			return { mode, oid, path: record.slice(separator + 1) };
+		});
+}
+
+function isIncludedPath(path: string): boolean {
+	if (EXACT_PATHS.has(path)) return true;
+	return TREE_PREFIXES.some(prefix => path.startsWith(`${prefix}/`));
+}
+
+function isExcludedPath(path: string): boolean {
+	const parts = path.toLowerCase().split("/");
+	return parts.some(part => EXCLUDED_PATH_PARTS.has(part));
+}
+
+function assertRelativePath(path: string): void {
+	if (!path || isAbsolute(path) || path.split("/").some(part => part === "" || part === "." || part === "..")) {
+		throw new Error(`unsafe projection path: ${path}`);
+	}
+}
+
+function objectValue(value: unknown, label: string): Record<string, unknown> {
+	if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(`${label} must be an object`);
+	return value as Record<string, unknown>;
+}
+
+function encodeJson(value: unknown): string {
+	return `${JSON.stringify(value, null, 2)}\n`;
+}
+
+function removeGeneratedHooks(value: unknown): unknown {
+	if (Array.isArray(value)) return value.map(removeGeneratedHooks);
+	if (!value || typeof value !== "object") return value;
+
+	const input = value as Record<string, unknown>;
+	const output: Record<string, unknown> = {};
+	for (const [key, child] of Object.entries(input)) {
+		if (key === "hooks" && Array.isArray(child)) {
+			const hooks = child.filter(hook => {
+				if (!hook || typeof hook !== "object" || Array.isArray(hook)) return true;
+				return !String((hook as Record<string, unknown>).command ?? "").includes("herdr-agent-state.sh");
+			});
+			if (hooks.length) output[key] = hooks.map(removeGeneratedHooks);
+			continue;
+		}
+		output[key] = removeGeneratedHooks(child);
+	}
+	return output;
+}
+
+function projectClaudeSettings(text: string): string {
+	const source = objectValue(JSON.parse(text), ".claude/settings.json");
+	const output: Record<string, unknown> = {};
+	for (const key of ["$schema", "model", "statusLine", "enabledPlugins", "effortLevel", "skipDangerousModePermissionPrompt", "theme"]) {
+		if (source[key] !== undefined) output[key] = source[key];
+	}
+
+	const environment = objectValue(source.env ?? {}, ".claude/settings.json env");
+	output.env = Object.fromEntries(
+		Object.entries(environment).filter(([key]) => ["API_TIMEOUT_MS", "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC"].includes(key)),
+	);
+
+	const permissions = objectValue(source.permissions ?? {}, ".claude/settings.json permissions");
+	const allow = Array.isArray(permissions.allow)
+		? permissions.allow.filter(item => typeof item === "string" && !PRIVATE_LINE_TOKENS.some(token => item.includes(token)))
+		: [];
+	output.permissions = { allow };
+
+	const overrides = objectValue(source.skillOverrides ?? {}, ".claude/settings.json skillOverrides");
+	output.skillOverrides = Object.fromEntries(Object.entries(overrides).filter(([name]) => SKILL_NAMES.has(name)));
+	if (source.hooks !== undefined) output.hooks = removeGeneratedHooks(source.hooks);
+	return encodeJson(output);
+}
+
+function projectZedSettings(text: string): string {
+	const source = objectValue(Bun.JSONC.parse(text), ".config/zed/settings.json");
+	for (const key of ["language_models", "ssh_connections", "edit_predictions", "proxy", "server_url"]) delete source[key];
+
+	const agent = objectValue(source.agent ?? {}, "Zed agent settings");
+	delete agent.favorite_models;
+	source.agent = agent;
+
+	const servers = objectValue(source.agent_servers ?? {}, "Zed agent servers");
+	source.agent_servers = Object.fromEntries(
+		Object.entries(servers).filter(([name]) => ["claude-acp", "codex-acp", "grok-build"].includes(name)),
+	);
+
+	const lsp = objectValue(source.lsp ?? {}, "Zed LSP settings");
+	delete lsp["shadowtree-lsp"];
+	source.lsp = lsp;
+	return encodeJson(source);
+}
+
+function projectToml(
+	text: string,
+	topLevelKeys: Set<string>,
+	allowedSections: (section: string) => boolean,
+): string {
+	Bun.TOML.parse(text);
+	const output: string[] = [];
+	let keepSection = false;
+	for (const line of text.split(/\r?\n/)) {
+		const header = line.match(/^\s*\[\[?([^\]]+)\]\]?\s*(?:#.*)?$/);
+		if (header) {
+			keepSection = allowedSections(header[1]);
+			if (keepSection) output.push(line);
+			continue;
+		}
+		if (keepSection) {
+			output.push(line);
+			continue;
+		}
+		const assignment = line.match(/^\s*([A-Za-z0-9_-]+)\s*=/);
+		if (assignment && topLevelKeys.has(assignment[1])) output.push(line);
+	}
+	const projected = `${output.join("\n").trim()}\n`;
+	Bun.TOML.parse(projected);
+	return projected;
+}
+
+function projectCodexConfig(text: string): string {
+	const topLevel = new Set([
+		"approval_policy",
+		"approvals_reviewer",
+		"disable_response_storage",
+		"experimental_compact_prompt_file",
+		"hide_agent_reasoning",
+		"model",
+		"model_auto_compact_token_limit",
+		"model_context_window",
+		"model_instructions_file",
+		"model_reasoning_effort",
+		"model_reasoning_summary",
+		"model_verbosity",
+		"network_access",
+		"personality",
+		"plan_mode_reasoning_effort",
+		"sandbox_mode",
+		"service_tier",
+		"supports_websockets",
+		"tool_output_token_limit",
+	]);
+	const sections = new Set([
+		"analytics",
+		"features",
+		"features.multi_agent_v2",
+		"feedback",
+		"mcp_servers.openaiDeveloperDocs",
+		"memories",
+		"notice",
+		"notice.model_migrations",
+		"skills",
+		"tui",
+	]);
+	return projectToml(text, topLevel, section => sections.has(section));
+}
+
+function projectGrokConfig(text: string): string {
+	const sections = ["cli", "disabled_mcp_tools", "features", "harness", "mcp_servers.context7", "models", "telemetry", "ui"];
+	return projectToml(text, new Set(["disabled_mcp_servers"]), section =>
+		sections.some(allowed => section === allowed || section.startsWith(`${allowed}.`)),
+	);
+}
+
+function fishCodeOutsideQuotes(line: string, initialQuote: "'" | '"' | undefined): { code: string; quote: "'" | '"' | undefined } {
+	let code = "";
+	let quote = initialQuote;
+	for (let index = 0; index < line.length; index++) {
+		const character = line[index];
+		if (quote) {
+			if (character === "\\") {
+				index++;
+				continue;
+			}
+			if (character === quote) quote = undefined;
+			continue;
+		}
+		if (character === "#") break;
+		if (character === "'" || character === '"') {
+			quote = character;
+			code += " ";
+			continue;
+		}
+		code += character;
+	}
+	return { code, quote };
+}
+
+function removeFishBlocks(text: string): string {
+	const lines = text.split(/\r?\n/);
+	const output: string[] = [];
+	let depth = 0;
+	let quote: "'" | '"' | undefined;
+	for (const line of lines) {
+		const privateIf = /^\s*if\b/.test(line) && PRIVATE_LINE_TOKENS.some(token => line.toLowerCase().includes(token.toLowerCase()));
+		if (depth === 0 && (/^\s*function\s+(install_my_ca|claude-use|claude-config-edit)\b/.test(line) || privateIf)) {
+			depth = 1;
+			quote = undefined;
+			continue;
+		}
+		if (depth > 0) {
+			const visible = fishCodeOutsideQuotes(line, quote);
+			quote = visible.quote;
+			if (/^\s*(begin|for|function|if|switch|while)\b/.test(visible.code)) depth++;
+			depth += (visible.code.match(/;\s*(?:and|or)\s+begin\b/g) ?? []).length;
+			if (/^\s*end\b/.test(visible.code)) depth--;
+			continue;
+		}
+		output.push(line);
+	}
+	if (depth !== 0 || quote) throw new Error("unbalanced filtered Fish block");
+	return output.join("\n");
+}
+
+function removeBraceFunction(text: string, names: Set<string>): string {
+	const lines = text.split(/\r?\n/);
+	const output: string[] = [];
+	let depth = 0;
+	for (const line of lines) {
+		const start = depth === 0 ? line.match(/^\s*([A-Za-z0-9_-]+)\(\)\s*\{/) : undefined;
+		if (start && names.has(start[1])) depth = 1;
+		if (depth > 0) {
+			if (!start) depth += (line.match(/\{/g) ?? []).length;
+			depth -= (line.match(/\}/g) ?? []).length;
+			continue;
+		}
+		output.push(line);
+	}
+	if (depth !== 0) throw new Error("unbalanced filtered shell function");
+	return output.join("\n");
+}
+
+function removePrivateShellIfBlocks(text: string): string {
+	const lines = text.split(/\r?\n/);
+	const output: string[] = [];
+	let depth = 0;
+	for (const line of lines) {
+		const privateIf = /^\s*if\b/.test(line) && PRIVATE_LINE_TOKENS.some(token => line.toLowerCase().includes(token.toLowerCase()));
+		if (depth === 0 && privateIf) {
+			depth = 1;
+			continue;
+		}
+		if (depth > 0) {
+			if (/^\s*if\b/.test(line)) depth++;
+			if (/^\s*fi\b/.test(line)) depth--;
+			continue;
+		}
+		output.push(line);
+	}
+	if (depth !== 0) throw new Error("unbalanced filtered private shell block");
+	return output.join("\n");
+}
+
+function projectShell(path: string, text: string): string {
+	let projected = text;
+	if (path.endsWith(".fish")) projected = removeFishBlocks(projected);
+	if (path === ".bashrc" || path.endsWith(".zsh") || path === ".zshrc") {
+		projected = removeBraceFunction(projected, new Set(["install_my_ca", "claude-use", "claude-config-edit"]));
+		projected = removePrivateShellIfBlocks(projected);
+	}
+	const lines = projected
+		.split(/\r?\n/)
+		.filter(line => !PRIVATE_LINE_TOKENS.some(token => line.toLowerCase().includes(token.toLowerCase())))
+		.filter(line => !(path === ".yabairc" && line.includes("trgame.exe")))
+		.filter(line => !(path === ".gitignore_global" && line.trim() === ".kilo/"));
+	return `${lines.join("\n").trimEnd()}\n`;
+}
+
+function projectGitConfig(text: string): string {
+	const output: string[] = [];
+	let keepSection = true;
+	for (const line of text.split(/\r?\n/)) {
+		const header = line.match(/^\s*\[([^\]]+)\]/);
+		if (header) keepSection = !["user", "coderabbit"].includes(header[1].trim());
+		if (!keepSection || /^\s*signingkey\s*=/.test(line)) continue;
+		output.push(line);
+	}
+	return `${output.join("\n").trimEnd()}\n`;
+}
+
+function projectMarkdown(path: string, text: string): string {
+	if (path === "AGENTS.md") {
+		const marker = "--- project-doc ---";
+		return `${text.split(marker, 1)[0].trimEnd()}\n\n${PUBLIC_PROJECT_GUIDANCE}`;
+	}
+	let projected = text;
+	if (path === "CONTEXT-HOOK-OWNERS.md") {
+		projected = projected.replace(/; and `\.codex\/herdr-agent-state\.sh` reports[\s\S]*?edited directly\.\n/, ".\n");
+		projected = projected.replace(/\s*FIXME: Port the `SubagentStart`[\s\S]*?delivery\.\n/, "\n");
+	}
+	if (path === "CONTEXT-CODEX-LIFECYCLE.md") {
+		projected = projected.replace(
+			/`, the automatic\n\s*skill-inventory reporter, and the single Herdr session reporter\. They contribute project\n\s*context, current skill metadata, and session reporting/,
+			"` and the automatic\n   skill-inventory reporter. They contribute project context and current skill metadata",
+		);
+	}
+	if (path === "CONTEXT-INSTRUCTION-SURFACES.md") {
+		projected = projected
+			.split(/\r?\n/)
+			.filter(line => ![".kilocode/", ".omp/", ".pi/"].some(token => line.includes(token)))
+			.join("\n");
+	}
+	return `${projected.trimEnd()}\n`;
+}
+
+function transformText(path: string, text: string, privateHomes: string[]): string {
+	// The helper is part of its own output. Preserve its deny rules verbatim rather than
+	// rewriting the private examples those rules are responsible for detecting.
+	if (path === COMMAND_PATH) return text;
+	let projected = text;
+	if (path === ".codex/config.toml") projected = projectCodexConfig(projected);
+	else if (path === ".grok/config.toml") projected = projectGrokConfig(projected);
+	else if (path === ".claude/settings.json") projected = projectClaudeSettings(projected);
+	else if (path === ".codex/hooks.json") projected = encodeJson(removeGeneratedHooks(JSON.parse(projected)));
+	else if (path === ".config/zed/settings.json") projected = projectZedSettings(projected);
+	else if (path === ".gitconfig") projected = projectGitConfig(projected);
+	else if (path.endsWith(".md")) projected = projectMarkdown(path, projected);
+	else if ([".bashrc", ".gitignore_global", ".tmux.conf", ".yabairc", ".zshrc"].includes(path) || path.endsWith(".fish") || path.endsWith(".zsh")) {
+		projected = projectShell(path, projected);
+	}
+	for (const privateHome of privateHomes) projected = projected.replaceAll(privateHome, "$HOME");
+	return projected;
+}
+
+function isTextPath(path: string): boolean {
+	if (TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS.has(path)) return true;
+	const name = path.split("/").at(-1) ?? path;
+	if (!name.includes(".")) return path === COMMAND_PATH || path.startsWith(".local/bin/") || path.startsWith(".codex/hooks/");
+	return TEXT_EXTENSIONS.has(`.${name.split(".").at(-1)!.toLowerCase()}`);
+}
+
+function publicContentFailure(path: string, text: string): string | undefined {
+	if (path === COMMAND_PATH) return undefined;
+	const checks: Array<[RegExp, string]> = [
+		[/\$HOME\/(?:projects|Projects)\//i, "private project path"],
+		[/\b(?:10\.|192\.168\.|172\.(?:1[6-9]|2\d|3[01])\.)\d{1,3}\.\d{1,3}/, "private IP address"],
+		[/\b[a-z0-9.-]+\.pve(?::\d+)?\b/i, "private hostname"],
+		[/ANTHROPIC_AUTH_TOKEN|OPENAI_EMBEDDING_|APPRISE_URL|masterpassword/i, "private credential configuration"],
+		[/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/, "private key"],
+		[/spawn-codex|codex-auto-resume|\bcodex-herdr\b/, "removed Codex launcher"],
+		[/herdr-agent-state\.sh/, "generated Herdr reporter"],
+		[/\.omp\/|\.pi\/|\.kilocode\//, "excluded agent family"],
+		[/inshellisense/i, "excluded tool"],
+	];
+	for (const [pattern, label] of checks) if (pattern.test(text)) return label;
+
+	if (path.endsWith(".json") || path.endsWith(".toml") || path.endsWith(".yml") || path.endsWith(".yaml") || path.startsWith(".config/") || path.startsWith(".local/bin/")) {
+		if (/(?:^|[^A-Za-z0-9_-])["']?(?:api[_-]?key|auth[_-]?token|password|secret)["']?\s*[:=]\s*["']?(?!\$|<|env\b|false\b|null\b|redacted\b)[^\s"']+/im.test(text)) {
+			return "literal credential-like value";
+		}
+	}
+	return undefined;
+}
+
+function symlinkStaysInside(path: string, target: string): boolean {
+	if (isAbsolute(target)) return false;
+	const root = resolve("/projection");
+	const resolved = resolve(root, dirname(path), target);
+	return resolved === root || resolved.startsWith(`${root}${sep}`);
+}
+
+function buildProjection(source: string, commit: string): Map<string, ProjectedEntry> {
+	const projection = new Map<string, ProjectedEntry>();
+	const userName = basename(homedir());
+	const privateHomes = [...new Set([source, homedir(), join("/home", userName), join("/Users", userName)])]
+		.filter(path => path !== resolve("/"))
+		.sort((left, right) => right.length - left.length);
+	for (const entry of listTree(source, commit)) {
+		if (!isIncludedPath(entry.path) || isExcludedPath(entry.path)) continue;
+		assertRelativePath(entry.path);
+		const content = git(source, ["cat-file", "blob", entry.oid]);
+		if (entry.mode === "120000") {
+			projection.set(entry.path, { kind: "symlink", target: content.toString("utf8") });
+			continue;
+		}
+		const projected = isTextPath(entry.path)
+			? Buffer.from(transformText(entry.path, content.toString("utf8"), privateHomes))
+			: content;
+		projection.set(entry.path, { kind: "file", content: projected, executable: entry.mode === "100755" });
+	}
+
+	for (const required of ["AGENTS.md", COMMAND_PATH]) {
+		if (!projection.has(required)) throw new Error(`source revision does not contain required projected path: ${required}`);
+	}
+	return projection;
+}
+
+function validateProjection(projection: Map<string, ProjectedEntry>): void {
+	for (const [path, entry] of projection) {
+		assertRelativePath(path);
+		if (isExcludedPath(path)) throw new Error(`excluded test or evaluation path reached projection: ${path}`);
+		if (entry.kind === "symlink") {
+			if (!symlinkStaysInside(path, entry.target)) throw new Error(`symlink escapes projection: ${path} -> ${entry.target}`);
+			continue;
+		}
+		if (!isTextPath(path)) continue;
+		const failure = publicContentFailure(path, entry.content.toString("utf8"));
+		if (failure) throw new Error(`${path} contains ${failure}`);
+	}
+}
+
+function outputManifest(commit: string, projection: Map<string, ProjectedEntry>): OutputManifest {
+	const outputs = [...projection.entries()]
+		.sort(([left], [right]) => left.localeCompare(right))
+		.map(([path, entry]): OutputRecord => {
+			if (entry.kind === "symlink") return { path, kind: "symlink", target: entry.target };
+			return {
+				path,
+				kind: "file",
+				sha256: sha256(entry.content),
+				executable: entry.executable,
+			};
+		});
+	return { schemaVersion: 1, sourceCommit: commit, outputs };
+}
+
+function sha256(content: Uint8Array): string {
+	const hasher = new Bun.CryptoHasher("sha256");
+	hasher.update(content);
+	return hasher.digest("hex");
+}
+
+async function writeStagedTree(stage: string, projection: Map<string, ProjectedEntry>, manifest: OutputManifest): Promise<void> {
+	for (const [path, entry] of projection) {
+		const destination = join(stage, path);
+		await mkdir(dirname(destination), { recursive: true });
+		if (entry.kind === "symlink") await symlink(entry.target, destination);
+		else {
+			await Bun.write(destination, entry.content);
+			await chmod(destination, entry.executable ? 0o755 : 0o644);
+		}
+	}
+	await Bun.write(join(stage, OUTPUT_MANIFEST_PATH), encodeJson(manifest));
+}
+
+async function existingManifest(destination: string): Promise<OutputManifest | undefined> {
+	try {
+		const value = objectValue(JSON.parse(await Bun.file(join(destination, OUTPUT_MANIFEST_PATH)).text()), OUTPUT_MANIFEST_PATH);
+		if (value.schemaVersion !== 1 || !Array.isArray(value.outputs)) throw new Error("unsupported generated manifest");
+		return value as OutputManifest;
+	} catch (error) {
+		if ((error as NodeJS.ErrnoException).code === "ENOENT") return undefined;
+		throw error;
+	}
+}
+
+async function pathExists(path: string): Promise<boolean> {
+	try {
+		await lstat(path);
+		return true;
+	} catch (error) {
+		if ((error as NodeJS.ErrnoException).code === "ENOENT") return false;
+		throw error;
+	}
+}
+
+function destinationPath(root: string, path: string): string {
+	assertRelativePath(path);
+	const output = resolve(root, path);
+	if (!output.startsWith(`${root}${sep}`)) throw new Error(`projection path escapes destination: ${path}`);
+	return output;
+}
+
+async function assertSafeParents(root: string, path: string): Promise<void> {
+	const parentParts = dirname(path).split("/").filter(part => part !== ".");
+	let current = root;
+	for (const part of parentParts) {
+		current = join(current, part);
+		try {
+			const stat = await lstat(current);
+			if (stat.isSymbolicLink() || !stat.isDirectory()) throw new Error(`destination parent is not a directory: ${current}`);
+		} catch (error) {
+			if ((error as NodeJS.ErrnoException).code === "ENOENT") return;
+			throw error;
+		}
+	}
+}
+
+async function sameEntry(path: string, entry: ProjectedEntry): Promise<boolean> {
+	try {
+		const stat = await lstat(path);
+		if (entry.kind === "symlink") return stat.isSymbolicLink() && (await readlink(path)) === entry.target;
+		if (!stat.isFile()) return false;
+		const content = Buffer.from(await Bun.file(path).arrayBuffer());
+		return content.equals(entry.content) && Boolean(stat.mode & 0o111) === entry.executable;
+	} catch (error) {
+		if ((error as NodeJS.ErrnoException).code === "ENOENT") return false;
+		throw error;
+	}
+}
+
+async function atomicInstall(staged: string, destination: string, path: string, entry: ProjectedEntry): Promise<void> {
+	const target = destinationPath(destination, path);
+	await assertSafeParents(destination, path);
+	await mkdir(dirname(target), { recursive: true });
+	await assertSafeParents(destination, path);
+	const temporary = join(dirname(target), `.${path.split("/").at(-1)}.project-public-config.${randomUUIDv7()}`);
+	try {
+		if (entry.kind === "symlink") await symlink(entry.target, temporary);
+		else {
+			await Bun.write(temporary, Bun.file(join(staged, path)));
+			await chmod(temporary, entry.executable ? 0o755 : 0o644);
+		}
+		try {
+			const stat = await lstat(target);
+			if (stat.isDirectory() && !stat.isSymbolicLink()) throw new Error(`generated path is an existing directory: ${path}`);
+		} catch (error) {
+			if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+		}
+		await rename(temporary, target);
+		if (entry.kind === "file") await chmod(target, entry.executable ? 0o755 : 0o644);
+	} catch (error) {
+		await rm(temporary, { force: true });
+		throw error;
+	}
+}
+
+async function removeStalePath(destination: string, path: string): Promise<void> {
+	const target = destinationPath(destination, path);
+	await assertSafeParents(destination, path);
+	try {
+		const stat = await lstat(target);
+		if (stat.isDirectory() && !stat.isSymbolicLink()) throw new Error(`refusing to delete stale generated directory: ${path}`);
+		await unlink(target);
+	} catch (error) {
+		if ((error as NodeJS.ErrnoException).code === "ENOENT") return;
+		throw error;
+	}
+
+	let parent = dirname(target);
+	while (parent !== destination) {
+		try {
+			await rmdir(parent);
+		} catch (error) {
+			if (["ENOTEMPTY", "ENOENT"].includes((error as NodeJS.ErrnoException).code ?? "")) break;
+			throw error;
+		}
+		parent = dirname(parent);
+	}
+}
+
+async function matchesRecord(destination: string, record: OutputRecord): Promise<boolean> {
+	const path = destinationPath(destination, record.path);
+	try {
+		const stat = await lstat(path);
+		if (record.kind === "symlink") return stat.isSymbolicLink() && typeof record.target === "string" && (await readlink(path)) === record.target;
+		if (!stat.isFile() || typeof record.sha256 !== "string") return false;
+		return sha256(new Uint8Array(await Bun.file(path).arrayBuffer())) === record.sha256;
+	} catch (error) {
+		if ((error as NodeJS.ErrnoException).code === "ENOENT") return true;
+		throw error;
+	}
+}
+
+async function synchronize(destination: string, staged: string, projection: Map<string, ProjectedEntry>, manifest: OutputManifest): Promise<{ changed: number; removed: number }> {
+	await mkdir(destination, { recursive: true });
+	const destinationStat = await lstat(destination);
+	if (destinationStat.isSymbolicLink() || !destinationStat.isDirectory()) throw new Error("destination must be a directory, not a symlink");
+	const previous = await existingManifest(destination);
+	const previousOutputs = new Map((previous?.outputs ?? []).map(output => {
+		assertRelativePath(output.path);
+		return [output.path, output];
+	}));
+	const previouslyOwned = new Set(previousOutputs.keys());
+	previouslyOwned.add(OUTPUT_MANIFEST_PATH);
+
+	for (const path of projection.keys()) {
+		const target = destinationPath(destination, path);
+		await assertSafeParents(destination, path);
+		if (!previouslyOwned.has(path) && (await pathExists(target))) {
+			throw new Error(`destination path is not owned by the projection: ${path}`);
+		}
+	}
+	const staleOutputs = [...previousOutputs.values()].filter(
+		output => output.path !== OUTPUT_MANIFEST_PATH && !projection.has(output.path),
+	);
+	for (const record of staleOutputs) {
+		if (!(await matchesRecord(destination, record))) {
+			throw new Error(`stale generated path was modified outside the projection: ${record.path}`);
+		}
+	}
+
+	let changed = 0;
+	for (const [path, entry] of projection) {
+		const target = destinationPath(destination, path);
+		if (await sameEntry(target, entry)) continue;
+		await atomicInstall(staged, destination, path, entry);
+		changed++;
+	}
+
+	let removed = 0;
+	for (const record of staleOutputs) {
+		await removeStalePath(destination, record.path);
+		removed++;
+	}
+
+	const manifestEntry: ProjectedEntry = { kind: "file", content: Buffer.from(encodeJson(manifest)), executable: false };
+	await atomicInstall(staged, destination, OUTPUT_MANIFEST_PATH, manifestEntry);
+	return { changed, removed };
+}
+
+async function main(): Promise<void> {
+	const options = parseArgs(process.argv.slice(2));
+	if (options.source === options.destination) throw new Error("source and destination must be different directories");
+	if ([resolve("/"), resolve(homedir())].includes(options.destination)) {
+		throw new Error("destination must not be the filesystem root or home directory");
+	}
+
+	console.error(`Resolving ${options.revision} in ${options.source}`);
+	const commit = git(options.source, ["rev-parse", "--verify", `${options.revision}^{commit}`]).toString("utf8").trim();
+	const projection = buildProjection(options.source, commit);
+	validateProjection(projection);
+	console.error(`Projected and validated ${projection.size} paths from ${commit.slice(0, 12)}`);
+
+	await mkdir(dirname(options.destination), { recursive: true });
+	const stage = await mkdtemp(join(tmpdir(), "project-public-config-"));
+	try {
+		const manifest = outputManifest(commit, projection);
+		await writeStagedTree(stage, projection, manifest);
+		const result = await synchronize(options.destination, stage, projection, manifest);
+		console.error(`Synchronized ${result.changed} changed paths and removed ${result.removed} stale paths`);
+	} finally {
+		await rm(stage, { recursive: true, force: true });
+	}
+}
+
+main().catch(error => {
+	console.error(`project-public-config: ${error instanceof Error ? error.message : String(error)}`);
+	process.exitCode = 1;
+});

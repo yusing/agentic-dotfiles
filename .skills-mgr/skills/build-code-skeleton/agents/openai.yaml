@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Initial Skeleton"
+  short_description: "Create and commit the one new-project scaffold"
+  default_prompt: "Use $build-code-skeleton to build, inspect, validate, and commit the authorized initial checkpoint before complete slice delivery."

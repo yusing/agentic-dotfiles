@@ -1,0 +1,4 @@
+interface:
+  display_name: "User Experience"
+  short_description: "Design operable user-facing workflows"
+  default_prompt: "Use $user-experience to make this user-facing workflow clear and operable."

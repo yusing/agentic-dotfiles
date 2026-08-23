@@ -1,0 +1,7 @@
+{
+  "iferr": {
+    "prefix": "iferr",
+    "body": ["if err != nil {\n\treturn nil, err\n\t}\n\t"],
+    "description": "Error Handling"
+  }
+}
