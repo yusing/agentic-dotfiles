@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "af4b703f331a25275c511654d34780253aefb53a",
+  "sourceCommit": "8b51aeccbb2ebf06ae0c68031e8f49b064da2174",
   "outputs": [
     {
       "path": ".bashrc",
@@ -274,7 +274,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "b0721365a34f0412629733b4f8755d510d1d602d355f3db326fe8d6225a93db1",
+      "sha256": "21ea98524220cb08321b6c496ef6d29f21c99354bf6001e61133f5355e60c5b1",
       "executable": false
     },
     {
@@ -651,7 +651,7 @@
     {
       "path": ".skills-mgr/skills/handoff/STANDARD.md",
       "kind": "file",
-      "sha256": "6cd15d3f67a5548756359994d8c147ebdaae8cf79fbdfdd3b5e173c5ffdfc818",
+      "sha256": "367e4ca689e59d9eb92cb59b3b30976d873e91adfd6995513c67e09fa6d1c527",
       "executable": false
     },
     {
@@ -860,7 +860,7 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "51f7e652079160e6c81348f0f4ce5af2c8829f5e7820572dd8f5e3f4a0b4fb93",
+      "sha256": "48ad7a4bce5a18050f64f61a7b9c75a4b683c842ce65d8b415eb38ceac3bb831",
       "executable": false
     },
     {

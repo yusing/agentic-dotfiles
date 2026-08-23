@@ -115,7 +115,9 @@ Use the latest evidence. Remove resolved blockers, superseded plans and attempts
 ## Continuity obligations
 
 - Preserve each incomplete hook obligation and its owning hook path without copying the full hook wording.
-- If a skill remains active for unfinished work, add `## Active skills to reread`, list its exact name, and require `skills-mgr get <skill-name>` before more task work. Omit skills that no longer apply.
+- Treat skill bodies loaded before the handoff as unavailable to the next LLM.
+- For every skill that remains active for unfinished work, add `## Active skills to reread`, list its exact name, and require `skills-mgr get <skill-name>` before more task work.
+- Express skill continuity only through that section and its required command. Never describe a skill's earlier load state or tell the next LLM to skip its read. Omit skills that no longer apply without mentioning them.
 - If no work remains, state that the task is complete and list only unresolved reporting or external obligations, if any.
 
 Do not fabricate state, progress, conclusions, or next steps. The shortest handoff that satisfies the completion standard is the correct handoff.

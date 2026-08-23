@@ -124,10 +124,11 @@ A skill is a set of instructions provided through a `SKILL.md` source. The skill
 
 - Trigger rules:
   * User mentioned
-  * After handoff: Skills named under `## Active skills to reread`
+  * After handoff: Reread skills named under `## Active skills to reread` before more task work.
+    When that section is absent, apply the remaining trigger rules normally.
   * Whose description most specifically owns the operation,
     and add another skill only when it covers a separate responsibility.
-    Do not reread it merely because the task advances to another phase.
+    Within one context, keep an applicable loaded skill across phase changes.
 
 - Skills section:
   * Choose automatic skills for the operation you are about to perform, not every phase you expect the task to have.

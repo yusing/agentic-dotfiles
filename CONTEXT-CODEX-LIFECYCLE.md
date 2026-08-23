@@ -22,7 +22,9 @@
    snapshots. On the first production or operational change, it injects the risk-gated native
    inspection decision once; it does not select ordinary lint, build, probe, or test work.
 6. **Compaction.** `.skills-mgr/skills/handoff/STANDARD.md` preserves incomplete hook obligations
-   without copying completed hook responses. No hook-specific state rotation runs at compaction.
+   without copying completed hook responses and carries applicable skills as required rereads.
+   After handoff, the base prompt rereads named skills or, when that section is absent, selects
+   them again from the current operation. No hook-specific state rotation runs at compaction.
 
 Registration and implementation stay separate throughout this flow: `.codex/hooks.json`
 decides when a hook runs, the registered command or script owns its output and behavior, and
