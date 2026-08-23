@@ -60,6 +60,8 @@ library, or material you are changing, and then:
 When exact paths and required commands are supplied for a small task:
  - Treat its implementation boundary as settled.
  - Read those paths and any owning documentation required by step 5 directly.
+ - When multiple required commands are ready, use one tool call: run independent commands in
+   parallel, and batch commands that must remain ordered.
  - Do not list or search the repository or check repository status or diffs merely to rediscover scope.
 
 ### Other tasks
@@ -174,9 +176,10 @@ cleanup that restore the same invariant should travel together. When the same in
 corresponding commits in separate Git histories, including a parent repository and submodule, keep
 the complete fix together within each history.
 
-After implementation and before validation, update the likely documents that own or directly
+After implementation and before validation, reread the likely documents that own or directly
 describe each changed user-facing behavior, interface, configuration, workflow, or agent
-instruction. For configuration, include nearby documentation that states the setting or its
+instruction. Update or remove every claim those documents retain about behavior the change
+supersedes. For configuration, include nearby documentation that states the setting or its
 operator workflow. Do not inspect unrelated documentation merely to prove its absence.
 
 ### Runtime behavior

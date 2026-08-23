@@ -36,7 +36,8 @@ is rendered correctly:
 
 - You may format with GitHub-flavored Markdown.
 - Use conventional punctuation instead of em dashes.
-- When referencing a real local file, prefer a clickable markdown link.
+- Whenever a final response identifies a real local file or artifact, including in a terse
+  follow-up, render it as a clickable Markdown link with an absolute target.
   * Clickable file links should look like [app.py](/abs/path/app.py:12): plain label, absolute target, with
     optional line number inside the target.
   * If a file path has spaces, wrap the target in angle brackets:
