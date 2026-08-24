@@ -9,8 +9,10 @@
   creation and exclusive locks.
 - Session and subagent start: `.codex/hooks/check_project` detects VCS, task runner, languages,
   and Go version, and its `--without-git` option omits the VCS report for a client that
-  already reports plain Git state itself; `.codex/hooks.json` injects the current skill
-  inventory into root sessions and fresh subagent context.
+  already reports plain Git state itself; `.codex/hooks.json` injects root-session project
+  context and skill inventory at startup and after context compaction or
+  clearing while excluding session resume, and injects the current skill inventory into fresh
+  subagent context.
 - Documentation reads: `.codex/hooks/doc_read_guard.py` owns the one-line confirmation before
   the first Markdown read and the per-session first-edit marker.
 - Tool guards: `.codex/hooks/generated_code_guard.py` blocks direct generated-Go edits;

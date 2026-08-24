@@ -86,9 +86,12 @@
             "timeout": 5,
             "type": "command"
           }
-        ]
+        ],
+        "matcher": "^(startup|compact|clear)$"
       },
-      {}
+      {
+        "matcher": "^(startup|compact|clear)$"
+      }
     ],
     "SubagentStart": [
       {

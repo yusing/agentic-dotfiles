@@ -9,9 +9,11 @@
    routing. The routed context maps and skill bodies are loaded only when their triggers match.
    Codex also discovers `.codex/agents/*.toml`; each role description guides the parent spawn,
    and each role selects its paired complete model prompt before its first turn.
-2. **Session start.** `.codex/hooks.json` runs `.codex/hooks/check_project` and the automatic
-   skill-inventory reporter. They contribute project context and current skill metadata without selecting implementation or
-   validation work.
+2. **Session start.** At startup and after context compaction or clearing,
+   `.codex/hooks.json` runs `.codex/hooks/check_project` and the automatic
+   skill-inventory reporter. Resuming an existing session does not run
+   these root-session hooks. Matched events receive project context and current skill metadata
+   without selecting implementation or validation work.
 3. **Prompt submission.** The registered `UserPromptSubmit` hook adds native review routing
    only for an explicit review request. Nonmatching prompts remain silent.
 4. **Tool loop.** Before matched tools run, guards may reject generated-Go edits, versioned

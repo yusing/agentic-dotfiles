@@ -576,14 +576,24 @@ function projectMarkdown(path: string, text: string): string {
 	}
 	let projected = text;
 	if (path === "CONTEXT-HOOK-OWNERS.md") {
-		projected = projected.replace(/; and `\.codex\/herdr-agent-state\.sh` reports[\s\S]*?edited directly\.\n/, ".\n");
+		projected = projected
+			.replace(
+				/root-session project\s+context, skill inventory, and Herdr\s+reporting/,
+				"root-session project\n  context and skill inventory",
+			)
+			.replace(/;\s*`\.codex\/herdr-agent-state\.sh` reports[\s\S]*?edited directly\.\n/, ".\n");
 		projected = projected.replace(/\s*FIXME: Port the `SubagentStart`[\s\S]*?delivery\.\n/, "\n");
 	}
 	if (path === "CONTEXT-CODEX-LIFECYCLE.md") {
-		projected = projected.replace(
-			/`, the automatic\n\s*skill-inventory reporter, and the single Herdr session reporter\. They contribute project\n\s*context, current skill metadata, and session reporting/,
-			"` and the automatic\n   skill-inventory reporter. They contribute project context and current skill metadata",
-		);
+		projected = projected
+			.replace(
+				/`\.codex\/hooks\/check_project`, the automatic skill-inventory\s+reporter, and the single Herdr\s+session reporter/,
+				"`.codex/hooks/check_project` and the automatic\n   skill-inventory reporter",
+			)
+			.replace(
+				/project context, current skill metadata, and\s+session reporting\s+without selecting/,
+				"project context and current skill metadata\n   without selecting",
+			);
 	}
 	if (path === "CONTEXT-INSTRUCTION-SURFACES.md") {
 		projected = projected
