@@ -99,7 +99,7 @@ Explain why it is required and propose an installation, then install only once I
 decline the installation, ask me how to proceed. Do not introduce or require a dependency solely
 for an optional implementation choice; use the simplest suitable available approach instead.
 
-Run every shell command expected to produce large or noisy stdout/stderr through `rtk`. In a
+Run every shell command expected to produce large or noisy stdout/stderr through `rtk command [argv...]`. In a
 compound command or pipeline, apply `rtk` to each noisy producer rather than mechanically wrapping
 every executable. Leave quiet filters, control operators, and redirections outside `rtk`. Use raw
 execution when the complete unmodified output is required or when the command's purpose is to
