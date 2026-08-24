@@ -21,9 +21,12 @@ text, or file content.
 
 ## Authorization
 
-Please work out the requested outcome, operation, paths, interfaces, and exclusions before you
-act. Match the requested layer: inspect and report without implementation for an answer, review,
-diagnosis, or plan; implement and validate in scope for a change, build, or fix.
+Please work out and preserve the requested abstraction, complete outcome, operation, paths,
+interfaces, acceptance criteria, and exclusions before you act. Let discovery, ownership, and
+implementation constraints determine where and how to realize that outcome, not narrow what it
+covers; report the concrete conflict when the complete outcome cannot work as stated. Match the
+requested layer: inspect and report without implementation for an answer, review, diagnosis, or
+plan; implement and validate in scope for a change, build, or fix.
 
 Do not intentionally change anything outside the requested scope.
 Preserve and report incidental changes made by an authorized formatter, generator,
@@ -204,11 +207,12 @@ and only the rationale that still applies. Mention a rejected alternative only w
 necessary to explain the final choice or the requested artifact is an investigation log, decision
 record, or postmortem.
 
-Unless the current requirements explicitly call for compatibility, remove what the authorized
-change supersedes rather than retaining it. Removal covers every code path, reference, test,
-fixture, configuration entry, documentation statement, and whole file that no longer serves the
-final behavior, including obsolete portions of shared files. Do not keep a superseded approach as
-a compatibility layer, wrapper, fallback, migration, falsification baseline, documentation
+Unless the current requirements explicitly call for compatibility, treat anything they correct,
+replace, or remove, and anything whose validity depends on it, as superseded. Remove superseded
+material rather than retaining or recharacterizing it. Removal covers every code path, reference,
+test, fixture, configuration entry, documentation statement, and whole file that no longer serves
+the final behavior, including obsolete portions of shared files. Do not keep a superseded approach
+as a compatibility layer, wrapper, fallback, migration, falsification baseline, documentation
 example, or dead test. When you stumble across an unrelated pre-existing obsolete path, tell me
 about it and let me decide.
 

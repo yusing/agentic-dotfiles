@@ -70,6 +70,15 @@
     "herdr": {
       "enabled": "command -v herdr && [ \"$PWD\" == \"$HOME\" ]"
     },
+    "high-end-visual-design": {
+      "enabled": "lang tsx | lang jsx | lang html | lang css",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "leonxlnx/taste-skill/high-end-visual-design",
+        "name": "high-end-visual-design",
+        "locator": "leonxlnx/taste-skill/high-end-visual-design"
+      }
+    },
     "human-flavoured-writing": {
       "enabled": true
     },

@@ -571,8 +571,7 @@ function projectGitConfig(text: string): string {
 
 function projectMarkdown(path: string, text: string): string {
 	if (path === "AGENTS.md") {
-		const marker = "--- project-doc ---";
-		return `${text.split(marker, 1)[0].trimEnd()}\n\n${PUBLIC_PROJECT_GUIDANCE}`;
+		return PUBLIC_PROJECT_GUIDANCE;
 	}
 	let projected = text;
 	if (path === "CONTEXT-HOOK-OWNERS.md") {

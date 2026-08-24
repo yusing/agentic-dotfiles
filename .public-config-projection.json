@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7612b7cb72bf579f07e519126f09d2471c917d17",
+  "sourceCommit": "4da715a0c977b61feeac6a07f2b1ff12133d95fb",
   "outputs": [
     {
       "path": ".bashrc",
@@ -82,7 +82,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "9ec9de005a7344f01bd5f85c0edae2411861f9fa84e470a65fa71c992597637c",
+      "sha256": "683479b113fd3bf00f56ff43c3c7e14757a53e4afbc36fc704820fd15dea8ed7",
       "executable": false
     },
     {
@@ -495,13 +495,13 @@
     {
       "path": ".local/bin/project-public-config",
       "kind": "file",
-      "sha256": "3ec7d1a48686b4602e30bf7e8305d82dd122417573fff2e2bd2ac9d4769e13ac",
+      "sha256": "ba4601938b6f870b260730b03a16cc4a0c8cc19fa621e6e8f9ac09a8d608cf58",
       "executable": true
     },
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "bc493a6be1dc282bc3438e0ceabd378db961f90966ecf67767e6ed14640dd625",
+      "sha256": "7f6bf8073f143826d58747679b352507dad2ddb2de0043270bd8895d29d19045",
       "executable": false
     },
     {
@@ -843,7 +843,7 @@
     {
       "path": "AGENTS.md",
       "kind": "file",
-      "sha256": "1e851d4aac9c6b79e9345919f2273fa49dbb146d54cd8b43c04d465712a6cede",
+      "sha256": "b0a72ff46dce9c7c9420b8161cfcc80b43413c893651385d8a2f2f72c24560b2",
       "executable": false
     },
     {
@@ -902,7 +902,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "3d5aec08ee865e4be90168129918706418d064c543bb9eba132108b549bf92cc",
+      "sha256": "dd6d25706663991a4fbc6017be9b54ec759825cae715a1648620675a511c32da",
       "executable": false
     }
   ]

@@ -23,11 +23,11 @@ preferences.
 
 | If you want to adapt… | Start with |
 | --- | --- |
-| The overall agent workflow | [`AGENTS.md`](AGENTS.md) and [`.codex/AGENTS.md`](.codex/AGENTS.md) |
-| Codex | [`.codex/config.toml`](.codex/config.toml), [agents](.codex/agents/), and [hooks](.codex/hooks/) |
+| The shared agent workflow | [`.codex/AGENTS.md`](.codex/AGENTS.md) |
+| Codex | [`.codex/config.toml`](.codex/config.toml), [base instructions](.codex/overridden_base_instructions.md), [agents](.codex/agents/), [hook registration](.codex/hooks.json), and [hook implementations](.codex/hooks/) |
 | Claude Code | [`.claude/settings.json`](.claude/settings.json) and [agents](.claude/agents/) |
 | Grok | [`.grok/config.toml`](.grok/config.toml) and [hooks](.grok/hooks/) |
-| Reusable agent skills | [`.skills-mgr/skills/`](.skills-mgr/skills/) |
+| Reusable agent skills | [skill configuration](.skills-mgr/.skills-mgr.json) and [shared skill sources](.skills-mgr/skills/) |
 | Fish | [`.config/fish/config.fish`](.config/fish/config.fish) |
 | Zsh | [`.zshrc`](.zshrc) and [`.zsh/fish-mirror.zsh`](.zsh/fish-mirror.zsh) |
 | Bash | [`.bashrc`](.bashrc) |
@@ -39,9 +39,15 @@ shell behavior.
 
 ## Adapting the Agent Setup
 
-Start with the instruction files before copying client settings. They define how
-agents are expected to explore a repository, make changes, validate their work,
-and communicate results.
+Start with the instruction stack before copying client settings:
+
+- [`.codex/overridden_base_instructions.md`](.codex/overridden_base_instructions.md)
+  defines the Codex harness behavior selected by [`.codex/config.toml`](.codex/config.toml).
+- [`.codex/AGENTS.md`](.codex/AGENTS.md) defines the shared working principles used
+  by Codex, Claude Code, and Grok.
+- [`AGENTS.md`](AGENTS.md) contains guidance specific to this repository.
+- [`.codex/hooks.json`](.codex/hooks.json) activates lifecycle-specific policies
+  implemented under [`.codex/hooks/`](.codex/hooks/).
 
 The agent definitions divide work by responsibility:
 
@@ -62,12 +68,13 @@ development environment.
 
 ## Agent Skills
 
-Only shared skills under [`.skills-mgr/skills/`](.skills-mgr/skills/) and Codex
-skills directly under [`.codex/skills/`](.codex/skills/) are listed below. “Model
-visible” means the model can select the skill itself when its condition is met;
-`No` skills are available only through an explicit workflow.
+The table covers local shared skills under [`.skills-mgr/skills/`](.skills-mgr/skills/)
+and Codex-only skills directly under [`.codex/skills/`](.codex/skills/). “Model
+visible” means the model can select the skill itself. Conditions come from
+[`.skills-mgr/.skills-mgr.json`](.skills-mgr/.skills-mgr.json) and describe when a
+skill is enabled; each skill's instructions determine when it applies.
 
-| Name | Purpose | model visible | condition |
+| Name | Purpose | Model visible | Condition |
 | --- | --- | --- | --- |
 | `assess-change-impact` | Map callers affected by a shared change | Yes | Always |
 | `build-code-skeleton` | Create an initial compile-safe project skeleton | Yes | Always |
@@ -115,8 +122,8 @@ adopt one layer at a time and roll back anything that does not fit.
 
 ```text
 .
-├── AGENTS.md              # Working principles and repository guidance
-├── .codex/                # Codex settings, agents, hooks, and skills
+├── AGENTS.md              # Repository-specific agent guidance
+├── .codex/                # Codex settings, base instructions, agents, hooks, and skills
 ├── .claude/               # Claude Code settings and agents
 ├── .grok/                 # Grok settings and Codex-hook adapters
 ├── .skills-mgr/skills/    # Reusable cross-client skills
