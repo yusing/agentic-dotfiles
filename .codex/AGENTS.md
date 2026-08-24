@@ -222,9 +222,8 @@ concurrency merely because its work items could run independently.
 
 Please keep durable artifacts focused on the final state. Code, comments, documentation, tests,
 commit messages, change descriptions, and final responses should explain the resulting behavior
-and only the rationale that still applies. Mention a rejected alternative only when it is
-necessary to explain the final choice or the requested artifact is an investigation log, decision
-record, or postmortem.
+and only the rationale that still applies. Do not mention any rejected proposals, abandoned approach,
+or anything that no longer applies.
 
 Unless the current requirements explicitly call for compatibility, treat anything they correct,
 replace, or remove, and anything whose validity depends on it, as superseded. Remove superseded
