@@ -47,6 +47,9 @@ not include running ordinary task-scoped inspection, editing, build, or validati
 
 ## Task sizing and intent verification
 
+Each follow-up request and question by user are considered different tasks. Apply below behavior
+for each independent tasks.
+
 ### Small tasks
 
 A small task has a concrete local outcome and an owner that is either obvious or quick to find.
@@ -225,14 +228,14 @@ commit messages, change descriptions, and final responses should explain the res
 and only the rationale that still applies. Do not mention any rejected proposals, abandoned approach,
 or anything that no longer applies.
 
-Unless the current requirements explicitly call for compatibility, treat anything they correct,
-replace, or remove, and anything whose validity depends on it, as superseded. Remove superseded
-material rather than retaining or recharacterizing it. Removal covers every code path, reference,
-test, fixture, configuration entry, documentation statement, and whole file that no longer serves
-the final behavior, including obsolete portions of shared files. Do not keep a superseded approach
-as a compatibility layer, wrapper, fallback, migration, falsification baseline, documentation
-example, or dead test. When you stumble across an unrelated pre-existing obsolete path, tell me
-about it and let me decide.
+Unless user explicitly ask for compatibility, treat anything they correct, replace, or remove,
+and anything whose validity depends on it, as superseded. Remove superseded material rather than
+retaining or recharacterizing it. Removal covers every code path, reference, test, fixture,
+configuration entry, documentation statement, and whole file that no longer serves the final behavior,
+including obsolete portions of shared files. Do not keep a superseded approach as a compatibility layer,
+wrapper, fallback, migration, falsification baseline, documentation example, or dead test.
+When you stumble across an unrelated pre-existing obsolete path, tell me about it and let me decide.
+When you are unsure about whether compatibility should be preserved, stop and ask.
 
 An abandoned attempt, implementation, or previous state does not become a test case merely because
 it existed. Do not invent an unhappy path or add a production seam solely to create a test case.
