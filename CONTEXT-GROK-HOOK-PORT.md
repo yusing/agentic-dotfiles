@@ -7,8 +7,8 @@ interpreter selection for a hook script that carries no executable bit; policy r
 the reused `.codex/hooks/` implementation. `.grok/hooks/codex-port.json` owns Grok tool
 matchers and event placement, extending the Claude matchers (`Bash`, `Edit`, `Write`) with
 `run_terminal_command`, `search_replace`, and `MultiEdit`. Grok uses camelCase event fields
-and `{"decision":"deny","reason":...}` denials. The adapter preserves prompt turn IDs for
-later tool events and maps failed result events. Herdr session reporting remains
+and `{"decision":"deny","reason":...}` denials. The adapter maps failed result events. Herdr
+session reporting remains
 client-managed and is not part of the port.
 
 `.grok/hooks/smoke_test.py` asserts that every registered Codex hook has a port counterpart,

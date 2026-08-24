@@ -27,17 +27,6 @@
         ]
       }
     ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/usr/bin/python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/turn_review_instruction.py prompt",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
     "PreToolUse": [
       {
         "matcher": "^(apply_patch|Edit|Write|search_replace|MultiEdit)$",
@@ -47,16 +36,6 @@
             "command": "/usr/bin/python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/generated_code_guard.py",
             "timeout": 5,
             "statusMessage": "Checking for generated Go files"
-          }
-        ]
-      },
-      {
-        "matcher": "^(Bash|run_terminal_command|apply_patch|Edit|Write|search_replace|MultiEdit)$",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/usr/bin/python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/turn_review_instruction.py pre-tool",
-            "timeout": 10
           }
         ]
       },
@@ -79,30 +58,6 @@
             "command": "/usr/bin/python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/remote_vcs_guard.py",
             "timeout": 5,
             "statusMessage": "Checking Git clone commands"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "^(Bash|run_terminal_command|apply_patch|Edit|Write|search_replace|MultiEdit)$",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/usr/bin/python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/turn_review_instruction.py post-tool",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PostToolUseFailure": [
-      {
-        "matcher": "^(Bash|run_terminal_command|apply_patch|Edit|Write|search_replace|MultiEdit)$",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/usr/bin/python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/turn_review_instruction.py post-tool",
-            "timeout": 10
           }
         ]
       }

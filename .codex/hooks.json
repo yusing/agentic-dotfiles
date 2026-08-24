@@ -1,28 +1,6 @@
 {
   "hooks": {
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "/usr/bin/python3 $HOME/.codex/hooks/turn_review_instruction.py post-tool",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "^(Bash|apply_patch|Edit|Write)$"
-      }
-    ],
     "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "/usr/bin/python3 $HOME/.codex/hooks/turn_review_instruction.py pre-tool",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "^(Bash|apply_patch|Edit|Write)$"
-      },
       {
         "hooks": [
           {
@@ -83,17 +61,6 @@
           {
             "command": "$HOME/go/bin/skills-mgr list",
             "timeout": 5,
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "command": "/usr/bin/python3 $HOME/.codex/hooks/turn_review_instruction.py prompt",
-            "timeout": 10,
             "type": "command"
           }
         ]

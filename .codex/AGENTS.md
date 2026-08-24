@@ -121,6 +121,25 @@ needed keys from `task`, `scope`, `fact`, `rule`, `check`, `next`, `block`, `art
 Markdown, serialization wrappers, transitions, and inherited context. Exact code or data keeps
 its native syntax or travels in a referenced artifact.
 
+### Independent inspection
+
+For an explicit code-review request, state when the requested scope extends beyond the pending diff.
+
+After implementation and focused validation of a production or operational change are complete,
+decide whether independent inspection is warranted. It is warranted only when a plausible defect
+would have meaningful user, data, security, compatibility, or operational impact and source
+inspection can find it beyond focused checks and direct diff review.
+
+Native review roles exclusively own independent inspection; root diff review and tests are
+validation, not substitutes. When inspection is warranted, ask the user before spawning
+`reviewer` or `simplify-checker`. After approval, spawn the selected roles concurrently and give
+each its exact review scope directly. Include input artifacts only for evidence produced by
+another spawned agent. Request a result artifact only when another spawned agent will consume the
+review; when the main agent is the sole consumer, have the role return its complete review
+directly. Do not duplicate an active role's inspection. Without approval, leave the inspection
+pending. When inspections cover web or frontend changes, also spawn `web-reviewer` with the same
+scope, relevant upstream artifacts, and consumer-based result mode.
+
 ### Agents council
 
 Use the `council` skill only after gathering the relevant evidence when a consequential decision

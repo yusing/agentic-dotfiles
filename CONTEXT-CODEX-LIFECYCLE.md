@@ -14,15 +14,10 @@
    skill-inventory reporter. Resuming an existing session does not run
    these root-session hooks. Matched events receive project context and current skill metadata
    without selecting implementation or validation work.
-3. **Prompt submission.** The registered `UserPromptSubmit` hook adds native review routing
-   only for an explicit review request. Nonmatching prompts remain silent.
-4. **Tool loop.** Before matched tools run, guards may reject generated-Go edits, versioned
+3. **Tool loop.** Before matched tools run, guards may reject generated-Go edits, versioned
    dependency additions, unapproved Git clones, or container commands from spawned agents. The
-   paired review hook snapshots the worktree before each matched tool and compares it afterward.
-5. **First production change.** `.codex/hooks/turn_review_instruction.py` compares paired
-   snapshots. On the first production or operational change, it injects the risk-gated native
-   inspection decision once; it does not select ordinary lint, build, probe, or test work.
-6. **Compaction.** `.skills-mgr/skills/handoff/STANDARD.md` preserves incomplete hook obligations
+   remaining guards are silent when their policies do not apply.
+4. **Compaction.** `.skills-mgr/skills/handoff/STANDARD.md` preserves incomplete obligations
    without copying completed hook responses and carries applicable skills as required rereads.
    After handoff, the base prompt rereads named skills or, when that section is absent, selects
    them again from the current operation. No hook-specific state rotation runs at compaction.

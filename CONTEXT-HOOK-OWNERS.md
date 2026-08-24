@@ -27,9 +27,6 @@
   routing it as a manifest blocker, and read-only role prompts own recording it as a coverage
   limitation. `.codex/skills/orchestrated-workflow/SKILL.md` owns external validation before
   review roles are spawned when the change carries that dependency.
-- Review routing: `.codex/hooks/turn_review_instruction.py` owns explicit native-role routing,
-  production-change detection, the inspection risk gate, and the one-time launch approval
-  prompt. Native role prompts own their inspection method and result contract.
 - User experience: `.skills-mgr/skills/user-experience/SKILL.md` owns proportional UX and
   operability guidance when a user-facing workflow or interface changes.
 

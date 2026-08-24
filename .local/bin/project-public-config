@@ -112,7 +112,6 @@ const EXACT_PATHS = new Set([
 	".codex/hooks/session_scope.py",
 	".codex/hooks/shell_command.py",
 	".codex/hooks/subagent_exec_guard.py",
-	".codex/hooks/turn_review_instruction.py",
 	".codex/overridden_base_instructions.md",
 	".config/atuin/config.toml",
 	".config/ccstatusline/settings.json",

@@ -18,7 +18,6 @@ Grok differences this adapter bridges:
 
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import subprocess
@@ -28,16 +27,6 @@ from typing import Any
 
 
 CODEX_HOOKS = Path.home() / ".codex" / "hooks"
-sys.path.insert(0, str(CODEX_HOOKS))
-from session_scope import DEFAULT_STATE_MAX_AGE_SECONDS, prune_old_entries
-
-TURN_STATE_ROOT = Path(
-    os.environ.get(
-        "GROK_TURN_STATE_DIR",
-        str(Path.home() / ".grok" / "hook-state" / "turns"),
-    )
-)
-TURN_STATE_MAX_AGE_SECONDS = DEFAULT_STATE_MAX_AGE_SECONDS
 
 # Grok camelCase / alternate keys -> Claude/Codex snake_case.
 KEY_ALIASES: dict[str, str] = {
@@ -110,35 +99,6 @@ def _normalize_event_name(raw: object) -> str | None:
     return EVENT_ALIASES.get(raw, raw)
 
 
-def _turn_state_path(session_id: str) -> Path:
-    key = hashlib.sha256(session_id.encode()).hexdigest()
-    return TURN_STATE_ROOT / f"{key}.turn"
-
-
-def _store_turn_id(session_id: str, turn_id: str) -> None:
-    path = _turn_state_path(session_id)
-    temporary = path.with_suffix(f".{os.getpid()}.tmp")
-    try:
-        path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
-        os.chmod(path.parent, 0o700)
-        temporary.write_text(turn_id, encoding="utf-8")
-        os.chmod(temporary, 0o600)
-        temporary.replace(path)
-    except OSError:
-        try:
-            temporary.unlink()
-        except OSError:
-            pass
-
-
-def _load_turn_id(session_id: str) -> str | None:
-    try:
-        turn_id = _turn_state_path(session_id).read_text(encoding="utf-8").strip()
-    except OSError:
-        return None
-    return turn_id or None
-
-
 def normalize_event(event: dict[str, Any]) -> dict[str, Any]:
     """Return a Claude/Codex-shaped event derived from a Grok envelope."""
     out: dict[str, Any] = dict(event)
@@ -178,38 +138,6 @@ def normalize_event(event: dict[str, Any]) -> dict[str, Any]:
     if raw_event in COMPACT_EVENTS or event_name in {"PreCompact", "PostCompact"}:
         out["hook_event_name"] = "SessionStart"
         out["source"] = "compact"
-
-    # Grok may omit turn_id. Persist the prompt turn for later tool events.
-    session_id = _first_str(out.get("session_id"))
-    if session_id and event_name in {"SessionStart", "UserPromptSubmit"}:
-        prune_old_entries(
-            TURN_STATE_ROOT,
-            max_age_seconds=TURN_STATE_MAX_AGE_SECONDS,
-            directories=False,
-            files=True,
-        )
-    if not _first_str(out.get("turn_id")):
-        prompt = out.get("prompt")
-        if (
-            session_id
-            and event_name == "UserPromptSubmit"
-            and isinstance(prompt, str)
-        ):
-            out["turn_id"] = hashlib.sha256(
-                f"{session_id}\0{prompt}".encode()
-            ).hexdigest()[:32]
-        elif session_id and event_name in {
-            "PreToolUse",
-            "PostToolUse",
-            "PostToolUseFailure",
-        }:
-            stored_turn_id = _load_turn_id(session_id)
-            if stored_turn_id is not None:
-                out["turn_id"] = stored_turn_id
-
-    turn_id = _first_str(out.get("turn_id"))
-    if session_id and event_name == "UserPromptSubmit" and turn_id:
-        _store_turn_id(session_id, turn_id)
 
     return out
 

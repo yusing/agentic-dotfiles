@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "18aa4f8dadce1eff287f9f8d06e09b2ccfa51aa2",
+  "sourceCommit": "66f30ec93fffab91bbc75161a584e7983e7a1dfc",
   "outputs": [
     {
       "path": ".bashrc",
@@ -82,7 +82,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "683479b113fd3bf00f56ff43c3c7e14757a53e4afbc36fc704820fd15dea8ed7",
+      "sha256": "ecff14860b149e78546a74e84bfbbf16e2e8a2011d40aa2bb9163defe705e19e",
       "executable": false
     },
     {
@@ -202,7 +202,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "9e696730c143609af8a6e5f75005c441fa4b8dff390b6f647b857962cce64e79",
+      "sha256": "3c1a5ada69ea9c57fe1cf2d9f5c6257ed7bb3316a53bd4514a7f848711e90218",
       "executable": false
     },
     {
@@ -257,12 +257,6 @@
       "path": ".codex/hooks/subagent_exec_guard.py",
       "kind": "file",
       "sha256": "d9a50cc184f42a42a51cfcdf59191424edd16eca1d4a0708b8aff26191f0a89f",
-      "executable": false
-    },
-    {
-      "path": ".codex/hooks/turn_review_instruction.py",
-      "kind": "file",
-      "sha256": "921a72943c7a842fa707b4dac9bebbb3331c9386220614834ed7ec57b193ee34",
       "executable": false
     },
     {
@@ -453,13 +447,13 @@
     {
       "path": ".grok/hooks/adapt_codex_hook.py",
       "kind": "file",
-      "sha256": "6bfad020e5ca9316730c65ffc97c3b118718bf8c477a91b6c1aee4719efc3b63",
+      "sha256": "d937ba4646e8286b2c0545d56e239360b1b53838819495da59999f7cbe962022",
       "executable": true
     },
     {
       "path": ".grok/hooks/codex-port.json",
       "kind": "file",
-      "sha256": "372bf41fbfc0cf61774e91520526ffcd9a1d28aa21578ffc25276473bad59e27",
+      "sha256": "0e2e31353c755c78b9510757e4abc5b3efe12b132482646c4facd547dc4bc7fe",
       "executable": false
     },
     {
@@ -489,7 +483,7 @@
     {
       "path": ".local/bin/project-public-config",
       "kind": "file",
-      "sha256": "be5645fa63b17013d11def02287a935d7fa2e48ce57d1ca8f0cdac8eca5ab2fa",
+      "sha256": "576cc883318d10b966c80804bd695b355034b8dc6064393b964e668e1450df9f",
       "executable": true
     },
     {
@@ -854,13 +848,13 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "45bda6a9147d0ed45142c11251efa3db83f8f840785f5b6666769dd267bb8f74",
+      "sha256": "eafe022e7d874ae7c7d40a1187ab51ec2ceacb0c263a6f520f57e079959120a9",
       "executable": false
     },
     {
       "path": "CONTEXT-GROK-HOOK-PORT.md",
       "kind": "file",
-      "sha256": "f51a4b7bac5a6f9ead9eb98767b251c600937b7382d8bf143d19e9ed1262e369",
+      "sha256": "4a2b629fa6744cee8e330e6a856a4a97adab5b4be635acb2aa8e9ff7daf29053",
       "executable": false
     },
     {
@@ -872,7 +866,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "6ce69bf4e269c545168c9f814e48753a2dc606f331776ca9d6ceac9f06df2712",
+      "sha256": "f3966b302bc0ae2057f9c42e71005e90fc6eae090b5d449604c8bb5ef0c77b23",
       "executable": false
     },
     {
