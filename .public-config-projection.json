@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "4da715a0c977b61feeac6a07f2b1ff12133d95fb",
+  "sourceCommit": "18aa4f8dadce1eff287f9f8d06e09b2ccfa51aa2",
   "outputs": [
     {
       "path": ".bashrc",
@@ -202,7 +202,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "c0465a6c516d2eef55fe572547cca174c773783cc4a5e4c8dce81167af5f3271",
+      "sha256": "9e696730c143609af8a6e5f75005c441fa4b8dff390b6f647b857962cce64e79",
       "executable": false
     },
     {
@@ -210,12 +210,6 @@
       "kind": "file",
       "sha256": "525f492886830d5ec9e9bcc35cad53add4628df5cca0062e28f50fec4ada9f31",
       "executable": true
-    },
-    {
-      "path": ".codex/hooks/doc_read_guard.py",
-      "kind": "file",
-      "sha256": "d4d42950ac288f80aca0988118b74921e51c0ef9546d5a351315ebce830396fd",
-      "executable": false
     },
     {
       "path": ".codex/hooks/generated_code_guard.py",
@@ -465,7 +459,7 @@
     {
       "path": ".grok/hooks/codex-port.json",
       "kind": "file",
-      "sha256": "745765dd6bee9daed32a7661f4d44df6ea4bd67adaf026ca10e83e3267e840d0",
+      "sha256": "372bf41fbfc0cf61774e91520526ffcd9a1d28aa21578ffc25276473bad59e27",
       "executable": false
     },
     {
@@ -495,7 +489,7 @@
     {
       "path": ".local/bin/project-public-config",
       "kind": "file",
-      "sha256": "ba4601938b6f870b260730b03a16cc4a0c8cc19fa621e6e8f9ac09a8d608cf58",
+      "sha256": "be5645fa63b17013d11def02287a935d7fa2e48ce57d1ca8f0cdac8eca5ab2fa",
       "executable": true
     },
     {
@@ -860,7 +854,7 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "7e8228f48fef7200b6cbf98a6f3c77f55309f514c8d833c8dce935ae3ad1993f",
+      "sha256": "45bda6a9147d0ed45142c11251efa3db83f8f840785f5b6666769dd267bb8f74",
       "executable": false
     },
     {
@@ -872,13 +866,13 @@
     {
       "path": "CONTEXT-HOOK-ARCHITECTURE.md",
       "kind": "file",
-      "sha256": "594f2b5052cd513d18ca22af8ce6e5d8ac1482cff76790d4598ed52838db0a36",
+      "sha256": "db5a7c82278ad1043340acfd5d2fb7fe1ca4300ca121365a0f44aa62f865032e",
       "executable": false
     },
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "b9a6aa218d3065d11e1e49ffec4f526b17da34df392d2cb0ce096fdcf18849a8",
+      "sha256": "6ce69bf4e269c545168c9f814e48753a2dc606f331776ca9d6ceac9f06df2712",
       "executable": false
     },
     {

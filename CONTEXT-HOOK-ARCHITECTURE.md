@@ -26,8 +26,3 @@ copying the policies they own.
   handling. Otherwise change the single owning hook and its focused test. When moving a
   policy from static guidance into a hook, update coverage to assert both its presence in
   the hook and its absence from the static surfaces.
-
-For example, a one-time warning before an unprompted documentation read belongs in
-`.codex/hooks/doc_read_guard.py`. A rule that code must outrank documentation throughout
-the entire task would instead belong in `.codex/AGENTS.md`; the hook could enforce a
-narrow read boundary without duplicating the whole-task wording.

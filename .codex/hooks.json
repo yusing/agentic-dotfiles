@@ -10,16 +10,6 @@
           }
         ],
         "matcher": "^(Bash|apply_patch|Edit|Write)$"
-      },
-      {
-        "hooks": [
-          {
-            "command": "/usr/bin/python3 $HOME/.codex/hooks/doc_read_guard.py edit",
-            "timeout": 5,
-            "type": "command"
-          }
-        ],
-        "matcher": "^(apply_patch|Edit|Write)$"
       }
     ],
     "PreToolUse": [
@@ -60,12 +50,6 @@
           {
             "command": "/usr/bin/python3 $HOME/.codex/hooks/remote_vcs_guard.py",
             "statusMessage": "Checking Git clone commands",
-            "timeout": 5,
-            "type": "command"
-          },
-          {
-            "command": "/usr/bin/python3 $HOME/.codex/hooks/doc_read_guard.py",
-            "statusMessage": "Checking documentation read policy",
             "timeout": 5,
             "type": "command"
           }

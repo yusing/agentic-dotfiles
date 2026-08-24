@@ -13,8 +13,6 @@
   context and skill inventory at startup and after context compaction or
   clearing while excluding session resume, and injects the current skill inventory into fresh
   subagent context.
-- Documentation reads: `.codex/hooks/doc_read_guard.py` owns the one-line confirmation before
-  the first Markdown read and the per-session first-edit marker.
 - Tool guards: `.codex/hooks/generated_code_guard.py` blocks direct generated-Go edits;
   `.codex/hooks/latest_dependency_instruction.py` blocks explicitly versioned dependency
   additions; `.codex/hooks/remote_vcs_guard.py` requires approval for `git clone`; and

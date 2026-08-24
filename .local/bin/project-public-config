@@ -104,7 +104,6 @@ const EXACT_PATHS = new Set([
 	".codex/config.toml",
 	".codex/hooks.json",
 	".codex/hooks/check_project",
-	".codex/hooks/doc_read_guard.py",
 	".codex/hooks/generated_code_guard.py",
 	".codex/hooks/hook_response.py",
 	".codex/hooks/latest_dependency_instruction.py",

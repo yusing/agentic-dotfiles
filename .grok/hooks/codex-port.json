@@ -79,12 +79,6 @@
             "command": "/usr/bin/python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/remote_vcs_guard.py",
             "timeout": 5,
             "statusMessage": "Checking Git clone commands"
-          },
-          {
-            "type": "command",
-            "command": "/usr/bin/python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/doc_read_guard.py",
-            "timeout": 5,
-            "statusMessage": "Checking documentation read policy"
           }
         ]
       }
@@ -97,16 +91,6 @@
             "type": "command",
             "command": "/usr/bin/python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/turn_review_instruction.py post-tool",
             "timeout": 10
-          }
-        ]
-      },
-      {
-        "matcher": "^(apply_patch|Edit|Write|search_replace|MultiEdit)$",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/usr/bin/python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/doc_read_guard.py edit",
-            "timeout": 5
           }
         ]
       }

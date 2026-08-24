@@ -17,9 +17,8 @@
 3. **Prompt submission.** The registered `UserPromptSubmit` hook adds native review routing
    only for an explicit review request. Nonmatching prompts remain silent.
 4. **Tool loop.** Before matched tools run, guards may reject generated-Go edits, versioned
-   dependency additions, unapproved Git clones, pre-edit Markdown reads, or container commands
-   from spawned agents. The paired review hook snapshots the worktree before each matched tool
-   and compares it afterward. The documentation hook records the first completed edit.
+   dependency additions, unapproved Git clones, or container commands from spawned agents. The
+   paired review hook snapshots the worktree before each matched tool and compares it afterward.
 5. **First production change.** `.codex/hooks/turn_review_instruction.py` compares paired
    snapshots. On the first production or operational change, it injects the risk-gated native
    inspection decision once; it does not select ordinary lint, build, probe, or test work.
