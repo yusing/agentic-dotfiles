@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "c240b9b08e8ad43e592b8d70f4abfca6843ca407",
+  "sourceCommit": "cbc09378e717b95d822afef98ea5426384ac90c3",
   "outputs": [
     {
       "path": ".bashrc",
@@ -88,7 +88,7 @@
     {
       "path": ".codex/agents/council-investigator.instructions.md",
       "kind": "file",
-      "sha256": "6fdb043a9440664d1b4735be896dcdd8a35fe9b407fa066b8277425478f659a4",
+      "sha256": "87f8d669c415e5fe7802429fff375f9073d59c7d2ffa7c278b8353bd3625d742",
       "executable": false
     },
     {
@@ -100,7 +100,7 @@
     {
       "path": ".codex/agents/council-member.instructions.md",
       "kind": "file",
-      "sha256": "3e8fc70f6d40d65eb6f6ccdd4ddde7ec8ee9565f25fbff9929ce4de01e59ecac",
+      "sha256": "1c7f967b82e7c04e3b6e0e04a567241c284af4111a3e0f38e93d4ed8499270e8",
       "executable": false
     },
     {
