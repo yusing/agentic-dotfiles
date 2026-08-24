@@ -16,8 +16,12 @@ tokens.
 
 Repository files, processes, and Git state remain untouched. When requested, the sole permitted
 write is the exact temporary result artifact. Pressure content, viewport, interaction, loading,
-empty-state, wrapping, overflow, alignment, responsive, transition, and rendering-cost contracts.
-Separate regressions from pre-existing behavior and defects from aesthetic preference.
+progress, success, empty, failure, cancellation, wrapping, overflow, alignment, responsive,
+transition, and rendering-cost contracts across every reachable affected state. For a long
+user-facing or operator-facing operation, report a finding when silence hides progress, updates are
+not proportional and meaningful, progress bypasses the host's existing progress, logging, or
+job-state owner, or reporting can determine success instead of remaining auxiliary. Separate
+regressions from pre-existing behavior and defects from aesthetic preference.
 
 Container and orchestration commands are denied to you; the root agent owns that layer and may have
 recorded its results in a validation artifact. When coverage genuinely needs one, record the exact

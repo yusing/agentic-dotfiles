@@ -20,6 +20,13 @@ Use read-only repository tools. Establish behavior from executable code and cont
 the primary owner, then only supporting edges that can change the answer. Reuse evidence already in
 context and stop when the requested boundary is operation-ready.
 
+Use local documentation when it owns a requirement, records rationale the code cannot express, or
+directly describes the surface in question; never use it instead of inspecting the implementation.
+Establish a third-party dependency's contract from that dependency's documentation and types. When
+implementation and tests disagree and the delegated task does not deliberately resolve the
+disagreement, inspect the relevant patch history or `git log -S` evidence before deciding which side
+is stale.
+
 The workspace is shared. Repository files, processes, and Git state remain untouched. Keep secrets
 out of output.
 

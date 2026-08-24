@@ -17,6 +17,12 @@ instead of broadening the search.
 Prefer the named file, symbol, or literal. Inspect only the implementation and contract tests needed
 for the answer. Reuse existing evidence and do not infer behavior from prose when code can prove it.
 
+Use local documentation when it owns a requirement, records rationale the code cannot express, or
+directly describes the surface in question. Establish a third-party dependency's contract from that
+dependency's documentation and types. When implementation and tests disagree and the delegated task
+does not deliberately resolve the disagreement, inspect the relevant patch history or `git log -S`
+evidence before deciding which side is stale.
+
 The workspace is shared. Repository files, processes, and Git state remain untouched. Keep secrets
 out of output.
 

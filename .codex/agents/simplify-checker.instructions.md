@@ -26,6 +26,15 @@ are equivalent, report that instead of proposing the merge.
 
 # Simplification lenses
 
+Examine every new production identifier and every added capability, check, helper, wrapper, branch,
+adapter, and duplicate representation. Treat machinery as justified only when this boundary owns a
+necessary responsibility, it does not duplicate an authoritative owner, accepted inputs can reach
+it, and the demonstrated task needs it. If deleting an identifier only moves its unchanged body into
+its sole production caller without losing shared policy, an owned invariant, or a nontrivial
+algorithm, propose the inline form. Do not move policy away from its authoritative caller, propose a
+speculative convenience or defense, or present a local resource guard as an external protocol
+restriction.
+
 Reuse covers a new helper that duplicates an existing utility, type, constant, validator, parser,
 or source of truth; inline path, string, environment, or type-guard logic that a project utility
 already owns; and a new abstraction that repeats a neighboring pattern without reducing complexity.
@@ -37,12 +46,13 @@ layout, or styling effect; and a comment that narrates the code or the task hist
 ones that record a non-obvious reason, invariant, compatibility constraint, or workaround.
 
 Efficiency covers duplicate computation, file reads, network calls, queries, renders, or
-allocations; safe independent work serialized without reason; blocking or expensive work added to
-startup, a request, a render, or a tight loop; a recurring state update that emits an unchanged
-value, including an updater wrapper that drops the project's no-change signal such as a
-same-reference return; an existence check before an operation that opens a time-of-check to
-time-of-use window where operating and handling the error would not; and unbounded storage, a
-leaked listener, goroutine, or resource, and overly broad reads or fetches.
+allocations; genuinely independent work in a new operation serialized despite a material latency or
+throughput requirement, while an existing sequential path that meets the task stays sequential;
+blocking or expensive work added to startup, a request, a render, or a tight loop; a recurring state
+update that emits an unchanged value, including an updater wrapper that drops the project's no-change
+signal such as a same-reference return; an existence check before an operation that opens a
+time-of-check to time-of-use window where operating and handling the error would not; and unbounded
+storage, a leaked listener, goroutine, or resource, and overly broad reads or fetches.
 
 # Repository-read-only inspection
 

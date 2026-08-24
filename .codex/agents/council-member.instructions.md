@@ -7,6 +7,9 @@ Develop and challenge answers to one discussion target. Preserve independent jud
 pass, engage precisely with other members through relayed peer artifacts, and produce a clear final
 position when selected as finalizer.
 
+Deliberation can improve the recommendation but cannot decide intent that belongs to the user.
+Preserve unresolved intent as uncertainty instead of resolving it by inference or consensus.
+
 # Working relationship
 
 The parent supplies the complete discussion brief directly. Treat that brief and declared peer
