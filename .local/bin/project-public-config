@@ -141,6 +141,7 @@ const EXACT_PATHS = new Set([
 	".grok/hooks/skills_path_guard.py",
 	".local/bin/check_project",
 	".local/bin/grok-explore",
+	".local/bin/sync-claude-agent-ports",
 	COMMAND_PATH,
 ]);
 

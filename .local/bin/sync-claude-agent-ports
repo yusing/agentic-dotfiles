@@ -1,0 +1,370 @@
+#!/usr/bin/env python3
+"""Generate Claude and Grok role files from the native Codex role sources."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import sys
+import tempfile
+import tomllib
+from pathlib import Path
+from typing import Any
+
+
+HOME = Path(__file__).resolve().parents[2]
+CODEX_AGENTS = HOME / ".codex" / "agents"
+CLAUDE_AGENTS = HOME / ".claude" / "agents"
+GUARD = HOME / ".codex" / "hooks" / "subagent_exec_guard.py"
+
+MODEL_MAP = {
+    "gpt-5.6-luna": "sonnet",
+    "gpt-5.6-sol": "opus",
+}
+
+# Selection guidance, color, and tools are Claude-only capabilities. The base
+# description, behavior, and execution contract come from the native role pair.
+CLAUDE_METADATA: dict[str, dict[str, str]] = {
+    "council-investigator": {
+        "selection_guidance": "Send the same complete neutral brief as the blind members and run later council phases over named peer artifact paths.",
+        "color": "yellow",
+        "tools": "Read, Grep, Glob, Bash, Write, TodoWrite",
+    },
+    "council-member": {
+        "selection_guidance": "Use one or more independent seats; it does no repository discovery, so add a `council-investigator` when the target needs implementation evidence.",
+        "color": "orange",
+        "tools": "Read, Write, TodoWrite",
+    },
+    "explorer": {
+        "selection_guidance": "Use when the owner or behavior remains unresolved after minimal framing; use `fast-explorer` for bounded context-heavy reading.",
+        "color": "pink",
+        "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
+    },
+    "fast-explorer": {
+        "selection_guidance": "Use for bounded context-heavy reading or one named artifact; use `explorer` when repository investigation is needed.",
+        "color": "yellow",
+        "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
+    },
+    "fast-implementer": {
+        "selection_guidance": "Use only after the outcome and narrow owner are settled; use `implementer` for a substantial boundary.",
+        "color": "cyan",
+        "tools": "Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill",
+    },
+    "implementer": {
+        "selection_guidance": "Use after design is settled for sustained end-to-end ownership of the substantial boundary.",
+        "color": "blue",
+        "tools": "Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill",
+    },
+    "reviewer": {
+        "selection_guidance": "Use after implementation for falsifying correctness inspection by an agent that did not write the change.",
+        "color": "red",
+        "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
+    },
+    "simplify-checker": {
+        "selection_guidance": "Use after behavior works for confirmed behavior-preserving reuse, clarity, and efficiency opportunities.",
+        "color": "green",
+        "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
+    },
+    "web-reviewer": {
+        "selection_guidance": "Use for frontend changes that need independent inspection of content, viewport, interaction, state, and rendering cost.",
+        "color": "purple",
+        "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
+    },
+}
+
+
+class PortError(Exception):
+    pass
+
+
+CONTAINER_BOUNDARY = (
+    r"Container\s+and\s+orchestration\s+commands\s+are\s+denied\s+to\s+"
+    r"(?:you|this\s+role);"
+)
+
+
+def replace_once(text: str, old: str, new: str, *, role: str) -> str:
+    count = text.count(old)
+    if count != 1:
+        raise PortError(f"{role}: expected one occurrence of {old!r}, found {count}")
+    return text.replace(old, new, 1)
+
+
+def remove_container_instruction(text: str) -> str:
+    pattern = re.compile(
+        rf"\s*{CONTAINER_BOUNDARY}.*?(?=\n\n|\Z)",
+        re.DOTALL,
+    )
+    return pattern.sub("", text)
+
+
+def adapt_text(text: str, *, role: str, has_bash: bool) -> str:
+    text = re.sub(
+        r"You are Codex, a GPT-5\.6 (?:Luna|Sol) subagent",
+        "You are a subagent",
+        text,
+        count=1,
+    )
+    text = text.replace("The handoff provides", "The task provides")
+    text = text.replace(
+        "It names `input_artifacts` only", "It names input artifact paths only"
+    )
+    text = text.replace(
+        "When the handoff includes `result_artifact`",
+        "When the task names a result artifact path",
+    )
+    text = text.replace("`input_artifacts`", "input artifact paths")
+    text = text.replace("`result_artifact`", "result artifact path")
+    text = text.replace(
+        "When no result artifact is requested", "When no result artifact is named"
+    )
+    text = re.sub(
+        r"Do not\s+perform external writes,\s+control processes,\s+or spawn subagents\.",
+        "Do not perform external writes or control processes. You cannot spawn another agent.",
+        text,
+    )
+    text = re.sub(
+        r"Do\s+not spawn another agent\.", "You cannot spawn another agent.", text
+    )
+
+    if has_bash:
+        text = re.sub(
+            CONTAINER_BOUNDARY,
+            "Container and orchestration commands are denied to you, and a hook blocks\n"
+            "them;",
+            text,
+        )
+        text = text.replace(
+            ". Container and orchestration commands", ".\nContainer and orchestration commands"
+        )
+    else:
+        text = remove_container_instruction(text)
+
+    return text.strip()
+
+
+def add_result_write_boundary(text: str, *, role: str) -> str:
+    named_write = (
+        "When the task names a result artifact path, that exact file is the sole\n"
+        "permitted write."
+    )
+    if role in {"explorer", "fast-explorer"}:
+        old = (
+            "The workspace is shared. Repository files, processes, and Git state remain untouched. "
+            "Keep secrets\nout of output."
+        )
+        new = (
+            "The workspace is shared. Repository files, processes, and Git state remain untouched.\n"
+            f"{named_write} Keep secrets out of output."
+        )
+        return replace_once(text, old, new, role=role)
+
+    if role in {"reviewer", "simplify-checker", "web-reviewer"}:
+        pattern = re.compile(
+            r"When requested, the sole permitted\nwrite is the exact temporary (?:review|result) artifact\."
+        )
+        text, count = pattern.subn(named_write, text, count=1)
+        if count != 1:
+            raise PortError(f"{role}: expected one temporary-result write boundary")
+        text = text.replace(
+            ". When the task names a result artifact path",
+            ".\nWhen the task names a result artifact path",
+        )
+        return text
+
+    return text
+
+
+def split_completion(text: str, *, role: str) -> tuple[str, str]:
+    marker = "\n# Completion\n"
+    if text.count(marker) != 1:
+        raise PortError(f"{role}: expected one Completion section")
+    before, completion = text.split(marker, 1)
+    return before.rstrip(), completion.strip()
+
+
+def split_contract(text: str, *, role: str) -> tuple[str, str]:
+    marker = "When the task names a result artifact path"
+    if text.count(marker) != 1:
+        raise PortError(f"{role}: expected one result-artifact contract")
+    before, after = text.split(marker, 1)
+    return before.rstrip(), (marker + after).strip()
+
+
+def load_role(role: str) -> dict[str, Any]:
+    path = CODEX_AGENTS / f"{role}.toml"
+    try:
+        with path.open("rb") as source:
+            config = tomllib.load(source)
+    except (OSError, tomllib.TOMLDecodeError) as exc:
+        raise PortError(f"{role}: cannot read {path}: {exc}") from exc
+
+    if config.get("name") != role:
+        raise PortError(f"{role}: TOML name does not match its filename")
+    instructions = CODEX_AGENTS / str(config.get("model_instructions_file", ""))
+    try:
+        instructions = instructions.resolve(strict=True)
+        instructions.relative_to(CODEX_AGENTS.resolve())
+    except (OSError, ValueError) as exc:
+        raise PortError(f"{role}: invalid model_instructions_file") from exc
+    config["instructions"] = instructions.read_text(encoding="utf-8")
+    return config
+
+
+def render_description(role: str, config: dict[str, Any]) -> str:
+    description = config.get("description")
+    if not isinstance(description, str) or not description.strip():
+        raise PortError(f"{role}: missing description")
+    description, count = re.subn(
+        r'\s+Spawn with `fork_turns="none"`(?:; omit `model` by default)?\.$',
+        "",
+        description,
+    )
+    if count != 1:
+        raise PortError(f"{role}: description has no recognized Codex-only spawn suffix")
+    guidance = CLAUDE_METADATA[role]["selection_guidance"]
+    return f"{description} This subagent starts with a fresh context. {guidance}"
+
+
+def render_frontmatter(role: str, config: dict[str, Any]) -> str:
+    metadata = CLAUDE_METADATA[role]
+    fields = [
+        "---",
+        f"name: {role}",
+        f"description: {json.dumps(render_description(role, config), ensure_ascii=False)}",
+    ]
+    model = config.get("model")
+    if model is not None:
+        try:
+            fields.append(f"model: {MODEL_MAP[str(model)]}")
+        except KeyError as exc:
+            raise PortError(f"{role}: no Claude mapping for model {model!r}") from exc
+        effort = config.get("model_reasoning_effort")
+        if not isinstance(effort, str) or not effort:
+            raise PortError(f"{role}: model has no model_reasoning_effort")
+        fields.append(f"effort: {effort}")
+    fields.extend(
+        (
+            f"color: {metadata['color']}",
+            f"tools: {metadata['tools']}",
+        )
+    )
+    if "Bash" in {tool.strip() for tool in metadata["tools"].split(",")}:
+        fields.extend(
+            (
+                "hooks:",
+                "  PreToolUse:",
+                '    - matcher: "Bash"',
+                "      hooks:",
+                "        - type: command",
+                f'          command: "/usr/bin/python3 {GUARD}"',
+                "          timeout: 5",
+            )
+        )
+    fields.extend(("---", ""))
+    return "\n".join(fields)
+
+
+def render_role(role: str) -> str:
+    config = load_role(role)
+    tools = {
+        tool.strip() for tool in CLAUDE_METADATA[role]["tools"].split(",") if tool.strip()
+    }
+    instructions = adapt_text(
+        str(config["instructions"]), role=role, has_bash="Bash" in tools
+    )
+    instructions = add_result_write_boundary(instructions, role=role)
+    prompt, completion = split_completion(instructions, role=role)
+
+    developer = config.get("developer_instructions")
+    if not isinstance(developer, str) or not developer.strip():
+        raise PortError(f"{role}: missing developer_instructions")
+    developer = adapt_text(developer, role=role, has_bash="Bash" in tools)
+    task_contract, result_form = split_contract(developer, role=role)
+
+    body = (
+        f"{prompt}\n\n"
+        f"# Task contract\n\n{task_contract}\n\n"
+        f"# Result form\n\n{result_form}\n\n"
+        f"# Completion\n\n{completion}\n"
+    )
+    if "Bash" in tools and not re.search(r"and a hook blocks\s+them", body):
+        raise PortError(f"{role}: Bash role has no container-command boundary")
+    return render_frontmatter(role, config) + body
+
+
+def expected_ports() -> dict[Path, str]:
+    codex_roles = {path.stem for path in CODEX_AGENTS.glob("*.toml")}
+    metadata_roles = set(CLAUDE_METADATA)
+    if codex_roles != metadata_roles:
+        missing = sorted(codex_roles - metadata_roles)
+        extra = sorted(metadata_roles - codex_roles)
+        raise PortError(f"role metadata mismatch: missing={missing}, extra={extra}")
+    return {
+        CLAUDE_AGENTS / f"{role}.md": render_role(role)
+        for role in sorted(codex_roles)
+    }
+
+
+def atomic_write(path: Path, text: str) -> None:
+    mode = path.stat().st_mode if path.exists() else 0o644
+    fd, temporary_name = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    temporary = Path(temporary_name)
+    try:
+        os.fchmod(fd, mode)
+        with os.fdopen(fd, "w", encoding="utf-8") as output:
+            output.write(text)
+            output.flush()
+            os.fsync(output.fileno())
+        os.replace(temporary, path)
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="generate .claude/agents from native .codex/agents role pairs"
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="report stale generated role files without changing them",
+    )
+    args = parser.parse_args()
+
+    expected = expected_ports()
+    stale = [
+        path
+        for path, content in expected.items()
+        if not path.exists() or path.read_text(encoding="utf-8") != content
+    ]
+    extra = sorted(set(CLAUDE_AGENTS.glob("*.md")) - set(expected))
+    if extra:
+        raise PortError(f"unexpected Claude role files: {', '.join(map(str, extra))}")
+
+    if args.check:
+        if stale:
+            print("Claude agent ports are stale; run sync-claude-agent-ports:")
+            for path in stale:
+                print(path)
+            return 1
+        print("Claude agent ports are current")
+        return 0
+
+    for path in stale:
+        atomic_write(path, expected[path])
+        print(f"updated {path}")
+    if not stale:
+        print("Claude agent ports are already current")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except (OSError, PortError) as exc:
+        print(f"sync-claude-agent-ports: {exc}", file=sys.stderr)
+        raise SystemExit(1)

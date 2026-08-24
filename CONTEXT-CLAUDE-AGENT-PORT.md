@@ -1,16 +1,25 @@
 # Claude agent port
 
-`.claude/agents/*.md` ports the Codex native roles in `.codex/agents/*.toml`. Each Claude file
-owns one complete role: Claude has no separate developer channel, so the Markdown body carries
-both the model prompt and the result contract. The Codex role remains the design owner; when a
-role's behavior changes, change both files together rather than letting them drift.
+`.claude/agents/*.md` ports the Codex native roles in `.codex/agents/*.toml`. Each generated Claude
+file carries one complete role: Claude has no separate developer channel, so the Markdown body
+carries both the model prompt and the TOML `developer_instructions` contract. The Codex role pair
+remains the design owner. Run `.local/bin/sync-claude-agent-ports` after changing one; do not copy
+the change into the Claude file by hand. The helper applies the client-specific mappings and
+regenerates every Claude role. Its `--check` mode reports drift without writing.
 
-Field mapping is the port's own concern. `model` and `model_reasoning_effort` become Claude's
+Field mapping is the helper's concern. `model` and `model_reasoning_effort` become Claude's
 `model` and `effort`. `fork_turns` and `service_tier` have no Claude counterpart and are
 dropped: a Claude subagent always starts from a fresh context, which is what `fork_turns="none"`
 selects under Codex. The Codex handoff fields `input_artifacts` and `result_artifact` are
 harness structure with no Claude equivalent, so each body states the same contract in terms of
 artifact paths the parent names in the task text.
+
+The helper derives each base role-selection description from the TOML and appends only
+Claude-specific selection guidance. Colors, tool allowlists, that guidance, and the
+Codex-to-Claude model mapping live in the helper. A new Codex role or an unmapped model makes
+generation fail until that platform metadata is supplied. The behavioral prompt and developer
+contract are read directly from the native pair, so edits to either source cannot pass the focused
+test while generated ports are stale.
 
 Claude enforces structurally what Codex states by prompt. The `tools` allowlist omits `Agent`,
 so no role can spawn another agent, and it omits `Edit` and `NotebookEdit` for the review and
@@ -46,9 +55,10 @@ reaches Grok, which matches `Bash` and `run_terminal_command` under one matcher 
 guard fails open there for the reason `CONTEXT-GROK-HOOK-PORT.md` records, so under Grok the
 command boundary rests on the role body alone.
 
-Its focused test is `.local/tests/claude_agent_port_test.py`, which asserts the Codex-to-Claude
-role correspondence, the tool boundaries, and the guard registration. Add a Codex role and its
-Claude port together, or that test fails.
+Its focused test is `.local/tests/claude_agent_port_test.py`, which runs the generator in `--check`
+mode and asserts the Codex-to-Claude role correspondence, tool boundaries, and guard registration.
+Add the Codex source pair and its Claude-specific metadata together, then run the helper; stale or
+missing generated output fails the test.
 
 ## Session start
 

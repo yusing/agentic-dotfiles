@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "e18748390ed4011408b6ab50ada6938e32a51cec",
+  "sourceCommit": "e38c9a8648cc564cf6a5b5b6e91e031b43b44514",
   "outputs": [
     {
       "path": ".bashrc",
@@ -483,7 +483,13 @@
     {
       "path": ".local/bin/project-public-config",
       "kind": "file",
-      "sha256": "576cc883318d10b966c80804bd695b355034b8dc6064393b964e668e1450df9f",
+      "sha256": "f109f89ab5ea62693d4a0740c8bbb67261afe24e8bd5332b4adc89ac6d5d2db1",
+      "executable": true
+    },
+    {
+      "path": ".local/bin/sync-claude-agent-ports",
+      "kind": "file",
+      "sha256": "0b9267f4678479aeeb54c15c6f446d415c78bdc17d997534f41f93f119645d01",
       "executable": true
     },
     {
@@ -842,7 +848,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "344beb6c3be141f7db4bdbcf9512d7b318626f878b847c3418f0de1e3be93ba0",
+      "sha256": "0217d7f7be8e20ede58ce3a2fc2a5f68a500a4c024918fea8f0a8d37122b537e",
       "executable": false
     },
     {
