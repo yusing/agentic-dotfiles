@@ -107,12 +107,8 @@ write its output to a file rather than return it to the conversation.
 
 ## Cross agent communication
 
-When cross agent communication is required. The main agent creates one task-scoped communication artifact root and passes its path to the each agent.
-
-Only the final consumer reads the artifact. Every intermediary, including the main agent, relays only its path and routing manifest without opening, summarizing, or reproducing its contents.
-
-Agent<->Main: keep the task and result in messages
-Agent<->Agent: writes the complete result in an artifact.
+Main should create one artifact root if the task includes Agent-to-Agent communication.
+Use artifacts only for those exchanges; Agent-to-Main communication always uses messages.
 
 ### Artifact Format
 
