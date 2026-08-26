@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "cbc09378e717b95d822afef98ea5426384ac90c3",
+  "sourceCommit": "43c7445d71bf76ade65061ea922032183a2e8bd7",
   "outputs": [
     {
       "path": ".bashrc",
@@ -495,7 +495,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "7f6bf8073f143826d58747679b352507dad2ddb2de0043270bd8895d29d19045",
+      "sha256": "d3cd2d08bc80bfaacf018e0ac90f37ed2bf13c4cb4df25c9680d8689ef4f8a62",
       "executable": false
     },
     {
@@ -561,7 +561,7 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "5f6402765c7c6b90c99e15cf47fb0329c80215f379c89bdc0c9eb93b36f90f52",
+      "sha256": "2ed8e175f3757b4fc6ef3e2a99fd2e727189d9bfbf8e3c9be1a9d79c8579a602",
       "executable": false
     },
     {
@@ -627,7 +627,7 @@
     {
       "path": ".skills-mgr/skills/golang-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "bd99b312a9b916e426c9d726f0859d791ed9ee69d335b50c5f84f375b977a198",
+      "sha256": "b1325c8baec89ae705a5b392efec01e79ae705e1f7743b31d064b579f5b2bf74",
       "executable": false
     },
     {

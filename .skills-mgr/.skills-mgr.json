@@ -47,7 +47,7 @@
       "enabled": false
     },
     "go": {
-      "enabled": "lang go",
+      "enabled": false,
       "remote": {
         "provider": "SkillsMP",
         "id": "spf13-go-skills-go-skill-md",
@@ -163,8 +163,26 @@
         "locator": "https://github.com/midudev/autoskills/tree/main/packages/autoskills/skills-registry/tauri-v2"
       }
     },
+    "thermo-nuclear-code-quality-review": {
+      "enabled": true,
+      "remote": {
+        "provider": "skills.sh",
+        "id": "cursor/plugins/thermo-nuclear-code-quality-review",
+        "name": "thermo-nuclear-code-quality-review",
+        "locator": "cursor/plugins/thermo-nuclear-code-quality-review"
+      }
+    },
     "ui-ux-pro-max": {
       "enabled": "lang tsx || lang jsx || lang html || lang css"
+    },
+    "use-modern-go": {
+      "enabled": "lang go",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "jetbrains/go-modern-guidelines/use-modern-go",
+        "name": "use-modern-go",
+        "locator": "jetbrains/go-modern-guidelines/use-modern-go"
+      }
     },
     "user-experience": {
       "enabled": true

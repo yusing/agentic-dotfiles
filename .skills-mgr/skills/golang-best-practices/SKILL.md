@@ -1,6 +1,6 @@
 ---
 name: golang-best-practices
-description: Apply modern Go syntax and standard-library APIs according. Use for Go writing, refactoring, review, testing; skip for exploration. Use together with `go` skill
+description: Apply modern Go syntax and standard-library APIs according. Use for Go writing, refactoring, review, testing; skip for exploration. Use together with `use-modern-go` skill
 ---
 
 # Modern Go by Version

@@ -1,6 +1,6 @@
 ---
 name: deliver-vertical-slice
-description: After framing evidence establishes medium or high work and the accepted items, non-goals, required checks, Git-agent inspections, commits, fixups, autosquash, and any external or destructive effects are settled and authorized, deliver a new project, feature, or behavioral change through ordered end-to-end slices and final review. Use this execution workflow only after a new-project skeleton or existing-project framing is complete.
+description:  Deliver a new project, feature, or behavioral change through ordered end-to-end slices and final review. Use it for a complex work that needs checkpoints, only after a new-project skeleton or existing-project framing is complete.
 ---
 
 # Deliver the complete accepted change
