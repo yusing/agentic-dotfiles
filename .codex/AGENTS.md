@@ -4,7 +4,7 @@ Hi, I am yusing. Thanks for the help.
 
 This file is my standing guidance for how I like to work, and it applies to every project you
 and I touch together, whatever the repository. Anything I say directly in a conversation
-outranks it. Inside this file, `## Authorization` wins whenever another section would seem to
+wins over it. Inside this file, `## Authorization` wins whenever another section would seem to
 permit or forbid something differently.
 
 ## Language and writing style
@@ -48,7 +48,7 @@ not include running ordinary task-scoped inspection, editing, build, or validati
 ## Task sizing and intent verification
 
 Each follow-up request and question by user are considered different tasks. Apply below behavior
-and another intent verification (if warranted) for each independent tasks.
+and another intent verification (if needed) for each independent tasks.
 
 ### Small tasks
 
@@ -77,7 +77,7 @@ cross-owner changes, diagnosis, refactoring, migration, or other open-ended inve
 
 - Stop and ask when:
   * An unresolved assumption could change the outcome, scope, authoritative owner, external
-    effects, destructive effects, or material risk.
+    effects, destructive effects, or significant risk.
   * Evidence supports competing interpretations, distinguish the concrete reproducer,
     immediate failure mechanism, violated invariant, and authoritative owner from the assumptions connecting them.
 - If I correct the abstraction, scope, owner, or causal model, every conclusion that depended on it is no longer valid.
@@ -125,12 +125,12 @@ its native syntax or travels in a referenced artifact.
 For an explicit code-review request, state when the requested scope extends beyond the pending diff.
 
 After implementation and focused validation of a production or operational change are complete,
-decide whether independent inspection is warranted. It is warranted only when a plausible defect
+decide whether independent inspection is needed. It is needed only when a plausible defect
 would have meaningful user, data, security, compatibility, or operational impact and source
 inspection can find it beyond focused checks and direct diff review.
 
-Native review roles exclusively own independent inspection; root diff review and tests are
-validation, not substitutes. When inspection is warranted, ask the user before spawning
+Native review roles are the only owners of independent inspection; root diff review and tests are
+validation, not substitutes. When inspection is needed, ask the user before spawning
 `reviewer` or `simplify-checker`. After approval, spawn the selected roles concurrently and give
 each its exact review scope directly. Include input artifacts only for evidence produced by
 another spawned agent. Request a result artifact only when another spawned agent will consume the
@@ -141,7 +141,7 @@ scope, relevant upstream artifacts, and consumer-based result mode.
 
 ### Agents council
 
-Use the `council` skill only after gathering the relevant evidence when a consequential decision
+Use the `council` skill only after gathering the relevant evidence when an important decision
 still has multiple evidence-supported conclusions and no authoritative owner or further available
 evidence can settle them. A council can improve your judgment, but it cannot decide intent that
 belongs to me.
@@ -170,7 +170,7 @@ context and returns any unresolved discovery need to the main agent rather than 
 exploration agent.
 
 If an equivalent explorer is already active, please wait for it; if it has finished, use its
-result. Launch another only when the question or available evidence changes materially, or when
+result. Launch another only when the question or available evidence changes enough to matter, or when
 the earlier explorer fails or gives you an unusable result.
 
 When implementation behavior and its tests, fixtures, or assertions disagree, first determine
@@ -214,7 +214,7 @@ not merely start and finish. Progress reporting must remain auxiliary and must n
 interfere with successful core behavior.
 
 For a new operation, use bounded concurrency when work items are genuinely independent and
-concurrency materially helps meet a requirement such as latency or throughput. Keep an existing
+concurrency actually helps meet a requirement such as latency or throughput. Keep an existing
 sequential path sequential when it already meets the current requirements; do not retrofit
 concurrency merely because its work items could run independently.
 
@@ -227,10 +227,11 @@ or anything that no longer applies.
 
 Unless user explicitly ask for compatibility, treat anything they correct, replace, or remove,
 and anything whose validity depends on it, as superseded. Remove superseded material rather than
-retaining or recharacterizing it. Removal covers every code path, reference, test, fixture,
+keeping it or describing it as something else. Removal covers every code path, reference, test, fixture,
 configuration entry, documentation statement, and whole file that no longer serves the final behavior,
-including obsolete portions of shared files. Do not keep a superseded approach as a compatibility layer,
-wrapper, fallback, migration, falsification baseline, documentation example, or dead test.
+including obsolete portions of shared files. Do not keep a superseded approach as a
+compatibility layer, wrapper, fallback, migration, a leftover kept only to prove the
+old approach wrong, documentation example, or dead test.
 When you stumble across an unrelated pre-existing obsolete path, tell me about it and let me decide.
 When you are unsure about whether compatibility should be preserved, stop and ask.
 
@@ -306,14 +307,14 @@ In your internal reasoning, list every new production identifier. Resolve every 
 `I`, and `U` finding, remove each identifier that fails the deletion test, and keep only identifiers
 that satisfy `J`.
 
-This gate never vetoes a capability I explicitly asked for. My request establishes the need for
+This gate never rejects a capability I explicitly asked for. My request establishes the need for
 that capability, but its implementation structure must still pass the ownership, duplication,
 reachability, and complexity checks. Keep the gate analysis inside your internal reasoning. In
 responses, focus on the requested result, its evidence, and actionable caveats. Include gate
 labels, production identifier inventories, or smallest sufficient alternatives only when directly
-answering my question about them. Never silently drop, defer, or narrow a requested capability on
-gate grounds. If the gate shows my request cannot work as stated, tell me the concrete conflict
-before you implement it.
+answering my question about them. Never silently drop, defer, or narrow a requested capability
+because of the gate. If the gate shows my request cannot work as stated, tell me the concrete
+conflict before you implement it.
 
 ## Active work
 
