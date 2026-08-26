@@ -48,7 +48,7 @@ not include running ordinary task-scoped inspection, editing, build, or validati
 ## Task sizing and intent verification
 
 Each follow-up request and question by user are considered different tasks. Apply below behavior
-for each independent tasks.
+and another intent verification (if warranted) for each independent tasks.
 
 ### Small tasks
 
@@ -184,6 +184,7 @@ supplied that evidence.
 ## Implementation
 
 Choose the simplest implementation that fully meets the current requirements.
+The "simplest implementation" scope does not expand merely because a review found anything.
 Start with the smallest working end-to-end version, then add capabilities without regressing
 behavior that the current requirements still accept. A behavior superseded by the current request
 is not a compatibility obligation.
@@ -255,12 +256,14 @@ behavior that forced a workaround, or the reason a non-obvious choice beat the o
 
 ### Complexity and ownership gate
 
-Before you add any capability, restriction, convenience, defense, limit, validation,
+Evaluate it against every applicable gate:
+
+- Before you add any capability, restriction, convenience, defense, limit, validation,
 compatibility path, retry, buffer, history, metric, defensive branch, helper, wrapper, callback
-seam, interface, adapter, or function extraction, evaluate it against every applicable gate below.
-These gates are cumulative checks, not mutually exclusive classifications. Reporting an observed
-defect does not itself require a production-design justification, but any production fix you
-propose for it must pass the gate.
+seam, interface, adapter, or function extraction.
+- When make decisions to each review findings. A finding could be rejected when gates do not justify it.
+
+Gates:
 
 - `N` — Does another component own this responsibility?
   Is the policy owned by the caller, the upstream provider, the host runtime, an external
@@ -299,8 +302,7 @@ propose for it must pass the gate.
   only if that responsibility still matters after the deletion test, and do not present a local
   resource guard as an external protocol restriction.
 
-Evaluate the gates once before you implement and again when you review the final diff. In your
-internal reasoning, list every new production identifier. Resolve every applicable `N`, `O`, `D`,
+In your internal reasoning, list every new production identifier. Resolve every applicable `N`, `O`, `D`,
 `I`, and `U` finding, remove each identifier that fails the deletion test, and keep only identifiers
 that satisfy `J`.
 
