@@ -162,6 +162,7 @@ Let the task size and the evidence you already have pick your discovery method:
   use an `explorer` with exactly one atomic question and one matching purpose: diagnosis,
   change impact, behavior, or ownership. This includes read-only ownership discovery; a report-only
   outcome does not make the task small.
+  * You may spawn multiple concurrently for different purposes, if needed.
   * For artifact summarization or context-heavy reading, use `fast-explorer`
   * For repository investigation, use `explorer`.
 
