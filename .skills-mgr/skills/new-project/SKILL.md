@@ -14,10 +14,10 @@ description: Start a new software project through an automated specification, co
 
 ## Specify and contract
 
-- Record the smallest cohesive specification with stable item IDs, observable acceptance examples, exact user-visible surfaces, constraints, and non-goals; give each fact one authoritative owner.
+- Record each accepted item as its own indexed file with one stable ID, observable acceptance examples, exact user-visible surfaces, constraints, and non-goals; give each fact one authoritative owner and reference related items instead of copying them.
 - Classify every proposed capability, restriction, protection, limit, compatibility path, or shared boundary as `N/O/D/I/U/J`: external owner, overengineering, duplicated policy, unreachable, uncertain, or justified local responsibility. Only `J` proceeds; resolve `U` from owner, reproducer, immediate failure, violated invariant, and the smallest requirement.
 - When the user confirmed the specification and no uncertainty or ambiguity remains, continue without external specification inspection; otherwise run pre-authorized independent inspection, correct confirmed in-scope blockers, and skip findings that invent or broaden the accepted outcome.
-- Record only necessary shared ownership, dependency direction, interface shape, data lifecycle, trust enforcement, and failure propagation; leave architecture artifacts unchanged when existing code and contracts already decide them.
+- Record only necessary shared ownership, dependency direction, interface shape, data lifecycle, trust enforcement, and failure propagation as one contract file per item with references; leave architecture artifacts unchanged when existing code and contracts already decide them.
 
 ## Execute the project
 

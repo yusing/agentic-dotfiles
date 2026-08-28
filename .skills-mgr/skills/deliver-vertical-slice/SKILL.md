@@ -1,6 +1,6 @@
 ---
 name: deliver-vertical-slice
-description:  Deliver a new project, feature, or behavioral change through ordered end-to-end slices and final review. Use it for a complex work that needs checkpoints, only after a new-project skeleton or existing-project framing is complete.
+description: Deliver every accepted item for a new project, feature, or behavioral change through ordered end-to-end slices. Use after a new-project skeleton or after the user has confirmed an existing-project change and granted all workflow authorizations; do not use for a bug fix, diagnosis, or question.
 ---
 
 # Deliver the complete accepted change

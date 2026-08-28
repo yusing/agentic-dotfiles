@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "72bb4e8e95277db8e07e2dbe025b1ee977a43a67",
+  "sourceCommit": "357bdfb9c3c6559ae701112422f9df58f77ee837",
   "outputs": [
     {
       "path": ".bashrc",
@@ -561,7 +561,7 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "2ed8e175f3757b4fc6ef3e2a99fd2e727189d9bfbf8e3c9be1a9d79c8579a602",
+      "sha256": "362afa42df91d8cf3aee9be996e61d7f89c7a806c8cb1f9cb7410c41b3f1be16",
       "executable": false
     },
     {
@@ -693,7 +693,7 @@
     {
       "path": ".skills-mgr/skills/new-project/SKILL.md",
       "kind": "file",
-      "sha256": "5858791815d9e0432321969eb2c85e630f4c3cb860cb54342ff24b2104f8a9ec",
+      "sha256": "4b39986fe95f8814a730e607796e0456d5f9d7fa2f35462f0bc86000225eb46f",
       "executable": false
     },
     {
@@ -759,7 +759,7 @@
     {
       "path": ".skills-mgr/skills/using-pjdoc/SKILL.md",
       "kind": "file",
-      "sha256": "f0d8be4ebf3ba5f241d276baef42138cf2161c7c2b864a80b7502f60f879a299",
+      "sha256": "ebb23e7d7963b78bd8370be8b58ab1a2df2229e0d21e6737df902a16992abcce",
       "executable": false
     },
     {

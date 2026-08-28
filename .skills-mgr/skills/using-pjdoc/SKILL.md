@@ -35,7 +35,7 @@ The `pjdoc` mapping has exactly these keys:
 
 The mandatory root index is `doc/spec/index.md`. The optional root architecture index is `doc/architecture/index.md`. A registered subproject architecture index is `<subproject-path>/doc/architecture/index.md`.
 
-Each indexed Markdown file has exactly one non-empty H1. Body content starts after that H1. Requirement declarations are headings shaped `## REQ-AREA-001 — Title` in specification documents; contract declarations are `## CTR-AREA-001 — Title` in architecture documents. IDs are project-wide unique. Local Markdown links must resolve to indexed files and exact existing headings.
+Each indexed Markdown file has exactly one non-empty H1. Body content starts after that H1. The index contains no stable declaration. Each declared file contains exactly one requirement or contract declaration. Requirement declarations are headings shaped `## REQ-AREA-001 — Title` in specification documents; contract declarations are `## CTR-AREA-001 — Title` in architecture documents. IDs are project-wide unique. Related facts are cited by stable ID or linked; they are not copied. Local Markdown links must resolve to indexed files and exact existing headings.
 
 Every `.md` file below a governed `spec/` or `architecture/` directory is either its index or appears exactly once in that index's `files` list.
 
