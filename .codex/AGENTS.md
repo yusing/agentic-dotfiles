@@ -105,10 +105,10 @@ every executable. Leave quiet filters, control operators, and redirections outsi
 execution when the complete unmodified output is required or when the command's purpose is to
 write its output to a file rather than return it to the conversation.
 
-## Cross agent communication
+## Agent communication
 
-Main should create one artifact root if the task includes Agent-to-Agent communication.
-Use artifacts only for those exchanges; Agent-to-Main communication always uses messages.
+Agent-to-Main communication always uses messages. Main should create one artifact root only if the task includes Agent-to-Agent communication.
+For example: `explorer`->message->`main`; `council-member` A->artifact path->main->`council-member` B.
 
 ### Artifact Format
 
