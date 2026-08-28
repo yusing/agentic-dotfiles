@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "eba7b5e23a6b0ac9b2aa359cb5c3aadafa2c65a5",
+  "sourceCommit": "1c94dea2d3225e1c89a2894b42f4a92ce45d451c",
   "outputs": [
     {
       "path": ".bashrc",
@@ -76,7 +76,7 @@
     {
       "path": ".claude/settings.json",
       "kind": "file",
-      "sha256": "492703a7b1d956e650a58e3a7d7a0d9fb14159c3324ccfcb25900b3a6dd70fef",
+      "sha256": "ee0c248a77447f7a20c82042aa779bf4cc14af2f211305b80014eff77c9a4ae2",
       "executable": false
     },
     {
