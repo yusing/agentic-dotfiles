@@ -21,6 +21,8 @@
 4. **Compaction.** `.skills-mgr/skills/handoff/STANDARD.md` is caller-neutral: the runtime owns
    the compaction cutoff and delivery while the standard preserves incomplete obligations without
    copying completed hook responses and carries the exact names of applicable skills.
+   When compaction interrupts an undelivered file handoff, runtime delivery supersedes the file
+   destination and resumes the task from before the file-handoff invocation.
    After handoff, the base prompt rereads named skills or, when that section is absent, selects
    them again from the current operation. No hook-specific state rotation runs at compaction.
 

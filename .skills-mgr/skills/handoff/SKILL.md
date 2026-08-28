@@ -22,3 +22,7 @@ DO NOT REPEAT THE CONTENT OR INCLUDE ANYTHING ELSE IN THE RESPONSE.
 ## Cutoff
 
 Everything before this handoff skill invocation. Do not include the handoff itself in the handoff markdown.
+
+This file handoff remains undelivered until `HANDOFF.md` is written. If runtime compaction begins
+first, it supersedes this invocation and inherits this cutoff. After compaction, resume the task
+from this cutoff; writing `HANDOFF.md` and returning its path are no longer due.

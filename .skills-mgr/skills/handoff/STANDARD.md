@@ -5,9 +5,18 @@ Produce an execution-ready Markdown handoff for the next LLM, which will resume 
 Write the minimum sufficient working set. The handoff is complete when the next LLM can perform the first unfinished action without rereading the conversation, repeating completed investigation, or guessing about the outcome, current state, scope, constraints, or validation.
 
 The caller owns the cutoff and delivery. Use the cutoff supplied by the invoking skill or runtime.
-The handoff operation itself is outside the carried task state: loading, composing, writing, or
-compacting the handoff is never a task action. This standard defines the handoff document; the
-caller owns its destination and any acknowledgement that follows.
+A handoff invocation and the loading, composing, writing, compacting, delivery, or acknowledgement
+it triggers are handoff control flow, not request state or task actions. They never appear in the
+handoff document. This standard defines the handoff document; the caller owns its destination and
+any acknowledgement that follows.
+
+If a new handoff begins before another caller has delivered its handoff, the new caller supersedes
+the undelivered operation and inherits its cutoff. This includes runtime compaction immediately
+after the file-handoff skill or this standard was read. Resume the unfinished task from immediately
+before the superseded invocation; the superseded caller has no remaining file, response, or
+acknowledgement obligation. Build every section from that inherited cutoff, so neither handoff
+request, the new caller's compaction request, nor intervening handoff control flow can become
+request state, `## Last action`, an active skill, a concern, `Next:`, `Then:`, or any later action.
 
 ## Request state
 
