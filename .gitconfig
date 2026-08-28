@@ -14,3 +14,5 @@
 [core]
   pager = delta
   excludesfile = $HOME/.gitignore_global
+[alias]
+	diffstat = "!f() { git add -N . && git diff --shortstat; git restore --staged .; }; f"
