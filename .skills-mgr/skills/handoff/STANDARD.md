@@ -76,10 +76,13 @@ When work remains, add `## Continuation`. Order every unfinished obligation by t
 3. Unfinished standing items, in their request order.
 
 Write exactly one `Next:` line naming the first obligation in that order and its first unfinished
-action. When further obligations remain, write exactly one `Then:` line listing them in the same
-order. Only `Next:` selects work for immediate continuation. `[complete]` entries establish current
-state and produce no action or response. Omit `## Continuation` when no work remains. Work remains
-while any action, response, validation, report, hook, or external obligation is unfinished.
+action. When further obligations remain, write exactly one `Then:` line that lists them in the same
+order and explicitly requires continuing them after `Next:` before a final response. `Next:` selects
+the immediate obligation; `Then:` keeps every later obligation executable as each earlier one
+completes. A final response is due only when no work remains or progress requires user input or an
+external-state change. `[complete]` entries establish current state and produce no action or
+response. Omit `## Continuation` when no work remains. Work remains while any action, response,
+validation, report, hook, or external obligation is unfinished.
 
 ## Attribution
 
