@@ -4,7 +4,8 @@
    `.codex/overridden_base_instructions.md` for model-level communication, turn and tool-use
    mechanics, and safety. It uses
    `.skills-mgr/skills/handoff/STANDARD.md`, the handoff standard, for checkpoint
-   handoffs. Codex loads
+   handoffs. The user-invoked `handoff` skill uses the same standard for document content while
+   its `SKILL.md` owns the cutoff, `HANDOFF.md` destination, and path-only response. Codex loads
    `.codex/AGENTS.md` for durable workflow guidance and the root `AGENTS.md` for repository context
    routing. The routed context maps and skill bodies are loaded only when their triggers match.
    Codex also discovers `.codex/agents/*.toml`; each role description guides the parent spawn,
@@ -17,8 +18,9 @@
 3. **Tool loop.** Before matched tools run, guards may reject generated-Go edits, versioned
    dependency additions, unapproved Git clones, or container commands from spawned agents. The
    remaining guards are silent when their policies do not apply.
-4. **Compaction.** `.skills-mgr/skills/handoff/STANDARD.md` preserves incomplete obligations
-   without copying completed hook responses and carries applicable skills as required rereads.
+4. **Compaction.** `.skills-mgr/skills/handoff/STANDARD.md` is caller-neutral: the runtime owns
+   the compaction cutoff and delivery while the standard preserves incomplete obligations without
+   copying completed hook responses and carries the exact names of applicable skills.
    After handoff, the base prompt rereads named skills or, when that section is absent, selects
    them again from the current operation. No hook-specific state rotation runs at compaction.
 

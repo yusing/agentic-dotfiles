@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b475afab11601d1e8bcde9a55d00db0b440c2640",
+  "sourceCommit": "9e9a037380fa1d7ab5686dee3479a8cce930e802",
   "outputs": [
     {
       "path": ".bashrc",
@@ -639,13 +639,13 @@
     {
       "path": ".skills-mgr/skills/handoff/SKILL.md",
       "kind": "file",
-      "sha256": "07068b6f666c4e74d1b5dbd402ed356f2352574dd83c2d6d0ab8266405d95b9e",
+      "sha256": "4c30604cad264c98b8c031c3790625a77e20b9df58c255eff547318237e7ee03",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/handoff/STANDARD.md",
       "kind": "file",
-      "sha256": "a67b25e98b0acea19b470cacb821a9e79dc0012a4bc45693932f57e222ae731b",
+      "sha256": "13c0410f53a594a93efb0599359d8f7579aa96b99226ec67301a11f56772f724",
       "executable": false
     },
     {
@@ -854,7 +854,7 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "eafe022e7d874ae7c7d40a1187ab51ec2ceacb0c263a6f520f57e079959120a9",
+      "sha256": "4a99945e9baf1379057df9bd88ecf80dae8701500231afc5906006959b5a976b",
       "executable": false
     },
     {

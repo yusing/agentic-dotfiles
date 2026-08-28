@@ -1,7 +1,6 @@
 ---
 name: handoff
 description: Create a compact, actionable, and redacted handoff document for a fresh agent.
-argument-hint: "What will the next session be used for?"
 disable-model-invocation: true
 ---
 
@@ -12,6 +11,9 @@ the earlier one stays unread.
 Read the handoff standard with `skills-mgr get handoff/STANDARD.md`, then write `HANDOFF.md`.
 Those are the only two actions this skill takes: compose the document from the context you already
 hold, and hand off immediately.
+
+The standard owns the document content. This skill owns the cutoff, file destination, and final
+path-only response.
 
 After writing it, output only the path of the handoff file written. If any other instruction
 constrain the path output format (e.g. Markdown link), follow it.
