@@ -32,10 +32,36 @@ preferences.
 | Zsh | [`.zshrc`](.zshrc) and [`.zsh/fish-mirror.zsh`](.zsh/fish-mirror.zsh) |
 | Bash | [`.bashrc`](.bashrc) |
 | Editors and terminal tools | [`.config/`](.config/) |
+| A new machine of yours | [`setup.sh`](setup.sh) |
 
 The `CONTEXT-*.md` files are maps for the less obvious parts of the setup. They
 explain which files own agent instructions, hooks, lifecycle behavior, and shared
 shell behavior.
+
+## Bootstrap
+
+`setup.sh` is for machines that should become a checkout of this repository.
+It installs OS packages, checks this repository out into `$HOME`, then installs
+the current Go toolchain, Codex, Claude Code, Grok, herdr, and the Go tools this
+setup uses.
+
+It is written for a home directory that already has unrelated files, and it
+can be run again if it stops partway through. Files that would be overwritten
+by the checkout are copied to `~/.local/share/dotfiles-setup/` first. Untracked
+files this repository does not own are left in place.
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/yusing/agentic-dotfiles/main/setup.sh | bash
+```
+
+If you already have the file:
+
+```sh
+bash setup.sh
+```
+
+If you are adapting pieces of this setup on a machine that already has its own
+dotfiles, do not run `setup.sh`. Copy the files you want instead.
 
 ## Adapting the Agent Setup
 

@@ -78,6 +78,7 @@ const TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS = new Set([
 ]);
 
 const EXACT_PATHS = new Set([
+  "setup.sh",
 	"AGENTS.md",
 	"CLAUDE.md",
 	"LICENSE",
