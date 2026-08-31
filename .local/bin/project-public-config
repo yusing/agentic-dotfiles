@@ -68,6 +68,7 @@ const TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS = new Set([
 	"LICENSE",
 	".bashrc",
 	".gitconfig",
+	".gitignore",
 	".gitignore_global",
 	".tmux.conf",
 	".yabairc",
@@ -91,6 +92,7 @@ const EXACT_PATHS = new Set([
 	".bashrc",
 	".bunfig.toml",
 	".gitconfig",
+	".gitignore",
 	".gitignore_global",
 	".skills-mgr/.skills-mgr.json",
 	".tmux.conf",
@@ -556,6 +558,32 @@ function projectShell(path: string, text: string): string {
 	return `${lines.join("\n").trimEnd()}\n`;
 }
 
+function projectGitignore(text: string, projectedPaths: Set<string>): string {
+	const preamble: string[] = [];
+	for (const line of text.split(/\r?\n/)) {
+		const trimmed = line.trim();
+		if (!trimmed || trimmed.startsWith("#") || trimmed === "*" || trimmed === "__pycache__") {
+			preamble.push(line);
+			continue;
+		}
+		break;
+	}
+	while (preamble.at(-1) === "") preamble.pop();
+
+	// Source un-ignores private-only paths. Keep only files that reached this
+	// projection, plus their parent directories so Git will still enter them.
+	const rules = new Set<string>();
+	for (const path of projectedPaths) {
+		const parts = path.split("/");
+		let prefix = "";
+		for (let index = 0; index < parts.length; index++) {
+			prefix = prefix ? `${prefix}/${parts[index]}` : parts[index];
+			rules.add(index < parts.length - 1 ? `!/${prefix}/` : `!/${prefix}`);
+		}
+	}
+	return `${[...preamble, "", ...[...rules].sort((left, right) => left.slice(2).localeCompare(right.slice(2)))].join("\n")}\n`;
+}
+
 function projectGitConfig(text: string): string {
 	const output: string[] = [];
 	let keepSection = true;
@@ -680,6 +708,14 @@ function buildProjection(source: string, commit: string): Map<string, ProjectedE
 
 	for (const required of ["AGENTS.md", COMMAND_PATH]) {
 		if (!projection.has(required)) throw new Error(`source revision does not contain required projected path: ${required}`);
+	}
+	const gitignore = projection.get(".gitignore");
+	if (gitignore?.kind === "file") {
+		projection.set(".gitignore", {
+			kind: "file",
+			content: Buffer.from(projectGitignore(gitignore.content.toString("utf8"), new Set(projection.keys()))),
+			executable: gitignore.executable,
+		});
 	}
 	return projection;
 }
