@@ -37,20 +37,30 @@ fi
 directory=$(CDPATH='' cd -- "$directory" && pwd -P)
 ancestor=$directory
 vcs='none'
+git_without_commit_ancestor=''
 
 while :; do
 	if [ -e "$ancestor/.git" ]; then
-		vcs='git'
-		if [ -d "$ancestor/.svn" ]; then
-			vcs='git+svn'
+		if git -C "$ancestor" rev-parse --verify HEAD >/dev/null 2>&1; then
+			vcs='git'
+			if [ -d "$ancestor/.svn" ]; then
+				vcs='git+svn'
+			fi
+			break
 		fi
-		break
+
+		# An empty Git repository does not supersede an enclosing SVN working copy.
+		[ -n "$git_without_commit_ancestor" ] || git_without_commit_ancestor=$ancestor
 	fi
 	if [ -d "$ancestor/.svn" ]; then
 		vcs='svn'
 		break
 	fi
 	if [ "$ancestor" = / ]; then
+		if [ -n "$git_without_commit_ancestor" ]; then
+			vcs='git'
+			ancestor=$git_without_commit_ancestor
+		fi
 		break
 	fi
 	ancestor=${ancestor%/*}

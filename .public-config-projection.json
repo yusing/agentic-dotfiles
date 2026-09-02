@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "2c76e77b50f6ea8014bb5a6883a4c0e42c0e7e85",
+  "sourceCommit": "752625318e9241b2e1ffb9cd3ce07435314e96f1",
   "outputs": [
     {
       "path": ".bashrc",
@@ -208,7 +208,7 @@
     {
       "path": ".codex/hooks/check_project",
       "kind": "file",
-      "sha256": "525f492886830d5ec9e9bcc35cad53add4628df5cca0062e28f50fec4ada9f31",
+      "sha256": "a8334ff926728698fba53ddd02dd2c1b09e719c9f8d6f2c180be5cc31af22862",
       "executable": true
     },
     {
