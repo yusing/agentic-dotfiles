@@ -849,6 +849,7 @@ install_go_tools() {
   have gopls || modules+=("golang.org/x/tools/gopls@latest")
   have goimports || modules+=("golang.org/x/tools/cmd/goimports@latest")
   have deadcode || modules+=("golang.org/x/tools/cmd/deadcode@latest")
+  have gitleaks || modules+=("github.com/gitleaks/gitleaks/v8@latest")
   have lazygit || modules+=("github.com/jesseduffield/lazygit@latest")
   have skills-mgr || modules+=("github.com/yusing/skills-mgr@latest")
   have git-agent || modules+=("github.com/yusing/git-agent/cmd/git-agent@latest")
@@ -989,7 +990,7 @@ check_cmds() {
 verify_setup() {
   local required_failed=0 expected_failed=0
   info "required commands"
-  if ! check_cmds git curl fish jq make just rg fzf go oh-my-posh micro rtk shadowtree skills-mgr git-agent golangci-lint gopls; then
+  if ! check_cmds git curl fish jq make just rg fzf go oh-my-posh micro rtk shadowtree skills-mgr git-agent gitleaks golangci-lint gopls; then
     required_failed=1
   fi
   if [ "$PM" = pacman ] && ! check_cmds yay; then
