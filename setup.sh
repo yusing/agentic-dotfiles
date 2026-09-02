@@ -316,7 +316,7 @@ pm_install_batch() {
       fi
       ;;
     brew)
-      brew install "$@"
+      brew install --no-ask "$@"
       ;;
     *)
       die "unknown package manager: $PM"
