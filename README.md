@@ -47,6 +47,10 @@ machine, then installs the current Go toolchain when the one on `PATH` is missin
 or outdated, followed by `rtk`, Codex, Claude Code, Grok, herdr, and the Go tools
 this setup uses.
 
+When `$HOME` is already the recognized private `yusing/dotfiles` checkout,
+setup preserves its origin and history and continues with the remaining setup
+instead of replacing it with the public projection.
+
 Setup configures this checkout to use [`.githooks/`](.githooks/). After each
 commit, the post-commit hook refreshes `projects/public-agent-shell-config` and,
 when projected content changed, creates a local commit there with the same

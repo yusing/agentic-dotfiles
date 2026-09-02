@@ -10,6 +10,7 @@ set -euo pipefail
 
 REPO_URL="https://github.com/yusing/agentic-dotfiles.git"
 REPO_SLUG="yusing/agentic-dotfiles"
+PRIVATE_REPO_SLUG="yusing/dotfiles"
 GIT_NAME="yusing"
 GIT_EMAIL="yusing.wys@gmail.com"
 GO_PREFIX="${HOME}/.local/opt/go"
@@ -431,6 +432,7 @@ ensure_origin() {
   if url="$(git remote get-url origin 2>/dev/null)"; then
     case "$url" in
       *github.com[:/]"$REPO_SLUG"*) return 0 ;;
+      *[:/]"$PRIVATE_REPO_SLUG"|*[:/]"$PRIVATE_REPO_SLUG".git) return 1 ;;
     esac
     die "origin is $url; refusing to replace a different repository in $HOME"
   fi
@@ -502,6 +504,7 @@ drop_bootstrap_empty_commit() {
 }
 
 setup_home_repo() {
+  local update_checkout
   cd "$HOME"
 
   if [ ! -d .git ]; then
@@ -514,10 +517,20 @@ setup_home_repo() {
     fi
   fi
 
-  configure_git_identity
-  ensure_origin
+  # A recognized private source checkout is already authoritative. Keep its
+  # origin, history, and identity, but still activate the tracked hooks.
+  if ensure_origin; then
+    update_checkout=1
+  else
+    update_checkout=0
+  fi
   git config --local core.hooksPath .githooks
+  if [ "$update_checkout" -eq 0 ]; then
+    info "preserving private repository checkout at $HOME"
+    return 0
+  fi
 
+  configure_git_identity
   info "fetching origin"
   git fetch origin
 
