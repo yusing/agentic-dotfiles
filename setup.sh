@@ -230,9 +230,14 @@ pkg_cmd() {
 
 have_logical() {
   local cmd
+  if [ "$1" = ca-certificates ] && [ "$PM" = apt ]; then
+    dpkg-query -W -f='${Status}\n' ca-certificates 2>/dev/null \
+      | grep -q 'install ok installed'
+    return
+  fi
   cmd="$(pkg_cmd "$1")"
-  # No command to probe (e.g. ca-certificates): let the package manager
-  # install it. apt/pacman/brew are idempotent for an already-present package.
+  # Packages without a command probe are left to package managers whose
+  # install operations already skip current packages.
   [ -z "$cmd" ] && return 1
   if [ "$cmd" = python3 ] && ! have python3; then
     have python
@@ -324,7 +329,7 @@ pm_install_batch() {
 # missing from the apt index are skipped so a single unknown package cannot
 # split the install back into a per-package loop (and re-trigger initramfs).
 install_packages() {
-  local name pkg cmd mode=required
+  local name pkg cmd mode=required apt_refreshed=0
   local required_names=()
   local pkgs=()
 
@@ -338,6 +343,10 @@ install_packages() {
     fi
     if have_logical "$name"; then
       continue
+    fi
+    if [ "$PM" = apt ] && [ "$apt_refreshed" -eq 0 ]; then
+      refresh_pm
+      apt_refreshed=1
     fi
     if ! pkg="$(select_mapped_pkg "$name")"; then
       if [ "$mode" = required ]; then
@@ -507,6 +516,7 @@ setup_home_repo() {
 
   configure_git_identity
   ensure_origin
+  git config --local core.hooksPath .githooks
 
   info "fetching origin"
   git fetch origin
@@ -1039,8 +1049,10 @@ main() {
   STEP="ensure sudo"
   ensure_sudo
 
-  STEP="refresh package index"
-  refresh_pm
+  if [ "$PM" != apt ]; then
+    STEP="refresh package index"
+    refresh_pm
+  fi
 
   STEP="ensure yay"
   ensure_yay

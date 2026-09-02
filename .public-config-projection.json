@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "55760f93be6d36b998532df1b084f0a24a18993c",
+  "sourceCommit": "c0a5df7ce54f2b39204cdeb3ed6085b415fe59f9",
   "outputs": [
     {
       "path": ".bashrc",
@@ -908,7 +908,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "17e8f401dd801a9d4b7c2d710c8c7b5e854d1e5950a8e4ab9481c4c45ecb2552",
+      "sha256": "863f5663ca02076aa522eaab73458c4f7ea4ce1ea4bb609f24158570441e41c5",
       "executable": true
     }
   ]
