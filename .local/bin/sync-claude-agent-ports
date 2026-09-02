@@ -17,7 +17,7 @@ from typing import Any
 HOME = Path(__file__).resolve().parents[2]
 CODEX_AGENTS = HOME / ".codex" / "agents"
 CLAUDE_AGENTS = HOME / ".claude" / "agents"
-GUARD = HOME / ".codex" / "hooks" / "subagent_exec_guard.py"
+GUARD = Path("$HOME/.codex/hooks/subagent_exec_guard.py")
 
 MODEL_MAP = {
     "gpt-5.6-luna": "sonnet",
@@ -259,7 +259,7 @@ def render_frontmatter(role: str, config: dict[str, Any]) -> str:
                 '    - matcher: "Bash"',
                 "      hooks:",
                 "        - type: command",
-                f'          command: "/usr/bin/python3 {GUARD}"',
+                f'          command: "python3 {GUARD}"',
                 "          timeout: 5",
             )
         )

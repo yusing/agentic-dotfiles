@@ -78,7 +78,7 @@ const TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS = new Set([
 ]);
 
 const EXACT_PATHS = new Set([
-  "setup.sh",
+	"setup.sh",
 	"AGENTS.md",
 	"CLAUDE.md",
 	"LICENSE",
@@ -647,6 +647,9 @@ function transformText(path: string, text: string, privateHomes: string[]): stri
 		projected = projectShell(path, projected);
 	}
 	for (const privateHome of privateHomes) projected = projected.replaceAll(privateHome, "$HOME");
+	// Committed content can retain Linux home paths from a different host than the
+	// machine running the projection.
+	projected = projected.replaceAll(/(?<![A-Za-z0-9._~\/-])\/home\/[A-Za-z0-9._-]+/g, "$HOME");
 	return projected;
 }
 
@@ -690,7 +693,7 @@ function symlinkStaysInside(path: string, target: string): boolean {
 function buildProjection(source: string, commit: string): Map<string, ProjectedEntry> {
 	const projection = new Map<string, ProjectedEntry>();
 	const userName = basename(homedir());
-	const privateHomes = [...new Set([source, homedir(), join("/home", userName), join("/Users", userName)])]
+	const privateHomes = [...new Set([source, homedir(), join("/Users", userName)])]
 		.filter(path => path !== resolve("/"))
 		.sort((left, right) => right.length - left.length);
 	for (const entry of listTree(source, commit)) {
