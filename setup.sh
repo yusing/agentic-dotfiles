@@ -604,6 +604,8 @@ for name in tracked:
         continue
     text = path.read_text(encoding="utf-8")
     resolved = text.replace(source_home, str(home))
+    if relative.parts[0] in {".claude", ".codex", ".grok"}:
+        resolved = resolved.replace("$HOME", str(home))
     if resolved == text:
         continue
     path.write_text(resolved, encoding="utf-8")
