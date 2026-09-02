@@ -47,6 +47,11 @@ machine, then installs the current Go toolchain when the one on `PATH` is missin
 or outdated, followed by `rtk`, Codex, Claude Code, Grok, herdr, and the Go tools
 this setup uses.
 
+Setup configures this checkout to use [`.githooks/`](.githooks/). After each
+commit, the post-commit hook refreshes `projects/public-agent-shell-config` and,
+when projected content changed, creates a local commit there with the same
+commit message. It does not push the public repository.
+
 It is written for a home directory that already has unrelated files, and it
 can be run again if it stops partway through. Files that would be overwritten
 by the checkout are copied to `~/.local/share/dotfiles-setup/` first. Untracked
