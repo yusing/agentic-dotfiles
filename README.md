@@ -41,14 +41,17 @@ shell behavior.
 ## Bootstrap
 
 `setup.sh` is for machines that should become a checkout of this repository.
-It installs OS packages, checks this repository out into `$HOME`, then installs
-the current Go toolchain, Codex, Claude Code, Grok, herdr, and the Go tools this
-setup uses.
+It installs OS packages, checks this repository out into `$HOME`, rewrites the
+repository's canonical home paths in tracked runtime configuration for the local
+machine, then installs the current Go toolchain when the one on `PATH` is missing
+or outdated, followed by `rtk`, Codex, Claude Code, Grok, herdr, and the Go tools
+this setup uses.
 
 It is written for a home directory that already has unrelated files, and it
 can be run again if it stops partway through. Files that would be overwritten
 by the checkout are copied to `~/.local/share/dotfiles-setup/` first. Untracked
-files this repository does not own are left in place.
+files this repository does not own are left in place. Independent installers
+run concurrently, with each installer's output printed as one labeled log block.
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/yusing/agentic-dotfiles/main/setup.sh | bash

@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/usr/bin/python3 $HOME/.grok/hooks/skills_path_guard.py",
+            "command": "python3 $HOME/.grok/hooks/skills_path_guard.py",
             "timeout": 5,
             "statusMessage": "Checking for home skills path access"
           }

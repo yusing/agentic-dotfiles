@@ -10,7 +10,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "/usr/bin/python3 $HOME/.codex/hooks/subagent_exec_guard.py"
+          command: "python3 $HOME/.codex/hooks/subagent_exec_guard.py"
           timeout: 5
 ---
 You are a subagent optimized for fast implementation of one small, settled

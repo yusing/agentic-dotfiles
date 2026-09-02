@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "84a870af0b5c17dbe3787934df057bbab8f1298f",
+  "sourceCommit": "b7094d867acdbbd4d9b9c182f3fa1c5aa1142fad",
   "outputs": [
     {
       "path": ".bashrc",
@@ -17,55 +17,55 @@
     {
       "path": ".claude/agents/council-investigator.md",
       "kind": "file",
-      "sha256": "d1603779b7189a14aa837b3b5c317fd44a3e91342886c3d860a98ac7e745eab2",
+      "sha256": "f1c940d91398d3b9bb81402e7ab74c8a32ee2e9a0b2eb81331e722b1708dcd1b",
       "executable": false
     },
     {
       "path": ".claude/agents/council-member.md",
       "kind": "file",
-      "sha256": "2936dfba471cf8df847804818a493b29116ead734f786896a3bc5f1d561f2113",
+      "sha256": "59205823b53da1b2fa584ef346d1646dd510192043acada0a62f0078b416177b",
       "executable": false
     },
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "66471e935c900dc540f463e0171c1cede71cc6793cd2d88fbc1b1fdd33b81cc0",
+      "sha256": "8aeb26157f124b64fdaa245b39ba54e62aeadb726b99a5d5a744138814463ba2",
       "executable": false
     },
     {
       "path": ".claude/agents/fast-explorer.md",
       "kind": "file",
-      "sha256": "e81df359717007ec1b5279c1be87aead9af7a8c124631c6fcc8481a00fc100c1",
+      "sha256": "86d0ea349a846085c252520277ac443fe613537ee30fcca3cc0ed4361c3936f5",
       "executable": false
     },
     {
       "path": ".claude/agents/fast-implementer.md",
       "kind": "file",
-      "sha256": "e60c42e81fc2300c517d40d27b760fc351bcf9a4ff4fad4914101ef0117ca1d6",
+      "sha256": "42c4c193b315e447e254f8e10900d807e60af1dbcbaef4e8b50ec1b64b29bc05",
       "executable": false
     },
     {
       "path": ".claude/agents/implementer.md",
       "kind": "file",
-      "sha256": "4affaba5a3578c6be20d6cd0661eeaa199a81e127c50c1309952f90c7ff6ba8e",
+      "sha256": "6c6781884e8e43304c1a1cb73df5b94616068d80915628a5791ddb5271670c6d",
       "executable": false
     },
     {
       "path": ".claude/agents/reviewer.md",
       "kind": "file",
-      "sha256": "ea2f4c3809fed9f7937a8f9350fb801fbaff48aacff148684c0e682543de20d0",
+      "sha256": "578b133c9e945679d90a22661daae5760686a84f637e86d83f7abc1ff004d6b2",
       "executable": false
     },
     {
       "path": ".claude/agents/simplify-checker.md",
       "kind": "file",
-      "sha256": "8be83a51c952f03c2594613591bcf7b585afd4d26a72753deaa90e22fa78cff9",
+      "sha256": "817a9d1e8e5ba870e08942e78ea3521ae2bdb237969c2447f3531678d6bd076f",
       "executable": false
     },
     {
       "path": ".claude/agents/web-reviewer.md",
       "kind": "file",
-      "sha256": "0eb6f2854a4a78044ac13ece822a6613419cb6a02ff41b9c76a6c81e539451cc",
+      "sha256": "2be1896083e9a939ee75e6bbe2ca031aaa384b1bd6b324ab9fc75ad88d485078",
       "executable": false
     },
     {
@@ -76,7 +76,7 @@
     {
       "path": ".claude/settings.json",
       "kind": "file",
-      "sha256": "ee0c248a77447f7a20c82042aa779bf4cc14af2f211305b80014eff77c9a4ae2",
+      "sha256": "819641aa66e0a27323ac067fce219b16ad27f233ad3e8c32eb2888f2102f1f4a",
       "executable": false
     },
     {
@@ -202,7 +202,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "3c1a5ada69ea9c57fe1cf2d9f5c6257ed7bb3316a53bd4514a7f848711e90218",
+      "sha256": "0c0a65c4144861d989db4e61514e02565064c5452021319863dccf5afe6a05ae",
       "executable": false
     },
     {
@@ -428,9 +428,15 @@
       "executable": false
     },
     {
+      "path": ".gitignore",
+      "kind": "file",
+      "sha256": "344214647883da388116ae065de42a5c442c2a8440c4682d83703b3cf9a33fe3",
+      "executable": false
+    },
+    {
       "path": ".gitignore_global",
       "kind": "file",
-      "sha256": "b68e8229e2654a87169b11557c369432af2c7a35a6dbc96709fabf2e6bcf030d",
+      "sha256": "7317ace20f8e5ff7e014d2fb77ad4b4c5b381264725860f0437e5745b7348ca1",
       "executable": false
     },
     {
@@ -453,7 +459,7 @@
     {
       "path": ".grok/hooks/codex-port.json",
       "kind": "file",
-      "sha256": "0e2e31353c755c78b9510757e4abc5b3efe12b132482646c4facd547dc4bc7fe",
+      "sha256": "be640515bc71a9823ccd324989ffa703f20d9eb5cde7c1185153279e141bd0d3",
       "executable": false
     },
     {
@@ -465,7 +471,7 @@
     {
       "path": ".grok/hooks/skills-path-guard.json",
       "kind": "file",
-      "sha256": "61c97de4f8b229bb5c5ac66fe26b9c797247b8b5bbbc9669263353e3f5a7759a",
+      "sha256": "fed3525282524150a229b00272508d34675aea58c5dd1013431512d3b7a93441",
       "executable": false
     },
     {
@@ -483,13 +489,13 @@
     {
       "path": ".local/bin/project-public-config",
       "kind": "file",
-      "sha256": "f109f89ab5ea62693d4a0740c8bbb67261afe24e8bd5332b4adc89ac6d5d2db1",
+      "sha256": "f7b923f69b9796e694600d7a21c504af9b7c8a4a42fb0ee241186c47060f64d8",
       "executable": true
     },
     {
       "path": ".local/bin/sync-claude-agent-ports",
       "kind": "file",
-      "sha256": "0b9267f4678479aeeb54c15c6f446d415c78bdc17d997534f41f93f119645d01",
+      "sha256": "ddc4ee52e6f8f2747f60849113a1e19a9af8606a533c11cfb756e8975e90b4bb",
       "executable": true
     },
     {
@@ -896,8 +902,14 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "dd6d25706663991a4fbc6017be9b54ec759825cae715a1648620675a511c32da",
+      "sha256": "b7f1d394f411c3610bc6638603cb0f6d1f9f12c7ba6c917b69dde2b74d693eb6",
       "executable": false
+    },
+    {
+      "path": "setup.sh",
+      "kind": "file",
+      "sha256": "2ca7d4fbc7eb7d48ba6328b38cfcf53bf366841d2110c6c079a3a0928b3b8f52",
+      "executable": true
     }
   ]
 }

@@ -550,6 +550,73 @@ setup_home_repo() {
   fi
 }
 
+rewrite_home_paths() {
+  local changed
+  changed="$(CONFIG_SOURCE_HOME="/home/${GIT_NAME}" py - <<'PY'
+import os
+import subprocess
+from pathlib import Path
+
+home = Path(os.environ["HOME"])
+source_home = os.environ["CONFIG_SOURCE_HOME"]
+tracked = subprocess.run(
+    ["git", "ls-files", "-z"],
+    check=True,
+    stdout=subprocess.PIPE,
+).stdout.decode().split("\0")
+
+
+def is_runtime_config(path: Path) -> bool:
+    name = path.as_posix()
+    if name in {
+        ".claude/settings.json",
+        ".codex/config.toml",
+        ".codex/hooks.json",
+        ".config/fish/config.fish",
+        ".gitconfig",
+        ".grok/config.toml",
+        ".bashrc",
+        ".zsh/fish-mirror.zsh",
+        ".zshrc",
+    }:
+        return True
+    if name.startswith(".claude/agents/"):
+        return path.suffix == ".md"
+    if name.startswith(".codex/agents/"):
+        return path.suffix == ".toml"
+    if name.startswith(".grok/hooks/"):
+        return path.suffix in {".json", ".toml", ".yaml", ".yml"}
+    return name.startswith(".config/") and path.suffix in {
+        ".json",
+        ".toml",
+        ".yaml",
+        ".yml",
+    }
+
+
+changed = 0
+for name in tracked:
+    relative = Path(name)
+    if not name or not is_runtime_config(relative):
+        continue
+    path = home / relative
+    if not path.is_file() or path.is_symlink():
+        continue
+    text = path.read_text(encoding="utf-8")
+    resolved = text.replace(source_home, str(home))
+    if resolved == text:
+        continue
+    path.write_text(resolved, encoding="utf-8")
+    changed += 1
+
+print(changed)
+PY
+)"
+  if [ "$changed" -gt 0 ]; then
+    info "resolved home paths in $changed configuration files"
+  fi
+}
+
 # ---------------------------------------------------------------------------
 # Latest Go toolchain (go.dev), not the distro package
 # ---------------------------------------------------------------------------
@@ -571,13 +638,10 @@ install_latest_go() {
   local version filename url sha tmp tarball current goos
   version="$(latest_go_version)"
   [ -n "$version" ] || die "could not determine the latest Go version"
-  if [ -x "${GO_PREFIX}/bin/go" ]; then
-    current="$("${GO_PREFIX}/bin/go" env GOVERSION 2>/dev/null || true)"
+  if have go; then
+    current="$(go env GOVERSION 2>/dev/null || true)"
     if [ "$current" = "$version" ]; then
-      info "Go $version already installed"
-      mkdir -p "$GOBIN"
-      ln -sfn "${GO_PREFIX}/bin/go" "${GOBIN}/go"
-      ln -sfn "${GO_PREFIX}/bin/gofmt" "${GOBIN}/gofmt"
+      info "Go $version already installed at $(command -v go)"
       return 0
     fi
   fi
@@ -647,7 +711,7 @@ install_codex() {
     return 0
   fi
   info "installing Codex"
-  curl -fsSL https://chatgpt.com/codex/install.sh | sh
+  curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
 }
 
 install_grok() {
@@ -754,6 +818,17 @@ install_golangci_lint() {
   curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b "$GOBIN"
 }
 
+install_rtk() {
+  if have rtk && rtk gain >/dev/null 2>&1; then
+    return 0
+  fi
+  info "installing rtk"
+  curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
+  hash -r 2>/dev/null || true
+  have rtk && rtk gain >/dev/null 2>&1 \
+    || die "rtk installed, but the Rust Token Killer CLI is not available"
+}
+
 # One `go install` per missing tool. A single invocation cannot mix packages
 # from different modules (gopls, x/tools, and the yusing tools are all separate).
 install_go_tools() {
@@ -774,6 +849,79 @@ install_go_tools() {
   fi
   install_golangci_lint
 }
+
+# Independent installers run together, but each writes to its own log. Emit the
+# completed logs in launch order so concurrent output never becomes interleaved.
+run_independent_installs() (
+  local log_root index log status failed=0
+  local labels=(
+    "just"
+    "fzf"
+    "zoxide"
+    "micro"
+    "atuin"
+    "bun"
+    "oh-my-posh"
+    "Claude Code"
+    "Codex"
+    "Grok CLI"
+    "herdr"
+    "rtk"
+    "Go tools"
+  )
+  local commands=(
+    install_just
+    install_fzf
+    install_zoxide
+    install_micro
+    install_atuin
+    install_bun
+    install_oh_my_posh
+    install_claude
+    install_codex
+    install_grok
+    install_herdr
+    install_rtk
+    install_go_tools
+  )
+  local pids=()
+  local logs=()
+
+  log_root="$(mktemp -d "${TMPDIR:-/tmp}/setup-install.XXXXXX")"
+  trap 'rm -rf "$log_root"' EXIT HUP INT TERM
+
+  for ((index = 0; index < ${#commands[@]}; index++)); do
+    log="${log_root}/${index}.log"
+    logs[$index]="$log"
+    info "starting ${labels[$index]}"
+    (
+      STEP="install ${labels[$index]}"
+      "${commands[$index]}"
+    ) >"$log" 2>&1 &
+    pids[$index]=$!
+  done
+
+  for ((index = 0; index < ${#pids[@]}; index++)); do
+    if wait "${pids[$index]}"; then
+      status=0
+    else
+      status=$?
+      failed=1
+    fi
+
+    info "install log: ${labels[$index]}"
+    if [ -s "${logs[$index]}" ]; then
+      cat "${logs[$index]}"
+    else
+      log "  completed with no output"
+    fi
+    if [ "$status" -ne 0 ]; then
+      warn "${labels[$index]} installer failed with status $status"
+    fi
+  done
+
+  [ "$failed" -eq 0 ] || die "one or more independent installers failed"
+)
 
 # ---------------------------------------------------------------------------
 # Fish as login shell
@@ -829,7 +977,7 @@ check_cmds() {
 verify_setup() {
   local required_failed=0 expected_failed=0
   info "required commands"
-  if ! check_cmds git curl fish jq make just rg fzf go oh-my-posh micro shadowtree skills-mgr git-agent golangci-lint gopls; then
+  if ! check_cmds git curl fish jq make just rg fzf go oh-my-posh micro rtk shadowtree skills-mgr git-agent golangci-lint gopls; then
     required_failed=1
   fi
   if [ "$PM" = pacman ] && ! check_cmds yay; then
@@ -907,29 +1055,20 @@ main() {
   STEP="setup home git repository"
   setup_home_repo
 
+  STEP="resolve home paths in configuration"
+  rewrite_home_paths
+
   STEP="install latest Go"
   install_latest_go
   export PATH="${GOBIN}:${GO_PREFIX}/bin:${PATH}"
   hash -r 2>/dev/null || true
 
-  STEP="install CLI fallbacks"
-  install_just
-  install_fzf
-  install_zoxide
-  install_micro
-  install_atuin
-  install_bun
+  STEP="install independent tools"
+  run_independent_installs
+  hash -r 2>/dev/null || true
+
+  STEP="install tldr"
   install_tldr
-
-  STEP="install agent CLIs"
-  install_oh_my_posh
-  install_claude
-  install_codex
-  install_grok
-  install_herdr
-
-  STEP="install Go tools"
-  install_go_tools
 
   STEP="set login shell"
   ensure_fish_login_shell

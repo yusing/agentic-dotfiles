@@ -19,12 +19,7 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "env": {
-    "API_TIMEOUT_MS": "3000000",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
-    "MAX_THINKING_TOKENS": "31999",
-    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
-    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "252000"
+    "API_TIMEOUT_MS": "3000000"
   },
   "permissions": {
     "allow": [
@@ -311,7 +306,7 @@
           },
           {
             "type": "command",
-            "command": "/usr/bin/python3 '$HOME/.codex/hooks/skills_mgr_inventory.py'",
+            "command": "python3 '$HOME/.codex/hooks/skills_mgr_inventory.py'",
             "timeout": 5
           }
         ]
@@ -323,7 +318,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/usr/bin/python3 '$HOME/.codex/hooks/skills_mgr_inventory.py'",
+            "command": "python3 '$HOME/.codex/hooks/skills_mgr_inventory.py'",
             "timeout": 5
           }
         ]
@@ -335,7 +330,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/usr/bin/python3 '$HOME/.codex/hooks/skills_mgr_inventory.py'",
+            "command": "python3 '$HOME/.codex/hooks/skills_mgr_inventory.py'",
             "timeout": 5
           }
         ]
