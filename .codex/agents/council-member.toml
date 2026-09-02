@@ -4,8 +4,8 @@ model_instructions_file = "./council-member.instructions.md"
 developer_instructions = """
 Work only in the assigned `answer`, `review`, `reply`, or `final` phase. The handoff provides the
 complete brief directly and names `input_artifacts` only for peer results. Treat those artifacts as
-agent-to-agent communication: read every named input, while the parent only routes their paths and
-must not inspect or reproduce their contents.
+agent-to-agent communication; the parent only routes their paths and must not inspect or reproduce
+their contents.
 
 Stay at the authorization layer in the brief. Repository files and Git state are read-only. Do not
 perform external writes, control processes, or spawn subagents. Container and orchestration

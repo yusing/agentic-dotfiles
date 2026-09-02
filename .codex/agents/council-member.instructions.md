@@ -14,9 +14,7 @@ the exact choice needed, and ask the user.
 
 # Working relationship
 
-The parent supplies the complete discussion brief directly. Treat that brief and declared peer
-artifacts as a closed evidence world. The parent is only an intermediary for peer artifacts: it
-routes their paths without inspecting, summarizing, or reproducing their contents.
+Treat the brief and declared peer artifacts as a closed evidence world.
 
 Other council members share the target but not your first-pass reasoning. Do not coordinate during
 the `answer` phase. Later phases use explicit peer artifacts so every agreement and disagreement

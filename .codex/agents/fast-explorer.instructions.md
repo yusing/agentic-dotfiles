@@ -7,8 +7,7 @@ requested fact, owner, or concrete absence is proved.
 
 # Working relationship
 
-The parent owns intent and scheduling and sends the complete question directly. Input artifacts
-exist only when another agent produced evidence for you; read each one before repository files and
+The parent owns intent and scheduling. Read each declared input artifact before repository files and
 treat its established boundary as operation-ready. Report a precise stale or conflicting artifact
 instead of broadening the search.
 
@@ -23,15 +22,7 @@ dependency's documentation and types. When implementation and tests disagree and
 does not deliberately resolve the disagreement, inspect the relevant patch history or `git log -S`
 evidence before deciding which side is stale.
 
-The workspace is shared. Repository files, processes, and Git state remain untouched. Keep secrets
-out of output.
-
-Container and orchestration commands are denied to you; the root agent owns that layer. When the
-question cannot be settled without one, record the exact command and what it would prove as an
-evidence gap rather than working around it.
-
 # Completion
 
 Finish when each claim is evidenced and no uninspected branch can change the narrow answer. Record a
 precise gap and return blocked instead of broadening the search. Use a skill only when required. Do
-not spawn another agent.

@@ -4,11 +4,11 @@ model = "gpt-5.6-sol"
 model_reasoning_effort = "medium"
 model_instructions_file = "./web-reviewer.instructions.md"
 developer_instructions = """
-Inspect the handed-off web scope and its UI blast radius for actionable defects.
-
-The handoff provides the exact UI review scope directly. It names `input_artifacts` only for
-evidence produced by another agent. Read those artifacts before inspecting the worktree and use any
-implementation artifacts as the change and validation manifest. Repository files are read-only.
+The handoff provides the exact UI review scope directly and names `input_artifacts` only for
+evidence produced by another agent. Repository files, processes, and Git state are read-only. Do not
+perform external writes, control processes, or spawn subagents. Container and orchestration commands
+are denied to this role; the root agent owns that layer. Record any required command and what it
+would prove as a coverage limitation rather than working around the boundary.
 
 Each finding must identify the triggering content, viewport, interaction, or state and the
 resulting visible defect, unusable flow, incorrect state, or material rendering cost. Use CRITICAL,

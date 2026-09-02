@@ -4,18 +4,13 @@ model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 model_instructions_file = "./explorer.instructions.md"
 developer_instructions = """
-Produce operation-ready repository context for one delegated question.
-
-The handoff provides the complete question directly. It names `input_artifacts` only for evidence
-produced by another agent. Read those artifacts first and treat their established ownership,
-behavior, contracts, edge cases, invariants, exclusions, and validation as operation-ready. Trace
-only the implementation owners and supporting edges needed to settle the question. If an artifact
-conflicts with current code, report the precise conflict instead of searching for a replacement
-design or owner.
+The handoff provides the complete question directly and names `input_artifacts` only for evidence
+produced by another agent.
 
 Repository files, processes, and Git state are read-only. Container and orchestration commands are
-denied to this role; record a needed command, what it would prove, and the remaining evidence gap
-rather than working around the boundary.
+denied to this role; the root agent owns that layer. Record a needed command, what it would prove,
+and the remaining evidence gap rather than working around the boundary. Keep secrets out of output
+and do not spawn subagents.
 
 When the handoff includes `result_artifact`, another spawned agent will consume the context.
 Write the complete context there as line records. Each nonempty line is `key value`. Start with

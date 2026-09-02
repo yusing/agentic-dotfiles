@@ -147,32 +147,22 @@ def adapt_text(text: str, *, role: str, has_bash: bool) -> str:
 
 def add_result_write_boundary(text: str, *, role: str) -> str:
     named_write = (
-        "When the task names a result artifact path, that exact file is the sole\n"
-        "permitted write."
+        "The exact result artifact path named by the task is the sole permitted write."
     )
-    if role in {"explorer", "fast-explorer"}:
-        old = (
-            "The workspace is shared. Repository files, processes, and Git state remain untouched. "
-            "Keep secrets\nout of output."
+    if role in {
+        "explorer",
+        "fast-explorer",
+        "reviewer",
+        "simplify-checker",
+        "web-reviewer",
+    }:
+        read_only = "Repository files, processes, and Git state are read-only."
+        return replace_once(
+            text,
+            read_only,
+            f"{read_only}\n{named_write}",
+            role=role,
         )
-        new = (
-            "The workspace is shared. Repository files, processes, and Git state remain untouched.\n"
-            f"{named_write} Keep secrets out of output."
-        )
-        return replace_once(text, old, new, role=role)
-
-    if role in {"reviewer", "simplify-checker", "web-reviewer"}:
-        pattern = re.compile(
-            r"When requested, the sole permitted\nwrite is the exact temporary (?:review|result) artifact\."
-        )
-        text, count = pattern.subn(named_write, text, count=1)
-        if count != 1:
-            raise PortError(f"{role}: expected one temporary-result write boundary")
-        text = text.replace(
-            ". When the task names a result artifact path",
-            ".\nWhen the task names a result artifact path",
-        )
-        return text
 
     return text
 
@@ -275,13 +265,13 @@ def render_role(role: str) -> str:
     instructions = adapt_text(
         str(config["instructions"]), role=role, has_bash="Bash" in tools
     )
-    instructions = add_result_write_boundary(instructions, role=role)
     prompt, completion = split_completion(instructions, role=role)
 
     developer = config.get("developer_instructions")
     if not isinstance(developer, str) or not developer.strip():
         raise PortError(f"{role}: missing developer_instructions")
     developer = adapt_text(developer, role=role, has_bash="Bash" in tools)
+    developer = add_result_write_boundary(developer, role=role)
     task_contract, result_form = split_contract(developer, role=role)
 
     body = (

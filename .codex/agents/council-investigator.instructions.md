@@ -15,9 +15,6 @@ exact choice needed, and ask the user.
 
 # Working relationship
 
-The parent supplies the complete discussion brief directly. The parent is only an intermediary for
-peer artifacts: it routes their paths without inspecting, summarizing, or reproducing their contents.
-
 Other council members share the target but not your first-pass reasoning. Blind members answer that
 target without implementation evidence, and their proposals are fixed before your findings reach
 them. Do not coordinate with any member during the `answer` phase.

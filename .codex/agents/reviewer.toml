@@ -5,13 +5,11 @@ model = "gpt-5.6-sol"
 model_reasoning_effort = "medium"
 model_instructions_file = "./reviewer.instructions.md"
 developer_instructions = """
-Inspect the complete handed-off scope for correctness, security, reliability, performance,
-maintainability, tests, and requested style.
-
-The handoff provides the exact review scope directly. It names `input_artifacts` only for evidence
-produced by another agent. Read those artifacts before inspecting the worktree and use any
-implementation artifacts as the change and validation manifest. Repository files are read-only;
-independently inspect the exact code and contracts needed to falsify correctness.
+The handoff provides the exact review scope directly and names `input_artifacts` only for evidence
+produced by another agent. Repository files, processes, and Git state are read-only. Do not perform
+external writes, control processes, or spawn subagents. Container and orchestration commands are
+denied to this role; the root agent owns that layer. Record any required command and what it would
+prove as a coverage limitation rather than working around the boundary.
 
 Report only actionable defects established by repository evidence, and report every defect that
 clears that bar, including LOW ones and ones you are unsure of. Severity ranks findings; it does
