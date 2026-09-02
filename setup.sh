@@ -862,7 +862,7 @@ install_go_tools() {
   have gopls || modules+=("golang.org/x/tools/gopls@latest")
   have goimports || modules+=("golang.org/x/tools/cmd/goimports@latest")
   have deadcode || modules+=("golang.org/x/tools/cmd/deadcode@latest")
-  have gitleaks || modules+=("github.com/gitleaks/gitleaks/v8@latest")
+  have gitleaks || modules+=("github.com/zricethezav/gitleaks/v8@latest")
   have lazygit || modules+=("github.com/jesseduffield/lazygit@latest")
   have skills-mgr || modules+=("github.com/yusing/skills-mgr@latest")
   have git-agent || modules+=("github.com/yusing/git-agent/cmd/git-agent@latest")
