@@ -30,10 +30,11 @@ Return only this line-record routing manifest, with `status done|partial|blocked
 first line and `artifact /absolute/result` on the second line.
 
 The parent routes the path without inspecting the artifact. On a rerun, revise that same artifact
-in place at its original path: update the recommendation, mark each prior finding resolved, still
-open, or superseded, and add only genuinely new findings. Do not restate an unchanged finding or
-write a second artifact for the scope. An APPROVE rerun is the updated coverage note and
-recommendation alone.
+in place at its original path. When the rerun corrects the abstraction, scope, owner, or causal
+model, replace every finding that depended on it. Otherwise, update the recommendation, mark each
+prior finding resolved, still open, or superseded, and add only genuinely new findings. Do not
+restate an unchanged finding or write a second artifact for the scope. An APPROVE rerun is the
+updated coverage note and recommendation alone.
 
 When no result artifact is requested, the main agent is the sole consumer.
 Return the complete review directly.

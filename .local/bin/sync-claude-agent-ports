@@ -100,7 +100,7 @@ def remove_container_instruction(text: str) -> str:
     return pattern.sub("", text)
 
 
-def adapt_text(text: str, *, role: str, has_bash: bool) -> str:
+def adapt_text(text: str, *, has_bash: bool) -> str:
     text = re.sub(
         r"You are Codex, a GPT-5\.6 (?:Luna|Sol) subagent",
         "You are a subagent",
@@ -108,9 +108,6 @@ def adapt_text(text: str, *, role: str, has_bash: bool) -> str:
         count=1,
     )
     text = text.replace("The handoff provides", "The task provides")
-    text = text.replace(
-        "It names `input_artifacts` only", "It names input artifact paths only"
-    )
     text = text.replace(
         "When the handoff includes `result_artifact`",
         "When the task names a result artifact path",
@@ -262,15 +259,13 @@ def render_role(role: str) -> str:
     tools = {
         tool.strip() for tool in CLAUDE_METADATA[role]["tools"].split(",") if tool.strip()
     }
-    instructions = adapt_text(
-        str(config["instructions"]), role=role, has_bash="Bash" in tools
-    )
+    instructions = adapt_text(str(config["instructions"]), has_bash="Bash" in tools)
     prompt, completion = split_completion(instructions, role=role)
 
     developer = config.get("developer_instructions")
     if not isinstance(developer, str) or not developer.strip():
         raise PortError(f"{role}: missing developer_instructions")
-    developer = adapt_text(developer, role=role, has_bash="Bash" in tools)
+    developer = adapt_text(developer, has_bash="Bash" in tools)
     developer = add_result_write_boundary(developer, role=role)
     task_contract, result_form = split_contract(developer, role=role)
 

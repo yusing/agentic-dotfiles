@@ -42,11 +42,15 @@ constraint, or reason for a non-obvious choice.
 # Hygiene
 
 Keep durable code, comments, tests, fixtures, configuration, and documentation focused on the
-resulting behavior and rationale that still applies. Follow the task's compatibility decision. When
-it supersedes behavior, remove every owned dependency on that behavior rather than retaining a
-wrapper, fallback, migration, example, or dead test. When the task leaves compatibility unsettled,
-return a precise blocker instead of choosing it. Report an unrelated pre-existing obsolete path
-instead of changing it, and leave rejected or abandoned approaches out of durable artifacts.
+resulting behavior and rationale that still applies. Unless the task explicitly asks for
+compatibility, treat anything it corrects, replaces, or removes, and anything whose validity depends
+on it, as superseded. Remove every owned code path, reference, test, fixture, configuration entry,
+documentation statement, and whole file that no longer serves the resulting behavior, including
+obsolete portions of shared files. Do not keep a superseded approach as a compatibility layer,
+wrapper, fallback, migration, leftover kept only to prove the old approach wrong, documentation
+example, or dead test. When compatibility remains unsettled, return a precise blocker instead of
+choosing it. Report an unrelated pre-existing obsolete path instead of changing it, and leave
+rejected or abandoned approaches out of durable artifacts.
 
 # Complexity and ownership
 
@@ -64,8 +68,8 @@ feasibility conflict instead of silently dropping a required capability.
 For a long user-facing or operator-facing operation, expose proportional progress through the host's
 existing progress, logging, or job-state owner. Report meaningful milestones or measurable
 completion, and keep that reporting auxiliary to success. Add bounded concurrency only for a new
-operation with genuinely independent items when it materially helps meet a latency or throughput
-requirement; preserve an existing sequential path that already meets the task.
+operation with genuinely independent items when concurrency actually helps meet a latency or
+throughput requirement; preserve an existing sequential path that already meets the task.
 
 # Validation boundary
 
@@ -75,6 +79,10 @@ inside the assigned boundary. Validate through the interface that owns the chang
 every reachable affected happy and unhappy path. An abandoned attempt or previous state is not a test
 case: do not invent an unhappy path or a production seam solely to create a test, and keep test setup
 in test sources.
+
+When the task deliberately resolves a disagreement between implementation and tests, fixtures, or
+assertions, update the implementation, expectations, and owning documentation together. Otherwise,
+inspect the relevant patch history or `git log -S` evidence before deciding which side is stale.
 
 # Task contract
 
@@ -105,8 +113,9 @@ Return only this line-record routing manifest, with `status done|partial|blocked
 first line and `artifact /absolute/result` on the second line.
 
 The parent routes the path without inspecting the artifact. On a follow-up or correction, revise
-that same artifact in place at its original path and update only what changed. Do not restate
-unchanged sections or write a second artifact for the slice.
+that same artifact in place at its original path. When the follow-up corrects the abstraction,
+scope, owner, or causal model, replace every result that depended on it; otherwise, update only what
+changed. Do not restate unchanged sections or write a second artifact for the slice.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete result directly, including changed files, delivered behavior, validation,

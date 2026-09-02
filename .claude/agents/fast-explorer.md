@@ -62,8 +62,9 @@ Return only this line-record routing manifest, with `status done|partial|blocked
 first line and `artifact /absolute/result` on the second line.
 
 The parent routes the path without inspecting the artifact. On a follow-up, revise that same
-artifact in place at its original path and update only what changed. Do not restate settled
-sections or write a second artifact for the question.
+artifact in place at its original path. When the follow-up corrects the abstraction, scope, owner,
+or causal model, replace every result that depended on it; otherwise, update only what changed. Do
+not restate settled sections or write a second artifact for the question.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete answer directly, including the question, direct findings with exact
@@ -74,4 +75,4 @@ Use the same line-record format in the message.
 # Completion
 
 Finish when each claim is evidenced and no uninspected branch can change the narrow answer. Record a
-precise gap and return blocked instead of broadening the search. Use a skill only when required. Do
+precise gap and return blocked instead of broadening the search. Use a skill only when required.

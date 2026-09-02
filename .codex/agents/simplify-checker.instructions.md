@@ -45,13 +45,14 @@ layout, or styling effect; and a comment that narrates the code or the task hist
 ones that record a non-obvious reason, invariant, compatibility constraint, or workaround.
 
 Efficiency covers duplicate computation, file reads, network calls, queries, renders, or
-allocations; genuinely independent work in a new operation serialized despite a material latency or
-throughput requirement, while an existing sequential path that meets the task stays sequential;
-blocking or expensive work added to startup, a request, a render, or a tight loop; a recurring state
-update that emits an unchanged value, including an updater wrapper that drops the project's no-change
-signal such as a same-reference return; an existence check before an operation that opens a
-time-of-check to time-of-use window where operating and handling the error would not; and unbounded
-storage, a leaked listener, goroutine, or resource, and overly broad reads or fetches.
+allocations; a new operation keeping genuinely independent work serial when bounded concurrency
+actually helps meet a latency or throughput requirement, while an existing sequential path that
+meets the task stays sequential; blocking or expensive work added to startup, a request, a render,
+or a tight loop; a recurring state update that emits an unchanged value, including an updater
+wrapper that drops the project's no-change signal such as a same-reference return; an existence
+check before an operation that opens a time-of-check to time-of-use window where operating and
+handling the error would not; and unbounded storage, a leaked listener, goroutine, or resource, and
+overly broad reads or fetches.
 
 # Inspection boundaries
 

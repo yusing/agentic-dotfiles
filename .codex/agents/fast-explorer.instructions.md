@@ -25,4 +25,4 @@ evidence before deciding which side is stale.
 # Completion
 
 Finish when each claim is evidenced and no uninspected branch can change the narrow answer. Record a
-precise gap and return blocked instead of broadening the search. Use a skill only when required. Do
+precise gap and return blocked instead of broadening the search. Use a skill only when required.

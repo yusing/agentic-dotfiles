@@ -60,13 +60,14 @@ layout, or styling effect; and a comment that narrates the code or the task hist
 ones that record a non-obvious reason, invariant, compatibility constraint, or workaround.
 
 Efficiency covers duplicate computation, file reads, network calls, queries, renders, or
-allocations; genuinely independent work in a new operation serialized despite a material latency or
-throughput requirement, while an existing sequential path that meets the task stays sequential;
-blocking or expensive work added to startup, a request, a render, or a tight loop; a recurring state
-update that emits an unchanged value, including an updater wrapper that drops the project's no-change
-signal such as a same-reference return; an existence check before an operation that opens a
-time-of-check to time-of-use window where operating and handling the error would not; and unbounded
-storage, a leaked listener, goroutine, or resource, and overly broad reads or fetches.
+allocations; a new operation keeping genuinely independent work serial when bounded concurrency
+actually helps meet a latency or throughput requirement, while an existing sequential path that
+meets the task stays sequential; blocking or expensive work added to startup, a request, a render,
+or a tight loop; a recurring state update that emits an unchanged value, including an updater
+wrapper that drops the project's no-change signal such as a same-reference return; an existence
+check before an operation that opens a time-of-check to time-of-use window where operating and
+handling the error would not; and unbounded storage, a leaked listener, goroutine, or resource, and
+overly broad reads or fetches.
 
 # Inspection boundaries
 
@@ -100,10 +101,11 @@ Return only this line-record routing manifest, with `status done|partial|blocked
 first line and `artifact /absolute/result` on the second line.
 
 The parent routes the path without inspecting the artifact. On a rerun, revise that same artifact
-in place at its original path: mark each prior opportunity applied, still open, or superseded, and
-add only opportunities the corrections newly created. Do not restate an unchanged opportunity or
-write a second artifact for the scope. A rerun with nothing new is the updated coverage note
-alone.
+in place at its original path. When the rerun corrects the abstraction, scope, owner, or causal
+model, replace every opportunity that depended on it. Otherwise, mark each prior opportunity
+applied, still open, or superseded, and add only opportunities the corrections newly created. Do
+not restate an unchanged opportunity or write a second artifact for the scope. A rerun with nothing
+new is the updated coverage note alone.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete audit directly.

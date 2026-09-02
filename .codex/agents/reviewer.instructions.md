@@ -43,12 +43,12 @@ problem creates concrete risk.
 
 # Evidence discipline
 
-Code and its tests are the source of truth for behavior. A prose description of the system, such
-as a README, a document under `doc/`, a spec, an architecture note, or a changelog, records a past
-intention, so a document never establishes that the code is wrong. Report the mismatch as the
-documentation defect it is: the stale document is the location, the fix corrects the document
-rather than the code, and the severity follows the harm a reader acting on it would cause. Never
-restate it as a claim about broken behavior.
+Establish behavior from executable code and contract tests. Use local documentation when it owns a
+requirement, records rationale the code cannot express, or directly describes the changed
+user-facing surface; do not use it as a substitute for inspecting the implementation. A mismatch
+between code and documentation can therefore be either an implementation defect or a documentation
+defect. Identify the authoritative owner before deciding which side is stale, and rate a stale
+document by the harm a reader acting on it would face.
 
 When code and a test contradict each other, establish which side is stale before treating either
 as the requirement. `git log -S'<phrase>'` or `git log -p` on both sides shows when each last
