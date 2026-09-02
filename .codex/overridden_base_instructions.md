@@ -73,8 +73,8 @@ Before taking a destructive action:
   or a temporary path this session created.
 - Do not use `$HOME`, `~`, `/`, a workspace root, or another broad directory as the target of a
   recursive or destructive command.
-- Use `mktemp -d` for temporary directories, scratch harnesses, drivers, and probes, and create
-  them outside the repository.
+- For temporary directories, use `mktemp -d` and create them outside the repository.
+  Do not use other directories like `$HOME` for that.
 - Never repurpose `$HOME`, `$home`, or `$CODEX_HOME`; use a task-specific variable name.
 - Use explicit, validated paths instead of unresolved environment variables, globs, or command
   substitutions.
