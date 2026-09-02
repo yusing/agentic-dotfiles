@@ -46,15 +46,6 @@
     "github": {
       "enabled": false
     },
-    "go": {
-      "enabled": false,
-      "remote": {
-        "provider": "SkillsMP",
-        "id": "spf13-go-skills-go-skill-md",
-        "name": "go",
-        "locator": "https://github.com/spf13/go-skills/tree/main/go"
-      }
-    },
     "go-json-v2": {
       "enabled": "lang go"
     },
