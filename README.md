@@ -61,11 +61,13 @@ It is written for a home directory that already has unrelated files, and it
 can be run again if it stops partway through. Files that would be overwritten
 by the checkout are copied to `~/.local/share/dotfiles-setup/` first. Untracked
 files this repository does not own are left in place. A normal rerun checks
-installed versions and installs missing locked tools without upgrading existing
-ones. After a replacement validates, it removes explicitly mapped duplicate
-Brew, APT, Pacman, and legacy direct-install copies. It refuses an APT removal
-that would remove another package, and package-manager dependency failures leave
-the legacy copy in place.
+installed versions and installs missing locked tools in parallel without
+upgrading existing ones. Go is installed first when the source-built Go tools
+need it. After every replacement validates, it removes explicitly mapped
+duplicate Brew, APT, and Pacman packages in one package-manager transaction,
+then removes legacy direct-install copies. It refuses an APT removal that would
+remove another package, and package-manager dependency failures leave the legacy
+copy in place.
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/yusing/agentic-dotfiles/main/setup.sh | bash

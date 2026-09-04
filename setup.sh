@@ -728,13 +728,29 @@ validate_mise_tool() {
 
 install_missing_mise_tools() {
   local tool cmd
+  local missing=() parallel=()
   while IFS='|' read -r tool cmd; do
     if mise_tool_installed "$tool"; then
       log "  present $cmd"
     else
-      info "installing locked $tool"
-      mise_cmd install --locked "$tool"
+      missing+=("$tool")
     fi
+  done < <(mise_tool_records)
+
+  for tool in "${missing[@]}"; do
+    if [ "$tool" = go ]; then
+      info "installing locked Go toolchain"
+      mise_cmd install --locked go
+      validate_mise_tool go go
+    else
+      parallel+=("$tool")
+    fi
+  done
+  if [ "${#parallel[@]}" -gt 0 ]; then
+    info "installing ${#parallel[@]} locked tools in parallel"
+    mise_cmd install --locked "${parallel[@]}"
+  fi
+  while IFS='|' read -r tool cmd; do
     validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
   mise_cmd reshim
@@ -843,7 +859,7 @@ upgrade_mise_tools() {
   refresh_mise_lock
   # The refreshed Go version must be ready before mise invokes the go: backend.
   mise_cmd install --locked go
-  info "installing the upgraded tool set"
+  info "installing the upgraded tool set in parallel"
   mise_cmd install --locked
   mise_cmd reshim
 }
@@ -987,36 +1003,65 @@ pm_package_installed() {
   esac
 }
 
-remove_legacy_package() {
-  local pkg="$1" dependents plan removed name
-  pm_package_installed "$pkg" || return 0
+remove_legacy_packages() {
+  local pkg existing duplicate dependents plan removed name matched
+  local candidates=() removable=()
+  for pkg in "$@"; do
+    [ -n "$pkg" ] || continue
+    pm_package_installed "$pkg" || continue
+    duplicate=0
+    for existing in "${candidates[@]}"; do
+      [ "$existing" != "$pkg" ] || duplicate=1
+    done
+    [ "$duplicate" -eq 1 ] || candidates+=("$pkg")
+  done
+  [ "${#candidates[@]}" -gt 0 ] || return 0
+
   case "$PM" in
     brew)
-      dependents="$(brew uses --installed "$pkg" 2>/dev/null || true)"
-      if [ -n "$dependents" ]; then
-        warn "keeping legacy brew package $pkg; used by: $dependents"
-        return 0
-      fi
-      info "removing legacy brew package $pkg"
-      brew uninstall --formula "$pkg"
+      for pkg in "${candidates[@]}"; do
+        dependents="$(brew uses --installed "$pkg" 2>/dev/null || true)"
+        if [ -n "$dependents" ]; then
+          warn "keeping legacy brew package $pkg; used by: $dependents"
+        else
+          removable+=("$pkg")
+        fi
+      done
+      [ "${#removable[@]}" -gt 0 ] || return 0
+      info "removing legacy brew packages: ${removable[*]}"
+      brew uninstall --formula "${removable[@]}"
       ;;
     apt)
-      plan="$(apt-get -s remove "$pkg")" \
-        || { warn "keeping legacy apt package $pkg; removal simulation failed"; return 0; }
+      plan="$(apt-get -s remove "${candidates[@]}")" \
+        || { warn "keeping legacy apt packages; removal simulation failed"; return 0; }
       removed="$(printf '%s\n' "$plan" | awk '$1 == "Remv" { print $2 }')"
       for name in $removed; do
-        if [ "${name%%:*}" != "$pkg" ]; then
-          warn "keeping legacy apt package $pkg; removal would also remove $name"
+        matched=0
+        for pkg in "${candidates[@]}"; do
+          [ "${name%%:*}" != "$pkg" ] || matched=1
+        done
+        if [ "$matched" -eq 0 ]; then
+          warn "keeping legacy apt packages; removal would also remove $name"
           return 0
         fi
       done
-      info "removing legacy apt package $pkg"
-      run_root apt-get remove -y "$pkg"
+      for pkg in "${candidates[@]}"; do
+        matched=0
+        for name in $removed; do
+          [ "${name%%:*}" != "$pkg" ] || matched=1
+        done
+        if [ "$matched" -eq 0 ]; then
+          warn "keeping legacy apt packages; simulation did not confirm removal of $pkg"
+          return 0
+        fi
+      done
+      info "removing legacy apt packages: ${candidates[*]}"
+      run_root apt-get remove -y "${candidates[@]}"
       ;;
     pacman)
-      info "removing legacy pacman package $pkg"
-      if ! run_root pacman -R --noconfirm "$pkg"; then
-        warn "keeping legacy pacman package $pkg; it may still be required"
+      info "removing legacy pacman packages: ${candidates[*]}"
+      if ! run_root pacman -R --noconfirm "${candidates[@]}"; then
+        warn "keeping legacy pacman packages; one or more may still be required"
       fi
       ;;
   esac
@@ -1085,15 +1130,19 @@ cleanup_legacy_files() {
 
 cleanup_legacy_tool_sources() {
   local tool cmd pkg
+  local packages=()
   info "reconciling tool ownership"
   while IFS= read -r pkg; do
-    [ -n "$pkg" ] && remove_legacy_package "$pkg"
+    [ -z "$pkg" ] || packages+=("$pkg")
   done < <(legacy_packages mise)
   while IFS='|' read -r tool cmd; do
     validate_mise_tool "$tool" "$cmd"
     while IFS= read -r pkg; do
-      [ -n "$pkg" ] && remove_legacy_package "$pkg"
+      [ -z "$pkg" ] || packages+=("$pkg")
     done < <(legacy_packages "$cmd")
+  done < <(mise_tool_records)
+  remove_legacy_packages "${packages[@]}"
+  while IFS='|' read -r tool cmd; do
     cleanup_legacy_files "$cmd"
     validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
@@ -1126,14 +1175,17 @@ install_grok() {
 }
 
 install_herdr() {
+  local pkg
+  local packages=()
   if [ ! -x "${LOCAL_BIN}/herdr" ] || [ "$UPGRADE" -eq 1 ]; then
     info "installing/updating herdr"
     curl -fsSL https://herdr.dev/install.sh | sh
   fi
   [ -x "${LOCAL_BIN}/herdr" ] || die "herdr is unavailable at ${LOCAL_BIN}/herdr"
   while IFS= read -r pkg; do
-    [ -n "$pkg" ] && remove_legacy_package "$pkg"
+    [ -z "$pkg" ] || packages+=("$pkg")
   done < <(legacy_packages herdr)
+  remove_legacy_packages "${packages[@]}"
 }
 
 install_hunkdiff() {
