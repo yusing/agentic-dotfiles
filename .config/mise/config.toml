@@ -1,6 +1,6 @@
 [settings]
 lockfile = true
-minimum_release_age = "3d"
+minimum_release_age = "0s"
 
 [tools]
 go = "latest"
@@ -8,10 +8,9 @@ bun = "latest"
 "aqua:astral-sh/uv" = "latest"
 "github:atuinsh/atuin" = "latest"
 "aqua:crate-ci/typos" = "latest"
-"aqua:openai/codex" = "latest"
 "aqua:dandavison/delta" = "latest"
 "github:eza-community/eza" = "latest"
-"aqua:fastfetch-cli/fastfetch" = { version = "latest", minimum_release_age = "0s" }
+"aqua:fastfetch-cli/fastfetch" = "latest"
 "aqua:junegunn/fzf" = "latest"
 "aqua:cli/cli" = "latest"
 "aqua:git-lfs/git-lfs" = "latest"
@@ -35,9 +34,9 @@ bun = "latest"
 "aqua:tmux/tmux-builds" = "latest"
 "aqua:watchexec/watchexec" = "latest"
 "aqua:ajeetdsouza/zoxide" = "latest"
-"go:golang.org/x/tools/gopls" = { version = "latest", minimum_release_age = "0s" }
-"go:golang.org/x/tools/cmd/goimports" = { version = "latest", minimum_release_age = "0s" }
-"go:golang.org/x/tools/cmd/deadcode" = { version = "latest", minimum_release_age = "0s" }
-"go:github.com/yusing/skills-mgr" = { version = "latest", minimum_release_age = "0s" }
-"go:github.com/yusing/git-agent/cmd/git-agent" = { version = "latest", minimum_release_age = "0s" }
-"go:github.com/yusing/shadowtree/cmd/shadowtree" = { version = "latest", minimum_release_age = "0s" }
+"go:golang.org/x/tools/gopls" = "latest"
+"go:golang.org/x/tools/cmd/goimports" = "latest"
+"go:golang.org/x/tools/cmd/deadcode" = "latest"
+"go:github.com/yusing/skills-mgr" = "latest"
+"go:github.com/yusing/git-agent/cmd/git-agent" = "latest"
+"go:github.com/yusing/shadowtree/cmd/shadowtree" = "latest"
