@@ -130,6 +130,15 @@
     "shadowtree": {
       "enabled": true
     },
+    "show-me": {
+      "enabled": true,
+      "remote": {
+        "provider": "skills.sh",
+        "id": "humanlayer/skills/show-me",
+        "name": "show-me",
+        "locator": "humanlayer/skills/show-me"
+      }
+    },
     "skill-creator": {
       "enabled": true
     },

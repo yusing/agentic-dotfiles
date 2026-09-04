@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "4b8ae7e6016cd3a6d973064cfa2ae0fb9d7c2812",
+  "sourceCommit": "15854b23ca37a3eb1bcbc885a451deab553e4d46",
   "outputs": [
     {
       "path": ".bashrc",
@@ -430,7 +430,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "344214647883da388116ae065de42a5c442c2a8440c4682d83703b3cf9a33fe3",
+      "sha256": "ee9b4f83e92f3cf1cdae77ab1f38800619e5746e1d9b4f8c7d87eaebc0c80f41",
       "executable": false
     },
     {
@@ -501,7 +501,13 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "80728deb3b69f587beb290402b39f762169cdfab444793bdc566f458f558feba",
+      "sha256": "fb9300458388d745d5c9daf6ee84e0a4ebac1541830cf25ef2ce1e38a299b884",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/.remote-patches/1873c3293f7904f3536872679118a319035d4f4080c13f49620628211cd619c1.patch",
+      "kind": "file",
+      "sha256": "e60f20c840d7ff317649baef9f2c26443106d199e7cc8e0f67df2c85b6b49280",
       "executable": false
     },
     {

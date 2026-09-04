@@ -117,6 +117,8 @@ __pycache__
 !/.skills-mgr/
 !/.skills-mgr/.skills-mgr.json
 !/.skills-mgr/skills/
+!/.skills-mgr/skills/.remote-patches/
+!/.skills-mgr/skills/.remote-patches/1873c3293f7904f3536872679118a319035d4f4080c13f49620628211cd619c1.patch
 !/.skills-mgr/skills/assess-change-impact/
 !/.skills-mgr/skills/assess-change-impact/agents/
 !/.skills-mgr/skills/assess-change-impact/agents/openai.yaml
