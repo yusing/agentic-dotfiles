@@ -260,13 +260,14 @@ py() {
 # Direct installs owned by this script live under these user-local roots. If a
 # command resolves elsewhere, leave updates to the package manager that owns it.
 direct_install_needed() {
-  local cmd="$1" path
+  local cmd="$1" home path
   if ! have "$cmd"; then
     return 0
   fi
-  path="$(command -v "$cmd")"
+  home="$(realpath "$HOME")"
+  path="$(realpath "$(command -v "$cmd")")"
   case "$path" in
-    "${GOBIN}/"*|"${GO_PREFIX}/"*|"${HOME}/.bun/bin/"*|"${HOME}/.atuin/bin/"*|"${HOME}/.grok/bin/"*|"${HOME}/go/bin/"*)
+    "${home}/.local/bin/"*|"${home}/.local/opt/go/"*|"${home}/.bun/bin/"*|"${home}/.atuin/bin/"*|"${home}/.fzf/bin/"*|"${home}/.grok/bin/"*|"${home}/go/bin/"*)
       return 0
       ;;
     *)
@@ -845,8 +846,20 @@ install_micro() {
 }
 
 install_tldr() {
+  local path
   direct_install_needed tldr || return 0
   info "installing/updating tldr"
+  if have tldr; then
+    path="$(realpath "$(command -v tldr)")"
+    if [ -e "${GOBIN}/tldr" ] \
+      && [ "$path" = "$(realpath "${GOBIN}/tldr")" ]; then
+      if py -m pip install --user --upgrade tldr; then
+        return 0
+      fi
+      warn "failed to update tldr"
+      return 0
+    fi
+  fi
   if bun install -g tldr@latest; then
     return 0
   fi
@@ -868,9 +881,7 @@ install_golangci_lint() {
 }
 
 install_rtk() {
-  if have rtk && rtk gain >/dev/null 2>&1 && ! direct_install_needed rtk; then
-    return 0
-  fi
+  direct_install_needed rtk || return 0
   info "installing/updating rtk"
   curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
   hash -r 2>/dev/null || true
