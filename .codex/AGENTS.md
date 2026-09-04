@@ -51,11 +51,11 @@ Apply this transition table before reading task documents or taking the next act
 
 | Event | Task handling | Document handling | Next action |
 | --- | --- | --- | --- |
-| Independent user request or question | Start a separate task and classify it before discovery or action. | Read exactly one task-size document: `~/.codex/SMALL-TASK.md` for a small task, otherwise `~/.codex/LARGE-TASK.md`. | Begin the new task. |
+| Independent user request or question | Start a separate task and classify it before discovery or action. | Read exactly one task-size document: `$HOME/.codex/SMALL-TASK.md` for a small task, otherwise `$HOME/.codex/LARGE-TASK.md`. | Begin the new task. |
 | Direct continuation or correction | Keep the current task. Reclassify only when the changed scope invalidates its classification. | Retain loaded task-size and implementation documents; reclassification alone does not reload them. | Continue the task. |
 | Workflow approval | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Perform the approved next step. |
 | Approval or request to dispatch a native role | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Dispatch the role. The main agent does not become the owner of that role's implementation or review. |
-| Compaction | Keep the current task and classify its active scope again. | Reread the matching task-size document. If the active task requires implementation or review, also reread `~/.codex/IMPLEMENTATION.md`. | Resume from the preserved task state. |
+| Compaction | Keep the current task and classify its active scope again. | Reread the matching task-size document. If the active task requires implementation or review, also reread `$HOME/.codex/IMPLEMENTATION.md`. | Resume from the preserved task state. |
 
 Use these task sizes:
 
@@ -155,7 +155,7 @@ supplied that evidence.
 ## Implementation
 
 Before implementing or reviewing code, configuration, tests, documentation, or agent instructions,
-read `~/.codex/IMPLEMENTATION.md`. It owns implementation, validation, runtime behavior, hygiene,
+read `$HOME/.codex/IMPLEMENTATION.md`. It owns implementation, validation, runtime behavior, hygiene,
 edit readiness, and the complexity and ownership gate. Apply it before the first edit and when
 deciding whether to act on a review finding.
 
