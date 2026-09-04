@@ -257,6 +257,24 @@ py() {
   fi
 }
 
+# Direct installs owned by this script live under these user-local roots. If a
+# command resolves elsewhere, leave updates to the package manager that owns it.
+direct_install_needed() {
+  local cmd="$1" path
+  if ! have "$cmd"; then
+    return 0
+  fi
+  path="$(command -v "$cmd")"
+  case "$path" in
+    "${GOBIN}/"*|"${GO_PREFIX}/"*|"${HOME}/.bun/bin/"*|"${HOME}/.atuin/bin/"*|"${HOME}/.grok/bin/"*|"${HOME}/go/bin/"*)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
 refresh_pm() {
   case "$PM" in
     apt)
@@ -715,16 +733,17 @@ for rel in releases:
 # ---------------------------------------------------------------------------
 
 install_oh_my_posh() {
-  if have oh-my-posh; then
-    return 0
-  fi
-  info "installing oh-my-posh"
+  direct_install_needed oh-my-posh || return 0
+  info "installing/updating oh-my-posh"
   mkdir -p "$GOBIN"
   curl -fsSL https://ohmyposh.dev/install.sh | bash -s -- -d "$GOBIN"
 }
 
 install_claude() {
+  direct_install_needed claude || return 0
   if have claude; then
+    info "updating Claude Code"
+    claude update
     return 0
   fi
   info "installing Claude Code"
@@ -732,15 +751,16 @@ install_claude() {
 }
 
 install_codex() {
-  if have codex; then
-    return 0
-  fi
-  info "installing Codex"
+  direct_install_needed codex || return 0
+  info "installing/updating Codex"
   curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
 }
 
 install_grok() {
+  direct_install_needed grok || return 0
   if have grok; then
+    info "updating Grok CLI"
+    grok update
     return 0
   fi
   info "installing Grok CLI"
@@ -748,15 +768,16 @@ install_grok() {
 }
 
 install_herdr() {
-  if have herdr; then
-    return 0
-  fi
-  info "installing herdr"
+  direct_install_needed herdr || return 0
+  info "installing/updating herdr"
   curl -fsSL https://herdr.dev/install.sh | sh
 }
 
 install_bun() {
+  direct_install_needed bun || return 0
   if have bun; then
+    info "updating bun"
+    bun upgrade
     return 0
   fi
   info "installing bun"
@@ -765,12 +786,17 @@ install_bun() {
 }
 
 install_atuin() {
+  direct_install_needed atuin || return 0
   if have atuin; then
+    info "updating atuin"
+    atuin update
     return 0
   fi
   if [ -x "${HOME}/.atuin/bin/atuin" ]; then
     ln -sfn "${HOME}/.atuin/bin/atuin" "${GOBIN}/atuin"
     export PATH="${HOME}/.atuin/bin:${PATH}"
+    info "updating atuin"
+    atuin update
     return 0
   fi
   info "installing atuin"
@@ -780,30 +806,29 @@ install_atuin() {
 }
 
 install_just() {
-  if have just; then
-    return 0
-  fi
-  info "installing just via official installer"
+  direct_install_needed just || return 0
+  info "installing/updating just via official installer"
   curl --proto "=https" --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to "$GOBIN"
 }
 
 install_zoxide() {
-  if have zoxide; then
-    return 0
-  fi
-  info "installing zoxide via official installer"
+  direct_install_needed zoxide || return 0
+  info "installing/updating zoxide via official installer"
   curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 }
 
 install_fzf() {
   # Distro fzf is often too old for `fzf --fish` (needs 0.48+).
-  if have fzf && fzf --help 2>&1 | grep -q -- '--fish'; then
+  if have fzf && ! direct_install_needed fzf \
+    && fzf --help 2>&1 | grep -q -- '--fish'; then
     return 0
   fi
-  info "installing fzf from GitHub"
+  info "installing/updating fzf from GitHub"
   if ! git -C "${HOME}/.fzf" remote get-url origin 2>/dev/null | grep -q 'junegunn/fzf'; then
     rm -rf "${HOME}/.fzf"
     git clone --depth 1 https://github.com/junegunn/fzf.git "${HOME}/.fzf"
+  else
+    git -C "${HOME}/.fzf" pull --ff-only
   fi
   "${HOME}/.fzf/install" --bin --no-update-rc --no-key-bindings --no-completion
   mkdir -p "$GOBIN"
@@ -811,10 +836,8 @@ install_fzf() {
 }
 
 install_micro() {
-  if have micro; then
-    return 0
-  fi
-  info "installing micro"
+  direct_install_needed micro || return 0
+  info "installing/updating micro"
   (
     cd "$GOBIN"
     curl -fsS https://getmic.ro | bash
@@ -822,11 +845,9 @@ install_micro() {
 }
 
 install_tldr() {
-  if have tldr; then
-    return 0
-  fi
-  info "installing tldr"
-  if bun install -g tldr; then
+  direct_install_needed tldr || return 0
+  info "installing/updating tldr"
+  if bun install -g tldr@latest; then
     return 0
   fi
   if python3 -m pip install --user tldr; then
@@ -835,38 +856,42 @@ install_tldr() {
   warn "tldr is still missing"
 }
 
+install_hunkdiff() {
+  info "installing/updating hunkdiff"
+  bun install -g hunkdiff@latest
+}
+
 install_golangci_lint() {
-  if have golangci-lint; then
-    return 0
-  fi
-  info "installing golangci-lint"
+  direct_install_needed golangci-lint || return 0
+  info "installing/updating golangci-lint"
   curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b "$GOBIN"
 }
 
 install_rtk() {
-  if have rtk && rtk gain >/dev/null 2>&1; then
+  if have rtk && rtk gain >/dev/null 2>&1 && ! direct_install_needed rtk; then
     return 0
   fi
-  info "installing rtk"
+  info "installing/updating rtk"
   curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
   hash -r 2>/dev/null || true
   have rtk && rtk gain >/dev/null 2>&1 \
     || die "rtk installed, but the Rust Token Killer CLI is not available"
 }
 
-# One `go install` per missing tool. A single invocation cannot mix packages
-# from different modules (gopls, x/tools, and the yusing tools are all separate).
+# One `go install` per missing or directly managed tool. A single invocation
+# cannot mix packages from different modules (gopls, x/tools, and the yusing
+# tools are all separate).
 install_go_tools() {
   local modules=() module
   mkdir -p "$GOBIN"
-  have gopls || modules+=("golang.org/x/tools/gopls@latest")
-  have goimports || modules+=("golang.org/x/tools/cmd/goimports@latest")
-  have deadcode || modules+=("golang.org/x/tools/cmd/deadcode@latest")
-  have gitleaks || modules+=("github.com/zricethezav/gitleaks/v8@latest")
-  have lazygit || modules+=("github.com/jesseduffield/lazygit@latest")
-  have skills-mgr || modules+=("github.com/yusing/skills-mgr@latest")
-  have git-agent || modules+=("github.com/yusing/git-agent/cmd/git-agent@latest")
-  have shadowtree || modules+=("github.com/yusing/shadowtree/cmd/shadowtree@latest")
+  direct_install_needed gopls && modules+=("golang.org/x/tools/gopls@latest")
+  direct_install_needed goimports && modules+=("golang.org/x/tools/cmd/goimports@latest")
+  direct_install_needed deadcode && modules+=("golang.org/x/tools/cmd/deadcode@latest")
+  direct_install_needed gitleaks && modules+=("github.com/zricethezav/gitleaks/v8@latest")
+  direct_install_needed lazygit && modules+=("github.com/jesseduffield/lazygit@latest")
+  direct_install_needed skills-mgr && modules+=("github.com/yusing/skills-mgr@latest")
+  direct_install_needed git-agent && modules+=("github.com/yusing/git-agent/cmd/git-agent@latest")
+  direct_install_needed shadowtree && modules+=("github.com/yusing/shadowtree/cmd/shadowtree@latest")
   if [ "${#modules[@]}" -gt 0 ]; then
     for module in "${modules[@]}"; do
       info "go install ${module}"
@@ -1010,7 +1035,7 @@ verify_setup() {
     required_failed=1
   fi
   info "expected commands"
-  if ! check_cmds goimports deadcode gh zoxide delta tput gpg bun claude codex grok herdr atuin eza tldr fastfetch lazygit tmux git-lfs; then
+  if ! check_cmds goimports deadcode gh zoxide delta tput gpg bun claude codex grok herdr atuin eza tldr hunk fastfetch lazygit tmux git-lfs; then
     expected_failed=1
   fi
   if [ "$required_failed" -ne 0 ]; then
@@ -1097,6 +1122,9 @@ main() {
 
   STEP="install tldr"
   install_tldr
+
+  STEP="install hunkdiff"
+  install_hunkdiff
 
   STEP="set login shell"
   ensure_fish_login_shell
