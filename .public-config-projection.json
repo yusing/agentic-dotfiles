@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "68ccb2986f975acc650d4bca8b9b53d42ce9eda9",
+  "sourceCommit": "656a5dfc6bb50df37af90776c5ceed95b9543c03",
   "outputs": [
     {
       "path": ".bashrc",
@@ -424,7 +424,7 @@
     {
       "path": ".gitconfig",
       "kind": "file",
-      "sha256": "d13d523be9d00363cd26d301565e0e5595c7c1ab61557463b1117a230df7eb97",
+      "sha256": "c1b7dccb7200f28919434622dbe1cbfc3a77bbb7775fb0f3e21bd1e6332a214f",
       "executable": false
     },
     {

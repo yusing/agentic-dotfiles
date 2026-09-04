@@ -12,7 +12,7 @@
 [init]
   defaultBranch = main
 [core]
-  pager = delta
+  pager = hunk pager
   excludesfile = $HOME/.gitignore_global
 [alias]
 	# Use a temporary index so untracked files appear without changing the real staging area.
