@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "15854b23ca37a3eb1bcbc885a451deab553e4d46",
+  "sourceCommit": "701ed4c8feb902e86bcbc634118a8761e0825684",
   "outputs": [
     {
       "path": ".bashrc",
@@ -489,7 +489,7 @@
     {
       "path": ".local/bin/project-public-config",
       "kind": "file",
-      "sha256": "f7b923f69b9796e694600d7a21c504af9b7c8a4a42fb0ee241186c47060f64d8",
+      "sha256": "f4d5a9f6a5f08d40b1acb47d158c5432635ba64b8a6ec367d50ccd2c48be96af",
       "executable": true
     },
     {

@@ -55,6 +55,7 @@ const TEXT_EXTENSIONS = new Set([
 	".jsonc",
 	".md",
 	".micro",
+	".patch",
 	".py",
 	".sh",
 	".swift",
@@ -148,6 +149,32 @@ const EXACT_PATHS = new Set([
 	COMMAND_PATH,
 ]);
 
+const PROJECTED_SKILL_NAMES = [
+	"assess-change-impact",
+	"build-code-skeleton",
+	"codebase-review",
+	"council",
+	"deliver-vertical-slice",
+	"deslop",
+	"final-review",
+	"go-json-v2",
+	"go-microoptimizations",
+	"golang-best-practices",
+	"handoff",
+	"human-flavoured-writing",
+	"js-ts-best-practices",
+	"juststore-rendering-optimizer",
+	"new-project",
+	"postgres-17-18-features",
+	"shadcn",
+	"shadowtree",
+	"supabase-postgres-best-practices",
+	"user-experience",
+	"using-pjdoc",
+	"writing-for-agents",
+	"writing-readme",
+];
+
 const TREE_PREFIXES = [
 	".claude/agents",
 	".codex/agents",
@@ -156,34 +183,11 @@ const TREE_PREFIXES = [
 	".codex/skills/read-codex-session",
 	".codex/skills/session-usage",
 	".config/micro/colorschemes",
-	...[
-		"assess-change-impact",
-		"build-code-skeleton",
-		"codebase-review",
-		"council",
-		"deliver-vertical-slice",
-		"deslop",
-		"final-review",
-		"go-json-v2",
-		"go-microoptimizations",
-		"golang-best-practices",
-		"handoff",
-		"human-flavoured-writing",
-		"js-ts-best-practices",
-		"juststore-rendering-optimizer",
-		"new-project",
-		"postgres-17-18-features",
-		"shadcn",
-		"shadowtree",
-		"supabase-postgres-best-practices",
-		"user-experience",
-		"using-pjdoc",
-		"writing-for-agents",
-		"writing-readme",
-	].map(name => `.skills-mgr/skills/${name}`),
+	".skills-mgr/skills/.remote-patches",
+	...PROJECTED_SKILL_NAMES.map(name => `.skills-mgr/skills/${name}`),
 ];
 
-const SKILL_NAMES = new Set(TREE_PREFIXES.filter(path => path.startsWith(".skills-mgr/skills/")).map(path => path.split("/").at(-1)!));
+const SKILL_NAMES = new Set(PROJECTED_SKILL_NAMES);
 
 const EXCLUDED_PATH_PARTS = new Set([
 	"__pycache__",
