@@ -14,7 +14,8 @@ PRIVATE_REPO_SLUG="yusing/dotfiles"
 GIT_NAME="yusing"
 GIT_EMAIL="yusing.wys@gmail.com"
 GO_PREFIX="${HOME}/.local/opt/go"
-GOBIN="${HOME}/.local/bin"
+LOCAL_BIN="${HOME}/.local/bin"
+GOBIN="${HOME}/go/bin"
 BACKUP_ROOT="${HOME}/.local/share/dotfiles-setup"
 
 STEP="starting"
@@ -39,7 +40,7 @@ run_root() {
 # PATH and OS
 # ---------------------------------------------------------------------------
 
-export PATH="${GOBIN}:${GO_PREFIX}/bin:${HOME}/.bun/bin:${HOME}/.atuin/bin:${HOME}/.grok/bin:${HOME}/go/bin:${PATH}"
+export PATH="${GOBIN}:${LOCAL_BIN}:${GO_PREFIX}/bin:${HOME}/.bun/bin:${HOME}/.atuin/bin:${HOME}/.grok/bin:${PATH}"
 export GOBIN
 export DEBIAN_FRONTEND=noninteractive
 export NONINTERACTIVE=1
@@ -721,13 +722,13 @@ for rel in releases:
   curl -fsSL -o "$tarball" "$url"
   sha256_check "$sha" "$tarball"
 
-  mkdir -p "$(dirname "$GO_PREFIX")" "$GOBIN"
+  mkdir -p "$(dirname "$GO_PREFIX")" "$LOCAL_BIN"
   rm -rf "$GO_PREFIX"
   tar -C "$(dirname "$GO_PREFIX")" -xzf "$tarball"
   rm -rf "$tmp"
 
-  ln -sfn "${GO_PREFIX}/bin/go" "${GOBIN}/go"
-  ln -sfn "${GO_PREFIX}/bin/gofmt" "${GOBIN}/gofmt"
+  ln -sfn "${GO_PREFIX}/bin/go" "${LOCAL_BIN}/go"
+  ln -sfn "${GO_PREFIX}/bin/gofmt" "${LOCAL_BIN}/gofmt"
   hash -r 2>/dev/null || true
   have go || die "go installed to ${GO_PREFIX} but is not on PATH"
   log "Go $(go env GOVERSION) -> $(command -v go)"
@@ -740,8 +741,8 @@ for rel in releases:
 install_oh_my_posh() {
   direct_install_needed oh-my-posh || return 0
   info "installing/updating oh-my-posh"
-  mkdir -p "$GOBIN"
-  curl -fsSL https://ohmyposh.dev/install.sh | bash -s -- -d "$GOBIN"
+  mkdir -p "$LOCAL_BIN"
+  curl -fsSL https://ohmyposh.dev/install.sh | bash -s -- -d "$LOCAL_BIN"
 }
 
 install_claude() {
@@ -798,14 +799,14 @@ install_atuin() {
     return 0
   fi
   if [ -x "${HOME}/.atuin/bin/atuin" ]; then
-    ln -sfn "${HOME}/.atuin/bin/atuin" "${GOBIN}/atuin"
+    ln -sfn "${HOME}/.atuin/bin/atuin" "${LOCAL_BIN}/atuin"
     export PATH="${HOME}/.atuin/bin:${PATH}"
     info "updating atuin"
     atuin update
     return 0
   fi
   info "installing atuin"
-  mkdir -p "$GOBIN"
+  mkdir -p "$LOCAL_BIN"
   ATUIN_NO_MODIFY_PATH=1 ATUIN_INSTALL_DIR="$HOME/.local" \
     curl --proto "=https" --tlsv1.2 -LsSf https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh | sh
 }
@@ -813,7 +814,7 @@ install_atuin() {
 install_just() {
   direct_install_needed just || return 0
   info "installing/updating just via official installer"
-  curl --proto "=https" --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to "$GOBIN"
+  curl --proto "=https" --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to "$LOCAL_BIN"
 }
 
 install_zoxide() {
@@ -836,15 +837,15 @@ install_fzf() {
     git -C "${HOME}/.fzf" pull --ff-only
   fi
   "${HOME}/.fzf/install" --bin --no-update-rc --no-key-bindings --no-completion
-  mkdir -p "$GOBIN"
-  ln -sfn "${HOME}/.fzf/bin/fzf" "${GOBIN}/fzf"
+  mkdir -p "$LOCAL_BIN"
+  ln -sfn "${HOME}/.fzf/bin/fzf" "${LOCAL_BIN}/fzf"
 }
 
 install_micro() {
   direct_install_needed micro || return 0
   info "installing/updating micro"
   (
-    cd "$GOBIN"
+    cd "$LOCAL_BIN"
     curl -fsS https://getmic.ro | bash
   )
 }
@@ -855,8 +856,8 @@ install_tldr() {
   info "installing/updating tldr"
   if have tldr; then
     path="$(realpath "$(command -v tldr)")"
-    if [ -e "${GOBIN}/tldr" ] \
-      && [ "$path" = "$(realpath "${GOBIN}/tldr")" ]; then
+    if [ -e "${LOCAL_BIN}/tldr" ] \
+      && [ "$path" = "$(realpath "${LOCAL_BIN}/tldr")" ]; then
       if py -m pip install --user --upgrade tldr; then
         return 0
       fi
@@ -896,9 +897,35 @@ install_rtk() {
 # One `go install` per missing or directly managed tool. A single invocation
 # cannot mix packages from different modules (gopls, x/tools, and the yusing
 # tools are all separate).
+migrate_go_tools() {
+  local name source target
+  mkdir -p "$GOBIN"
+  for name in gopls goimports deadcode gitleaks lazygit skills-mgr git-agent shadowtree golangci-lint; do
+    source="${LOCAL_BIN}/${name}"
+    if [ ! -f "$source" ] && [ ! -L "$source" ]; then
+      continue
+    fi
+    target="${GOBIN}/${name}"
+    if [ -e "$target" ] || [ -L "$target" ]; then
+      if [ -L "$target" ] && [ "$source" -ef "$target" ]; then
+        rm -f "$target"
+        mv "$source" "$target"
+        info "migrated ${name} to ${GOBIN}"
+      else
+        rm -f "$source"
+        info "removed legacy ${source}; ${target} already exists"
+      fi
+    else
+      mv "$source" "$target"
+      info "migrated ${name} to ${GOBIN}"
+    fi
+  done
+  hash -r 2>/dev/null || true
+}
+
 install_go_tools() {
   local modules=() module
-  mkdir -p "$GOBIN"
+  migrate_go_tools
   direct_install_needed gopls && modules+=("golang.org/x/tools/gopls@latest")
   direct_install_needed goimports && modules+=("golang.org/x/tools/cmd/goimports@latest")
   direct_install_needed deadcode && modules+=("golang.org/x/tools/cmd/deadcode@latest")
@@ -1090,7 +1117,7 @@ main() {
       ;;
   esac
 
-  mkdir -p "$GOBIN" "$BACKUP_ROOT"
+  mkdir -p "$LOCAL_BIN" "$GOBIN" "$BACKUP_ROOT"
   cd "$HOME"
 
   STEP="detect package manager"
@@ -1128,7 +1155,7 @@ main() {
 
   STEP="install latest Go"
   install_latest_go
-  export PATH="${GOBIN}:${GO_PREFIX}/bin:${PATH}"
+  export PATH="${GOBIN}:${LOCAL_BIN}:${GO_PREFIX}/bin:${PATH}"
   hash -r 2>/dev/null || true
 
   STEP="install independent tools"

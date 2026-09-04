@@ -45,7 +45,9 @@ It installs OS packages, checks this repository out into `$HOME`, rewrites the
 repository's canonical home paths in tracked runtime configuration for the local
 machine, then installs the current Go toolchain when the one on `PATH` is missing
 or outdated, followed by `rtk`, Codex, Claude Code, Grok, herdr, and the Go tools
-this setup uses.
+this setup uses. Go tools live in `~/go/bin`; rerunning the setup migrates copies
+installed by an older version from `~/.local/bin`, preferring an existing tool at
+the new location before the normal update runs.
 
 When `$HOME` is already the recognized private `yusing/dotfiles` checkout,
 setup preserves its origin and history and continues with the remaining setup
