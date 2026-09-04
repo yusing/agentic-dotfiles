@@ -715,10 +715,6 @@ go:github.com/yusing/shadowtree/cmd/shadowtree|shadowtree
 EOF
 }
 
-mise_tool_installed() {
-  mise_cmd where "$1" >/dev/null 2>&1
-}
-
 validate_mise_tool() {
   local tool="$1" cmd="$2" path
   path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
@@ -726,30 +722,13 @@ validate_mise_tool() {
     || die "mise installed $tool, but $cmd is unavailable"
 }
 
-install_missing_mise_tools() {
+install_locked_mise_tools() {
   local tool cmd
-  local missing=() parallel=()
-  while IFS='|' read -r tool cmd; do
-    if mise_tool_installed "$tool"; then
-      log "  present $cmd"
-    else
-      missing+=("$tool")
-    fi
-  done < <(mise_tool_records)
-
-  for tool in "${missing[@]}"; do
-    if [ "$tool" = go ]; then
-      info "installing locked Go toolchain"
-      mise_cmd install --locked go
-      validate_mise_tool go go
-    else
-      parallel+=("$tool")
-    fi
-  done
-  if [ "${#parallel[@]}" -gt 0 ]; then
-    info "installing ${#parallel[@]} locked tools in parallel"
-    mise_cmd install --locked "${parallel[@]}"
-  fi
+  info "installing the locked Go toolchain"
+  mise_cmd install --locked go
+  validate_mise_tool go go
+  info "reconciling the locked tool set in parallel"
+  mise_cmd install --locked
   while IFS='|' read -r tool cmd; do
     validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
@@ -857,26 +836,7 @@ upgrade_mise_tools() {
   # The existing locked Go version is needed to resolve source-built Go tools.
   mise_cmd install --locked go
   refresh_mise_lock
-  # The refreshed Go version must be ready before mise invokes the go: backend.
-  mise_cmd install --locked go
-  info "installing the upgraded tool set in parallel"
-  mise_cmd install --locked
-  mise_cmd reshim
-}
-
-report_mise_updates() {
-  local output
-  info "available cross-platform tool updates"
-  if ! output="$(mise_cmd outdated 2>&1)"; then
-    warn "could not check for cross-platform tool updates"
-    [ -z "$output" ] || printf '%s\n' "$output"
-    return 0
-  fi
-  if [ -n "$output" ]; then
-    printf '%s\n' "$output"
-  else
-    log "  none"
-  fi
+  install_locked_mise_tools
 }
 
 # ---------------------------------------------------------------------------
@@ -988,27 +948,30 @@ legacy_packages() {
   esac
 }
 
-pm_package_installed() {
+installed_pm_package() {
   case "$PM" in
     apt)
       dpkg-query -W -f='${Status}\n' "$1" 2>/dev/null \
-        | grep -q 'install ok installed'
+        | grep -q 'install ok installed' \
+        && printf '%s\n' "$1"
       ;;
     brew)
-      brew list --formula "$1" >/dev/null 2>&1
+      brew list --formula "$1" >/dev/null 2>&1 \
+        && printf '%s\n' "$1"
       ;;
     pacman)
-      pacman -Q "$1" >/dev/null 2>&1
+      pacman -Qq "$1" 2>/dev/null
       ;;
   esac
 }
 
 remove_legacy_packages() {
-  local pkg existing duplicate dependents plan removed name matched
+  local pkg resolved existing duplicate dependents plan removed name matched
   local candidates=() removable=()
   for pkg in "$@"; do
     [ -n "$pkg" ] || continue
-    pm_package_installed "$pkg" || continue
+    resolved="$(installed_pm_package "$pkg")" || continue
+    pkg="$resolved"
     duplicate=0
     for existing in "${candidates[@]}"; do
       [ "$existing" != "$pkg" ] || duplicate=1
@@ -1304,10 +1267,11 @@ Usage: setup.sh [--upgrade]
 Install missing native and locked cross-platform tools, reconcile each tool to
 its declared owner, then check the agentic-dotfiles repository out into $HOME.
 
-Without --upgrade, installed tools are checked but not upgraded. Packages from
-legacy Brew, APT, Pacman, and direct-install sources are removed only after the
-replacement validates. --upgrade advances the tracked multi-platform mise lock
-and installs the upgraded tool set. Native OS package upgrades remain separate.
+Without --upgrade, installed tools are reconciled to the tracked lock without a
+remote version lookup. Packages from legacy Brew, APT, Pacman, and direct-install
+sources are removed only after the replacement validates. --upgrade advances the
+tracked multi-platform mise lock and installs it. Native OS package upgrades
+remain separate.
 EOF
 }
 
@@ -1369,7 +1333,7 @@ main() {
   if [ "$UPGRADE" -eq 1 ]; then
     upgrade_mise_tools
   else
-    install_missing_mise_tools
+    install_locked_mise_tools
   fi
 
   STEP="reconcile tool ownership"
@@ -1387,11 +1351,6 @@ main() {
 
   info "cross-platform tool versions"
   mise_cmd ls --global
-
-  if [ "$UPGRADE" -eq 0 ]; then
-    STEP="check for tool updates"
-    report_mise_updates
-  fi
 
   info "setup complete"
   log "open a new shell session to activate the mise-managed tools"

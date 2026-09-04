@@ -47,24 +47,21 @@ not include running ordinary task-scoped inspection, editing, build, or validati
 
 ## Task sizing and intent verification
 
-Treat each independently scoped user request or question as a separate task. A direct continuation
-or correction remains part of the current task; reclassify it when the changed scope invalidates
-its current classification. Reclassification does not require rereading an already loaded matching
-task-size document.
+Apply this transition table before reading task documents or taking the next action:
 
-Classify the task before discovery or action:
+| Event | Task handling | Document handling | Next action |
+| --- | --- | --- | --- |
+| Independent user request or question | Start a separate task and classify it before discovery or action. | Read exactly one task-size document: `~/.codex/SMALL-TASK.md` for a small task, otherwise `~/.codex/LARGE-TASK.md`. | Begin the new task. |
+| Direct continuation or correction | Keep the current task. Reclassify only when the changed scope invalidates its classification. | Retain loaded task-size and implementation documents; reclassification alone does not reload them. | Continue the task. |
+| Workflow approval | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Perform the approved next step. |
+| Approval or request to dispatch a native role | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Dispatch the role. The main agent does not become the owner of that role's implementation or review. |
+| Compaction | Keep the current task and classify its active scope again. | Reread the matching task-size document. If the active task requires implementation or review, also reread `~/.codex/IMPLEMENTATION.md`. | Resume from the preserved task state. |
+
+Use these task sizes:
 
 - Small: it has a concrete local outcome and an owner that is obvious or quick to find.
 - Large: it involves semantic changes with meaningful edge cases, cross-owner changes, diagnosis,
   refactoring, migration, or other open-ended investigation.
-
-If the task is small, read `~/.codex/SMALL-TASK.md`; otherwise, read
-`~/.codex/LARGE-TASK.md`. Read exactly one task-size document.
-
-After compaction, classify the active task again from its current scope, then reread the matching
-task-size document before more task work. If the active task requires implementation or review,
-also reread `~/.codex/IMPLEMENTATION.md`. This compaction reload is independent of ordinary
-reclassification.
 
 ## Skills and required tools
 
@@ -81,11 +78,12 @@ Explain why it is required and propose an installation, then install only once I
 decline the installation, ask me how to proceed. Do not introduce or require a dependency solely
 for an optional implementation choice; use the simplest suitable available approach instead.
 
-Run every shell command expected to produce large or noisy stdout/stderr through `rtk command [argv...]`. In a
-compound command or pipeline, apply `rtk` to each noisy producer rather than mechanically wrapping
-every executable. Leave quiet filters, control operators, and redirections outside `rtk`. Use raw
-execution when the complete unmodified output is required or when the command's purpose is to
-write its output to a file rather than return it to the conversation.
+Noisy output: prefix each shell producer expected to emit large stdout/stderr with
+`rtk command [argv...]`, including a user-supplied command that omits the prefix. In a compound
+command or pipeline, prefix each noisy producer rather than mechanically wrapping every
+executable. Leave quiet filters, control operators, and redirections outside `rtk`. Use raw
+execution when the complete unmodified output is required or when the command writes its output
+to a file instead of returning it to the conversation.
 
 ## Agent communication
 
@@ -114,13 +112,13 @@ inspection can find it beyond focused checks and direct diff review.
 
 Native review roles are the only owners of independent inspection; root diff review and tests are
 validation, not substitutes. When inspection is needed, ask the user before spawning
-`reviewer` or `simplify-checker`. After approval, spawn the selected roles concurrently and give
-each its exact review scope directly. Include input artifacts only for evidence produced by
-another spawned agent. Request a result artifact only when another spawned agent will consume the
-review; when the main agent is the sole consumer, have the role return its complete review
-directly. Do not duplicate an active role's inspection. Without approval, leave the inspection
-pending. When inspections cover web or frontend changes, also spawn `web-reviewer` with the same
-scope, relevant upstream artifacts, and consumer-based result mode.
+`reviewer` or `simplify-checker`. After approval, follow the native-role dispatch row above, then
+spawn the selected roles concurrently and give each its exact review scope directly. Include input
+artifacts only for evidence produced by another spawned agent. Request a result artifact only when
+another spawned agent will consume the review; when the main agent is the sole consumer, have the
+role return its complete review directly. Do not duplicate an active role's inspection. Without
+approval, leave the inspection pending. When inspections cover web or frontend changes, also spawn
+`web-reviewer` with the same scope, relevant upstream artifacts, and consumer-based result mode.
 
 ### Agents council
 

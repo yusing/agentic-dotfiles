@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b516f9c3ccd10e85b65c86baef686a73b4be457a",
+  "sourceCommit": "baba85a96f9c8d67ef1f01bf8f3b37e4c656c5d2",
   "outputs": [
     {
       "path": ".bashrc",
@@ -82,7 +82,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "ed48b530b4f42507aa5b32b4cbdfa08515cdf71deab35a0f895f725b6b6c3e64",
+      "sha256": "d4fa69ed30d201ddfaf79a37f131b7a30703063d7ce5d3529523e6423f8687a9",
       "executable": false
     },
     {
@@ -274,7 +274,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "292775ca93c3164f7f6b0e9653201aecd965724698e67efbbd48352877daca28",
+      "sha256": "962d95b2e478b83d1b51ac10b0f6af9df88e220a76dd55eec028a562d368fff4",
       "executable": false
     },
     {
@@ -938,13 +938,13 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "49a8c0ad23e1fd3f169ab2c2728a5559b84779f2c6e5086d75d7fa9955f4ebe7",
+      "sha256": "efa492709bb7437f43a115d890f29878519db19103f2b32cae15f6c87f241eba",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "247c8e0c2195fa4c0c67f1a73fc05aacd4e8c84cf3205a3864fad25f99d3514a",
+      "sha256": "3d3810a8bdac14f3d30ff573a3d33155bd7c63c35c6b37735cca839bfcf0eddd",
       "executable": true
     }
   ]
