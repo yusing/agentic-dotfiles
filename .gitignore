@@ -50,6 +50,8 @@ __pycache__
 !/.codex/hooks/session_scope.py
 !/.codex/hooks/shell_command.py
 !/.codex/hooks/subagent_exec_guard.py
+!/.codex/IMPLEMENTATION.md
+!/.codex/LARGE-TASK.md
 !/.codex/overridden_base_instructions.md
 !/.codex/skills/
 !/.codex/skills/dump-last-response/
@@ -64,6 +66,7 @@ __pycache__
 !/.codex/skills/read-codex-session/SKILL.md
 !/.codex/skills/session-usage/
 !/.codex/skills/session-usage/SKILL.md
+!/.codex/SMALL-TASK.md
 !/.config/
 !/.config/atuin/
 !/.config/atuin/config.toml

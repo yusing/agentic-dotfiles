@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "e8f160e3d924a368b3805ea851e22d6ad87e2f7e",
+  "sourceCommit": "3bc629d7b0bfc1928cc20f05d23c9c84e77dbd32",
   "outputs": [
     {
       "path": ".bashrc",
@@ -260,6 +260,18 @@
       "executable": false
     },
     {
+      "path": ".codex/IMPLEMENTATION.md",
+      "kind": "file",
+      "sha256": "783328703ba2d7ca1fb8679ad8b6024d4d6eb474903f9a753a28732837761b8b",
+      "executable": false
+    },
+    {
+      "path": ".codex/LARGE-TASK.md",
+      "kind": "file",
+      "sha256": "463ed104ad85b08db810a77c4b8338ae4a42e8ae9f0fbbdd0cdbbc9abc6c083d",
+      "executable": false
+    },
+    {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
       "sha256": "292775ca93c3164f7f6b0e9653201aecd965724698e67efbbd48352877daca28",
@@ -299,6 +311,12 @@
       "path": ".codex/skills/session-usage/SKILL.md",
       "kind": "file",
       "sha256": "06c115083cba295ec78ee5ee8afc4ea0d79a5a920130ac65c2c1f2fc4639fe97",
+      "executable": false
+    },
+    {
+      "path": ".codex/SMALL-TASK.md",
+      "kind": "file",
+      "sha256": "926cae329678d40f19501d27331cc6d12c22cbac41f8ca28c97e90f983efc053",
       "executable": false
     },
     {
@@ -430,7 +448,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "ee9b4f83e92f3cf1cdae77ab1f38800619e5746e1d9b4f8c7d87eaebc0c80f41",
+      "sha256": "4a64369c4092a756e4503329501755aa5dbe027f42cca783991a541da6cdd9e0",
       "executable": false
     },
     {
@@ -489,7 +507,7 @@
     {
       "path": ".local/bin/project-public-config",
       "kind": "file",
-      "sha256": "f4d5a9f6a5f08d40b1acb47d158c5432635ba64b8a6ec367d50ccd2c48be96af",
+      "sha256": "a66281221b91bd5e3150cc730ae9242a18e5702ac8970d0cb842934e30a82629",
       "executable": true
     },
     {
