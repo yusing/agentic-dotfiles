@@ -165,7 +165,7 @@ ensure_sudo() {
 mapped_pkgs() {
   local name="$1"
   case "$name" in
-    fish|git|curl|jq|unzip|wget|make|just|ripgrep|fzf|zoxide|eza|micro|tmux|git-lfs|atuin|lazygit|fastfetch)
+    fish|git|curl|jq|unzip|wget|make|just|ripgrep|fzf|zoxide|eza|micro|tmux|git-lfs|atuin|lazygit|fastfetch|imagemagick)
       printf '%s\n' "$name"
       ;;
     delta) printf '%s\n' git-delta ;;
@@ -234,6 +234,10 @@ have_logical() {
   if [ "$1" = ca-certificates ] && [ "$PM" = apt ]; then
     dpkg-query -W -f='${Status}\n' ca-certificates 2>/dev/null \
       | grep -q 'install ok installed'
+    return
+  fi
+  if [ "$1" = imagemagick ]; then
+    have magick || have convert
     return
   fi
   cmd="$(pkg_cmd "$1")"
@@ -1112,7 +1116,7 @@ main() {
     git curl jq unzip python3 ca-certificates fish make gpg ncurses \
     --optional \
     just ripgrep fzf zoxide eza delta micro gh tldr fastfetch atuin \
-    lazygit tmux git-lfs wget build-essential
+    lazygit tmux git-lfs wget build-essential imagemagick
   have git || die "git is required"
   have curl || die "curl is required"
 
