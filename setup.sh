@@ -170,8 +170,29 @@ ensure_sudo() {
 mapped_pkgs() {
   local name="$1"
   case "$name" in
-    fish|git|curl|unzip|wget|make|imagemagick|rsync)
+    fish|git|curl|unzip|wget|make|imagemagick|rich-cli|rsync|websocat|wrk)
       printf '%s\n' "$name"
+      ;;
+    typescript-language-server)
+      if [ "$PM" = apt ]; then
+        printf '%s\n' node-typescript-language-server
+      else
+        printf '%s\n' typescript-language-server
+      fi
+      ;;
+    time)
+      if [ "$PM" = brew ]; then
+        printf '%s\n' gnu-time
+      else
+        printf '%s\n' time
+      fi
+      ;;
+    trunk-check)
+      case "$PM" in
+        pacman) printf '%s\n' trunk-check ;;
+        brew) printf '%s\n' trunk-io ;;
+        apt) printf '\n' ;;
+      esac
       ;;
     python3)
       if [ "$PM" = apt ]; then
@@ -214,6 +235,7 @@ pkg_cmd() {
     ncurses) echo tput ;;
     build-essential) echo gcc ;;
     ca-certificates) echo "" ;;
+    typescript-language-server|time|rich-cli|trunk-check|websocat|wrk) echo "" ;;
     *) echo "$1" ;;
   esac
 }
@@ -1344,7 +1366,8 @@ main() {
   install_packages \
     git curl unzip python3 ca-certificates fish make gpg ncurses rsync \
     --optional \
-    wget build-essential imagemagick
+    wget build-essential imagemagick typescript-language-server time rich-cli \
+    trunk-check websocat wrk
   have git || die "git is required"
   have curl || die "curl is required"
 
