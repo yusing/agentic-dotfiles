@@ -134,6 +134,8 @@ const EXACT_PATHS = new Set([
 	".config/lazygit/config.yml",
 	".config/micro/bindings.json",
 	".config/micro/settings.json",
+	".config/mise/config.toml",
+	".config/mise/mise.lock",
 	".config/skhd/move-window.sh",
 	".config/skhd/skhdrc",
 	".config/zed/keymap.json",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3bc629d7b0bfc1928cc20f05d23c9c84e77dbd32",
+  "sourceCommit": "5fed2dc8e8707848a4482599e0f439eed2901238",
   "outputs": [
     {
       "path": ".bashrc",
@@ -334,7 +334,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "61ce7e3fe042df74a1d29af8ea31b52e0e93adb0393454daad0bba032c889f73",
+      "sha256": "88bf594fdb9dc41b9143864b0e9fe7f3f4c862cd151df24daabca2188343bc3b",
       "executable": false
     },
     {
@@ -410,6 +410,18 @@
       "executable": false
     },
     {
+      "path": ".config/mise/config.toml",
+      "kind": "file",
+      "sha256": "4464d5596c90783e5368398eb3b2fb164356c706d74882b7c47e86bfc013fac3",
+      "executable": false
+    },
+    {
+      "path": ".config/mise/mise.lock",
+      "kind": "file",
+      "sha256": "76745084dfed3585aae5a41b8a0e93ddecbe019cbed66a19bfbc7a70d996476c",
+      "executable": false
+    },
+    {
       "path": ".config/skhd/move-window.sh",
       "kind": "file",
       "sha256": "31c2e5492b86f6af9a1c65ed2a59249590d3e80071a13b8b882f1145024d700d",
@@ -448,7 +460,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "4a64369c4092a756e4503329501755aa5dbe027f42cca783991a541da6cdd9e0",
+      "sha256": "11d056ffc4d2ccd0f03b8c09baf6d1b07f09ebe899327bb40ed70cf69cf2b2f6",
       "executable": false
     },
     {
@@ -507,7 +519,7 @@
     {
       "path": ".local/bin/project-public-config",
       "kind": "file",
-      "sha256": "a66281221b91bd5e3150cc730ae9242a18e5702ac8970d0cb842934e30a82629",
+      "sha256": "78ddf9b6eaca89318b3d8d49e8cd9a45c1a31061583f6a94e5ecb923f81f47ef",
       "executable": true
     },
     {
@@ -861,7 +873,7 @@
     {
       "path": ".zshrc",
       "kind": "file",
-      "sha256": "424f8eade4788e90b79c4e10c068ea8d0c1bd5110731ab1d9d8daa8b8e8ae8cf",
+      "sha256": "ea656cbe732cb2e0a8e3ffafe66df2aea583ae7c66ccc66a2398ac76a33f35aa",
       "executable": false
     },
     {
@@ -926,13 +938,13 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "f6ce0a48325db2b4502e81a11bdbf200b2b5f060b46d054a020c7895513f96b3",
+      "sha256": "a2d1e8982923a3ec5d0dccf9b305e41c6c55561bb4164ea8760f9cc247ac6149",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "bd1a46f8be6b005cfe61a76f17f45f4f8e0801b832d1473bdd59d02af26bf35c",
+      "sha256": "072ca01b6f3f17e5bee50771f3ecf0242ae29f6e202b3ae95ee820c58004e151",
       "executable": true
     }
   ]

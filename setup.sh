@@ -13,10 +13,15 @@ REPO_SLUG="yusing/agentic-dotfiles"
 PRIVATE_REPO_SLUG="yusing/dotfiles"
 GIT_NAME="yusing"
 GIT_EMAIL="yusing.wys@gmail.com"
-GO_PREFIX="${HOME}/.local/opt/go"
 LOCAL_BIN="${HOME}/.local/bin"
-GOBIN="${HOME}/go/bin"
 BACKUP_ROOT="${HOME}/.local/share/dotfiles-setup"
+MISE_BIN="${LOCAL_BIN}/mise"
+MISE_SHIMS="${HOME}/.local/share/mise/shims"
+MISE_CONFIG="${HOME}/.config/mise/config.toml"
+MISE_LOCK_PLATFORMS="linux-arm64,linux-x64,macos-arm64"
+LEGACY_GO_PREFIX="${HOME}/.local/opt/go"
+LEGACY_GOBIN="${HOME}/go/bin"
+UPGRADE=0
 
 STEP="starting"
 trap 'printf "setup.sh failed during: %s\n" "$STEP" >&2' ERR
@@ -40,8 +45,7 @@ run_root() {
 # PATH and OS
 # ---------------------------------------------------------------------------
 
-export PATH="${GOBIN}:${LOCAL_BIN}:${GO_PREFIX}/bin:${HOME}/.bun/bin:${HOME}/.atuin/bin:${HOME}/.grok/bin:${PATH}"
-export GOBIN
+export PATH="${MISE_SHIMS}:${LOCAL_BIN}:${HOME}/.grok/bin:${HOME}/.bun/bin:${PATH}"
 export DEBIAN_FRONTEND=noninteractive
 export NONINTERACTIVE=1
 export GIT_TERMINAL_PROMPT=0
@@ -166,23 +170,8 @@ ensure_sudo() {
 mapped_pkgs() {
   local name="$1"
   case "$name" in
-    fish|git|curl|jq|unzip|wget|make|just|ripgrep|fzf|zoxide|eza|micro|tmux|git-lfs|atuin|lazygit|fastfetch|imagemagick)
+    fish|git|curl|unzip|wget|make|imagemagick|rsync)
       printf '%s\n' "$name"
-      ;;
-    delta) printf '%s\n' git-delta ;;
-    gh)
-      if [ "$PM" = pacman ]; then
-        printf '%s\n' github-cli
-      else
-        printf '%s\n' gh
-      fi
-      ;;
-    tldr)
-      if [ "$PM" = apt ]; then
-        printf '%s\n' tealdeer tldr
-      else
-        printf '%s\n' tealdeer
-      fi
       ;;
     python3)
       if [ "$PM" = apt ]; then
@@ -222,7 +211,6 @@ mapped_pkgs() {
 # Command that should exist after the logical package is installed.
 pkg_cmd() {
   case "$1" in
-    ripgrep) echo rg ;;
     ncurses) echo tput ;;
     build-essential) echo gcc ;;
     ca-certificates) echo "" ;;
@@ -260,25 +248,6 @@ py() {
   else
     die "python3 is required"
   fi
-}
-
-# Direct installs owned by this script live under these user-local roots. If a
-# command resolves elsewhere, leave updates to the package manager that owns it.
-direct_install_needed() {
-  local cmd="$1" home path
-  if ! have "$cmd"; then
-    return 0
-  fi
-  home="$(realpath "$HOME")"
-  path="$(realpath "$(command -v "$cmd")")"
-  case "$path" in
-    "${home}/.local/bin/"*|"${home}/.local/opt/go/"*|"${home}/.bun/bin/"*|"${home}/.atuin/bin/"*|"${home}/.fzf/bin/"*|"${home}/.grok/bin/"*|"${home}/go/bin/"*)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
 }
 
 refresh_pm() {
@@ -667,353 +636,538 @@ PY
 }
 
 # ---------------------------------------------------------------------------
-# Latest Go toolchain (go.dev), not the distro package
+# Cross-platform tools managed by mise
 # ---------------------------------------------------------------------------
 
-latest_go_version() {
-  curl -fsSL "https://go.dev/VERSION?m=text" | head -n 1
+mise_cmd() {
+  "$MISE_BIN" "$@"
 }
 
-sha256_check() {
-  local hash="$1" file="$2"
-  if have sha256sum; then
-    printf '%s  %s\n' "$hash" "$file" | sha256sum -c -
+install_mise() {
+  local installed=0 staged
+  mkdir -p "$LOCAL_BIN"
+  if [ -L "$MISE_BIN" ] || [ ! -x "$MISE_BIN" ]; then
+    [ ! -L "$MISE_BIN" ] || info "replacing legacy mise link $MISE_BIN"
+    info "installing mise"
+    (
+      staged="$(mktemp "${MISE_BIN}.setup.XXXXXX")"
+      trap 'rm -f "$staged"' EXIT HUP INT TERM
+      if ! curl -fsSL https://mise.run | MISE_INSTALL_PATH="$staged" sh; then
+        die "mise installer failed; existing $MISE_BIN was preserved"
+      fi
+      "$staged" --version >/dev/null 2>&1 \
+        || die "downloaded mise failed validation; existing $MISE_BIN was preserved"
+      mv -f "$staged" "$MISE_BIN"
+      trap - EXIT HUP INT TERM
+    ) || return $?
+    installed=1
+  fi
+  if [ "$UPGRADE" -eq 1 ] && [ "$installed" -eq 0 ]; then
+    info "updating mise"
+    mise_cmd self-update -y
+  fi
+  [ -x "$MISE_BIN" ] || die "mise is not available at $MISE_BIN"
+  [ -f "$MISE_CONFIG" ] || die "mise configuration is missing: $MISE_CONFIG"
+  export PATH="${MISE_SHIMS}:${LOCAL_BIN}:${HOME}/.grok/bin:${HOME}/.bun/bin:${PATH}"
+}
+
+# tool identifier | primary command
+mise_tool_records() {
+  cat <<'EOF'
+go|go
+bun|bun
+aqua:astral-sh/uv|uv
+github:atuinsh/atuin|atuin
+aqua:crate-ci/typos|typos
+aqua:openai/codex|codex
+aqua:dandavison/delta|delta
+github:eza-community/eza|eza
+aqua:fastfetch-cli/fastfetch|fastfetch
+aqua:junegunn/fzf|fzf
+aqua:cli/cli|gh
+aqua:git-lfs/git-lfs|git-lfs
+aqua:gitleaks/gitleaks|gitleaks
+aqua:golangci/golangci-lint|golangci-lint
+aqua:jqlang/jq|jq
+aqua:casey/just|just
+aqua:koalaman/shellcheck|shellcheck
+aqua:jesseduffield/lazygit|lazygit
+aqua:mikefarah/yq|yq
+aqua:micro-editor/micro|micro
+aqua:mvdan/sh|shfmt
+aqua:JanDeDobbeleer/oh-my-posh|oh-my-posh
+aqua:rclone/rclone|rclone
+aqua:rhysd/actionlint|actionlint
+aqua:BurntSushi/ripgrep|rg
+aqua:rtk-ai/rtk|rtk
+aqua:sharkdp/bat|bat
+aqua:sharkdp/hyperfine|hyperfine
+github:tldr-pages/tlrc|tldr
+aqua:tmux/tmux-builds|tmux
+aqua:watchexec/watchexec|watchexec
+aqua:ajeetdsouza/zoxide|zoxide
+go:golang.org/x/tools/gopls|gopls
+go:golang.org/x/tools/cmd/goimports|goimports
+go:golang.org/x/tools/cmd/deadcode|deadcode
+go:github.com/yusing/skills-mgr|skills-mgr
+go:github.com/yusing/git-agent/cmd/git-agent|git-agent
+go:github.com/yusing/shadowtree/cmd/shadowtree|shadowtree
+EOF
+}
+
+mise_tool_installed() {
+  mise_cmd where "$1" >/dev/null 2>&1
+}
+
+validate_mise_tool() {
+  local tool="$1" cmd="$2" path
+  path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
+  [ -n "$path" ] && [ -x "$path" ] \
+    || die "mise installed $tool, but $cmd is unavailable"
+}
+
+install_missing_mise_tools() {
+  local tool cmd
+  while IFS='|' read -r tool cmd; do
+    if mise_tool_installed "$tool"; then
+      log "  present $cmd"
+    else
+      info "installing locked $tool"
+      mise_cmd install --locked "$tool"
+    fi
+    validate_mise_tool "$tool" "$cmd"
+  done < <(mise_tool_records)
+  mise_cmd reshim
+}
+
+validate_mise_lock() {
+  local config_path="$1" lock_path="$2"
+  MISE_CONFIG_PATH="$config_path" MISE_LOCK_PATH="$lock_path" \
+    MISE_LOCK_PLATFORMS="$MISE_LOCK_PLATFORMS" py <<'PY'
+import os
+import re
+from pathlib import Path
+from urllib.parse import urlsplit
+
+config_text = Path(os.environ["MISE_CONFIG_PATH"]).read_text()
+lock_text = Path(os.environ["MISE_LOCK_PATH"]).read_text()
+tools_section = config_text.split("[tools]", 1)[1]
+tools_section = tools_section.split("\n[", 1)[0]
+configured = {
+    quoted or bare
+    for quoted, bare in re.findall(r'^(?:"([^"]+)"|([A-Za-z0-9_-]+))\s*=', tools_section, re.MULTILINE)
+}
+locked = {
+    quoted or bare
+    for quoted, bare in re.findall(
+        r'^\[\[tools\.(?:"([^"]+)"|([A-Za-z0-9_-]+))\]\]$',
+        lock_text,
+        re.MULTILINE,
+    )
+}
+if locked != configured:
+    missing = sorted(configured - locked)
+    extra = sorted(locked - configured)
+    raise SystemExit(f"mise lock inventory mismatch; missing={missing}, extra={extra}")
+
+required = {f"platforms.{platform}" for platform in os.environ["MISE_LOCK_PLATFORMS"].split(",")}
+artifact_header = re.compile(
+    r'^\[tools\.(?:"([^"]+)"|([A-Za-z0-9_-]+))\."platforms\.([^"]+)"\]$',
+    re.MULTILINE,
+)
+next_header = re.compile(r'^\[', re.MULTILINE)
+artifacts = {}
+for match in artifact_header.finditer(lock_text):
+    tool = match.group(1) or match.group(2)
+    platform = f"platforms.{match.group(3)}"
+    following = next_header.search(lock_text, match.end())
+    body = lock_text[match.end() : following.start() if following else len(lock_text)]
+    fields = {
+        key: value
+        for key, value in re.findall(r'^(url|checksum)\s*=\s*"([^"]*)"\s*$', body, re.MULTILINE)
+    }
+    artifacts.setdefault((tool, platform), []).append(fields)
+for tool in locked:
+    # Source-built Go tools lock the module version rather than release artifacts.
+    if tool.startswith("go:"):
+        continue
+    for platform in sorted(required):
+        sections = artifacts.get((tool, platform), [])
+        if len(sections) != 1:
+            raise SystemExit(
+                f"mise lock needs exactly one {tool} artifact for {platform}; found={len(sections)}"
+            )
+        url = sections[0].get("url", "")
+        checksum = sections[0].get("checksum", "")
+        parsed_url = urlsplit(url)
+        if parsed_url.scheme != "https" or not parsed_url.hostname or parsed_url.path in {"", "/"}:
+            raise SystemExit(f"mise lock has an invalid {tool} URL for {platform}")
+        if not re.fullmatch(r'(?:sha256:)?[0-9a-fA-F]{64}', checksum):
+            raise SystemExit(f"mise lock has an invalid {tool} checksum for {platform}")
+PY
+}
+
+refresh_mise_lock() (
+  local tmp lock_path staged token=""
+  tmp="$(mktemp -d "${TMPDIR:-/tmp}/setup-mise-lock.XXXXXX")"
+  lock_path="${MISE_CONFIG%/*}/mise.lock"
+  staged="${lock_path}.setup.$$"
+  trap 'rm -rf "$tmp"; rm -f "$staged"' EXIT HUP INT TERM
+
+  mkdir -p "$tmp/.config/mise"
+  cp "$MISE_CONFIG" "$tmp/.config/mise/config.toml"
+  [ ! -f "$lock_path" ] || cp "$lock_path" "$tmp/.config/mise/mise.lock"
+
+  if [ -z "${GITHUB_TOKEN:-}" ] && have gh; then
+    token="$(gh auth token 2>/dev/null || true)"
+    [ -z "$token" ] || export GITHUB_TOKEN="$token"
+  fi
+
+  info "updating the cross-platform tool lock"
+  if ! (
+    cd "$tmp"
+    HOME="$tmp" MISE_HTTP_TIMEOUT=120 mise_cmd lock --global --bump \
+      --platform "$MISE_LOCK_PLATFORMS"
+  ); then
+    return 1
+  fi
+  validate_mise_lock "$tmp/.config/mise/config.toml" "$tmp/.config/mise/mise.lock" \
+    || return 1
+  cp "$tmp/.config/mise/mise.lock" "$staged"
+  mv "$staged" "$lock_path"
+)
+
+upgrade_mise_tools() {
+  # The existing locked Go version is needed to resolve source-built Go tools.
+  mise_cmd install --locked go
+  refresh_mise_lock
+  # The refreshed Go version must be ready before mise invokes the go: backend.
+  mise_cmd install --locked go
+  info "installing the upgraded tool set"
+  mise_cmd install --locked
+  mise_cmd reshim
+}
+
+report_mise_updates() {
+  local output
+  info "available cross-platform tool updates"
+  if ! output="$(mise_cmd outdated 2>&1)"; then
+    warn "could not check for cross-platform tool updates"
+    [ -z "$output" ] || printf '%s\n' "$output"
+    return 0
+  fi
+  if [ -n "$output" ]; then
+    printf '%s\n' "$output"
   else
-    printf '%s  %s\n' "$hash" "$file" | shasum -a 256 -c -
+    log "  none"
   fi
 }
 
-install_latest_go() {
-  local version filename url sha tmp tarball current goos
-  version="$(latest_go_version)"
-  [ -n "$version" ] || die "could not determine the latest Go version"
-  if have go; then
-    current="$(go env GOVERSION 2>/dev/null || true)"
-    if [ "$current" = "$version" ]; then
-      info "Go $version already installed at $(command -v go)"
+# ---------------------------------------------------------------------------
+# Legacy source cleanup
+# ---------------------------------------------------------------------------
+
+legacy_packages() {
+  local cmd="$1"
+  case "${PM}:${cmd}" in
+    brew:actionlint) echo actionlint ;;
+    brew:atuin) echo atuin ;;
+    brew:bat) echo bat ;;
+    brew:bun) echo bun ;;
+    brew:codex) echo codex ;;
+    brew:delta) echo git-delta ;;
+    brew:eza) echo eza ;;
+    brew:fastfetch) echo fastfetch ;;
+    brew:fzf) echo fzf ;;
+    brew:gh) echo gh ;;
+    brew:git-lfs) echo git-lfs ;;
+    brew:gitleaks) echo gitleaks ;;
+    brew:go) echo go ;;
+    brew:golangci-lint) echo golangci-lint ;;
+    brew:herdr) echo herdr ;;
+    brew:hyperfine) echo hyperfine ;;
+    brew:jq) echo jq ;;
+    brew:just) echo just ;;
+    brew:lazygit) echo lazygit ;;
+    brew:micro) echo micro ;;
+    brew:mise) echo mise ;;
+    brew:oh-my-posh) echo oh-my-posh ;;
+    brew:rg) echo ripgrep ;;
+    brew:rtk) echo rtk ;;
+    brew:rclone) echo rclone ;;
+    brew:shellcheck) echo shellcheck ;;
+    brew:shfmt) echo shfmt ;;
+    brew:tldr) echo tealdeer ;;
+    brew:tmux) echo tmux ;;
+    brew:typos) echo typos-cli ;;
+    brew:uv) echo uv ;;
+    brew:watchexec) echo watchexec ;;
+    brew:yq) echo yq ;;
+    brew:zoxide) echo zoxide ;;
+
+    apt:actionlint) echo actionlint ;;
+    apt:atuin) echo atuin ;;
+    apt:bat) echo bat ;;
+    apt:delta) echo git-delta ;;
+    apt:eza) echo eza ;;
+    apt:fastfetch) echo fastfetch ;;
+    apt:fzf) echo fzf ;;
+    apt:gh) echo gh ;;
+    apt:git-lfs) echo git-lfs ;;
+    apt:gitleaks) echo gitleaks ;;
+    apt:go) printf '%s\n' golang-go golang ;;
+    apt:golangci-lint) echo golangci-lint ;;
+    apt:hyperfine) echo hyperfine ;;
+    apt:jq) echo jq ;;
+    apt:just) echo just ;;
+    apt:lazygit) echo lazygit ;;
+    apt:micro) echo micro ;;
+    apt:mise) echo mise ;;
+    apt:oh-my-posh) echo oh-my-posh ;;
+    apt:rg) echo ripgrep ;;
+    apt:rclone) echo rclone ;;
+    apt:shellcheck) echo shellcheck ;;
+    apt:shfmt) echo shfmt ;;
+    apt:tldr) printf '%s\n' tealdeer tldr ;;
+    apt:tmux) echo tmux ;;
+    apt:typos) echo typos-cli ;;
+    apt:uv) echo uv ;;
+    apt:watchexec) echo watchexec ;;
+    apt:yq) echo yq ;;
+    apt:zoxide) echo zoxide ;;
+
+    pacman:actionlint) echo actionlint ;;
+    pacman:atuin) echo atuin ;;
+    pacman:bat) echo bat ;;
+    pacman:bun) printf '%s\n' bun bun-bin ;;
+    pacman:codex) printf '%s\n' codex codex-cli-bin ;;
+    pacman:delta) echo git-delta ;;
+    pacman:eza) echo eza ;;
+    pacman:fastfetch) echo fastfetch ;;
+    pacman:fzf) echo fzf ;;
+    pacman:gh) echo github-cli ;;
+    pacman:git-lfs) echo git-lfs ;;
+    pacman:gitleaks) echo gitleaks ;;
+    pacman:go) echo go ;;
+    pacman:golangci-lint) echo golangci-lint ;;
+    pacman:hyperfine) echo hyperfine ;;
+    pacman:jq) echo jq ;;
+    pacman:just) echo just ;;
+    pacman:lazygit) echo lazygit ;;
+    pacman:micro) echo micro ;;
+    pacman:mise) echo mise ;;
+    pacman:oh-my-posh) echo oh-my-posh ;;
+    pacman:rg) echo ripgrep ;;
+    pacman:rtk) echo rtk ;;
+    pacman:rclone) echo rclone ;;
+    pacman:shellcheck) echo shellcheck ;;
+    pacman:shfmt) echo shfmt ;;
+    pacman:tldr) echo tealdeer ;;
+    pacman:tmux) echo tmux ;;
+    pacman:typos) echo typos-cli ;;
+    pacman:uv) echo uv ;;
+    pacman:watchexec) echo watchexec ;;
+    pacman:yq) echo yq ;;
+    pacman:zoxide) echo zoxide ;;
+  esac
+}
+
+pm_package_installed() {
+  case "$PM" in
+    apt)
+      dpkg-query -W -f='${Status}\n' "$1" 2>/dev/null \
+        | grep -q 'install ok installed'
+      ;;
+    brew)
+      brew list --formula "$1" >/dev/null 2>&1
+      ;;
+    pacman)
+      pacman -Q "$1" >/dev/null 2>&1
+      ;;
+  esac
+}
+
+remove_legacy_package() {
+  local pkg="$1" dependents plan removed name
+  pm_package_installed "$pkg" || return 0
+  case "$PM" in
+    brew)
+      dependents="$(brew uses --installed "$pkg" 2>/dev/null || true)"
+      if [ -n "$dependents" ]; then
+        warn "keeping legacy brew package $pkg; used by: $dependents"
+        return 0
+      fi
+      info "removing legacy brew package $pkg"
+      brew uninstall --formula "$pkg"
+      ;;
+    apt)
+      plan="$(apt-get -s remove "$pkg")" \
+        || { warn "keeping legacy apt package $pkg; removal simulation failed"; return 0; }
+      removed="$(printf '%s\n' "$plan" | awk '$1 == "Remv" { print $2 }')"
+      for name in $removed; do
+        if [ "${name%%:*}" != "$pkg" ]; then
+          warn "keeping legacy apt package $pkg; removal would also remove $name"
+          return 0
+        fi
+      done
+      info "removing legacy apt package $pkg"
+      run_root apt-get remove -y "$pkg"
+      ;;
+    pacman)
+      info "removing legacy pacman package $pkg"
+      if ! run_root pacman -R --noconfirm "$pkg"; then
+        warn "keeping legacy pacman package $pkg; it may still be required"
+      fi
+      ;;
+  esac
+}
+
+remove_legacy_file() {
+  local path="$1" replacement="$2" path_real replacement_real
+  if [ ! -e "$path" ] && [ ! -L "$path" ]; then
+    return 0
+  fi
+  if [ -n "$replacement" ] && [ -e "$replacement" ]; then
+    path_real="$(realpath "$path" 2>/dev/null || true)"
+    replacement_real="$(realpath "$replacement" 2>/dev/null || true)"
+    if [ -n "$path_real" ] && [ "$path_real" = "$replacement_real" ]; then
       return 0
     fi
   fi
+  info "removing legacy tool path $path"
+  rm -f "$path"
+}
 
-  case "$OS" in
-    Darwin) goos=darwin ;;
-    Linux) goos=linux ;;
+cleanup_legacy_files() {
+  local cmd="$1" replacement
+  replacement="$(mise_cmd which "$cmd" 2>/dev/null || true)"
+  case "$cmd" in
+    atuin)
+      remove_legacy_file "${HOME}/.atuin/bin/atuin" "$replacement"
+      remove_legacy_file "${LOCAL_BIN}/atuin" "$replacement"
+      ;;
+    bun) remove_legacy_file "${HOME}/.bun/bin/bun" "$replacement" ;;
+    fzf)
+      remove_legacy_file "${LOCAL_BIN}/fzf" "$replacement"
+      remove_legacy_file "${HOME}/.fzf/bin/fzf" "$replacement"
+      if [ -d "${HOME}/.fzf/.git" ] \
+        && git -C "${HOME}/.fzf" remote get-url origin 2>/dev/null | grep -q 'junegunn/fzf'; then
+        info "removing legacy fzf checkout ${HOME}/.fzf"
+        rm -rf "${HOME}/.fzf"
+      fi
+      ;;
+    go)
+      remove_legacy_file "${LOCAL_BIN}/go" "$replacement"
+      remove_legacy_file "${LOCAL_BIN}/gofmt" "$(mise_cmd which gofmt 2>/dev/null || true)"
+      if [ -x "${LEGACY_GO_PREFIX}/bin/go" ]; then
+        info "removing legacy Go toolchain $LEGACY_GO_PREFIX"
+        rm -rf "$LEGACY_GO_PREFIX"
+      fi
+      ;;
+    gopls|goimports|deadcode|skills-mgr|git-agent|shadowtree)
+      remove_legacy_file "${LEGACY_GOBIN}/${cmd}" "$replacement"
+      remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
+      ;;
+    gitleaks|golangci-lint|lazygit)
+      remove_legacy_file "${LEGACY_GOBIN}/${cmd}" "$replacement"
+      remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
+      ;;
+    actionlint|bat|codex|delta|eza|fastfetch|gh|git-lfs|hyperfine|jq|just|micro|oh-my-posh|rclone|rg|rtk|shellcheck|shfmt|tldr|tmux|typos|watchexec|yq|zoxide)
+      remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
+      [ "$cmd" != tldr ] || remove_legacy_file "${HOME}/.bun/bin/tldr" "$replacement"
+      ;;
+    uv)
+      remove_legacy_file "${LOCAL_BIN}/uv" "$replacement"
+      remove_legacy_file "${LOCAL_BIN}/uvx" "$(mise_cmd which uvx 2>/dev/null || true)"
+      ;;
   esac
-  filename="${version}.${goos}-${GOARCH}.tar.gz"
-  url="https://go.dev/dl/${filename}"
-  info "installing ${version} from go.dev"
+}
 
-  sha="$(
-    curl -fsSL "https://go.dev/dl/?mode=json" | py -c '
-import json, sys
-filename = sys.argv[1]
-releases = json.load(sys.stdin)
-for rel in releases:
-    for f in rel.get("files", []):
-        if f.get("filename") == filename:
-            print(f.get("sha256", ""))
-            raise SystemExit
-' "$filename"
-  )"
-  [ -n "$sha" ] || die "no sha256 listed for $filename"
-
-  tmp="$(mktemp -d "${TMPDIR:-/tmp}/setup-go.XXXXXX")"
-  tarball="${tmp}/${filename}"
-  curl -fsSL -o "$tarball" "$url"
-  sha256_check "$sha" "$tarball"
-
-  mkdir -p "$(dirname "$GO_PREFIX")" "$LOCAL_BIN"
-  rm -rf "$GO_PREFIX"
-  tar -C "$(dirname "$GO_PREFIX")" -xzf "$tarball"
-  rm -rf "$tmp"
-
-  ln -sfn "${GO_PREFIX}/bin/go" "${LOCAL_BIN}/go"
-  ln -sfn "${GO_PREFIX}/bin/gofmt" "${LOCAL_BIN}/gofmt"
+cleanup_legacy_tool_sources() {
+  local tool cmd pkg
+  info "reconciling tool ownership"
+  while IFS= read -r pkg; do
+    [ -n "$pkg" ] && remove_legacy_package "$pkg"
+  done < <(legacy_packages mise)
+  while IFS='|' read -r tool cmd; do
+    validate_mise_tool "$tool" "$cmd"
+    while IFS= read -r pkg; do
+      [ -n "$pkg" ] && remove_legacy_package "$pkg"
+    done < <(legacy_packages "$cmd")
+    cleanup_legacy_files "$cmd"
+    validate_mise_tool "$tool" "$cmd"
+  done < <(mise_tool_records)
   hash -r 2>/dev/null || true
-  have go || die "go installed to ${GO_PREFIX} but is not on PATH"
-  log "Go $(go env GOVERSION) -> $(command -v go)"
 }
 
 # ---------------------------------------------------------------------------
-# Official installers and Go modules
+# Additional tools
 # ---------------------------------------------------------------------------
-
-install_oh_my_posh() {
-  direct_install_needed oh-my-posh || return 0
-  info "installing/updating oh-my-posh"
-  mkdir -p "$LOCAL_BIN"
-  curl -fsSL https://ohmyposh.dev/install.sh | bash -s -- -d "$LOCAL_BIN"
-}
 
 install_claude() {
-  direct_install_needed claude || return 0
-  if have claude; then
+  if [ ! -x "${LOCAL_BIN}/claude" ]; then
+    info "installing Claude Code"
+    curl -fsSL https://claude.ai/install.sh | bash
+  elif [ "$UPGRADE" -eq 1 ]; then
     info "updating Claude Code"
-    claude update
-    return 0
+    "${LOCAL_BIN}/claude" update
   fi
-  info "installing Claude Code"
-  curl -fsSL https://claude.ai/install.sh | bash
-}
-
-install_codex() {
-  direct_install_needed codex || return 0
-  info "installing/updating Codex"
-  curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
 }
 
 install_grok() {
-  direct_install_needed grok || return 0
-  if have grok; then
+  local grok_bin="${HOME}/.grok/bin/grok"
+  if [ ! -x "$grok_bin" ]; then
+    info "installing Grok CLI"
+    curl -fsSL https://x.ai/cli/install.sh | bash
+  elif [ "$UPGRADE" -eq 1 ]; then
     info "updating Grok CLI"
-    grok update
-    return 0
+    "$grok_bin" update
   fi
-  info "installing Grok CLI"
-  curl -fsSL https://x.ai/cli/install.sh | bash
 }
 
 install_herdr() {
-  direct_install_needed herdr || return 0
-  info "installing/updating herdr"
-  curl -fsSL https://herdr.dev/install.sh | sh
-}
-
-install_bun() {
-  direct_install_needed bun || return 0
-  if have bun; then
-    info "updating bun"
-    bun upgrade
-    return 0
+  if [ ! -x "${LOCAL_BIN}/herdr" ] || [ "$UPGRADE" -eq 1 ]; then
+    info "installing/updating herdr"
+    curl -fsSL https://herdr.dev/install.sh | sh
   fi
-  info "installing bun"
-  curl -fsSL https://bun.sh/install | bash
-  export PATH="${HOME}/.bun/bin:${PATH}"
-}
-
-install_atuin() {
-  direct_install_needed atuin || return 0
-  if have atuin; then
-    info "updating atuin"
-    atuin update
-    return 0
-  fi
-  if [ -x "${HOME}/.atuin/bin/atuin" ]; then
-    ln -sfn "${HOME}/.atuin/bin/atuin" "${LOCAL_BIN}/atuin"
-    export PATH="${HOME}/.atuin/bin:${PATH}"
-    info "updating atuin"
-    atuin update
-    return 0
-  fi
-  info "installing atuin"
-  mkdir -p "$LOCAL_BIN"
-  ATUIN_NO_MODIFY_PATH=1 ATUIN_INSTALL_DIR="$HOME/.local" \
-    curl --proto "=https" --tlsv1.2 -LsSf https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh | sh
-}
-
-install_just() {
-  direct_install_needed just || return 0
-  info "installing/updating just via official installer"
-  curl --proto "=https" --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to "$LOCAL_BIN"
-}
-
-install_zoxide() {
-  direct_install_needed zoxide || return 0
-  info "installing/updating zoxide via official installer"
-  curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-}
-
-install_fzf() {
-  # Distro fzf is often too old for `fzf --fish` (needs 0.48+).
-  if have fzf && ! direct_install_needed fzf \
-    && fzf --help 2>&1 | grep -q -- '--fish'; then
-    return 0
-  fi
-  info "installing/updating fzf from GitHub"
-  if ! git -C "${HOME}/.fzf" remote get-url origin 2>/dev/null | grep -q 'junegunn/fzf'; then
-    rm -rf "${HOME}/.fzf"
-    git clone --depth 1 https://github.com/junegunn/fzf.git "${HOME}/.fzf"
-  else
-    git -C "${HOME}/.fzf" pull --ff-only
-  fi
-  "${HOME}/.fzf/install" --bin --no-update-rc --no-key-bindings --no-completion
-  mkdir -p "$LOCAL_BIN"
-  ln -sfn "${HOME}/.fzf/bin/fzf" "${LOCAL_BIN}/fzf"
-}
-
-install_micro() {
-  direct_install_needed micro || return 0
-  info "installing/updating micro"
-  (
-    cd "$LOCAL_BIN"
-    curl -fsS https://getmic.ro | bash
-  )
-}
-
-install_tldr() {
-  local path
-  direct_install_needed tldr || return 0
-  info "installing/updating tldr"
-  if have tldr; then
-    path="$(realpath "$(command -v tldr)")"
-    if [ -e "${LOCAL_BIN}/tldr" ] \
-      && [ "$path" = "$(realpath "${LOCAL_BIN}/tldr")" ]; then
-      if py -m pip install --user --upgrade tldr; then
-        return 0
-      fi
-      warn "failed to update tldr"
-      return 0
-    fi
-  fi
-  if bun install -g tldr@latest; then
-    return 0
-  fi
-  if python3 -m pip install --user tldr; then
-    return 0
-  fi
-  warn "tldr is still missing"
+  [ -x "${LOCAL_BIN}/herdr" ] || die "herdr is unavailable at ${LOCAL_BIN}/herdr"
+  while IFS= read -r pkg; do
+    [ -n "$pkg" ] && remove_legacy_package "$pkg"
+  done < <(legacy_packages herdr)
 }
 
 install_hunkdiff() {
-  info "installing/updating hunkdiff"
-  bun install -g hunkdiff@latest
-}
-
-install_golangci_lint() {
-  direct_install_needed golangci-lint || return 0
-  info "installing/updating golangci-lint"
-  curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b "$GOBIN"
-}
-
-install_rtk() {
-  direct_install_needed rtk || return 0
-  info "installing/updating rtk"
-  curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
-  hash -r 2>/dev/null || true
-  have rtk && rtk gain >/dev/null 2>&1 \
-    || die "rtk installed, but the Rust Token Killer CLI is not available"
-}
-
-# One `go install` per missing or directly managed tool. A single invocation
-# cannot mix packages from different modules (gopls, x/tools, and the yusing
-# tools are all separate).
-migrate_go_tools() {
-  local name source target
-  mkdir -p "$GOBIN"
-  for name in gopls goimports deadcode gitleaks lazygit skills-mgr git-agent shadowtree golangci-lint; do
-    source="${LOCAL_BIN}/${name}"
-    if [ ! -f "$source" ] && [ ! -L "$source" ]; then
-      continue
-    fi
-    target="${GOBIN}/${name}"
-    if [ -e "$target" ] || [ -L "$target" ]; then
-      if [ -L "$target" ] && [ "$source" -ef "$target" ]; then
-        rm -f "$target"
-        mv "$source" "$target"
-        info "migrated ${name} to ${GOBIN}"
-      else
-        rm -f "$source"
-        info "removed legacy ${source}; ${target} already exists"
-      fi
-    else
-      mv "$source" "$target"
-      info "migrated ${name} to ${GOBIN}"
-    fi
-  done
-  hash -r 2>/dev/null || true
-}
-
-install_go_tools() {
-  local modules=() module
-  migrate_go_tools
-  direct_install_needed gopls && modules+=("golang.org/x/tools/gopls@latest")
-  direct_install_needed goimports && modules+=("golang.org/x/tools/cmd/goimports@latest")
-  direct_install_needed deadcode && modules+=("golang.org/x/tools/cmd/deadcode@latest")
-  direct_install_needed gitleaks && modules+=("github.com/zricethezav/gitleaks/v8@latest")
-  direct_install_needed lazygit && modules+=("github.com/jesseduffield/lazygit@latest")
-  direct_install_needed skills-mgr && modules+=("github.com/yusing/skills-mgr@latest")
-  direct_install_needed git-agent && modules+=("github.com/yusing/git-agent/cmd/git-agent@latest")
-  direct_install_needed shadowtree && modules+=("github.com/yusing/shadowtree/cmd/shadowtree@latest")
-  if [ "${#modules[@]}" -gt 0 ]; then
-    for module in "${modules[@]}"; do
-      info "go install ${module}"
-      GOBIN="$GOBIN" go install "$module"
-    done
+  if [ ! -x "${HOME}/.bun/bin/hunk" ] || [ "$UPGRADE" -eq 1 ]; then
+    info "installing/updating hunkdiff"
+    bun install -g hunkdiff@latest
   fi
-  install_golangci_lint
 }
 
-# Independent installers run together, but each writes to its own log. Emit the
-# completed logs in launch order so concurrent output never becomes interleaved.
-run_independent_installs() (
+run_additional_installs() (
   local log_root index log status failed=0
-  local labels=(
-    "just"
-    "fzf"
-    "zoxide"
-    "micro"
-    "atuin"
-    "bun"
-    "oh-my-posh"
-    "Claude Code"
-    "Codex"
-    "Grok CLI"
-    "herdr"
-    "rtk"
-    "Go tools"
-  )
-  local commands=(
-    install_just
-    install_fzf
-    install_zoxide
-    install_micro
-    install_atuin
-    install_bun
-    install_oh_my_posh
-    install_claude
-    install_codex
-    install_grok
-    install_herdr
-    install_rtk
-    install_go_tools
-  )
-  local pids=()
-  local logs=()
+  local labels=("Claude Code" "Grok CLI" "herdr" "hunkdiff")
+  local commands=(install_claude install_grok install_herdr install_hunkdiff)
+  local pids=() logs=()
 
-  log_root="$(mktemp -d "${TMPDIR:-/tmp}/setup-install.XXXXXX")"
+  log_root="$(mktemp -d "${TMPDIR:-/tmp}/setup-vendor.XXXXXX")"
   trap 'rm -rf "$log_root"' EXIT HUP INT TERM
 
   for ((index = 0; index < ${#commands[@]}; index++)); do
     log="${log_root}/${index}.log"
-    logs[$index]="$log"
+    logs[index]="$log"
     info "starting ${labels[$index]}"
-    (
-      STEP="install ${labels[$index]}"
-      "${commands[$index]}"
-    ) >"$log" 2>&1 &
-    pids[$index]=$!
+    (STEP="install ${labels[$index]}"; "${commands[$index]}") >"$log" 2>&1 &
+    pids[index]=$!
   done
 
   for ((index = 0; index < ${#pids[@]}; index++)); do
-    if wait "${pids[$index]}"; then
-      status=0
-    else
-      status=$?
-      failed=1
-    fi
-
+    if wait "${pids[$index]}"; then status=0; else status=$?; failed=1; fi
     info "install log: ${labels[$index]}"
-    if [ -s "${logs[$index]}" ]; then
-      cat "${logs[$index]}"
-    else
-      log "  completed with no output"
-    fi
-    if [ "$status" -ne 0 ]; then
-      warn "${labels[$index]} installer failed with status $status"
-    fi
+    if [ -s "${logs[$index]}" ]; then cat "${logs[$index]}"; else log "  completed with no output"; fi
+    [ "$status" -eq 0 ] || warn "${labels[$index]} install failed with status $status"
   done
 
-  [ "$failed" -eq 0 ] || die "one or more independent installers failed"
+  [ "$failed" -eq 0 ] || die "one or more additional tool installs failed"
 )
 
 # ---------------------------------------------------------------------------
@@ -1068,35 +1222,40 @@ check_cmds() {
 }
 
 verify_setup() {
-  local required_failed=0 expected_failed=0
-  info "required commands"
-  if ! check_cmds git curl fish jq make just rg fzf go oh-my-posh micro rtk shadowtree skills-mgr git-agent gitleaks golangci-lint gopls; then
-    required_failed=1
-  fi
+  local required_failed=0 tool cmd path
+  info "native commands"
+  if ! check_cmds git curl fish make tput gpg python3 unzip rsync; then required_failed=1; fi
   if [ "$PM" = pacman ] && ! check_cmds yay; then
     required_failed=1
   fi
-  info "expected commands"
-  if ! check_cmds goimports deadcode gh zoxide delta tput gpg bun claude codex grok herdr atuin eza tldr hunk fastfetch lazygit tmux git-lfs; then
-    expected_failed=1
-  fi
+  info "mise-managed commands"
+  while IFS='|' read -r tool cmd; do
+    path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
+    if [ -n "$path" ] && [ -x "$path" ]; then
+      log "  ok  $cmd ($path)"
+    else
+      log "  MISS $cmd ($tool)"
+      required_failed=1
+    fi
+  done < <(mise_tool_records)
+  info "additional commands"
+  if ! check_cmds claude grok herdr hunk; then required_failed=1; fi
   if [ "$required_failed" -ne 0 ]; then
     die "required tools are missing; re-run setup.sh"
-  fi
-  if [ "$expected_failed" -ne 0 ]; then
-    warn "some expected tools are missing; re-run setup.sh after fixing package availability"
   fi
 }
 
 usage() {
   cat <<'EOF'
-Usage: setup.sh
+Usage: setup.sh [--upgrade]
 
-Install packages and tools for this dotfiles setup, then check the
-agentic-dotfiles repository out into $HOME.
+Install missing native and locked cross-platform tools, reconcile each tool to
+its declared owner, then check the agentic-dotfiles repository out into $HOME.
 
-The script can be re-run after a failure. It leaves untracked files that the
-repository does not own in place.
+Without --upgrade, installed tools are checked but not upgraded. Packages from
+legacy Brew, APT, Pacman, and direct-install sources are removed only after the
+replacement validates. --upgrade advances the tracked multi-platform mise lock
+and installs the upgraded tool set. Native OS package upgrades remain separate.
 EOF
 }
 
@@ -1105,6 +1264,7 @@ EOF
 # ---------------------------------------------------------------------------
 
 main() {
+  [ "$#" -le 1 ] || die "expected at most one argument"
   case "${1:-}" in
     -h|--help)
       usage
@@ -1112,12 +1272,15 @@ main() {
       ;;
     "")
       ;;
+    --upgrade)
+      UPGRADE=1
+      ;;
     *)
       die "unknown argument: $1"
       ;;
   esac
 
-  mkdir -p "$LOCAL_BIN" "$GOBIN" "$BACKUP_ROOT"
+  mkdir -p "$LOCAL_BIN" "$BACKUP_ROOT"
   cd "$HOME"
 
   STEP="detect package manager"
@@ -1130,20 +1293,14 @@ main() {
   STEP="ensure sudo"
   ensure_sudo
 
-  if [ "$PM" != apt ]; then
-    STEP="refresh package index"
-    refresh_pm
-  fi
-
   STEP="ensure yay"
   ensure_yay
 
   STEP="install packages"
   install_packages \
-    git curl jq unzip python3 ca-certificates fish make gpg ncurses \
+    git curl unzip python3 ca-certificates fish make gpg ncurses rsync \
     --optional \
-    just ripgrep fzf zoxide eza delta micro gh tldr fastfetch atuin \
-    lazygit tmux git-lfs wget build-essential imagemagick
+    wget build-essential imagemagick
   have git || die "git is required"
   have curl || die "curl is required"
 
@@ -1153,20 +1310,21 @@ main() {
   STEP="resolve home paths in configuration"
   rewrite_home_paths
 
-  STEP="install latest Go"
-  install_latest_go
-  export PATH="${GOBIN}:${LOCAL_BIN}:${GO_PREFIX}/bin:${PATH}"
-  hash -r 2>/dev/null || true
+  STEP="install mise"
+  install_mise
 
-  STEP="install independent tools"
-  run_independent_installs
-  hash -r 2>/dev/null || true
+  STEP="install cross-platform tools"
+  if [ "$UPGRADE" -eq 1 ]; then
+    upgrade_mise_tools
+  else
+    install_missing_mise_tools
+  fi
 
-  STEP="install tldr"
-  install_tldr
+  STEP="reconcile tool ownership"
+  cleanup_legacy_tool_sources
 
-  STEP="install hunkdiff"
-  install_hunkdiff
+  STEP="install additional tools"
+  run_additional_installs
 
   STEP="set login shell"
   ensure_fish_login_shell
@@ -1175,8 +1333,16 @@ main() {
   hash -r 2>/dev/null || true
   verify_setup
 
+  info "cross-platform tool versions"
+  mise_cmd ls --global
+
+  if [ "$UPGRADE" -eq 0 ]; then
+    STEP="check for tool updates"
+    report_mise_updates
+  fi
+
   info "setup complete"
-  log "open a new fish session to pick up PATH and completions"
+  log "open a new shell session to activate the mise-managed tools"
 }
 
 main "$@"

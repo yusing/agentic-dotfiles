@@ -43,11 +43,10 @@ shell behavior.
 `setup.sh` is for machines that should become a checkout of this repository.
 It installs OS packages, checks this repository out into `$HOME`, rewrites the
 repository's canonical home paths in tracked runtime configuration for the local
-machine, then installs the current Go toolchain when the one on `PATH` is missing
-or outdated, followed by `rtk`, Codex, Claude Code, Grok, herdr, and the Go tools
-this setup uses. Go tools live in `~/go/bin`; rerunning the setup migrates copies
-installed by an older version from `~/.local/bin`, preferring an existing tool at
-the new location before the normal update runs.
+machine, and installs the locked cross-platform tool set through `mise`. Native
+package managers retain ownership of system foundations; `mise` owns development
+runtimes and fast-moving command-line tools; vendor installers retain ownership
+of Claude Code, Grok, and herdr.
 
 When `$HOME` is already the recognized private `yusing/dotfiles` checkout,
 setup preserves its origin and history and continues with the remaining setup
@@ -61,10 +60,12 @@ commit message. It does not push the public repository.
 It is written for a home directory that already has unrelated files, and it
 can be run again if it stops partway through. Files that would be overwritten
 by the checkout are copied to `~/.local/share/dotfiles-setup/` first. Untracked
-files this repository does not own are left in place. Direct installs are
-updated automatically on reruns, while package-manager-owned tools are left to
-their package manager. Independent installers run concurrently, with each
-installer's output printed as one labeled log block.
+files this repository does not own are left in place. A normal rerun checks
+installed versions and installs missing locked tools without upgrading existing
+ones. After a replacement validates, it removes explicitly mapped duplicate
+Brew, APT, Pacman, and legacy direct-install copies. It refuses an APT removal
+that would remove another package, and package-manager dependency failures leave
+the legacy copy in place.
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/yusing/agentic-dotfiles/main/setup.sh | bash
@@ -75,6 +76,20 @@ If you already have the file:
 ```sh
 bash setup.sh
 ```
+
+To advance the tracked lock to the latest eligible releases and install that
+tool set on the current machine:
+
+```sh
+bash setup.sh --upgrade
+```
+
+The lock covers Linux on arm64 and x86-64, plus macOS on arm64. Releases
+normally must be at least three days old; backends that cannot apply that policy
+reliably use an explicit per-tool exception. `--upgrade` does not perform a
+native OS package upgrade. Lock updates use an existing GitHub CLI login when
+available, validate every release artifact, and replace the tracked lock only
+after the complete candidate passes.
 
 If you are adapting pieces of this setup on a machine that already has its own
 dotfiles, do not run `setup.sh`. Copy the files you want instead.

@@ -123,6 +123,10 @@ end
 check-path ~/.local/bin; and fish_add_path ~/.local/bin
 check-path ~/go/bin; and fish_add_path ~/go/bin
 
+if type -q mise
+    mise activate fish | source
+end
+
 if not set -q GOPATH
     set -l gopath (go env GOPATH 2>/dev/null)
     if test -n "$gopath"

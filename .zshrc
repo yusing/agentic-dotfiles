@@ -1,4 +1,5 @@
-export PATH="$PATH:$HOME/go/bin"
+export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.bun/bin:$PATH"
+command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 
 zmodload zsh/complist
 autoload -Uz compinit && compinit

@@ -1,0 +1,43 @@
+[settings]
+lockfile = true
+minimum_release_age = "3d"
+
+[tools]
+go = "latest"
+bun = "latest"
+"aqua:astral-sh/uv" = "latest"
+"github:atuinsh/atuin" = "latest"
+"aqua:crate-ci/typos" = "latest"
+"aqua:openai/codex" = "latest"
+"aqua:dandavison/delta" = "latest"
+"github:eza-community/eza" = "latest"
+"aqua:fastfetch-cli/fastfetch" = { version = "latest", minimum_release_age = "0s" }
+"aqua:junegunn/fzf" = "latest"
+"aqua:cli/cli" = "latest"
+"aqua:git-lfs/git-lfs" = "latest"
+"aqua:gitleaks/gitleaks" = "latest"
+"aqua:golangci/golangci-lint" = "latest"
+"aqua:jqlang/jq" = "latest"
+"aqua:casey/just" = "latest"
+"aqua:koalaman/shellcheck" = "latest"
+"aqua:jesseduffield/lazygit" = "latest"
+"aqua:mikefarah/yq" = "latest"
+"aqua:micro-editor/micro" = "latest"
+"aqua:mvdan/sh" = "latest"
+"aqua:JanDeDobbeleer/oh-my-posh" = "latest"
+"aqua:rclone/rclone" = "latest"
+"aqua:rhysd/actionlint" = "latest"
+"aqua:BurntSushi/ripgrep" = "latest"
+"aqua:rtk-ai/rtk" = "latest"
+"aqua:sharkdp/bat" = "latest"
+"aqua:sharkdp/hyperfine" = "latest"
+"github:tldr-pages/tlrc" = "latest"
+"aqua:tmux/tmux-builds" = "latest"
+"aqua:watchexec/watchexec" = "latest"
+"aqua:ajeetdsouza/zoxide" = "latest"
+"go:golang.org/x/tools/gopls" = { version = "latest", minimum_release_age = "0s" }
+"go:golang.org/x/tools/cmd/goimports" = { version = "latest", minimum_release_age = "0s" }
+"go:golang.org/x/tools/cmd/deadcode" = { version = "latest", minimum_release_age = "0s" }
+"go:github.com/yusing/skills-mgr" = { version = "latest", minimum_release_age = "0s" }
+"go:github.com/yusing/git-agent/cmd/git-agent" = { version = "latest", minimum_release_age = "0s" }
+"go:github.com/yusing/shadowtree/cmd/shadowtree" = { version = "latest", minimum_release_age = "0s" }
