@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "47492c52f5a37eeb804416567f6841e854cf278a",
+  "sourceCommit": "e8f160e3d924a368b3805ea851e22d6ad87e2f7e",
   "outputs": [
     {
       "path": ".bashrc",
@@ -17,55 +17,55 @@
     {
       "path": ".claude/agents/council-investigator.md",
       "kind": "file",
-      "sha256": "b59605c4bfc60b6b41f4f17363d7443033def0cf217c7f818338cc7857d90a41",
+      "sha256": "520aa6fcfec3164c52c3fcff26d2b0de321304b488074a53528c315414237f7c",
       "executable": false
     },
     {
       "path": ".claude/agents/council-member.md",
       "kind": "file",
-      "sha256": "83d7f71f1a4c1dac4ca072cfeb73398a782c1b48b369b452dedb6bbd4914c632",
+      "sha256": "95d70a4e7342a3480cdecf1cb3a1161ac0fd1f6e05a5b4504f9957cd202864df",
       "executable": false
     },
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "8d1ccb56ed601b37d10fa768c8ea0fa0ed368068f54d53667a595be3e97293cd",
+      "sha256": "5be330bbb00ce889c62189c5686e713f5ef9ac659e82f22326f17611aa9468bd",
       "executable": false
     },
     {
       "path": ".claude/agents/fast-explorer.md",
       "kind": "file",
-      "sha256": "ce3cf693ab8fb1bbeb0bbfec9be18ffc45a3f33a1b12b072619b33440f41245e",
+      "sha256": "212e72d47da22747c05f09713687c639c065ebecd897f37615cd12a52f6cfc17",
       "executable": false
     },
     {
       "path": ".claude/agents/fast-implementer.md",
       "kind": "file",
-      "sha256": "b4bd9e646473de3387db574866544379f80c7dd645d8fe765d9d086bba788ae6",
+      "sha256": "2a0046edf763bfc4912de180743a745382df096582f7251a39008f8bcb0e1b2a",
       "executable": false
     },
     {
       "path": ".claude/agents/implementer.md",
       "kind": "file",
-      "sha256": "401f41a5b02f5bf01fb00bd49974116a9629f0ec767aabc25717250a5020769e",
+      "sha256": "3180067e4ddfd8476f9c0631d8e11a22d6a9122cbcee5cb8ac7ea051dd195d5b",
       "executable": false
     },
     {
       "path": ".claude/agents/reviewer.md",
       "kind": "file",
-      "sha256": "be0be99f63d6efc008e6fd84f46bf4772001cfb26ef8e44b886ce8c050362b97",
+      "sha256": "9258b9062fbe373f0914568fc45bed71b7f15cce765c72f8c0f29d4c8ce4b4e5",
       "executable": false
     },
     {
       "path": ".claude/agents/simplify-checker.md",
       "kind": "file",
-      "sha256": "e87a5953ce18daf4f396f6a0fd3fa3d03c32982d334fae2701cdc86b10fc31f6",
+      "sha256": "e81d60154d3945fd162a5b84b356e9941068ce7ea561682213aa151fee367cc4",
       "executable": false
     },
     {
       "path": ".claude/agents/web-reviewer.md",
       "kind": "file",
-      "sha256": "406b7947570ebbba10a561ba51a2af0861c495743d451629802c6b3f275957d8",
+      "sha256": "4a2fcb0bb66020c078a0cfd6718a58bf1bfd62cd8958873909b254525c9ac7c5",
       "executable": false
     },
     {
@@ -82,7 +82,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "0a9a39495b47e2ec9c67f4f9fa9478663e0529638bcca27a8723ce0e1946d1be",
+      "sha256": "ed48b530b4f42507aa5b32b4cbdfa08515cdf71deab35a0f895f725b6b6c3e64",
       "executable": false
     },
     {
@@ -94,7 +94,7 @@
     {
       "path": ".codex/agents/council-investigator.toml",
       "kind": "file",
-      "sha256": "5a59696511a2c8833d04a739262e838fcd247d7b08b9093d33abda7281378431",
+      "sha256": "fadbf68196e7d256371e3c1a2bb56d7cef90e5f03290cee138c6d7659aa64195",
       "executable": false
     },
     {
@@ -106,31 +106,31 @@
     {
       "path": ".codex/agents/council-member.toml",
       "kind": "file",
-      "sha256": "25ef7746650f607aa9eedb7767bf8b94c8ab04029c1df0c5d866fb98d6910a2f",
+      "sha256": "bb49cd91d62932f5f98b37a756843fd7ab4356d08c0c2bd25c4381909ced9f16",
       "executable": false
     },
     {
       "path": ".codex/agents/explorer.instructions.md",
       "kind": "file",
-      "sha256": "dfa19abc175464818ae8fce3bbf54e76718df2275b2c4a9adf380844e2739d14",
+      "sha256": "27be5b7126ad5b46e92cd9dc8a194719cc11a63576b3830f1fabe5390df104d9",
       "executable": false
     },
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "69c726ed6c1f556b7166266590a28f82cb83bd5a3120261783072c7209bdd8aa",
+      "sha256": "5db3b518572319bf1c74ac38f883e629a27511c2676b475554af6f8af3fa91fb",
       "executable": false
     },
     {
       "path": ".codex/agents/fast-explorer.instructions.md",
       "kind": "file",
-      "sha256": "3b3b1852b83dd863528ef666fbd5d82efcbfe73b3e102dd95e5c8ffceefb23a2",
+      "sha256": "bb78518160becd201391ea6c39d9b592c63bc122af34ccac99547cf1ae90df2d",
       "executable": false
     },
     {
       "path": ".codex/agents/fast-explorer.toml",
       "kind": "file",
-      "sha256": "1b6df75e18af659edc8a3fe87d711704142fb0f15b7510f7aa46653e80645dcd",
+      "sha256": "e7560beb4a57486674d569dbdfd7f6023098b7cf6ca6b57894a98825f98dad47",
       "executable": false
     },
     {
@@ -142,7 +142,7 @@
     {
       "path": ".codex/agents/fast-implementer.toml",
       "kind": "file",
-      "sha256": "7d6e21a9a9237f85ca3536109506e33b6fee60403c0c52724b16e9424a014099",
+      "sha256": "9c0dc4b39fe96e5e5d4ccb5d543ba35d3ace92d895568cf6717aeced4ff8b31f",
       "executable": false
     },
     {
@@ -154,7 +154,7 @@
     {
       "path": ".codex/agents/implementer.toml",
       "kind": "file",
-      "sha256": "af32b3691bd80c229f6cb89f2d0f0d9b6aa74b24616f0562d9646c35e90a31c8",
+      "sha256": "9021c16e5a7b898341091ae973522f99b4a9c993e9cc3008ee1fb47d4598578f",
       "executable": false
     },
     {
@@ -166,7 +166,7 @@
     {
       "path": ".codex/agents/reviewer.toml",
       "kind": "file",
-      "sha256": "99c9f2e16f5805fef60b7154480a258130f2a0d7b2f5685b3bca3b79078b13a6",
+      "sha256": "82a3a3579db8f022ab3941f5f6a337996cf23c9f16ebab1eb238f3fd970dc938",
       "executable": false
     },
     {
@@ -178,7 +178,7 @@
     {
       "path": ".codex/agents/simplify-checker.toml",
       "kind": "file",
-      "sha256": "60638abdc0a004c06dd258e5ef081b6c5ab414aa335a82f01c2bda4dc2244ac5",
+      "sha256": "b1e702f75f2d219f8f04274ad2aa9cb9bba9183d6efe555a663d88b498607e91",
       "executable": false
     },
     {
@@ -190,7 +190,7 @@
     {
       "path": ".codex/agents/web-reviewer.toml",
       "kind": "file",
-      "sha256": "f32fbae6885c7d763946b0ad25e6f3a7c6068fa3fdf5bbbc97d728bb81b93071",
+      "sha256": "c55a263867a2194015b0d284ff3409d7425254099a825f0f4ddf3016f8ed6db4",
       "executable": false
     },
     {
@@ -262,7 +262,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "bec3ee599b311a715d09fdbd623f8e4b226275e16e354c1aa7b672223ed5305b",
+      "sha256": "292775ca93c3164f7f6b0e9653201aecd965724698e67efbbd48352877daca28",
       "executable": false
     },
     {
@@ -286,7 +286,7 @@
     {
       "path": ".codex/skills/orchestrated-workflow/SKILL.md",
       "kind": "file",
-      "sha256": "2d64c2916146ff1ce556da38844c3cad02fbe03976e96a9f9503e61e56d8012b",
+      "sha256": "c1d7c9ea9d8e0f2631d0df8ecae619a5f7c2e34963bbec8e2b7d4bf7ad430bbe",
       "executable": false
     },
     {
@@ -495,7 +495,7 @@
     {
       "path": ".local/bin/sync-claude-agent-ports",
       "kind": "file",
-      "sha256": "898362513f74110cc31bcfa0eba528817308028b65ee9138b1a7b0bb73f7febd",
+      "sha256": "b9d46b73f8883d79dd97ad5ba88a4fb1aebe0da1c4da92c93d6e8c39a88e7f3f",
       "executable": true
     },
     {
@@ -860,25 +860,25 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "0217d7f7be8e20ede58ce3a2fc2a5f68a500a4c024918fea8f0a8d37122b537e",
+      "sha256": "5c209dcbf2eb6b9051e0c805bd4f61d397092ef6bbd783f65a3244bd88af0f3f",
       "executable": false
     },
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "a4e6d8939540bb96661a32b9f06a7ec615b3bdb4dc2d43d8644681a9251b22af",
+      "sha256": "2fd8a3f88b5a82dcc498098b42cdad9c25009d056c5527ea0fbe0227897c1d23",
       "executable": false
     },
     {
       "path": "CONTEXT-GROK-HOOK-PORT.md",
       "kind": "file",
-      "sha256": "4a2b629fa6744cee8e330e6a856a4a97adab5b4be635acb2aa8e9ff7daf29053",
+      "sha256": "fdc974fd40680dc640d4a302cd260ac20de0529c3f67aada2115bff3bece9f07",
       "executable": false
     },
     {
       "path": "CONTEXT-HOOK-ARCHITECTURE.md",
       "kind": "file",
-      "sha256": "db5a7c82278ad1043340acfd5d2fb7fe1ca4300ca121365a0f44aa62f865032e",
+      "sha256": "87ad388397616c33faef2d46bc0c225201f37b7e5e3920aa87320f97f5e089db",
       "executable": false
     },
     {
@@ -890,7 +890,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "838cd7e23e4bd88bfa6f05e326f3fd687cfc4a940547be76357fa192ba03590a",
+      "sha256": "bf6f24099543b82abe550c920263e34753c1ad89487f1c7343e5d90509468664",
       "executable": false
     },
     {

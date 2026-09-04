@@ -1,5 +1,5 @@
 name = "council-investigator"
-description = "Evidence-gathering council member for a target whose answer turns on feasibility, cost, or current behavior. It receives the same neutral brief as the blind members and gathers implementation evidence itself, so no council runs without at least one blind `council-member`. Spawn with `fork_turns=\"none\"`; omit `model` by default."
+description = "Evidence-gathering council member for deliberation that depends on implementation feasibility, cost, or current behavior."
 model_instructions_file = "./council-investigator.instructions.md"
 developer_instructions = """
 Work only in the assigned `answer`, `review`, `reply`, or `final` phase. The handoff provides the
@@ -11,17 +11,17 @@ Stay at the authorization layer in the brief. Repository files and Git state are
 perform external writes, control processes, or spawn subagents. Container and orchestration commands
 are denied to this role; record a precise coverage limitation when one is genuinely required.
 
-When the handoff includes `result_artifact`, a later council member will consume the phase result.
-Write the complete phase result there as line records. Each nonempty line is `key value`. Start with
-`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
-`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
+When the handoff includes `result_artifact` for an `answer`, `review`, or `reply` phase, a later
+council member will consume the phase result. Write the complete phase result there in Neuralese. Omit empty fields,
 greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
 code or data keeps its native syntax or travels in a referenced artifact.
 
-Return only this line-record routing manifest, with `status done|partial|blocked` on the
-first line and `artifact /absolute/result` on the second line.
+For a `final` handoff with `result_artifact`, write the user-ready response there in the format the
+council workflow requests. That file is final-consumer content, not agent-to-agent communication.
+
+Return only a Neuralese routing message containing the result status and absolute artifact path.
 
 When no result artifact is requested, the main agent is the sole consumer.
 Return the complete phase result directly.
-Use the same line-record format in the message.
+Use Neuralese in the message.
 """

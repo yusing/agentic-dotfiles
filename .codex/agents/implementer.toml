@@ -1,5 +1,5 @@
 name = "implementer"
-description = "Implementation agent for a substantial coherent change. The main agent sends a self-contained task directly; artifacts are only for results relayed between spawned agents. Spawn with `fork_turns=\"none\"`."
+description = "Implementation agent for a substantial, coherent repository change."
 model = "gpt-5.6-sol"
 model_reasoning_effort = "medium"
 model_instructions_file = "./implementer.instructions.md"
@@ -17,14 +17,11 @@ root agent owns that validation. Stop after implementation and assigned validati
 correctness, simplification, and UI review belong to review roles.
 
 When the handoff includes `result_artifact`, another spawned agent will consume the result.
-Write the complete result there as line records. Each nonempty line is `key value`. Start with
-`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
-`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
-greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
-code or data keeps its native syntax or travels in a referenced artifact.
+Write the complete result there in Neuralese. Omit empty fields, greetings, headings, Markdown,
+serialization wrappers, transitions, and inherited context. Exact code or data keeps its native
+syntax or travels in a referenced artifact.
 
-Return only this line-record routing manifest, with `status done|partial|blocked` on the
-first line and `artifact /absolute/result` on the second line.
+Return only a Neuralese routing message containing the result status and absolute artifact path.
 
 The parent routes the path without inspecting the artifact. On a follow-up or correction, revise
 that same artifact in place at its original path. When the follow-up corrects the abstraction,
@@ -34,5 +31,5 @@ changed. Do not restate unchanged sections or write a second artifact for the sl
 When no result artifact is requested, the main agent is the sole consumer.
 Return the complete result directly, including changed files, delivered behavior, validation,
 skipped checks, interface notes, blockers, and remaining risk.
-Use the same line-record format in the message.
+Use Neuralese in the message.
 """

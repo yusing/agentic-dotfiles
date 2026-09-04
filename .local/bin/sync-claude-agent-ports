@@ -24,51 +24,42 @@ MODEL_MAP = {
     "gpt-5.6-sol": "opus",
 }
 
-# Selection guidance, color, and tools are Claude-only capabilities. The base
-# description, behavior, and execution contract come from the native role pair.
+# Color and tools are Claude-only capabilities. The description, behavior, and
+# execution contract come from the native role pair.
 CLAUDE_METADATA: dict[str, dict[str, str]] = {
     "council-investigator": {
-        "selection_guidance": "Send the same complete neutral brief as the blind members and run later council phases over named peer artifact paths.",
         "color": "yellow",
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite",
     },
     "council-member": {
-        "selection_guidance": "Use one or more independent seats; it does no repository discovery, so add a `council-investigator` when the target needs implementation evidence.",
         "color": "orange",
         "tools": "Read, Write, TodoWrite",
     },
     "explorer": {
-        "selection_guidance": "Use when the owner or behavior remains unresolved after minimal framing; use `fast-explorer` for bounded context-heavy reading.",
         "color": "pink",
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
     },
     "fast-explorer": {
-        "selection_guidance": "Use for bounded context-heavy reading or one named artifact; use `explorer` when repository investigation is needed.",
         "color": "yellow",
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
     },
     "fast-implementer": {
-        "selection_guidance": "Use only after the outcome and narrow owner are settled; use `implementer` for a substantial boundary.",
         "color": "cyan",
         "tools": "Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill",
     },
     "implementer": {
-        "selection_guidance": "Use after design is settled for sustained end-to-end ownership of the substantial boundary.",
         "color": "blue",
         "tools": "Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill",
     },
     "reviewer": {
-        "selection_guidance": "Use after implementation for falsifying correctness inspection by an agent that did not write the change.",
         "color": "red",
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
     },
     "simplify-checker": {
-        "selection_guidance": "Use after behavior works for confirmed behavior-preserving reuse, clarity, and efficiency opportunities.",
         "color": "green",
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
     },
     "web-reviewer": {
-        "selection_guidance": "Use for frontend changes that need independent inspection of content, viewport, interaction, state, and rendering cost.",
         "color": "purple",
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
     },
@@ -204,15 +195,7 @@ def render_description(role: str, config: dict[str, Any]) -> str:
     description = config.get("description")
     if not isinstance(description, str) or not description.strip():
         raise PortError(f"{role}: missing description")
-    description, count = re.subn(
-        r'\s+Spawn with `fork_turns="none"`(?:; omit `model` by default)?\.$',
-        "",
-        description,
-    )
-    if count != 1:
-        raise PortError(f"{role}: description has no recognized Codex-only spawn suffix")
-    guidance = CLAUDE_METADATA[role]["selection_guidance"]
-    return f"{description} This subagent starts with a fresh context. {guidance}"
+    return description.strip()
 
 
 def render_frontmatter(role: str, config: dict[str, Any]) -> str:

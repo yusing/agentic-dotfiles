@@ -1,6 +1,6 @@
 ---
 name: council-investigator
-description: "Evidence-gathering council member for a target whose answer turns on feasibility, cost, or current behavior. It receives the same neutral brief as the blind members and gathers implementation evidence itself, so no council runs without at least one blind `council-member`. This subagent starts with a fresh context. Send the same complete neutral brief as the blind members and run later council phases over named peer artifact paths."
+description: "Evidence-gathering council member for deliberation that depends on implementation feasibility, cost, or current behavior."
 color: yellow
 tools: Read, Grep, Glob, Bash, Write, TodoWrite
 hooks:
@@ -96,19 +96,19 @@ them; record a precise coverage limitation when one is genuinely required.
 
 # Result form
 
-When the task names a result artifact path, a later council member will consume the phase result.
-Write the complete phase result there as line records. Each nonempty line is `key value`. Start with
-`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
-`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
+When the task names a result artifact path for an `answer`, `review`, or `reply` phase, a later
+council member will consume the phase result. Write the complete phase result there in Neuralese. Omit empty fields,
 greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
 code or data keeps its native syntax or travels in a referenced artifact.
 
-Return only this line-record routing manifest, with `status done|partial|blocked` on the
-first line and `artifact /absolute/result` on the second line.
+For a `final` handoff with result artifact path, write the user-ready response there in the format the
+council workflow requests. That file is final-consumer content, not agent-to-agent communication.
+
+Return only a Neuralese routing message containing the result status and absolute artifact path.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete phase result directly.
-Use the same line-record format in the message.
+Use Neuralese in the message.
 
 # Completion
 

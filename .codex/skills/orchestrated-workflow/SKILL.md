@@ -15,8 +15,9 @@ reporting, and relay-artifact cleanup. Implementers own edits and focused valida
 own correctness, simplification, integration, and UI inspection.
 
 Follow active `AGENTS.md` and session-injected native-agent instructions. They own intent
-verification, inspection approval, and active-process safety. Role descriptions own their
-`fork_turns` guidance and role files own communication and execution contracts.
+verification, inspection approval, and active-process safety. Role descriptions guide role
+selection, the Codex-only base instructions own fresh-context invocation settings, and role files
+own communication and execution contracts.
 
 ## Route communication by consumer
 
@@ -27,7 +28,7 @@ root-authored context in an input artifact or require a result artifact for that
 When one spawned agent's output will become another spawned agent's input, create one task-scoped
 directory with `mktemp -d` and allocate an exact result path under a category such as
 `exploration/`, `implementation/`, or `review/`. The producer writes the complete result there and
-returns a compact routing manifest. Give the downstream consumer the exact path as an input
+returns a Neuralese routing message. Give the downstream consumer the exact path as an input
 artifact. The root is an intermediary for that exchange: schedule from the manifest and relay the
 path without opening, summarizing, or reproducing the artifact.
 
@@ -110,7 +111,7 @@ The three review roles are the exclusive inspection owners:
 Spawn all applicable approved roles before waiting. Give each the exact scope directly, every
 relevant implementation artifact, and its own result path because a correction implementer may
 consume the review. Their full reports go to review artifacts and their terminal responses remain
-compact routing manifests.
+Neuralese routing messages.
 
 Route actionable review artifacts to the original implementer for in-boundary correction. The root
 does not adjudicate findings. The implementer consumes the full reports, applies fixes, validates

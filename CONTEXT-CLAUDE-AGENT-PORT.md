@@ -14,12 +14,11 @@ selects under Codex. The Codex handoff fields `input_artifacts` and `result_arti
 harness structure with no Claude equivalent, so each body states the same contract in terms of
 artifact paths the parent names in the task text.
 
-The helper derives each base role-selection description from the TOML and appends only
-Claude-specific selection guidance. Colors, tool allowlists, that guidance, and the
-Codex-to-Claude model mapping live in the helper. A new Codex role or an unmapped model makes
-generation fail until that platform metadata is supplied. The behavioral prompt and developer
-contract are read directly from the native pair, so edits to either source cannot pass the focused
-test while generated ports are stale.
+The helper copies each descriptive role summary from the TOML without adding invocation policy.
+Colors, tool allowlists, and the Codex-to-Claude model mapping live in the helper. A new Codex role
+or an unmapped model makes generation fail until that platform metadata is supplied. The behavioral
+prompt and developer contract are read directly from the native pair, so edits to either source
+cannot pass the focused test while generated ports are stale.
 
 Claude enforces structurally what Codex states by prompt. The `tools` allowlist omits `Agent`,
 so no role can spawn another agent, and it omits `Edit` and `NotebookEdit` for the review and

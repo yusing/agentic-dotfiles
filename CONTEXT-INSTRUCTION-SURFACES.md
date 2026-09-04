@@ -3,14 +3,17 @@
 This is the path index for static instruction files. The user manages every file
 under `Paths`. That list does not describe their contents.
 
-`.grok/AGENTS.md` and `.claude/CLAUDE.md` are symlinks to `.codex/AGENTS.md`, so
-Codex, Grok, and Claude Code share one static instruction surface. Edit that file
-once; a change reaches all three clients, and none of them owns a private copy.
+transitively through `.grok/AGENTS.md`. Codex, Grok, Claude Code, OMP, Pi, and
+KiloCode therefore share one static instruction surface. Edit that file once; a
+change reaches all six clients, and none of them owns a private copy.
 
 ## Paths
 
 - `AGENTS.md`
 - `.codex/AGENTS.md`
+- `.codex/SMALL-TASK.md`
+- `.codex/LARGE-TASK.md`
+- `.codex/IMPLEMENTATION.md`
 - `.codex/overridden_base_instructions.md`
 - `.skills-mgr/skills/handoff/STANDARD.md`
 - `.codex/agents/*.toml`

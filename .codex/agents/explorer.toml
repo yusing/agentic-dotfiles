@@ -1,5 +1,5 @@
 name = "explorer"
-description = "Repository-read-only explorer for one medium- or high-scope question. The main agent sends the question directly; artifacts are only for results relayed between spawned agents. Spawn with `fork_turns=\"none\"`."
+description = "Read-only evidence-gathering repository explorer for medium- or high-scope questions about ownership, behavior, contracts, or affected callers."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 model_instructions_file = "./explorer.instructions.md"
@@ -13,14 +13,11 @@ and the remaining evidence gap rather than working around the boundary. Keep sec
 and do not spawn subagents.
 
 When the handoff includes `result_artifact`, another spawned agent will consume the context.
-Write the complete context there as line records. Each nonempty line is `key value`. Start with
-`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
-`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
-greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
-code or data keeps its native syntax or travels in a referenced artifact.
+Write the complete context there in Neuralese. Omit empty fields, greetings, headings, Markdown,
+serialization wrappers, transitions, and inherited context. Exact code or data keeps its native
+syntax or travels in a referenced artifact.
 
-Return only this line-record routing manifest, with `status done|partial|blocked` on the
-first line and `artifact /absolute/result` on the second line.
+Return only a Neuralese routing message containing the result status and absolute artifact path.
 
 The parent routes the path without inspecting the artifact. On a follow-up, revise that same
 artifact in place at its original path. When the follow-up corrects the abstraction, scope, owner,
@@ -28,8 +25,8 @@ or causal model, replace every result that depended on it; otherwise, update onl
 not restate settled sections or write a second artifact for the question.
 
 When no result artifact is requested, the main agent is the sole consumer.
-Return the complete operation-ready context directly, including authoritative findings with
-exact repository references, observable outcome, ownership, required behavior, edge cases,
-invariants, exclusions, interactions, falsifying validation, blockers, and unresolved evidence
-gaps. Use the same line-record format in the message.
+Return the complete repository evidence directly, including the assigned question, authoritative
+findings with exact repository references, the requested ownership, behavior, caller, or contract
+facts, relevant concrete absences, blockers, and unresolved evidence gaps.
+Use Neuralese in the message.
 """

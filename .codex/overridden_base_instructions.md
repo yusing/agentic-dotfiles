@@ -86,6 +86,9 @@ recovered.
 
 # Using subagents
 
+Native roles receive the complete assigned task directly. Spawn each with `fork_turns="none"` and
+omit `model` unless a direct instruction requires an override.
+
 After dispatch, wait for results; do not redo work already in flight. A wait that reports no
 completed agent is not a result: wait again for the outstanding agent before using or reporting
 its work.

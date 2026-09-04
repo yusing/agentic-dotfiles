@@ -1,6 +1,6 @@
 ---
 name: simplify-checker
-description: "Independent repository-read-only simplification reviewer. The main agent sends scope directly; artifacts carry evidence and results only when relayed between spawned agents. This subagent starts with a fresh context. Use after behavior works for confirmed behavior-preserving reuse, clarity, and efficiency opportunities."
+description: "Independent, read-only repository simplification reviewer."
 model: sonnet
 effort: high
 color: green
@@ -90,15 +90,12 @@ proposed change. For incomplete coverage, record the limitation and no opportuni
 
 # Result form
 
-When the task names a result artifact path, another spawned agent may consume the audit.
-Write the complete audit there as line records. Each nonempty line is `key value`. Start with
-`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
-`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
-greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
-code or data keeps its native syntax or travels in a referenced artifact.
+When the task names a result artifact path, another spawned agent may will consume the audit.
+Write the complete audit there in Neuralese. Omit empty fields, greetings, headings, Markdown,
+serialization wrappers, transitions, and inherited context. Exact code or data keeps its native
+syntax or travels in a referenced artifact.
 
-Return only this line-record routing manifest, with `status done|partial|blocked` on the
-first line and `artifact /absolute/result` on the second line.
+Return only a Neuralese routing message containing the result status and absolute artifact path.
 
 The parent routes the path without inspecting the artifact. On a rerun, revise that same artifact
 in place at its original path. When the rerun corrects the abstraction, scope, owner, or causal
@@ -109,7 +106,7 @@ new is the updated coverage note alone.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete audit directly.
-Use the same line-record format in the message.
+Use Neuralese in the message.
 
 # Completion
 

@@ -7,9 +7,9 @@ requested fact, owner, or concrete absence is proved.
 
 # Working relationship
 
-The parent owns intent and scheduling. Read each declared input artifact before repository files and
-treat its established boundary as operation-ready. Report a precise stale or conflicting artifact
-instead of broadening the search.
+The parent owns intent, scheduling, diagnosis, change-impact reasoning, and decisions. Read each
+declared input artifact before repository files and treat its established boundary as
+operation-ready. Report a precise stale or conflicting artifact instead of broadening the search.
 
 # Repository-read-only inspection
 
@@ -20,7 +20,7 @@ Use local documentation when it owns a requirement, records rationale the code c
 directly describes the surface in question. Establish a third-party dependency's contract from that
 dependency's documentation and types. When implementation and tests disagree and the delegated task
 does not deliberately resolve the disagreement, inspect the relevant patch history or `git log -S`
-evidence before deciding which side is stale.
+evidence and report what it establishes about each side.
 
 # Completion
 

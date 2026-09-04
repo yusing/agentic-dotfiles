@@ -47,42 +47,24 @@ not include running ordinary task-scoped inspection, editing, build, or validati
 
 ## Task sizing and intent verification
 
-Each follow-up request and question by user are considered different tasks. Apply below behavior
-and another intent verification (if needed) for each independent tasks.
+Treat each independently scoped user request or question as a separate task. A direct continuation
+or correction remains part of the current task; reclassify it when the changed scope invalidates
+its current classification. Reclassification does not require rereading an already loaded matching
+task-size document.
 
-### Small tasks
+Classify the task before discovery or action:
 
-A small task has a concrete local outcome and an owner that is either obvious or quick to find.
-For a small task, skip the workflow skills, still read any skill that owns the language,
-library, or material you are changing, and then:
+- Small: it has a concrete local outcome and an owner that is obvious or quick to find.
+- Large: it involves semantic changes with meaningful edge cases, cross-owner changes, diagnosis,
+  refactoring, migration, or other open-ended investigation.
 
-1. Follow the exact path, identifier, or literal in my prompt.
-2. Read the smallest relevant boundary.
-3. Make a safe in-scope assumption when one is available.
-4. Perform the authorized operation.
-5. Account for owning documentation, then run the cheapest focused check that could prove the
-   result wrong.
+If the task is small, read `~/.codex/SMALL-TASK.md`; otherwise, read
+`~/.codex/LARGE-TASK.md`. Read exactly one task-size document.
 
-When exact paths and required commands are supplied for a small task:
- - Treat its implementation boundary as settled.
- - Read those paths and any owning documentation required by step 5 directly.
- - When multiple required commands are ready, use one tool call: run independent commands in
-   parallel, and batch commands that must remain ordered.
- - Do not list or search the repository or check repository status or diffs merely to rediscover scope.
-
-### Other tasks
-
-Treat work as medium or complex when it involves semantic changes with meaningful edge cases,
-cross-owner changes, diagnosis, refactoring, migration, or other open-ended investigation.
-
-- Stop and ask when:
-  * An unresolved assumption could change the outcome, scope, authoritative owner, external
-    effects, destructive effects, or significant risk.
-  * Evidence supports competing interpretations, distinguish the concrete reproducer,
-    immediate failure mechanism, violated invariant, and authoritative owner from the assumptions connecting them.
-- If I correct the abstraction, scope, owner, or causal model, every conclusion that depended on it is no longer valid.
-- Reuse the framing evidence you already gathered, pick up only the remaining operation-ready context,
-  and continue at the authorized layer.
+After compaction, classify the active task again from its current scope, then reread the matching
+task-size document before more task work. If the active task requires implementation or review,
+also reread `~/.codex/IMPLEMENTATION.md`. This compaction reload is independent of ordinary
+reclassification.
 
 ## Skills and required tools
 
@@ -92,8 +74,8 @@ inclusive range to read the whole file.
 Load only the references you actually need.
 Run scripts with `skills-mgr run <skill-name>/<relative/script> [args...]`.
 
-If a skill, tool, CLI, package, runtime, or exact approach explicitly required by me, a
-higher-priority instruction, an owning skill, or the repository's authoritative workflow is
+If a skill, tool, CLI, package, runtime, or exact approach explicitly required by me (`$name`, `/name`, or similar form), 
+a higher-priority instruction, an owning skill, or the repository's authoritative workflow is
 unavailable, stop rather than substituting, working around, reimplementing, or skipping it.
 Explain why it is required and propose an installation, then install only once I agree. If I
 decline the installation, ask me how to proceed. Do not introduce or require a dependency solely
@@ -107,18 +89,19 @@ write its output to a file rather than return it to the conversation.
 
 ## Agent communication
 
+Native roles receive the complete assigned task directly in fresh context. Use the client's native
+fresh-context mechanism rather than copying inherited conversation history into the handoff.
+
 Agent-to-Main communication always uses messages. Main should create one artifact root only if the task includes Agent-to-Agent communication.
 For example: `explorer`->message->`main`; `council-member` A->artifact path->main->`council-member` B.
 
 ### Artifact Format
 
-Use line records for content whose intended reader is another agent, including task and result
-messages, routing manifests, and communication artifacts. Each nonempty line is `key value`.
-A dispatch starts with `task`; a result starts with `status done|partial|blocked`. Use only the
-needed keys from `task`, `scope`, `fact`, `rule`, `check`, `next`, `block`, `artifact`, and
-`status`; repeat a key when needed. Use raw paths. Omit empty fields, greetings, headings,
+Use Neuralese for content whose intended reader is another agent, including task and result
+messages, routing messages, and communication artifacts. Omit empty fields, greetings, headings,
 Markdown, serialization wrappers, transitions, and inherited context. Exact code or data keeps
-its native syntax or travels in a referenced artifact.
+its native syntax or travels in a referenced artifact. When an invoked workflow assigns a final
+consumer a different output format, that workflow owns the final artifact format.
 
 ### Independent inspection
 
@@ -154,25 +137,14 @@ user-facing surface. Do not use documentation as a substitute for inspecting the
 For a third-party dependency, check its own documentation and types instead of inferring the
 contract from call sites.
 
-Let the task size and the evidence you already have pick your discovery method:
-
-- Small task: The main agent owns discovery. When I supply an explicit path, use it directly.
-- Medium/Complex:
-  * When framing still leaves the owning path or identifier unknown,
-  use an `explorer` with exactly one atomic question and one matching purpose: diagnosis,
-  change impact, behavior, or ownership. This includes read-only ownership discovery; a report-only
-  outcome does not make the task small.
-  * You may spawn multiple concurrently for different purposes, if needed.
-  * For artifact summarization or context-heavy reading, use `fast-explorer`
-  * For repository investigation, use `explorer`.
-
 Only the main agent spawns `explorer` or `fast-explorer`. A spawned agent works from its assigned
 context and returns any unresolved discovery need to the main agent rather than spawning another
 exploration agent.
 
-If an equivalent explorer is already active, please wait for it; if it has finished, use its
-result. Launch another only when the question or available evidence changes enough to matter, or when
-the earlier explorer fails or gives you an unusable result.
+Resolve the full independent question set before waiting. Reuse finished equivalent results, count
+active equivalents as already launched, launch the remaining questions concurrently, then wait for
+every active explorer in the set. Launch another only when the question or available evidence
+changes enough to matter, or when the earlier explorer fails or gives an unusable result.
 
 When implementation behavior and its tests, fixtures, or assertions disagree, first determine
 whether the current request or authorized change deliberately resolves the disagreement. If it
@@ -184,138 +156,10 @@ supplied that evidence.
 
 ## Implementation
 
-Choose the simplest implementation that fully meets the current requirements.
-The "simplest implementation" scope does not expand merely because a review found anything.
-Start with the smallest working end-to-end version, then add capabilities without regressing
-behavior that the current requirements still accept. A behavior superseded by the current request
-is not a compatibility obligation.
-
-Please validate the implementation through the interface that owns the changed behavior. Test every
-reachable happy and unhappy path affected by the change.
-
-Please keep the demonstrated failure and violated invariant together as the unit of
-implementation and of any authorized commit. Helper code, callers, tests, documentation, and
-cleanup that restore the same invariant should travel together. When the same invariant requires
-corresponding commits in separate Git histories, including a parent repository and submodule, keep
-the complete fix together within each history.
-
-After implementation and before validation, reread the likely documents that own or directly
-describe each changed user-facing behavior, interface, configuration, workflow, or agent
-instruction. Update or remove every claim those documents retain about behavior the change
-supersedes. For configuration, include nearby documentation that states the setting or its
-operator workflow. Do not inspect unrelated documentation merely to prove its absence.
-
-### Runtime behavior
-
-When a user-facing or operator-facing operation can remain active long enough that silence
-obscures whether it is progressing, expose proportional progress through the interface that owns
-the operation. Reuse progress, logging, or job-state facilities already owned by the host runtime
-or project instead of duplicating them. Report meaningful milestones or measurable completion,
-not merely start and finish. Progress reporting must remain auxiliary and must not determine or
-interfere with successful core behavior.
-
-For a new operation, use bounded concurrency when work items are genuinely independent and
-concurrency actually helps meet a requirement such as latency or throughput. Keep an existing
-sequential path sequential when it already meets the current requirements; do not retrofit
-concurrency merely because its work items could run independently.
-
-### Hygiene
-
-Please keep durable artifacts focused on the final state. Code, comments, documentation, tests,
-commit messages, change descriptions, and final responses should explain the resulting behavior
-and only the rationale that still applies. Do not mention any rejected proposals, abandoned approach,
-or anything that no longer applies.
-
-Unless user explicitly ask for compatibility, treat anything they correct, replace, or remove,
-and anything whose validity depends on it, as superseded. Remove superseded material rather than
-keeping it or describing it as something else. Removal covers every code path, reference, test, fixture,
-configuration entry, documentation statement, and whole file that no longer serves the final behavior,
-including obsolete portions of shared files. Do not keep a superseded approach as a
-compatibility layer, wrapper, fallback, migration, a leftover kept only to prove the
-old approach wrong, documentation example, or dead test.
-When you stumble across an unrelated pre-existing obsolete path, tell me about it and let me decide.
-When you are unsure about whether compatibility should be preserved, stop and ask.
-
-An abandoned attempt, implementation, or previous state does not become a test case merely because
-it existed. Do not invent an unhappy path or add a production seam solely to create a test case.
-Keep test setup in test sources.
-
-### Edit readiness
-
-Keep components modular and responsibilities separate.
-Reuse suitable project dependencies before you write a replacement or add a package.
-Prefer maintained libraries when they reduce complexity or improve reliability.
-
-Edit authoritative sources rather than generated, vendored, or minified outputs.
-Match the local naming, error handling, idiom, and comment density. Let local style set a
-comment's form, but let the final state set its content; the cases below matter even when the
-local code has few comments.
-
-Please write a comment wherever the reason for the code cannot be recovered from the code itself:
-the invariant a check protects, the caller contract a signature cannot state, the external
-behavior that forced a workaround, or the reason a non-obvious choice beat the obvious one.
-
-
-### Complexity and ownership gate
-
-Evaluate it against every applicable gate:
-
-- Before you add any capability, restriction, convenience, defense, limit, validation,
-compatibility path, retry, buffer, history, metric, defensive branch, helper, wrapper, callback
-seam, interface, adapter, or function extraction.
-- When make decisions to each review findings. A finding could be rejected when gates do not justify it.
-
-Gates:
-
-- `N` — Does another component own this responsibility?
-  Is the policy owned by the caller, the upstream provider, the host runtime, an external
-  protocol, or another boundary? Would the proposal invent or redefine an external request,
-  response, identifier, metadata field, argument, limit, or retry policy? Would it take a policy
-  choice away from its authoritative caller and put it in a helper or wrapper that merely selects
-  or forwards existing operations?
-
-- `O` — Is the proposal more complex than the demonstrated problem requires?
-  Does it add an unnecessary abstraction, a duplicate representation, or maintenance cost?
-  Could streaming, hashing, direct comparison, or a simpler implementation solve the same
-  problem with fewer resources? Try deleting every new production identifier. If that only moves
-  its body unchanged into its sole production caller, without losing a shared policy, owned
-  invariant, or nontrivial algorithm, please inline it.
-
-- `D` — Is an authoritative owner already enforcing this policy?
-  Would the proposal repeat validation, copy a limit across components, or impose a stricter
-  downstream rule on data already bounded at the accepted-input boundary?
-  Add another check only when it protects a distinct boundary and derives its rule from the
-  authoritative owner.
-
-- `I` — Can accepted inputs actually reach this case?
-  If the branch is impossible under the established contracts and invariants, do not handle it as
-  a normal condition. If corruption or external mutation is the real threat, validate that
-  invariant at the relevant boundary.
-
-- `U` — Is the need still speculative?
-  Are the owner, the reproducer, the immediate failure, the violated invariant, or the actual
-  consumer unknown? Do not add convenience, count limits, size limits, or compatibility behavior
-  until those are established.
-
-- `J` — Justified: Does this project own a necessary responsibility, resource, invariant, shared
-  policy, or nontrivial algorithm?
-  Name what it owns, describe the local failure or need, and choose the smallest sufficient
-  implementation. For every new production identifier, name the responsibility it owns. Keep it
-  only if that responsibility still matters after the deletion test, and do not present a local
-  resource guard as an external protocol restriction.
-
-In your internal reasoning, list every new production identifier. Resolve every applicable `N`, `O`, `D`,
-`I`, and `U` finding, remove each identifier that fails the deletion test, and keep only identifiers
-that satisfy `J`.
-
-This gate never rejects a capability I explicitly asked for. My request establishes the need for
-that capability, but its implementation structure must still pass the ownership, duplication,
-reachability, and complexity checks. Keep the gate analysis inside your internal reasoning. In
-responses, focus on the requested result, its evidence, and actionable caveats. Include gate
-labels, production identifier inventories, or smallest sufficient alternatives only when directly
-answering my question about them. Never silently drop, defer, or narrow a requested capability
-because of the gate. If the gate shows my request cannot work as stated, tell me the concrete
-conflict before you implement it.
+Before implementing or reviewing code, configuration, tests, documentation, or agent instructions,
+read `~/.codex/IMPLEMENTATION.md`. It owns implementation, validation, runtime behavior, hygiene,
+edit readiness, and the complexity and ownership gate. Apply it before the first edit and when
+deciding whether to act on a review finding.
 
 ## Active work
 

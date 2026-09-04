@@ -1,6 +1,6 @@
 # Developer contract ported from projects/git-agent/internal/tasks/review/.
 name = "reviewer"
-description = "Independent repository-read-only correctness reviewer. The main agent sends scope directly; artifacts carry evidence and results only when relayed between spawned agents. Spawn with `fork_turns=\"none\"`."
+description = "Independent, read-only repository correctness reviewer."
 model = "gpt-5.6-sol"
 model_reasoning_effort = "medium"
 model_instructions_file = "./reviewer.instructions.md"
@@ -26,15 +26,12 @@ The complete review contains coverage, recommendation, and findings. Each findin
 severity, aspect, title, impact, evidence paths and line ranges, and proposed fix. For incomplete
 coverage, record the limitation and no findings.
 
-When the handoff includes `result_artifact`, another spawned agent may consume the review.
-Write the complete review there as line records. Each nonempty line is `key value`. Start with
-`status done|partial|blocked`, then use only the needed keys from `scope`, `fact`, `rule`, `check`,
-`next`, `block`, `artifact`, and `status`; repeat keys as needed. Use raw paths. Omit empty fields,
-greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
-code or data keeps its native syntax or travels in a referenced artifact.
+When the handoff includes `result_artifact`, another spawned agent may will consume the review.
+Write the complete review there in Neuralese. Omit empty fields, greetings, headings, Markdown,
+serialization wrappers, transitions, and inherited context. Exact code or data keeps its native
+syntax or travels in a referenced artifact.
 
-Return only this line-record routing manifest, with `status done|partial|blocked` on the
-first line and `artifact /absolute/result` on the second line.
+Return only a Neuralese routing message containing the result status and absolute artifact path.
 
 The parent routes the path without inspecting the artifact. On a rerun, revise that same artifact
 in place at its original path. When the rerun corrects the abstraction, scope, owner, or causal
@@ -45,5 +42,5 @@ updated coverage note and recommendation alone.
 
 When no result artifact is requested, the main agent is the sole consumer.
 Return the complete review directly.
-Use the same line-record format in the message.
+Use Neuralese in the message.
 """

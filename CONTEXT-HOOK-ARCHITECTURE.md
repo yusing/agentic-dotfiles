@@ -5,9 +5,18 @@ copying the policies they own.
 
 ## Hook surfaces
 
-- `.codex/hooks.json` is registration only: lifecycle event, matcher, command, timeout,
-  and status message. A script is active only when registered there; an implementation
-  file existing under `.codex/hooks/` is not by itself an active hook.
+- Active hooks are assembled from `.codex/hooks.json`, any inline hook configuration,
+  and manifests for enabled plugins. All matching hooks from those sources run for the
+  event. `.codex/config.toml` owns the feature flags that enable configured and plugin
+  hooks; it is not the owner of their event-specific behavior.
+- `.codex/hooks.json` registers repository-owned hooks: lifecycle event, matcher,
+  command, timeout, and status message. An implementation file existing under
+  `.codex/hooks/` is not by itself an active hook; it must be registered by an active
+  configuration source.
+- An enabled plugin manifest owns its plugin hook registrations and implementation
+  references. The current Browser plugin contributes a `Stop` MCP hook, independently
+  of `.codex/hooks.json`. Inspect enabled plugin manifests when mapping complete hook
+  coverage rather than treating `.codex/hooks.json` as the whole registry.
 - The registered implementation under `.codex/hooks/` owns its detection, state,
   decision, and injected wording. Hooks read event JSON from stdin and may deny an
   operation, add event-scoped context, or update session state.

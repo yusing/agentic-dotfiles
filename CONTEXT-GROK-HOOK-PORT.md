@@ -36,10 +36,11 @@ owns PreToolUse denial of search and listing against `/home/$USER/*/skills`,
 and of broad searches rooted at the home directory or an agent-client
 directory. A named skill file may be read directly. Listing and fetching
 unknown skills still belong to `skills-mgr`.
-`.grok/hooks/skills_mgr_inventory.py` (registered by `.grok/hooks/codex-port.json`)
-owns the `--- skills-mgr injected ---` heading on the SessionStart and
-PostCompact inventory so that list is not mistaken for Grok's visible
-skills.
+`.codex/hooks/skills_mgr_inventory.py` is the shared inventory owner registered by
+`.grok/hooks/codex-port.json` for SessionStart and PostCompact. It owns the
+`--- skills-mgr injected ---` heading so that the injected list is not mistaken for
+Grok's visible skills. Its harness-aware `skills-mgr list` preserves the Grok inventory
+selected explicitly by `skills-mgr list --grok` without a Grok-only wrapper.
 
 When an instruction changes, edit only its owner. Supporting the same policy in multiple
 clients means sharing or porting the owner, not copying its text into each client's static
