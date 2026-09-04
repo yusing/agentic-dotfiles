@@ -32,13 +32,16 @@ pane_borders = true
 pane_gaps = false
 show_agent_labels_on_pane_borders = true
 agent_panel_sort = "priority"
-# Match tmux status-right: application, cpu, ram, net, uptime, date.
+# Herdr 0.8 has one tab row, so keep every metric but minimize single-row spacing.
 tab_bar_right = [
   { type = "command", command = "~/.config/herdr/status.sh application", interval_seconds = 5, timeout_seconds = 2 },
+  { type = "command", command = "~/.config/herdr/status.sh codex", interval_seconds = 180, timeout_seconds = 10 },
+  { type = "command", command = "~/.config/herdr/status.sh grok", interval_seconds = 180, timeout_seconds = 10 },
+  { type = "command", command = "~/.config/herdr/status.sh claude", interval_seconds = 180, timeout_seconds = 10 },
   { type = "command", command = "~/.config/herdr/status.sh cpu", interval_seconds = 5, timeout_seconds = 2 },
   { type = "command", command = "~/.config/herdr/status.sh ram", interval_seconds = 5, timeout_seconds = 2 },
   { type = "command", command = "~/.config/herdr/status.sh net", interval_seconds = 5, timeout_seconds = 2 },
   { type = "command", command = "~/.config/herdr/status.sh uptime", interval_seconds = 5, timeout_seconds = 2 },
-  { type = "datetime", format = "󰃰 %d.%m. %H:%M" },
+  { type = "datetime", format = "󰃰 %d.%m %H:%M" },
 ]
-tab_bar_right_separator = " · "
+tab_bar_right_separator = "  "
