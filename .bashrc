@@ -2,6 +2,9 @@ if [ -f /opt/homebrew/bin/brew ]; then
   eval $(/opt/homebrew/bin/brew shellenv bash)
 fi
 
+export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.bun/bin:$PATH"
+command -v mise >/dev/null 2>&1 && eval "$(mise activate bash)"
+
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

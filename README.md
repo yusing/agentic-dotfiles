@@ -46,7 +46,7 @@ repository's canonical home paths in tracked runtime configuration for the local
 machine, and installs the locked cross-platform tool set through `mise`. Native
 package managers retain ownership of system foundations; `mise` owns development
 runtimes and fast-moving command-line tools; vendor installers retain ownership
-of Codex, Claude Code, Grok, and herdr.
+of Claude Code, Grok, and herdr.
 
 When `$HOME` is already the recognized private `yusing/dotfiles` checkout,
 setup preserves its origin and history and continues with the remaining setup
@@ -60,10 +60,10 @@ commit message. It does not push the public repository.
 It is written for a home directory that already has unrelated files, and it
 can be run again if it stops partway through. Files that would be overwritten
 by the checkout are copied to `~/.local/share/dotfiles-setup/` first. Untracked
-files this repository does not own are left in place. A normal rerun reconciles
-every managed tool to the tracked lock without querying remote version APIs.
-Go is installed first so the source-built Go tools use the locked toolchain.
-After every replacement validates, it removes explicitly mapped
+files this repository does not own are left in place. A normal rerun checks
+installed versions and installs missing locked tools in parallel without
+upgrading existing ones. Go is installed first when the source-built Go tools
+need it. After every replacement validates, it removes explicitly mapped
 duplicate Brew, APT, and Pacman packages in one package-manager transaction,
 then removes legacy direct-install copies. It refuses an APT removal that would
 remove another package, and package-manager dependency failures leave the legacy
@@ -86,12 +86,12 @@ tool set on the current machine:
 bash setup.sh --upgrade
 ```
 
-The lock covers Linux on arm64 and x86-64, plus macOS on arm64. `--upgrade`
-resolves every `latest` selector without an additional release-age delay; it
-does not perform a native OS package upgrade. Lock updates use an existing
-GitHub CLI login when available, validate every release artifact, and replace
-the tracked lock only after the complete candidate passes. Installing that
-locked mise tool set does not query remote version APIs.
+The lock covers Linux on arm64 and x86-64, plus macOS on arm64. Releases
+normally must be at least three days old; backends that cannot apply that policy
+reliably use an explicit per-tool exception. `--upgrade` does not perform a
+native OS package upgrade. Lock updates use an existing GitHub CLI login when
+available, validate every release artifact, and replace the tracked lock only
+after the complete candidate passes.
 
 If you are adapting pieces of this setup on a machine that already has its own
 dotfiles, do not run `setup.sh`. Copy the files you want instead.

@@ -656,9 +656,9 @@ function transformText(path: string, text: string, privateHomes: string[]): stri
 		projected = projectShell(path, projected);
 	}
 	for (const privateHome of privateHomes) projected = projected.replaceAll(privateHome, "$HOME");
-	// Committed content can retain home paths from a different host than the
+	// Committed content can retain Linux home paths from a different host than the
 	// machine running the projection.
-	projected = projected.replaceAll(/(?<![A-Za-z0-9._~\/-])(?:\/home|\/Users)\/[A-Za-z0-9._-]+/g, "$HOME");
+	projected = projected.replaceAll(/(?<![A-Za-z0-9._~\/-])\/home\/[A-Za-z0-9._-]+/g, "$HOME");
 	return projected;
 }
 

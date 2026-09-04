@@ -679,6 +679,7 @@ bun|bun
 aqua:astral-sh/uv|uv
 github:atuinsh/atuin|atuin
 aqua:crate-ci/typos|typos
+aqua:openai/codex|codex
 aqua:dandavison/delta|delta
 github:eza-community/eza|eza
 aqua:fastfetch-cli/fastfetch|fastfetch
@@ -714,6 +715,10 @@ go:github.com/yusing/shadowtree/cmd/shadowtree|shadowtree
 EOF
 }
 
+mise_tool_installed() {
+  mise_cmd where "$1" >/dev/null 2>&1
+}
+
 validate_mise_tool() {
   local tool="$1" cmd="$2" path
   path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
@@ -721,13 +726,30 @@ validate_mise_tool() {
     || die "mise installed $tool, but $cmd is unavailable"
 }
 
-install_locked_mise_tools() {
+install_missing_mise_tools() {
   local tool cmd
-  info "installing the locked Go toolchain"
-  mise_cmd install --locked go
-  validate_mise_tool go go
-  info "reconciling the locked tool set in parallel"
-  mise_cmd install --locked
+  local missing=() parallel=()
+  while IFS='|' read -r tool cmd; do
+    if mise_tool_installed "$tool"; then
+      log "  present $cmd"
+    else
+      missing+=("$tool")
+    fi
+  done < <(mise_tool_records)
+
+  for tool in "${missing[@]}"; do
+    if [ "$tool" = go ]; then
+      info "installing locked Go toolchain"
+      mise_cmd install --locked go
+      validate_mise_tool go go
+    else
+      parallel+=("$tool")
+    fi
+  done
+  if [ "${#parallel[@]}" -gt 0 ]; then
+    info "installing ${#parallel[@]} locked tools in parallel"
+    mise_cmd install --locked "${parallel[@]}"
+  fi
   while IFS='|' read -r tool cmd; do
     validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
@@ -820,18 +842,9 @@ refresh_mise_lock() (
   info "updating the cross-platform tool lock"
   if ! (
     cd "$tmp"
-    # Isolate the candidate config without hiding the installed Go toolchain
-    # and caches that source-backed tools need while resolving versions.
-    MISE_GLOBAL_CONFIG_FILE="$tmp/.config/mise/config.toml" \
-      MISE_HTTP_TIMEOUT=120 MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=120 \
-      mise_cmd lock --global --bump \
+    HOME="$tmp" MISE_HTTP_TIMEOUT=120 mise_cmd lock --global --bump \
       --platform "$MISE_LOCK_PLATFORMS"
-  ) 2>&1 | tee "$tmp/mise-lock.log"; then
-    return 1
-  fi
-  if grep -Eq '^mise WARN[[:space:]]+(Failed to resolve tool version list|Remote versions cannot be fetched|Error getting latest version)' \
-    "$tmp/mise-lock.log"; then
-    warn "mise could not resolve every latest tool version; the existing lock was preserved"
+  ); then
     return 1
   fi
   validate_mise_lock "$tmp/.config/mise/config.toml" "$tmp/.config/mise/mise.lock" \
@@ -844,7 +857,26 @@ upgrade_mise_tools() {
   # The existing locked Go version is needed to resolve source-built Go tools.
   mise_cmd install --locked go
   refresh_mise_lock
-  install_locked_mise_tools
+  # The refreshed Go version must be ready before mise invokes the go: backend.
+  mise_cmd install --locked go
+  info "installing the upgraded tool set in parallel"
+  mise_cmd install --locked
+  mise_cmd reshim
+}
+
+report_mise_updates() {
+  local output
+  info "available cross-platform tool updates"
+  if ! output="$(mise_cmd outdated 2>&1)"; then
+    warn "could not check for cross-platform tool updates"
+    [ -z "$output" ] || printf '%s\n' "$output"
+    return 0
+  fi
+  if [ -n "$output" ]; then
+    printf '%s\n' "$output"
+  else
+    log "  none"
+  fi
 }
 
 # ---------------------------------------------------------------------------
@@ -956,30 +988,27 @@ legacy_packages() {
   esac
 }
 
-installed_pm_package() {
+pm_package_installed() {
   case "$PM" in
     apt)
       dpkg-query -W -f='${Status}\n' "$1" 2>/dev/null \
-        | grep -q 'install ok installed' \
-        && printf '%s\n' "$1"
+        | grep -q 'install ok installed'
       ;;
     brew)
-      brew list --formula "$1" >/dev/null 2>&1 \
-        && printf '%s\n' "$1"
+      brew list --formula "$1" >/dev/null 2>&1
       ;;
     pacman)
-      pacman -Qq "$1" 2>/dev/null
+      pacman -Q "$1" >/dev/null 2>&1
       ;;
   esac
 }
 
 remove_legacy_packages() {
-  local pkg resolved existing duplicate dependents plan removed name matched
+  local pkg existing duplicate dependents plan removed name matched
   local candidates=() removable=()
   for pkg in "$@"; do
     [ -n "$pkg" ] || continue
-    resolved="$(installed_pm_package "$pkg")" || continue
-    pkg="$resolved"
+    pm_package_installed "$pkg" || continue
     duplicate=0
     for existing in "${candidates[@]}"; do
       [ "$existing" != "$pkg" ] || duplicate=1
@@ -1134,26 +1163,6 @@ install_claude() {
   fi
 }
 
-install_codex() {
-  local pkg
-  local packages=()
-  if [ ! -x "${LOCAL_BIN}/codex" ] || [ "$UPGRADE" -eq 1 ]; then
-    info "installing/updating Codex"
-    curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
-  fi
-  [ -x "${LOCAL_BIN}/codex" ] || die "Codex is unavailable at ${LOCAL_BIN}/codex"
-
-  # Codex moved back to its official installer; remove both mise backends used
-  # by earlier setup versions so their generated shim cannot shadow it.
-  mise_cmd uninstall --all aqua:openai/codex github:openai/codex >/dev/null 2>&1 \
-    || warn "could not remove a legacy mise-managed Codex installation"
-  mise_cmd reshim
-  while IFS= read -r pkg; do
-    [ -z "$pkg" ] || packages+=("$pkg")
-  done < <(legacy_packages codex)
-  remove_legacy_packages "${packages[@]}"
-}
-
 install_grok() {
   local grok_bin="${HOME}/.grok/bin/grok"
   if [ ! -x "$grok_bin" ]; then
@@ -1188,8 +1197,8 @@ install_hunkdiff() {
 
 run_additional_installs() (
   local log_root index log status failed=0
-  local labels=("Claude Code" "Codex" "Grok CLI" "herdr" "hunkdiff")
-  local commands=(install_claude install_codex install_grok install_herdr install_hunkdiff)
+  local labels=("Claude Code" "Grok CLI" "herdr" "hunkdiff")
+  local commands=(install_claude install_grok install_herdr install_hunkdiff)
   local pids=() logs=()
 
   log_root="$(mktemp -d "${TMPDIR:-/tmp}/setup-vendor.XXXXXX")"
@@ -1295,11 +1304,10 @@ Usage: setup.sh [--upgrade]
 Install missing native and locked cross-platform tools, reconcile each tool to
 its declared owner, then check the agentic-dotfiles repository out into $HOME.
 
-Without --upgrade, installed tools are reconciled to the tracked lock without a
-remote version lookup. Packages from legacy Brew, APT, Pacman, and direct-install
-sources are removed only after the replacement validates. --upgrade advances the
-tracked multi-platform mise lock and installs it. Native OS package upgrades
-remain separate.
+Without --upgrade, installed tools are checked but not upgraded. Packages from
+legacy Brew, APT, Pacman, and direct-install sources are removed only after the
+replacement validates. --upgrade advances the tracked multi-platform mise lock
+and installs the upgraded tool set. Native OS package upgrades remain separate.
 EOF
 }
 
@@ -1361,7 +1369,7 @@ main() {
   if [ "$UPGRADE" -eq 1 ]; then
     upgrade_mise_tools
   else
-    install_locked_mise_tools
+    install_missing_mise_tools
   fi
 
   STEP="reconcile tool ownership"
@@ -1379,6 +1387,11 @@ main() {
 
   info "cross-platform tool versions"
   mise_cmd ls --global
+
+  if [ "$UPGRADE" -eq 0 ]; then
+    STEP="check for tool updates"
+    report_mise_updates
+  fi
 
   info "setup complete"
   log "open a new shell session to activate the mise-managed tools"
