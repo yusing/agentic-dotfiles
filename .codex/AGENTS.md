@@ -51,11 +51,11 @@ Apply this transition table before reading task documents or taking the next act
 
 | Event | Task handling | Document handling | Next action |
 | --- | --- | --- | --- |
-| Independent user request or question | Start a separate task and classify it before discovery or action. | Read exactly one task-size document: `$HOME/.codex/SMALL-TASK.md` for a small task, otherwise `$HOME/.codex/LARGE-TASK.md`. | Begin the new task. |
+| Independent user request or question | Start a separate task and classify it before discovery or action. | Read exactly one task-size document: `$HOME/.codex/SMALL-TASK.md` for a small task, otherwise `$HOME/.codex/LARGE-TASK.md`. When the request requires implementation or review, batch-read `$HOME/.codex/IMPLEMENTATION.md` in the same file-read command. | Begin the new task. |
 | Direct continuation or correction | Keep the current task. Reclassify only when the changed scope invalidates its classification. | Retain loaded task-size and implementation documents; reclassification alone does not reload them. | Continue the task. |
 | Workflow approval | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Perform the approved next step. |
 | Approval or request to dispatch a native role | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Dispatch the role. The main agent does not become the owner of that role's implementation or review. |
-| Compaction | Keep the current task and classify its active scope again. | Reread the matching task-size document. If the active task requires implementation or review, also reread `$HOME/.codex/IMPLEMENTATION.md`. | Resume from the preserved task state. |
+| Compaction | Keep the current task and classify its active scope again. | Batch-read the matching task-size document and, when the active task requires implementation or review, `$HOME/.codex/IMPLEMENTATION.md` in one file-read command. | Resume from the preserved task state. |
 
 Use these task sizes:
 
@@ -70,6 +70,9 @@ with `skills-mgr get <skill-name>/<relative-path> [start:end]`. Omit the optiona
 inclusive range to read the whole file.
 Load only the references you actually need.
 Run scripts with `skills-mgr run <skill-name>/<relative/script> [args...]`.
+
+`SMALL-TASK.md`, `LARGE-TASK.md`, and `IMPLEMENTATION.md` are task documents, not skills. Only
+`skills-mgr get` reads use skill-specific timing and batching rules.
 
 If a skill, tool, CLI, package, runtime, or exact approach explicitly required by me (`$name`, `/name`, or similar form), 
 a higher-priority instruction, an owning skill, or the repository's authoritative workflow is
@@ -98,8 +101,9 @@ For example: `explorer`->message->`main`; `council-member` A->artifact path->mai
 Use Neuralese for content whose intended reader is another agent, including task and result
 messages, routing messages, and communication artifacts. Omit empty fields, greetings, headings,
 Markdown, serialization wrappers, transitions, and inherited context. Exact code or data keeps
-its native syntax or travels in a referenced artifact. When an invoked workflow assigns a final
-consumer a different output format, that workflow owns the final artifact format.
+its native syntax or travels in a referenced artifact. Write repository references as plain
+`path:line` tokens. When an invoked workflow assigns a final consumer a different output format,
+that workflow owns the final artifact format.
 
 ### Independent inspection
 
@@ -155,9 +159,9 @@ supplied that evidence.
 ## Implementation
 
 Before implementing or reviewing code, configuration, tests, documentation, or agent instructions,
-read `$HOME/.codex/IMPLEMENTATION.md`. It owns implementation, validation, runtime behavior, hygiene,
-edit readiness, and the complexity and ownership gate. Apply it before the first edit and when
-deciding whether to act on a review finding.
+read `$HOME/.codex/IMPLEMENTATION.md` if it is not already loaded for this task. It owns
+implementation, validation, runtime behavior, hygiene, edit readiness, and the complexity and
+ownership gate. Apply it before the first edit and when deciding whether to act on a review finding.
 
 ## Active work
 

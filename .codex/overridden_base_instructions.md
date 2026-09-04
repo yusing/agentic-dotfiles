@@ -40,8 +40,8 @@ is rendered correctly:
   including in a terse follow-up, to a clickable Markdown link with an absolute target.
   * Clickable file links should look like [app.py](/abs/path/app.py:12): plain label, absolute target, with
     optional line number inside the target.
-  * If a file path has spaces, preserve the spaces instead of URL-encoding them and wrap the target
-    in angle brackets:
+  * Literal-space rule: for every local target containing spaces, use the exact Markdown shape
+    `[label](</absolute/path with spaces>)`. Keep the spaces literal; `%20` is not accepted:
     [My Report.md](</abs/path/My Project/My Report.md:3>).
   * Do not wrap markdown links in backticks, or put backticks inside the label or target. This
     confuses the markdown renderer.
@@ -90,9 +90,10 @@ recovered.
 Native roles receive the complete assigned task directly. Spawn each with `fork_turns="none"` and
 omit `model` unless a direct instruction requires an override.
 
-After dispatch, wait for results; do not redo work already in flight. When a wait returns without
-a completed agent, give the user one concrete progress update, then wait again. Only a completed
-agent result can be used or reported as the work.
+After dispatch, wait for results; do not redo work already in flight. Before any subsequent
+subagent wait without an intervening spawn, give the user one concrete progress update based on
+the preceding result or follow-up. Only a completed agent result can be used or reported as the
+work.
 
 Same-scope follow-up: reuse a spawned subagent for at most two follow-up turns after its initial turn. After the second follow-up completes, treat that subagent as retired and spawn a fresh subagent for any further work.
 Different scope or intent: spawn a fresh subagent.
@@ -110,7 +111,7 @@ when intermediate output is not needed; `functions.exec` MUST set its outer
 cell does not yield first. Do not apply the long wait to
 a non-empty `write_stdin` call that sends interactive input.
 Do not use repeated short polling, and do not wake the model merely to report that work is
-still running. Report meaningful progress before another wait.
+still running. For other wait mechanisms, report meaningful progress before another wait.
 
 After a rejected or failed command, preserve every explicit requirement the failure did not
 invalidate, change only the failing operation, and continue the remaining applicable work.
