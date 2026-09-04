@@ -46,7 +46,7 @@ repository's canonical home paths in tracked runtime configuration for the local
 machine, and installs the locked cross-platform tool set through `mise`. Native
 package managers retain ownership of system foundations; `mise` owns development
 runtimes and fast-moving command-line tools; vendor installers retain ownership
-of Claude Code, Grok, and herdr.
+of Codex, Claude Code, Grok, and herdr.
 
 When `$HOME` is already the recognized private `yusing/dotfiles` checkout,
 setup preserves its origin and history and continues with the remaining setup
@@ -86,13 +86,12 @@ tool set on the current machine:
 bash setup.sh --upgrade
 ```
 
-The lock covers Linux on arm64 and x86-64, plus macOS on arm64. Releases
-normally must be at least three days old; backends that cannot apply that policy
-reliably use an explicit per-tool exception. `--upgrade` does not perform a
-native OS package upgrade. Lock updates use an existing GitHub CLI login when
-available, validate every release artifact, and replace the tracked lock only
-after the complete candidate passes. This lock refresh is the only setup path
-that queries remote version APIs.
+The lock covers Linux on arm64 and x86-64, plus macOS on arm64. `--upgrade`
+resolves every `latest` selector without an additional release-age delay; it
+does not perform a native OS package upgrade. Lock updates use an existing
+GitHub CLI login when available, validate every release artifact, and replace
+the tracked lock only after the complete candidate passes. Installing that
+locked mise tool set does not query remote version APIs.
 
 If you are adapting pieces of this setup on a machine that already has its own
 dotfiles, do not run `setup.sh`. Copy the files you want instead.

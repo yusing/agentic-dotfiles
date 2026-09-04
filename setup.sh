@@ -679,7 +679,6 @@ bun|bun
 aqua:astral-sh/uv|uv
 github:atuinsh/atuin|atuin
 aqua:crate-ci/typos|typos
-aqua:openai/codex|codex
 aqua:dandavison/delta|delta
 github:eza-community/eza|eza
 aqua:fastfetch-cli/fastfetch|fastfetch
@@ -821,9 +820,18 @@ refresh_mise_lock() (
   info "updating the cross-platform tool lock"
   if ! (
     cd "$tmp"
-    HOME="$tmp" MISE_HTTP_TIMEOUT=120 mise_cmd lock --global --bump \
+    # Isolate the candidate config without hiding the installed Go toolchain
+    # and caches that source-backed tools need while resolving versions.
+    MISE_GLOBAL_CONFIG_FILE="$tmp/.config/mise/config.toml" \
+      MISE_HTTP_TIMEOUT=120 MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=120 \
+      mise_cmd lock --global --bump \
       --platform "$MISE_LOCK_PLATFORMS"
-  ); then
+  ) 2>&1 | tee "$tmp/mise-lock.log"; then
+    return 1
+  fi
+  if grep -Eq '^mise WARN[[:space:]]+(Failed to resolve tool version list|Remote versions cannot be fetched|Error getting latest version)' \
+    "$tmp/mise-lock.log"; then
+    warn "mise could not resolve every latest tool version; the existing lock was preserved"
     return 1
   fi
   validate_mise_lock "$tmp/.config/mise/config.toml" "$tmp/.config/mise/mise.lock" \
@@ -1126,6 +1134,26 @@ install_claude() {
   fi
 }
 
+install_codex() {
+  local pkg
+  local packages=()
+  if [ ! -x "${LOCAL_BIN}/codex" ] || [ "$UPGRADE" -eq 1 ]; then
+    info "installing/updating Codex"
+    curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
+  fi
+  [ -x "${LOCAL_BIN}/codex" ] || die "Codex is unavailable at ${LOCAL_BIN}/codex"
+
+  # Codex moved back to its official installer; remove both mise backends used
+  # by earlier setup versions so their generated shim cannot shadow it.
+  mise_cmd uninstall --all aqua:openai/codex github:openai/codex >/dev/null 2>&1 \
+    || warn "could not remove a legacy mise-managed Codex installation"
+  mise_cmd reshim
+  while IFS= read -r pkg; do
+    [ -z "$pkg" ] || packages+=("$pkg")
+  done < <(legacy_packages codex)
+  remove_legacy_packages "${packages[@]}"
+}
+
 install_grok() {
   local grok_bin="${HOME}/.grok/bin/grok"
   if [ ! -x "$grok_bin" ]; then
@@ -1160,8 +1188,8 @@ install_hunkdiff() {
 
 run_additional_installs() (
   local log_root index log status failed=0
-  local labels=("Claude Code" "Grok CLI" "herdr" "hunkdiff")
-  local commands=(install_claude install_grok install_herdr install_hunkdiff)
+  local labels=("Claude Code" "Codex" "Grok CLI" "herdr" "hunkdiff")
+  local commands=(install_claude install_codex install_grok install_herdr install_hunkdiff)
   local pids=() logs=()
 
   log_root="$(mktemp -d "${TMPDIR:-/tmp}/setup-vendor.XXXXXX")"
