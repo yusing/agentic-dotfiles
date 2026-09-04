@@ -128,9 +128,11 @@ if [[ -z ${COLORTERM+x} && -n ${TERM+x} ]] && _zfm_command_exists tput; then
     unset _zfm_colors
 fi
 
+_zfm_path_prepend "$HOME/.local/bin"
+check-path "$HOME/go/bin" && _zfm_path_prepend "$HOME/go/bin"
+
 if ! _zfm_command_exists go; then
     echo-error "go is not installed or not in PATH"
-    check-path "$HOME/go/bin" && _zfm_path_prepend "$HOME/go/bin"
 fi
 
 if [[ -z ${GOPATH:-} ]]; then
@@ -148,8 +150,6 @@ if [[ -z ${GOPATH:-} ]]; then
     fi
     unset gopath_from_go
 fi
-
-_zfm_path_prepend "$HOME/.local/bin"
 
 if _zfm_command_exists docker && [[ -z ${DOCKER_HOST:-} ]]; then
     if [[ -S "$HOME/.docker/run/docker.sock" ]]; then

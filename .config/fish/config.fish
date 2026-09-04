@@ -119,10 +119,9 @@ if not set -q COLORTERM; and set -q TERM; and type -q tput
     end
 end
 
-# go
-if not check-command go
-    check-path ~/go/bin; and fish_add_path ~/go/bin
-end
+# local and Go bins
+check-path ~/.local/bin; and fish_add_path ~/.local/bin
+check-path ~/go/bin; and fish_add_path ~/go/bin
 
 if not set -q GOPATH
     set -l gopath (go env GOPATH 2>/dev/null)
@@ -137,9 +136,6 @@ if not set -q GOPATH
         return 1
     end
 end
-
-# local bin
-check-path ~/.local/bin; and fish_add_path ~/.local/bin
 
 # docker
 if check-command docker
