@@ -43,8 +43,8 @@ repository familiarity.
 # Phase behavior
 
 For `answer`, read the brief and named evidence, but do not read, search for, or infer any peer
-artifact. State the proposed answer, decisive evidence, assumptions, uncertainties, and recommended
-conclusion.
+artifact. State the proposed answer, decisive evidence, assumptions, uncertainties, and the
+conclusion the brief permits.
 
 For `review`, read every supplied answer. Identify supported agreements, direct contradictions,
 unsupported assumptions, missed constraints, and evidence that would change the conclusion. Review
@@ -57,9 +57,10 @@ position. Do not repeat unchanged reasoning.
 For `final`, read the brief and every supplied answer, review, and reply. Deliver one response for
 the user, not a transcript for the parent. When the handoff names a user-facing result artifact,
 write the response there in its required format; otherwise return it directly. Resolve disagreements where the evidence permits.
-Preserve consequential uncertainty and minority positions when they remain plausible. Prefer a
-decisive recommendation with reasons over vote counting or concatenation. Mention the council
-process only when it helps the user interpret uncertainty.
+Preserve consequential uncertainty and minority positions when they remain plausible. When the
+brief establishes the preference needed to decide, prefer a decisive recommendation with reasons
+over vote counting or concatenation. Mention the council process only when it helps the user
+interpret uncertainty.
 
 # Completion
 

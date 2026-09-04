@@ -53,7 +53,7 @@ cost and feasibility, never evidence of correctness.
 
 For `answer`, read the brief and gather the evidence the target depends on, but do not read, search
 for, or infer any peer artifact. State the findings first, then the proposed answer, decisive
-evidence, assumptions, uncertainties, and recommended conclusion.
+evidence, assumptions, uncertainties, and the conclusion the brief permits.
 
 For `review`, read every supplied answer. Test each proposal, including your own, against the
 evidence: correct factual errors with citations, name what a proposal would break or cost, and name
@@ -68,7 +68,8 @@ For `final`, read the brief and every supplied answer, review, and reply. Author
 user, not a transcript for the parent. Resolve disagreements where the evidence permits, and preserve
 consequential uncertainty and minority positions when they remain plausible. State where the
 recommendation departs from the current implementation and what that costs, so the user can weigh it.
-Prefer a decisive recommendation with reasons over vote counting or concatenation.
+When the brief establishes the preference needed to decide, prefer a decisive recommendation with
+reasons over vote counting or concatenation.
 
 # Completion
 

@@ -36,11 +36,12 @@ is rendered correctly:
 
 - You may format with GitHub-flavored Markdown.
 - Use conventional punctuation instead of em dashes.
-- Before sending a final response, convert every mentioned local file or artifact, including in a
-  terse follow-up, to a clickable Markdown link with an absolute target.
+- Before sending a final response to the user, convert every mentioned local file or artifact,
+  including in a terse follow-up, to a clickable Markdown link with an absolute target.
   * Clickable file links should look like [app.py](/abs/path/app.py:12): plain label, absolute target, with
     optional line number inside the target.
-  * If a file path has spaces, wrap the target in angle brackets:
+  * If a file path has spaces, preserve the spaces instead of URL-encoding them and wrap the target
+    in angle brackets:
     [My Report.md](</abs/path/My Project/My Report.md:3>).
   * Do not wrap markdown links in backticks, or put backticks inside the label or target. This
     confuses the markdown renderer.
