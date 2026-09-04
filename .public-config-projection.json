@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d9c838f07d3673c5b98f9496bec2758882225412",
+  "sourceCommit": "337582b16007e60fa618028265b94957c034ad50",
   "outputs": [
     {
       "path": ".bashrc",
@@ -82,13 +82,13 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "d4fa69ed30d201ddfaf79a37f131b7a30703063d7ce5d3529523e6423f8687a9",
+      "sha256": "3f42fe570d0e62c0730cb59fe83cf1a750225e80c2994bb7aa1cf0eec589683c",
       "executable": false
     },
     {
       "path": ".codex/agents/council-investigator.instructions.md",
       "kind": "file",
-      "sha256": "ccc6db5581b17f90b7171fdff8e495a8a718d7b5432f0d39356d3cf2bbc17c0e",
+      "sha256": "d849c65a44e584a5da47451353d06e7adb67a3fdff761774f755eff0ae788dd2",
       "executable": false
     },
     {
@@ -100,7 +100,7 @@
     {
       "path": ".codex/agents/council-member.instructions.md",
       "kind": "file",
-      "sha256": "9fac6230046d116df2b8460505f105858084be11243d02683d60d8113a935303",
+      "sha256": "529ac0b1c005188c91cd5d4aacba5f582cef5b10e8ffa8a6d86f9cec046c6912",
       "executable": false
     },
     {
@@ -274,7 +274,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "962d95b2e478b83d1b51ac10b0f6af9df88e220a76dd55eec028a562d368fff4",
+      "sha256": "c271aa2336084e877ca0ac8581c82400e76f381fd923950330cd12ccec707574",
       "executable": false
     },
     {
