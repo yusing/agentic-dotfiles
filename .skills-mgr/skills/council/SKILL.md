@@ -1,6 +1,6 @@
 ---
 name: council
-description: Run an artifact-mediated council of independent agents and return one synthesized answer.
+description: Deliberate on an important decision that remains unsettled after evidence gathering.
 disable-model-invocation: false
 ---
 
