@@ -45,14 +45,16 @@ boundary or make the shared seam return enough information for each caller to de
 
 ## Test reachability and invariants
 
-Before editing, prove that accepted inputs can reach the suspected branch. After editing, validate:
+Before editing, establish which callers and branches accepted inputs can reach. After editing,
+validate the affected contracts with checks proportional to the change:
 
-1. The concrete reproducer fails before the fix and passes after it.
+1. For a bug fix, the concrete reproducer fails before the fix and passes after it; for an
+   intentional behavior change, the accepted before/after outcomes are verified.
 2. The happy path and immediate failure path.
 3. Every caller category whose contract differs.
-4. At least one unaffected sibling path as a compatibility control.
+4. An unaffected sibling path when one exists and shares behavior the change could disrupt.
 5. Removal behavior and replacement behavior independently when both are part of the change.
-6. Boundary-specific risks, such as unsafe-method replay, redirect locality, protocol upgrade,
+6. Reachable boundary-specific risks, such as unsafe-method replay, redirect locality, protocol upgrade,
    serialization compatibility, authentication freshness, cancellation, and cleanup.
 7. The final externally observable result, not only an intermediate status or helper return.
 

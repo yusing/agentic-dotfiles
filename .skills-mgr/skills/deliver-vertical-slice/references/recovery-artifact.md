@@ -12,10 +12,11 @@ This is the complete temporary recovery artifact for the automated change. Recor
 
 - Accepted operation: `<new project | feature | behavioral change>`.
 - Authorized repository writes: `<scope>`.
-- Authorized inspections and follow-ups: `<scope>`.
+- Native inspections and follow-ups: `<scope and any task-specific constraints>`.
 - Authorized commits, fixups, and autosquash: `<scope>`.
 - Authorized external or destructive effects: `<scope or none>`.
-- Active Git-agent hook instructions: `<available and binding>`.
+- Required native review roles: `<reviewer; simplify-checker when needed; web-reviewer for frontend coverage>`.
+- Review capability check: `<required roles available, or exact blocker>`.
 
 ## Accepted outcome
 
@@ -30,7 +31,7 @@ The delivered behavior must include `ALL` accepted items:
 
 ### <Area or boundary>
 
-- <exact current behavior, reproducer, and evidence>;
+- <exact current and accepted behavior, supporting evidence, and a reproducer when fixing a bug>;
 - <immediate failure mechanism when applicable>;
 - <violated invariant and authoritative owner when applicable>;
 - <required ownership, dependency, interface, lifecycle, trust, and failure rules>;
@@ -39,14 +40,16 @@ The delivered behavior must include `ALL` accepted items:
 ## Ownership and complexity decisions
 
 - `N` — another project, caller, provider, or runtime owns the policy.
-- `O` — maintenance cost exceeds the demonstrated failure prevented.
+- `O` — implementation complexity or maintenance cost exceeds what the accepted requirement needs.
 - `D` — an authoritative owner already enforces the policy.
 - `I` — accepted inputs cannot reach the proposed branch.
-- `U` — owner, reproducer, failure, or violated invariant remains uncertain.
-- `J` — a demonstrated locally owned resource or invariant justifies the smallest protection.
-- `<ITEM-ID or proposal>`: `<N|O|D|I|U|J>` — <decision, owner, evidence, and owned resource for J>.
+- `U` — ownership, an accepted requirement, or evidence needed for the implementation remains uncertain.
+- `J` — a necessary locally owned responsibility, resource, or invariant justifies the implementation.
+- `<ITEM-ID or proposal>`: `<N|O|D|I|U|J>` — <decision, owner, evidence, and owned responsibility for J>.
 
-Only `J` proposals proceed. Resolve `U` before implementation; skip `N`, `O`, `D`, and `I`.
+Apply the gate to implementation choices, preserving every accepted capability. Resolve `U`
+before implementation; use authoritative owners for `N` and remove unnecessary `O`, `D`, or `I`
+mechanisms. Record the justified local responsibility as `J`.
 
 ## Slice order
 
@@ -99,7 +102,7 @@ Confirmed blockers in original slice order:
 
 Autosquash:
 
-- [ ] All confirmed blockers cleared within hook-permitted review.
+- [ ] Required native reviews completed and all confirmed blockers cleared.
 - [ ] Fixup commits autosquashed into corresponding slice commits.
 - [ ] Rewritten base-to-head range validated without tree change.
 - [ ] Final result reported with exact commit range.

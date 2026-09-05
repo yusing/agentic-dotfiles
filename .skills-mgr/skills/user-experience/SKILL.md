@@ -10,4 +10,4 @@ description: Apply proportional user-experience and operability guidance when ch
 - Design progress for long-running, data-dependent, or network-bound work unless it is predictably short or honest progress is impossible. Emit immediate feedback, meaningful phases, and counts or percentages when totals are known.
 - Keep machine-readable stdout clean by sending progress to stderr unless the interface explicitly says otherwise. Make redirected output newline-delimited; keep interactive progress transient and clear it before results or errors.
 - Propagate cancellation and rendering failures. Never expose secrets in progress, diagnostics, or rendered output.
-- Validate only affected interactive, redirected, empty-work, failure, cancellation, retry, and unknown-progress cases.
+- Validate only affected cases among interactive, redirected, empty-work, failure, cancellation, retry, and unknown-progress behavior.

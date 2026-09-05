@@ -9,11 +9,10 @@ Shadowtree is the project's workflow boundary, not a prefix for every shell
 command. A recipe defines how an operation runs; it does not expand the task's
 authorization.
 
-Reading exactly one reference is a hard gate, not optional discovery. Before
-issuing any Shadowtree command or editing `.shadowtree.toml`, select and read
-the single reference that most directly owns the requested outcome. Reading
-this file alone or loading multiple references does not satisfy the gate. Each
-reference is self-sufficient; do not load another during the same activation.
+Before issuing a Shadowtree command or editing `.shadowtree.toml`, read the one
+reference that owns the current operation. Each reference is self-sufficient;
+reuse it for that operation. Read another only when the task moves to an operation
+owned by a different reference, not as routine preflight or reassurance.
 
 | Work | Reference |
 | --- | --- |
@@ -45,7 +44,7 @@ from another command.
 | Command | Use only when |
 | --- | --- |
 | `shadowtree config` | the config path or selected profile is unknown |
-| `shadowtree recipes` | the recipe name is unknown; run it once |
+| `shadowtree recipes` | the recipe name is unknown; list the available recipes once |
 | `shadowtree help <recipe> color=false` | all of these hold: the recipe is custom and unfamiliar, an unresolved argument choice blocks the invocation, and no established context gives its name, type, bound, preset, or value |
 | `shadowtree --print <recipe> [args...]` | an unresolved question about this exact invocation's stages, sandbox mode, workdir, requirements, or sync-out can change the decision to run it |
 | `shadowtree --print --expanded ...` | a compact plan hides a script or resolved value the decision needs |

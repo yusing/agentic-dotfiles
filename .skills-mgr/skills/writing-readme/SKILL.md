@@ -21,9 +21,9 @@ the same manual.
    - Dotfiles, setup, or reusable configuration: [references/configuration.md](references/configuration.md)
    - Curated resources, examples, templates, or documentation: [references/collection.md](references/collection.md)
    - Personal or organization profile repository: [references/profile.md](references/profile.md)
-3. Gather evidence for every behavior claim from implementation, metadata,
-   configuration, user-facing help, examples, and owning documentation. Inspect an
-   exemplar when the user requests a matching style.
+3. Support every behavior claim with the applicable authoritative source: implementation,
+   metadata, configuration, user-facing help, examples, or owning documentation. Read only
+   what the claim needs. Inspect an exemplar when the user requests a matching style.
 4. Write the shortest path from the opening promise to the reader's first useful
    outcome, then add only the reference material that supports repeated use.
 5. Verify runnable examples, local links, names, defaults, side effects,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "74668eb4bb086ff0c02447fe643785d128fe742b",
+  "sourceCommit": "65596160e92b8aa5555f97e89609afca1ff341ac",
   "outputs": [
     {
       "path": ".bashrc",
@@ -555,7 +555,7 @@
     {
       "path": ".skills-mgr/skills/assess-change-impact/SKILL.md",
       "kind": "file",
-      "sha256": "656379f2686af9ffe96ecb44c5ca049e70a3af7174cb6497453768027874b3bc",
+      "sha256": "30084bc3bc4ca0a5bf2fa3bb7f3d1dab4f3aa5c0cbd6dbc3b8f5b96070688050",
       "executable": false
     },
     {
@@ -567,7 +567,7 @@
     {
       "path": ".skills-mgr/skills/build-code-skeleton/SKILL.md",
       "kind": "file",
-      "sha256": "226f1f362d00a9d5caed1e59cef44210937cd4a4c8de1e5d5590f98bfe046e49",
+      "sha256": "4db8e3973bb6cde47c16116ed3661bf62dbcb6ddd60bda58a9aeac084a5bbd7b",
       "executable": false
     },
     {
@@ -603,13 +603,13 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/references/recovery-artifact.md",
       "kind": "file",
-      "sha256": "4cafe117de983aaf1732f5dc114bbf9cce1f7b9ec31bd86d8f6b073c657f1412",
+      "sha256": "266c9af9b2767521cfde663de09f43116149ad14696b1ae1fd928c83d34d0963",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "362afa42df91d8cf3aee9be996e61d7f89c7a806c8cb1f9cb7410c41b3f1be16",
+      "sha256": "ca8583a670e3be1ee7089a666a15796ccb28e40e0f6017967c8fd78057b16cad",
       "executable": false
     },
     {
@@ -627,7 +627,7 @@
     {
       "path": ".skills-mgr/skills/final-review/SKILL.md",
       "kind": "file",
-      "sha256": "b42436d2198b05710efee661fee266198010e669e1d27a2e5b526a9ef06778c8",
+      "sha256": "342b1a639c5f264c142de6fadf367eed762330b79d42949660aa96032ab094bf",
       "executable": false
     },
     {
@@ -741,7 +741,7 @@
     {
       "path": ".skills-mgr/skills/new-project/SKILL.md",
       "kind": "file",
-      "sha256": "4b39986fe95f8814a730e607796e0456d5f9d7fa2f35462f0bc86000225eb46f",
+      "sha256": "3ae8cbb47e71130858346ab93bea5d548f931ceb420a9bc2afa7513c3f0c9593",
       "executable": false
     },
     {
@@ -783,7 +783,7 @@
     {
       "path": ".skills-mgr/skills/shadowtree/SKILL.md",
       "kind": "file",
-      "sha256": "cab884c1114028dd172afcc600b5da83d4ed7500431acc5c58ea1213280b296f",
+      "sha256": "fd28f2192f29f1a3d88cf76a402371ebfbd3657a9765bf43ac7a64f292e85b39",
       "executable": false
     },
     {
@@ -795,7 +795,7 @@
     {
       "path": ".skills-mgr/skills/user-experience/SKILL.md",
       "kind": "file",
-      "sha256": "42607807d9bbb0e9121d30f47ac1f7d2cd4e1428b863a53996071eeeef89b0af",
+      "sha256": "ab817c5a0bc91c442681d068d285f869a93271ce6d644627c4c3cfbbad8dc8f6",
       "executable": false
     },
     {
@@ -855,7 +855,7 @@
     {
       "path": ".skills-mgr/skills/writing-readme/SKILL.md",
       "kind": "file",
-      "sha256": "3e0751ae240dffd8a4d268794d0e6919c4ef0b8c135668115b0ca52872a6d1e9",
+      "sha256": "3787ca91cc8d9ad2b82281e404296cdf7026ceddbcc328851d363954eb4d8f49",
       "executable": false
     },
     {

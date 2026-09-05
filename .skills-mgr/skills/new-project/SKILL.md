@@ -7,16 +7,16 @@ description: Start a new software project through an automated specification, co
 
 ## Preflight
 
-- Before automation starts, resolve every material product decision with the user and obtain explicit authorization for repository writes, required Git-agent inspections and follow-ups, Conventional Commits, fixup commits, autosquash, and any external or destructive effect.
-- Fix the working directory, accepted outcome, public interface, constraints, non-goals, toolchain, base revision, and complete item set; follow the active Git-agent hook instructions without restating them.
+- Before automation starts, resolve material product decisions and confirm authorization for repository writes, Conventional Commits, fixup commits, autosquash, and any external or destructive effect. Reuse authorization already granted; ask only for missing decisions or permissions.
+- Fix the working directory, accepted outcome, public interface, constraints, non-goals, toolchain, base revision, and complete item set. Confirm the native review roles required for final review are available before starting unattended delivery.
 - Start only when every required decision and authorization is settled. After starting, run every stage without manual intervention and stop only for an unresolvable blocker.
 - Preserve established project behavior and tools; add no conventional command, option, configuration, service, dependency, discovery, or persistence that the accepted outcome does not require.
 
 ## Specify and contract
 
 - Record each accepted item as its own indexed file with one stable ID, observable acceptance examples, exact user-visible surfaces, constraints, and non-goals; give each fact one authoritative owner and reference related items instead of copying them.
-- Classify every proposed capability, restriction, protection, limit, compatibility path, or shared boundary as `N/O/D/I/U/J`: external owner, overengineering, duplicated policy, unreachable, uncertain, or justified local responsibility. Only `J` proceeds; resolve `U` from owner, reproducer, immediate failure, violated invariant, and the smallest requirement.
-- When the user confirmed the specification and no uncertainty or ambiguity remains, continue without external specification inspection; otherwise run pre-authorized independent inspection, correct confirmed in-scope blockers, and skip findings that invent or broaden the accepted outcome.
+- Apply the active ownership and complexity gate to implementation choices, preserving every accepted capability. Resolve uncertain ownership or material requirements before implementation; a new capability needs acceptance evidence, not a pre-existing bug reproducer.
+- When the user confirmed the specification and no uncertainty or ambiguity remains, continue without specification inspection; otherwise use native review roles under the standing independent-inspection policy. Correct confirmed in-scope blockers without delegating user-owned product decisions or broadening the accepted outcome.
 - Record only necessary shared ownership, dependency direction, interface shape, data lifecycle, trust enforcement, and failure propagation as one contract file per item with references; leave architecture artifacts unchanged when existing code and contracts already decide them.
 
 ## Execute the project
@@ -29,6 +29,6 @@ description: Start a new software project through an automated specification, co
 ## Completion
 
 - The preflight is complete only when the remaining workflow can run unattended with every required operation already authorized.
-- The specification is complete only when all accepted items are testable, lossless, mutually consistent, and classified through the ownership gate.
-- Report only an unresolvable conflict, unavailable required mechanism, unsafe unauthorized effect, or exhausted hook-permitted recovery; otherwise continue automatically.
+- The specification is complete only when all accepted items are testable, lossless, and mutually consistent, with implementation choices checked through the ownership gate.
+- Report only an unresolvable conflict, unavailable required mechanism, or unsafe unauthorized effect; otherwise continue automatically.
 - A successful new-project run ends only after `final-review` passes, fixups are autosquashed, validation passes, and the temporary recovery artifact is removed.
