@@ -197,7 +197,6 @@ def translate_output(
         # Passive Codex hooks (check_project, prompt policy shells) print prose.
         if event_name in {
             "SessionStart",
-            "SubagentStart",
             "UserPromptSubmit",
             "PreToolUse",
             "PostToolUse",

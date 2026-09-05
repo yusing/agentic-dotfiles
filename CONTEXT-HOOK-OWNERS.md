@@ -8,28 +8,11 @@
   additional-context envelopes; and `.codex/hooks/locked_state.py` owns private-directory
   creation and exclusive locks.
 - Session and subagent start: `.codex/hooks/check_project` detects VCS, task runner, languages,
-  and delegates module-scoped Go version and guideline reporting to
-  `.codex/hooks/go_guidelines.py`. Its `--without-git` option omits the VCS report for a client that
+  and Go version, and its `--without-git` option omits the VCS report for a client that
   already reports plain Git state itself; `.codex/hooks.json` injects root-session project
   context and skill inventory at startup and after context compaction or
-  clearing while excluding session resume, and injects project context and current skill inventory into fresh
+  clearing while excluding session resume, and injects the current skill inventory into fresh
   subagent context.
-- Go guidance: `.codex/hooks/go_guidelines.py` finds the nearest owning `go.mod`, obtains the
-  provider's pinned CLI version through `skills-mgr`, and uses only the already-installed
-  binary from the cache layout owned by the provider's `scripts/run-tool.sh`. It caches complete
-  lists by CLI and Go version, never installs at startup, and reports unresolved or unavailable
-  guidance without suppressing ordinary project context. A `go.work` or installed toolchain
-  version does not replace a member module's language version. UserPromptSubmit and PostToolUse
-  run its `--refresh` mode, with delivery state scoped to session and agent; startup,
-  fresh-agent, and compaction reports always reinject. Normal tool working directories and
-  explicit Go file/patch targets select the module automatically, using the file-target resolver
-  shared with the generated-Go guard. Literal file/directory operands and `cd` in shell inspection
-  use the shared shell parser. Modules are deduplicated before provider calls, which share one
-  deadline. Agents need no refresh command or extra path argument.
-- Skill inventory: `.codex/hooks/skills_mgr_inventory.py` supplies the shared harness-aware
-  inventory and omits `use-modern-go`, which remains an enabled CLI backend. The project hook
-  owns its generated list and application policy; `golang-best-practices` is the only initial
-  Go skill read. The tracked remote patch owns the backend's explicit-use instructions.
 - Tool guards: `.codex/hooks/generated_code_guard.py` blocks direct generated-Go edits;
   `.codex/hooks/latest_dependency_instruction.py` blocks explicitly versioned dependency
   additions; `.codex/hooks/remote_vcs_guard.py` requires approval for `git clone`; and

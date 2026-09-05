@@ -116,8 +116,7 @@ def _resolve_path(raw_path: str, cwd: Path) -> Path:
     return path.resolve(strict=False)
 
 
-def target_paths(event: dict[str, object]) -> tuple[Path, ...]:
-    """Resolve explicit file and patch targets for Go mutation and guidance hooks."""
+def _target_paths(event: dict[str, object]) -> tuple[Path, ...]:
     tool_input = event.get("tool_input")
     if not isinstance(tool_input, dict):
         return ()
@@ -223,7 +222,7 @@ def _proposed_sources(event: dict[str, object]) -> tuple[tuple[Path, str], ...]:
     cwd_value = event.get("cwd")
     cwd = Path(cwd_value) if isinstance(cwd_value, str) and cwd_value else Path.cwd()
     proposed: list[tuple[Path, str]] = []
-    direct_paths = target_paths(event)
+    direct_paths = _target_paths(event)
 
     content = tool_input.get("content")
     if isinstance(content, str):
@@ -255,7 +254,7 @@ def _proposed_sources(event: dict[str, object]) -> tuple[tuple[Path, str], ...]:
 def response_for(event: object) -> dict[str, object] | None:
     if not isinstance(event, dict):
         return None
-    existing_generated = any(is_generated_go_file(path) for path in target_paths(event))
+    existing_generated = any(is_generated_go_file(path) for path in _target_paths(event))
     proposed_generated = any(
         path.suffix == ".go" and is_generated_go_source(source)
         for path, source in _proposed_sources(event)

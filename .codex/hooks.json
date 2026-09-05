@@ -44,7 +44,7 @@
             "type": "command"
           },
           {
-            "command": "python3 $HOME/.codex/hooks/skills_mgr_inventory.py",
+            "command": "$HOME/go/bin/skills-mgr list",
             "timeout": 5,
             "type": "command"
           }
@@ -59,35 +59,8 @@
       {
         "hooks": [
           {
-            "command": "$HOME/.codex/hooks/check_project",
-            "timeout": 10,
-            "type": "command"
-          },
-          {
-            "command": "python3 $HOME/.codex/hooks/skills_mgr_inventory.py",
+            "command": "$HOME/go/bin/skills-mgr list",
             "timeout": 5,
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "command": "python3 $HOME/.codex/hooks/go_guidelines.py --refresh",
-            "timeout": 10,
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "python3 $HOME/.codex/hooks/go_guidelines.py --refresh",
-            "timeout": 10,
             "type": "command"
           }
         ]
