@@ -51,11 +51,11 @@ Apply this transition table before reading task documents or taking the next act
 
 | Event | Task handling | Document handling | Next action |
 | --- | --- | --- | --- |
-| Independent user request or question | Start a separate task and classify it before discovery or action. | Read exactly one task-size document: `$HOME/.codex/SMALL-TASK.md` for a small task, otherwise `$HOME/.codex/LARGE-TASK.md`. When the request requires implementation or review, batch-read `$HOME/.codex/IMPLEMENTATION.md` in the same file-read command. | Begin the new task. |
+| Independent user request or question | Start a separate task and classify it before discovery or action. | Read exactly one task-size document: `$HOME/.codex/SMALL-TASK.md` for a small task, otherwise `$HOME/.codex/LARGE-TASK.md`. When the request requires implementation or review, read also `$HOME/.codex/IMPLEMENTATION.md`. | Begin the new task. |
 | Direct continuation or correction | Keep the current task. Reclassify only when the changed scope invalidates its classification. | Retain loaded task-size and implementation documents; reclassification alone does not reload them. | Continue the task. |
 | Workflow approval | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Perform the approved next step. |
 | Approval or request to dispatch a native role | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Dispatch the role. The main agent does not become the owner of that role's implementation or review. |
-| Compaction | Keep the current task and classify its active scope again. | Batch-read the matching task-size document and, when the active task requires implementation or review, `$HOME/.codex/IMPLEMENTATION.md` in one file-read command. | Resume from the preserved task state. |
+| Compaction | Keep the current task and classify its active scope again. | Same as "Independent user request or question" | Resume from the preserved task state. |
 
 Use these task sizes:
 
@@ -143,8 +143,9 @@ context and returns any unresolved discovery need to the main agent rather than 
 exploration agent.
 
 Resolve the full independent question set before waiting. Reuse finished equivalent results, count
-active equivalents as already launched, launch the remaining questions concurrently, then wait for
-every active explorer in the set. Launch another only when the question or available evidence
+active equivalents as already launched, and group related questions by shared context. Launch the
+remaining independent groups concurrently, then wait for every result needed for the next decision.
+Launch another only when the question or available evidence
 changes enough to matter, or when the earlier explorer fails or gives an unusable result.
 
 When implementation behavior and its tests, fixtures, or assertions disagree, first determine

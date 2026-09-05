@@ -1,7 +1,9 @@
-model = "gpt-5.6-sol"
+model = "gpt-6-astra"
 network_access = "enabled"
 disable_response_storage = true
 model_reasoning_summary = "detailed"
+model_context_window = 300000
+model_auto_compact_token_limit = 270000
 tool_output_token_limit = 20000
 experimental_compact_prompt_file = "$HOME/.skills-mgr/skills/handoff/STANDARD.md"
 personality = "friendly"
@@ -11,7 +13,7 @@ service_tier = "priority"
 supports_websockets = true
 approvals_reviewer = "user"
 model_instructions_file = "$HOME/.codex/overridden_base_instructions.md"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 approval_policy = "never"
 sandbox_mode = "danger-full-access"
 [skills]

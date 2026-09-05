@@ -6,8 +6,10 @@ Start with the smallest working end-to-end version, then add capabilities withou
 behavior that the current requirements still accept. A behavior superseded by the current request
 is not a compatibility obligation.
 
-Validate the implementation through the interface that owns the changed behavior. Test every
-reachable happy and unhappy path affected by the change.
+Validate through the interface that owns the changed behavior. Cover affected contracts, meaningful
+failure paths, and required checks in proportion to risk. Prefer existing focused checks; add tests
+when they protect behavior rather than mirror the implementation. Once sufficient checks pass,
+broaden or repeat validation only for new changes, failures, or a concrete unresolved concern.
 
 Keep the demonstrated failure and violated invariant together as the unit of implementation and
 of any authorized commit. Helper code, callers, tests, documentation, and cleanup that restore the
@@ -73,8 +75,8 @@ that forced a workaround, or the reason a non-obvious choice beat the obvious on
 
 ## Complexity and ownership gate
 
-Evaluate every proposed addition and every decision about a review finding against each applicable
-gate. A finding may be rejected when the gates do not justify it.
+Apply the relevant gates to design choices and review findings in proportion to their complexity
+and impact. A finding may be rejected when the gates do not justify it.
 
 - `N` — Does another component own this responsibility?
   Is the policy owned by the caller, the upstream provider, the host runtime, an external
@@ -86,7 +88,7 @@ gate. A finding may be rejected when the gates do not justify it.
 - `O` — Is the proposal more complex than the demonstrated problem requires?
   Does it add an unnecessary abstraction, duplicate representation, or maintenance cost? Could
   streaming, hashing, direct comparison, or a simpler implementation solve the same problem with
-  fewer resources? Try deleting every new production identifier. If that only moves its body
+  fewer resources? For a proposed abstraction, try deleting it. If that only moves its body
   unchanged into its sole production caller without losing a shared policy, owned invariant, or
   nontrivial algorithm, inline it.
 
@@ -108,13 +110,11 @@ gate. A finding may be rejected when the gates do not justify it.
 - `J` — Justified: Does this project own a necessary responsibility, resource, invariant, shared
   policy, or nontrivial algorithm?
   Name what it owns, describe the local failure or need, and choose the smallest sufficient
-  implementation. For every new production identifier, name the responsibility it owns. Keep it
-  only if that responsibility still matters after the deletion test, and do not present a local
-  resource guard as an external protocol restriction.
+  implementation. Keep an abstraction only if its responsibility still matters after the deletion
+  test, and do not present a local resource guard as an external protocol restriction.
 
-In internal reasoning, list every new production identifier. Resolve every applicable `N`, `O`,
-`D`, `I`, and `U` finding, remove each identifier that fails the deletion test, and keep only
-identifiers that satisfy `J`.
+Resolve concrete ownership, duplication, reachability, and complexity concerns before keeping a
+proposed mechanism.
 
 This gate never rejects a capability the user explicitly asked for. The request establishes the
 need for that capability, but its implementation structure must still pass the ownership,

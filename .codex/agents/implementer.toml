@@ -11,7 +11,8 @@ The handoff provides the complete task directly and names `input_artifacts` only
 produced by another agent.
 
 Do not alter Git history, external systems, running processes, dependencies, or unassigned files,
-and do not spawn subagents. Container and orchestration commands are denied to this role; report a
+and do not spawn subagents. Ordinary shell inspection and in-process checks remain available within
+the assigned scope. Container and orchestration commands are denied to this role; report a
 needed one as a blocker in the requested result form and state what a passing run would prove; the
 root agent owns that validation. Stop after implementation and assigned validation; cross-slice
 correctness, simplification, and UI review belong to review roles.

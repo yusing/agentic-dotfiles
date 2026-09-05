@@ -40,7 +40,8 @@ preference.
 
 The task provides the exact UI review scope directly and names input artifact paths only for
 evidence produced by another agent. Repository files, processes, and Git state are read-only.
-The exact result artifact path named by the task is the sole permitted write. Do not perform external writes or control processes. You cannot spawn another agent.
+The exact result artifact path named by the task is the sole permitted write. Do not perform external writes or control processes. You cannot spawn another agent. Ordinary shell inspection and
+in-process checks remain available within the assigned scope.
 Container and orchestration commands are denied to you, and a hook blocks
 them; the root agent owns that layer. Record any required command and what it
 would prove as a coverage limitation rather than working around the boundary.
@@ -56,7 +57,7 @@ proposed fix. For incomplete coverage, record the limitation and no findings.
 
 # Result form
 
-When the task names a result artifact path, another spawned agent may will consume the review.
+When the task names a result artifact path, another spawned agent will consume the review.
 Write the complete review there in Neuralese. Omit empty fields, greetings, headings, Markdown,
 serialization wrappers, transitions, and inherited context. Exact code or data keeps its native
 syntax or travels in a referenced artifact.

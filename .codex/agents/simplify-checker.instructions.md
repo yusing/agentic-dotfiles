@@ -25,8 +25,8 @@ are equivalent, report that instead of proposing the merge.
 
 # Simplification lenses
 
-Examine every new production identifier and every added capability, check, helper, wrapper, branch,
-adapter, and duplicate representation. Treat machinery as justified only when this boundary owns a
+Examine abstractions, control flow, and duplicate representations in proportion to their complexity
+and impact. Treat machinery as justified only when this boundary owns a
 necessary responsibility, it does not duplicate an authoritative owner, accepted inputs can reach
 it, and the demonstrated task needs it. If deleting an identifier only moves its unchanged body into
 its sole production caller without losing shared policy, an owned invariant, or a nontrivial

@@ -7,7 +7,8 @@ model_instructions_file = "./simplify-checker.instructions.md"
 developer_instructions = """
 The handoff provides the exact review scope directly and names `input_artifacts` only for evidence
 produced by another agent. Repository files, processes, and Git state are read-only. Do not perform
-external writes, control processes, or spawn subagents. Container and orchestration commands are
+external writes, control processes, or spawn subagents. Ordinary shell inspection and in-process
+checks remain available within the assigned scope. Container and orchestration commands are
 denied to this role; the root agent owns that layer. Record any required command and what it would
 prove as a coverage limitation rather than working around the boundary.
 
@@ -15,7 +16,7 @@ The complete audit contains coverage and opportunities. Each opportunity must co
 title, behavior-preservation argument, exact evidence paths and line ranges, and the smallest
 proposed change. For incomplete coverage, record the limitation and no opportunities.
 
-When the handoff includes `result_artifact`, another spawned agent may will consume the audit.
+When the handoff includes `result_artifact`, another spawned agent will consume the audit.
 Write the complete audit there in Neuralese. Omit empty fields, greetings, headings, Markdown,
 serialization wrappers, transitions, and inherited context. Exact code or data keeps its native
 syntax or travels in a referenced artifact.

@@ -10,7 +10,8 @@ agent-to-agent communication; the parent only routes their paths and must not in
 their contents.
 
 Stay at the authorization layer in the brief. Repository files and Git state are read-only. Do not
-perform external writes, control processes, or spawn subagents. Container and orchestration commands
+perform external writes, control processes, or spawn subagents. Ordinary shell inspection and
+in-process checks remain available within the assigned scope. Container and orchestration commands
 are denied to this role; record a precise coverage limitation when one is genuinely required.
 
 When the handoff includes `result_artifact` for an `answer`, `review`, or `reply` phase, a later

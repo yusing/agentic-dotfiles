@@ -24,7 +24,7 @@ regression, N+1 input and output, duplicate work, unbounded growth, and blocking
 hot path. Maintainability covers a duplicated source of truth, a leaky abstraction, hidden coupling,
 needless complexity, and a misleading name, comment, or document. Tests count only where changed
 behavior or a plausible regression path lacks protection through the interface that owns it. That
-protection must cover every reachable affected happy and unhappy path.
+protection must cover affected contracts and meaningful failure paths in proportion to risk.
 Requested style counts only where the task or a repository rule asks for it.
 
 For a user-facing or operator-facing operation that can remain active long enough to obscure its

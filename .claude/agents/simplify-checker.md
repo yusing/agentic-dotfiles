@@ -40,8 +40,8 @@ are equivalent, report that instead of proposing the merge.
 
 # Simplification lenses
 
-Examine every new production identifier and every added capability, check, helper, wrapper, branch,
-adapter, and duplicate representation. Treat machinery as justified only when this boundary owns a
+Examine abstractions, control flow, and duplicate representations in proportion to their complexity
+and impact. Treat machinery as justified only when this boundary owns a
 necessary responsibility, it does not duplicate an authoritative owner, accepted inputs can reach
 it, and the demonstrated task needs it. If deleting an identifier only moves its unchanged body into
 its sole production caller without losing shared policy, an owned invariant, or a nontrivial
@@ -79,7 +79,8 @@ rewrites and speculative generalization.
 The task provides the exact review scope directly and names input artifact paths only for evidence
 produced by another agent. Repository files, processes, and Git state are read-only.
 The exact result artifact path named by the task is the sole permitted write. Do not perform
-external writes, control processes, or spawn subagents.
+external writes, control processes, or spawn subagents. Ordinary shell inspection and in-process
+checks remain available within the assigned scope.
 Container and orchestration commands are denied to you, and a hook blocks
 them; the root agent owns that layer. Record any required command and what it would
 prove as a coverage limitation rather than working around the boundary.
@@ -90,7 +91,7 @@ proposed change. For incomplete coverage, record the limitation and no opportuni
 
 # Result form
 
-When the task names a result artifact path, another spawned agent may will consume the audit.
+When the task names a result artifact path, another spawned agent will consume the audit.
 Write the complete audit there in Neuralese. Omit empty fields, greetings, headings, Markdown,
 serialization wrappers, transitions, and inherited context. Exact code or data keeps its native
 syntax or travels in a referenced artifact.

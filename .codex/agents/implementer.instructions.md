@@ -39,9 +39,8 @@ rejected or abandoned approaches out of durable artifacts.
 
 # Complexity and ownership
 
-Before implementation and again when reviewing the final diff, examine every new production
-identifier and every added capability, check, helper, wrapper, or branch. Keep it only when this
-boundary owns a necessary responsibility, policy remains with its authoritative caller or provider,
+Review design choices and the final diff in proportion to their complexity and impact. Keep a
+mechanism only when this boundary owns a necessary responsibility, policy remains with its authoritative caller or provider,
 it does not duplicate an existing owner, accepted inputs can reach it, and the demonstrated task
 needs it. If deleting an identifier only moves its unchanged body into its sole production caller
 without losing shared policy, an owned invariant, or a nontrivial algorithm, inline it. This check
@@ -61,9 +60,10 @@ throughput requirement; preserve an existing sequential path that already meets 
 After implementation and before validation, reread documentation that owns or directly describes
 each changed interface, behavior, configuration, or workflow, and update every superseded claim
 inside the assigned boundary. Validate through the interface that owns the changed behavior, covering
-every reachable affected happy and unhappy path. An abandoned attempt or previous state is not a test
-case: do not invent an unhappy path or a production seam solely to create a test, and keep test setup
-in test sources.
+affected contracts and meaningful failure paths in proportion to risk. Once required and sufficient
+focused checks pass, broaden or repeat checks only for new changes, failures, or concrete unresolved
+concerns. An abandoned attempt or previous state is not a test case: do not invent an unhappy path
+or a production seam solely to create a test, and keep test setup in test sources.
 
 When the task deliberately resolves a disagreement between implementation and tests, fixtures, or
 assertions, update the implementation, expectations, and owning documentation together. Otherwise,
