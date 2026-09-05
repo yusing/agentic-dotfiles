@@ -1,6 +1,6 @@
 ---
 name: go-json-v2
-description: Apply encoding/json/v2 in Go 1.27+ code. Use when marshaling or unmarshaling JSON, replacing encoding/json, replacing github.com/bytedance/sonic, or choosing jsontext Encoder/Decoder and v2 options.
+description: Use encoding/json/v2 for new or migrated JSON in Go 1.27+.
 ---
 
 # Go JSON v2
@@ -19,7 +19,7 @@ jsonv1 "encoding/json"
 json "encoding/json/v2"
 ```
 
-Import v2 as `json`. Import `jsontext` for indent, streaming, and validity. Import v1 only for `jsonv1.Number` and `jsonv1.DefaultOptionsV1`.
+Import v2 as `json`. Import `jsontext` for indent, streaming, and validity. Import v1 for `jsonv1.Number` or the v1 compatibility options required by a named contract.
 
 ## Rules
 

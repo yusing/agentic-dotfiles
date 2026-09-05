@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ac3c4898c862441dd5b695554a2720ad9c09959a",
+  "sourceCommit": "8aaf7313db210e731145e2795d2677e19f257b86",
   "outputs": [
     {
       "path": ".bashrc",
@@ -645,13 +645,13 @@
     {
       "path": ".skills-mgr/skills/go-json-v2/references/migration.md",
       "kind": "file",
-      "sha256": "277d812aa8d34a5e0b5f8f787bf25b083bcab91c7900e9fb21d7f5872730fd78",
+      "sha256": "f0377f8ac1f776e0d551ede88d98935eadeb18d5b8e113e3189af5532bc6c109",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/go-json-v2/SKILL.md",
       "kind": "file",
-      "sha256": "e53f5d1345e708b6a50d73e8dc18b5c70c000608c78107e78d7af6741ca7b2a3",
+      "sha256": "24ff78c89ebeca2f00ba140f3f9eba06d7d5cdddff95c54152633a72beb13573",
       "executable": false
     },
     {

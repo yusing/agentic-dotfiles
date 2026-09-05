@@ -12,13 +12,18 @@ Prefer v2 defaults. Add one option when a test, on-disk file, or interop contrac
 | `json.Unmarshal(b, &v)` | `json.Unmarshal(b, &v)` |
 | `json.MarshalIndent(v, "", "  ")` | `json.Marshal(v, jsontext.WithIndent("  "))` |
 | `json.NewEncoder(w).Encode(v)` | `json.MarshalEncode(jsontext.NewEncoder(w), v)` |
-| `json.NewDecoder(r).Decode(&v)` | `json.UnmarshalRead(r, &v)` or `json.Unmarshal(data, &v)` |
+| `json.NewDecoder(r).Decode(&v)` | `json.UnmarshalDecode(jsontext.NewDecoder(r), &v)`; retain the decoder for later values |
 | `enc.SetEscapeHTML(false)` | v2 default |
 | `enc.SetIndent("", "  ")` | `jsontext.WithIndent("  ")` on marshal |
 | `dec.DisallowUnknownFields()` | `json.RejectUnknownMembers(true)` |
 | `dec.UseNumber()` | `WithUnmarshalers` on `*any` ([api.md](api.md#numbers-in-any)) |
 | `json.Valid(b)` | `jsontext.Value(b).IsValid()` |
-| trailing-value `Decode` loop | `Unmarshal` / `UnmarshalRead` (one value); leftover input errors with `after top-level value` |
+| streaming `Decode` loop | `json.UnmarshalDecode(dec, &v)` with one retained `jsontext.Decoder`; stop on `io.EOF` |
+| decode one finite document and reject trailing values | `json.Unmarshal(data, &v)` or `json.UnmarshalRead(r, &v)` |
+
+Use `UnmarshalRead` only when consuming a finite, single-document reader to EOF is intended.
+For a stream or persistent connection, retain a `jsontext.Decoder` and decode one value at a time;
+recreating it may discard buffered input. See the [Go API contracts](https://pkg.go.dev/encoding/json/v2#UnmarshalDecode).
 
 `json.Number` stays on the v1 package.
 
@@ -38,7 +43,7 @@ Map Sonic APIs onto v2. Do not keep a Sonic-shaped wrapper.
 | `sonic.Valid(b)` | `jsontext.Value(b).IsValid()` |
 | `sonic.ConfigStd.Marshal*` | `json.Marshal` plus the v1-like options the call actually needed |
 | `sonic.ConfigDefault.Marshal*` / `NewEncoder` | v2 defaults; `MarshalEncode` if a newline is required |
-| `ConfigStd.NewDecoder` + `DisallowUnknownFields` | `json.Unmarshal(..., json.RejectUnknownMembers(true))` |
+| `ConfigStd.NewDecoder` + `DisallowUnknownFields` | retained `jsontext.Decoder` with `json.UnmarshalDecode(dec, &v, json.RejectUnknownMembers(true))` |
 | `Config{UseNumber: true}` | [numbers in `any`](api.md#numbers-in-any) |
 
 `ConfigStd` is the v1-compatible Sonic profile (HTML escape, sorted maps, case-insensitive names, nil → `null`). Replace each of those with a named v2/v1 option only where a contract still needs it. `ConfigDefault` is already close to v2 (no HTML escape, unsorted maps).
