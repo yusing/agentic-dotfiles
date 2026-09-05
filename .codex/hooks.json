@@ -44,7 +44,7 @@
             "type": "command"
           },
           {
-            "command": "$HOME/go/bin/skills-mgr list",
+            "command": "skills-mgr list",
             "timeout": 5,
             "type": "command"
           }
@@ -59,9 +59,20 @@
       {
         "hooks": [
           {
-            "command": "$HOME/go/bin/skills-mgr list",
+            "command": "skills-mgr list",
             "timeout": 5,
             "type": "command"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 $HOME/.codex/hooks/go_guidelines.py",
+            "timeout": 10
           }
         ]
       }

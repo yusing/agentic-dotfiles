@@ -1,7 +1,10 @@
 # skills-mgr-base-sha256 d5f4918c97aa4d8bd5ae4df31ab74dea56175248bd432169677c3ff432888f16
-# skills-mgr-result-sha256 505d72d53e22c520240efcf104b1ad9693db497ead1a6c15d705c70fd4456867
+# skills-mgr-result-sha256 541c947383187d5506402ddedee73ecc04d629fe1d4eb13fcb46aef26b95a278
 --- a/SKILL.md
 +++ b/SKILL.md
+@@ -3 +3 @@
+-description: Use the Modern Go Guidelines CLI whenever writing, modifying, fixing, or refactoring Go code. Apply its version-specific guidance to generated changes.
++description: Use for explicit Modern Go Guidelines CLI operations or individual rule explanations. For normal Go work, golang-best-practices supplies the list.
 @@ -6,11 +6,6 @@
  # Modern Go Guidelines CLI
  

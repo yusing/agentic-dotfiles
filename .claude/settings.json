@@ -335,6 +335,17 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 $HOME/.codex/hooks/go_guidelines.py",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   }
 }

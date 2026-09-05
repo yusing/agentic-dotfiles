@@ -1,9 +1,15 @@
 ---
 name: golang-best-practices
-description: Apply modern Go syntax and standard-library APIs according. Use for Go writing, refactoring, review, testing; skip for exploration. Use together with `use-modern-go` skill
+description: Apply Go practices when writing, refactoring, reviewing, or testing Go; skip exploration. Read from the target module's working directory to receive its modern Go guidelines in the same tool result.
 ---
 
 # Modern Go by Version
+
+The accompanying Modern Go Guidelines list must match the target module and Go
+version. Read through `END_GO_GUIDELINES`; report missing or truncated guidance.
+Apply relevant rules even when nearby code uses older idioms. Before skipping a
+seemingly relevant rule or when examples are needed, request only its returned IDs
+with `skills-mgr run use-modern-go/scripts/run-tool.sh explain <ID> [<ID> ...]`.
 
 ## Principles
 

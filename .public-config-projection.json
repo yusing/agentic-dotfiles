@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "875a4ff24655d6b911fa94d6d927998824b4b58e",
+  "sourceCommit": "34c7e4735cf0e3a9e9338090c6b6631068a7f930",
   "outputs": [
     {
       "path": ".bashrc",
@@ -76,7 +76,7 @@
     {
       "path": ".claude/settings.json",
       "kind": "file",
-      "sha256": "2bd8f6730faf72cdc2516fa5bbf8396f1d739f6a6cfe67a2ed5ae1eae98f6db0",
+      "sha256": "c69439491d3301c7393164ad8dac4754c2f3e024b32c4e61f454516b8002a344",
       "executable": false
     },
     {
@@ -202,7 +202,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "0c0a65c4144861d989db4e61514e02565064c5452021319863dccf5afe6a05ae",
+      "sha256": "74d4e092de2680c6314cf67893a22a7c58f13f6900dfba318202fb98b662f346",
       "executable": false
     },
     {
@@ -215,6 +215,12 @@
       "path": ".codex/hooks/generated_code_guard.py",
       "kind": "file",
       "sha256": "f738c772fa5a61364db36724dfde62281c1c01a15b32a3cc3bbee27e22238853",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/go_guidelines.py",
+      "kind": "file",
+      "sha256": "a0bdb5258e64893f20d1368f4b92e40022b127942a9a9974cf538eaaa257dcac",
       "executable": false
     },
     {
@@ -460,7 +466,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "11d056ffc4d2ccd0f03b8c09baf6d1b07f09ebe899327bb40ed70cf69cf2b2f6",
+      "sha256": "fb801df6f73f7e46e44440c7d4d290a0bc2b38502f55a05c59fc8ef5e69b0861",
       "executable": false
     },
     {
@@ -489,7 +495,7 @@
     {
       "path": ".grok/hooks/codex-port.json",
       "kind": "file",
-      "sha256": "be640515bc71a9823ccd324989ffa703f20d9eb5cde7c1185153279e141bd0d3",
+      "sha256": "d4768bf3f27081c89b6dd4e7ddc104b530794934a864f977cd6a56c5337684f8",
       "executable": false
     },
     {
@@ -519,7 +525,7 @@
     {
       "path": ".local/bin/project-public-config",
       "kind": "file",
-      "sha256": "6ffdc12f091e2959cedf6f674666415ca097af75b1278aff9ae178e704f56cea",
+      "sha256": "40f9d414d2071ed50ef05a5951361f133f4d982a4eca9a27c7d5aaa57f9e9722",
       "executable": true
     },
     {
@@ -537,7 +543,7 @@
     {
       "path": ".skills-mgr/skills/.remote-patches/1873c3293f7904f3536872679118a319035d4f4080c13f49620628211cd619c1.patch",
       "kind": "file",
-      "sha256": "73061e2bf5bd71400c9913321ef77322082a9abc8e1774f09ed0cfd9eda988df",
+      "sha256": "0ac7b31592c2a6bf8a63ced26954d4acfd6215962c916b4946f09354d86c487f",
       "executable": false
     },
     {
@@ -669,7 +675,7 @@
     {
       "path": ".skills-mgr/skills/golang-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "b1325c8baec89ae705a5b392efec01e79ae705e1f7743b31d064b579f5b2bf74",
+      "sha256": "fd8e87778658317dbc5f818bfedbc39b7a2906b92529955bfb5567f474550ae9",
       "executable": false
     },
     {
@@ -914,7 +920,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "f3966b302bc0ae2057f9c42e71005e90fc6eae090b5d449604c8bb5ef0c77b23",
+      "sha256": "65f0f4c97f4dba025e2ff7a6f1ffffd1b894f7dfac72f4e1b13f15a10e140537",
       "executable": false
     },
     {

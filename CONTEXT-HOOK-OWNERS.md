@@ -13,6 +13,12 @@
   context and skill inventory at startup and after context compaction or
   clearing while excluding session resume, and injects the current skill inventory into fresh
   subagent context.
+- Go skill delivery: `.codex/hooks/go_guidelines.py` appends the installed CLI's complete,
+  module-version-specific list after a direct `skills-mgr get golang-best-practices` call.
+  PostToolUse registers it for Codex, Claude, Grok, and the OMP bridge. The read's working
+  directory selects the module; a literal `cd <module> &&` prefix is also supported.
+  Startup and unrelated tools do not load guidelines. The `END_GO_GUIDELINES` marker
+  allows model-visible tail verification; missing tooling is reported without installation.
 - Tool guards: `.codex/hooks/generated_code_guard.py` blocks direct generated-Go edits;
   `.codex/hooks/latest_dependency_instruction.py` blocks explicitly versioned dependency
   additions; `.codex/hooks/remote_vcs_guard.py` requires approval for `git clone`; and

@@ -61,6 +61,17 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/go_guidelines.py",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   }
 }
