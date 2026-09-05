@@ -47,15 +47,21 @@ not include running ordinary task-scoped inspection, editing, build, or validati
 
 ## Task sizing and intent verification
 
-Apply this transition table before reading task documents or taking the next action:
+Resolve the request before classifying it or loading task-size documents. Read explicitly
+referenced task or handoff documents and follow the references needed to identify the requested
+outcome, operation, and scope. For compaction, use the preserved task state and read any referenced
+material needed to recover the active scope. Classify the work described, not the act of reading
+its description. If the task remains unclear, ask for clarification before classifying it.
+
+Then apply this transition table before task-specific discovery or execution:
 
 | Event | Task handling | Document handling | Next action |
 | --- | --- | --- | --- |
-| Independent user request or question | Start a separate task and classify it before discovery or action. | Read exactly one task-size document: `$HOME/.codex/SMALL-TASK.md` for a small task, otherwise `$HOME/.codex/LARGE-TASK.md`. When the request requires implementation or review, read also `$HOME/.codex/IMPLEMENTATION.md`. | Begin the new task. |
+| Independent user request or question | Start a separate task and classify the resolved request. | Read exactly one task-size document: `$HOME/.codex/SMALL-TASK.md` for a small task, otherwise `$HOME/.codex/LARGE-TASK.md`. When the request requires implementation or review, read also `$HOME/.codex/IMPLEMENTATION.md`. | Begin the new task. |
 | Direct continuation or correction | Keep the current task. Reclassify only when the changed scope invalidates its classification. | Retain loaded task-size and implementation documents; reclassification alone does not reload them. | Continue the task. |
 | Workflow approval | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Perform the approved next step. |
 | Approval or request to dispatch a native role | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Dispatch the role. The main agent does not become the owner of that role's implementation or review. |
-| Compaction | Keep the current task and classify its active scope again. | Same as "Independent user request or question" | Resume from the preserved task state. |
+| Compaction | Keep the current task and classify its recovered active scope again. | Same as "Independent user request or question" | Resume from the preserved task state. |
 
 Use these task sizes:
 
