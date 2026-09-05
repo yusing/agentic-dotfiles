@@ -60,66 +60,32 @@ Keep test setup in test sources.
 
 ## Edit readiness
 
-Keep components modular and responsibilities separate.
-Reuse suitable project dependencies before writing a replacement or adding a package.
-Prefer maintained libraries when they reduce complexity or improve reliability.
-
-Edit authoritative sources rather than generated, vendored, or minified outputs.
-Match the local naming, error handling, idiom, and comment density. Let local style set a
-comment's form, but let the final state set its content; the cases below matter even when the
-local code has few comments.
-
-Write a comment wherever the reason for the code cannot be recovered from the code itself: the
-invariant a check protects, the caller contract a signature cannot state, the external behavior
-that forced a workaround, or the reason a non-obvious choice beat the obvious one.
+Separate responsibilities; reuse suitable project dependencies before replacing or adding them.
+Prefer maintained libraries when they simplify the implementation or improve reliability.
+Edit authoritative sources, not generated, vendored, or minified outputs; follow local naming,
+error handling, idiom, and comment style. Comment non-obvious invariants, caller contracts,
+workarounds, and tradeoffs even where nearby code has few comments; describe the final behavior.
 
 ## Complexity and ownership gate
 
 Apply the relevant gates to design choices and review findings in proportion to their complexity
-and impact. A finding may be rejected when the gates do not justify it.
+and impact. Resolve concrete concerns before keeping a mechanism; unjustified findings may be rejected.
 
-- `N` — Does another component own this responsibility?
-  Is the policy owned by the caller, the upstream provider, the host runtime, an external
-  protocol, or another boundary? Would the proposal invent or redefine an external request,
-  response, identifier, metadata field, argument, limit, or retry policy? Would it take a policy
-  choice away from its authoritative caller and put it in a helper or wrapper that merely selects
-  or forwards existing operations?
+- `N` — Ownership: leave policy with its caller, provider, runtime, or protocol owner;
+  forwarding helpers must not redefine external contracts, fields, limits, or retry rules.
+- `O` — Simplicity: remove duplicate representations and unnecessary abstractions. Inline a
+  sole-caller helper when doing so loses no shared policy, invariant, or nontrivial algorithm.
+- `D` — Duplication: rely on authoritative validation. Add checks only for a distinct boundary,
+  deriving their rules from its owner rather than imposing stricter downstream policy.
+- `I` — Reachability: handle accepted inputs, not impossible branches. Validate corruption or
+  external mutation at the boundary where it can occur.
+- `U` — Evidence: establish the owner, reproducer, failure, invariant, and consumer before adding
+  convenience, limits, or compatibility behavior.
+- `J` — Justified: retain a necessary responsibility, resource, invariant, shared policy, or
+  nontrivial algorithm with the smallest sufficient implementation. A local resource guard is
+  not an external protocol restriction.
 
-- `O` — Is the proposal more complex than the demonstrated problem requires?
-  Does it add an unnecessary abstraction, duplicate representation, or maintenance cost? Could
-  streaming, hashing, direct comparison, or a simpler implementation solve the same problem with
-  fewer resources? For a proposed abstraction, try deleting it. If that only moves its body
-  unchanged into its sole production caller without losing a shared policy, owned invariant, or
-  nontrivial algorithm, inline it.
-
-- `D` — Is an authoritative owner already enforcing this policy?
-  Would the proposal repeat validation, copy a limit across components, or impose a stricter
-  downstream rule on data already bounded at the accepted-input boundary? Add another check only
-  when it protects a distinct boundary and derives its rule from the authoritative owner.
-
-- `I` — Can accepted inputs actually reach this case?
-  If the branch is impossible under established contracts and invariants, do not handle it as a
-  normal condition. If corruption or external mutation is the real threat, validate that invariant
-  at the relevant boundary.
-
-- `U` — Is the need still speculative?
-  Are the owner, reproducer, immediate failure, violated invariant, or actual consumer unknown? Do
-  not add convenience, count limits, size limits, or compatibility behavior until those are
-  established.
-
-- `J` — Justified: Does this project own a necessary responsibility, resource, invariant, shared
-  policy, or nontrivial algorithm?
-  Name what it owns, describe the local failure or need, and choose the smallest sufficient
-  implementation. Keep an abstraction only if its responsibility still matters after the deletion
-  test, and do not present a local resource guard as an external protocol restriction.
-
-Resolve concrete ownership, duplication, reachability, and complexity concerns before keeping a
-proposed mechanism.
-
-This gate never rejects a capability the user explicitly asked for. The request establishes the
-need for that capability, but its implementation structure must still pass the ownership,
-duplication, reachability, and complexity checks. Keep the gate analysis internal. In responses,
-focus on the requested result, evidence, and actionable caveats. Include gate labels, identifier
-inventories, or smallest sufficient alternatives only when directly answering a question about
-them. Never silently drop, defer, or narrow a requested capability because of the gate. If the gate
-shows the request cannot work as stated, explain the concrete conflict before implementation.
+The request establishes the need for that capability; these gates constrain its implementation,
+not its scope. Explain concrete conflicts before implementing rather than silently dropping,
+deferring, or narrowing requested behavior. Keep gate analysis internal unless asked about it;
+report the result, evidence, and actionable caveats rather than gate labels or identifier lists.

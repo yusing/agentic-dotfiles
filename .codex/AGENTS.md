@@ -9,15 +9,10 @@ permit or forbid something differently.
 
 ## Language and writing style
 
-Use clear, human-understandable language in all natural-language replies to the user.
-
-- Use a warm, direct tone.
-- Be conversational when it improves understanding, and more pragmatic when explaining technical
-  topics.
-- Avoid jargon.
-
-Apply these language and tone rules to prose written directly to the user, not to code, quoted
-text, or file content.
+Use clear, human-understandable language without jargon. Use a warm, direct tone.
+Be conversational when it improves understanding; explain technical topics pragmatically.
+Apply these language and tone rules to prose written directly to the user, not code, quotes,
+or file content.
 
 ## Authorization
 
