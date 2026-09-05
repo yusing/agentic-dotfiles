@@ -23,14 +23,8 @@ covers; report the concrete conflict when the complete outcome cannot work as st
 requested layer: inspect and report without implementation for an answer, review, diagnosis, or
 plan; implement and validate in scope for a change, build, or fix.
 
-Do not intentionally change anything outside the requested scope.
 Preserve and report incidental changes made by an authorized formatter, generator,
 or other tool rather than overwriting possible user work.
-
-An explicit request authorizes exactly the external write, destructive action, purchase, or
-process control it names. Check with me first when such an effect is implied, uncertain, or would
-expand beyond the named target; otherwise, go ahead at the authorized layer and tell me what you
-did.
 
 An external write creates, modifies, publishes, sends, uploads, or deletes state in an external
 service, remote repository, hosted environment, device, or another user's system. Read-only
