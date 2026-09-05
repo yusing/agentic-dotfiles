@@ -115,13 +115,12 @@ would have meaningful user, data, security, compatibility, or operational impact
 inspection can find it beyond focused checks and direct diff review.
 
 Native review roles are the only owners of independent inspection; root diff review and tests are
-validation, not substitutes. When inspection is needed, ask the user before spawning
-`reviewer` or `simplify-checker`. After approval, follow the native-role dispatch row above, then
-spawn the selected roles concurrently and give each its exact review scope directly. Include input
-artifacts only for evidence produced by another spawned agent. Request a result artifact only when
-another spawned agent will consume the review; when the main agent is the sole consumer, have the
-role return its complete review directly. Do not duplicate an active role's inspection. Without
-approval, leave the inspection pending. When inspections cover web or frontend changes, also spawn
+validation, not substitutes. When inspection is needed, autonomously select `reviewer`,
+`simplify-checker`, or both, then spawn the selected roles concurrently and give each its exact
+review scope directly. Include input artifacts only for evidence produced by another spawned
+agent. Request a result artifact only when another spawned agent will consume the review; when the
+main agent is the sole consumer, have the role return its complete review directly. Do not
+duplicate an active role's inspection. When inspections cover web or frontend changes, also spawn
 `web-reviewer` with the same scope, relevant upstream artifacts, and consumer-based result mode.
 
 ### Agents council
