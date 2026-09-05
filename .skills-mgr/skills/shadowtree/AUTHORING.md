@@ -1,14 +1,16 @@
 # Authoring Recipes
 
-Changing a recipe definition or configuration contract. Invocation, inspection,
-lifecycle, configuration form, and persistence live in [`SKILL.md`](SKILL.md).
+Changing a recipe definition or configuration contract. Shared lifecycle and persistence
+constraints live in [SKILL.md](SKILL.md). For execution or an unfamiliar CLI argument,
+read [RUNNING.md](RUNNING.md).
 
 A recipe is one named project workflow, not a new task language. Prefer one
 readable path from `pre` through `cmd` to `post`.
 
 ## Before editing
 
-1. Read the active `.shadowtree.toml` and every affected included config in full.
+1. Read the active recipe/configuration fields and included definitions that determine the
+   changed behavior. Read the complete configuration when inheritance or overrides require it.
 2. Inspect a same-name profile recipe or override only when its inherited
    behavior matters.
 3. Reuse the existing recipe, argument, var, enum set, or include that owns the
@@ -16,6 +18,15 @@ readable path from `pre` through `cmd` to `post`.
 4. Choose the smallest feature set that makes the workflow explicit. DON'T add a
    field merely because it exists; every feature must answer a current
    requirement.
+
+## Configuration form
+
+- DO write command fields as shell strings; never TOML argv arrays.
+- DO quote placeholders in shell text: `command "{path}"`.
+- DO compose with `@recipe` or `@path:recipe`; never a nested `shadowtree`
+  process.
+- Argument types are `string`, `int`, `float`, `bool`, `path`, `rel_path`,
+  `duration`, and `duration:seconds`.
 
 ## Feature selection
 

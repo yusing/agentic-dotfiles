@@ -1,14 +1,60 @@
 # Running Recipes
 
 Running or inspecting an existing recipe, leaving `.shadowtree.toml` unchanged.
-Invocation, inspection, lifecycle, configuration form, and persistence live in
-[`SKILL.md`](SKILL.md).
+Shared lifecycle and persistence constraints live in [SKILL.md](SKILL.md).
 
 Use an existing recipe when it owns the requested operation. Run the selected
 operation once, then only the smallest non-overlapping validation.
 
 When recipe ownership is unknown, use the `[built-in]` and `[overridden]`
 markers in `shadowtree recipes`; custom config recipes are unmarked.
+
+## Invocation
+
+```sh
+shadowtree [global flags] <recipe> [recipe args...]
+shadowtree --profile go test ./internal/recipe -run=TestResolve
+```
+
+- DO put global flags before the recipe name; every later token is recipe input.
+- DO pass positional and `key=value` arguments straight after the recipe name.
+- DON'T write `shadowtree run <recipe>`. `run` is not a dispatcher but a recipe
+  name, including the Go-profile recipe for `go run`.
+- DON'T add `--` before ordinary arguments or single-token passthrough flags.
+
+## Inspection
+
+Invoke a known recipe directly. Inspect only to resolve a concrete unknown that
+can change the invocation or whether it is safe to run. The user, project
+instructions, the owning reference, an earlier result, and a conclusive error
+all count as established context; reuse them instead of seeking reassurance
+from another command.
+
+| Command | Use only when |
+| --- | --- |
+| `shadowtree config` | the config path or selected profile is unknown |
+| `shadowtree recipes` | the recipe name is unknown; list the available recipes once |
+| `shadowtree help <recipe> color=false` | all of these hold: the recipe is custom and unfamiliar, an unresolved argument choice blocks the invocation, and no established context gives its name, type, bound, preset, or value |
+| `shadowtree --print <recipe> [args...]` | an unresolved question about this exact invocation's stages, sandbox mode, workdir, requirements, or sync-out can change the decision to run it |
+| `shadowtree --print --expanded ...` | a compact plan hides a script or resolved value the decision needs |
+| `shadowtree --check <recipe> [args...]` | resolution and recipe references need validating without running commands |
+| `shadowtree --check --shell ...` | expanded `sh` or `bash` syntax is the uncertainty |
+| `shadowtree --verbose <recipe>` | workspace paths or stage boundaries are useful during execution |
+
+- Treat `help` and `--print` as exceptional evidence-gathering commands, never
+  routine preflight, validation, or proof of diligence. Run neither for a known
+  profile built-in, a documented invocation, or a command already established
+  by the owning reference or project instructions.
+- Use `help` only for the unresolved custom-recipe argument case in the table.
+  An `unknown argument` error is conclusive evidence that the recipe does not
+  expose that token; correct the invocation or owning configuration instead of
+  calling `help`. Help resolves dynamic values and may run command-backed
+  providers, so it is neither cheap nor quiet.
+- Use `--print` only for the unresolved execution-property case in the table or
+  the unfamiliar persistent or privileged case under Persistence. Do not print
+  a known test, check, format, or build recipe before running it.
+- Inspect once per unresolved decision. Reuse that result unless the recipe,
+  arguments, working directory, or configuration changes.
 
 ## Arguments
 

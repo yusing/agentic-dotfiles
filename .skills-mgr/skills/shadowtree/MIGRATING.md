@@ -1,8 +1,9 @@
 # Migrating to Shadowtree
 
 Converting existing automation into recipes and removing the obsolete surface.
-Invocation, inspection, lifecycle, configuration form, and persistence live in
-[`SKILL.md`](SKILL.md).
+Shared lifecycle and persistence constraints live in [SKILL.md](SKILL.md). Read
+[AUTHORING.md](AUTHORING.md) when choosing recipe fields or input contracts, and
+[RUNNING.md](RUNNING.md) when invoking recipes or resolving an unfamiliar CLI argument.
 
 Migrate **behavior**, not files or syntax: preserve the useful workflow contract,
 replace script mechanics with Shadowtree concepts, update every active caller,

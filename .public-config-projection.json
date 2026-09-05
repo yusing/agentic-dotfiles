@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "23a3fcc3b7679d9deb86063dc140a7f575c62673",
+  "sourceCommit": "63c876ef5662ed5349f742f05d23b2eaf8475eb7",
   "outputs": [
     {
       "path": ".bashrc",
@@ -789,25 +789,25 @@
     {
       "path": ".skills-mgr/skills/shadowtree/AUTHORING.md",
       "kind": "file",
-      "sha256": "f3bc6fce413bc7fb7d47cb744d67a0ac944c4435c2a8c992b2550b32a7bef35c",
+      "sha256": "72104f4fa23ae2f968c8f0570cf533eaed75b575e9d1102ae557e2e46160d8a1",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/shadowtree/MIGRATING.md",
       "kind": "file",
-      "sha256": "774fb5d7de737cdee3cd33b61351d182ad927c0f488b64c170ab65687afce042",
+      "sha256": "a25d6896e96936ef6d2688ad5624c5400eae4c8fa92fd6d0c1d8d526f7ae2b2d",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/shadowtree/RUNNING.md",
       "kind": "file",
-      "sha256": "6e5b699bc0e15a707daae17ab53a5f9eecedf4a06fa8100df5269963f10dfe7a",
+      "sha256": "6218c2a29339d15c67672416f16a18d9700bc0154a919fedd6b7c9701f142826",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/shadowtree/SKILL.md",
       "kind": "file",
-      "sha256": "fd28f2192f29f1a3d88cf76a402371ebfbd3657a9765bf43ac7a64f292e85b39",
+      "sha256": "dae4559ca72a147c8d5950dc059e206f19be9b0e09647f858c90bfc6ccc9b0e4",
       "executable": false
     },
     {
