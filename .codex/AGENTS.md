@@ -40,35 +40,30 @@ Process control means starting, stopping, restarting, signalling, or otherwise c
 lifecycle of an existing or persistent service, agent, collection, or user-owned process. It does
 not include running ordinary task-scoped inspection, editing, build, or validation commands.
 
-## Task sizing and intent verification
+## Completion and context
 
-Resolve the request before classifying it or loading task-size documents. Read explicitly
-referenced task or handoff documents and follow the references needed to identify the requested
-outcome, operation, and scope. For compaction, use the preserved task state and read any referenced
-material needed to recover the active scope. Classify the work described, not the act of reading
-its description. If the task remains unclear, ask for clarification before classifying it.
+For a change, continue through implementation, affected documentation, focused local validation,
+and fixes for failures caused by the change. Finish when the requested outcome is usable and
+checked, or explain the concrete blocker. An initial implementation is not an automatic review
+checkpoint. Respect named approval boundaries while continuing independent authorized work.
 
-Document reuse is per context, not per task. Select `$HOME/.codex/SMALL-TASK.md` for a small
-task, otherwise `$HOME/.codex/LARGE-TASK.md`; also select `$HOME/.codex/IMPLEMENTATION.md` for
-implementation or review. Read each selected document only if it has not been read in the current
-context. Reuse it across new tasks and size changes, including switching back to a previous size.
-After compaction, reset this read history; reread a document sooner only if it changed or I ask.
+Read explicitly referenced task or handoff documents to recover the requested outcome, operation,
+and scope. Routine local work needs the supplied paths, applicable repository guidance, and the
+affected boundary, not a full repository map or a stack of workflow documents.
 
-Then apply this transition table before task-specific discovery or execution:
+Load additional guidance when it changes the work:
 
-| Event | Task handling | Document handling | Next action |
-| --- | --- | --- | --- |
-| Independent user request or question | Start a separate task and classify the resolved request. | Apply document reuse; load only selected documents not yet read in this context. | Begin the new task. |
-| Direct continuation or correction | Keep the current task. Reclassify only when the changed scope invalidates its classification. | Apply document reuse to the current size and operation; load any newly needed document once. | Continue the task. |
-| Workflow approval | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Perform the approved next step. |
-| Approval or request to dispatch a native role | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Dispatch the role. The main agent does not become the owner of that role's implementation or review. |
-| Compaction | Keep the current task and classify its recovered active scope again. | Reset document read history and load the documents selected for the recovered task. | Resume from the preserved task state. |
+- `$HOME/.codex/SMALL-TASK.md` is an optional guide for scoped execution, not a prerequisite.
+- Read `$HOME/.codex/LARGE-TASK.md` for open-ended diagnosis, refactoring, cross-owner work, or
+  changes with meaningful edge cases. It owns evidence delegation and synthesis.
+- Read `$HOME/.codex/IMPLEMENTATION.md` for behavioral changes or substantive implementation
+  and review. It owns validation, hygiene, and complexity decisions. Mechanical-only edits need
+  the affected content and applicable repository rules, not this additional workflow.
 
-Use these task sizes:
-
-- Small: it has a concrete local outcome and an owner that is obvious or quick to find.
-- Large: it involves semantic changes with meaningful edge cases, cross-owner changes, diagnosis,
-  refactoring, migration, or other open-ended investigation.
+Read each applicable document once per context; reread only if it changes or I ask. Direct
+follow-ups and approvals continue the current task without restarting discovery. Dispatching a
+native role leaves that role responsible for its assigned implementation or review. After
+compaction, recover the active scope and reread only the guidance needed for the remaining work.
 
 ## Skills and required tools
 
@@ -139,6 +134,11 @@ belongs to me.
 
 ## Exploring
 
+Explorers retrieve missing facts; they do not reason about what should change. Keep audits,
+reviews, evaluations, diagnosis, recommendations, and decisions with the main agent or the
+appropriate non-explorer role. For an instruction audit or revision at supplied or known paths,
+read the instructions directly instead of spawning an explorer.
+
 Use code to establish how the repository behaves. Read local documentation when it owns
 requirements, records rationale that code cannot express, or directly describes a changed
 user-facing surface. Do not use documentation as a substitute for inspecting the implementation.
@@ -162,13 +162,6 @@ requested final behavior. Otherwise, inspect the relevant `git log -S` output or
 Restore a rule that an unrelated rewrite dropped. Update an expectation when the current request
 or history establishes that the behavior changed deliberately, and cite the commit when history
 supplied that evidence.
-
-## Implementation
-
-Before implementing or reviewing code, configuration, tests, documentation, or agent instructions,
-read `$HOME/.codex/IMPLEMENTATION.md` under the document-reuse rule above. It owns
-implementation, validation, runtime behavior, hygiene, edit readiness, and the complexity and
-ownership gate. Apply it before the first edit and when deciding whether to act on a review finding.
 
 ## Active work
 

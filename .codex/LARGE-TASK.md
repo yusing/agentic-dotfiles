@@ -3,14 +3,17 @@
 The main agent owns synthesis, change-impact reasoning, decisions, and implementation unless the
 active workflow explicitly assigns that ownership to another role. This is an explicit standing
 request to spawn available native exploration roles without per-task approval when independent
-evidence work benefits from parallel investigation.
+factual lookup benefits from parallel investigation. This authorizes exploration, not reasoning:
+explorers collect source-backed facts, not audits, evaluations, diagnoses, recommendations, or
+decisions. An instruction audit or revision at supplied or known paths needs direct reading by
+the main agent, not an explorer.
 
 Identify the independent evidence questions and group those that share an owner or context. Dispatch
 the useful independent groups concurrently:
 
-- Use `explorer` for repository behavior, ownership, or caller questions.
+- Use `explorer` for repository behavior, ownership, or caller questions that ask for facts.
 - Use `fast-explorer` for bounded provider, dependency, installed-tool, local-documentation,
-  configuration, artifact-summarization, or read-only network-research questions.
+  configuration, artifact extraction, or read-only network lookups.
 - Split provider-specific discovery when its contracts or evidence sources differ.
 - Keep the main agent on non-overlapping synthesis, integration, and implementation work.
 - Wait for every dispatched result before deciding or editing anything that depends on it.
