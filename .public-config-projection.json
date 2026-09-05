@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ec4f7fc49502a18765210b7ccd02f75d0d97d815",
+  "sourceCommit": "0b6229a5c2102a174724eace942c09b481d2af40",
   "outputs": [
     {
       "path": ".bashrc",
@@ -615,7 +615,7 @@
     {
       "path": ".skills-mgr/skills/deslop/SKILL.md",
       "kind": "file",
-      "sha256": "d129b91821d8e314062d36159f4f74ec6ee0f1c8e4afdc71452dbc4e1c0bc0fd",
+      "sha256": "dfb01fdb924947d0a88cdfa3de3d1cc146f47c020e18b8094dc400041a01fad0",
       "executable": false
     },
     {
