@@ -29,9 +29,10 @@
    When compaction interrupts an undelivered file handoff, runtime delivery supersedes the file
    destination and resumes the task from before the file-handoff invocation.
    After handoff, the base prompt rereads named skills or, when that section is absent, selects
-   them again from the current operation. The reloaded root instructions reclassify the active task
-   and reread its matching task-size document, plus the implementation document when the active
-   work requires implementation or review. No hook-specific state rotation runs at compaction.
+   them again from the current operation. The reloaded shared instructions recover the active
+   scope and reread only the guidance needed for remaining work. Routine local work does not
+   require task-size documents; substantive changes and reviews use the implementation guidance.
+   No hook-specific state rotation runs at compaction.
 
 Registration and implementation stay separate throughout this flow: each active configuration
 source decides when its hook runs, the registered command, script, or MCP tool owns its output

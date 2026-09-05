@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "789fd0c181d985f4e48d4362d9c8746d35d12db6",
+  "sourceCommit": "52431564a194999db22d05dec67035d0871b2bd1",
   "outputs": [
     {
       "path": ".bashrc",
@@ -82,7 +82,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "be8a9893060ab2ba5f88a15392174c028aa3d46e528057650da3da4563f84f0e",
+      "sha256": "9435f22d8b5126bbd7e344f299f13a5d04ede0d47447137bc7c7d92030dda49b",
       "executable": false
     },
     {
@@ -902,7 +902,7 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "2fd8a3f88b5a82dcc498098b42cdad9c25009d056c5527ea0fbe0227897c1d23",
+      "sha256": "1abe8d16dd5b5d4c7e5972886f6f7e2fb2fff313ab15f1a68e7db91542dac4d3",
       "executable": false
     },
     {

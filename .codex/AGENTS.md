@@ -76,9 +76,10 @@ Run scripts with `skills-mgr run <skill-name>/<relative/script> [args...]`.
 `SMALL-TASK.md`, `LARGE-TASK.md`, and `IMPLEMENTATION.md` are task documents, not skills. Only
 `skills-mgr get` reads use skill-specific timing and batching rules.
 
-If a skill, tool, CLI, package, runtime, or exact approach explicitly required by me (`$name`, `/name`, or similar form), 
+If a skill, tool, CLI, package, runtime, or exact approach explicitly required by me (`$name`, `/name`, or similar form),
 a higher-priority instruction, an owning skill, or the repository's authoritative workflow is
-unavailable, stop rather than substituting, working around, reimplementing, or skipping it.
+unavailable, stop the dependent operation rather than substituting, working around,
+reimplementing, or skipping it. Continue independent authorized work.
 Explain why it is required and propose an installation, then install only once I agree. If I
 decline the installation, ask me how to proceed. Do not introduce or require a dependency solely
 for an optional implementation choice; use the simplest suitable available approach instead.
