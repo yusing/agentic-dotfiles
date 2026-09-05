@@ -1,4 +1,4 @@
-# skills-mgr-base-sha256 7a94e3467b184953584c66a96e9afcb35f04c80446369be860e82627a8a61c86
+# skills-mgr-base-sha256 d5f4918c97aa4d8bd5ae4df31ab74dea56175248bd432169677c3ff432888f16
 # skills-mgr-result-sha256 505d72d53e22c520240efcf104b1ad9693db497ead1a6c15d705c70fd4456867
 --- a/SKILL.md
 +++ b/SKILL.md
@@ -10,7 +10,7 @@
 -Command:
 -
 -- Linux or macOS: `sh "<skill-dir>/scripts/run-tool.sh"`
--- Windows PowerShell: `'<skill-dir>\scripts\run-tool.ps1'`
+-- Windows PowerShell: `& '<skill-dir>\scripts\run-tool.ps1'`
  
  First run and approvals:
  
