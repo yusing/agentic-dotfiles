@@ -22,16 +22,19 @@ GUARD = Path("$HOME/.codex/hooks/subagent_exec_guard.py")
 MODEL_MAP = {
     "gpt-5.6-luna": "sonnet",
     "gpt-5.6-sol": "opus",
+    "gpt-6-astra": "opus",
 }
 
 # Color and tools are Claude-only capabilities. The description, behavior, and
 # execution contract come from the native role pair.
 CLAUDE_METADATA: dict[str, dict[str, str]] = {
     "council-investigator": {
+        "model": "inherit",
         "color": "yellow",
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite",
     },
     "council-member": {
+        "model": "inherit",
         "color": "orange",
         "tools": "Read, Write, TodoWrite",
     },
@@ -56,6 +59,9 @@ CLAUDE_METADATA: dict[str, dict[str, str]] = {
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
     },
     "simplify-checker": {
+        # Claude's lightweight audit budget is independent of Codex model routing.
+        "model": "sonnet",
+        "effort": "high",
         "color": "green",
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
     },
@@ -93,7 +99,7 @@ def remove_container_instruction(text: str) -> str:
 
 def adapt_text(text: str, *, has_bash: bool) -> str:
     text = re.sub(
-        r"You are Codex, a GPT-5\.6 (?:Luna|Sol) subagent",
+        r"You are Codex, a GPT-(?:5\.6 (?:Luna|Sol)|6 Astra) subagent",
         "You are a subagent",
         text,
         count=1,
@@ -208,13 +214,16 @@ def render_frontmatter(role: str, config: dict[str, Any]) -> str:
     model = config.get("model")
     if model is not None:
         try:
-            fields.append(f"model: {MODEL_MAP[str(model)]}")
+            mapped_model = MODEL_MAP[str(model)]
         except KeyError as exc:
             raise PortError(f"{role}: no Claude mapping for model {model!r}") from exc
-        effort = config.get("model_reasoning_effort")
-        if not isinstance(effort, str) or not effort:
-            raise PortError(f"{role}: model has no model_reasoning_effort")
-        fields.append(f"effort: {effort}")
+        # Omit both fields when this client's role inherits its parent settings.
+        if metadata.get("model") != "inherit":
+            fields.append(f"model: {metadata.get('model', mapped_model)}")
+            effort = metadata.get("effort", config.get("model_reasoning_effort"))
+            if not isinstance(effort, str) or not effort:
+                raise PortError(f"{role}: model has no model_reasoning_effort")
+            fields.append(f"effort: {effort}")
     fields.extend(
         (
             f"color: {metadata['color']}",

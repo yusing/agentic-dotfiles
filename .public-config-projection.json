@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "4fd90a28effa09b1f787ba571f601a44492f1ba9",
+  "sourceCommit": "c8fa7fa09d62363493cd555fecbdbfd5cb583620",
   "outputs": [
     {
       "path": ".bashrc",
@@ -94,7 +94,7 @@
     {
       "path": ".codex/agents/council-investigator.toml",
       "kind": "file",
-      "sha256": "fadbf68196e7d256371e3c1a2bb56d7cef90e5f03290cee138c6d7659aa64195",
+      "sha256": "5e4d83da4ba818fb34504dc62da8c5d99a593a7c01f4ad65fff5aedd21625663",
       "executable": false
     },
     {
@@ -106,7 +106,7 @@
     {
       "path": ".codex/agents/council-member.toml",
       "kind": "file",
-      "sha256": "bb49cd91d62932f5f98b37a756843fd7ab4356d08c0c2bd25c4381909ced9f16",
+      "sha256": "0b8f9f2efeb5b913e911dd3522a01c53dc4094c1461988b145981f068a6d1060",
       "executable": false
     },
     {
@@ -160,25 +160,25 @@
     {
       "path": ".codex/agents/reviewer.instructions.md",
       "kind": "file",
-      "sha256": "ab144ebac0e6f39a87f50dec7898938278d28f6b651978a00792eb7bce7bed67",
+      "sha256": "841e3506f853c8a69ca48b93c0f6bbe1635cf63df8679d4d5070ff0f26fe0e01",
       "executable": false
     },
     {
       "path": ".codex/agents/reviewer.toml",
       "kind": "file",
-      "sha256": "82a3a3579db8f022ab3941f5f6a337996cf23c9f16ebab1eb238f3fd970dc938",
+      "sha256": "b7fa0569de8052f3a2e78228cb154825db3225ae71a913027aa397e96f2efc8a",
       "executable": false
     },
     {
       "path": ".codex/agents/simplify-checker.instructions.md",
       "kind": "file",
-      "sha256": "1ca0584a9205e5f5591005c73df7258e34b5b13513d437b268c47e39f2811be5",
+      "sha256": "cc4d0b5d2217196f2803a85efc70f0a2db57b55bf1e30090ac06bb68f5a566be",
       "executable": false
     },
     {
       "path": ".codex/agents/simplify-checker.toml",
       "kind": "file",
-      "sha256": "b1e702f75f2d219f8f04274ad2aa9cb9bba9183d6efe555a663d88b498607e91",
+      "sha256": "666c8837a17df25b174606f6ddcb5a59cfcf440a04cafb03bb53de594a7ce7de",
       "executable": false
     },
     {
@@ -525,7 +525,7 @@
     {
       "path": ".local/bin/sync-claude-agent-ports",
       "kind": "file",
-      "sha256": "b9d46b73f8883d79dd97ad5ba88a4fb1aebe0da1c4da92c93d6e8c39a88e7f3f",
+      "sha256": "76f3f69cb7fd6b6c519f9584099b7a8f8214a936010ed59702df4b550506ad07",
       "executable": true
     },
     {
@@ -585,7 +585,7 @@
     {
       "path": ".skills-mgr/skills/council/SKILL.md",
       "kind": "file",
-      "sha256": "74e9ed5ded258bdcf0d151e506aaa3f3b6f77cd072fa921373a005a4f6d35a56",
+      "sha256": "df4146a0b6e33fdbc83d395133df31eae9965445bc2d82f640d0bfb14a95fd4d",
       "executable": false
     },
     {
@@ -890,7 +890,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "5c209dcbf2eb6b9051e0c805bd4f61d397092ef6bbd783f65a3244bd88af0f3f",
+      "sha256": "e36d9c6c1c597d76934ac7a0dbae69c052b16eae7de14d62e0931e34c3dec8cd",
       "executable": false
     },
     {

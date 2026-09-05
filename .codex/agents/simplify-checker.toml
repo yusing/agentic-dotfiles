@@ -1,8 +1,8 @@
 # Developer contract ported from projects/git-agent/internal/tasks/review/.
 name = "simplify-checker"
 description = "Independent, read-only repository simplification reviewer."
-model = "gpt-5.6-luna"
-model_reasoning_effort = "high"
+model = "gpt-6-astra"
+model_reasoning_effort = "low"
 model_instructions_file = "./simplify-checker.instructions.md"
 developer_instructions = """
 The handoff provides the exact review scope directly and names `input_artifacts` only for evidence

@@ -1,7 +1,7 @@
 # Developer contract ported from projects/git-agent/internal/tasks/review/.
 name = "reviewer"
 description = "Independent, read-only repository correctness reviewer."
-model = "gpt-5.6-sol"
+model = "gpt-6-astra"
 model_reasoning_effort = "medium"
 model_instructions_file = "./reviewer.instructions.md"
 developer_instructions = """

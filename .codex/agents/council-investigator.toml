@@ -1,5 +1,7 @@
 name = "council-investigator"
 description = "Evidence-gathering council member for deliberation that depends on implementation feasibility, cost, or current behavior."
+model = "gpt-6-astra"
+model_reasoning_effort = "medium"
 model_instructions_file = "./council-investigator.instructions.md"
 developer_instructions = """
 Work only in the assigned `answer`, `review`, `reply`, or `final` phase. The handoff provides the

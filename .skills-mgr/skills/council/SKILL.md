@@ -47,12 +47,13 @@ evidence itself, so a blind member's first pass never sees it.
 ## Configure members
 
 Spawn every member with its chosen `agent_type`, a unique task name, `fork_turns: "none"`, and a
-self-contained handoff. Omit `model` on every spawn so the role follows the main agent's model
-resolution.
+self-contained handoff. Omit `model` on every spawn; model selection belongs to the selected role
+and client.
 
-Omit `reasoning_effort` by default. Set only the spawn's `reasoning_effort` when the discussion
-target needs more reasoning than the inherited default: use `high` for complex targets and
-`xhigh` or `max` for exceptionally difficult targets when the inherited model supports it.
+Omit `reasoning_effort` by default to use the role's configured effort or the client's inherited
+default. When the client permits an effort override and the discussion target needs more reasoning,
+use `high` for complex targets and `xhigh` or `max` for exceptionally difficult targets when the
+selected model supports it. A fixed role setting remains authoritative.
 
 ## Create the artifact handoff
 

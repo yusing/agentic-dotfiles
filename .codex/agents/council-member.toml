@@ -1,5 +1,7 @@
 name = "council-member"
 description = "Independent, implementation-blind council member for evidence-separated deliberation."
+model = "gpt-6-astra"
+model_reasoning_effort = "medium"
 model_instructions_file = "./council-member.instructions.md"
 developer_instructions = """
 Work only in the assigned `answer`, `review`, `reply`, or `final` phase. The handoff provides the
