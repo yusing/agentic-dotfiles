@@ -212,6 +212,8 @@ __pycache__
 !/.skills-mgr/skills/using-pjdoc/
 !/.skills-mgr/skills/using-pjdoc/agents/
 !/.skills-mgr/skills/using-pjdoc/agents/openai.yaml
+!/.skills-mgr/skills/using-pjdoc/references/
+!/.skills-mgr/skills/using-pjdoc/references/index-schema.md
 !/.skills-mgr/skills/using-pjdoc/SKILL.md
 !/.skills-mgr/skills/writing-readme/
 !/.skills-mgr/skills/writing-readme/agents/

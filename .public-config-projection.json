@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "bebcaab852b9740d9785e8cb1ec71569bf7cd90c",
+  "sourceCommit": "80fa789051c86239ce1ca2fbb191974ba8134a9e",
   "outputs": [
     {
       "path": ".bashrc",
@@ -466,7 +466,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "9f60eb9ee8ec9237b17487ad7e2424875dfae0fccb093b4086c7d6f586cdc95e",
+      "sha256": "1f57c65c0bee13c542355dac6224b8f048bda0c9bfa207976b3a6a752ec2f8d9",
       "executable": false
     },
     {
@@ -829,9 +829,15 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/using-pjdoc/references/index-schema.md",
+      "kind": "file",
+      "sha256": "e637d26d3997648a21daf99d683c283904541e9cc20fc747645f004a0e2329bd",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/using-pjdoc/SKILL.md",
       "kind": "file",
-      "sha256": "ebb23e7d7963b78bd8370be8b58ab1a2df2229e0d21e6737df902a16992abcce",
+      "sha256": "6cecbaa61fffa039d5bec8522346650114998844b7368ed7c1cf6b22cfda9df1",
       "executable": false
     },
     {
