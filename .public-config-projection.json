@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7416e5788052eb8ee32e46bccaab2d88c9ab64d2",
+  "sourceCommit": "23a3fcc3b7679d9deb86063dc140a7f575c62673",
   "outputs": [
     {
       "path": ".bashrc",
@@ -466,7 +466,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "d3a16eee4ed8987499823ad105455f0832c18cf2cf8a2963dd327c86af249cbf",
+      "sha256": "9f60eb9ee8ec9237b17487ad7e2424875dfae0fccb093b4086c7d6f586cdc95e",
       "executable": false
     },
     {
@@ -757,9 +757,27 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/postgres-17-18-features/references/operations.md",
+      "kind": "file",
+      "sha256": "78b7b5aab4ba7872f315f3e50b75d243799b05e0f1a81645f9fcb2c9e110e873",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/postgres-17-18-features/references/queries-and-loading.md",
+      "kind": "file",
+      "sha256": "5c54aefeb2b169229fe6a83b48d3a28c9bc5a8cf96036ab34f4fb074736cd751",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/postgres-17-18-features/references/schema-and-dml.md",
+      "kind": "file",
+      "sha256": "062af2216b2d996ba909e08c5ba7388501b0405656834dfcb1723bbde6abdbc6",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/postgres-17-18-features/SKILL.md",
       "kind": "file",
-      "sha256": "8c52479e15f73797baaca92e8569d1c81cdd36ebd28ee458dc86cce454f84906",
+      "sha256": "85fe1a997d7af6c19f4132675b69bdffc4138849ef004ba6d278e5fc6e29cf93",
       "executable": false
     },
     {

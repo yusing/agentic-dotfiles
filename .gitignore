@@ -193,6 +193,10 @@ __pycache__
 !/.skills-mgr/skills/postgres-17-18-features/
 !/.skills-mgr/skills/postgres-17-18-features/agents/
 !/.skills-mgr/skills/postgres-17-18-features/agents/openai.yaml
+!/.skills-mgr/skills/postgres-17-18-features/references/
+!/.skills-mgr/skills/postgres-17-18-features/references/operations.md
+!/.skills-mgr/skills/postgres-17-18-features/references/queries-and-loading.md
+!/.skills-mgr/skills/postgres-17-18-features/references/schema-and-dml.md
 !/.skills-mgr/skills/postgres-17-18-features/SKILL.md
 !/.skills-mgr/skills/shadowtree/
 !/.skills-mgr/skills/shadowtree/agents/
