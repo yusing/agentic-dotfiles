@@ -40,7 +40,14 @@ unknown skills still belong to `skills-mgr`.
 `.grok/hooks/codex-port.json` for SessionStart and PostCompact. It owns the
 `--- skills-mgr injected ---` heading so that the injected list is not mistaken for
 Grok's visible skills. Its harness-aware `skills-mgr list` preserves the Grok inventory
-selected explicitly by `skills-mgr list --grok` without a Grok-only wrapper.
+selected explicitly by `skills-mgr list --grok`, except for the shared omission of the
+`use-modern-go` CLI backend, without a Grok-only wrapper.
+
+Project context also runs on PostCompact and SubagentStart. The adapter wraps passive
+SubagentStart output as additional context. `UserPromptSubmit` and `PostToolUse` run the shared Go guidance
+refresh hook; module/version policy remains in that shared owner. These routes are covered
+by the local adapter and registration tests; live Grok subagent delivery still needs client
+verification. Guidance refresh is hook-owned, not a separate agent tool call.
 
 When an instruction changes, edit only its owner. Supporting the same policy in multiple
 clients means sharing or porting the owner, not copying its text into each client's static

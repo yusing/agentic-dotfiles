@@ -17,7 +17,14 @@
    skill-inventory reporter. Resuming an existing session does not run
    these root-session hooks. Matched events receive project context and current skill metadata
    without selecting implementation or validation work.
-3. **Tool loop.** Before matched tools run, guards may reject generated-Go edits, versioned
+   Fresh Codex subagents receive project context and the same shared skill inventory. Go project
+   context includes the cached guideline list for the owning module; the CLI backend stays out
+   of the inventory, leaving one initial Go practices skill read.
+3. **Prompt and tool loop.** `UserPromptSubmit` checks Go guidance again and injects it only when
+   the module, target version, provider version, or availability changes. PostToolUse does the
+   same after normal tool calls, using their working directory, shell inspection paths, or Go file/patch targets
+   to cover within-turn changes without an agent-issued refresh command. Before matched tools run,
+   guards may reject generated-Go edits, versioned
    dependency additions, unapproved Git clones, or container commands from spawned agents. The
    remaining guards are silent when their policies do not apply.
 4. **Turn end.** All matching hooks from active configuration sources run for their lifecycle

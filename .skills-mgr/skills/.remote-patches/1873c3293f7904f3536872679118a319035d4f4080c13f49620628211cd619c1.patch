@@ -1,33 +1,37 @@
 # skills-mgr-base-sha256 d5f4918c97aa4d8bd5ae4df31ab74dea56175248bd432169677c3ff432888f16
-# skills-mgr-result-sha256 505d72d53e22c520240efcf104b1ad9693db497ead1a6c15d705c70fd4456867
+# skills-mgr-result-sha256 f569e7490dc39397f716ae3c199819d359f0a17cb258d475015ca76ac01a929e
 --- a/SKILL.md
 +++ b/SKILL.md
-@@ -6,11 +6,6 @@
- # Modern Go Guidelines CLI
- 
- Always write modern, idiomatic Go code. Use the Modern Go Guidelines CLI as the source of truth for modern Go idioms that may be newer than your knowledge cutoff.
--
+@@ -8 +8,3 @@
+-Always write modern, idiomatic Go code. Use the Modern Go Guidelines CLI as the source of truth for modern Go idioms that may be newer than your knowledge cutoff.
++The project hook supplies the complete version-specific guideline list and its
++application policy. Normal Go work reads `golang-best-practices`; this skill is
++the CLI backend, not an additional prerequisite read.
+@@ -10,45 +12 @@
 -Command:
 -
 -- Linux or macOS: `sh "<skill-dir>/scripts/run-tool.sh"`
 -- Windows PowerShell: `& '<skill-dir>\scripts\run-tool.ps1'`
- 
- First run and approvals:
- 
-@@ -23,44 +18,32 @@
- 
- Before editing Go code:
- 
+-
+-First run and approvals:
+-
+-On first use, the wrapper installs the Modern Go Guidelines CLI in a local cache directory.
+-
+-Subcommands:
+-
+-- `list`
+-- `explain`
+-
+-Before editing Go code:
+-
 -1. Call the wrapper's `list` subcommand for the relevant Go file.
 -
 -   Prefer passing the file you are about to edit:
-+1. Target Go version is already known (injected with hook), you may pass it directly:
- 
-    ```sh
+-
+-   ```sh
 -   sh "<skill-dir>/scripts/run-tool.sh" list --file-path path/to/file.go
-+   skills-mgr run use-modern-go/scripts/run-tool.sh list --go-version 1.24
-    ```
- 
+-   ```
+-
 -   On Windows, use the PowerShell wrapper with the same arguments.
 -
 -   The CLI resolves the applicable Go version from go.mod, go.work, the local Go toolchain, or an explicit override.
@@ -39,29 +43,31 @@
 -   ```
 -
 -3. Read the complete list output before deciding which guidelines apply.
-+2. Read the complete list output before deciding which guidelines apply.
- 
-    The list output is ordered newest first. Read the full output because older supported guidelines may still apply.
- 
-    Do not pipe the output through head, tail, grep, sed, or any other truncating/filtering command. Important guidelines may otherwise be missed.
- 
+-
+-   The list output is ordered newest first. Read the full output because older supported guidelines may still apply.
+-
+-   Do not pipe the output through head, tail, grep, sed, or any other truncating/filtering command. Important guidelines may otherwise be missed.
+-
 -4. Treat returned guidelines as authoritative for modern Go style choices in code you are editing.
-+3. Treat returned guidelines as authoritative for modern Go style choices in code you are editing.
- 
-    If a guideline applies, follow it even when nearby code or repository convention uses an older pattern. Skip it only when it would not compile, would change behavior, or clearly does not match the edited code. Before skipping a returned guideline that seems relevant, call the wrapper's `explain` subcommand for that guideline ID.
- 
- Call `explain` only when a specific guideline may apply and you need the detailed explanation or examples. Request only the guideline IDs you intend to evaluate or apply:
- 
- ```sh
+-
+-   If a guideline applies, follow it even when nearby code or repository convention uses an older pattern. Skip it only when it would not compile, would change behavior, or clearly does not match the edited code. Before skipping a returned guideline that seems relevant, call the wrapper's `explain` subcommand for that guideline ID.
+-
+-Call `explain` only when a specific guideline may apply and you need the detailed explanation or examples. Request only the guideline IDs you intend to evaluate or apply:
++Use the wrapper for an explicitly requested CLI operation:
+@@ -57 +15,2 @@
 -sh "<skill-dir>/scripts/run-tool.sh" explain sync_waitgroup_go
++skills-mgr run use-modern-go/scripts/run-tool.sh list --go-version 1.26
 +skills-mgr run use-modern-go/scripts/run-tool.sh explain sync_waitgroup_go
- ```
- 
- Multiple guideline IDs may be requested as positional arguments:
- 
- ```sh
+@@ -60 +19,2 @@
+-Multiple guideline IDs may be requested as positional arguments:
++Read complete list output. For explanations, pass only guideline IDs returned
++for the target module's Go version; multiple IDs may be supplied together.
+@@ -62,5 +22,3 @@
+-```sh
 -sh "<skill-dir>/scripts/run-tool.sh" explain atomic_types errors_as_type
-+skills-mgr run use-modern-go/scripts/run-tool.sh explain atomic_types errors_as_type
- ```
- 
- Do not call `explain` without guideline IDs. Use `list` first to discover the short guideline list for the target Go version, then call `explain` for the specific returned IDs that need more context.
+-```
+-
+-Do not call `explain` without guideline IDs. Use `list` first to discover the short guideline list for the target Go version, then call `explain` for the specific returned IDs that need more context.
++The wrapper installs the pinned CLI in its local cache on first use. Ask before
++installing a missing tool. The project hook uses only the already-installed CLI
++and reports a missing installation without attempting one.

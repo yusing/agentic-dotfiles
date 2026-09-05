@@ -74,10 +74,14 @@ commits, so the flag drops the hook's `vcs:` field and its version-control instr
 plain Git repository or an unversioned directory. Subversion and mixed `git+svn` checkouts are
 still reported, because no client reports those. The task runner, language mix, and Go version
 have no harness equivalent, which is what makes the registration worth having.
+The same project hook also runs at SubagentStart. The shared Go guidance helper runs at
+UserPromptSubmit and PostToolUse to refresh changed module/version guidance without repeating
+an unchanged list or requiring an agent refresh call.
 
 `.codex/hooks/skills_mgr_inventory.py` is the shared inventory hook. It owns the
 `--- skills-mgr injected ---` heading so the injected list is not mistaken for Claude's own
-visible skills. `skills-mgr list` scopes itself from the session environment, so the Claude
+visible skills. It omits the `use-modern-go` backend because project context supplies its list.
+`skills-mgr list` scopes itself from the session environment, so the Claude
 registration needs no harness flag or adapter. Claude has no separate post-compaction event:
 the `*` matcher covers the `compact` session source, while the same hook is also registered for
 Claude's subagent starts and post-compaction context.

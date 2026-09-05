@@ -1,9 +1,16 @@
 ---
 name: golang-best-practices
-description: Apply modern Go syntax and standard-library APIs according. Use for Go writing, refactoring, review, testing; skip for exploration. Use together with `use-modern-go` skill
+description: Apply Go build, testing, lookup, and coding practices when writing, refactoring, reviewing, or testing Go; skip exploration.
 ---
 
-# Modern Go by Version
+# Go Practices
+
+## Module guidance
+
+The hooks automatically supply and update `go_guidelines` for the target module
+and Go version. Use the matching `ready` block for version-specific idioms.
+If guidance remains unavailable when needed, report the blocker. Ask before
+installing a missing CLI; the hooks deliberately do not install tools.
 
 ## Principles
 
@@ -32,24 +39,19 @@ Defer clean up after work done.
 - `go vet [flags] package...`
 - `golangci-lint run`
 
-## Feature cutoffs
+## Additional version-specific APIs
+
+The injected CLI list owns its covered idioms. Also consider these APIs when
+they fit the edited code:
 
 <!-- markdownlint-disable MD013 -->
 
 | Go | Prefer |
 | --- | --- |
-| 1.0+ | `time.Since(t)` over `time.Now().Sub(t)` |
-| 1.8+ | `time.Until(deadline)` over `deadline.Sub(time.Now())` |
-| 1.13+ | `errors.Is` for wrapped errors |
-| 1.18+ | `any`; `bytes.Cut`; `strings.Cut` |
-| 1.19+ | `fmt.Appendf`; typed atomics: `atomic.Bool`, `Int64`, `Pointer[T]` |
-| 1.20+ | `Clone`, `CutPrefix`, `CutSuffix`; `errors.Join`; context cancellation causes |
-| 1.21+ | `min`, `max`, `clear`; `slices`; `maps.Clone`/`Copy`/`DeleteFunc`; `sync.OnceFunc`/`OnceValue`; context deadline helpers |
-| 1.22+ | `for i := range n`; per-iteration loop variables; `cmp.Or`; `reflect.TypeFor[T]`; method/path `http.ServeMux`; `PathValue` |
-| 1.23+ | range-over-function; `maps.Keys`/`Values` iterators; `slices.Collect`/`Sorted`; `os.CopyFS`; GC-safe `time.Tick`; `unique.Make` |
-| 1.24+ | `t.Context()`/`b.Context()`; JSON `omitzero`; `b.Loop()`; `strings`/`bytes` `Lines`, `SplitSeq`, `FieldsSeq`; generic aliases; `os.Root`; `runtime.AddCleanup`; `weak` |
-| 1.25+ | `sync.WaitGroup.Go`; stable `testing/synctest` |
-| 1.26+ | `new(expr)`; `errors.AsType[T]`; reflect type/value iterator methods |
+| 1.23+ | range-over-function; `os.CopyFS`; `unique.Make` |
+| 1.24+ | `b.Context()`; `strings`/`bytes` `Lines`; generic aliases; `os.Root`; `runtime.AddCleanup`; `weak` |
+| 1.25+ | stable `testing/synctest` |
+| 1.26+ | reflect type/value iterator methods |
 
 <!-- markdownlint-enable MD013 -->
 
@@ -71,9 +73,6 @@ real filesystem; do not add one solely to make tests in-memory.
 
 - Create root context with `signal` package and handle graceful shutdown
 - Never use nil context or `context.Background`
-- Go 1.26+:
-  - use `_, ok := errors.AsType[ErrorType](err)` over a temporary target plus `errors.As`.
-  - use `new(expr)` instead of local pointer helpers.
 
 ## Conventions
 

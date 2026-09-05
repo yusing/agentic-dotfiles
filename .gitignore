@@ -43,12 +43,14 @@ __pycache__
 !/.codex/hooks/
 !/.codex/hooks/check_project
 !/.codex/hooks/generated_code_guard.py
+!/.codex/hooks/go_guidelines.py
 !/.codex/hooks/hook_response.py
 !/.codex/hooks/latest_dependency_instruction.py
 !/.codex/hooks/locked_state.py
 !/.codex/hooks/remote_vcs_guard.py
 !/.codex/hooks/session_scope.py
 !/.codex/hooks/shell_command.py
+!/.codex/hooks/skills_mgr_inventory.py
 !/.codex/hooks/subagent_exec_guard.py
 !/.codex/IMPLEMENTATION.md
 !/.codex/LARGE-TASK.md

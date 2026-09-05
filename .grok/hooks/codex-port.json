@@ -21,6 +21,11 @@
         "hooks": [
           {
             "type": "command",
+            "command": "python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/check_project",
+            "timeout": 10
+          },
+          {
+            "type": "command",
             "command": "python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/skills_mgr_inventory.py",
             "timeout": 5
           }
@@ -58,6 +63,39 @@
             "command": "python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/remote_vcs_guard.py",
             "timeout": 5,
             "statusMessage": "Checking Git clone commands"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/check_project",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/go_guidelines.py --refresh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 $HOME/.grok/hooks/adapt_codex_hook.py $HOME/.codex/hooks/go_guidelines.py --refresh",
+            "timeout": 10
           }
         ]
       }
