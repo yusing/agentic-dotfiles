@@ -1,12 +1,12 @@
 ---
 name: golang-best-practices
-description: Apply Go practices when writing, refactoring, reviewing, or testing Go; skip exploration. Read from the target module's working directory to receive its modern Go guidelines in the same tool result.
+description: Apply module-version-specific Go conventions during implementation or review, not exploration.
 ---
 
 # Modern Go by Version
 
-The accompanying Modern Go Guidelines list must match the target module and Go
-version. Read through `END_GO_GUIDELINES`; report missing or truncated guidance.
+Read this skill from the target module's working directory so the accompanying Modern Go
+Guidelines list matches that module and Go version. Read through `END_GO_GUIDELINES`; report missing or truncated guidance.
 Apply relevant rules even when nearby code uses older idioms. Before skipping a
 seemingly relevant rule or when examples are needed, request only its returned IDs
 with `skills-mgr run use-modern-go/scripts/run-tool.sh explain <ID> [<ID> ...]`.
@@ -15,7 +15,6 @@ with `skills-mgr run use-modern-go/scripts/run-tool.sh explain <ID> [<ID> ...]`.
 
 - No binary or artifact in repo root. Prohibit `go build` without `-o`, defaults `bin/`
 - Production build strip symbols: `-ldflags '-s -w'`
-- Use modern features and syntax
 
 ## Symbol lookup
 
@@ -25,39 +24,12 @@ Use `gopls` for symbols and references when location is known:
 Use text search for literals, generated code, config, or when symbolic lookup
 cannot answer question.
 
-## Codebase cleanup
+## Focused checks
 
-Defer clean up after work done.
-
-- `gofmt -w`: format go files
-- `deadcode [flags] package...`: scan deadcode
-- `go fix [flags] package...` (1.26+): modernize code
-
-## Linting
-
-- `go vet [flags] package...`
-- `golangci-lint run`
-
-## Feature cutoffs
-
-<!-- markdownlint-disable MD013 -->
-
-| Go | Prefer |
-| --- | --- |
-| 1.0+ | `time.Since(t)` over `time.Now().Sub(t)` |
-| 1.8+ | `time.Until(deadline)` over `deadline.Sub(time.Now())` |
-| 1.13+ | `errors.Is` for wrapped errors |
-| 1.18+ | `any`; `bytes.Cut`; `strings.Cut` |
-| 1.19+ | `fmt.Appendf`; typed atomics: `atomic.Bool`, `Int64`, `Pointer[T]` |
-| 1.20+ | `Clone`, `CutPrefix`, `CutSuffix`; `errors.Join`; context cancellation causes |
-| 1.21+ | `min`, `max`, `clear`; `slices`; `maps.Clone`/`Copy`/`DeleteFunc`; `sync.OnceFunc`/`OnceValue`; context deadline helpers |
-| 1.22+ | `for i := range n`; per-iteration loop variables; `cmp.Or`; `reflect.TypeFor[T]`; method/path `http.ServeMux`; `PathValue` |
-| 1.23+ | range-over-function; `maps.Keys`/`Values` iterators; `slices.Collect`/`Sorted`; `os.CopyFS`; GC-safe `time.Tick`; `unique.Make` |
-| 1.24+ | `t.Context()`/`b.Context()`; JSON `omitzero`; `b.Loop()`; `strings`/`bytes` `Lines`, `SplitSeq`, `FieldsSeq`; generic aliases; `os.Root`; `runtime.AddCleanup`; `weak` |
-| 1.25+ | `sync.WaitGroup.Go`; stable `testing/synctest` |
-| 1.26+ | `new(expr)`; `errors.AsType[T]`; reflect type/value iterator methods |
-
-<!-- markdownlint-enable MD013 -->
+Format changed Go files and use the owning project's relevant tests and lint checks. `go vet`
+and `golangci-lint` are available check choices, not a requirement to run both on every edit.
+Use `deadcode` for a requested reachability/cleanup investigation and `go fix` (Go 1.26+) for
+in-scope modernization, rather than broad cleanup after unrelated work.
 
 ## Filesystem copying and tests
 
@@ -75,11 +47,9 @@ real filesystem; do not add one solely to make tests in-memory.
 
 ## High-value patterns
 
-- Create root context with `signal` package and handle graceful shutdown
-- Never use nil context or `context.Background`
-- Go 1.26+:
-  - use `_, ok := errors.AsType[ErrorType](err)` over a temporary target plus `errors.As`.
-  - use `new(expr)` instead of local pointer helpers.
+- Derive operation contexts from the caller so cancellation propagates; never pass a nil context.
+- Own process shutdown at the entry point using the `signal` package when graceful shutdown is
+  required, rather than creating detached root contexts inside request or library code.
 
 ## Conventions
 
