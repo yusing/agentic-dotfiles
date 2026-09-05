@@ -1,6 +1,6 @@
 # Style rules (human-flavoured)
 
-Load this when drafting or when the main skill says to apply voice / scrub AI smell.
+Load this when drafting or revising the voice of casual public prose.
 
 ## Leading words
 
@@ -66,7 +66,8 @@ Structure smells:
 
 ## Numbers and honesty
 
-- State n, session count, tokenizer, and what token stream you counted.
+- For measured claims, name the unit, sample, and comparison boundary. For token-output
+  comparisons, include session/request counts, tokenizer, and the token stream counted.
 - *One claim* form: "~47% less output on successful edit payloads (12 sessions,
   247 requests). Not whole-session cost."
 - If rejects are zero, say that in prose; do not print a duplicate row.

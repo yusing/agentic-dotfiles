@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "0f15dd34523df9f84e81a2d02e6b99512bb134e7",
+  "sourceCommit": "ca7e7d08ea9a95d4f838d1948b7246e604e77f39",
   "outputs": [
     {
       "path": ".bashrc",
@@ -705,19 +705,19 @@
     {
       "path": ".skills-mgr/skills/human-flavoured-writing/references/example-spine.md",
       "kind": "file",
-      "sha256": "9a8b1b7551feacf5f170240939c7a98f297cbd1c999434d2a36a040a1073a225",
+      "sha256": "529d49617f90d40988cf75c58bc3b94a0a239a0cfdf2380c4ed7b7eca941d083",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/human-flavoured-writing/references/style-rules.md",
       "kind": "file",
-      "sha256": "a93097f06dac11f1d3e0d186e01b636d8225002f58e3b7c2d38dfa0e18c91dfd",
+      "sha256": "f8ec2b98c9ac633722ca5e6c97270130b0922c52b48593e7d637f45e3337d24c",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/human-flavoured-writing/SKILL.md",
       "kind": "file",
-      "sha256": "38a8d2a2626c6724ccee09e4e8862e608744428f55f01768a7322d3cd90c4d57",
+      "sha256": "09fe0f0c4b11e15b537b4d774f4b4ba83d099c47dd1825e48087cf6f94f3ea6f",
       "executable": false
     },
     {

@@ -1,6 +1,7 @@
 # Example spine (product post)
 
-Skeleton only. Fill with real product facts. Do not copy placeholder numbers.
+Optional shape for a measured tool-comparison post. Adapt or omit sections for the actual
+venue and evidence. Fill with real product facts; do not copy placeholder numbers.
 
 ```markdown
 # <verb the change>: ~<N>% <scoped win>
