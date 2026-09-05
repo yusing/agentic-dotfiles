@@ -140,7 +140,7 @@ user-facing surface. Do not use documentation as a substitute for inspecting the
 For a third-party dependency, check its own documentation and types instead of inferring the
 contract from call sites.
 
-Only the main agent spawns `explorer` or `fast-explorer`. A spawned agent works from its assigned
+Only the main agent spawns `explorer`. A spawned agent works from its assigned
 context and returns any unresolved discovery need to the main agent rather than spawning another
 exploration agent.
 

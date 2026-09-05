@@ -11,9 +11,8 @@ the main agent, not an explorer.
 Identify the independent evidence questions and group those that share an owner or context. Dispatch
 the useful independent groups concurrently:
 
-- Use `explorer` for repository behavior, ownership, or caller questions that ask for facts.
-- Use `fast-explorer` for bounded provider, dependency, installed-tool, local-documentation,
-  configuration, artifact extraction, or read-only network lookups.
+- Use `explorer` for factual repository, provider, dependency, installed-tool, documentation,
+  configuration, artifact, or read-only network lookups.
 - Split provider-specific discovery when its contracts or evidence sources differ.
 - Keep the main agent on non-overlapping synthesis, integration, and implementation work.
 - Wait for every dispatched result before deciding or editing anything that depends on it.

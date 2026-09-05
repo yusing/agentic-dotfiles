@@ -42,10 +42,6 @@ CLAUDE_METADATA: dict[str, dict[str, str]] = {
         "color": "pink",
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
     },
-    "fast-explorer": {
-        "color": "yellow",
-        "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
-    },
     "fast-implementer": {
         "color": "cyan",
         "tools": "Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill",
@@ -145,7 +141,6 @@ def add_result_write_boundary(text: str, *, role: str) -> str:
     )
     if role in {
         "explorer",
-        "fast-explorer",
         "reviewer",
         "simplify-checker",
         "web-reviewer",

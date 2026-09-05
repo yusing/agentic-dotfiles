@@ -9,7 +9,6 @@ __pycache__
 !/.claude/agents/council-investigator.md
 !/.claude/agents/council-member.md
 !/.claude/agents/explorer.md
-!/.claude/agents/fast-explorer.md
 !/.claude/agents/fast-implementer.md
 !/.claude/agents/implementer.md
 !/.claude/agents/reviewer.md
@@ -26,8 +25,6 @@ __pycache__
 !/.codex/agents/council-member.toml
 !/.codex/agents/explorer.instructions.md
 !/.codex/agents/explorer.toml
-!/.codex/agents/fast-explorer.instructions.md
-!/.codex/agents/fast-explorer.toml
 !/.codex/agents/fast-implementer.instructions.md
 !/.codex/agents/fast-implementer.toml
 !/.codex/agents/implementer.instructions.md

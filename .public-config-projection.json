@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "88e246a5c12aa431e4944c0562f355f0c1bf7be6",
+  "sourceCommit": "40d4362347b8e6b182f6ff7277c7b1f78a55e165",
   "outputs": [
     {
       "path": ".bashrc",
@@ -30,12 +30,6 @@
       "path": ".claude/agents/explorer.md",
       "kind": "file",
       "sha256": "de5e235dfcd56c2285a482808761bc6224ec206b7f1c0c68a96d8074b21d0e57",
-      "executable": false
-    },
-    {
-      "path": ".claude/agents/fast-explorer.md",
-      "kind": "file",
-      "sha256": "30246a36a1d3de493c1a599b69b9cbd439c4145939cd9e5d126c1678ab49c744",
       "executable": false
     },
     {
@@ -82,7 +76,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "70a9ed9466f3fb802fb9357aa173fe6cbc4ba43982c039d9ebaff9217c02fefa",
+      "sha256": "4e0458c46d973687fa9372b309bd26fd5d7f3bc4c484cceb3e9e11e59f0f6fb6",
       "executable": false
     },
     {
@@ -119,18 +113,6 @@
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
       "sha256": "cb2182ded989d39797525ad883a91d53110dff11ec1573f0231cb5e061c59986",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/fast-explorer.instructions.md",
-      "kind": "file",
-      "sha256": "4c75704df01602daa9a5cb656ff31d7d41ff5479d2294291962817891dd1d99e",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/fast-explorer.toml",
-      "kind": "file",
-      "sha256": "189420d618a9ab2a84257a64fef4ba321647b141671a8c8038697101a447e8dc",
       "executable": false
     },
     {
@@ -274,7 +256,7 @@
     {
       "path": ".codex/LARGE-TASK.md",
       "kind": "file",
-      "sha256": "bbb80ded1149334589521c477282919a1046cd013e1feb3472040e04720e8334",
+      "sha256": "4f65c5d4ff6378cf1c033b59adb1586d709fe503ec904f34cb5db3647ebaf650",
       "executable": false
     },
     {
@@ -466,7 +448,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "1f57c65c0bee13c542355dac6224b8f048bda0c9bfa207976b3a6a752ec2f8d9",
+      "sha256": "3f825d0b3f8ed52c89be067812dc3191981556a1d3032a0796f7777886c517d1",
       "executable": false
     },
     {
@@ -531,7 +513,7 @@
     {
       "path": ".local/bin/sync-claude-agent-ports",
       "kind": "file",
-      "sha256": "76f3f69cb7fd6b6c519f9584099b7a8f8214a936010ed59702df4b550506ad07",
+      "sha256": "9ce55c5136f048df38be0ddadb446d2eaf91715077a8b180f9e703522f557438",
       "executable": true
     },
     {
