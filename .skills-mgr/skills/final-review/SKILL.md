@@ -1,35 +1,44 @@
 ---
 name: final-review
-description: Independently inspect the complete committed outcome of an automated new-project, feature, or behavioral-change workflow. Use only after deliver-vertical-slice completes every accepted item; do not use for a bug fix, diagnosis, question, or routine per-slice inspection.
+description: Independently inspect the complete committed outcome after deliver-vertical-slice finishes every accepted item.
 ---
 
 # Review the complete delivered outcome
 
-## Scope and independence
+Use only after `deliver-vertical-slice` completes every accepted item. This is final workflow
+inspection, not a bug-fix review, diagnosis, question, or routine per-slice inspection.
 
-- Require every accepted item to be committed, the temporary recovery artifact to be current, and the exact base-to-head commit range to be stable and identifiable.
-- Final review is required for the complete delivered outcome even when an individual slice did not need inspection. Spawn a fresh native `reviewer` for the complete commit range; add `simplify-checker` when complexity warrants it and `web-reviewer` when the range includes web or frontend changes. Dispatch the selected roles concurrently in fresh context with the exact range, accepted requirements, and necessary evidence.
-- Apply the standing independent-inspection policy for handoffs and result delivery. When the main agent is the sole consumer, receive complete results directly rather than creating a review-report artifact.
-- Keep the inspected snapshot unchanged until the inspection is terminal, and treat unavailable or unrecoverable required inspection as an unresolvable blocker.
-- Trace the delivered surface, accepted items, contracts, non-goals, tests, and validation across the stated range.
+## Independent inspection
 
-## Classify findings
+Require committed accepted items, a current recovery artifact, and a stable, exact base-to-head
+range. Spawn a fresh native `reviewer` for the complete range even if no slice needed inspection.
+Add `simplify-checker` when complexity warrants it and `web-reviewer` for web/frontend changes.
+Dispatch selected roles concurrently with the accepted requirements and necessary evidence under
+the standing handoff policy. Keep the snapshot unchanged until inspection finishes.
 
-- Confirm a blocker only when current code evidence shows a violation of an accepted item, contract, safety invariant, or required check.
-- Apply the active ownership and complexity gate to proposed corrections, preserving every accepted capability. Remediate confirmed violations through their authoritative owners.
-- Skip invalid, external-owner, unreachable, duplicated, overengineered, uncertain, or scope-broadening findings and record their dispositions in the recovery artifact.
-- Order confirmed blockers by their original slice and corresponding commit; never edit in the independent reviewer context.
+Trace the delivered surfaces, accepted items, contracts, non-goals, tests, and validation across
+the full range. Missing or unrecoverable required inspection is a blocker, not a passing review.
+When the main agent is the sole consumer, return results directly without a review-report artifact.
 
-## Correct and recheck
+## Findings and corrections
 
-- Route confirmed blockers to `deliver-vertical-slice` in original slice order; validate and pre-commit-inspect each correction, then create `git commit --fixup=<corresponding-slice-commit>`.
-- Send the corrected range and focused validation evidence back to the native reviewers. Reuse them while their scope and context remain useful; use a fresh reviewer when either changes materially. Continue automatically while a confirmed blocker is resolvable within accepted scope.
-- If a confirmed blocker cannot be resolved within the authorized change, stop and report it without weakening or broadening the accepted outcome. Missing required review coverage is a blocker, not a passing review.
-- Keep the recovery artifact through every fixup and inspection; do not create a separate final-review report.
+A blocker needs current code evidence of a violated accepted item, contract, safety invariant, or
+required check. Record unsupported, external-owner, unreachable, duplicate, uncertain, or
+scope-broadening findings and their dispositions in the recovery artifact.
+
+Route confirmed blockers to `deliver-vertical-slice` in original slice order. Correct through the
+authoritative owner, validate, apply required pre-commit inspection, and create
+`git commit --fixup=<corresponding-slice-commit>`. The independent reviewer never edits the tree.
+
+Return corrected ranges and focused check results to the reviewers. Reuse them while scope and
+context remain useful; otherwise use a fresh reviewer. Continue through resolvable in-scope
+blockers and report those that require a new decision or authorization.
 
 ## Close the range
 
-- After no confirmed blocker remains, autosquash every fixup into its corresponding slice commit using the preflight authorization.
-- Verify that autosquash preserves the reviewed tree, rerun the smallest affected checks, and identify the final rewritten base-to-head commit range.
-- Delete the temporary recovery artifact only after the autosquashed range is validated.
-- Return the final commit range, validation facts, and skipped-item dispositions directly; successful completion requires no manual intervention and no remaining blocker.
+After review passes, use the preflight authorization to autosquash fixups into their slice commits.
+Verify that the reviewed tree is unchanged by autosquash and run the smallest affected checks.
+Delete the recovery artifact only after the rewritten range is validated.
+
+Finish with the final base-to-head range, validation facts, skipped-finding dispositions, and no
+remaining blocker. Preserve the recovery artifact if required inspection or correction is blocked.
