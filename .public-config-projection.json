@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ca7e7d08ea9a95d4f838d1948b7246e604e77f39",
+  "sourceCommit": "75af419eb1b741b98ca939bd634a9b431d98cadf",
   "outputs": [
     {
       "path": ".bashrc",
@@ -723,7 +723,7 @@
     {
       "path": ".skills-mgr/skills/js-ts-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "7f1da6b3f1a550556d8983a7a7de81e44b7f3aa7db842d2f4df5f6c78b26287e",
+      "sha256": "ef497fec175648f8d8856617e5cec8f5c3474fdf46e331477f57b8b958548661",
       "executable": false
     },
     {
