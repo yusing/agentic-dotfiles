@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "52431564a194999db22d05dec67035d0871b2bd1",
+  "sourceCommit": "69311a637a69de8ecef9d5e8e55e4af63511ce7b",
   "outputs": [
     {
       "path": ".bashrc",
@@ -555,7 +555,7 @@
     {
       "path": ".skills-mgr/skills/assess-change-impact/SKILL.md",
       "kind": "file",
-      "sha256": "30084bc3bc4ca0a5bf2fa3bb7f3d1dab4f3aa5c0cbd6dbc3b8f5b96070688050",
+      "sha256": "f7c1522bfbef2512f7ae365401f99ffdc4f02690b68c1e578e3111e520e22d8a",
       "executable": false
     },
     {
