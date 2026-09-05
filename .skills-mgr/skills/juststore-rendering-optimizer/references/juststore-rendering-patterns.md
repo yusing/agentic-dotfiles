@@ -130,3 +130,23 @@ const connectionSettings = settings.connection.ensureObject()
 ```
 
 Reactive work begins when code calls `use`, `useState`, `useCompute`, renders a juststore reactive utility, or invokes `subscribe`. Keep stable path and derived handles outside render when they target a singleton store. Keep form-instance or prop-derived handles within the owning component and include them in effect dependencies.
+
+## Field updates and shared values
+
+- Use `useState()` for a single field's value/setter pair and `Render` for a small read-only region.
+- Create `createAtom(id, defaultValue)` at the common root/container when sibling children need
+  one shared value. Pass the handle, not a parent-subscribed primitive.
+- Write to the narrowest path, such as `state.at(i).field.set(v)`. Use functional updates when
+  the next value depends on the current one, `reset()` for delete/default semantics, and
+  `rename()` for dynamic object keys.
+- Cross-field cleanup belongs in an effect subscription or supported change callback, not render.
+- A control's `defaultValue` does not decide whether the persisted domain path is absent or
+  explicitly written; preserve that contract separately.
+
+## High-frequency sources
+
+Use `useDebounce(delay)` for search/filter work when delayed processing is acceptable.
+Keep temporary interaction state in `useMemoryStore` rather than app-wide persistence. Use
+`createMixedState(...)` only for values genuinely coupled in rendering decisions. Prefer an atom
+to a frequently changing parent value shared by siblings. Avoid full-store replacement for
+incremental events unless a whole-value contract requires it.

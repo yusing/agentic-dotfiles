@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "75af419eb1b741b98ca939bd634a9b431d98cadf",
+  "sourceCommit": "e5bf1f20c8f630c5ca31fdebc2527de4f08795aa",
   "outputs": [
     {
       "path": ".bashrc",
@@ -729,13 +729,13 @@
     {
       "path": ".skills-mgr/skills/juststore-rendering-optimizer/references/juststore-rendering-patterns.md",
       "kind": "file",
-      "sha256": "33c102cd5f9b13ddb67d74b49f174e53c759252644b6b634406085638a9c36f4",
+      "sha256": "60cab2b58631f65437f2b06d2b8adc2a673e5d4c9f7df940b286f5ed00f48b80",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/juststore-rendering-optimizer/SKILL.md",
       "kind": "file",
-      "sha256": "39e071fac8646d115bbc6df7d38ec710abfbbc0a326855640482070745c725a8",
+      "sha256": "97953bd845fffba5404aa143b30e61d4da1ae1385a27fb5207d16ac6bbfb36ed",
       "executable": false
     },
     {
