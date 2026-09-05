@@ -48,15 +48,21 @@ outcome, operation, and scope. For compaction, use the preserved task state and 
 material needed to recover the active scope. Classify the work described, not the act of reading
 its description. If the task remains unclear, ask for clarification before classifying it.
 
+Document reuse is per context, not per task. Select `$HOME/.codex/SMALL-TASK.md` for a small
+task, otherwise `$HOME/.codex/LARGE-TASK.md`; also select `$HOME/.codex/IMPLEMENTATION.md` for
+implementation or review. Read each selected document only if it has not been read in the current
+context. Reuse it across new tasks and size changes, including switching back to a previous size.
+After compaction, reset this read history; reread a document sooner only if it changed or I ask.
+
 Then apply this transition table before task-specific discovery or execution:
 
 | Event | Task handling | Document handling | Next action |
 | --- | --- | --- | --- |
-| Independent user request or question | Start a separate task and classify the resolved request. | Read exactly one task-size document: `$HOME/.codex/SMALL-TASK.md` for a small task, otherwise `$HOME/.codex/LARGE-TASK.md`. When the request requires implementation or review, read also `$HOME/.codex/IMPLEMENTATION.md`. | Begin the new task. |
-| Direct continuation or correction | Keep the current task. Reclassify only when the changed scope invalidates its classification. | Retain loaded task-size and implementation documents; reclassification alone does not reload them. | Continue the task. |
+| Independent user request or question | Start a separate task and classify the resolved request. | Apply document reuse; load only selected documents not yet read in this context. | Begin the new task. |
+| Direct continuation or correction | Keep the current task. Reclassify only when the changed scope invalidates its classification. | Apply document reuse to the current size and operation; load any newly needed document once. | Continue the task. |
 | Workflow approval | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Perform the approved next step. |
 | Approval or request to dispatch a native role | Keep the current task and classification. | Retain loaded task-size and implementation documents. | Dispatch the role. The main agent does not become the owner of that role's implementation or review. |
-| Compaction | Keep the current task and classify its recovered active scope again. | Same as "Independent user request or question" | Resume from the preserved task state. |
+| Compaction | Keep the current task and classify its recovered active scope again. | Reset document read history and load the documents selected for the recovered task. | Resume from the preserved task state. |
 
 Use these task sizes:
 
@@ -160,7 +166,7 @@ supplied that evidence.
 ## Implementation
 
 Before implementing or reviewing code, configuration, tests, documentation, or agent instructions,
-read `$HOME/.codex/IMPLEMENTATION.md` if it is not already loaded for this task. It owns
+read `$HOME/.codex/IMPLEMENTATION.md` under the document-reuse rule above. It owns
 implementation, validation, runtime behavior, hygiene, edit readiness, and the complexity and
 ownership gate. Apply it before the first edit and when deciding whether to act on a review finding.
 
