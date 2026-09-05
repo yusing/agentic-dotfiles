@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8aaf7313db210e731145e2795d2677e19f257b86",
+  "sourceCommit": "5a55a94b4e0ba5b3e11e2d8bd01ed312c030bdfd",
   "outputs": [
     {
       "path": ".bashrc",
@@ -466,7 +466,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "fb801df6f73f7e46e44440c7d4d290a0bc2b38502f55a05c59fc8ef5e69b0861",
+      "sha256": "d3a16eee4ed8987499823ad105455f0832c18cf2cf8a2963dd327c86af249cbf",
       "executable": false
     },
     {
@@ -661,6 +661,12 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/go-microoptimizations/references/assembly.md",
+      "kind": "file",
+      "sha256": "15e70f02ef4aa5bcce3ed264c3ac6958647aaf0d1c254c02791e8dd477b29dc8",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/go-microoptimizations/scripts/go_asm_metrics.py",
       "kind": "file",
       "sha256": "bf54ff1638786d35cb6d1d5732b9eead323b5fff2ecc27512df49dd446dabf4a",
@@ -669,7 +675,7 @@
     {
       "path": ".skills-mgr/skills/go-microoptimizations/SKILL.md",
       "kind": "file",
-      "sha256": "7218868cfad0f8d69b1250ca06f526a665b8ff8cf64e764910092308f7c63034",
+      "sha256": "abaa43beb156a28a38564b5c0891a73b3610c6e96d3bd6233b2e01be8e8ac920",
       "executable": false
     },
     {

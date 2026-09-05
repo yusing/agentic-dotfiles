@@ -163,6 +163,8 @@ __pycache__
 !/.skills-mgr/skills/go-microoptimizations/
 !/.skills-mgr/skills/go-microoptimizations/agents/
 !/.skills-mgr/skills/go-microoptimizations/agents/openai.yaml
+!/.skills-mgr/skills/go-microoptimizations/references/
+!/.skills-mgr/skills/go-microoptimizations/references/assembly.md
 !/.skills-mgr/skills/go-microoptimizations/scripts/
 !/.skills-mgr/skills/go-microoptimizations/scripts/go_asm_metrics.py
 !/.skills-mgr/skills/go-microoptimizations/SKILL.md

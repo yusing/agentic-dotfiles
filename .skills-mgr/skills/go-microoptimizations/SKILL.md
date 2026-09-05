@@ -1,65 +1,28 @@
 ---
 name: go-microoptimizations
-description: Optimize bounded Go hot paths on amd64 using call-site evidence, correctness tests, benchmarks, allocation data, assembly metrics, branch shape, register use, stack churn, CMOV, branchless transforms, and math/bits.
+description: Measure and optimize a bounded Go hot path on amd64 without changing its contracts.
 disable-model-invocation: true
 ---
 
 # Go Microoptimizations
 
-Local, measured, reversible. Correctness first; nanoseconds must pay readability
-and maintenance cost.
+Keep the work bounded to a production hot path with a concrete performance question. Identify its
+callers and realistic input shape: size, hit/miss mix, encoding, allocations, and profile evidence.
+Correctness and caller relevance outrank a smaller instruction count.
 
-## Workflow
+## Measurement loop
 
-### Scope
-
-Pick one function/method symbol. Find production callers and correctness test.
-Record real shape: input sizes, hit/miss ratio, ASCII/Unicode, allocation
-pressure, literal separators/search sets, profile evidence.
-
-### Baseline
-
-Capture with same Go version, `GOOS`, `GOARCH`, and symbol used later:
-
-```sh
-python3 \
-  "${HOME}/.agents/skills/go-microoptimizations/scripts/go_asm_metrics.py" . \
-  --symbol 'pkg.Func' \
-  --json-output /tmp/pkg.Func.before.json
-```
-
-Record `instruction_count`, `branch_count`, `stack_churn_detected`,
-`stack_op_count`.
-
-Runtime/allocation claim needs baseline benchmark matching caller shape:
+Capture focused correctness checks and a baseline for the claimed runtime or allocation effect.
+Use the same symbol, Go version, GOOS, GOARCH, and workload before and after. For example:
 
 ```sh
 rtk go test ./pkg -run '^$' -bench '^BenchmarkFunc$' -benchmem -count=8
 ```
 
-### Change
-
-Audit behavior traps and metrics. Apply one small change. Run focused correctness
-tests.
-
-### Compare
-
-Compare assembly:
-
-```sh
-python3 \
-  "${HOME}/.agents/skills/go-microoptimizations/scripts/go_asm_metrics.py" . \
-  --symbol 'pkg.Func' \
-  --baseline /tmp/pkg.Func.before.json \
-  --json-output /tmp/pkg.Func.after.json
-```
-
-Rerun matching benchmarks. Prefer `benchstat` when available. Keep change only
-when relevant evidence wins without material regression. Restore rejected
-attempt.
-
-Done: behavior covered; before/after environment matches; assembly and claimed
-runtime/allocation effects measured; rejected source restored.
+Read [references/assembly.md](references/assembly.md) when assembly shape is part of the hypothesis
+or requested result. Apply a coherent change, check behavior, and compare the relevant evidence.
+Prefer `benchstat` when available. Keep improvements only without material regression; restore
+only this task's rejected edits, preserving unrelated work.
 
 ## Decision order
 
@@ -71,20 +34,6 @@ Correctness > caller relevance > benchmark/allocation evidence > assembly shape
 - Allocation claim needs `-benchmem` or clear escape/allocation evidence.
 - Capacity change affects append behavior; treat as API risk unless proven
   private.
-
-## Metrics
-
-- Tiny no-frame leaf with `instruction_count > 8`: inspect compound conditions,
-  conversions, intermediates.
-- Mathematical/bit primitive with `branch_count > 0`: inspect masks, shifts,
-  boolean-to-mask transforms, `CMOV*`, `SET*`, `AND`, `OR`, `XOR`, arithmetic
-  versus `J*`. Predictable branch may still win; benchmark decides.
-- `stack_churn_detected = true`: inspect spills, frame, address-taking, closure,
-  defer, register retention.
-- Standalone symbol can mislead when caller inlining dominates. Measure
-  instantiated generic symbol or caller when possible.
-- Compare same symbol and toolchain: instruction counts include prologue and
-  stack-growth checks, so absolute counts are not universal targets.
 
 ## Benchmark bar
 
@@ -129,5 +78,5 @@ rewrite needs relevant ASCII boundary, Unicode, and invalid-UTF-8 cases.
 ## Report
 
 For kept change: file/function, preserved behavior, before/after environment and
-assembly metrics, benchmark ranges, tests, tradeoff/risk. For rejected attempt:
+any requested assembly metrics, benchmark ranges, tests, tradeoff/risk. For rejected attempt:
 reason; source remains restored.
