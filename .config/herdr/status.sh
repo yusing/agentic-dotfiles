@@ -399,9 +399,9 @@ def cache_record(name, credential_path, fetch):
     except Exception:
         pass
 
-    # Herdr redraws every three minutes for the countdown, while provider requests
-    # stay hourly. A newer credential store bypasses the cache after login/refresh.
-    refresh_seconds = 3600
+    # Provider usage refreshes with the three-minute redraw.
+    # A newer credential store bypasses the cache after login/refresh.
+    refresh_seconds = 180
     try:
         cache_mtime = cache_path.stat().st_mtime
         credential_mtime = Path(credential_path).stat().st_mtime
@@ -423,7 +423,7 @@ def cache_record(name, credential_path, fetch):
     except Exception:
         if cached is not None:
             # Credential rotation may succeed before the usage request fails.
-            # Advance the preserved cache so that failure still waits one hour.
+            # Advance the preserved cache so failure waits the refresh interval.
             write_private_json(cache_path, cached)
             return cached
         write_private_json(cache_path, {"reset_at": 0})
