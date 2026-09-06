@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6b555a780e96f01b1098e9bf7a08adfbb6b54f67",
+  "sourceCommit": "d12bfce63e44fca708ee462813a307e6ed49ead6",
   "outputs": [
     {
       "path": ".bashrc",
@@ -346,7 +346,7 @@
     {
       "path": ".config/herdr/status.sh",
       "kind": "file",
-      "sha256": "bdb79b60b8cc3fe7f827547c592195b798f749e7f6cbae99fe330aa4e41a627d",
+      "sha256": "bbaec2197a48975f944fe244266d89e01d629aae4a12ee647be2692ab915d124",
       "executable": true
     },
     {

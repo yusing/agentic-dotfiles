@@ -1,5 +1,7 @@
 #!/bin/sh
 # Tab-bar modules matching tmux status-right: application, AI usage, cpu, ram, net, uptime.
+# AI usage modules print remaining weekly percent as plain text. Herdr tab-bar commands
+# drop ESC and keep the CSI body, which hides the whole status area once it is too wide.
 set -u
 
 LC_ALL=C
@@ -587,6 +589,15 @@ def claude_usage():
 
     return cache_record("claude", auth_path, fetch)
 
+def remaining_percent(used):
+    remaining = 100 - used
+    if remaining < 0:
+        remaining = 0
+    elif remaining > 100:
+        remaining = 100
+    return remaining
+
+
 try:
     if provider == "codex":
         record = codex_usage()
@@ -599,6 +610,7 @@ try:
     used = record["used"]
     if not isinstance(used, (int, float)) or isinstance(used, bool):
         raise ValueError
+    remaining = remaining_percent(used)
     seconds = max(0, int(float(record["reset_at"]) - now))
 except Exception:
     sys.exit(0)
@@ -619,7 +631,7 @@ banked_suffix = ""
 if isinstance(banked, (int, float)) and not isinstance(banked, bool) and banked > 0:
     banked_suffix = f" +{int(banked)}b"
 icons = {"codex": "", "grok": "󰚩", "claude": ""}
-print(f"{icons[provider]} {used:g}% -{''.join(parts)}{banked_suffix}")
+print(f"{icons[provider]} {remaining:g}% -{''.join(parts)}{banked_suffix}")
 PY
 }
 
