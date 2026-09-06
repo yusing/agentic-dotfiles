@@ -3,19 +3,18 @@ import * as path from "path";
 import { handleVersion, isRecord, readEvent, writeJson } from "../../.codex/hooks/lib/hook_runtime.ts";
 import { shellTokens } from "../../.codex/hooks/lib/shell_command.ts";
 
-export const VERSION = "1.0.1";
+export const VERSION = "1.1.0";
 
 export const DENIAL_REASON =
   "Blocked search of /home/$USER/*/skills or a broad search rooted at " +
-  "/home/$USER or an agent-client directory. Read a known skill file " +
-  "directly, or use `skills-mgr get <skill>` and " +
+  "/home/$USER. Read a known skill file directly, or use `skills-mgr get <skill>` and " +
   "`skills-mgr run <skill>/...`. Do not search or list skill trees.";
-const READ_TOOL_NAMES = new Set(["read", "readfile"]);
 const SEARCH_TOOL_NAMES = new Set(["glob", "grep", "search"]);
-const SHELL_TOOL_NAMES = new Set(["bash", "execute", "runterminalcommand"]);
-const READ_COMMANDS = new Set(["bat", "cat", "head", "less", "more", "nl", "tail"]);
+const LIST_TOOL_NAMES = new Set(["listdir"]);
+const SHELL_TOOL_NAMES = new Set(["bash", "runterminalcommand"]);
 const SEARCH_COMMANDS = new Set(["fd", "fdfind", "find", "grep", "rg"]);
-const AGENT_CLIENT_DIRS = [".agents", ".claude", ".codex", ".grok"];
+const LIST_COMMANDS = new Set(["ls", "tree"]);
+const PATH_KEYS = ["path", "target_directory"];
 const SEPARATORS = new Set([";", "&", "|", "(", ")"]);
 const SHELL_TOKEN_PUNCTUATION = new Set([";", "&", "|", "(", ")", "\n"]);
 
@@ -25,7 +24,7 @@ export function username(): string {
 
 export function skillsPathPattern(user?: string): RegExp {
   const name = user ?? username();
-  return new RegExp(`/home/${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/[^/]+/skills(?:/|\\b)`);
+  return new RegExp(`/home/${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/[^/]+/skills(?:/|$)`);
 }
 
 export function containsSkillsPath(text: string, user?: string): boolean {
@@ -40,38 +39,111 @@ function normalizedToolName(event: Record<string, unknown>): string {
   return name.toLowerCase().replace(/[^a-z]/g, "");
 }
 
-function isBroadSearchRoot(text: string, user?: string): boolean {
-  const name = user ?? username();
-  const home = `/home/${name}`;
-  const expanded = text.trim().replace(/^(?:\$HOME|\$\{HOME\}|~)(?=\/|$)/, home);
-  const candidate = expanded.replace(/\/+$/, "") || expanded;
-  return candidate === home || AGENT_CLIENT_DIRS.some((directory) => candidate === `${home}/${directory}`);
+function eventCwd(event: Record<string, unknown>): string {
+  const cwd = event.cwd ?? event.workspaceRoot;
+  return typeof cwd === "string" ? cwd : "";
 }
 
-function segmentForbidsSkills(segment: string[], user?: string): boolean {
+function homeDir(user?: string): string {
+  return `/home/${user ?? username()}`;
+}
+
+function expandHome(text: string, user?: string): string {
+  return text.trim().replace(/^(?:\$HOME|\$\{HOME\}|~)(?=\/|$)/, homeDir(user));
+}
+
+function normalizedRoot(text: string, cwd: string, user?: string): string {
+  const expanded = expandHome(text, user);
+  let candidate = expanded.replace(/\/+$/, "") || expanded;
+  if (candidate === "" || candidate === ".") {
+    return cwd.replace(/\/+$/, "") || cwd;
+  }
+  if (!path.isAbsolute(candidate) && cwd !== "") {
+    candidate = path.resolve(cwd, candidate);
+  }
+  return candidate.replace(/\/+$/, "") || candidate;
+}
+
+function rootForbidsSkills(text: string, cwd: string, user?: string): boolean {
+  const resolved = normalizedRoot(text, cwd, user);
+  return resolved === homeDir(user) || containsSkillsPath(resolved, user);
+}
+
+function looksLikeSearchRoot(argument: string): boolean {
+  if (argument.startsWith("-")) {
+    return false;
+  }
+  return (
+    argument === "." ||
+    argument === ".." ||
+    argument.includes("/") ||
+    argument.startsWith("~") ||
+    argument.startsWith("$HOME") ||
+    argument.startsWith("${HOME}")
+  );
+}
+
+function pathRoots(toolInput: unknown): string[] {
+  if (!isRecord(toolInput)) {
+    return [];
+  }
+  const roots: string[] = [];
+  for (const key of PATH_KEYS) {
+    const value = toolInput[key];
+    if (typeof value === "string" && value.trim() !== "") {
+      roots.push(value);
+    }
+  }
+  return roots;
+}
+
+function searchRootsForbid(roots: string[], cwd: string, user?: string): boolean {
+  const resolved = roots.length > 0 ? roots : cwd ? [cwd] : [];
+  return resolved.some((root) => rootForbidsSkills(root, cwd, user));
+}
+
+function segmentForbidsSkills(segment: string[], cwd: string, user?: string): boolean {
   const executable = path.basename(segment[0] ?? "");
   const arguments_ = segment.slice(1);
   if (SEARCH_COMMANDS.has(executable)) {
-    return arguments_.some(
-      (argument) => isBroadSearchRoot(argument, user) || containsSkillsPath(argument, user),
-    );
+    const pathArguments = arguments_.filter((argument) => looksLikeSearchRoot(argument));
+    if (pathArguments.length === 0) {
+      return false;
+    }
+    return pathArguments.some((argument) => rootForbidsSkills(argument, cwd, user));
   }
-  if (READ_COMMANDS.has(executable)) {
-    return false;
+  if (LIST_COMMANDS.has(executable)) {
+    const pathArguments = arguments_.filter((argument) => !argument.startsWith("-"));
+    const roots = pathArguments.length > 0 ? pathArguments : cwd ? [cwd] : [];
+    return roots.some((root) => containsSkillsPath(normalizedRoot(root, cwd, user), user));
   }
-  return segment.some((text) => containsSkillsPath(text, user));
+  return false;
 }
 
-function shellForbidsSkills(command: string, user?: string): boolean {
-  const tokens = shellTokens(command, SHELL_TOKEN_PUNCTUATION);
-  if (tokens.length === 0 && command.includes("'")) {
-    return false;
+function firstPathArgument(arguments_: string[]): string | undefined {
+  for (const argument of arguments_) {
+    if (!argument.startsWith("-")) {
+      return argument;
+    }
   }
+  return undefined;
+}
+
+function shellForbidsSkills(command: string, cwd: string, user?: string): boolean {
+  const tokens = shellTokens(command, SHELL_TOKEN_PUNCTUATION);
   let segment: string[] = [];
+  let currentCwd = cwd;
   for (const token of [...tokens, ";"]) {
     if (token.length > 0 && [...token].every((character) => SEPARATORS.has(character))) {
-      if (segment.length > 0 && segmentForbidsSkills(segment, user)) {
-        return true;
+      if (segment.length > 0) {
+        const executable = path.basename(segment[0] ?? "");
+        if (executable === "cd") {
+          const target = firstPathArgument(segment.slice(1));
+          currentCwd = target === undefined ? homeDir(user) : normalizedRoot(target, currentCwd, user);
+        }
+        if (segmentForbidsSkills(segment, currentCwd, user)) {
+          return true;
+        }
       }
       segment = [];
       continue;
@@ -81,49 +153,28 @@ function shellForbidsSkills(command: string, user?: string): boolean {
   return false;
 }
 
-function iterStrings(value: unknown): string[] {
-  const collected: string[] = [];
-  const visit = (current: unknown): void => {
-    if (typeof current === "string") {
-      collected.push(current);
-      return;
-    }
-    if (Array.isArray(current)) {
-      for (let index = 0; index < current.length; index += 1) {
-        visit(current[index]);
-      }
-      return;
-    }
-    if (typeof current === "object" && current !== null) {
-      const record = current as Record<string, unknown>;
-      for (const key in record) {
-        visit(record[key]);
-      }
-    }
-  };
-  visit(value);
-  return collected;
-}
-
 export function eventTargetsSkillsPath(
   event: Record<string, unknown>,
   user?: string,
 ): boolean {
   const toolInput = event.toolInput ?? event.tool_input ?? {};
-  const strings = iterStrings(toolInput);
-  const pattern = skillsPathPattern(user);
-  const hasSkillsPath = strings.some((text) => pattern.test(text));
+  const cwd = eventCwd(event);
   const toolName = normalizedToolName(event);
-  if (READ_TOOL_NAMES.has(toolName)) {
-    return false;
-  }
   if (SEARCH_TOOL_NAMES.has(toolName)) {
-    return hasSkillsPath || strings.some((text) => isBroadSearchRoot(text, user));
+    return searchRootsForbid(pathRoots(toolInput), cwd, user);
   }
   if (SHELL_TOOL_NAMES.has(toolName)) {
-    return strings.some((text) => shellForbidsSkills(text, user));
+    const command = isRecord(toolInput) ? toolInput.command : undefined;
+    return typeof command === "string" && shellForbidsSkills(command, cwd, user);
   }
-  return hasSkillsPath;
+  if (LIST_TOOL_NAMES.has(toolName)) {
+    const roots = pathRoots(toolInput);
+    if (roots.length === 0) {
+      return cwd !== "" && containsSkillsPath(cwd, user);
+    }
+    return roots.some((root) => containsSkillsPath(normalizedRoot(root, cwd, user), user));
+  }
+  return false;
 }
 
 function main(): number {

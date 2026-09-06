@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b7217f568fa82095ea7505ce05541753966b1d83",
+  "sourceCommit": "3af9e5732cb188c435249529c990880dba4409a1",
   "outputs": [
     {
       "path": ".bashrc",
@@ -466,7 +466,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "eefe55a2bea85021a574a10a2fb0c12be4aa784bc39825cee15e17882293feb5",
+      "sha256": "8366df002c6d13efe212752f3832d7a27e59a82446a049b106fc99f23aece447",
       "executable": false
     },
     {
@@ -501,13 +501,13 @@
     {
       "path": ".grok/hooks/skills_path_guard.ts",
       "kind": "file",
-      "sha256": "9fa79f7ab3114a3b27eced7113e670bc19f346e9b9dfbd0602831980444a5814",
+      "sha256": "c9dcfbf9d0a377556b6bf5131caf55712f05cb5be930d81705da70c96f226ee0",
       "executable": false
     },
     {
       "path": ".grok/hooks/skills-path-guard.json",
       "kind": "file",
-      "sha256": "4f1ee12a72b3ea5a1335fbe9a42283993c907c2ae8682bc8d26040dbdffb76fe",
+      "sha256": "587524186a929dd13f515bb1c095bda33066207ad0ef14379d1fdbcbb43459cb",
       "executable": false
     },
     {
@@ -537,7 +537,7 @@
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "f8390948360cf92d7912caae6f958e36e458026dc47495f376aabb4ecdb4c263",
+      "sha256": "88edb45d652bf98c663a96ec354173da14c4c38a9053e4f0968677b4336ad364",
       "executable": true
     },
     {
@@ -793,6 +793,36 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/scriptc-compiler/agents/openai.yaml",
+      "kind": "file",
+      "sha256": "6d7c804fffd421766c44336929347aafd17488d66b9e2dbbca974556f226e0c9",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/scriptc-compiler/references/cli.md",
+      "kind": "file",
+      "sha256": "bb93fff1e59a7c5a38d4cdc2b822c29a2cf487e9dbf036f0d8c7e9f4a0120704",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/scriptc-compiler/references/ffi.md",
+      "kind": "file",
+      "sha256": "ae22bc991e796bb86a80f340829b7fdb2848360ba2117f6f50fafb8a57184b0b",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/scriptc-compiler/references/limitations.md",
+      "kind": "file",
+      "sha256": "f6b7a31c131f6992de0ee86100978bea9f03205140b7405f6635b0a7a0e7129e",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/scriptc-compiler/SKILL.md",
+      "kind": "file",
+      "sha256": "f255e14d2740730c983292f09e3692025588a6c7f28a72f29e3f43995b832e91",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/shadowtree/agents/openai.yaml",
       "kind": "file",
       "sha256": "eedb15edb199cd72828450c86845bafc1c1b673c3dfb5bf135a24c423ab7f9d0",
@@ -950,7 +980,7 @@
     {
       "path": "CONTEXT-GROK-HOOK-PORT.md",
       "kind": "file",
-      "sha256": "a4ba040c790dfcd552b2224b60770108b2d854dab2cd3d4fe55d375acee9a5b2",
+      "sha256": "c36eaf2332403a26c1df83ed7181e735343af73d58757d50de2717bf17c568f5",
       "executable": false
     },
     {

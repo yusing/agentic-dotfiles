@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.2";
+export const VERSION = "1.1.3";
 
 type TreeEntry = {
 	mode: string;
@@ -179,6 +179,7 @@ const PROJECTED_SKILL_NAMES = [
 	"new-project",
 	"orchestrated-workflow",
 	"postgres-17-18-features",
+	"scriptc-compiler",
 	"shadcn",
 	"shadowtree",
 	"supabase-postgres-best-practices",

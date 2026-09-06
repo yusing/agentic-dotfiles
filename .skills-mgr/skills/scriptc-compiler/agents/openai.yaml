@@ -1,0 +1,4 @@
+interface:
+  display_name: "scriptc compiler"
+  short_description: "scriptc compiler documentation"
+  default_prompt: "Use $scriptc-compiler for scriptc compiler behavior."

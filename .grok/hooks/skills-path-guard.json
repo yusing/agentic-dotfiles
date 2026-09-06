@@ -2,7 +2,7 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "^(Bash|run_terminal_command|Grep|grep|Search|search|Glob|ListDir|list_dir|Edit|Write|MultiEdit|search_replace)$",
+        "matcher": "^(Bash|run_terminal_command|Grep|grep|Search|search|Glob|ListDir|list_dir)$",
         "hooks": [
           {
             "type": "command",

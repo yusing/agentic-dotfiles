@@ -204,6 +204,14 @@ __pycache__
 !/.skills-mgr/skills/postgres-17-18-features/references/queries-and-loading.md
 !/.skills-mgr/skills/postgres-17-18-features/references/schema-and-dml.md
 !/.skills-mgr/skills/postgres-17-18-features/SKILL.md
+!/.skills-mgr/skills/scriptc-compiler/
+!/.skills-mgr/skills/scriptc-compiler/agents/
+!/.skills-mgr/skills/scriptc-compiler/agents/openai.yaml
+!/.skills-mgr/skills/scriptc-compiler/references/
+!/.skills-mgr/skills/scriptc-compiler/references/cli.md
+!/.skills-mgr/skills/scriptc-compiler/references/ffi.md
+!/.skills-mgr/skills/scriptc-compiler/references/limitations.md
+!/.skills-mgr/skills/scriptc-compiler/SKILL.md
 !/.skills-mgr/skills/shadowtree/
 !/.skills-mgr/skills/shadowtree/agents/
 !/.skills-mgr/skills/shadowtree/agents/openai.yaml

@@ -38,9 +38,13 @@ closing it needs a caller-identity field from the client, not an adapter change.
 Native Grok-only hooks (not Codex ports) also live under `.grok/hooks/`.
 `.grok/hooks/bin/skills_path_guard` (registered by `.grok/hooks/skills-path-guard.json`)
 owns PreToolUse denial of search and listing against `/home/$USER/*/skills`,
-and of broad searches rooted at the home directory or an agent-client
-directory. A named skill file may be read directly. Listing and fetching
-unknown skills still belong to `skills-mgr`.
+and of broad searches rooted at the home directory. A missing dedicated-search
+path uses the event cwd, so a home-directory workspace is still a broad root.
+Relative search and list roots resolve against that cwd.
+Agent-client directories such as `.codex` are not broad roots; a `skills`
+child still matches `/home/$USER/*/skills`. A named skill file may be read
+or edited directly. Listing and fetching unknown skills still belong to
+`skills-mgr`.
 `.codex/hooks/bin/skills_mgr_inventory` is the shared inventory owner registered by
 `.grok/hooks/codex-port.json` for SessionStart, PostCompact, and SubagentStart. It owns the
 `--- skills-mgr injected ---` heading so that the injected list is not mistaken for
