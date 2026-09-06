@@ -78,11 +78,11 @@ Explain why it is required and propose an installation, then install only once I
 decline the installation, ask me how to proceed. Do not introduce or require a dependency solely
 for an optional implementation choice; use the simplest suitable available approach instead.
 
-Noisy output: prefix each shell producer expected to emit large stdout/stderr with
-`rtk command [argv...]`, including a user-supplied command that omits the prefix. In a compound
-command or pipeline, prefix each noisy producer rather than mechanically wrapping every
-executable. Leave quiet filters, control operators, and redirections outside `rtk`. Use raw
-execution when the complete unmodified output is required or when the command writes its output
+Noisy output: prefix each shell producer expected to emit large stdout/stderr with `rtk`,
+including a user-supplied command that omits the prefix. In a compound command or pipeline,
+prefix each noisy producer rather than mechanically wrapping every executable. 
+Leave quiet filters, control operators, and redirections outside `rtk`.
+Use raw execution when the complete unmodified output is required or when the command writes its output
 to a file instead of returning it to the conversation.
 
 ## Agent communication
