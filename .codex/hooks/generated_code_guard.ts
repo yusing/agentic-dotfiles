@@ -11,20 +11,36 @@ import {
   writeJson,
 } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.0.1";
 
 const MARKER_GENERATED = "Code generated";
 const MARKER_DO_NOT_EDIT = "DO NOT EDIT";
 export const REJECTION_REASON =
   "Generated artifact mutation not allowed. Edit the authoritative source this file " +
   "is generated from, then rerun its generator. Do not edit the generated output.";
+const PATCH_OPERATIONS = ["Add", "Delete", "Update"] as const;
+
+function patchHeader(line: string): { operation: string; path: string } | undefined {
+  if (!line.startsWith("*** ")) {
+    return undefined;
+  }
+  const rest = line.slice(4);
+  for (const operation of PATCH_OPERATIONS) {
+    const marker = `${operation} File: `;
+    if (rest.startsWith(marker)) {
+      return { operation, path: rest.slice(marker.length).trim() };
+    }
+  }
+  return undefined;
+}
+
 function patchFileMatches(value: string): Array<{ operation: string; path: string }> {
   const matches: Array<{ operation: string; path: string }> = [];
-  const re = new RegExp("^\\*\\*\\* (Add|Delete|Update) File: ([^\\r\\n]+)$", "gm");
-  let match = re.exec(value);
-  while (match !== null) {
-    matches.push({ operation: match[1] ?? "", path: (match[2] ?? "").trim() });
-    match = re.exec(value);
+  for (const line of value.split("\n")) {
+    const header = patchHeader(line.replace(/\r$/, ""));
+    if (header !== undefined && header.path.length > 0) {
+      matches.push(header);
+    }
   }
   return matches;
 }
@@ -33,19 +49,36 @@ function patchSectionMatches(
   patch: string,
 ): Array<{ operation: string; path: string; body: string }> {
   const matches: Array<{ operation: string; path: string; body: string }> = [];
-  const re = new RegExp(
-    "^\\*\\*\\* (Add|Delete|Update) File: ([^\\r\\n]+)\\n(.*?)(?=^\\*\\*\\* (?:Add|Delete|Update) File: |^\\*\\*\\* End Patch)",
-    "gms",
-  );
-  let match = re.exec(patch);
-  while (match !== null) {
+  const lines = patch.split("\n");
+  let current: { operation: string; path: string; bodyLines: string[] } | undefined;
+  const flush = (): void => {
+    if (current === undefined) {
+      return;
+    }
     matches.push({
-      operation: match[1] ?? "",
-      path: (match[2] ?? "").trim(),
-      body: match[3] ?? "",
+      operation: current.operation,
+      path: current.path,
+      body: current.bodyLines.join("\n"),
     });
-    match = re.exec(patch);
+    current = undefined;
+  };
+  for (const raw of lines) {
+    const line = raw.replace(/\r$/, "");
+    if (line === "*** End Patch") {
+      flush();
+      continue;
+    }
+    const header = patchHeader(line);
+    if (header !== undefined) {
+      flush();
+      current = { operation: header.operation, path: header.path, bodyLines: [] };
+      continue;
+    }
+    if (current !== undefined) {
+      current.bodyLines.push(raw.replace(/\r$/, ""));
+    }
   }
+  flush();
   return matches;
 }
 

@@ -1,5 +1,5 @@
 import * as path from "path";
-import { deny, VERSION as RESPONSE_VERSION } from "./lib/hook_response.ts";
+import { deny } from "./lib/hook_response.ts";
 import { handleVersion, isRecord, readEvent, writeJson } from "./lib/hook_runtime.ts";
 import {
   SHELLS,
@@ -11,7 +11,6 @@ import {
 } from "./lib/shell_command.ts";
 
 export const VERSION = "1.0.0";
-void RESPONSE_VERSION;
 
 const CONTAINER_EXECUTABLES = new Set([
   "docker",

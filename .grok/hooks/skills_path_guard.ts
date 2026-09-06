@@ -3,7 +3,7 @@ import * as path from "path";
 import { handleVersion, isRecord, readEvent, writeJson } from "../../.codex/hooks/lib/hook_runtime.ts";
 import { shellTokens } from "../../.codex/hooks/lib/shell_command.ts";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.0.1";
 
 export const DENIAL_REASON =
   "Blocked search of /home/$USER/*/skills or a broad search rooted at " +
@@ -17,6 +17,7 @@ const READ_COMMANDS = new Set(["bat", "cat", "head", "less", "more", "nl", "tail
 const SEARCH_COMMANDS = new Set(["fd", "fdfind", "find", "grep", "rg"]);
 const AGENT_CLIENT_DIRS = [".agents", ".claude", ".codex", ".grok"];
 const SEPARATORS = new Set([";", "&", "|", "(", ")"]);
+const SHELL_TOKEN_PUNCTUATION = new Set([";", "&", "|", "(", ")", "\n"]);
 
 export function username(): string {
   return process.env.USER || process.env.LOGNAME || path.basename(os.homedir());
@@ -62,7 +63,7 @@ function segmentForbidsSkills(segment: string[], user?: string): boolean {
 }
 
 function shellForbidsSkills(command: string, user?: string): boolean {
-  const tokens = shellTokens(command);
+  const tokens = shellTokens(command, SHELL_TOKEN_PUNCTUATION);
   if (tokens.length === 0 && command.includes("'")) {
     return false;
   }

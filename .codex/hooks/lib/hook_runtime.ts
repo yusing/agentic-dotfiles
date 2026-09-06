@@ -111,7 +111,7 @@ export function runCommand(
     }
     if (options.stdin !== undefined) {
       payloadPath = path.join(os.tmpdir(), `hook-stdin-${process.pid}-${Date.now()}`);
-      fs.writeFileSync(payloadPath, options.stdin);
+      fs.writeFileSync(payloadPath, options.stdin, { mode: 0o600 });
       const result = spawnSync(
         "/bin/sh",
         ["-c", 'exec "$1" "${@:2}" < "$0"', payloadPath, executable, ...args],
@@ -119,16 +119,16 @@ export function runCommand(
       );
       return {
         status: result.status ?? 1,
-        stdout: result.stdout,
-        stderr: result.stderr,
+        stdout: result.stdout ?? "",
+        stderr: result.stderr ?? "",
         error: result.error,
       };
     }
     const result = spawnSync(executable, args, { encoding: "utf8" });
     return {
       status: result.status ?? 1,
-      stdout: result.stdout,
-      stderr: result.stderr,
+      stdout: result.stdout ?? "",
+      stderr: result.stderr ?? "",
       error: result.error,
     };
   } finally {

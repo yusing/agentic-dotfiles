@@ -1,5 +1,5 @@
 #!/bin/sh
-# version: 1.0.0
+# version: 1.0.1
 # Rebuild user-owned helper and hook binaries for this machine.
 
 set -eu
@@ -17,7 +17,11 @@ mkdir -p "$BIN" "$GROK_BIN"
 compile_hook() {
 	src=$1
 	out=$2
-	scriptc build "$src" -o "$out" --no-keep-c
+	set --
+	if grep -q 'locked_state\.ts' "$src"; then
+		set -- --ffi "$HOOKS/lib/flock.ffi.json"
+	fi
+	scriptc build "$src" -o "$out" --no-keep-c "$@"
 	chmod 755 "$out"
 }
 

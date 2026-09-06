@@ -1,4 +1,4 @@
-export const VERSION = "1.0.0";
+export const VERSION = "1.0.1";
 
 export const SHELLS = new Set(["bash", "dash", "sh", "zsh"]);
 const COMMAND_PREFIXES = new Set(["!", "do", "elif", "exec", "if", "then"]);
@@ -11,7 +11,10 @@ export function isSeparatorToken(token: string): boolean {
   return token.length > 0 && [...token].every((character) => SEPARATORS.has(character));
 }
 
-export function shellTokens(command: string): string[] {
+export function shellTokens(
+  command: string,
+  punctuation: ReadonlySet<string> = PUNCTUATION,
+): string[] {
   const tokens: string[] = [];
   let index = 0;
 
@@ -31,9 +34,9 @@ export function shellTokens(command: string): string[] {
       }
 
       const start = command[index] ?? "";
-      if (PUNCTUATION.has(start)) {
+      if (punctuation.has(start)) {
         let end = index + 1;
-        while (end < command.length && PUNCTUATION.has(command[end] ?? "")) {
+        while (end < command.length && punctuation.has(command[end] ?? "")) {
           end += 1;
         }
         pushToken(command.slice(index, end));
@@ -51,7 +54,7 @@ export function shellTokens(command: string): string[] {
       let token = "";
       while (index < command.length) {
         const character = command[index] ?? "";
-        if (WHITESPACE.has(character) || PUNCTUATION.has(character)) {
+        if (WHITESPACE.has(character) || punctuation.has(character)) {
           break;
         }
         if (character === "'" || character === '"') {
@@ -275,6 +278,7 @@ export function commandSubstitutions(command: string): string[] {
     }
     if (character === "`") {
       let end = index + 1;
+      let closed = false;
       while (end < command.length) {
         if (command[end] === "\\") {
           end += 2;
@@ -283,11 +287,12 @@ export function commandSubstitutions(command: string): string[] {
         if (command[end] === "`") {
           substitutions.push(command.slice(index + 1, end));
           index = end + 1;
+          closed = true;
           break;
         }
         end += 1;
       }
-      if (end >= command.length && command[end - 1] !== "`") {
+      if (!closed) {
         index += 1;
       }
       continue;

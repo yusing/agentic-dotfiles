@@ -1,0 +1,13 @@
+{
+  "ffi_format": 1,
+  "functions": [
+    {
+      "name": "flock",
+      "symbol": "flock",
+      "params": ["i32", "i32"],
+      "returns": "i32"
+    }
+  ],
+  "libraries": [],
+  "system_libraries": []
+}

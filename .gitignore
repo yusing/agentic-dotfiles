@@ -43,6 +43,7 @@ __pycache__
 !/.codex/hooks/go_guidelines.ts
 !/.codex/hooks/latest_dependency_instruction.ts
 !/.codex/hooks/lib/
+!/.codex/hooks/lib/flock.ffi.json
 !/.codex/hooks/lib/hook_response.ts
 !/.codex/hooks/lib/hook_runtime.ts
 !/.codex/hooks/lib/locked_state.ts
