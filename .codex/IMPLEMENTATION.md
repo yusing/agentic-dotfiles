@@ -1,12 +1,14 @@
 # Implementation
 
-Choose the simplest implementation that fully meets the current requirements.
+Choose the simplest implementation that fully meets the current requirements. Reconsider the
+approach before adding complexity to make it work.
 The "simplest implementation" scope does not expand merely because a review found anything.
 Start with the smallest working end-to-end version, then add capabilities without regressing
 behavior that the current requirements still accept. A behavior superseded by the current request
 is not a compatibility obligation.
 
-Validate through the interface that owns the changed behavior. Cover affected contracts, meaningful
+Validate the assumptions behind the approach, not only whether it runs. Test through the interface
+that owns the changed behavior. Cover affected contracts, meaningful
 failure paths, and required checks in proportion to risk. Prefer existing focused checks; add tests
 when they protect behavior rather than mirror the implementation. Once sufficient checks pass,
 broaden or repeat validation only for new changes, failures, or a concrete unresolved concern.
@@ -61,7 +63,7 @@ Keep test setup in test sources.
 ## Edit readiness
 
 Separate responsibilities; reuse suitable project dependencies before replacing or adding them.
-Prefer maintained libraries when they simplify the implementation or improve reliability.
+Select dependencies for trustworthy provenance, maintenance, and fit, not merely availability.
 Edit authoritative sources, not generated, vendored, or minified outputs; follow local naming,
 error handling, idiom, and comment style. Comment non-obvious invariants, caller contracts,
 workarounds, and tradeoffs even where nearby code has few comments; describe the final behavior.
