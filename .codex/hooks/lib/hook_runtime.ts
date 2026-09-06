@@ -104,6 +104,8 @@ export type CommandResult = {
   error?: Error;
 };
 
+export const posixStdinExec = 'cmd="$1"; shift; exec "$cmd" "$@" < "$0"';
+
 export function runCommand(
   command: string[],
   options: { stdin?: string; cwd?: string } = {},
@@ -119,9 +121,11 @@ export function runCommand(
     if (options.stdin !== undefined) {
       payloadPath = path.join(os.tmpdir(), `hook-stdin-${process.pid}-${Date.now()}`);
       fs.writeFileSync(payloadPath, options.stdin, { mode: 0o600 });
+      // scriptc spawnSync has no `input`. POSIX sh redirects the temp payload
+      // as `$0`; `/bin/sh` may be dash, so this cannot use bash expansions.
       const result = spawnSync(
         "/bin/sh",
-        ["-c", 'exec "$1" "${@:2}" < "$0"', payloadPath, executable, ...args],
+        ["-c", posixStdinExec, payloadPath, executable, ...args],
         { encoding: "utf8" },
       );
       return {

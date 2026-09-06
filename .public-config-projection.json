@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d014b46fed23577ba44b4f8151970735d84251f5",
+  "sourceCommit": "d9fd6351ac41e003cee1b7a50d375c034ad839cf",
   "outputs": [
     {
       "path": ".bashrc",
@@ -226,7 +226,7 @@
     {
       "path": ".codex/hooks/lib/hook_runtime.ts",
       "kind": "file",
-      "sha256": "6ad6ac076b59cfb201652c268d026ab365473a8c4f822ebd71c1d80e5f7252e1",
+      "sha256": "7ecc40d8aa287a408603d6df1d3bf679b415ec2cc3fda2c3a400e9832f1d53f9",
       "executable": false
     },
     {
