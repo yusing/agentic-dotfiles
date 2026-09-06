@@ -79,6 +79,8 @@ __pycache__
 !/.config/herdr/
 !/.config/herdr/config.toml
 !/.config/herdr/status.sh
+!/.config/hunk/
+!/.config/hunk/config.toml
 !/.config/lazygit/
 !/.config/lazygit/config.yml
 !/.config/micro/

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "40d4362347b8e6b182f6ff7277c7b1f78a55e165",
+  "sourceCommit": "513ab6868de8b77c4d047d8dd2f1ba99d87eb8be",
   "outputs": [
     {
       "path": ".bashrc",
@@ -350,6 +350,12 @@
       "executable": true
     },
     {
+      "path": ".config/hunk/config.toml",
+      "kind": "file",
+      "sha256": "28f0b8b031608d1328a1508d6c15932ca028300359d01bdc89ad343dc363f5e1",
+      "executable": false
+    },
+    {
       "path": ".config/lazygit/config.yml",
       "kind": "file",
       "sha256": "9a3adc3154378250aead27f8a619561b3185a002069d6be796afe35d20861d13",
@@ -448,7 +454,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "3f825d0b3f8ed52c89be067812dc3191981556a1d3032a0796f7777886c517d1",
+      "sha256": "4c4ebc823407e4ddf2e409beacc80f5841f4667e05b8c1b993e958f3ef5f45e1",
       "executable": false
     },
     {
@@ -507,7 +513,7 @@
     {
       "path": ".local/bin/project-public-config",
       "kind": "file",
-      "sha256": "40f9d414d2071ed50ef05a5951361f133f4d982a4eca9a27c7d5aaa57f9e9722",
+      "sha256": "fee7402ec8fbe8dbbfde79d7638de75276797301e305dac437aa7cfce45e501d",
       "executable": true
     },
     {

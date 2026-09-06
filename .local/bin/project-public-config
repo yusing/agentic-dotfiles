@@ -132,6 +132,7 @@ const EXACT_PATHS = new Set([
 	".config/ghostty/config",
 	".config/herdr/config.toml",
 	".config/herdr/status.sh",
+	".config/hunk/config.toml",
 	".config/lazygit/config.yml",
 	".config/micro/bindings.json",
 	".config/micro/settings.json",
