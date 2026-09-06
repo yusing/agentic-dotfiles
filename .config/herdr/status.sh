@@ -1,5 +1,5 @@
 #!/bin/sh
-# Tab-bar modules matching tmux status-right: application, AI usage, cpu, ram, net, uptime.
+# Tab-bar modules matching tmux status-right: application, AI usage, cpu, ram, net.
 # AI usage modules print remaining weekly percent as plain text. Herdr tab-bar commands
 # drop ESC and keep the CSI body, which hides the whole status area once it is too wide.
 set -u
@@ -11,7 +11,6 @@ state_dir=${HERDR_STATUS_STATE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/herdr-status
 proc_stat=${HERDR_STATUS_PROC_STAT:-/proc/stat}
 proc_meminfo=${HERDR_STATUS_PROC_MEMINFO:-/proc/meminfo}
 proc_net_dev=${HERDR_STATUS_PROC_NET_DEV:-/proc/net/dev}
-proc_uptime=${HERDR_STATUS_PROC_UPTIME:-/proc/uptime}
 proc_route=${HERDR_STATUS_PROC_ROUTE:-/proc/net/route}
 
 os_name() {
@@ -74,7 +73,7 @@ darwin_cpu_percent() {
 		{ s += $1 }
 		END {
 			if (ncpu <= 0) exit 1
-			printf "%.1f%%\n", s / ncpu
+			printf "%.0f%%\n", s / ncpu
 		}
 	'
 }
@@ -98,7 +97,7 @@ mod_cpu() {
 				dt = t - pt
 				di = i - pi
 				if (dt <= 0 || di < 0 || di > dt) exit 1
-				printf "%.1f%%\n", 100 * (dt - di) / dt
+				printf "%.0f%%\n", 100 * (dt - di) / dt
 			}
 		' || return 0
 		;;
@@ -117,7 +116,7 @@ linux_ram_percent() {
 		$1 == "MemAvailable:" { avail = $2 }
 		END {
 			if (total <= 0) exit 1
-			printf "%.1f%%\n", 100 * (total - avail) / total
+			printf "%.0f%%\n", 100 * (total - avail) / total
 		}
 	' "$proc_meminfo"
 }
@@ -148,7 +147,7 @@ darwin_ram_percent() {
 			used = used_and_cached - cached
 			total = used_and_cached + free_b
 			if (total <= 0) exit 1
-			printf "%.1f%%\n", 100 * used / total
+			printf "%.0f%%\n", 100 * used / total
 		}
 	'
 }
@@ -243,53 +242,6 @@ mod_net() {
 	rx_h=$(print_speed "$rx_rate")
 	tx_h=$(print_speed "$tx_rate")
 	printf '󰤨 ↓%s ↑%s\n' "$rx_h" "$tx_h"
-}
-
-format_uptime() {
-	awk -v s="$1" 'BEGIN {
-		if (s < 0) s = 0
-		s = int(s)
-		days = int(s / 86400)
-		hours = int((s % 86400) / 3600)
-		mins = int((s % 3600) / 60)
-		secs = s % 60
-		if (days > 0 && mins > 0) printf "%dd%dh%dm\n", days, hours, mins
-		else if (days > 0) printf "%dd%dh\n", days, hours
-		else if (hours > 0) printf "%dh%dm\n", hours, mins
-		else if (mins > 0) printf "%dm\n", mins
-		else printf "%ds\n", secs
-	}'
-}
-
-mod_uptime() {
-	os=$(os_name)
-	case "$os" in
-	Linux)
-		[ -r "$proc_uptime" ] || return 0
-		secs=$(awk '{ print int($1) }' "$proc_uptime") || return 0
-		;;
-	Darwin)
-		boot=$(sysctl -n kern.boottime 2>/dev/null | awk '{
-			for (i = 1; i <= NF; i++) {
-				if ($i == "sec") {
-					sec = $(i + 2)
-					gsub(/[^0-9]/, "", sec)
-					print sec
-					exit
-				}
-			}
-		}') || return 0
-		[ -n "$boot" ] || return 0
-		now=$(now_epoch)
-		secs=$((now - boot))
-		;;
-	*)
-		return 0
-		;;
-	esac
-	[ -n "$secs" ] || return 0
-	formatted=$(format_uptime "$secs") || return 0
-	printf '󰔟 %s\n' "$formatted"
 }
 
 extract_argv0() {
@@ -648,7 +600,7 @@ prefix_ram() {
 }
 
 usage() {
-	printf 'usage: %s application|codex|grok|claude|cpu|ram|net|uptime\n' "${0##*/}" >&2
+	printf 'usage: %s application|codex|grok|claude|cpu|ram|net\n' "${0##*/}" >&2
 	return 2
 }
 
@@ -674,9 +626,6 @@ ram)
 	;;
 net)
 	mod_net
-	;;
-uptime)
-	mod_uptime
 	;;
 '' | -h | --help)
 	usage

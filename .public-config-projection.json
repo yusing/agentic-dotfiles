@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d12bfce63e44fca708ee462813a307e6ed49ead6",
+  "sourceCommit": "3e79cc5246af23ba9f297eb1b1bdc9a18c502c44",
   "outputs": [
     {
       "path": ".bashrc",
@@ -340,13 +340,13 @@
     {
       "path": ".config/herdr/config.toml",
       "kind": "file",
-      "sha256": "9bb53563eb366cc010d104b4046872acb1f3eaf7818dc061a60cfd405659db31",
+      "sha256": "f24b7d3366bc6d5db7a842b975a38ed679e008b4d6048f756acd09ca7396d5d1",
       "executable": false
     },
     {
       "path": ".config/herdr/status.sh",
       "kind": "file",
-      "sha256": "bbaec2197a48975f944fe244266d89e01d629aae4a12ee647be2692ab915d124",
+      "sha256": "4ba1f0da7ff0041430aaa2ec17f664cc76df9fadb50fc4d4cbc998ddfd8cb2a7",
       "executable": true
     },
     {
