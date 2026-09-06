@@ -932,6 +932,26 @@ url = "https://github.com/mikefarah/yq/releases/download/v4.53.6/yq_darwin_amd64
 url_api = "https://api.github.com/repos/mikefarah/yq/releases/assets/522028031"
 provenance = "cosign"
 
+[[tools."aqua:modem-dev/hunk"]]
+version = "0.21.1"
+backend = "aqua:modem-dev/hunk"
+specifiers = ["latest"]
+
+[tools."aqua:modem-dev/hunk"."platforms.linux-arm64"]
+checksum = "sha256:1d31dfc382b9a4df9c045eb239ec248f61c4161dd32ec7caaab8593d55a9eca6"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.21.1/hunkdiff-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/545159499"
+
+[tools."aqua:modem-dev/hunk"."platforms.linux-x64"]
+checksum = "sha256:c7d1e23ba4ffb6ca3330797e9f0c82dbada50e3cfe1b719f4194747f2cbca122"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.21.1/hunkdiff-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/545159494"
+
+[tools."aqua:modem-dev/hunk"."platforms.macos-arm64"]
+checksum = "sha256:c78d881ff3e68258ca6be7da20d786edc05993a535cc5bba2e4a298ddc1801ba"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.21.1/hunkdiff-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/545159496"
+
 [[tools."aqua:mvdan/sh"]]
 version = "3.14.0"
 backend = "aqua:mvdan/sh"
@@ -981,6 +1001,69 @@ url_api = "https://api.github.com/repos/mvdan/sh/releases/assets/534120026"
 checksum = "sha256:74255a8087d74a79f5c1307db807e7efa8f062c429e3a05c075550392e0dcfa1"
 url = "https://github.com/mvdan/sh/releases/download/v3.14.0/shfmt_v3.14.0_darwin_amd64"
 url_api = "https://api.github.com/repos/mvdan/sh/releases/assets/534120026"
+
+[[tools."aqua:oxc-project/oxc/oxfmt"]]
+version = "1.81.0"
+backend = "aqua:oxc-project/oxc/oxfmt"
+specifiers = ["latest"]
+
+[tools."aqua:oxc-project/oxc/oxfmt"."platforms.linux-arm64"]
+checksum = "sha256:a85df4acc7ffd378ea5990712b769e580f5c9cd7818bb66f2449b3e362f6bae1"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxfmt-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734188"
+
+[tools."aqua:oxc-project/oxc/oxfmt"."platforms.linux-x64"]
+checksum = "sha256:c64538f889330f1ca27c588b38b3605fd9ff477fa2eeb5efddb92c7e9862a9c8"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxfmt-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734246"
+
+[tools."aqua:oxc-project/oxc/oxfmt"."platforms.macos-arm64"]
+checksum = "sha256:83cb74205190cce07983775f53d2063bf6946bbc9c63028fd000c5c3632be8ce"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxfmt-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734190"
+
+[[tools."aqua:oxc-project/oxc/oxlint"]]
+version = "1.81.0"
+backend = "aqua:oxc-project/oxc/oxlint"
+specifiers = ["latest"]
+
+[tools."aqua:oxc-project/oxc/oxlint"."platforms.linux-arm64"]
+checksum = "sha256:e80f0a157a6ebbba332848a19f93f2fe593c42bc69d51d316446ada1ae47abc8"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxlint-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734294"
+
+[tools."aqua:oxc-project/oxc/oxlint"."platforms.linux-x64"]
+checksum = "sha256:d176d586ff131466383c70ce655afee7dc5a0f0e8fcbdebc8e1320021431e69c"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxlint-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734366"
+
+[tools."aqua:oxc-project/oxc/oxlint"."platforms.macos-arm64"]
+checksum = "sha256:329c5853e91fc0eb7fe84e324b606391a6b4ab7d85b573a9d7862571d307ea3f"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxlint-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734287"
+
+[[tools."aqua:pnpm/pnpm"]]
+version = "12.3.4"
+backend = "aqua:pnpm/pnpm"
+specifiers = ["latest"]
+
+[tools."aqua:pnpm/pnpm"."platforms.linux-arm64"]
+checksum = "sha256:95e71a2a30bbc0b77511f95cf096779068dcad6ffcbbfdf0cd4dde9de2b2b97c"
+url = "https://github.com/pnpm/pnpm/releases/download/v12.3.4/pnpm-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/544431953"
+provenance = "github-attestations"
+
+[tools."aqua:pnpm/pnpm"."platforms.linux-x64"]
+checksum = "sha256:9705e5704b4679fb503c963a18d1ac4f105e39aafafca8a2ed346facdf820cd0"
+url = "https://github.com/pnpm/pnpm/releases/download/v12.3.4/pnpm-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/544431952"
+provenance = "github-attestations"
+
+[tools."aqua:pnpm/pnpm"."platforms.macos-arm64"]
+checksum = "sha256:9560243d4e92780c4466bac2ee6aac4166c8bb601ad3c63f070cdd701b28f360"
+url = "https://github.com/pnpm/pnpm/releases/download/v12.3.4/pnpm-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/544431956"
+provenance = "github-attestations"
 
 [[tools."aqua:rclone/rclone"]]
 version = "1.75.1"
@@ -1765,6 +1848,21 @@ url = "https://github.com/wg/wrk/archive/refs/tags/4.2.0.tar.gz"
 [[tools."npm:@trunkio/launcher"]]
 version = "1.3.4"
 backend = "npm:@trunkio/launcher"
+specifiers = ["latest"]
+
+[[tools."npm:ctx7"]]
+version = "0.5.10"
+backend = "npm:ctx7"
+specifiers = ["latest"]
+
+[[tools."npm:scriptc"]]
+version = "0.0.36"
+backend = "npm:scriptc"
+specifiers = ["latest"]
+
+[[tools."npm:vite"]]
+version = "8.2.2"
+backend = "npm:vite"
 specifiers = ["latest"]
 
 [[tools."pipx:rich-cli"]]

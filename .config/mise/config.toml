@@ -12,6 +12,9 @@ bun = "latest"
 # GitHub ships websocat.<target-triple>; keep the command name websocat.
 "github:vi/websocat" = { version = "latest", bin = "websocat" }
 "npm:@trunkio/launcher" = "latest"
+"npm:ctx7" = "latest"
+"npm:scriptc" = "latest"
+"npm:vite" = "latest"
 # Build only the checksum-locked source archive published by wg/wrk.
 "http:wrk" = { version = "4.2.0", url = "https://github.com/wg/wrk/archive/refs/tags/{{ version }}.tar.gz", checksum = "sha256:e255f696bff6e329f5d19091da6b06164b8d59d62cb9e673625bdcd27fe7bdad", strip_components = 1, bin_path = "bin", postinstall = 'cd "$MISE_TOOL_INSTALL_PATH" && make VER=4.2.0 && mkdir -p bin && cp wrk bin/wrk' }
 "aqua:astral-sh/uv" = "latest"
@@ -43,6 +46,10 @@ bun = "latest"
 "aqua:tmux/tmux-builds" = "latest"
 "aqua:watchexec/watchexec" = "latest"
 "aqua:ajeetdsouza/zoxide" = "latest"
+"aqua:modem-dev/hunk" = "latest"
+"aqua:oxc-project/oxc/oxfmt" = "latest"
+"aqua:oxc-project/oxc/oxlint" = "latest"
+"aqua:pnpm/pnpm" = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
 "go:golang.org/x/tools/cmd/goimports" = "latest"
 "go:golang.org/x/tools/cmd/deadcode" = "latest"

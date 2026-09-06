@@ -698,6 +698,9 @@ github:microsoft/TypeScript|tsc
 pipx:rich-cli|rich
 github:vi/websocat|websocat
 npm:@trunkio/launcher|trunk
+npm:ctx7|ctx7
+npm:scriptc|scriptc
+npm:vite|vite
 http:wrk|wrk
 aqua:astral-sh/uv|uv
 github:atuinsh/atuin|atuin
@@ -728,6 +731,10 @@ github:tldr-pages/tlrc|tldr
 aqua:tmux/tmux-builds|tmux
 aqua:watchexec/watchexec|watchexec
 aqua:ajeetdsouza/zoxide|zoxide
+aqua:modem-dev/hunk|hunk
+aqua:oxc-project/oxc/oxfmt|oxfmt
+aqua:oxc-project/oxc/oxlint|oxlint
+aqua:pnpm/pnpm|pnpm
 go:golang.org/x/tools/gopls|gopls
 go:golang.org/x/tools/cmd/goimports|goimports
 go:golang.org/x/tools/cmd/deadcode|deadcode
@@ -1138,26 +1145,22 @@ remove_legacy_file() {
 
 legacy_bun_package() {
   case "$1" in
+    ctx7) printf '%s\n' ctx7 ;;
+    hunk) printf '%s\n' hunkdiff ;;
+    oxfmt) printf '%s\n' oxfmt ;;
+    oxlint) printf '%s\n' oxlint ;;
+    pnpm) printf '%s\n' pnpm ;;
+    scriptc) printf '%s\n' scriptc ;;
     tldr) printf '%s\n' tldr ;;
     trunk) printf '%s\n' @trunkio/launcher ;;
     tsc) printf '%s\n' typescript ;;
+    vite) printf '%s\n' vite ;;
   esac
 }
 
-bun_global_has_package() {
-  local pkg="$1" manifest="${HOME}/.bun/install/global/package.json"
-  [ -f "$manifest" ] || return 1
-  BUN_GLOBAL_MANIFEST="$manifest" BUN_GLOBAL_PACKAGE="$pkg" py - <<'PY'
-import json, os, sys
-from pathlib import Path
-
-data = json.loads(Path(os.environ["BUN_GLOBAL_MANIFEST"]).read_text())
-pkg = os.environ["BUN_GLOBAL_PACKAGE"]
-sys.exit(0 if pkg in (data.get("dependencies") or {}) else 1)
-PY
-}
-
-remove_legacy_bun_package() {
+# Prints the bun global package for $1 unless ~/.bun/bin/$1 is already the
+# validated mise replacement.
+legacy_bun_leftover_package() {
   local cmd="$1" replacement="$2" pkg bin path_real replacement_real
   pkg="$(legacy_bun_package "$cmd")"
   [ -n "$pkg" ] || return 0
@@ -1169,12 +1172,37 @@ remove_legacy_bun_package() {
       return 0
     fi
   fi
-  if bun_global_has_package "$pkg"; then
-    info "removing leftover bun package $pkg"
-    bun remove -g "$pkg" \
-      || warn "keeping leftover bun package $pkg; bun remove failed"
-  fi
-  remove_legacy_file "$bin" "$replacement"
+  printf '%s\n' "$pkg"
+}
+
+installed_bun_packages() {
+  local manifest="${HOME}/.bun/install/global/package.json"
+  [ -f "$manifest" ] || return 0
+  [ "$#" -gt 0 ] || return 0
+  BUN_GLOBAL_MANIFEST="$manifest" py - "$@" <<'PY'
+import json, os, sys
+from pathlib import Path
+
+data = json.loads(Path(os.environ["BUN_GLOBAL_MANIFEST"]).read_text())
+deps = data.get("dependencies") or {}
+for pkg in sys.argv[1:]:
+    if pkg in deps:
+        print(pkg)
+PY
+}
+
+remove_legacy_bun_packages() {
+  local pkg
+  local packages=()
+  [ "$#" -gt 0 ] || return 0
+  while IFS= read -r pkg; do
+    [ -n "$pkg" ] || continue
+    in_list "$pkg" "${packages[@]}" || packages+=("$pkg")
+  done < <(installed_bun_packages "$@")
+  [ "${#packages[@]}" -gt 0 ] || return 0
+  info "removing leftover bun packages: ${packages[*]}"
+  bun remove -g "${packages[@]}" \
+    || warn "keeping leftover bun packages; bun remove failed"
 }
 
 cleanup_legacy_files() {
@@ -1211,10 +1239,16 @@ cleanup_legacy_files() {
       remove_legacy_file "${LEGACY_GOBIN}/${cmd}" "$replacement"
       remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
       ;;
-    actionlint|bat|codex|delta|eza|fastfetch|gh|git-lfs|hyperfine|jq|just|micro|oh-my-posh|rclone|rg|rtk|shellcheck|shfmt|tldr|tmux|typos|watchexec|yq|zoxide|trunk|wrk|websocat|rich|tsc)
+    actionlint|bat|codex|ctx7|delta|eza|fastfetch|gh|git-lfs|hunk|hyperfine|jq|just|micro|oh-my-posh|oxfmt|oxlint|pnpm|rclone|rg|rtk|scriptc|shellcheck|shfmt|tldr|tmux|typos|vite|watchexec|yq|zoxide|trunk|wrk|websocat|rich|tsc)
       remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
       case "$cmd" in
-        tldr|trunk|tsc) remove_legacy_bun_package "$cmd" "$replacement" ;;
+        ctx7|oxfmt|oxlint|pnpm|scriptc|tldr|trunk|tsc|vite)
+          remove_legacy_file "${HOME}/.bun/bin/${cmd}" "$replacement"
+          ;;
+        hunk)
+          remove_legacy_file "${HOME}/.bun/bin/hunk" "$replacement"
+          remove_legacy_file "${HOME}/.bun/bin/hunkdiff" "$replacement"
+          ;;
       esac
       ;;
     uv)
@@ -1226,7 +1260,7 @@ cleanup_legacy_files() {
 
 cleanup_legacy_tool_sources() {
   local tool cmd pkg
-  local packages=()
+  local packages=() bun_packages=()
   info "reconciling tool ownership"
   while IFS= read -r pkg; do
     [ -z "$pkg" ] || packages+=("$pkg")
@@ -1236,8 +1270,13 @@ cleanup_legacy_tool_sources() {
     while IFS= read -r pkg; do
       [ -z "$pkg" ] || packages+=("$pkg")
     done < <(legacy_packages "$cmd")
+    pkg="$(legacy_bun_leftover_package "$cmd" "$(mise_cmd which "$cmd" 2>/dev/null || true)")"
+    if [ -n "$pkg" ] && ! in_list "$pkg" "${bun_packages[@]}"; then
+      bun_packages+=("$pkg")
+    fi
   done < <(mise_tool_records)
   remove_legacy_packages "${packages[@]}"
+  remove_legacy_bun_packages "${bun_packages[@]}"
   while IFS='|' read -r tool cmd; do
     cleanup_legacy_files "$cmd"
     validate_mise_tool "$tool" "$cmd"
@@ -1304,17 +1343,10 @@ install_herdr() {
   remove_legacy_packages "${packages[@]}"
 }
 
-install_hunkdiff() {
-  if [ ! -x "${HOME}/.bun/bin/hunk" ] || [ "$UPGRADE" -eq 1 ]; then
-    info "installing/updating hunkdiff"
-    bun install -g hunkdiff@latest
-  fi
-}
-
 run_additional_installs() (
   local log_root index log status failed=0
-  local labels=("Claude Code" "Codex" "Grok CLI" "herdr" "hunkdiff")
-  local commands=(install_claude install_codex install_grok install_herdr install_hunkdiff)
+  local labels=("Claude Code" "Codex" "Grok CLI" "herdr")
+  local commands=(install_claude install_codex install_grok install_herdr)
   local pids=() logs=()
 
   log_root="$(mktemp -d "${TMPDIR:-/tmp}/setup-vendor.XXXXXX")"
@@ -1407,7 +1439,7 @@ verify_setup() {
     fi
   done < <(mise_tool_records)
   info "additional commands"
-  if ! check_cmds claude grok herdr hunk; then required_failed=1; fi
+  if ! check_cmds claude grok herdr; then required_failed=1; fi
   if [ "$required_failed" -ne 0 ]; then
     die "required tools are missing; re-run setup.sh"
   fi
