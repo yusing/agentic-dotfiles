@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "0fd454956887d4498c06746564a8a3ab3f8f3541",
+  "sourceCommit": "b7217f568fa82095ea7505ce05541753966b1d83",
   "outputs": [
     {
       "path": ".bashrc",
@@ -543,7 +543,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "fb9300458388d745d5c9daf6ee84e0a4ebac1541830cf25ef2ce1e38a299b884",
+      "sha256": "da760f86b4ff9a0314d7419e6c352d23e26e0932b41a03ba6c05aea8b6deb485",
       "executable": false
     },
     {
@@ -992,7 +992,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "950e6abc99a92c486e7a7b15c44d7aa5a8f666c98df89610e8aef5ce06ed0100",
+      "sha256": "4bcee4fd4624def63140732d4626724ebfbcafd7d98903d576bb11ba6094778d",
       "executable": false
     },
     {

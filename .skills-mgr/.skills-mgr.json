@@ -115,6 +115,9 @@
         "locator": "https://github.com/affaan-m/ECC/tree/main/docs/es/skills/rust-patterns"
       }
     },
+    "scriptc-compiler": {
+      "enabled": true
+    },
     "session-usage": {
       "enabled": true
     },

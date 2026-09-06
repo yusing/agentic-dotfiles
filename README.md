@@ -156,6 +156,7 @@ skill is enabled; each skill's instructions determine when it applies.
 | `orchestrated-workflow` | Coordinate a change through native agents | No | Always |
 | `postgres-17-18-features` | Apply PostgreSQL 17 and 18 features | Yes | PostgreSQL project |
 | `read-codex-session` | Inspect local Codex session transcripts | No | Always |
+| `scriptc-compiler` | Read scriptc documentation | Yes | Always |
 | `session-usage` | Report current Codex token usage | No | Always |
 | `shadowtree` | Run and author Shadowtree recipes | Yes | Always |
 | `user-experience` | Improve user-facing workflow behavior | Yes | Always |
