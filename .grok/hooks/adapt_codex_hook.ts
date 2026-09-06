@@ -1,9 +1,22 @@
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
+import { responseFor as generatedCodeResponse } from "../../.codex/hooks/generated_code_guard.ts";
+import { responseFor as goGuidelinesResponse } from "../../.codex/hooks/go_guidelines.ts";
+import { responseFor as latestDependencyResponse } from "../../.codex/hooks/latest_dependency_instruction.ts";
+import { responseFor as remoteVcsResponse } from "../../.codex/hooks/remote_vcs_guard.ts";
+import { responseFor as subagentExecResponse } from "../../.codex/hooks/subagent_exec_guard.ts";
 import { asString, handleVersion, isRecord, readEvent, runCommand } from "../../.codex/hooks/lib/hook_runtime.ts";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.1.0";
+
+type PolicyFn = (event: unknown) => Record<string, unknown> | undefined;
+
+const BASH_PRE_TOOL_USE = [
+  "subagent_exec_guard",
+  "latest_dependency_instruction",
+  "remote_vcs_guard",
+];
 
 const CODEX_HOOKS = path.join(os.homedir(), ".codex", "hooks");
 
@@ -177,7 +190,8 @@ export function translateOutput(stdout: string, eventName?: string): string {
       eventName === "PreToolUse" ||
       eventName === "PostToolUse" ||
       eventName === "PreCompact" ||
-      eventName === "PostCompact"
+      eventName === "PostCompact" ||
+      eventName === "SubagentStart"
     ) {
       return JSON.stringify({
         hookSpecificOutput: {
@@ -278,6 +292,66 @@ function resolveCommand(argv: string[]): string[] {
   return command;
 }
 
+function policyFor(id: string): PolicyFn | undefined {
+  if (id === "generated_code_guard") {
+    return generatedCodeResponse;
+  }
+  if (id === "go_guidelines") {
+    return goGuidelinesResponse;
+  }
+  if (id === "latest_dependency_instruction") {
+    return latestDependencyResponse;
+  }
+  if (id === "remote_vcs_guard") {
+    return remoteVcsResponse;
+  }
+  if (id === "subagent_exec_guard") {
+    return subagentExecResponse;
+  }
+  return undefined;
+}
+
+function inProcessIds(argv: string[]): string[] | undefined {
+  const first = path.basename(argv[0] ?? "");
+  if (first.length === 0) {
+    return undefined;
+  }
+  if (first === "bash_pre_tool_use") {
+    return BASH_PRE_TOOL_USE;
+  }
+  if (policyFor(first) !== undefined) {
+    return [first];
+  }
+  return undefined;
+}
+
+function runInProcess(
+  ids: string[],
+  event: Record<string, unknown>,
+): Record<string, unknown> | undefined {
+  for (const id of ids) {
+    const policy = policyFor(id);
+    if (policy === undefined) {
+      continue;
+    }
+    const response = policy(event);
+    if (response !== undefined) {
+      return response;
+    }
+  }
+  return undefined;
+}
+
+function writeAdapted(stdout: string, eventName?: string): void {
+  const adapted = translateOutput(stdout, eventName);
+  if (adapted.length > 0) {
+    process.stdout.write(adapted);
+    if (!adapted.endsWith("\n")) {
+      process.stdout.write("\n");
+    }
+  }
+}
+
 function main(): number {
   if (handleVersion(VERSION)) {
     return 0;
@@ -293,7 +367,6 @@ function main(): number {
   const eventName = normalizeEventName(
     normalized.hook_event_name || event.hookEventName,
   );
-  const command = resolveCommand(args);
   if (process.env.CODEX_FILE_READ_STATE_DIR === undefined) {
     process.env.CODEX_FILE_READ_STATE_DIR = path.join(
       os.homedir(),
@@ -302,6 +375,15 @@ function main(): number {
       "file-reads",
     );
   }
+  const ids = inProcessIds(args);
+  if (ids !== undefined) {
+    const response = runInProcess(ids, normalized);
+    if (response !== undefined) {
+      writeAdapted(JSON.stringify(response), eventName);
+    }
+    return 0;
+  }
+  const command = resolveCommand(args);
   const cwd = asString(normalized.cwd);
   const result = runCommand(command, {
     stdin: JSON.stringify(normalized),
@@ -314,21 +396,15 @@ function main(): number {
   if (result.stderr.length > 0) {
     process.stderr.write(result.stderr);
   }
-  const adapted = translateOutput(result.stdout, eventName);
-  if (adapted.length > 0) {
-    process.stdout.write(adapted);
-    if (!adapted.endsWith("\n")) {
-      process.stdout.write("\n");
-    }
-  }
+  writeAdapted(result.stdout, eventName);
   const status = result.status ?? 1;
   if (status === 2) {
     return 2;
   }
-  if (status !== 0 && status !== 2 && adapted.length === 0) {
+  if (status !== 0 && status !== 2 && result.stdout.trim().length === 0) {
     return 0;
   }
-  return status === 0 || adapted.length > 0 ? 0 : status;
+  return status === 0 || result.stdout.trim().length > 0 ? 0 : status;
 }
 
 process.exit(main());

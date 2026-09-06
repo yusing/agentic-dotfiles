@@ -3,10 +3,10 @@ import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import { additionalContext } from "./lib/hook_response.ts";
-import { asString, handleVersion, isRecord, readEvent, runCommand, writeJson } from "./lib/hook_runtime.ts";
+import { asString, handleVersion, isRecord, readEvent, runCommand, runMain, writeJson } from "./lib/hook_runtime.ts";
 import { shellTokens } from "./lib/shell_command.ts";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.0.1";
 
 function isRecordOrEmpty(value: unknown): value is Record<string, unknown> {
   return isRecord(value);
@@ -123,17 +123,13 @@ export function guidance(directory: string): string {
   return `Modern Go Guidelines ${provider}: ${manifest} (Go ${version})\n${body}\nEND_GO_GUIDELINES sha256=${digest}`;
 }
 
-function main(): number {
-  if (handleVersion(VERSION)) {
-    return 0;
-  }
-  const event = readEvent();
+export function responseFor(event: unknown): Record<string, unknown> | undefined {
   if (!isRecord(event)) {
-    return 0;
+    return undefined;
   }
   const directory = skillDirectory(event);
   if (directory === undefined) {
-    return 0;
+    return undefined;
   }
   let body: string;
   try {
@@ -142,8 +138,18 @@ function main(): number {
     const message = error instanceof Error ? error.message : String(error);
     body = `Go guidelines unavailable: ${message}. Report this blocker before Go work.`;
   }
-  writeJson(additionalContext(body, "PostToolUse"));
+  return additionalContext(body, "PostToolUse");
+}
+
+function main(): number {
+  if (handleVersion(VERSION)) {
+    return 0;
+  }
+  const response = responseFor(readEvent());
+  if (response !== undefined) {
+    writeJson(response);
+  }
   return 0;
 }
 
-process.exit(main());
+runMain("go_guidelines", main);

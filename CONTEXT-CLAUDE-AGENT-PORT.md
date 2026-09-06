@@ -67,6 +67,8 @@ missing generated output fails the test.
 ## Session start
 
 `.claude/settings.json` registers two `SessionStart` hooks of its own.
+Grok does not load them: `[compat.claude] hooks = false` in
+`.grok/config.toml`, and Grok's copies live in `.grok/hooks/codex-port.json`.
 
 `.codex/hooks/bin/check_project` runs with `--without-git`, and with no adapter, because its
 plain-text report needs none. Claude's own session context already states the working

@@ -1,6 +1,6 @@
 import * as path from "path";
 import { deny } from "./lib/hook_response.ts";
-import { handleVersion, isRecord, readEvent, writeJson } from "./lib/hook_runtime.ts";
+import { handleVersion, isRecord, readEvent, runMain, writeJson } from "./lib/hook_runtime.ts";
 import {
   SHELLS,
   afterOptions,
@@ -10,7 +10,7 @@ import {
   stripLeadingShellPrefix,
 } from "./lib/shell_command.ts";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.0.1";
 
 const CONTAINER_EXECUTABLES = new Set([
   "docker",
@@ -127,4 +127,4 @@ function main(): number {
   return 0;
 }
 
-process.exit(main());
+runMain("subagent_exec_guard", main);

@@ -41,6 +41,11 @@ machine. `setup.sh` runs it. Source lives beside the changelog; the runnable
 form is the compiled binary under `.codex/hooks/bin/` or `.grok/hooks/bin/`
 for hooks, and the helper's path under `.local/bin/` for helpers.
 
+`.grok/hooks/bin/adapt_codex_hook` is a user-owned hook command: it adapts
+the Grok envelope and runs TypeScript Codex policy in-process so startup
+stays inside the 10ms budget. Spawn remains for commands that have no
+imported policy.
+
 Host extensions the client loads as TypeScript (the OMP Codex-hook adapter)
 are the client's extension format, not a helper or hook command. The hook
 commands they execute still follow this file.

@@ -29,6 +29,13 @@ export function handleVersion(version: string): boolean {
   return false;
 }
 
+export function runMain(entryName: string, main: () => number): void {
+  const invoked = [process.argv[0], process.argv[1]].map((value) => path.basename(value ?? ""));
+  if (invoked.includes(entryName) || invoked.includes(`${entryName}.ts`)) {
+    process.exit(main());
+  }
+}
+
 export function programArgs(): string[] {
   return process.argv.length >= 2 ? process.argv.slice(2) : [];
 }

@@ -7,7 +7,8 @@
   stripping, and option skipping; `.codex/hooks/lib/hook_response.ts` owns denial and
   additional-context envelopes; `.codex/hooks/lib/locked_state.ts` owns private-directory
   creation and exclusive locks; and `.codex/hooks/lib/hook_runtime.ts` owns stdin JSON,
-  `--version`, and process spawning. User-owned hook commands are the `scriptc` binaries under
+  `--version`, process spawning, and `runMain` so a hook binary can import another
+  hook's policy without executing it. User-owned hook commands are the `scriptc` binaries under
   `.codex/hooks/bin/`.
 - Session and subagent start: `.codex/hooks/bin/check_project` detects VCS, task runner, languages,
   and Go version, and its `--without-git` option omits the VCS report for a client that

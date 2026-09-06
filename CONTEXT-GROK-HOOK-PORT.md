@@ -1,12 +1,17 @@
 # Grok hook port
 
 `.grok/hooks/codex-port.json` explicitly registers the Codex hook set for Grok because
-Grok's `compat.codex.hooks` cell is reserved and inert. `.grok/hooks/bin/adapt_codex_hook`
-owns only envelope, event-name, field-name, client-identity, and decision adaptation, plus
-interpreter selection for a hook script that carries no executable bit; policy remains in
-the reused `.codex/hooks/` implementation. `.grok/hooks/codex-port.json` owns Grok tool
+Grok's `compat.codex.hooks` cell is reserved and inert. `.grok/config.toml` sets
+`[compat.claude] hooks = false` so Grok does not also load `~/.claude/settings.json`
+hooks. `.grok/hooks/bin/adapt_codex_hook` owns envelope, event-name, field-name,
+client-identity, and decision adaptation. TypeScript Codex policy runs in-process;
+spawn remains for `check_project` and `skills_mgr_inventory`; policy remains in the
+reused `.codex/hooks/` implementation. `.grok/hooks/codex-port.json` owns Grok tool
 matchers and event placement, extending the Claude matchers (`Bash`, `Edit`, `Write`) with
-`run_terminal_command`, `search_replace`, and `MultiEdit`. Grok uses camelCase event fields
+`run_terminal_command`, `search_replace`, and `MultiEdit`. The Bash PreToolUse group
+is one `bash_pre_tool_use` command that runs `subagent_exec_guard`,
+`latest_dependency_instruction`, and `remote_vcs_guard` in that order and returns
+the first deny. Grok uses camelCase event fields
 and `{"decision":"deny","reason":...}` denials. The adapter maps failed result events. Herdr
 session reporting remains
 client-managed and is not part of the port.
@@ -37,7 +42,7 @@ and of broad searches rooted at the home directory or an agent-client
 directory. A named skill file may be read directly. Listing and fetching
 unknown skills still belong to `skills-mgr`.
 `.codex/hooks/bin/skills_mgr_inventory` is the shared inventory owner registered by
-`.grok/hooks/codex-port.json` for SessionStart and PostCompact. It owns the
+`.grok/hooks/codex-port.json` for SessionStart, PostCompact, and SubagentStart. It owns the
 `--- skills-mgr injected ---` heading so that the injected list is not mistaken for
 Grok's visible skills. Its harness-aware `skills-mgr list` preserves the Grok inventory
 selected explicitly by `skills-mgr list --grok` without a Grok-only wrapper.

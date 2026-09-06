@@ -8,10 +8,11 @@ import {
   readEvent,
   replaceAll,
   replaceOnce,
+  runMain,
   writeJson,
 } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.1";
+export const VERSION = "1.0.2";
 
 const MARKER_GENERATED = "Code generated";
 const MARKER_DO_NOT_EDIT = "DO NOT EDIT";
@@ -380,4 +381,4 @@ function main(): number {
   return 0;
 }
 
-process.exit(main());
+runMain("generated_code_guard", main);
