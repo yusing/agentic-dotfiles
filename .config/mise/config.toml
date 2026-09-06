@@ -1,10 +1,19 @@
 [settings]
 lockfile = true
 minimum_release_age = "0s"
+npm.package_manager = "bun"
 
 [tools]
 go = "latest"
 bun = "latest"
+# Native TypeScript 7 GitHub assets; lib/tsc is the compiler and LSP.
+"github:microsoft/TypeScript" = { version = "latest", matching_regex = "^typescript-(linux|darwin|win32)-", strip_components = 1, bin_path = "lib" }
+"pipx:rich-cli" = { version = "latest", uvx = true }
+# GitHub ships websocat.<target-triple>; keep the command name websocat.
+"github:vi/websocat" = { version = "latest", bin = "websocat" }
+"npm:@trunkio/launcher" = "latest"
+# Build only the checksum-locked source archive published by wg/wrk.
+"http:wrk" = { version = "4.2.0", url = "https://github.com/wg/wrk/archive/refs/tags/{{ version }}.tar.gz", checksum = "sha256:e255f696bff6e329f5d19091da6b06164b8d59d62cb9e673625bdcd27fe7bdad", strip_components = 1, bin_path = "bin", postinstall = 'cd "$MISE_TOOL_INSTALL_PATH" && make VER=4.2.0 && mkdir -p bin && cp wrk bin/wrk' }
 "aqua:astral-sh/uv" = "latest"
 "github:atuinsh/atuin" = "latest"
 "aqua:crate-ci/typos" = "latest"

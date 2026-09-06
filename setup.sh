@@ -170,15 +170,8 @@ ensure_sudo() {
 mapped_pkgs() {
   local name="$1"
   case "$name" in
-    fish|git|curl|unzip|wget|make|imagemagick|rich-cli|rsync|websocat|wrk)
+    fish|git|curl|unzip|wget|make|imagemagick|rsync)
       printf '%s\n' "$name"
-      ;;
-    typescript-language-server)
-      if [ "$PM" = apt ]; then
-        printf '%s\n' node-typescript-language-server
-      else
-        printf '%s\n' typescript-language-server
-      fi
       ;;
     time)
       if [ "$PM" = brew ]; then
@@ -186,13 +179,6 @@ mapped_pkgs() {
       else
         printf '%s\n' time
       fi
-      ;;
-    trunk-check)
-      case "$PM" in
-        pacman) printf '%s\n' trunk-check ;;
-        brew) printf '%s\n' trunk-io ;;
-        apt) printf '\n' ;;
-      esac
       ;;
     python3)
       if [ "$PM" = apt ]; then
@@ -235,7 +221,7 @@ pkg_cmd() {
     ncurses) echo tput ;;
     build-essential) echo gcc ;;
     ca-certificates) echo "" ;;
-    typescript-language-server|time|rich-cli|trunk-check|websocat|wrk) echo "" ;;
+    time) echo "" ;;
     *) echo "$1" ;;
   esac
 }
@@ -698,6 +684,11 @@ mise_tool_records() {
   cat <<'EOF'
 go|go
 bun|bun
+github:microsoft/TypeScript|tsc
+pipx:rich-cli|rich
+github:vi/websocat|websocat
+npm:@trunkio/launcher|trunk
+http:wrk|wrk
 aqua:astral-sh/uv|uv
 github:atuinsh/atuin|atuin
 aqua:crate-ci/typos|typos
@@ -744,13 +735,18 @@ validate_mise_tool() {
 }
 
 install_locked_mise_tools() {
-  local tool cmd
+  local tool cmd path
   info "installing the locked Go toolchain"
   mise_cmd install --locked go
   validate_mise_tool go go
   info "reconciling the locked tool set in parallel"
   mise_cmd install --locked
   while IFS='|' read -r tool cmd; do
+    path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
+    if [ -z "$path" ] || [ ! -x "$path" ]; then
+      info "reinstalling $tool so $cmd is available"
+      mise_cmd install --force --locked "$tool"
+    fi
     validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
   mise_cmd reshim
@@ -804,8 +800,8 @@ for match in artifact_header.finditer(lock_text):
     }
     artifacts.setdefault((tool, platform), []).append(fields)
 for tool in locked:
-    # Source-built Go tools lock the module version rather than release artifacts.
-    if tool.startswith("go:"):
+    # Package-manager backends lock versions rather than release artifacts.
+    if tool.startswith(("go:", "npm:", "pipx:")):
         continue
     for platform in sorted(required):
         sections = artifacts.get((tool, platform), [])
@@ -876,6 +872,14 @@ upgrade_mise_tools() {
 legacy_packages() {
   local cmd="$1"
   case "${PM}:${cmd}" in
+    brew:tsc) printf '%s\n' typescript-language-server typescript ;;
+    pacman:tsc) printf '%s\n' typescript-language-server typescript ;;
+    apt:tsc) echo node-typescript-language-server ;;
+    brew:rich|apt:rich|pacman:rich) echo rich-cli ;;
+    brew:trunk) echo trunk-io ;;
+    pacman:trunk) echo trunk-check ;;
+    brew:wrk|apt:wrk|pacman:wrk) echo wrk ;;
+    brew:websocat|apt:websocat|pacman:websocat) echo websocat ;;
     brew:actionlint) echo actionlint ;;
     brew:atuin) echo atuin ;;
     brew:bat) echo bat ;;
@@ -1076,6 +1080,47 @@ remove_legacy_file() {
   rm -f "$path"
 }
 
+legacy_bun_package() {
+  case "$1" in
+    tldr) printf '%s\n' tldr ;;
+    trunk) printf '%s\n' @trunkio/launcher ;;
+    tsc) printf '%s\n' typescript ;;
+  esac
+}
+
+bun_global_has_package() {
+  local pkg="$1" manifest="${HOME}/.bun/install/global/package.json"
+  [ -f "$manifest" ] || return 1
+  BUN_GLOBAL_MANIFEST="$manifest" BUN_GLOBAL_PACKAGE="$pkg" py - <<'PY'
+import json, os, sys
+from pathlib import Path
+
+data = json.loads(Path(os.environ["BUN_GLOBAL_MANIFEST"]).read_text())
+pkg = os.environ["BUN_GLOBAL_PACKAGE"]
+sys.exit(0 if pkg in (data.get("dependencies") or {}) else 1)
+PY
+}
+
+remove_legacy_bun_package() {
+  local cmd="$1" replacement="$2" pkg bin path_real replacement_real
+  pkg="$(legacy_bun_package "$cmd")"
+  [ -n "$pkg" ] || return 0
+  bin="${HOME}/.bun/bin/${cmd}"
+  if [ -n "$replacement" ] && { [ -e "$bin" ] || [ -L "$bin" ]; }; then
+    path_real="$(realpath "$bin" 2>/dev/null || true)"
+    replacement_real="$(realpath "$replacement" 2>/dev/null || true)"
+    if [ -n "$path_real" ] && [ "$path_real" = "$replacement_real" ]; then
+      return 0
+    fi
+  fi
+  if bun_global_has_package "$pkg"; then
+    info "removing leftover bun package $pkg"
+    bun remove -g "$pkg" \
+      || warn "keeping leftover bun package $pkg; bun remove failed"
+  fi
+  remove_legacy_file "$bin" "$replacement"
+}
+
 cleanup_legacy_files() {
   local cmd="$1" replacement
   replacement="$(mise_cmd which "$cmd" 2>/dev/null || true)"
@@ -1110,9 +1155,11 @@ cleanup_legacy_files() {
       remove_legacy_file "${LEGACY_GOBIN}/${cmd}" "$replacement"
       remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
       ;;
-    actionlint|bat|codex|delta|eza|fastfetch|gh|git-lfs|hyperfine|jq|just|micro|oh-my-posh|rclone|rg|rtk|shellcheck|shfmt|tldr|tmux|typos|watchexec|yq|zoxide)
+    actionlint|bat|codex|delta|eza|fastfetch|gh|git-lfs|hyperfine|jq|just|micro|oh-my-posh|rclone|rg|rtk|shellcheck|shfmt|tldr|tmux|typos|watchexec|yq|zoxide|trunk|wrk|websocat|rich|tsc)
       remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
-      [ "$cmd" != tldr ] || remove_legacy_file "${HOME}/.bun/bin/tldr" "$replacement"
+      case "$cmd" in
+        tldr|trunk|tsc) remove_legacy_bun_package "$cmd" "$replacement" ;;
+      esac
       ;;
     uv)
       remove_legacy_file "${LOCAL_BIN}/uv" "$replacement"
@@ -1364,12 +1411,12 @@ main() {
 
   STEP="install packages"
   install_packages \
-    git curl unzip python3 ca-certificates fish make gpg ncurses rsync \
+    git curl unzip python3 ca-certificates fish make gpg ncurses rsync build-essential \
     --optional \
-    wget build-essential imagemagick typescript-language-server time rich-cli \
-    trunk-check websocat wrk
+    wget imagemagick time
   have git || die "git is required"
   have curl || die "curl is required"
+  have cc || die "a C compiler is required to build wrk; install the OS developer tools"
 
   STEP="setup home git repository"
   setup_home_repo
