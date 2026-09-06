@@ -16,6 +16,8 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
+export const VERSION = "1.1.0";
+
 type TreeEntry = {
 	mode: string;
 	oid: string;
@@ -46,7 +48,7 @@ type Options = {
 	source: string;
 };
 
-const COMMAND_PATH = ".local/bin/project-public-config";
+const COMMAND_PATH = ".local/lib/project-public-config/project-public-config.ts";
 const OUTPUT_MANIFEST_PATH = ".public-config-projection.json";
 const TEXT_EXTENSIONS = new Set([
 	".conf",
@@ -87,6 +89,7 @@ const EXACT_PATHS = new Set([
 	"CONTEXT-CLAUDE-AGENT-PORT.md",
 	"CONTEXT-CODEX-LIFECYCLE.md",
 	"CONTEXT-GROK-HOOK-PORT.md",
+	"CONTEXT-HELPER-HOOKS.md",
 	"CONTEXT-HOOK-ARCHITECTURE.md",
 	"CONTEXT-HOOK-OWNERS.md",
 	"CONTEXT-INSTRUCTION-SURFACES.md",
@@ -102,7 +105,6 @@ const EXACT_PATHS = new Set([
 	".zsh/fish-mirror.zsh",
 	".zshrc",
 	".claude/CLAUDE.md",
-	".claude/hooks/skills_mgr_inventory.py",
 	".claude/settings.json",
 	".codex/AGENTS.md",
 	".codex/IMPLEMENTATION.md",
@@ -110,16 +112,18 @@ const EXACT_PATHS = new Set([
 	".codex/SMALL-TASK.md",
 	".codex/config.toml",
 	".codex/hooks.json",
-	".codex/hooks/check_project",
-	".codex/hooks/generated_code_guard.py",
-	".codex/hooks/go_guidelines.py",
-	".codex/hooks/hook_response.py",
-	".codex/hooks/latest_dependency_instruction.py",
-	".codex/hooks/locked_state.py",
-	".codex/hooks/remote_vcs_guard.py",
-	".codex/hooks/session_scope.py",
-	".codex/hooks/shell_command.py",
-	".codex/hooks/subagent_exec_guard.py",
+	".codex/hooks/check_project.ts",
+	".codex/hooks/generated_code_guard.ts",
+	".codex/hooks/go_guidelines.ts",
+	".codex/hooks/latest_dependency_instruction.ts",
+	".codex/hooks/remote_vcs_guard.ts",
+	".codex/hooks/skills_mgr_inventory.ts",
+	".codex/hooks/subagent_exec_guard.ts",
+	".codex/hooks/lib/hook_response.ts",
+	".codex/hooks/lib/hook_runtime.ts",
+	".codex/hooks/lib/locked_state.ts",
+	".codex/hooks/lib/session_scope.ts",
+	".codex/hooks/lib/shell_command.ts",
 	".codex/overridden_base_instructions.md",
 	".config/atuin/config.toml",
 	".config/ccstatusline/settings.json",
@@ -145,12 +149,12 @@ const EXACT_PATHS = new Set([
 	".config/zed/snippets/go.json",
 	".grok/AGENTS.md",
 	".grok/config.toml",
-	".grok/hooks/adapt_codex_hook.py",
+	".grok/hooks/adapt_codex_hook.ts",
 	".grok/hooks/codex-port.json",
 	".grok/hooks/skills-path-guard.json",
-	".grok/hooks/skills_mgr_inventory.py",
-	".grok/hooks/skills_path_guard.py",
+	".grok/hooks/skills_path_guard.ts",
 	".local/bin/check_project",
+	".local/bin/compile-agent-tools",
 	".local/bin/grok-explore",
 	".local/bin/sync-claude-agent-ports",
 	COMMAND_PATH,
@@ -241,6 +245,8 @@ so do not treat edits made only in this repository as authoritative.
   event coverage.
 - Hook owners: load \`CONTEXT-HOOK-OWNERS.md\` when locating an included hook or shared hook
   infrastructure.
+- Helper and hook implementations: load \`CONTEXT-HELPER-HOOKS.md\` when adding, changing,
+  compiling, versioning, or reviewing a user-owned helper or hook.
 - Codex lifecycle: load \`CONTEXT-CODEX-LIFECYCLE.md\` when work crosses Codex lifecycle events.
 - Grok port: load \`CONTEXT-GROK-HOOK-PORT.md\` for the Grok Codex-hook adapter.
 - Claude port: load \`CONTEXT-CLAUDE-AGENT-PORT.md\` for Claude roles also consumed by Grok.
@@ -625,8 +631,8 @@ function projectMarkdown(path: string, text: string): string {
 	if (path === "CONTEXT-CODEX-LIFECYCLE.md") {
 		projected = projected
 			.replace(
-				/`\.codex\/hooks\/check_project`, the automatic skill-inventory\s+reporter, and the single Herdr\s+session reporter/,
-				"`.codex/hooks/check_project` and the automatic\n   skill-inventory reporter",
+				/`\.codex\/hooks\/bin\/check_project`, the automatic skill-inventory\s+reporter, and the single Herdr\s+session reporter/,
+				"`.codex/hooks/bin/check_project` and the automatic\n   skill-inventory reporter",
 			)
 			.replace(
 				/project context, current skill metadata, and\s+session reporting\s+without selecting/,
@@ -950,6 +956,10 @@ async function synchronize(destination: string, staged: string, projection: Map<
 }
 
 async function main(): Promise<void> {
+	if (process.argv.includes("--version")) {
+		process.stdout.write(`${VERSION}\n`);
+		return;
+	}
 	const options = parseArgs(process.argv.slice(2));
 	if (options.source === options.destination) throw new Error("source and destination must be different directories");
 	if ([resolve("/"), resolve(homedir())].includes(options.destination)) {

@@ -30,7 +30,7 @@ so no role can spawn another agent, and it omits `Edit` and `NotebookEdit` for t
 council roles, so they cannot change repository files. `Write` stays on every role because a
 relayed result artifact is the one permitted write, and the role body owns that limit.
 
-`.codex/hooks/subagent_exec_guard.py` is registered directly as a frontmatter `PreToolUse` hook
+`.codex/hooks/bin/subagent_exec_guard` is registered directly as a frontmatter `PreToolUse` hook
 on each role that has `Bash`, with no adapter. The guard already emits Claude's
 `hookSpecificOutput` denial envelope and already keys on `agent_type`, which Claude sets inside
 a subagent. Unlike the Grok port, the guard does not fail open here: a frontmatter hook runs
@@ -68,7 +68,7 @@ missing generated output fails the test.
 
 `.claude/settings.json` registers two `SessionStart` hooks of its own.
 
-`.codex/hooks/check_project` runs with `--without-git`, and with no adapter, because its
+`.codex/hooks/bin/check_project` runs with `--without-git`, and with no adapter, because its
 plain-text report needs none. Claude's own session context already states the working
 directory, whether it is a Git repository, the branch, the working-tree status, and recent
 commits, so the flag drops the hook's `vcs:` field and its version-control instruction for a
@@ -76,7 +76,7 @@ plain Git repository or an unversioned directory. Subversion and mixed `git+svn`
 still reported, because no client reports those. The task runner, language mix, and Go version
 have no harness equivalent, which is what makes the registration worth having.
 
-`.codex/hooks/skills_mgr_inventory.py` is the shared inventory hook. It owns the
+`.codex/hooks/bin/skills_mgr_inventory` is the shared inventory hook. It owns the
 `--- skills-mgr injected ---` heading so the injected list is not mistaken for Claude's own
 visible skills. `skills-mgr list` scopes itself from the session environment, so the Claude
 registration needs no harness flag or adapter. Claude has no separate post-compaction event:

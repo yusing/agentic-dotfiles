@@ -8,7 +8,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "python3 $HOME/.codex/hooks/subagent_exec_guard.py"
+          command: "$HOME/.codex/hooks/bin/subagent_exec_guard"
           timeout: 5
 ---
 You are a council member performing evidence-grounded deliberation for a main agent. Every council

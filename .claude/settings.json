@@ -301,12 +301,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "'$HOME/.codex/hooks/check_project' --without-git",
+            "command": "$HOME/.codex/hooks/bin/check_project --without-git",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "python3 '$HOME/.codex/hooks/skills_mgr_inventory.py'",
+            "command": "$HOME/.codex/hooks/bin/skills_mgr_inventory",
             "timeout": 5
           }
         ]
@@ -318,7 +318,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 '$HOME/.codex/hooks/skills_mgr_inventory.py'",
+            "command": "$HOME/.codex/hooks/bin/skills_mgr_inventory",
             "timeout": 5
           }
         ]
@@ -330,7 +330,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 '$HOME/.codex/hooks/skills_mgr_inventory.py'",
+            "command": "$HOME/.codex/hooks/bin/skills_mgr_inventory",
             "timeout": 5
           }
         ]
@@ -341,7 +341,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 $HOME/.codex/hooks/go_guidelines.py",
+            "command": "$HOME/.codex/hooks/bin/go_guidelines",
             "timeout": 10
           }
         ]

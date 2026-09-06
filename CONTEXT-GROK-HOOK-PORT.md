@@ -1,7 +1,7 @@
 # Grok hook port
 
 `.grok/hooks/codex-port.json` explicitly registers the Codex hook set for Grok because
-Grok's `compat.codex.hooks` cell is reserved and inert. `.grok/hooks/adapt_codex_hook.py`
+Grok's `compat.codex.hooks` cell is reserved and inert. `.grok/hooks/bin/adapt_codex_hook`
 owns only envelope, event-name, field-name, client-identity, and decision adaptation, plus
 interpreter selection for a hook script that carries no executable bit; policy remains in
 the reused `.codex/hooks/` implementation. `.grok/hooks/codex-port.json` owns Grok tool
@@ -23,7 +23,7 @@ from the shared `.codex/AGENTS.md` surface. The fuller destructive-action guidan
 accepted. Closing it would mean registering a deletion guard, which is a new hook, not a
 port change.
 
-`.codex/hooks/subagent_exec_guard.py` is registered and ported, but it acts only on the
+`.codex/hooks/bin/subagent_exec_guard` is registered and ported, but it acts only on the
 running agent's own `agent_type`, which Codex populates from the spawned thread's role.
 Grok's `subagentType` names the agent a spawn tool call is about to create, not the caller,
 so the adapter must not alias it: doing so would deny a root turn that merely spawns an
@@ -31,12 +31,12 @@ implementer. Under the port the guard therefore fails open. This gap is accepted
 closing it needs a caller-identity field from the client, not an adapter change.
 
 Native Grok-only hooks (not Codex ports) also live under `.grok/hooks/`.
-`.grok/hooks/skills_path_guard.py` (registered by `.grok/hooks/skills-path-guard.json`)
+`.grok/hooks/bin/skills_path_guard` (registered by `.grok/hooks/skills-path-guard.json`)
 owns PreToolUse denial of search and listing against `/home/$USER/*/skills`,
 and of broad searches rooted at the home directory or an agent-client
 directory. A named skill file may be read directly. Listing and fetching
 unknown skills still belong to `skills-mgr`.
-`.codex/hooks/skills_mgr_inventory.py` is the shared inventory owner registered by
+`.codex/hooks/bin/skills_mgr_inventory` is the shared inventory owner registered by
 `.grok/hooks/codex-port.json` for SessionStart and PostCompact. It owns the
 `--- skills-mgr injected ---` heading so that the injected list is not mistaken for
 Grok's visible skills. Its harness-aware `skills-mgr list` preserves the Grok inventory

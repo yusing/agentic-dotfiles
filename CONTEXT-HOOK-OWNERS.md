@@ -1,33 +1,34 @@
 # Codex hook owners
 
-- Shared infrastructure: `.codex/hooks/session_scope.py` owns session-id validation,
+- Shared infrastructure: `.codex/hooks/lib/session_scope.ts` owns session-id validation,
   digests, session-scoped state paths, spawned-agent scope digests, age-based pruning, and
-  live command-session detection; `.codex/hooks/shell_command.py` owns shared shell
+  live command-session detection; `.codex/hooks/lib/shell_command.ts` owns shared shell
   tokenization, segmenting, `-c` payload extraction, command-substitution extraction, prefix
-  stripping, and option skipping; `.codex/hooks/hook_response.py` owns denial and
-  additional-context envelopes; and `.codex/hooks/locked_state.py` owns private-directory
-  creation and exclusive locks.
-- Session and subagent start: `.codex/hooks/check_project` detects VCS, task runner, languages,
+  stripping, and option skipping; `.codex/hooks/lib/hook_response.ts` owns denial and
+  additional-context envelopes; and `.codex/hooks/lib/locked_state.ts` owns private-directory
+  creation and exclusive locks. User-owned hook commands are the `scriptc` binaries under
+  `.codex/hooks/bin/`.
+- Session and subagent start: `.codex/hooks/bin/check_project` detects VCS, task runner, languages,
   and Go version, and its `--without-git` option omits the VCS report for a client that
   already reports plain Git state itself; `.codex/hooks.json` injects root-session project
   context and skill inventory at startup and after context compaction or
   clearing while excluding session resume, and injects the current skill inventory into fresh
   subagent context.
-- Go skill delivery: `.codex/hooks/go_guidelines.py` appends the installed CLI's complete,
+- Go skill delivery: `.codex/hooks/bin/go_guidelines` appends the installed CLI's complete,
   module-version-specific list after a direct `skills-mgr get golang-best-practices` call.
   PostToolUse registers it for Codex, Claude, Grok, and the OMP bridge. The read's working
   directory selects the module; a literal `cd <module> &&` prefix is also supported.
   Startup and unrelated tools do not load guidelines. The `END_GO_GUIDELINES` marker
   allows model-visible tail verification; missing tooling is reported without installation.
-- Tool guards: `.codex/hooks/generated_code_guard.py` blocks direct generated-Go edits;
-  `.codex/hooks/latest_dependency_instruction.py` blocks explicitly versioned dependency
-  additions; `.codex/hooks/remote_vcs_guard.py` requires approval for `git clone`; and
-  `.codex/hooks/subagent_exec_guard.py` owns the container and orchestration command boundary
+- Tool guards: `.codex/hooks/bin/generated_code_guard` blocks direct generated-Go edits;
+  `.codex/hooks/bin/latest_dependency_instruction` blocks explicitly versioned dependency
+  additions; `.codex/hooks/bin/remote_vcs_guard` requires approval for `git clone`; and
+  `.codex/hooks/bin/subagent_exec_guard` owns the container and orchestration command boundary
   for spawned agents, keyed on the event's `agent_type`.
 - Subagent command boundary: Codex re-applies the parent turn's permission profile and
   approval policy after a role layer, so `sandbox_mode` and `approval_policy` in
   `.codex/agents/*.toml` have no runtime effect and must not be declared there.
-  `.codex/hooks/subagent_exec_guard.py` is the enforceable owner; the root agent stays
+  `.codex/hooks/bin/subagent_exec_guard` is the enforceable owner; the root agent stays
   unrestricted because it is the only agent that can escalate to the user. Every role prompt
   states the boundary because the guard denies every spawned role; implementer prompts own
   routing it as a manifest blocker, and read-only role prompts own recording it as a coverage

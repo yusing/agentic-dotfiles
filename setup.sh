@@ -1522,6 +1522,11 @@ main() {
     install_locked_mise_tools
   fi
 
+  STEP="compile user-owned helpers and hooks"
+  if [ -x "${LOCAL_BIN}/compile-agent-tools" ]; then
+    "${LOCAL_BIN}/compile-agent-tools"
+  fi
+
   STEP="reconcile tool ownership"
   cleanup_legacy_tool_sources
 

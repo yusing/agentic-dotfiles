@@ -10,7 +10,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "python3 $HOME/.codex/hooks/subagent_exec_guard.py"
+          command: "$HOME/.codex/hooks/bin/subagent_exec_guard"
           timeout: 5
 ---
 You are a subagent that produces evidence-backed repository context for another

@@ -13,7 +13,7 @@
    its paired complete model prompt before its first turn. Active hooks are assembled from
    `.codex/hooks.json`, any inline hook configuration, and manifests for enabled plugins.
 2. **Session start.** At startup and after context compaction or clearing,
-   `.codex/hooks.json` runs `.codex/hooks/check_project` and the automatic
+   `.codex/hooks.json` runs `.codex/hooks/bin/check_project` and the automatic
    skill-inventory reporter. Resuming an existing session does not run
    these root-session hooks. Matched events receive project context and current skill metadata
    without selecting implementation or validation work.

@@ -1,0 +1,62 @@
+#!/bin/sh
+# version: 1.0.0
+# Rebuild user-owned helper and hook binaries for this machine.
+
+set -eu
+
+HOME=${HOME:?HOME must be set}
+HOOKS=$HOME/.codex/hooks
+GROK_HOOKS=$HOME/.grok/hooks
+BIN=$HOOKS/bin
+GROK_BIN=$GROK_HOOKS/bin
+LOCAL_BIN=$HOME/.local/bin
+LOCAL_LIB=$HOME/.local/lib
+
+mkdir -p "$BIN" "$GROK_BIN"
+
+compile_hook() {
+	src=$1
+	out=$2
+	scriptc build "$src" -o "$out" --no-keep-c
+	chmod 755 "$out"
+}
+
+compile_helper() {
+	src=$1
+	out=$2
+	bun build --compile --outfile="$out" "$src"
+	chmod 755 "$out"
+}
+
+compile_hook "$HOOKS/generated_code_guard.ts" "$BIN/generated_code_guard"
+compile_hook "$HOOKS/subagent_exec_guard.ts" "$BIN/subagent_exec_guard"
+compile_hook "$HOOKS/latest_dependency_instruction.ts" "$BIN/latest_dependency_instruction"
+compile_hook "$HOOKS/remote_vcs_guard.ts" "$BIN/remote_vcs_guard"
+compile_hook "$HOOKS/go_guidelines.ts" "$BIN/go_guidelines"
+compile_hook "$HOOKS/skills_mgr_inventory.ts" "$BIN/skills_mgr_inventory"
+compile_hook "$HOOKS/check_project.ts" "$BIN/check_project"
+compile_hook "$GROK_HOOKS/adapt_codex_hook.ts" "$GROK_BIN/adapt_codex_hook"
+compile_hook "$GROK_HOOKS/skills_path_guard.ts" "$GROK_BIN/skills_path_guard"
+
+if [ -f "$LOCAL_LIB/grok-explore/grok-explore.ts" ]; then
+	compile_helper "$LOCAL_LIB/grok-explore/grok-explore.ts" "$LOCAL_BIN/grok-explore"
+fi
+if [ -f "$LOCAL_LIB/sync-claude-agent-ports/sync-claude-agent-ports.ts" ]; then
+	compile_helper "$LOCAL_LIB/sync-claude-agent-ports/sync-claude-agent-ports.ts" "$LOCAL_BIN/sync-claude-agent-ports"
+fi
+if [ -f "$LOCAL_LIB/claude-config-helper/claude-config-helper.ts" ]; then
+	compile_helper "$LOCAL_LIB/claude-config-helper/claude-config-helper.ts" "$LOCAL_BIN/claude-config-helper"
+fi
+if [ -f "$LOCAL_LIB/patch-bitwarden-cli-fast-exit/patch-bitwarden-cli-fast-exit.ts" ]; then
+	compile_helper "$LOCAL_LIB/patch-bitwarden-cli-fast-exit/patch-bitwarden-cli-fast-exit.ts" "$LOCAL_BIN/patch-bitwarden-cli-fast-exit"
+fi
+compile_helper "$LOCAL_LIB/project-public-config/project-public-config.ts" "$LOCAL_BIN/project-public-config"
+if [ -f "$LOCAL_LIB/svn-merge/svn-merge.ts" ]; then
+	compile_helper "$LOCAL_LIB/svn-merge/svn-merge.ts" "$LOCAL_BIN/svn-merge"
+fi
+if [ -f "$LOCAL_LIB/open-file-in-herdr/open-file-in-herdr.ts" ]; then
+	compile_helper "$LOCAL_LIB/open-file-in-herdr/open-file-in-herdr.ts" "$LOCAL_BIN/open-file-in-herdr"
+fi
+if [ -f "$LOCAL_LIB/deltapath-wifi-routes/deltapath-wifi-routes.ts" ]; then
+	compile_helper "$LOCAL_LIB/deltapath-wifi-routes/deltapath-wifi-routes.ts" "$LOCAL_BIN/deltapath-wifi-routes"
+fi

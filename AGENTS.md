@@ -16,6 +16,8 @@ so do not treat edits made only in this repository as authoritative.
   event coverage.
 - Hook owners: load `CONTEXT-HOOK-OWNERS.md` when locating an included hook or shared hook
   infrastructure.
+- Helper and hook implementations: load `CONTEXT-HELPER-HOOKS.md` when adding, changing,
+  compiling, versioning, or reviewing a user-owned helper or hook.
 - Codex lifecycle: load `CONTEXT-CODEX-LIFECYCLE.md` when work crosses Codex lifecycle events.
 - Grok port: load `CONTEXT-GROK-HOOK-PORT.md` for the Grok Codex-hook adapter.
 - Claude port: load `CONTEXT-CLAUDE-AGENT-PORT.md` for Claude roles also consumed by Grok.
