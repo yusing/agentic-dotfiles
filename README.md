@@ -153,7 +153,7 @@ skill is enabled; each skill's instructions determine when it applies.
 | `js-ts-best-practices` | Apply JavaScript and TypeScript practices | Yes | JavaScript or TypeScript project |
 | `juststore-rendering-optimizer` | Reduce React rerenders with juststore | Yes | JavaScript or TypeScript project with `juststore` |
 | `new-project` | Run the new-project workflow | Yes | Always |
-| `orchestrated-workflow` | Coordinate a change through Codex agents | No | Always |
+| `orchestrated-workflow` | Coordinate a change through native agents | No | Always |
 | `postgres-17-18-features` | Apply PostgreSQL 17 and 18 features | Yes | PostgreSQL project |
 | `read-codex-session` | Inspect local Codex session transcripts | No | Always |
 | `session-usage` | Report current Codex token usage | No | Always |

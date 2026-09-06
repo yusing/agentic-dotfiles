@@ -34,7 +34,7 @@
   unrestricted because it is the only agent that can escalate to the user. Every role prompt
   states the boundary because the guard denies every spawned role; implementer prompts own
   routing it as a manifest blocker, and read-only role prompts own recording it as a coverage
-  limitation. `.codex/skills/orchestrated-workflow/SKILL.md` owns external validation before
+  limitation. `.skills-mgr/skills/orchestrated-workflow/SKILL.md` owns external validation before
   review roles are spawned when the change carries that dependency.
 - User experience: `.skills-mgr/skills/user-experience/SKILL.md` owns proportional UX and
   operability guidance when a user-facing workflow or interface changes.

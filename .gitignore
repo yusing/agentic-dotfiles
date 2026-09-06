@@ -62,8 +62,6 @@ __pycache__
 !/.codex/skills/dump-last-response/scripts/
 !/.codex/skills/dump-last-response/scripts/dump_last_response.py
 !/.codex/skills/dump-last-response/SKILL.md
-!/.codex/skills/orchestrated-workflow/
-!/.codex/skills/orchestrated-workflow/SKILL.md
 !/.codex/skills/read-codex-session/
 !/.codex/skills/read-codex-session/SKILL.md
 !/.codex/skills/session-usage/
@@ -196,6 +194,8 @@ __pycache__
 !/.skills-mgr/skills/new-project/agents/
 !/.skills-mgr/skills/new-project/agents/openai.yaml
 !/.skills-mgr/skills/new-project/SKILL.md
+!/.skills-mgr/skills/orchestrated-workflow/
+!/.skills-mgr/skills/orchestrated-workflow/SKILL.md
 !/.skills-mgr/skills/postgres-17-18-features/
 !/.skills-mgr/skills/postgres-17-18-features/agents/
 !/.skills-mgr/skills/postgres-17-18-features/agents/openai.yaml

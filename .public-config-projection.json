@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d9fd6351ac41e003cee1b7a50d375c034ad839cf",
+  "sourceCommit": "0fd454956887d4498c06746564a8a3ab3f8f3541",
   "outputs": [
     {
       "path": ".bashrc",
@@ -302,12 +302,6 @@
       "executable": false
     },
     {
-      "path": ".codex/skills/orchestrated-workflow/SKILL.md",
-      "kind": "file",
-      "sha256": "c1d7c9ea9d8e0f2631d0df8ecae619a5f7c2e34963bbec8e2b7d4bf7ad430bbe",
-      "executable": false
-    },
-    {
       "path": ".codex/skills/read-codex-session/SKILL.md",
       "kind": "file",
       "sha256": "4d23fb1dfb647dd9ea11c1be12735a8e7cd6e6be15555316ac0e234d99001ba3",
@@ -472,7 +466,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "f74f173bfada4f950974b87dc4d7c51a705c05e58d14e40370644ff67be8bce9",
+      "sha256": "eefe55a2bea85021a574a10a2fb0c12be4aa784bc39825cee15e17882293feb5",
       "executable": false
     },
     {
@@ -543,7 +537,7 @@
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "699adfae22356545ed44d070ef02b52407e7e63e9cce5346cc71065ef0d2c92f",
+      "sha256": "f8390948360cf92d7912caae6f958e36e458026dc47495f376aabb4ecdb4c263",
       "executable": true
     },
     {
@@ -763,6 +757,12 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/orchestrated-workflow/SKILL.md",
+      "kind": "file",
+      "sha256": "c1d7c9ea9d8e0f2631d0df8ecae619a5f7c2e34963bbec8e2b7d4bf7ad430bbe",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/postgres-17-18-features/agents/openai.yaml",
       "kind": "file",
       "sha256": "257ebb6a5ce79401c6a2e18c876e81776b9ab92705549078b25deaf7e8c80862",
@@ -968,7 +968,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "2a7912f5de1cc7749c274d409234a06630dbf86117cc0e5fab7ebe88e633f0d5",
+      "sha256": "7aeb08ac58b42612b3e829a85528139d8f5e7594324dcac3a20aee5c13e406e4",
       "executable": false
     },
     {
@@ -992,7 +992,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "f1a75d37597969cf66a876063d488258de8d33c5afba813553f139fd9045aa1e",
+      "sha256": "950e6abc99a92c486e7a7b15c44d7aa5a8f666c98df89610e8aef5ce06ed0100",
       "executable": false
     },
     {

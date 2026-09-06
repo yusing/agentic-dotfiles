@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.1";
+export const VERSION = "1.1.2";
 
 type TreeEntry = {
 	mode: string;
@@ -177,6 +177,7 @@ const PROJECTED_SKILL_NAMES = [
 	"js-ts-best-practices",
 	"juststore-rendering-optimizer",
 	"new-project",
+	"orchestrated-workflow",
 	"postgres-17-18-features",
 	"shadcn",
 	"shadowtree",
@@ -191,7 +192,6 @@ const TREE_PREFIXES = [
 	".claude/agents",
 	".codex/agents",
 	".codex/skills/dump-last-response",
-	".codex/skills/orchestrated-workflow",
 	".codex/skills/read-codex-session",
 	".codex/skills/session-usage",
 	".config/micro/colorschemes",
