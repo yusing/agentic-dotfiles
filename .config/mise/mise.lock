@@ -1572,19 +1572,21 @@ backend = "github:llvm/llvm-project"
 specifiers = ["latest"]
 
 [tools."github:llvm/llvm-project".options]
-matching_regex = "^LLVM-.*-Linux-(X64|ARM64)\\.tar\\.xz$"
-os = ["linux"]
+matching_regex = '^LLVM-.*-Linux-(X64|ARM64)\.tar\.xz$'
 version_prefix = "llvmorg-"
 
 [tools."github:llvm/llvm-project"."platforms.linux-arm64"]
 checksum = "sha256:cfb31bfc713ef453248bf5bd026312f838ad6c52c25623e987cb6a340f3050d4"
 url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.0/LLVM-23.1.0-Linux-ARM64.tar.xz"
 url_api = "https://api.github.com/repos/llvm/llvm-project/releases/assets/529893413"
+provenance = "github-attestations"
 
 [tools."github:llvm/llvm-project"."platforms.linux-x64"]
 checksum = "sha256:18da30f77f475688a18f7704d23f9f155ae007ed9922dbed6850a9419d9fec8c"
 url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.0/LLVM-23.1.0-Linux-X64.tar.xz"
 url_api = "https://api.github.com/repos/llvm/llvm-project/releases/assets/529922072"
+provenance = "github-attestations"
+provenance_verified = true
 
 [[tools."github:microsoft/TypeScript"]]
 version = "7.0.2"
@@ -1802,7 +1804,7 @@ backend = "go:github.com/yusing/shadowtree/cmd/shadowtree"
 specifiers = ["latest"]
 
 [[tools."go:github.com/yusing/skills-mgr"]]
-version = "0.0.0-20260906051627-8e7af4af40d3"
+version = "0.0.0-20260906083959-e13f1539e3ab"
 backend = "go:github.com/yusing/skills-mgr"
 specifiers = ["latest"]
 
