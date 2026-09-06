@@ -5,8 +5,7 @@ Grok's `compat.codex.hooks` cell is reserved and inert. `.grok/config.toml` sets
 `[compat.claude] hooks = false` so Grok does not also load `~/.claude/settings.json`
 hooks. `.grok/hooks/bin/adapt_codex_hook` owns envelope, event-name, field-name,
 client-identity, and decision adaptation. TypeScript Codex policy runs in-process;
-spawn remains for `check_project` and `skills_mgr_inventory`; policy remains in the
-reused `.codex/hooks/` implementation. `.grok/hooks/codex-port.json` owns Grok tool
+policy remains in the reused `.codex/hooks/` implementation. `.grok/hooks/codex-port.json` owns Grok tool
 matchers and event placement, extending the Claude matchers (`Bash`, `Edit`, `Write`) with
 `run_terminal_command`, `search_replace`, and `MultiEdit`. The Bash PreToolUse group
 is one `bash_pre_tool_use` command that runs `subagent_exec_guard`,
@@ -16,9 +15,11 @@ and `{"decision":"deny","reason":...}` denials. The adapter maps failed result e
 session reporting remains
 client-managed and is not part of the port.
 
-`.grok/hooks/smoke_test.py` asserts that every registered Codex hook has a port counterpart,
-that each ported script starts, and that Grok-specific tool matchers remain covered. Add
-Codex and port registrations together, or that test fails.
+`.grok/hooks/smoke_test.py` asserts that every Codex hook Grok can enforce has a
+port counterpart, that the adapter is executable, and that Grok-specific tool
+matchers remain covered. Add Codex and port registrations together, or that test
+fails. SessionStart project report and skill inventory are not ported: Grok does
+not attach that event output to the model.
 
 Port coverage is limited to what a registered hook owns. Deletion policy has no registered
 hook, so no event-scoped owner exists to carry it. Grok receives the destructive-action rule
@@ -45,14 +46,15 @@ Agent-client directories such as `.codex` are not broad roots; a `skills`
 child still matches `/home/$USER/*/skills`. A named skill file may be read
 or edited directly. Listing and fetching unknown skills still belong to
 `skills-mgr`.
-`.codex/hooks/bin/skills_mgr_inventory` is the shared inventory owner registered by
-`.grok/hooks/codex-port.json` for SessionStart, PostCompact, and SubagentStart. It owns the
-`--- skills-mgr injected ---` heading so that the injected list is not mistaken for
-Grok's visible skills. Its harness-aware `skills-mgr list` preserves the Grok inventory
-selected explicitly by `skills-mgr list --grok` without a Grok-only wrapper.
+`.grok/AGENTS.md` owns the Grok-only extra instruction: at root-session start and
+after compaction the agent runs `$HOME/.codex/hooks/bin/check_project --without-git`
+and `skills-mgr list`; when a spawned subagent begins it runs `skills-mgr list`.
+That file `@`-references `.codex/AGENTS.md` for shared standing guidance. Do not
+copy the shared file into the Grok extra file. `.codex/hooks/bin/skills_mgr_inventory`
+and `.codex/hooks/bin/check_project` remain the Codex and Claude session-start
+owners.
 
-When an instruction changes, edit only its owner. Supporting the same policy in multiple
-clients means sharing or porting the owner, not copying its text into each client's static
-instructions. `.grok/AGENTS.md` is that sharing for static instructions: it is a symlink to
-`.codex/AGENTS.md`, so Grok and Codex read one file and neither holds a private copy. A
-Grok-only static rule would need its own file, not an edit to the shared one.
+When an instruction changes, edit only its owner. Supporting the same policy in
+multiple clients means sharing or porting the owner, not copying its text into
+each client's static instructions. Shared standing guidance lives in
+`.codex/AGENTS.md`. A Grok-only static rule belongs in `.grok/AGENTS.md`.

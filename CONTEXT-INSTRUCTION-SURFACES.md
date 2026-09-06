@@ -3,9 +3,10 @@
 This is the path index for static instruction files. The user manages every file
 under `Paths`. That list does not describe their contents.
 
-transitively through `.grok/AGENTS.md`. Codex, Grok, Claude Code, OMP, Pi, and
-KiloCode therefore share one static instruction surface. Edit that file once; a
-change reaches all six clients, and none of them owns a private copy.
+OMP, Pi, and KiloCode therefore share one static instruction surface. Edit that
+file once; a change reaches those five clients, and none of them owns a private
+copy. `.grok/AGENTS.md` is a Grok-only extra instruction file that `@`-references
+`.codex/AGENTS.md` for the shared standing guidance.
 
 ## Paths
 
@@ -19,7 +20,7 @@ change reaches all six clients, and none of them owns a private copy.
 - `.codex/agents/*.toml`
 - `.codex/agents/*.instructions.md`
 - `.codex/skills/.system/`
-- `.grok/AGENTS.md` (symlink to `.codex/AGENTS.md`)
+- `.grok/AGENTS.md` (Grok-only extra instruction; `@` references `.codex/AGENTS.md`)
 - `.claude/CLAUDE.md` (symlink to `.codex/AGENTS.md`)
 - `.claude/agents/*.md`
 - `.claude/rules/`

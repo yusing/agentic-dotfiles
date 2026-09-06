@@ -1,43 +1,5 @@
 {
   "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook $HOME/.codex/hooks/bin/check_project",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook $HOME/.codex/hooks/bin/skills_mgr_inventory",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
-    "PostCompact": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook $HOME/.codex/hooks/bin/skills_mgr_inventory",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook $HOME/.codex/hooks/bin/skills_mgr_inventory",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
     "PreToolUse": [
       {
         "matcher": "^(apply_patch|Edit|Write|search_replace|MultiEdit)$",
