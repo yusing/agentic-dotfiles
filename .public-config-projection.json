@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7ff06b4e64efaa48ef26a7cb7e5437b186b569e7",
+  "sourceCommit": "1c149b8d1edda3d39327683316a486f8af511f51",
   "outputs": [
     {
       "path": ".bashrc",
@@ -256,7 +256,7 @@
     {
       "path": ".codex/LARGE-TASK.md",
       "kind": "file",
-      "sha256": "4f65c5d4ff6378cf1c033b59adb1586d709fe503ec904f34cb5db3647ebaf650",
+      "sha256": "baf0574eb5c927478f022e072c0a80226846634d03dc8eb0ace64ec7d62f2aa4",
       "executable": false
     },
     {
