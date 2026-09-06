@@ -53,54 +53,24 @@ url = "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep-15
 url_api = "https://api.github.com/repos/BurntSushi/ripgrep/releases/assets/478119585"
 
 [[tools."aqua:JanDeDobbeleer/oh-my-posh"]]
-version = "31.1.2"
+version = "31.1.3"
 backend = "aqua:JanDeDobbeleer/oh-my-posh"
 specifiers = ["latest"]
 
 [tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.linux-arm64"]
-checksum = "sha256:f89022231e1d031f46a5f8e6254bee1dd871c328432c4f9d3a05c823fe1d26a1"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.2/posh-linux-arm64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/539990149"
-
-[tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.linux-arm64-musl"]
-checksum = "sha256:f89022231e1d031f46a5f8e6254bee1dd871c328432c4f9d3a05c823fe1d26a1"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.2/posh-linux-arm64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/539990149"
+checksum = "sha256:1f80cf4d12aa54e01b0edfecf5d4041187abdb7d58e0afcb8748158cbe1ced5c"
+url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.3/posh-linux-arm64"
+url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/545646200"
 
 [tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.linux-x64"]
-checksum = "sha256:f691e8913cf5abaf941a2f73da4e5df3ceb0d99e979451ae1734347b775d843e"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.2/posh-linux-amd64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/539990163"
-
-[tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.linux-x64-baseline"]
-checksum = "sha256:f691e8913cf5abaf941a2f73da4e5df3ceb0d99e979451ae1734347b775d843e"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.2/posh-linux-amd64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/539990163"
-
-[tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.linux-x64-musl"]
-checksum = "sha256:f691e8913cf5abaf941a2f73da4e5df3ceb0d99e979451ae1734347b775d843e"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.2/posh-linux-amd64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/539990163"
-
-[tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:f691e8913cf5abaf941a2f73da4e5df3ceb0d99e979451ae1734347b775d843e"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.2/posh-linux-amd64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/539990163"
+checksum = "sha256:c9c2f59618ff72ca1acc38e1cd87aa3198311bc5d4814e793f525dd1dfb522b5"
+url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.3/posh-linux-amd64"
+url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/545646206"
 
 [tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.macos-arm64"]
-checksum = "sha256:92fecaf338c6fb35190cbbe7df15a051c8caa5b031cf57753a6acfc10390721f"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.2/posh-darwin-arm64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/539990156"
-
-[tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.macos-x64"]
-checksum = "sha256:4b3448d87c2be71feb3b009d6a07267133a0d9694512f31756fae4193004c952"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.2/posh-darwin-amd64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/539990146"
-
-[tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.macos-x64-baseline"]
-checksum = "sha256:4b3448d87c2be71feb3b009d6a07267133a0d9694512f31756fae4193004c952"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.2/posh-darwin-amd64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/539990146"
+checksum = "sha256:65143577ab6cb46c1db0502f66337069d50c5b3cfb473f1d2805d9c93d97dac6"
+url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.3/posh-darwin-arm64"
+url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/545646210"
 
 [[tools."aqua:ajeetdsouza/zoxide"]]
 version = "0.10.0"
@@ -579,54 +549,24 @@ url_api = "https://api.github.com/repos/golangci/golangci-lint/releases/assets/5
 provenance = "github-attestations"
 
 [[tools."aqua:jesseduffield/lazygit"]]
-version = "0.64.1"
+version = "0.65.0"
 backend = "aqua:jesseduffield/lazygit"
 specifiers = ["latest"]
 
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-arm64"]
-checksum = "sha256:8b7ca3b344e60340ad1f89f29b9868ee39bcaba5bb92ee818bbe65476bb8b6e7"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.64.1/lazygit_0.64.1_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/511894160"
-
-[tools."aqua:jesseduffield/lazygit"."platforms.linux-arm64-musl"]
-checksum = "sha256:8b7ca3b344e60340ad1f89f29b9868ee39bcaba5bb92ee818bbe65476bb8b6e7"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.64.1/lazygit_0.64.1_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/511894160"
+checksum = "sha256:d954a09c128bd37b2bd0d254308474e87de3729cfe0e37f5b46a49357a4fe257"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.65.0/lazygit_0.65.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/545957226"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-x64"]
-checksum = "sha256:f8ea237c41f194cd799b48505518bfdaae4edf5a2ad6bd3d898e939785ee4532"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.64.1/lazygit_0.64.1_linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/511894209"
-
-[tools."aqua:jesseduffield/lazygit"."platforms.linux-x64-baseline"]
-checksum = "sha256:f8ea237c41f194cd799b48505518bfdaae4edf5a2ad6bd3d898e939785ee4532"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.64.1/lazygit_0.64.1_linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/511894209"
-
-[tools."aqua:jesseduffield/lazygit"."platforms.linux-x64-musl"]
-checksum = "sha256:f8ea237c41f194cd799b48505518bfdaae4edf5a2ad6bd3d898e939785ee4532"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.64.1/lazygit_0.64.1_linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/511894209"
-
-[tools."aqua:jesseduffield/lazygit"."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:f8ea237c41f194cd799b48505518bfdaae4edf5a2ad6bd3d898e939785ee4532"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.64.1/lazygit_0.64.1_linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/511894209"
+checksum = "sha256:44d8e7dd1484b4a66e191bd4ab25a71e8b4b3a65ab122f838e65677ef58c5506"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.65.0/lazygit_0.65.0_linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/545957203"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.macos-arm64"]
-checksum = "sha256:a106b4c1bf8ab7539c4afb40a01cbde263a96513cdcb8bf7630278f07e88cd99"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.64.1/lazygit_0.64.1_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/511894212"
-
-[tools."aqua:jesseduffield/lazygit"."platforms.macos-x64"]
-checksum = "sha256:f727fdf2efa46f78d102639eafe085cef437928da1e9ec79ec8e203b8a12f2a2"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.64.1/lazygit_0.64.1_darwin_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/511894192"
-
-[tools."aqua:jesseduffield/lazygit"."platforms.macos-x64-baseline"]
-checksum = "sha256:f727fdf2efa46f78d102639eafe085cef437928da1e9ec79ec8e203b8a12f2a2"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.64.1/lazygit_0.64.1_darwin_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/511894192"
+checksum = "sha256:d8ea1cade9e4279e45cbb58652e84edb07e98a9f8ec0604099c8b0a8f709e63a"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.65.0/lazygit_0.65.0_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/jesseduffield/lazygit/releases/assets/545957198"
 
 [[tools."aqua:jqlang/jq"]]
 version = "1.8.2"
@@ -1241,45 +1181,37 @@ url = "https://github.com/watchexec/watchexec/releases/download/v2.7.1/watchexec
 url_api = "https://api.github.com/repos/watchexec/watchexec/releases/assets/542557698"
 
 [[tools.bun]]
-version = "1.4.1"
+version = "1.4.2"
 backend = "core:bun"
 specifiers = ["latest"]
 
 [tools.bun."platforms.linux-arm64"]
-checksum = "sha256:580ce77533108dc6b10bec1721397e4f5aa44e909726da2451d483dfc5e581d6"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.1/bun-linux-aarch64.zip"
+checksum = "sha256:54328bbc2d9c8e0c9f892c544d66c57a83b84139e34909e5ee81758f1ac8fda7"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-aarch64.zip"
 
 [tools.bun."platforms.linux-arm64-musl"]
-checksum = "sha256:53895807a00508f70e76715947097aa533ec520aac066501c00fb77d2b1a7a6c"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.1/bun-linux-aarch64-musl.zip"
+checksum = "sha256:71760b6c8ea30623b81a4907cb815d48e2ea266f2e73e751534a44a0607950df"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-aarch64-musl.zip"
 
 [tools.bun."platforms.linux-x64"]
-checksum = "sha256:74c1c3bee7cd998500c8f969cd8972355ac6a07207e94a39eece1999b56ffabf"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.1/bun-linux-x64.zip"
+checksum = "sha256:36368faef7527875d5ffa52e53cd48021741f2a83eb6208a8dd64068d422a913"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-x64.zip"
 
 [tools.bun."platforms.linux-x64-baseline"]
-checksum = "sha256:a8c9c6738202e2fced555dd860a953c56c0cd059f75041e7010ae81a32802646"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.1/bun-linux-x64-baseline.zip"
+checksum = "sha256:c678040f14fe0440eb839d37cbd0ce4c051a32da72806ac97de6a6aab6bf728f"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-x64-baseline.zip"
 
 [tools.bun."platforms.linux-x64-musl"]
-checksum = "sha256:ea116fe09f2f764c87b9bf735225b781d1f7674ca58d66040470f38a7943c8ab"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.1/bun-linux-x64-musl.zip"
+checksum = "sha256:4835eca59d6da70f4674f5642f6e459dcadab773695b2ed9922d131057989742"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-x64-musl.zip"
 
 [tools.bun."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:74d04038a21e6ae816f9e74525b754b85294be99632b336cb4c57019c9313829"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.1/bun-linux-x64-musl-baseline.zip"
+checksum = "sha256:76e1db84e98f22f78de0a87e309bfbbf297732847f9720db36750646c85c8c18"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-x64-musl-baseline.zip"
 
 [tools.bun."platforms.macos-arm64"]
-checksum = "sha256:d8973ce835fa7867e5cc79afee6fc6f1ae0117aa4bd5fc2546fd00c512f71386"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.1/bun-darwin-aarch64.zip"
-
-[tools.bun."platforms.macos-x64"]
-checksum = "sha256:8f34239f276a3f0d27bfcd1ffecfe5d2127e74fb0aa4c0971a0cdec7b225c965"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.1/bun-darwin-x64.zip"
-
-[tools.bun."platforms.macos-x64-baseline"]
-checksum = "sha256:498e76d61bbe87d2306f65fed60ae86b6b0c8ee2da709f83202808db1a09e407"
-url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.1/bun-darwin-x64-baseline.zip"
+checksum = "sha256:90987a3a16d7db556d886ac3d551e7b6d3edf0a1cf43acaed622e8676be1d12f"
+url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-darwin-aarch64.zip"
 
 [[tools."github:atuinsh/atuin"]]
 version = "18.21.0"
