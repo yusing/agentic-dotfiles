@@ -33,6 +33,16 @@ die() { printf 'error: %s\n' "$*" >&2; exit 1; }
 
 have() { command -v "$1" >/dev/null 2>&1; }
 
+# in_list NEEDLE [ITEM...]
+in_list() {
+  local needle="$1" item
+  shift
+  for item in "$@"; do
+    [ "$item" != "$needle" ] || return 0
+  done
+  return 1
+}
+
 run_root() {
   if [ "$(id -u)" -eq 0 ]; then
     "$@"
@@ -999,67 +1009,113 @@ installed_pm_package() {
   esac
 }
 
+# Prints the installed packages that require $1. Empty output means removing $1
+# breaks nothing that is still installed. Optional dependencies are excluded:
+# they do not block a removal.
+pm_dependents() {
+  case "$PM" in
+    apt)
+      apt-cache rdepends --installed --no-recommends --no-suggests \
+        --no-conflicts --no-breaks --no-replaces --no-enhances "$1" 2>/dev/null \
+        | awk 'NR > 2 { gsub(/[|<>]/, "", $1); if ($1 != "") print $1 }'
+      ;;
+    brew)
+      brew uses --installed "$1" 2>/dev/null || true
+      ;;
+    pacman)
+      # "Required By" holds one space-separated list that wraps onto indented
+      # continuation lines; the next field name starts at column one.
+      LC_ALL=C pacman -Qi "$1" 2>/dev/null | awk '
+        /^[^[:space:]]/ { collecting = 0 }
+        /^Required By[[:space:]]*:/ { collecting = 1; sub(/^[^:]*:[[:space:]]*/, "") }
+        collecting { for (i = 1; i <= NF; i++) if ($i != "None") print $i }
+      '
+      ;;
+  esac
+}
+
+# Prints the subset of the given installed packages that can be removed in one
+# transaction: a package qualifies once every installed package depending on it
+# is in the subset too. A package held back for an outside dependent can in turn
+# hold back another, so the set is narrowed until it stops changing. Packages the
+# machine still needs are reported and skipped individually instead of costing
+# the whole batch its removal.
+filter_removable_packages() {
+  local pkg dep keep changed=1
+  local -A dependents=()
+  local remaining=("$@") kept=()
+
+  for pkg in "${remaining[@]}"; do
+    # Package names carry no whitespace or glob characters, so each cached list
+    # can be word-split back apart below.
+    dependents["$pkg"]="$(pm_dependents "$pkg" | tr '\n' ' ')"
+  done
+
+  while [ "$changed" -eq 1 ]; do
+    changed=0
+    kept=()
+    for pkg in "${remaining[@]}"; do
+      keep=1
+      for dep in ${dependents["$pkg"]}; do
+        if ! in_list "$dep" "${remaining[@]}"; then
+          warn "keeping legacy $PM package $pkg; still required by $dep"
+          keep=0
+          break
+        fi
+      done
+      [ "$keep" -eq 0 ] || kept+=("$pkg")
+    done
+    if [ "${#kept[@]}" -ne "${#remaining[@]}" ]; then
+      remaining=("${kept[@]}")
+      changed=1
+    fi
+  done
+
+  [ "${#remaining[@]}" -eq 0 ] || printf '%s\n' "${remaining[@]}"
+}
+
 remove_legacy_packages() {
-  local pkg resolved existing duplicate dependents plan removed name matched
+  local pkg resolved plan removed name
   local candidates=() removable=()
   for pkg in "$@"; do
     [ -n "$pkg" ] || continue
     resolved="$(installed_pm_package "$pkg")" || continue
-    pkg="$resolved"
-    duplicate=0
-    for existing in "${candidates[@]}"; do
-      [ "$existing" != "$pkg" ] || duplicate=1
-    done
-    [ "$duplicate" -eq 1 ] || candidates+=("$pkg")
+    in_list "$resolved" "${candidates[@]}" || candidates+=("$resolved")
   done
   [ "${#candidates[@]}" -gt 0 ] || return 0
 
+  while IFS= read -r pkg; do
+    [ -n "$pkg" ] || continue
+    removable+=("$pkg")
+  done < <(filter_removable_packages "${candidates[@]}")
+  [ "${#removable[@]}" -gt 0 ] || return 0
+
+  # The replacements are installed and validated before this runs, so a refused
+  # removal leaves a redundant package behind rather than a broken setup.
   case "$PM" in
     brew)
-      for pkg in "${candidates[@]}"; do
-        dependents="$(brew uses --installed "$pkg" 2>/dev/null || true)"
-        if [ -n "$dependents" ]; then
-          warn "keeping legacy brew package $pkg; used by: $dependents"
-        else
-          removable+=("$pkg")
-        fi
-      done
-      [ "${#removable[@]}" -gt 0 ] || return 0
       info "removing legacy brew packages: ${removable[*]}"
-      brew uninstall --formula "${removable[@]}"
+      brew uninstall --formula "${removable[@]}" \
+        || warn "keeping legacy brew packages; brew refused the removal"
       ;;
     apt)
-      plan="$(apt-get -s remove "${candidates[@]}")" \
+      plan="$(apt-get -s remove "${removable[@]}")" \
         || { warn "keeping legacy apt packages; removal simulation failed"; return 0; }
       removed="$(printf '%s\n' "$plan" | awk '$1 == "Remv" { print $2 }')"
       for name in $removed; do
-        matched=0
-        for pkg in "${candidates[@]}"; do
-          [ "${name%%:*}" != "$pkg" ] || matched=1
-        done
-        if [ "$matched" -eq 0 ]; then
+        if ! in_list "${name%%:*}" "${removable[@]}"; then
           warn "keeping legacy apt packages; removal would also remove $name"
           return 0
         fi
       done
-      for pkg in "${candidates[@]}"; do
-        matched=0
-        for name in $removed; do
-          [ "${name%%:*}" != "$pkg" ] || matched=1
-        done
-        if [ "$matched" -eq 0 ]; then
-          warn "keeping legacy apt packages; simulation did not confirm removal of $pkg"
-          return 0
-        fi
-      done
-      info "removing legacy apt packages: ${candidates[*]}"
-      run_root apt-get remove -y "${candidates[@]}"
+      info "removing legacy apt packages: ${removable[*]}"
+      run_root apt-get remove -y "${removable[@]}" \
+        || warn "keeping legacy apt packages; apt refused the removal"
       ;;
     pacman)
-      info "removing legacy pacman packages: ${candidates[*]}"
-      if ! run_root pacman -R --noconfirm "${candidates[@]}"; then
-        warn "keeping legacy pacman packages; one or more may still be required"
-      fi
+      info "removing legacy pacman packages: ${removable[*]}"
+      run_root pacman -R --noconfirm "${removable[@]}" \
+        || warn "keeping legacy pacman packages; pacman refused the removal"
       ;;
   esac
 }

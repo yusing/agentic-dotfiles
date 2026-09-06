@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8dc77ba24e3361975ab4771e8cff26f7bc663794",
+  "sourceCommit": "6b555a780e96f01b1098e9bf7a08adfbb6b54f67",
   "outputs": [
     {
       "path": ".bashrc",
@@ -962,13 +962,13 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "3706ac55470794557f97330013d0b6590eaa5fa6a5de33f6bb9e300e141d0277",
+      "sha256": "f1a75d37597969cf66a876063d488258de8d33c5afba813553f139fd9045aa1e",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "230e44ff64c519eb26566808a93408e22f4f881bcf8c4944d69e022b9287a810",
+      "sha256": "50dd1935fddb7b2290987110978dd254bd57d9be7c5e69ff4a67325f45819787",
       "executable": true
     }
   ]

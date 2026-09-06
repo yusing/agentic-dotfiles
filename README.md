@@ -65,9 +65,11 @@ every managed tool to the tracked lock without querying remote version APIs.
 Go is installed first so the source-built Go tools use the locked toolchain.
 After every replacement validates, it removes explicitly mapped
 duplicate Brew, APT, and Pacman packages in one package-manager transaction,
-then removes legacy direct-install copies. It refuses an APT removal that would
-remove another package, and package-manager dependency failures leave the legacy
-copy in place.
+then removes legacy direct-install copies. A package that something else
+installed still depends on is reported and kept on its own, and the rest of the
+batch is still removed. It refuses an APT removal that would take another
+package with it, and a removal the package manager rejects leaves the legacy
+copy in place without failing the run.
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/yusing/agentic-dotfiles/main/setup.sh | bash
