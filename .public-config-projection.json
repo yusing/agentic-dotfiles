@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3e79cc5246af23ba9f297eb1b1bdc9a18c502c44",
+  "sourceCommit": "7ff06b4e64efaa48ef26a7cb7e5437b186b569e7",
   "outputs": [
     {
       "path": ".bashrc",
@@ -118,25 +118,25 @@
     {
       "path": ".codex/agents/fast-implementer.instructions.md",
       "kind": "file",
-      "sha256": "4e1609b42861de4ab06a58a774e0f8ce048ea0712b020fa0f0e372c540efc61e",
+      "sha256": "4fbfbd2b55d8e1fdcfef7c072ed337bfbb77c57b40cded62a181487e2a6e6392",
       "executable": false
     },
     {
       "path": ".codex/agents/fast-implementer.toml",
       "kind": "file",
-      "sha256": "c5c5e98b05bcda78ceb88f8c768d90a4d790577a77489cf3b0fb2e43b32aa4e1",
+      "sha256": "c06c66c467b8ae372aeff702472353194facbbe4c7f684832aa95e4dc23e8370",
       "executable": false
     },
     {
       "path": ".codex/agents/implementer.instructions.md",
       "kind": "file",
-      "sha256": "7805972782df09bec5d5b53ae0a38c54df38b07f3489b4d2e42b48cdd542a28b",
+      "sha256": "830f3b6c3ad386aa704fd45c0c56f2293b8ba9501f22c1f893681a9f207fa924",
       "executable": false
     },
     {
       "path": ".codex/agents/implementer.toml",
       "kind": "file",
-      "sha256": "49f36d8ae94bf39f284e7f49ed2c983ae4e7469dc2bfc1dcf89d484e26f912c8",
+      "sha256": "91f3d27fc90871364c75421becf8f9220f5add39a93a02b4cd41e8e238d1a436",
       "executable": false
     },
     {
@@ -519,7 +519,7 @@
     {
       "path": ".local/bin/sync-claude-agent-ports",
       "kind": "file",
-      "sha256": "9ce55c5136f048df38be0ddadb446d2eaf91715077a8b180f9e703522f557438",
+      "sha256": "dd7f4d33e0261fe7773257acacdd35cd7f93af7a52640e127d433bd2e49bc392",
       "executable": true
     },
     {
@@ -914,7 +914,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "e36d9c6c1c597d76934ac7a0dbae69c052b16eae7de14d62e0931e34c3dec8cd",
+      "sha256": "0ea5cde32cca8ffd4f69de55c06d885bf76245d63a24718f3df14cfbdbdf667e",
       "executable": false
     },
     {

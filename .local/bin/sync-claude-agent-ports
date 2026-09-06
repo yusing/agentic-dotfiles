@@ -43,10 +43,16 @@ CLAUDE_METADATA: dict[str, dict[str, str]] = {
         "tools": "Read, Grep, Glob, Bash, Write, TodoWrite, Skill",
     },
     "fast-implementer": {
+        # Independent of Codex model routing.
+        "model": "sonnet",
+        "effort": "high",
         "color": "cyan",
         "tools": "Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill",
     },
     "implementer": {
+        # Independent of Codex model routing.
+        "model": "opus",
+        "effort": "medium",
         "color": "blue",
         "tools": "Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill",
     },

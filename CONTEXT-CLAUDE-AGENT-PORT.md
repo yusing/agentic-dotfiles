@@ -10,6 +10,7 @@ regenerates every Claude role. Its `--check` mode reports drift without writing.
 Field mapping is the helper's concern. `model` and `model_reasoning_effort` become Claude's
 `model` and `effort`, unless the role's Claude metadata specifies its own model or effort.
 The simplification role keeps its Claude Sonnet/high budget independently of Codex routing.
+The implementation roles keep Opus/medium and Sonnet/high independently of Codex routing.
 Council roles use `model: inherit` in the helper's metadata, omitting both generated fields so
 Claude continues to inherit its parent settings.
 `fork_turns` and `service_tier` have no Claude counterpart and are
