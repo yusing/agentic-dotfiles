@@ -19,6 +19,8 @@ MISE_BIN="${LOCAL_BIN}/mise"
 MISE_SHIMS="${HOME}/.local/share/mise/shims"
 MISE_CONFIG="${HOME}/.config/mise/config.toml"
 MISE_LOCK_PLATFORMS="linux-arm64,linux-x64,macos-arm64"
+LLVM_MISE_TOOL="github:llvm/llvm-project"
+LLVM_BREW_FORMULA_API="https://formulae.brew.sh/api/formula/llvm.json"
 LEGACY_GO_PREFIX="${HOME}/.local/opt/go"
 LEGACY_GOBIN="${HOME}/go/bin"
 UPGRADE=0
@@ -115,6 +117,15 @@ load_brew_env() {
   elif have brew; then
     eval "$(brew shellenv)"
   fi
+}
+
+load_brew_llvm_env() {
+  local prefix
+  [ "$PM" = brew ] || return 0
+  have brew || return 0
+  prefix="$(brew --prefix llvm 2>/dev/null || true)"
+  [ -n "$prefix" ] && [ -d "$prefix/bin" ] || return 0
+  export PATH="${prefix}/bin:${PATH}"
 }
 
 ensure_brew() {
@@ -219,6 +230,13 @@ mapped_pkgs() {
         brew) printf '\n' ;;
       esac
       ;;
+    llvm)
+      if [ "$PM" = brew ]; then
+        printf '%s\n' llvm
+      else
+        printf '\n'
+      fi
+      ;;
     *)
       die "unknown logical package: $name"
       ;;
@@ -237,7 +255,16 @@ pkg_cmd() {
 }
 
 have_logical() {
-  local cmd
+  local cmd prefix
+  if [ "$1" = llvm ]; then
+    # System clang is not Homebrew llvm; the formula is keg-only.
+    if [ "$PM" = brew ]; then
+      prefix="$(brew --prefix llvm 2>/dev/null || true)"
+      [ -n "$prefix" ] && [ -x "$prefix/bin/clang" ]
+      return
+    fi
+    return 1
+  fi
   if [ "$1" = ca-certificates ] && [ "$PM" = apt ]; then
     dpkg-query -W -f='${Status}\n' ca-certificates 2>/dev/null \
       | grep -q 'install ok installed'
@@ -695,6 +722,7 @@ mise_tool_records() {
 go|go
 bun|bun
 github:microsoft/TypeScript|tsc
+github:llvm/llvm-project|clang
 pipx:rich-cli|rich
 github:vi/websocat|websocat
 npm:@trunkio/launcher|trunk
@@ -744,6 +772,14 @@ go:github.com/yusing/shadowtree/cmd/shadowtree|shadowtree
 EOF
 }
 
+mise_tool_applies() {
+  if [ "$1" = "$LLVM_MISE_TOOL" ]; then
+    [ "$OS" = Linux ]
+    return
+  fi
+  return 0
+}
+
 validate_mise_tool() {
   local tool="$1" cmd="$2" path
   path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
@@ -759,6 +795,7 @@ install_locked_mise_tools() {
   info "reconciling the locked tool set in parallel"
   mise_cmd install --locked
   while IFS='|' read -r tool cmd; do
+    mise_tool_applies "$tool" || continue
     path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
     if [ -z "$path" ] || [ ! -x "$path" ]; then
       info "reinstalling $tool so $cmd is available"
@@ -816,12 +853,23 @@ for match in artifact_header.finditer(lock_text):
         for key, value in re.findall(r'^(url|checksum)\s*=\s*"([^"]*)"\s*$', body, re.MULTILINE)
     }
     artifacts.setdefault((tool, platform), []).append(fields)
+linux_only = {"github:llvm/llvm-project"}
 for tool in locked:
     # Package-manager backends lock versions rather than release artifacts.
     if tool.startswith(("go:", "npm:", "pipx:")):
         continue
+    if tool in linux_only:
+        tool_required = {platform for platform in required if platform.startswith("platforms.linux-")}
+    else:
+        tool_required = required
     for platform in sorted(required):
         sections = artifacts.get((tool, platform), [])
+        if platform not in tool_required:
+            if sections:
+                raise SystemExit(
+                    f"mise lock has an unexpected {tool} artifact for {platform}"
+                )
+            continue
         if len(sections) != 1:
             raise SystemExit(
                 f"mise lock needs exactly one {tool} artifact for {platform}; found={len(sections)}"
@@ -853,6 +901,9 @@ refresh_mise_lock() (
   fi
 
   info "updating the cross-platform tool lock"
+  linux_platforms="$(printf '%s\n' "${MISE_LOCK_PLATFORMS//,/$'\n'}" | grep '^linux-' | awk '{ printf sep $0; sep = "," }')"
+  macos_platforms="$(printf '%s\n' "${MISE_LOCK_PLATFORMS//,/$'\n'}" | grep '^macos-' | awk '{ printf sep $0; sep = "," }')"
+  [ -n "$linux_platforms" ] || die "MISE_LOCK_PLATFORMS has no linux platforms"
   if ! (
     cd "$tmp"
     # Isolate the candidate config without hiding the installed Go toolchain
@@ -860,9 +911,27 @@ refresh_mise_lock() (
     MISE_GLOBAL_CONFIG_FILE="$tmp/.config/mise/config.toml" \
       MISE_HTTP_TIMEOUT=120 MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=120 \
       mise_cmd lock --global --bump \
-      --platform "$MISE_LOCK_PLATFORMS"
+      --platform "$linux_platforms"
   ) 2>&1 | tee "$tmp/mise-lock.log"; then
     return 1
+  fi
+  if [ -n "$macos_platforms" ]; then
+    macos_tools=()
+    while IFS= read -r tool; do
+      [ -n "$tool" ] || continue
+      macos_tools+=("$tool")
+    done < <(mise_lock_tools_except "$LLVM_MISE_TOOL" "$tmp/.config/mise/config.toml")
+    [ "${#macos_tools[@]}" -gt 0 ] || die "no macOS mise tools to lock"
+    if ! (
+      cd "$tmp"
+      MISE_GLOBAL_CONFIG_FILE="$tmp/.config/mise/config.toml" \
+        MISE_HTTP_TIMEOUT=120 MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=120 \
+        mise_cmd lock --global --bump \
+        --platform "$macos_platforms" \
+        "${macos_tools[@]}"
+    ) 2>&1 | tee -a "$tmp/mise-lock.log"; then
+      return 1
+    fi
   fi
   if grep -Eq '^mise WARN[[:space:]]+(Failed to resolve tool version list|Remote versions cannot be fetched|Error getting latest version)' \
     "$tmp/mise-lock.log"; then
@@ -871,14 +940,69 @@ refresh_mise_lock() (
   fi
   validate_mise_lock "$tmp/.config/mise/config.toml" "$tmp/.config/mise/mise.lock" \
     || return 1
+  assert_llvm_version_alignment "$tmp/.config/mise/mise.lock" || return 1
   cp "$tmp/.config/mise/mise.lock" "$staged"
   mv "$staged" "$lock_path"
 )
+
+mise_lock_tools_except() {
+  local skip="$1" config_path="$2"
+  MISE_CONFIG_PATH="$config_path" MISE_SKIP_TOOL="$skip" py <<'PY'
+import os
+from pathlib import Path
+
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
+
+config = tomllib.loads(Path(os.environ["MISE_CONFIG_PATH"]).read_text())
+skip = os.environ["MISE_SKIP_TOOL"]
+for name in config["tools"]:
+    if name != skip:
+        print(name)
+PY
+}
+
+locked_llvm_version() {
+  local lock_path="${1:-${MISE_CONFIG%/*}/mise.lock}"
+  MISE_LOCK_PATH="$lock_path" py <<'PY'
+import os
+from pathlib import Path
+
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
+
+lock = tomllib.loads(Path(os.environ["MISE_LOCK_PATH"]).read_text())
+entries = lock["tools"]["github:llvm/llvm-project"]
+print(entries[0]["version"])
+PY
+}
+
+brew_llvm_formula_version() {
+  curl -fsSL "$LLVM_BREW_FORMULA_API" | py -c 'import json,sys; print(json.load(sys.stdin)["versions"]["stable"])'
+}
+
+assert_llvm_version_alignment() {
+  local lock_path="${1:-${MISE_CONFIG%/*}/mise.lock}" brew_ver lock_ver
+  brew_ver="$(brew_llvm_formula_version)" \
+    || die "could not read the Homebrew llvm formula version"
+  lock_ver="$(locked_llvm_version "$lock_path")" \
+    || die "could not read the locked LLVM version"
+  [ "$brew_ver" = "$lock_ver" ] \
+    || die "LLVM versions differ: Homebrew $brew_ver, mise $lock_ver"
+}
 
 upgrade_mise_tools() {
   # The existing locked Go version is needed to resolve source-built Go tools.
   mise_cmd install --locked go
   refresh_mise_lock
+  if [ "$PM" = brew ]; then
+    info "upgrading Homebrew llvm to the locked version"
+    brew upgrade llvm || brew install --no-ask llvm
+  fi
   install_locked_mise_tools
 }
 
@@ -1239,7 +1363,7 @@ cleanup_legacy_files() {
       remove_legacy_file "${LEGACY_GOBIN}/${cmd}" "$replacement"
       remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
       ;;
-    actionlint|bat|codex|ctx7|delta|eza|fastfetch|gh|git-lfs|hunk|hyperfine|jq|just|micro|oh-my-posh|oxfmt|oxlint|pnpm|rclone|rg|rtk|scriptc|shellcheck|shfmt|tldr|tmux|typos|vite|watchexec|yq|zoxide|trunk|wrk|websocat|rich|tsc)
+    actionlint|bat|clang|codex|ctx7|delta|eza|fastfetch|gh|git-lfs|hunk|hyperfine|jq|just|micro|oh-my-posh|oxfmt|oxlint|pnpm|rclone|rg|rtk|scriptc|shellcheck|shfmt|tldr|tmux|typos|vite|watchexec|yq|zoxide|trunk|wrk|websocat|rich|tsc)
       remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
       case "$cmd" in
         ctx7|oxfmt|oxlint|pnpm|scriptc|tldr|trunk|tsc|vite)
@@ -1266,6 +1390,7 @@ cleanup_legacy_tool_sources() {
     [ -z "$pkg" ] || packages+=("$pkg")
   done < <(legacy_packages mise)
   while IFS='|' read -r tool cmd; do
+    mise_tool_applies "$tool" || continue
     validate_mise_tool "$tool" "$cmd"
     while IFS= read -r pkg; do
       [ -z "$pkg" ] || packages+=("$pkg")
@@ -1278,9 +1403,17 @@ cleanup_legacy_tool_sources() {
   remove_legacy_packages "${packages[@]}"
   remove_legacy_bun_packages "${bun_packages[@]}"
   while IFS='|' read -r tool cmd; do
+    mise_tool_applies "$tool" || continue
     cleanup_legacy_files "$cmd"
     validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
+  if [ "$OS" = Darwin ]; then
+    local brew_clang=""
+    brew_clang="$(brew --prefix llvm 2>/dev/null || true)"
+    if [ -n "$brew_clang" ] && [ -x "$brew_clang/bin/clang" ]; then
+      remove_legacy_file "${LOCAL_BIN}/clang" "$brew_clang/bin/clang"
+    fi
+  fi
   hash -r 2>/dev/null || true
 }
 
@@ -1421,6 +1554,22 @@ check_cmds() {
   return "$missing"
 }
 
+verify_brew_llvm() {
+  local prefix ver lock_ver
+  prefix="$(brew --prefix llvm 2>/dev/null || true)"
+  if [ -z "$prefix" ] || [ ! -x "$prefix/bin/clang" ]; then
+    log "  MISS clang (brew llvm)"
+    return 1
+  fi
+  ver="$("$prefix/bin/llvm-config" --version 2>/dev/null || true)"
+  lock_ver="$(locked_llvm_version)" || return 1
+  if [ "$ver" != "$lock_ver" ]; then
+    log "  MISS llvm version brew=$ver lock=$lock_ver"
+    return 1
+  fi
+  log "  ok  clang ($prefix/bin/clang) $ver"
+}
+
 verify_setup() {
   local required_failed=0 tool cmd path
   info "native commands"
@@ -1430,6 +1579,7 @@ verify_setup() {
   fi
   info "mise-managed commands"
   while IFS='|' read -r tool cmd; do
+    mise_tool_applies "$tool" || continue
     path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
     if [ -n "$path" ] && [ -x "$path" ]; then
       log "  ok  $cmd ($path)"
@@ -1438,6 +1588,11 @@ verify_setup() {
       required_failed=1
     fi
   done < <(mise_tool_records)
+  if [ "$OS" = Darwin ]; then
+    info "Homebrew llvm"
+    load_brew_llvm_env
+    if ! verify_brew_llvm; then required_failed=1; fi
+  fi
   info "additional commands"
   if ! check_cmds claude grok herdr; then required_failed=1; fi
   if [ "$required_failed" -ne 0 ]; then
@@ -1456,7 +1611,8 @@ Without --upgrade, installed tools are reconciled to the tracked lock without a
 remote version lookup. Packages from legacy Brew, APT, Pacman, and direct-install
 sources are removed only after the replacement validates. --upgrade advances the
 tracked multi-platform mise lock and installs it. Native OS package upgrades
-remain separate.
+remain separate, except LLVM: Homebrew llvm on macOS and the locked Linux mise
+toolchain stay on the same version.
 EOF
 }
 
@@ -1502,9 +1658,13 @@ main() {
     git curl unzip python3 ca-certificates fish make gpg ncurses rsync build-essential \
     --optional \
     wget imagemagick time
+  if [ "$PM" = brew ]; then
+    install_packages llvm
+  fi
   have git || die "git is required"
   have curl || die "curl is required"
   have cc || die "a C compiler is required to build wrk; install the OS developer tools"
+  load_brew_llvm_env
 
   STEP="setup home git repository"
   setup_home_repo

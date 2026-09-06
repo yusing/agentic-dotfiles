@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ef90c0933b1ee4e882da30b2c7312e654715ee2b",
+  "sourceCommit": "2717fbcacf3f840f3d0bc768c2761613e383b318",
   "outputs": [
     {
       "path": ".bashrc",
@@ -340,7 +340,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "88bf594fdb9dc41b9143864b0e9fe7f3f4c862cd151df24daabca2188343bc3b",
+      "sha256": "c09ac0cccd9dee8ed7ed624de440c2db082080fa2874138dfc068dc51f5c9a61",
       "executable": false
     },
     {
@@ -424,13 +424,13 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "ec7eef57cd7f782954622fbb0042639ed18910a3d96667d2e891517235d382ca",
+      "sha256": "00974e45b5d0001d65499c2c768da24328412c226b79d6ced22d60fbd41e6a33",
       "executable": false
     },
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "f6a3b94effc679a6f7d275a929c708a155583e4d8c096df0429eafb5a08f57ec",
+      "sha256": "c3462ae6ac6c8df8b4a2852f1415833e4aa52a15667737d179774cd67b3891c8",
       "executable": false
     },
     {
@@ -915,7 +915,7 @@
     {
       "path": ".zsh/fish-mirror.zsh",
       "kind": "file",
-      "sha256": "2c913ae096b6905c0e0af790e176cb978837f93798fab2544c2c717affdf1541",
+      "sha256": "766fa3005e55addccfdb46d78539e975afe33d42c51b75695318795e672067eb",
       "executable": false
     },
     {
@@ -998,7 +998,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "d73e5aebbfd4a96ca5280c361756621d209c00ee14ccd9e75709e54e6b23d942",
+      "sha256": "b9c57fa53b0c62e574d2bec1d7acabf2c4097c0b8bc60a0bbbf7bcdf06e16866",
       "executable": true
     }
   ]

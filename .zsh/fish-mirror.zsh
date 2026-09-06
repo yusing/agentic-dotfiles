@@ -130,6 +130,10 @@ fi
 
 _zfm_path_prepend "$HOME/.local/bin"
 check-path "$HOME/go/bin" && _zfm_path_prepend "$HOME/go/bin"
+if _zfm_command_exists brew; then
+    llvm_prefix=$(brew --prefix llvm 2>/dev/null) || llvm_prefix=
+    [[ -n $llvm_prefix ]] && _zfm_path_prepend "$llvm_prefix/bin"
+fi
 
 if ! _zfm_command_exists go; then
     echo-error "go is not installed or not in PATH"

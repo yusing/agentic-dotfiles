@@ -8,6 +8,8 @@ go = "latest"
 bun = "latest"
 # Native TypeScript 7 GitHub assets; lib/tsc is the compiler and LSP.
 "github:microsoft/TypeScript" = { version = "latest", matching_regex = "^typescript-(linux|darwin|win32)-", strip_components = 1, bin_path = "lib" }
+# Official LLVM/clang toolchain on Linux. macOS uses Homebrew llvm at the same version.
+"github:llvm/llvm-project" = { version = "latest", os = ["linux"], version_prefix = "llvmorg-", matching_regex = "^LLVM-.*-Linux-(X64|ARM64)\\.tar\\.xz$", strip_components = 1, bin_path = "bin" }
 "pipx:rich-cli" = { version = "latest", uvx = true }
 # GitHub ships websocat.<target-triple>; keep the command name websocat.
 "github:vi/websocat" = { version = "latest", bin = "websocat" }

@@ -1566,6 +1566,26 @@ checksum = "sha256:cbdae2ad79ae0ef1fd6a06f4644c90cef79a56353bc3bb7cf4663bb283142
 url = "https://github.com/eza-community/eza/releases/download/v0.23.5/man-0.23.5.tar.gz"
 url_api = "https://api.github.com/repos/eza-community/eza/releases/assets/471228894"
 
+[[tools."github:llvm/llvm-project"]]
+version = "23.1.0"
+backend = "github:llvm/llvm-project"
+specifiers = ["latest"]
+
+[tools."github:llvm/llvm-project".options]
+matching_regex = "^LLVM-.*-Linux-(X64|ARM64)\\.tar\\.xz$"
+os = ["linux"]
+version_prefix = "llvmorg-"
+
+[tools."github:llvm/llvm-project"."platforms.linux-arm64"]
+checksum = "sha256:cfb31bfc713ef453248bf5bd026312f838ad6c52c25623e987cb6a340f3050d4"
+url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.0/LLVM-23.1.0-Linux-ARM64.tar.xz"
+url_api = "https://api.github.com/repos/llvm/llvm-project/releases/assets/529893413"
+
+[tools."github:llvm/llvm-project"."platforms.linux-x64"]
+checksum = "sha256:18da30f77f475688a18f7704d23f9f155ae007ed9922dbed6850a9419d9fec8c"
+url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.0/LLVM-23.1.0-Linux-X64.tar.xz"
+url_api = "https://api.github.com/repos/llvm/llvm-project/releases/assets/529922072"
+
 [[tools."github:microsoft/TypeScript"]]
 version = "7.0.2"
 backend = "github:microsoft/TypeScript"

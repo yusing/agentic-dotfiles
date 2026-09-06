@@ -122,6 +122,10 @@ end
 # local and Go bins
 check-path ~/.local/bin; and fish_add_path ~/.local/bin
 check-path ~/go/bin; and fish_add_path ~/go/bin
+if type -q brew
+    set -l llvm_prefix (brew --prefix llvm 2>/dev/null)
+    test -n "$llvm_prefix"; and test -d "$llvm_prefix/bin"; and fish_add_path --move --prepend $llvm_prefix/bin
+end
 
 if type -q mise
     mise activate fish | source
