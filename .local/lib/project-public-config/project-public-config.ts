@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.7";
+export const VERSION = "1.1.8";
 
 type TreeEntry = {
 	mode: string;
@@ -566,6 +566,7 @@ function removePrivateShellIfBlocks(text: string): string {
 
 function projectShell(path: string, text: string): string {
 	let projected = text;
+	if (path === "setup.sh") projected = removeBraceFunction(projected, new Set(["configure_goproxy"]));
 	if (path.endsWith(".fish")) projected = removeFishBlocks(projected);
 	if (path === ".bashrc" || path.endsWith(".zsh") || path === ".zshrc") {
 		projected = removeBraceFunction(projected, new Set(["install_my_ca", "claude-use", "claude-config-edit"]));

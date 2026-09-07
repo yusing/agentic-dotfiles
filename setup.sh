@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.0.0
+# version: 2.0.1
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -63,6 +63,7 @@ export PATH="${MISE_SHIMS}:${LOCAL_BIN}:${HOME}/.grok/bin:${HOME}/.bun/bin:${PAT
 export DEBIAN_FRONTEND=noninteractive
 export NONINTERACTIVE=1
 export GIT_TERMINAL_PROMPT=0
+
 
 OS="$(uname -s)"
 ARCH="$(uname -m)"
@@ -1615,6 +1616,8 @@ main() {
 
   STEP="ensure TOML parser"
   ensure_toml_parser
+
+  STEP="select Go proxy"
 
   STEP="setup home git repository"
   setup_home_repo
