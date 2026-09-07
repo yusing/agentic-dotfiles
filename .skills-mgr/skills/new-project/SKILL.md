@@ -1,6 +1,6 @@
 ---
 name: new-project
-description: Start a new software project through accepted specification, skeleton, complete delivery, and final review.
+description: Start a new software project with accepted requirements and a delivery approach proportional to its capabilities.
 ---
 
 # Start an automated project
@@ -11,21 +11,22 @@ or question.
 ## Preflight
 
 Resolve material product decisions and fix the working directory, accepted outcome, interfaces,
-constraints, non-goals, toolchain, base revision, complete item set, and required checks. Confirm
-that the native roles required for final review are available.
+constraints, non-goals, toolchain, complete item set, and required checks. Choose direct delivery
+or staged capability delivery from the accepted outcome, not the number of files or layers.
 
-Before unattended work, obtain any missing authorization for repository writes, Conventional
-Commits, fixup commits, autosquash, and external or destructive effects. Reuse granted permissions.
+Before unattended work, obtain missing authorization only for effects the selected approach needs.
+Staged delivery also needs a base revision and authorized commits, fixups, and autosquash.
+Reuse granted permissions.
 Begin only when the remaining workflow can run without further product or permission decisions.
 
 ## Specification and contracts
 
-Give each accepted item one indexed file with a stable ID, observable acceptance examples, exact
-user-visible surfaces, constraints, and non-goals. Keep facts with one authoritative owner and
-reference related items. Every accepted capability must remain testable and mutually consistent.
+Establish observable acceptance examples, user-visible surfaces, constraints, and non-goals.
+Use the confirmed request for a bounded project; staged delivery needs indexed item files with
+stable IDs. Keep facts with one authoritative owner and capabilities testable and consistent.
 
 Record necessary shared ownership, dependency direction, interfaces, data lifecycle, trust, and
-failure propagation in one contract file per item. Existing code or contracts may already settle
+failure propagation where they affect delivery. Existing code or contracts may already settle
 an architectural decision; leave those artifacts unchanged rather than duplicating them. Resolve
 material ambiguity before implementation without inventing conventional features or dependencies.
 
@@ -35,11 +36,11 @@ issues without delegating user-owned decisions.
 
 ## Delivery and completion
 
-Use `build-code-skeleton` once, then `deliver-vertical-slice` for every accepted item, followed by
-`final-review` for the complete committed outcome. Carry item IDs, owning selectors, non-goals,
-base revision, and authorizations through handoffs. Keep specification and contract decisions out
-of implementation commits unless the accepted project requires those artifacts.
+For direct delivery, implement the complete usable outcome and validate under standing task
+guidance. For staged delivery of usable capabilities, use `build-code-skeleton` once, then
+`deliver-vertical-slice` and `final-review`. Carry accepted items, contracts, non-goals, and
+authorizations through the selected approach.
 
-Continue automatically until final review passes, fixups are autosquashed, validation passes, and
-the temporary recovery artifact is removed. Stop only for a conflict, required mechanism, or
+Continue until the complete outcome and required checks pass, including inspection and cleanup
+required by the selected approach. Stop only for a conflict, required mechanism, or
 unauthorized effect that cannot be resolved within the accepted project.

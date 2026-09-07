@@ -1,4 +1,4 @@
 interface:
   display_name: "Start Automated Project"
-  short_description: "Run a new project from decisions through final review"
-  default_prompt: "Use $new-project to settle preflight once, then automate specification, skeleton, complete delivery, and final review without manual pauses."
+  short_description: "Start a project with proportionate delivery"
+  default_prompt: "Use $new-project to settle requirements, choose direct or staged capability delivery, and complete the usable project with focused validation."
