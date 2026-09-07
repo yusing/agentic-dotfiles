@@ -11,10 +11,9 @@ inspection, not a bug-fix review, diagnosis, question, or routine per-slice insp
 ## Independent inspection
 
 Require committed accepted items, a current recovery artifact, and a stable, exact base-to-head
-range. Spawn a fresh native `reviewer` for the complete range even if no slice needed inspection.
-Add `simplify-checker` when complexity warrants it and `web-reviewer` for web/frontend changes.
-Dispatch selected roles concurrently with the accepted requirements and necessary evidence under
-the standing handoff policy. Keep the snapshot unchanged until inspection finishes.
+range. Apply the standing inspection and reuse policy to the final outcome, including cross-slice
+integration. Record completed coverage and remaining gaps in the recovery artifact; dispatch only
+needed inspections and keep the snapshot stable. When coverage is sufficient, close the range.
 
 Trace the delivered surfaces, accepted items, contracts, non-goals, tests, and validation across
 the full range. Missing or unrecoverable required inspection is a blocker, not a passing review.

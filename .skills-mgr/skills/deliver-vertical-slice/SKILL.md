@@ -1,12 +1,14 @@
 ---
 name: deliver-vertical-slice
-description: Deliver all accepted project or feature items through authorized end-to-end slices and final review; not for bug fixes or questions.
+description: Deliver accepted user-facing capabilities as usable end-to-end vertical slices; for new-project delivery or features needing staged capability delivery, not routine changes or fixes.
 ---
 
 # Deliver the complete accepted change
 
-Use after a new-project skeleton or after the user has confirmed an existing-project change and
-granted all workflow authorizations; do not use for a bug fix, diagnosis, or question.
+Use after a new-project skeleton or for an accepted feature that needs staged delivery of usable
+capabilities. Each slice delivers a user-facing capability through its required layers, not a set
+of files or implementation steps. Handle routine changes, instruction/configuration corrections,
+refactors, fixes, and questions directly under standing task guidance.
 
 ## Entry and recovery
 
@@ -39,8 +41,8 @@ evidence, not just the first working path.
 
 ## Final review and completion
 
-Pass the current recovery artifact and exact base-to-head range to `final-review`, which requires
-a fresh reviewer. For confirmed blockers, correct slices in original order with the same checks
+Pass the current recovery artifact, completed inspection coverage, and exact base-to-head range
+to `final-review`. For confirmed blockers, correct slices in original order with the same checks
 and inspection rules; create `git commit --fixup=<slice-commit>` for each corresponding commit.
 
 Continue through final review and authorized autosquash. Delete the recovery artifact only after
