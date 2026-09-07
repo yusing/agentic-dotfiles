@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "5cd293a004eaa909a263aeaa916dd33d0659a3b0",
+  "sourceCommit": "e265d6cca5d19c5abba1e29363fbd6dc77a56f39",
   "outputs": [
     {
       "path": ".bashrc",
@@ -532,7 +532,7 @@
     {
       "path": ".local/bin/sync-claude-agent-ports",
       "kind": "file",
-      "sha256": "52a30223afe3bb46739d002ffaeb7b2e8da4696644c7ae14b6fe391f5e620766",
+      "sha256": "4e57263870689c0977d18a8a5431e4917aba38e23b7978ba4cf0322e24342969",
       "executable": true
     },
     {

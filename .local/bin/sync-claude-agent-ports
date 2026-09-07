@@ -17,7 +17,7 @@ from typing import Any
 HOME = Path(__file__).resolve().parents[2]
 CODEX_AGENTS = HOME / ".codex" / "agents"
 CLAUDE_AGENTS = HOME / ".claude" / "agents"
-GUARD = Path("$HOME/.codex/hooks/bin/subagent_exec_guard")
+GUARD = HOME / ".codex" / "hooks" / "bin" / "subagent_exec_guard"
 
 MODEL_MAP = {
     "gpt-5.6-luna": "sonnet",
