@@ -176,7 +176,13 @@
       }
     },
     "ui-ux-pro-max": {
-      "enabled": "lang tsx || lang jsx || lang html || lang css"
+      "enabled": "lang tsx || lang jsx || lang html || lang css",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "nextlevelbuilder/ui-ux-pro-max-skill/ui-ux-pro-max",
+        "name": "ui-ux-pro-max",
+        "locator": "nextlevelbuilder/ui-ux-pro-max-skill/ui-ux-pro-max"
+      }
     },
     "use-modern-go": {
       "enabled": "lang go",
