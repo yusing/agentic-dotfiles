@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0
+
+Upgrade installed native packages from the active JSON inventory on --upgrade. Target the first installed package alternative per declaration, include optional packages, and propagate upgrade failures. Keep plain setup install-only and avoid upgrading Homebrew LLVM twice. On Arch, perform a full system upgrade through yay before native installation; require a regular user account for Arch upgrades.
+
 ## 2.1.1
 
 Manage wrk through the native package manager instead of a pinned mise source build. Remove its custom build requirement and native-package removal rule. Check package-manager status for required packages without executable probes, including failure recovery and final verification.

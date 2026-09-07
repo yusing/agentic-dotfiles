@@ -51,13 +51,17 @@ From an existing checkout:
 
 ```sh
 bash setup.sh             # install or reconcile the locked tool set
-bash setup.sh --upgrade   # update the tool lock and install it
+bash setup.sh --upgrade   # upgrade setup-managed packages and tools
 ```
 
 Setup supports macOS, Debian/Ubuntu, and Arch-based Linux. It can be rerun after
 failure and backs up checkout collisions under `~/.local/share/dotfiles-setup/`.
-Unrelated files are left alone. `--upgrade` does not upgrade native OS packages,
-except the Homebrew LLVM toolchain.
+Unrelated files are left alone. `--upgrade` also upgrades installed native packages
+declared in `setup.json`, including optional packages, through Homebrew or APT.
+Only declared packages are targeted; their required dependencies may also change.
+On Arch, `--upgrade` performs a **full system upgrade** with yay, including AUR
+packages, before installing native packages. Run setup as a regular user on Arch;
+yay uses sudo when required.
 
 If you already have your own dotfiles, copy the pieces you want instead of
 running setup.

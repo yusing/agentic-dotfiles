@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.1.1
+# version: 2.2.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -550,13 +550,53 @@ install_configured_packages() {
   install_packages "${names[@]}"
 }
 
+# Upgrade declared installed alternatives; Arch requires a full system upgrade.
+upgrade_configured_packages() {
+  [ "$UPGRADE" -eq 1 ] || return 0
+  if [ "$PM" = pacman ]; then
+    info "upgrading the full Arch system"
+    refresh_pm || return 1
+    return 0
+  fi
+  local records optional_records name candidates pkg installed
+  local packages=()
+  records="$(setup_config native-required)" || return 1
+  optional_records="$(setup_config native-optional)" || return 1
+  records="${records}"$'\n'"${optional_records}"
+  while IFS= read -r name; do
+    [ -n "$name" ] || continue
+    candidates="$(mapped_pkgs "$name")" || return 1
+    while IFS= read -r pkg; do
+      [ -n "$pkg" ] || continue
+      installed="$(installed_pm_package "$pkg")" || continue
+      [ -n "$installed" ] || continue
+      if ! in_list "$pkg" ${packages[@]+"${packages[@]}"}; then packages+=("$pkg"); fi
+      # Mappings are alternatives, not additional packages to manage.
+      break
+    done <<<"$candidates"
+  done <<<"$records"
+  [ "${#packages[@]}" -gt 0 ] || return 0
+  info "upgrading setup-owned native packages: ${packages[*]}"
+  case "$PM" in
+    apt)
+      run_root apt-get update -y || return 1
+      run_root apt-get install --only-upgrade --no-remove -y "${packages[@]}" || return 1
+      ;;
+    brew)
+      brew update || return 1
+      HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade --formula "${packages[@]}" || return 1
+      ;;
+    *) die "unknown package manager: $PM" ;;
+  esac
+}
+
 refresh_pm() {
   case "$PM" in
     apt)
       run_root apt-get update -y
       ;;
     pacman)
-      run_root pacman -Syu --noconfirm
+      yay -Syu --noconfirm --answerclean None --answerdiff None
       ;;
     brew)
       # brew install refreshes as needed; a full update is slow on reruns
@@ -1219,7 +1259,7 @@ assert_llvm_version_alignment() {
 }
 
 upgrade_mise_tools() {
-  if [ "$PM" = brew ] && setup_config native-enabled llvm; then
+  if [ "$UPGRADE" -eq 0 ] && [ "$PM" = brew ] && setup_config native-enabled llvm; then
     info "upgrading Homebrew llvm to the locked version"
     brew upgrade llvm || brew install --no-ask llvm
   fi
@@ -1676,8 +1716,12 @@ its declared owner, then check the agentic-dotfiles repository out into $HOME.
 Without --upgrade, added or changed declarations refresh their lock entries;
 unchanged tools retain their locked versions without a full remote refresh. Packages from legacy Brew, APT, Pacman, and direct-install
 sources are removed only after the replacement validates. --upgrade advances the
-tracked multi-platform mise lock and installs it. Native OS package upgrades
-remain separate, except LLVM: Homebrew llvm on macOS and the locked Linux mise
+tracked multi-platform mise lock, installs it, and upgrades installed native
+packages declared in setup.json (including optional packages). Package managers
+may also update required dependencies. On Arch, --upgrade performs a full system
+upgrade with yay, including AUR packages. Run setup as a regular user on Arch;
+yay uses sudo when required.
+Homebrew llvm on macOS and the locked Linux mise
 toolchain stay on the same version. GitHub eza has no macOS archives; macOS
 installs Homebrew eza instead.
 EOF
@@ -1732,6 +1776,9 @@ main() {
   STEP="detect package manager"
   detect_pm
   info "using $PM on $OS/$GOARCH"
+  if [ "$UPGRADE" -eq 1 ] && [ "$PM" = pacman ] && [ "$(id -u)" -eq 0 ]; then
+    die "run setup --upgrade as a regular user on Arch; yay uses sudo when required"
+  fi
 
   STEP="ensure brew"
   ensure_brew
@@ -1760,6 +1807,12 @@ main() {
   SETUP_CONFIG="$SETUP_RUN_DIR/setup.json"
   setup_config validate
 
+  # Bring Arch's system and repository databases forward together before installs.
+  if [ "$PM" = pacman ]; then
+    STEP="upgrade Arch system"
+    upgrade_configured_packages
+  fi
+
   STEP="install packages"
   install_configured_packages
   have git || die "git is required"
@@ -1785,6 +1838,9 @@ main() {
 
   STEP="sync mise configuration and lock"
   sync_mise_config
+
+  STEP="upgrade setup-owned native packages"
+  if [ "$PM" != pacman ]; then upgrade_configured_packages; fi
 
   STEP="install cross-platform tools"
   if [ "$UPGRADE" -eq 1 ] || [ "$MISE_LLVM_CHANGED" -eq 1 ]; then
