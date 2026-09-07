@@ -40,66 +40,27 @@ shell behavior.
 
 ## Bootstrap
 
-`setup.sh` is for machines that should become a checkout of this repository.
-It installs OS packages, checks this repository out into `$HOME`, rewrites the
-repository's canonical home paths in tracked runtime configuration for the local
-machine, and installs the locked cross-platform tool set through `mise`. Native
-package managers retain ownership of system foundations; `mise` owns development
-runtimes and fast-moving command-line tools; vendor installers retain ownership
-of Codex, Claude Code, Grok, and herdr.
-
-When `$HOME` is already the recognized private `yusing/dotfiles` checkout,
-setup preserves its origin and history and continues with the remaining setup
-instead of replacing it with the public projection.
-
-Setup configures this checkout to use [`.githooks/`](.githooks/). After each
-commit, the post-commit hook refreshes `projects/public-agent-shell-config` and,
-when projected content changed, creates a local commit there with the same
-commit message. It does not push the public repository.
-
-It is written for a home directory that already has unrelated files, and it
-can be run again if it stops partway through. Files that would be overwritten
-by the checkout are copied to `~/.local/share/dotfiles-setup/` first. Untracked
-files this repository does not own are left in place. A normal rerun reconciles
-every managed tool to the tracked lock without querying remote version APIs.
-Go is installed first so the source-built Go tools use the locked toolchain.
-Bun is installed next so mise's npm backend uses bun. On macOS, Homebrew owns
-llvm and eza: GitHub does not publish darwin eza archives, and llvm stays on
-the same version as the locked Linux toolchain.
-After every replacement validates, it removes explicitly mapped
-duplicate Brew, APT, and Pacman packages in one package-manager transaction,
-then removes legacy direct-install copies. A package that something else
-installed still depends on is reported and kept on its own, and the rest of the
-batch is still removed. It refuses an APT removal that would take another
-package with it, and a removal the package manager rejects leaves the legacy
-copy in place without failing the run.
+For machines that should become a checkout of this repository, with its packages
+and tools installed:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/yusing/agentic-dotfiles/main/setup.sh | bash
 ```
 
-If you already have the file:
+From an existing checkout:
 
 ```sh
-bash setup.sh
+bash setup.sh             # install or reconcile the locked tool set
+bash setup.sh --upgrade   # update the tool lock and install it
 ```
 
-To advance the tracked lock to the latest eligible releases and install that
-tool set on the current machine:
+Setup supports macOS, Debian/Ubuntu, and Arch-based Linux. It can be rerun after
+failure and backs up checkout collisions under `~/.local/share/dotfiles-setup/`.
+Unrelated files are left alone. `--upgrade` does not upgrade native OS packages,
+except the Homebrew LLVM toolchain.
 
-```sh
-bash setup.sh --upgrade
-```
-
-The lock covers Linux on arm64 and x86-64, plus macOS on arm64. `--upgrade`
-resolves every `latest` selector without an additional release-age delay; it
-does not perform a native OS package upgrade. Lock updates use an existing
-GitHub CLI login when available, validate every release artifact, and replace
-the tracked lock only after the complete candidate passes. Installing that
-locked mise tool set does not query remote version APIs.
-
-If you are adapting pieces of this setup on a machine that already has its own
-dotfiles, do not run `setup.sh`. Copy the files you want instead.
+If you already have your own dotfiles, copy the pieces you want instead of
+running setup.
 
 ## Adapting the Agent Setup
 

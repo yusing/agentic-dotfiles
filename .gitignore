@@ -257,4 +257,6 @@ __pycache__
 !/CONTEXT-SHELL.md
 !/LICENSE
 !/README.md
+!/setup.changelog.md
+!/setup.json
 !/setup.sh

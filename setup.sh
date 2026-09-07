@@ -1,4 +1,5 @@
 #!/bin/bash
+# version: 2.0.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -17,14 +18,12 @@ LOCAL_BIN="${HOME}/.local/bin"
 BACKUP_ROOT="${HOME}/.local/share/dotfiles-setup"
 MISE_BIN="${LOCAL_BIN}/mise"
 MISE_SHIMS="${HOME}/.local/share/mise/shims"
-MISE_CONFIG="${HOME}/.config/mise/config.toml"
+MISE_CONFIG="${MISE_CONFIG:-${HOME}/.config/mise/config.toml}"
 MISE_LOCK_PLATFORMS="linux-arm64,linux-x64,macos-arm64"
-LLVM_MISE_TOOL="github:llvm/llvm-project"
-EZA_MISE_TOOL="github:eza-community/eza"
 LLVM_BREW_FORMULA_API="https://formulae.brew.sh/api/formula/llvm.json"
-LEGACY_GO_PREFIX="${HOME}/.local/opt/go"
-LEGACY_GOBIN="${HOME}/go/bin"
 UPGRADE=0
+SETUP_CONFIG_EXPLICIT="${SETUP_CONFIG:+1}"
+SETUP_CONFIG="${SETUP_CONFIG:-$(cd "$(dirname "${BASH_SOURCE[0]:-$HOME/setup.sh}")" && pwd)/setup.json}"
 
 STEP="starting"
 trap 'printf "setup.sh failed during: %s\n" "$STEP" >&2' ERR
@@ -191,118 +190,249 @@ ensure_sudo() {
 
 # Prints one or more package-manager names for a logical package, or an empty
 # line if this manager has nothing to install for it.
-mapped_pkgs() {
-  local name="$1"
-  case "$name" in
-    fish|git|curl|unzip|wget|make|imagemagick|rsync)
-      printf '%s\n' "$name"
-      ;;
-    time)
-      if [ "$PM" = brew ]; then
-        printf '%s\n' gnu-time
-      else
-        printf '%s\n' time
-      fi
-      ;;
-    python3)
-      if [ "$PM" = apt ]; then
-        printf '%s\n' python3
-      else
-        printf '%s\n' python
-      fi
-      ;;
-    gpg) printf '%s\n' gnupg ;;
-    ncurses)
-      if [ "$PM" = apt ]; then
-        printf '%s\n' ncurses-bin
-      else
-        printf '%s\n' ncurses
-      fi
-      ;;
-    ca-certificates)
-      if [ "$PM" = brew ]; then
-        printf '\n'
-      else
-        printf '%s\n' ca-certificates
-      fi
-      ;;
-    build-essential)
-      case "$PM" in
-        apt) printf '%s\n' build-essential ;;
-        pacman) printf '%s\n' base-devel ;;
-        brew) printf '\n' ;;
-      esac
-      ;;
-    llvm)
-      if [ "$PM" = brew ]; then
-        printf '%s\n' llvm
-      else
-        printf '\n'
-      fi
-      ;;
-    eza)
-      if [ "$PM" = brew ]; then
-        printf '%s\n' eza
-      else
-        printf '\n'
-      fi
-      ;;
-    *)
-      die "unknown logical package: $name"
-      ;;
-  esac
-}
-
-# Command that should exist after the logical package is installed.
-pkg_cmd() {
-  case "$1" in
-    ncurses) echo tput ;;
-    build-essential) echo gcc ;;
-    ca-certificates) echo "" ;;
-    time) echo "" ;;
-    *) echo "$1" ;;
-  esac
-}
+mapped_pkgs() { setup_config native-packages "$1"; }
+pkg_cmd() { setup_config native-command "$1"; }
 
 have_logical() {
-  local cmd prefix
-  if [ "$1" = llvm ]; then
-    # System clang is not Homebrew llvm; the formula is keg-only.
-    if [ "$PM" = brew ]; then
-      prefix="$(brew --prefix llvm 2>/dev/null || true)"
-      [ -n "$prefix" ] && [ -x "$prefix/bin/clang" ]
-      return
+  local name="$1" cmd prefix commands
+  setup_config native-enabled "$name" || return 1
+  prefix="$(setup_config native-prefix "$name")" || return 1
+  if [ "$PM" = brew ] && [ -n "$prefix" ]; then
+    prefix="$(brew --prefix "$prefix" 2>/dev/null || true)"
+    cmd="$(pkg_cmd "$name")"
+    [ -n "$prefix" ] && [ -x "$prefix/bin/$cmd" ]
+    return
+  fi
+  commands="$(setup_config native-commands "$name")" || return 1
+  if [ -z "$commands" ]; then
+    # No executable probe: ask the package manager rather than assuming success.
+    if [ "$PM" = apt ]; then
+      commands="$(mapped_pkgs "$name")" || return 1
+      while IFS= read -r cmd; do
+        if dpkg-query -W -f='${Status}\n' "$cmd" 2>/dev/null | grep -q 'install ok installed'; then return 0; fi
+      done <<<"$commands"
     fi
     return 1
   fi
-  if [ "$1" = ca-certificates ] && [ "$PM" = apt ]; then
-    dpkg-query -W -f='${Status}\n' ca-certificates 2>/dev/null \
-      | grep -q 'install ok installed'
-    return
-  fi
-  if [ "$1" = imagemagick ]; then
-    have magick || have convert
-    return
-  fi
-  cmd="$(pkg_cmd "$1")"
-  # Packages without a command probe are left to package managers whose
-  # install operations already skip current packages.
-  [ -z "$cmd" ] && return 1
-  if [ "$cmd" = python3 ] && ! have python3; then
-    have python
-    return
-  fi
-  have "$cmd"
+  while IFS= read -r cmd; do
+    have "$cmd" && return 0
+  done <<<"$commands"
+  return 1
 }
 
 py() {
-  if have python3; then
+  if [ -n "${SETUP_PYTHON:-}" ]; then
+    "$SETUP_PYTHON" "$@"
+  elif have python3; then
     python3 "$@"
   elif have python; then
     python "$@"
   else
     die "python3 is required"
   fi
+}
+
+ensure_toml_parser() {
+  local check=$'try:\n import tomllib\nexcept ImportError:\n import tomli'
+  py -c "$check" >/dev/null 2>&1 && return 0
+  info "installing Python TOML support"
+  case "$PM" in
+    apt) refresh_pm; pm_install_batch python3-tomli ;;
+    pacman) pm_install_batch python-tomli ;;
+    brew)
+      pm_install_batch python
+      SETUP_PYTHON="$(brew --prefix python)/bin/python3"
+      ;;
+  esac
+  py -c "$check" >/dev/null 2>&1 \
+    || die "Python TOML support is unavailable; use Python 3.11+ or install tomli for the active Python"
+}
+
+# JSON values travel as data, never as shell source. Validate before emitting any
+# records so malformed config cannot turn into a partial install plan.
+setup_config() {
+  SETUP_PM="$PM" SETUP_OS="$OS" SETUP_MISE_CONFIG="$MISE_CONFIG" \
+    py - "$SETUP_CONFIG" "$@" <<'PY'
+import json
+import os
+import re
+import sys
+from pathlib import Path
+
+def require(ok, message):
+    if not ok:
+        raise ValueError(message)
+
+def obj(value, allowed, where):
+    require(isinstance(value, dict), f"{where} must be an object")
+    require(not (set(value) - set(allowed)), f"unknown field in {where}: {set(value) - set(allowed)}")
+
+def string(value):
+    require(isinstance(value, str) and value and not any(c in value for c in "\n\r\0|"), "expected a nonempty, single-line string without |")
+
+def strings(value):
+    require(isinstance(value, list), "expected an array")
+    for item in value:
+        string(item)
+
+def relative(value):
+    string(value)
+    require(not value.startswith(("/", "-")) and all(p not in {"", ".", ".."} for p in value.split("/")), "paths must be relative to HOME without . or .. components")
+
+def packages(value):
+    obj(value, ("apt", "brew", "pacman"), "packages")
+    for items in value.values():
+        strings(items)
+        require(all(not x.startswith("-") and not any(c.isspace() for c in x) for x in items), "invalid package name")
+
+def unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        require(key not in result, f"duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+try:
+    config = json.loads(Path(sys.argv[1]).read_text(), object_pairs_hook=unique_object)
+    obj(config, ("version", "native", "mise_commands", "vendors", "legacy"), "setup")
+    require(type(config.get("version")) is int and config["version"] == 1, "unsupported setup config version")
+    for section in ("native", "mise_commands", "vendors", "legacy"):
+        require(isinstance(config.get(section), dict), f"{section} must be an object")
+        for name in config[section]:
+            string(name)
+            require(not name.startswith("-"), "names must not start with -")
+    for entry in config["native"].values():
+        obj(entry, ("packages", "commands", "optional", "brew_prefix"), "native package")
+        packages(entry.get("packages"))
+        strings(entry.get("commands", []))
+        require(type(entry.get("optional", False)) is bool, "optional must be boolean")
+        if "brew_prefix" in entry:
+            string(entry["brew_prefix"])
+    for command in config["mise_commands"].values():
+        string(command)
+    for entry in config["vendors"].values():
+        obj(entry, ("label", "path", "url", "shell", "update", "env", "legacy_mise"), "vendor")
+        for field in ("label", "url", "shell"):
+            string(entry.get(field))
+        relative(entry.get("path"))
+        require(entry["url"].startswith("https://"), "vendor URL must use HTTPS")
+        require(entry["shell"] in ("sh", "bash"), "vendor shell must be sh or bash")
+        strings(entry.get("update", []))
+        strings(entry.get("legacy_mise", []))
+        require(all(not x.startswith("-") for x in entry.get("legacy_mise", [])), "invalid legacy mise tool")
+        require(isinstance(entry.get("env", {}), dict), "vendor env must be an object")
+        for key, value in entry.get("env", {}).items():
+            require(re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key), "invalid environment variable name")
+            string(value)
+    for entry in config["legacy"].values():
+        obj(entry, ("packages", "bun", "files", "directories"), "legacy entry")
+        packages(entry.get("packages", {}))
+        if "bun" in entry:
+            string(entry["bun"])
+            require(not entry["bun"].startswith("-"), "invalid legacy bun package")
+        for field in ("files", "directories"):
+            require(isinstance(entry.get(field, []), list), f"{field} must be an array")
+        for item in entry.get("files", []):
+            obj(item, ("path", "command"), "legacy file")
+            relative(item.get("path"))
+            string(item.get("command"))
+        for item in entry.get("directories", []):
+            obj(item, ("path", "executable", "origin_contains"), "legacy directory")
+            relative(item.get("path"))
+            require(item["path"] not in {".local", ".local/bin", ".local/share", ".local/opt", ".config", "go", "go/bin", ".bun", ".bun/bin"}, "legacy directory is too broad")
+            require(("executable" in item) != ("origin_contains" in item), "legacy directory needs exactly one ownership probe")
+            if "executable" in item:
+                relative(item["executable"])
+            else:
+                string(item["origin_contains"])
+
+    action = sys.argv[2]
+    name = sys.argv[3] if len(sys.argv) > 3 else ""
+    pm = os.environ["SETUP_PM"]
+    platform = {"Darwin": "macos", "Linux": "linux"}.get(os.environ["SETUP_OS"])
+    output = []
+    if action == "validate":
+        pass
+    elif action.startswith("native-"):
+        if action in ("native-required", "native-optional"):
+            output = [key for key, entry in config["native"].items()
+                      if entry["packages"].get(pm, []) and entry.get("optional", False) == (action == "native-optional")]
+        elif action == "native-enabled":
+            sys.exit(0 if config["native"].get(name, {}).get("packages", {}).get(pm) else 1)
+        else:
+            entry = config["native"][name]
+            if action == "native-packages":
+                output = entry["packages"].get(pm, [])
+            elif action == "native-command":
+                output = entry.get("commands", [])[:1]
+            elif action == "native-commands":
+                output = entry.get("commands", [])
+            elif action == "native-prefix":
+                output = [entry.get("brew_prefix", "")]
+            else:
+                raise ValueError(f"unknown action: {action}")
+    elif action.startswith("mise-"):
+        try:
+            import tomllib
+        except ImportError:
+            import tomli as tomllib
+        tools = tomllib.loads(Path(os.environ["SETUP_MISE_CONFIG"]).read_text()).get("tools", {})
+        def platforms(value):
+            return value.get("os", ["linux", "macos"]) if isinstance(value, dict) else ["linux", "macos"]
+        if action == "mise-records":
+            for tool in tools:
+                command = config["mise_commands"].get(tool, tool.rsplit(":", 1)[-1].rsplit("/", 1)[-1])
+                string(tool)
+                string(command)
+                output.append(f"{tool}|{command}")
+        elif action == "mise-platforms":
+            output = [f"{tool}|{','.join(platforms(value))}" for tool, value in tools.items()]
+        elif action == "mise-for-os":
+            output = [tool for tool, value in tools.items() if name in platforms(value)]
+        elif action == "mise-applies":
+            sys.exit(0 if name in tools and platform in platforms(tools[name]) else 1)
+        elif action == "mise-has":
+            sys.exit(0 if name in tools else 1)
+        else:
+            raise ValueError(f"unknown action: {action}")
+    elif action == "vendors":
+        output = [f"{key}|{entry['label']}" for key, entry in config["vendors"].items()]
+    elif action == "vendor-field":
+        value = config["vendors"][name].get(sys.argv[4], [])
+        output = value if isinstance(value, list) else [value]
+    elif action == "vendor-env":
+        output = [f"{key}={value}" for key, value in config["vendors"][name].get("env", {}).items()]
+    elif action.startswith("legacy-"):
+        entry = config["legacy"].get(name, {})
+        if action == "legacy-packages":
+            output = entry.get("packages", {}).get(pm, [])
+        elif action == "legacy-bun":
+            output = [entry.get("bun", "")]
+        elif action == "legacy-files":
+            output = [f"{item['path']}|{item['command']}" for item in entry.get("files", [])]
+        elif action == "legacy-directories":
+            output = [f"{item['path']}|{item.get('executable', '')}|{item.get('origin_contains', '')}" for item in entry.get("directories", [])]
+        else:
+            raise ValueError(f"unknown action: {action}")
+    else:
+        raise ValueError(f"unknown action: {action}")
+    for value in output:
+        print(value)
+except (ValueError, KeyError, TypeError, OSError, ImportError) as error:
+    print(f"setup config: {error}", file=sys.stderr)
+    sys.exit(1)
+PY
+}
+
+install_configured_packages() {
+  local name records
+  local names=()
+  records="$(setup_config native-required)" || return 1
+  while IFS= read -r name; do [ -z "$name" ] || names+=("$name"); done <<<"$records"
+  names+=(--optional)
+  records="$(setup_config native-optional)" || return 1
+  while IFS= read -r name; do [ -z "$name" ] || names+=("$name"); done <<<"$records"
+  install_packages "${names[@]}"
 }
 
 refresh_pm() {
@@ -726,81 +856,9 @@ install_mise() {
   export PATH="${MISE_SHIMS}:${LOCAL_BIN}:${HOME}/.grok/bin:${HOME}/.bun/bin:${PATH}"
 }
 
-# tool identifier | primary command
-mise_tool_records() {
-  cat <<'EOF'
-go|go
-bun|bun
-github:microsoft/TypeScript|tsc
-github:llvm/llvm-project|clang
-pipx:rich-cli|rich
-github:vi/websocat|websocat
-npm:@kilocode/cli|kilocode
-npm:@tailwindcss/cli|tailwindcss
-npm:@trunkio/launcher|trunk
-npm:agent-browser|agent-browser
-npm:ccstatusline|ccstatusline
-npm:ctx7|ctx7
-npm:oxlint-tsgolint|tsgolint
-npm:scriptc|scriptc
-npm:vite|vite
-http:wrk|wrk
-aqua:astral-sh/uv|uv
-github:atuinsh/atuin|atuin
-aqua:crate-ci/typos|typos
-aqua:dandavison/delta|delta
-github:eza-community/eza|eza
-aqua:fastfetch-cli/fastfetch|fastfetch
-aqua:junegunn/fzf|fzf
-aqua:cli/cli|gh
-aqua:git-lfs/git-lfs|git-lfs
-aqua:gitleaks/gitleaks|gitleaks
-aqua:golangci/golangci-lint|golangci-lint
-aqua:jqlang/jq|jq
-aqua:casey/just|just
-aqua:koalaman/shellcheck|shellcheck
-aqua:jesseduffield/lazygit|lazygit
-aqua:mikefarah/yq|yq
-aqua:micro-editor/micro|micro
-aqua:mvdan/sh|shfmt
-aqua:JanDeDobbeleer/oh-my-posh|oh-my-posh
-aqua:rclone/rclone|rclone
-aqua:rhysd/actionlint|actionlint
-aqua:BurntSushi/ripgrep|rg
-aqua:rtk-ai/rtk|rtk
-aqua:sharkdp/bat|bat
-aqua:sharkdp/hyperfine|hyperfine
-github:tldr-pages/tlrc|tldr
-aqua:tmux/tmux-builds|tmux
-aqua:watchexec/watchexec|watchexec
-aqua:ajeetdsouza/zoxide|zoxide
-aqua:modem-dev/hunk|hunk
-aqua:oxc-project/oxc/oxfmt|oxfmt
-aqua:oxc-project/oxc/oxlint|oxlint
-aqua:pnpm/pnpm|pnpm
-go:golang.org/x/tools/gopls|gopls
-go:golang.org/x/tools/cmd/goimports|goimports
-go:golang.org/x/tools/cmd/deadcode|deadcode
-go:github.com/yusing/skills-mgr|skills-mgr
-go:github.com/yusing/git-agent/cmd/git-agent|git-agent
-go:github.com/yusing/shadowtree/cmd/shadowtree|shadowtree
-EOF
-}
-
-linux_only_mise_tools() {
-  printf '%s\n' "$LLVM_MISE_TOOL" "$EZA_MISE_TOOL"
-}
-
-mise_tool_applies() {
-  case "$1" in
-    "$LLVM_MISE_TOOL"|"$EZA_MISE_TOOL")
-      [ "$OS" = Linux ]
-      ;;
-    *)
-      return 0
-      ;;
-  esac
-}
+# Tool membership and OS restrictions come from mise's TOML, not a second list.
+mise_tool_records() { setup_config mise-records; }
+mise_tool_applies() { setup_config mise-applies "$1"; }
 
 validate_mise_tool() {
   local tool="$1" cmd="$2" path
@@ -833,10 +891,11 @@ install_locked_mise_tools() {
 }
 
 validate_mise_lock() {
-  local config_path="$1" lock_path="$2"
+  local config_path="$1" lock_path="$2" platforms
+  platforms="$(MISE_CONFIG="$config_path" setup_config mise-platforms)" || return 1
   MISE_CONFIG_PATH="$config_path" MISE_LOCK_PATH="$lock_path" \
     MISE_LOCK_PLATFORMS="$MISE_LOCK_PLATFORMS" \
-    MISE_LINUX_ONLY_TOOLS="$(linux_only_mise_tools)" py <<'PY'
+    MISE_TOOL_PLATFORMS="$platforms" py <<'PY'
 import os
 import re
 from pathlib import Path
@@ -880,17 +939,18 @@ for match in artifact_header.finditer(lock_text):
         for key, value in re.findall(r'^(url|checksum)\s*=\s*"([^"]*)"\s*$', body, re.MULTILINE)
     }
     artifacts.setdefault((tool, platform), []).append(fields)
-linux_only = {
-    line for line in os.environ.get("MISE_LINUX_ONLY_TOOLS", "").splitlines() if line
+tool_platforms = {
+    tool: platforms.split(",")
+    for tool, platforms in (line.split("|", 1) for line in os.environ["MISE_TOOL_PLATFORMS"].splitlines())
 }
 for tool in locked:
     # Package-manager backends lock versions rather than release artifacts.
     if tool.startswith(("go:", "npm:", "pipx:")):
         continue
-    if tool in linux_only:
-        tool_required = {platform for platform in required if platform.startswith("platforms.linux-")}
-    else:
-        tool_required = required
+    tool_required = {
+        platform for platform in required
+        if platform.split(".", 1)[1].split("-", 1)[0] in tool_platforms[tool]
+    }
     for platform in sorted(required):
         sections = artifacts.get((tool, platform), [])
         if platform not in tool_required:
@@ -914,7 +974,8 @@ PY
 }
 
 refresh_mise_lock() (
-  local tmp lock_path staged token=""
+  local tmp lock_path staged token="" os platforms tool records
+  local platform_tools=()
   tmp="$(mktemp -d "${TMPDIR:-/tmp}/setup-mise-lock.XXXXXX")"
   lock_path="${MISE_CONFIG%/*}/mise.lock"
   staged="${lock_path}.setup.$$"
@@ -922,7 +983,8 @@ refresh_mise_lock() (
 
   mkdir -p "$tmp/.config/mise"
   cp "$MISE_CONFIG" "$tmp/.config/mise/config.toml"
-  [ ! -f "$lock_path" ] || cp "$lock_path" "$tmp/.config/mise/mise.lock"
+  # Upgrade resolves the entire configured inventory afresh. Seeding a filtered
+  # lock run with the old lock would retain tools removed from configuration.
 
   if [ -z "${GITHUB_TOKEN:-}" ] && have gh; then
     token="$(gh auth token 2>/dev/null || true)"
@@ -930,38 +992,26 @@ refresh_mise_lock() (
   fi
 
   info "updating the cross-platform tool lock"
-  linux_platforms="$(printf '%s\n' "${MISE_LOCK_PLATFORMS//,/$'\n'}" | grep '^linux-' | awk '{ printf sep $0; sep = "," }')"
-  macos_platforms="$(printf '%s\n' "${MISE_LOCK_PLATFORMS//,/$'\n'}" | grep '^macos-' | awk '{ printf sep $0; sep = "," }')"
-  [ -n "$linux_platforms" ] || die "MISE_LOCK_PLATFORMS has no linux platforms"
-  if ! (
-    cd "$tmp"
-    # Isolate the candidate config without hiding the installed Go toolchain
-    # and caches that source-backed tools need while resolving versions.
-    MISE_GLOBAL_CONFIG_FILE="$tmp/.config/mise/config.toml" \
-      MISE_HTTP_TIMEOUT=120 MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=120 \
-      mise_cmd lock --global --bump \
-      --platform "$linux_platforms"
-  ) 2>&1 | tee "$tmp/mise-lock.log"; then
-    return 1
-  fi
-  if [ -n "$macos_platforms" ]; then
-    macos_tools=()
+  for os in linux macos; do
+    platforms="$(printf '%s\n' "${MISE_LOCK_PLATFORMS//,/$'\n'}" | awk -v os="$os" 'index($0, os "-") == 1 { printf sep $0; sep = "," }')"
+    [ -n "$platforms" ] || continue
+    platform_tools=()
+    records="$(mise_lock_tools_for "$tmp/.config/mise/config.toml" "$os")" || return 1
     while IFS= read -r tool; do
-      [ -n "$tool" ] || continue
-      macos_tools+=("$tool")
-    done < <(mise_lock_tools_except "$tmp/.config/mise/config.toml")
-    [ "${#macos_tools[@]}" -gt 0 ] || die "no macOS mise tools to lock"
+      [ -z "$tool" ] || platform_tools+=("$tool")
+    done <<<"$records"
+    [ "${#platform_tools[@]}" -gt 0 ] || continue
     if ! (
       cd "$tmp"
+      # Explicit tool lists preserve the other platform's artifacts while
+      # respecting every configured OS restriction, not individual tool names.
       MISE_GLOBAL_CONFIG_FILE="$tmp/.config/mise/config.toml" \
         MISE_HTTP_TIMEOUT=120 MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=120 \
-        mise_cmd lock --global --bump \
-        --platform "$macos_platforms" \
-        "${macos_tools[@]}"
+        mise_cmd lock --global --bump --platform "$platforms" "${platform_tools[@]}"
     ) 2>&1 | tee -a "$tmp/mise-lock.log"; then
       return 1
     fi
-  fi
+  done
   if grep -Eq '^mise WARN[[:space:]]+(Failed to resolve tool version list|Remote versions cannot be fetched|Error getting latest version)' \
     "$tmp/mise-lock.log"; then
     warn "mise could not resolve every latest tool version; the existing lock was preserved"
@@ -974,24 +1024,7 @@ refresh_mise_lock() (
   mv "$staged" "$lock_path"
 )
 
-mise_lock_tools_except() {
-  local config_path="$1"
-  MISE_CONFIG_PATH="$config_path" MISE_SKIP_TOOLS="$(linux_only_mise_tools)" py <<'PY'
-import os
-from pathlib import Path
-
-try:
-    import tomllib
-except ImportError:
-    import tomli as tomllib
-
-config = tomllib.loads(Path(os.environ["MISE_CONFIG_PATH"]).read_text())
-skip = {line for line in os.environ["MISE_SKIP_TOOLS"].splitlines() if line}
-for name in config["tools"]:
-    if name not in skip:
-        print(name)
-PY
-}
+mise_lock_tools_for() { MISE_CONFIG="$1" setup_config mise-for-os "$2"; }
 
 locked_llvm_version() {
   local lock_path="${1:-${MISE_CONFIG%/*}/mise.lock}"
@@ -1016,6 +1049,8 @@ brew_llvm_formula_version() {
 
 assert_llvm_version_alignment() {
   local lock_path="${1:-${MISE_CONFIG%/*}/mise.lock}" brew_ver lock_ver
+  PM=brew setup_config native-enabled llvm || return 0
+  setup_config mise-has github:llvm/llvm-project || return 0
   brew_ver="$(brew_llvm_formula_version)" \
     || die "could not read the Homebrew llvm formula version"
   lock_ver="$(locked_llvm_version "$lock_path")" \
@@ -1028,7 +1063,7 @@ upgrade_mise_tools() {
   # The existing locked Go version is needed to resolve source-built Go tools.
   mise_cmd install --locked go
   refresh_mise_lock
-  if [ "$PM" = brew ]; then
+  if [ "$PM" = brew ] && setup_config native-enabled llvm; then
     info "upgrading Homebrew llvm to the locked version"
     brew upgrade llvm || brew install --no-ask llvm
   fi
@@ -1039,118 +1074,7 @@ upgrade_mise_tools() {
 # Legacy source cleanup
 # ---------------------------------------------------------------------------
 
-legacy_packages() {
-  local cmd="$1"
-  case "${PM}:${cmd}" in
-    brew:tsc) printf '%s\n' typescript-language-server typescript ;;
-    pacman:tsc) printf '%s\n' typescript-language-server typescript ;;
-    apt:tsc) echo node-typescript-language-server ;;
-    brew:rich|apt:rich|pacman:rich) echo rich-cli ;;
-    brew:trunk) echo trunk-io ;;
-    pacman:trunk) echo trunk-check ;;
-    brew:wrk|apt:wrk|pacman:wrk) echo wrk ;;
-    brew:websocat|apt:websocat|pacman:websocat) echo websocat ;;
-    brew:actionlint) echo actionlint ;;
-    brew:atuin) echo atuin ;;
-    brew:bat) echo bat ;;
-    brew:bun) echo bun ;;
-    brew:codex) echo codex ;;
-    brew:delta) echo git-delta ;;
-    brew:eza) echo eza ;;
-    brew:fastfetch) echo fastfetch ;;
-    brew:fzf) echo fzf ;;
-    brew:gh) echo gh ;;
-    brew:git-lfs) echo git-lfs ;;
-    brew:gitleaks) echo gitleaks ;;
-    brew:go) echo go ;;
-    brew:golangci-lint) echo golangci-lint ;;
-    brew:herdr) echo herdr ;;
-    brew:hyperfine) echo hyperfine ;;
-    brew:jq) echo jq ;;
-    brew:just) echo just ;;
-    brew:lazygit) echo lazygit ;;
-    brew:micro) echo micro ;;
-    brew:mise) echo mise ;;
-    brew:oh-my-posh) echo oh-my-posh ;;
-    brew:rg) echo ripgrep ;;
-    brew:rtk) echo rtk ;;
-    brew:rclone) echo rclone ;;
-    brew:shellcheck) echo shellcheck ;;
-    brew:shfmt) echo shfmt ;;
-    brew:tldr) echo tealdeer ;;
-    brew:tmux) echo tmux ;;
-    brew:typos) echo typos-cli ;;
-    brew:uv) echo uv ;;
-    brew:watchexec) echo watchexec ;;
-    brew:yq) echo yq ;;
-    brew:zoxide) echo zoxide ;;
-
-    apt:actionlint) echo actionlint ;;
-    apt:atuin) echo atuin ;;
-    apt:bat) echo bat ;;
-    apt:delta) echo git-delta ;;
-    apt:eza) echo eza ;;
-    apt:fastfetch) echo fastfetch ;;
-    apt:fzf) echo fzf ;;
-    apt:gh) echo gh ;;
-    apt:git-lfs) echo git-lfs ;;
-    apt:gitleaks) echo gitleaks ;;
-    apt:go) printf '%s\n' golang-go golang ;;
-    apt:golangci-lint) echo golangci-lint ;;
-    apt:hyperfine) echo hyperfine ;;
-    apt:jq) echo jq ;;
-    apt:just) echo just ;;
-    apt:lazygit) echo lazygit ;;
-    apt:micro) echo micro ;;
-    apt:mise) echo mise ;;
-    apt:oh-my-posh) echo oh-my-posh ;;
-    apt:rg) echo ripgrep ;;
-    apt:rclone) echo rclone ;;
-    apt:shellcheck) echo shellcheck ;;
-    apt:shfmt) echo shfmt ;;
-    apt:tldr) printf '%s\n' tealdeer tldr ;;
-    apt:tmux) echo tmux ;;
-    apt:typos) echo typos-cli ;;
-    apt:uv) echo uv ;;
-    apt:watchexec) echo watchexec ;;
-    apt:yq) echo yq ;;
-    apt:zoxide) echo zoxide ;;
-
-    pacman:actionlint) echo actionlint ;;
-    pacman:atuin) echo atuin ;;
-    pacman:bat) echo bat ;;
-    pacman:bun) printf '%s\n' bun bun-bin ;;
-    pacman:codex) printf '%s\n' codex codex-cli-bin ;;
-    pacman:delta) echo git-delta ;;
-    pacman:eza) echo eza ;;
-    pacman:fastfetch) echo fastfetch ;;
-    pacman:fzf) echo fzf ;;
-    pacman:gh) echo github-cli ;;
-    pacman:git-lfs) echo git-lfs ;;
-    pacman:gitleaks) echo gitleaks ;;
-    pacman:go) echo go ;;
-    pacman:golangci-lint) echo golangci-lint ;;
-    pacman:hyperfine) echo hyperfine ;;
-    pacman:jq) echo jq ;;
-    pacman:just) echo just ;;
-    pacman:lazygit) echo lazygit ;;
-    pacman:micro) echo micro ;;
-    pacman:mise) echo mise ;;
-    pacman:oh-my-posh) echo oh-my-posh ;;
-    pacman:rg) echo ripgrep ;;
-    pacman:rtk) echo rtk ;;
-    pacman:rclone) echo rclone ;;
-    pacman:shellcheck) echo shellcheck ;;
-    pacman:shfmt) echo shfmt ;;
-    pacman:tldr) echo tealdeer ;;
-    pacman:tmux) echo tmux ;;
-    pacman:typos) echo typos-cli ;;
-    pacman:uv) echo uv ;;
-    pacman:watchexec) echo watchexec ;;
-    pacman:yq) echo yq ;;
-    pacman:zoxide) echo zoxide ;;
-  esac
-}
+legacy_packages() { setup_config legacy-packages "$1"; }
 
 installed_pm_package() {
   case "$PM" in
@@ -1292,25 +1216,7 @@ remove_legacy_file() {
   rm -f "$path"
 }
 
-legacy_bun_package() {
-  case "$1" in
-    agent-browser) printf '%s\n' agent-browser ;;
-    ccstatusline) printf '%s\n' ccstatusline ;;
-    ctx7) printf '%s\n' ctx7 ;;
-    hunk) printf '%s\n' hunkdiff ;;
-    kilocode) printf '%s\n' @kilocode/cli ;;
-    oxfmt) printf '%s\n' oxfmt ;;
-    oxlint) printf '%s\n' oxlint ;;
-    pnpm) printf '%s\n' pnpm ;;
-    scriptc) printf '%s\n' scriptc ;;
-    tailwindcss) printf '%s\n' @tailwindcss/cli ;;
-    tldr) printf '%s\n' tldr ;;
-    trunk) printf '%s\n' @trunkio/launcher ;;
-    tsc) printf '%s\n' typescript ;;
-    tsgolint) printf '%s\n' oxlint-tsgolint ;;
-    vite) printf '%s\n' vite ;;
-  esac
-}
+legacy_bun_package() { setup_config legacy-bun "$1"; }
 
 # Prints the bun global package for $1 unless ~/.bun/bin/$1 is already the
 # validated mise replacement.
@@ -1360,61 +1266,26 @@ remove_legacy_bun_packages() {
 }
 
 cleanup_legacy_files() {
-  local cmd="$1" replacement
-  replacement="$(mise_cmd which "$cmd" 2>/dev/null || true)"
-  case "$cmd" in
-    atuin)
-      remove_legacy_file "${HOME}/.atuin/bin/atuin" "$replacement"
-      remove_legacy_file "${LOCAL_BIN}/atuin" "$replacement"
-      ;;
-    bun) remove_legacy_file "${HOME}/.bun/bin/bun" "$replacement" ;;
-    fzf)
-      remove_legacy_file "${LOCAL_BIN}/fzf" "$replacement"
-      remove_legacy_file "${HOME}/.fzf/bin/fzf" "$replacement"
-      if [ -d "${HOME}/.fzf/.git" ] \
-        && git -C "${HOME}/.fzf" remote get-url origin 2>/dev/null | grep -q 'junegunn/fzf'; then
-        info "removing legacy fzf checkout ${HOME}/.fzf"
-        rm -rf "${HOME}/.fzf"
-      fi
-      ;;
-    go)
-      remove_legacy_file "${LOCAL_BIN}/go" "$replacement"
-      remove_legacy_file "${LOCAL_BIN}/gofmt" "$(mise_cmd which gofmt 2>/dev/null || true)"
-      if [ -x "${LEGACY_GO_PREFIX}/bin/go" ]; then
-        info "removing legacy Go toolchain $LEGACY_GO_PREFIX"
-        rm -rf "$LEGACY_GO_PREFIX"
-      fi
-      ;;
-    gopls|goimports|deadcode|skills-mgr|git-agent|shadowtree)
-      remove_legacy_file "${LEGACY_GOBIN}/${cmd}" "$replacement"
-      remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
-      ;;
-    gitleaks|golangci-lint|lazygit)
-      remove_legacy_file "${LEGACY_GOBIN}/${cmd}" "$replacement"
-      remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
-      ;;
-    actionlint|agent-browser|bat|ccstatusline|clang|codex|ctx7|delta|eza|fastfetch|gh|git-lfs|hunk|hyperfine|jq|just|kilocode|micro|oh-my-posh|oxfmt|oxlint|pnpm|rclone|rg|rtk|scriptc|shellcheck|shfmt|tailwindcss|tldr|tmux|tsgolint|typos|vite|watchexec|yq|zoxide|trunk|wrk|websocat|rich|tsc)
-      remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
-      case "$cmd" in
-        agent-browser|ccstatusline|ctx7|oxfmt|oxlint|pnpm|scriptc|tailwindcss|tldr|trunk|tsc|tsgolint|vite)
-          remove_legacy_file "${HOME}/.bun/bin/${cmd}" "$replacement"
-          ;;
-        hunk)
-          remove_legacy_file "${HOME}/.bun/bin/hunk" "$replacement"
-          remove_legacy_file "${HOME}/.bun/bin/hunkdiff" "$replacement"
-          ;;
-        kilocode)
-          remove_legacy_file "${LOCAL_BIN}/kilo" "$(mise_cmd which kilo 2>/dev/null || true)"
-          remove_legacy_file "${HOME}/.bun/bin/kilocode" "$replacement"
-          remove_legacy_file "${HOME}/.bun/bin/kilo" "$(mise_cmd which kilo 2>/dev/null || true)"
-          ;;
-      esac
-      ;;
-    uv)
-      remove_legacy_file "${LOCAL_BIN}/uv" "$replacement"
-      remove_legacy_file "${LOCAL_BIN}/uvx" "$(mise_cmd which uvx 2>/dev/null || true)"
-      ;;
-  esac
+  local cmd="$1" path probe origin replacement records
+  records="$(setup_config legacy-files "$cmd")" || return 1
+  while IFS='|' read -r path probe; do
+    [ -n "$path" ] || continue
+    replacement="$(mise_cmd which "$probe" 2>/dev/null || true)"
+    remove_legacy_file "${HOME}/$path" "$replacement"
+  done <<<"$records"
+  records="$(setup_config legacy-directories "$cmd")" || return 1
+  while IFS='|' read -r path probe origin; do
+    [ -n "$path" ] || continue
+    path="${HOME}/$path"
+    if [ -n "$probe" ]; then
+      [ -x "$path/$probe" ] || continue
+    else
+      [ -d "$path/.git" ] || continue
+      git -C "$path" remote get-url origin 2>/dev/null | grep -Fq "$origin" || continue
+    fi
+    info "removing legacy tool directory $path"
+    rm -rf "$path"
+  done <<<"$records"
 }
 
 cleanup_legacy_tool_sources() {
@@ -1445,11 +1316,11 @@ cleanup_legacy_tool_sources() {
   if [ "$OS" = Darwin ]; then
     local brew_clang="" eza_install
     brew_clang="$(brew --prefix llvm 2>/dev/null || true)"
-    if [ -n "$brew_clang" ] && [ -x "$brew_clang/bin/clang" ]; then
+    if setup_config native-enabled llvm && [ -n "$brew_clang" ] && [ -x "$brew_clang/bin/clang" ]; then
       remove_legacy_file "${LOCAL_BIN}/clang" "$brew_clang/bin/clang"
     fi
     eza_install="${HOME}/.local/share/mise/installs/github-eza-community-eza"
-    if [ -d "$eza_install" ]; then
+    if setup_config native-enabled eza && [ -d "$eza_install" ]; then
       info "removing leftover mise eza on macOS"
       rm -rf "$eza_install"
       if [ -x "$MISE_BIN" ]; then
@@ -1465,85 +1336,65 @@ cleanup_legacy_tool_sources() {
 # Additional tools
 # ---------------------------------------------------------------------------
 
-install_claude() {
-  if [ ! -x "${LOCAL_BIN}/claude" ]; then
-    info "installing Claude Code"
-    curl -fsSL https://claude.ai/install.sh | bash
+install_vendor() {
+  local name="$1" path url shell label item records
+  local updates=() environment=() obsolete=() packages=()
+  path="${HOME}/$(setup_config vendor-field "$name" path)"
+  url="$(setup_config vendor-field "$name" url)"
+  shell="$(setup_config vendor-field "$name" shell)"
+  label="$(setup_config vendor-field "$name" label)"
+  records="$(setup_config vendor-field "$name" update)"
+  while IFS= read -r item; do [ -z "$item" ] || updates+=("$item"); done <<<"$records"
+  records="$(setup_config vendor-env "$name")"
+  while IFS= read -r item; do [ -z "$item" ] || environment+=("$item"); done <<<"$records"
+  if [ ! -x "$path" ] || { [ "$UPGRADE" -eq 1 ] && [ "${#updates[@]}" -eq 0 ]; }; then
+    info "installing/updating $label"
+    curl -fsSL "$url" | env ${environment[@]+"${environment[@]}"} "$shell"
   elif [ "$UPGRADE" -eq 1 ]; then
-    info "updating Claude Code"
-    "${LOCAL_BIN}/claude" update
+    info "updating $label"
+    "$path" "${updates[@]}"
   fi
-}
-
-install_codex() {
-  local pkg
-  local packages=()
-  if [ ! -x "${LOCAL_BIN}/codex" ] || [ "$UPGRADE" -eq 1 ]; then
-    info "installing/updating Codex"
-    curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
+  [ -x "$path" ] || die "$label is unavailable at $path"
+  records="$(setup_config vendor-field "$name" legacy_mise)"
+  while IFS= read -r item; do [ -z "$item" ] || obsolete+=("$item"); done <<<"$records"
+  if [ "${#obsolete[@]}" -gt 0 ]; then
+    mise_cmd uninstall --all "${obsolete[@]}" >/dev/null 2>&1 \
+      || warn "could not remove legacy mise-managed $label"
+    mise_cmd reshim
   fi
-  [ -x "${LOCAL_BIN}/codex" ] || die "Codex is unavailable at ${LOCAL_BIN}/codex"
-
-  # Codex moved back to its official installer; remove both mise backends used
-  # by earlier setup versions so their generated shim cannot shadow it.
-  mise_cmd uninstall --all aqua:openai/codex github:openai/codex >/dev/null 2>&1 \
-    || warn "could not remove a legacy mise-managed Codex installation"
-  mise_cmd reshim
-  while IFS= read -r pkg; do
-    [ -z "$pkg" ] || packages+=("$pkg")
-  done < <(legacy_packages codex)
-  remove_legacy_packages ${packages[@]+"${packages[@]}"}
-}
-
-install_grok() {
-  local grok_bin="${HOME}/.grok/bin/grok"
-  if [ ! -x "$grok_bin" ]; then
-    info "installing Grok CLI"
-    curl -fsSL https://x.ai/cli/install.sh | bash
-  elif [ "$UPGRADE" -eq 1 ]; then
-    info "updating Grok CLI"
-    "$grok_bin" update
-  fi
-}
-
-install_herdr() {
-  local pkg
-  local packages=()
-  if [ ! -x "${LOCAL_BIN}/herdr" ] || [ "$UPGRADE" -eq 1 ]; then
-    info "installing/updating herdr"
-    curl -fsSL https://herdr.dev/install.sh | sh
-  fi
-  [ -x "${LOCAL_BIN}/herdr" ] || die "herdr is unavailable at ${LOCAL_BIN}/herdr"
-  while IFS= read -r pkg; do
-    [ -z "$pkg" ] || packages+=("$pkg")
-  done < <(legacy_packages herdr)
+  records="$(legacy_packages "$name")"
+  while IFS= read -r item; do [ -z "$item" ] || packages+=("$item"); done <<<"$records"
   remove_legacy_packages ${packages[@]+"${packages[@]}"}
 }
 
 run_additional_installs() (
-  local log_root index log status failed=0
-  local labels=("Claude Code" "Codex" "Grok CLI" "herdr")
-  local commands=(install_claude install_codex install_grok install_herdr)
-  local pids=() logs=()
-
+  local log_root index log status failed=0 name label records offset end
+  local names=() labels=() pids=() logs=()
+  records="$(setup_config vendors)" || return 1
+  while IFS='|' read -r name label; do
+    [ -n "$name" ] || continue
+    names+=("$name"); labels+=("$label")
+  done <<<"$records"
   log_root="$(mktemp -d "${TMPDIR:-/tmp}/setup-vendor.XXXXXX")"
   trap 'rm -rf "$log_root"' EXIT HUP INT TERM
-
-  for ((index = 0; index < ${#commands[@]}; index++)); do
-    log="${log_root}/${index}.log"
-    logs[index]="$log"
-    info "starting ${labels[$index]}"
-    (STEP="install ${labels[$index]}"; "${commands[$index]}") >"$log" 2>&1 &
-    pids[index]=$!
+  # Bound concurrency even when the config grows. Report all jobs before failing.
+  for ((offset = 0; offset < ${#names[@]}; offset += 4)); do
+    end=$((offset + 4))
+    [ "$end" -le "${#names[@]}" ] || end=${#names[@]}
+    for ((index = offset; index < end; index++)); do
+      log="${log_root}/${index}.log"
+      logs[index]="$log"
+      info "starting ${labels[$index]}"
+      (STEP="install ${labels[$index]}"; install_vendor "${names[$index]}") >"$log" 2>&1 &
+      pids[index]=$!
+    done
+    for ((index = offset; index < end; index++)); do
+      if wait "${pids[$index]}"; then status=0; else status=$?; failed=1; fi
+      info "install log: ${labels[$index]}"
+      if [ -s "${logs[$index]}" ]; then cat "${logs[$index]}"; else log "  completed with no output"; fi
+      [ "$status" -eq 0 ] || warn "${labels[$index]} install failed with status $status"
+    done
   done
-
-  for ((index = 0; index < ${#pids[@]}; index++)); do
-    if wait "${pids[$index]}"; then status=0; else status=$?; failed=1; fi
-    info "install log: ${labels[$index]}"
-    if [ -s "${logs[$index]}" ]; then cat "${logs[$index]}"; else log "  completed with no output"; fi
-    [ "$status" -eq 0 ] || warn "${labels[$index]} install failed with status $status"
-  done
-
   [ "$failed" -eq 0 ] || die "one or more additional tool installs failed"
 )
 
@@ -1615,9 +1466,15 @@ verify_brew_llvm() {
 }
 
 verify_setup() {
-  local required_failed=0 tool cmd path
+  local required_failed=0 tool cmd path records name label
   info "native commands"
-  if ! check_cmds git curl fish make tput gpg python3 unzip rsync; then required_failed=1; fi
+  records="$(setup_config native-required)" || return 1
+  while IFS= read -r name; do
+    [ -n "$name" ] || continue
+    cmd="$(pkg_cmd "$name")"
+    [ -n "$cmd" ] || continue
+    if have_logical "$name"; then log "  ok  $name"; else log "  MISS $name"; required_failed=1; fi
+  done <<<"$records"
   if [ "$PM" = pacman ] && ! check_cmds yay; then
     required_failed=1
   fi
@@ -1632,15 +1489,18 @@ verify_setup() {
       required_failed=1
     fi
   done < <(mise_tool_records)
-  if [ "$OS" = Darwin ]; then
+  if [ "$OS" = Darwin ] && setup_config native-enabled llvm && setup_config mise-has github:llvm/llvm-project; then
     info "Homebrew llvm"
     load_brew_llvm_env
     if ! verify_brew_llvm; then required_failed=1; fi
-    info "Homebrew eza"
-    if ! check_cmds eza; then required_failed=1; fi
   fi
   info "additional commands"
-  if ! check_cmds claude grok herdr; then required_failed=1; fi
+  records="$(setup_config vendors)" || return 1
+  while IFS='|' read -r name label; do
+    [ -n "$name" ] || continue
+    path="${HOME}/$(setup_config vendor-field "$name" path)"
+    if [ -x "$path" ]; then log "  ok  $label ($path)"; else log "  MISS $label ($path)"; required_failed=1; fi
+  done <<<"$records"
   if [ "$required_failed" -ne 0 ]; then
     die "required tools are missing; re-run setup.sh"
   fi
@@ -1648,7 +1508,13 @@ verify_setup() {
 
 usage() {
   cat <<'EOF'
-Usage: setup.sh [--upgrade]
+Usage: setup.sh [--upgrade] [--config PATH] [--check-config]
+
+Package choices and vendor installers live in setup.json beside this script.
+Mise package declarations and versions live in .config/mise/config.toml.
+--config selects another JSON file; SETUP_CONFIG is the environment equivalent.
+--check-config validates JSON only, without downloads, installs, or checkout changes.
+Removing an entry stops managing it; it does not uninstall existing software.
 
 Install missing native and locked cross-platform tools, reconcile each tool to
 its declared owner, then check the agentic-dotfiles repository out into $HOME.
@@ -1668,21 +1534,43 @@ EOF
 # ---------------------------------------------------------------------------
 
 main() {
-  [ "$#" -le 1 ] || die "expected at most one argument"
-  case "${1:-}" in
-    -h|--help)
-      usage
-      return 0
-      ;;
-    "")
-      ;;
-    --upgrade)
-      UPGRADE=1
-      ;;
-    *)
-      die "unknown argument: $1"
-      ;;
-  esac
+  local check_config=0 explicit_config="${SETUP_CONFIG_EXPLICIT:-0}"
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      -h|--help)
+        usage
+        return 0
+        ;;
+      --upgrade)
+        UPGRADE=1
+        ;;
+      --config)
+        [ "$#" -ge 2 ] || die "--config needs a path"
+        SETUP_CONFIG="$2"
+        explicit_config=1
+        shift
+        ;;
+      --check-config)
+        check_config=1
+        ;;
+      *)
+        die "unknown argument: $1"
+        ;;
+    esac
+    shift
+  done
+  case "$SETUP_CONFIG" in /*) ;; *) SETUP_CONFIG="$PWD/$SETUP_CONFIG" ;; esac
+  if [ "$check_config" -eq 1 ]; then
+    setup_config validate
+    info "setup config is valid: $SETUP_CONFIG"
+    return 0
+  fi
+  if [ "$explicit_config" -eq 1 ] && [ ! -f "$SETUP_CONFIG" ]; then
+    die "setup config is missing: $SETUP_CONFIG"
+  fi
+  if [ -f "$SETUP_CONFIG" ] && { have python3 || have python; }; then
+    setup_config validate
+  fi
 
   mkdir -p "$LOCAL_BIN" "$BACKUP_ROOT"
   cd "$HOME"
@@ -1700,24 +1588,42 @@ main() {
   STEP="ensure yay"
   ensure_yay
 
-  STEP="install packages"
-  install_packages \
-    git curl unzip python3 ca-certificates fish make gpg ncurses rsync build-essential \
-    --optional \
-    wget imagemagick time
-  if [ "$PM" = brew ]; then
-    install_packages llvm eza
+  STEP="load setup config"
+  # The parser is a bootstrap dependency, not a configurable managed package.
+  if ! have python3 && ! have python; then
+    refresh_pm
+    if [ "$PM" = apt ]; then pm_install_batch python3; else pm_install_batch python; fi
   fi
+  # Use one validated snapshot throughout the run, including across checkout.
+  SETUP_RUN_DIR="$(mktemp -d "${TMPDIR:-/tmp}/setup-config.XXXXXX")"
+  trap 'rm -rf "$SETUP_RUN_DIR"' EXIT
+  if [ -f "$SETUP_CONFIG" ]; then
+    cp "$SETUP_CONFIG" "$SETUP_RUN_DIR/setup.json"
+  else
+    have curl || pm_install_batch curl
+    curl -fsSL "https://raw.githubusercontent.com/${REPO_SLUG}/main/setup.json" -o "$SETUP_RUN_DIR/setup.json"
+  fi
+  SETUP_CONFIG="$SETUP_RUN_DIR/setup.json"
+  setup_config validate
+
+  STEP="install packages"
+  install_configured_packages
   have git || die "git is required"
   have curl || die "curl is required"
   have cc || die "a C compiler is required to build wrk; install the OS developer tools"
   load_brew_llvm_env
+
+  STEP="ensure TOML parser"
+  ensure_toml_parser
 
   STEP="setup home git repository"
   setup_home_repo
 
   STEP="resolve home paths in configuration"
   rewrite_home_paths
+
+  STEP="validate mise inventory"
+  setup_config mise-records >/dev/null
 
   STEP="install mise"
   install_mise

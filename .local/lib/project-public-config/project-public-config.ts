@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.5";
+export const VERSION = "1.1.7";
 
 type TreeEntry = {
 	mode: string;
@@ -82,6 +82,8 @@ const TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS = new Set([
 
 const EXACT_PATHS = new Set([
 	"setup.sh",
+	"setup.json",
+	"setup.changelog.md",
 	"AGENTS.md",
 	"CLAUDE.md",
 	"LICENSE",
@@ -620,6 +622,29 @@ function projectMarkdown(path: string, text: string): string {
 		return PUBLIC_PROJECT_GUIDANCE;
 	}
 	let projected = text;
+	if (path === "README.md") {
+		let omittedLevel = 0;
+		let fence: string | undefined;
+		projected = projected.split(/\r?\n/).filter(line => {
+			// Headings inside fenced examples are content, not section boundaries.
+			const marker = line.match(/^ {0,3}(`{3,}|~{3,})/);
+			if (fence) {
+				if (marker && marker[1][0] === fence[0] && marker[1].length >= fence.length
+					&& line.slice(marker[0].length).trim() === "") fence = undefined;
+				return omittedLevel === 0;
+			}
+			if (marker) {
+				fence = marker[1];
+				return omittedLevel === 0;
+			}
+			const heading = line.match(/^ {0,3}(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$/);
+			if (heading) {
+				if (omittedLevel && heading[1].length <= omittedLevel) omittedLevel = 0;
+				if (!omittedLevel && heading[2] === "Managing packages") omittedLevel = heading[1].length;
+			}
+			return omittedLevel === 0;
+		}).join("\n");
+	}
 	if (path === "CONTEXT-HOOK-OWNERS.md") {
 		projected = projected
 			.replace(
