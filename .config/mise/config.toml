@@ -4,6 +4,7 @@
 "lockfile" = true
 "minimum_release_age" = "0s"
 "npm" = { "package_manager" = "bun" }
+"go" = { "set_gobin" = false }
 
 [tools]
 "go" = "latest"

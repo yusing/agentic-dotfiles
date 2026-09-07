@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.2.1
+# version: 2.2.2
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1012,9 +1012,22 @@ install_mise() {
 mise_tool_records() { setup_config mise-records; }
 mise_tool_applies() { setup_config mise-applies "$1"; }
 
+# Go commands must come from their own package, not a stray toolchain binary.
+mise_tool_path() {
+  local tool="$1" cmd="$2" root
+  case "$tool" in
+    go:*)
+      root="$(mise_cmd where "$tool")" || return 1
+      [ -n "$root" ] || return 1
+      printf '%s/bin/%s\n' "$root" "$cmd"
+      ;;
+    *) mise_cmd which "$cmd" ;;
+  esac
+}
+
 validate_mise_tool() {
   local tool="$1" cmd="$2" path
-  path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
+  path="$(mise_tool_path "$tool" "$cmd" 2>/dev/null || true)"
   [ -n "$path" ] && [ -x "$path" ] \
     || die "mise installed $tool, but $cmd is unavailable"
 }
@@ -1032,7 +1045,7 @@ install_locked_mise_tools() {
   mise_cmd reshim
   while IFS='|' read -r tool cmd; do
     mise_tool_applies "$tool" || continue
-    path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
+    path="$(mise_tool_path "$tool" "$cmd" 2>/dev/null || true)"
     if [ -z "$path" ] || [ ! -x "$path" ]; then
       info "reinstalling $tool so $cmd is available"
       mise_cmd install --force --locked "$tool"
@@ -1487,6 +1500,27 @@ cleanup_legacy_files() {
   done <<<"$records"
 }
 
+# Only declared Go-package commands are candidates; preserve all other binaries.
+cleanup_go_toolchain_command() {
+  local tool="$1" cmd="$2" replacement installs root
+  case "$tool" in go:*) ;; *) return 0 ;; esac
+  case "$cmd" in ''|*/*|go|gofmt|.|..) die "unsafe Go cleanup command: $cmd" ;; esac
+  replacement="$(mise_tool_path "$tool" "$cmd")" || return 1
+  [ -x "$replacement" ] || die "cannot clean up $cmd without its mise package binary"
+  installs="$(mise_cmd ls go --installed --json)" || return 1
+  installs="$(printf '%s' "$installs" | py -c '
+import json, sys
+for tool in json.load(sys.stdin):
+    print(tool["install_path"])
+')" || return 1
+  while IFS= read -r root; do
+    [ -n "$root" ] || continue
+    case "$root" in /*) ;; *) die "invalid Go installation path: $root" ;; esac
+    [ -x "$root/bin/go" ] || die "invalid Go installation: $root"
+    remove_legacy_file "$root/bin/$cmd" "$replacement"
+  done <<<"$installs"
+}
+
 cleanup_legacy_tool_sources() {
   local tool cmd pkg
   local packages=() bun_packages=()
@@ -1509,6 +1543,7 @@ cleanup_legacy_tool_sources() {
   remove_legacy_bun_packages ${bun_packages[@]+"${bun_packages[@]}"}
   while IFS='|' read -r tool cmd; do
     mise_tool_applies "$tool" || continue
+    cleanup_go_toolchain_command "$tool" "$cmd"
     cleanup_legacy_files "$cmd"
     validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
@@ -1678,7 +1713,7 @@ verify_setup() {
   info "mise-managed commands"
   while IFS='|' read -r tool cmd; do
     mise_tool_applies "$tool" || continue
-    path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
+    path="$(mise_tool_path "$tool" "$cmd" 2>/dev/null || true)"
     if [ -n "$path" ] && [ -x "$path" ]; then
       log "  ok  $cmd ($path)"
     else

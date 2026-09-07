@@ -20,7 +20,7 @@
     "eza": {"packages": {"apt": [], "pacman": [], "brew": ["eza"]}, "commands": ["eza"]}
   },
   "mise": {
-    "settings": {"lockfile": true, "minimum_release_age": "0s", "npm": {"package_manager": "bun"}},
+    "settings": {"lockfile": true, "minimum_release_age": "0s", "npm": {"package_manager": "bun"}, "go": {"set_gobin": false}},
     "tools": {
       "go": "latest",
       "bun": "latest",

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2
+
+Disable mise Go toolchain GOBIN redirection. Validate Go-package commands in their own mise installation, reinstall missing package binaries even when a stray copy exists, and remove duplicate declared Go commands from installed Go toolchains only after validating the replacement. Preserve unrelated commands and links to the replacement.
+
 ## 2.2.1
 
 Bypass mise's remote-version cache when resolving added or changed tools and full --upgrade runs. Keep unchanged locks on normal setup runs, and leave unrelated caches intact.
