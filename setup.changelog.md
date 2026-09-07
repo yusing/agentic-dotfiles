@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.1
+
+Manage wrk through the native package manager instead of a pinned mise source build. Remove its custom build requirement and native-package removal rule. Check package-manager status for required packages without executable probes, including failure recovery and final verification.
+
+## 2.1.0
+
+Use setup.json as the single package source, including mise settings and declarations. Generate mise TOML and reconcile added, changed, and removed lock entries on plain setup, preserving unchanged versions and artifacts. Keep --upgrade as the full-refresh operation and preserve the previous config/lock on resolution or validation failures.
+
 ## 2.0.1
 
 Check the private Go proxy once with a two-second limit before Go work. Use the public proxy for the run when the private server or DNS is unavailable; retry the private server on the next run.
