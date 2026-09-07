@@ -220,6 +220,15 @@
     "visualize": {
       "enabled": true
     },
+    "web-design-guidelines": {
+      "enabled": "lang tsx || lang jsx || lang html || lang css",
+      "remote": {
+        "provider": "SkillsMP",
+        "id": "vercel-labs-agent-skills-skills-web-design-guidelines-skill-md",
+        "name": "web-design-guidelines",
+        "locator": "https://github.com/vercel-labs/agent-skills/tree/main/skills/web-design-guidelines"
+      }
+    },
     "writing-for-agents": {
       "enabled": true,
       "remote": {
