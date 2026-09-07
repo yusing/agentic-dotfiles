@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.2.0
+# version: 2.2.1
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1167,10 +1167,13 @@ refresh_mise_lock() (
       done <"$tmp/$os-tools"
       [ "${#platform_tools[@]}" -gt 0 ] || continue
       info "locking ${#platform_tools[@]} tool(s) for $platforms"
+      # --bump ignores locked versions, but still accepts cached remote lists.
+      # Resolve changed tools freshly without clearing unrelated mise caches.
       if ! (
         cd "$tmp"
         MISE_GLOBAL_CONFIG_FILE="$tmp/.config/mise/config.toml" \
           MISE_HTTP_TIMEOUT=120 MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=120 \
+          MISE_FETCH_REMOTE_VERSIONS_CACHE=0s \
           mise_cmd lock --global --bump --platform "$platforms" "${platform_tools[@]}"
       ) 2>&1 | tee -a "$tmp/mise-lock.log"; then
         return 1

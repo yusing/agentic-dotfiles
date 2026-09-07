@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+Bypass mise's remote-version cache when resolving added or changed tools and full --upgrade runs. Keep unchanged locks on normal setup runs, and leave unrelated caches intact.
+
 ## 2.2.0
 
 Upgrade installed native packages from the active JSON inventory on --upgrade. Target the first installed package alternative per declaration, include optional packages, and propagate upgrade failures. Keep plain setup install-only and avoid upgrading Homebrew LLVM twice. On Arch, perform a full system upgrade through yay before native installation; require a regular user account for Arch upgrades.
