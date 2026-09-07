@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.3";
+export const VERSION = "1.1.4";
 
 type TreeEntry = {
 	mode: string;
@@ -662,7 +662,11 @@ function transformText(path: string, text: string, privateHomes: string[]): stri
 	else if (path === ".config/zed/settings.json") projected = projectZedSettings(projected);
 	else if (path === ".gitconfig") projected = projectGitConfig(projected);
 	else if (path.endsWith(".md")) projected = projectMarkdown(path, projected);
-	else if ([".bashrc", ".gitignore_global", ".tmux.conf", ".yabairc", ".zshrc"].includes(path) || path.endsWith(".fish") || path.endsWith(".zsh")) {
+	else if (
+		[".bashrc", ".gitignore_global", ".tmux.conf", ".yabairc", ".zshrc", "setup.sh"].includes(path)
+		|| path.endsWith(".fish")
+		|| path.endsWith(".zsh")
+	) {
 		projected = projectShell(path, projected);
 	}
 	for (const privateHome of privateHomes) projected = projected.replaceAll(privateHome, "$HOME");

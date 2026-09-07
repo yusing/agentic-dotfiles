@@ -20,6 +20,7 @@ MISE_SHIMS="${HOME}/.local/share/mise/shims"
 MISE_CONFIG="${HOME}/.config/mise/config.toml"
 MISE_LOCK_PLATFORMS="linux-arm64,linux-x64,macos-arm64"
 LLVM_MISE_TOOL="github:llvm/llvm-project"
+EZA_MISE_TOOL="github:eza-community/eza"
 LLVM_BREW_FORMULA_API="https://formulae.brew.sh/api/formula/llvm.json"
 LEGACY_GO_PREFIX="${HOME}/.local/opt/go"
 LEGACY_GOBIN="${HOME}/go/bin"
@@ -36,6 +37,8 @@ die() { printf 'error: %s\n' "$*" >&2; exit 1; }
 have() { command -v "$1" >/dev/null 2>&1; }
 
 # in_list NEEDLE [ITEM...]
+# Empty arrays must be expanded as ${arr[@]+"${arr[@]}"} so bash 3.2 `set -u`
+# does not treat "${arr[@]}" as unbound.
 in_list() {
   local needle="$1" item
   shift
@@ -61,6 +64,8 @@ export PATH="${MISE_SHIMS}:${LOCAL_BIN}:${HOME}/.grok/bin:${HOME}/.bun/bin:${PAT
 export DEBIAN_FRONTEND=noninteractive
 export NONINTERACTIVE=1
 export GIT_TERMINAL_PROMPT=0
+# Comma fallback only handles HTTP 404/410. Pipe falls back on DNS failure
+# when the LAN module proxy is unreachable.
 
 OS="$(uname -s)"
 ARCH="$(uname -m)"
@@ -233,6 +238,13 @@ mapped_pkgs() {
     llvm)
       if [ "$PM" = brew ]; then
         printf '%s\n' llvm
+      else
+        printf '\n'
+      fi
+      ;;
+    eza)
+      if [ "$PM" = brew ]; then
+        printf '%s\n' eza
       else
         printf '\n'
       fi
@@ -772,12 +784,19 @@ go:github.com/yusing/shadowtree/cmd/shadowtree|shadowtree
 EOF
 }
 
+linux_only_mise_tools() {
+  printf '%s\n' "$LLVM_MISE_TOOL" "$EZA_MISE_TOOL"
+}
+
 mise_tool_applies() {
-  if [ "$1" = "$LLVM_MISE_TOOL" ]; then
-    [ "$OS" = Linux ]
-    return
-  fi
-  return 0
+  case "$1" in
+    "$LLVM_MISE_TOOL"|"$EZA_MISE_TOOL")
+      [ "$OS" = Linux ]
+      ;;
+    *)
+      return 0
+      ;;
+  esac
 }
 
 validate_mise_tool() {
@@ -792,8 +811,12 @@ install_locked_mise_tools() {
   info "installing the locked Go toolchain"
   mise_cmd install --locked go
   validate_mise_tool go go
+  info "installing bun so npm packages use bun"
+  mise_cmd install --locked bun
+  validate_mise_tool bun bun
   info "reconciling the locked tool set in parallel"
   mise_cmd install --locked
+  mise_cmd reshim
   while IFS='|' read -r tool cmd; do
     mise_tool_applies "$tool" || continue
     path="$(mise_cmd which "$cmd" 2>/dev/null || true)"
@@ -809,7 +832,8 @@ install_locked_mise_tools() {
 validate_mise_lock() {
   local config_path="$1" lock_path="$2"
   MISE_CONFIG_PATH="$config_path" MISE_LOCK_PATH="$lock_path" \
-    MISE_LOCK_PLATFORMS="$MISE_LOCK_PLATFORMS" py <<'PY'
+    MISE_LOCK_PLATFORMS="$MISE_LOCK_PLATFORMS" \
+    MISE_LINUX_ONLY_TOOLS="$(linux_only_mise_tools)" py <<'PY'
 import os
 import re
 from pathlib import Path
@@ -853,7 +877,9 @@ for match in artifact_header.finditer(lock_text):
         for key, value in re.findall(r'^(url|checksum)\s*=\s*"([^"]*)"\s*$', body, re.MULTILINE)
     }
     artifacts.setdefault((tool, platform), []).append(fields)
-linux_only = {"github:llvm/llvm-project"}
+linux_only = {
+    line for line in os.environ.get("MISE_LINUX_ONLY_TOOLS", "").splitlines() if line
+}
 for tool in locked:
     # Package-manager backends lock versions rather than release artifacts.
     if tool.startswith(("go:", "npm:", "pipx:")):
@@ -920,7 +946,7 @@ refresh_mise_lock() (
     while IFS= read -r tool; do
       [ -n "$tool" ] || continue
       macos_tools+=("$tool")
-    done < <(mise_lock_tools_except "$LLVM_MISE_TOOL" "$tmp/.config/mise/config.toml")
+    done < <(mise_lock_tools_except "$tmp/.config/mise/config.toml")
     [ "${#macos_tools[@]}" -gt 0 ] || die "no macOS mise tools to lock"
     if ! (
       cd "$tmp"
@@ -946,8 +972,8 @@ refresh_mise_lock() (
 )
 
 mise_lock_tools_except() {
-  local skip="$1" config_path="$2"
-  MISE_CONFIG_PATH="$config_path" MISE_SKIP_TOOL="$skip" py <<'PY'
+  local config_path="$1"
+  MISE_CONFIG_PATH="$config_path" MISE_SKIP_TOOLS="$(linux_only_mise_tools)" py <<'PY'
 import os
 from pathlib import Path
 
@@ -957,9 +983,9 @@ except ImportError:
     import tomli as tomllib
 
 config = tomllib.loads(Path(os.environ["MISE_CONFIG_PATH"]).read_text())
-skip = os.environ["MISE_SKIP_TOOL"]
+skip = {line for line in os.environ["MISE_SKIP_TOOLS"].splitlines() if line}
 for name in config["tools"]:
-    if name != skip:
+    if name not in skip:
         print(name)
 PY
 }
@@ -1173,36 +1199,32 @@ pm_dependents() {
 # the whole batch its removal.
 filter_removable_packages() {
   local pkg dep keep changed=1
-  local -A dependents=()
   local remaining=("$@") kept=()
 
-  for pkg in "${remaining[@]}"; do
-    # Package names carry no whitespace or glob characters, so each cached list
-    # can be word-split back apart below.
-    dependents["$pkg"]="$(pm_dependents "$pkg" | tr '\n' ' ')"
-  done
+  [ "$#" -gt 0 ] || return 0
 
   while [ "$changed" -eq 1 ]; do
     changed=0
     kept=()
-    for pkg in "${remaining[@]}"; do
+    for pkg in ${remaining[@]+"${remaining[@]}"}; do
       keep=1
-      for dep in ${dependents["$pkg"]}; do
-        if ! in_list "$dep" "${remaining[@]}"; then
+      while IFS= read -r dep; do
+        [ -n "$dep" ] || continue
+        if ! in_list "$dep" ${remaining[@]+"${remaining[@]}"}; then
           warn "keeping legacy $PM package $pkg; still required by $dep"
           keep=0
           break
         fi
-      done
+      done < <(pm_dependents "$pkg")
       [ "$keep" -eq 0 ] || kept+=("$pkg")
     done
     if [ "${#kept[@]}" -ne "${#remaining[@]}" ]; then
-      remaining=("${kept[@]}")
+      remaining=(${kept[@]+"${kept[@]}"})
       changed=1
     fi
   done
 
-  [ "${#remaining[@]}" -eq 0 ] || printf '%s\n' "${remaining[@]}"
+  [ "${#remaining[@]}" -eq 0 ] || printf '%s\n' ${remaining[@]+"${remaining[@]}"}
 }
 
 remove_legacy_packages() {
@@ -1211,7 +1233,7 @@ remove_legacy_packages() {
   for pkg in "$@"; do
     [ -n "$pkg" ] || continue
     resolved="$(installed_pm_package "$pkg")" || continue
-    in_list "$resolved" "${candidates[@]}" || candidates+=("$resolved")
+    in_list "$resolved" ${candidates[@]+"${candidates[@]}"} || candidates+=("$resolved")
   done
   [ "${#candidates[@]}" -gt 0 ] || return 0
 
@@ -1234,7 +1256,7 @@ remove_legacy_packages() {
         || { warn "keeping legacy apt packages; removal simulation failed"; return 0; }
       removed="$(printf '%s\n' "$plan" | awk '$1 == "Remv" { print $2 }')"
       for name in $removed; do
-        if ! in_list "${name%%:*}" "${removable[@]}"; then
+        if ! in_list "${name%%:*}" ${removable[@]+"${removable[@]}"}; then
           warn "keeping legacy apt packages; removal would also remove $name"
           return 0
         fi
@@ -1321,7 +1343,7 @@ remove_legacy_bun_packages() {
   [ "$#" -gt 0 ] || return 0
   while IFS= read -r pkg; do
     [ -n "$pkg" ] || continue
-    in_list "$pkg" "${packages[@]}" || packages+=("$pkg")
+    in_list "$pkg" ${packages[@]+"${packages[@]}"} || packages+=("$pkg")
   done < <(installed_bun_packages "$@")
   [ "${#packages[@]}" -gt 0 ] || return 0
   info "removing leftover bun packages: ${packages[*]}"
@@ -1396,22 +1418,31 @@ cleanup_legacy_tool_sources() {
       [ -z "$pkg" ] || packages+=("$pkg")
     done < <(legacy_packages "$cmd")
     pkg="$(legacy_bun_leftover_package "$cmd" "$(mise_cmd which "$cmd" 2>/dev/null || true)")"
-    if [ -n "$pkg" ] && ! in_list "$pkg" "${bun_packages[@]}"; then
+    if [ -n "$pkg" ] && ! in_list "$pkg" ${bun_packages[@]+"${bun_packages[@]}"}; then
       bun_packages+=("$pkg")
     fi
   done < <(mise_tool_records)
-  remove_legacy_packages "${packages[@]}"
-  remove_legacy_bun_packages "${bun_packages[@]}"
+  remove_legacy_packages ${packages[@]+"${packages[@]}"}
+  remove_legacy_bun_packages ${bun_packages[@]+"${bun_packages[@]}"}
   while IFS='|' read -r tool cmd; do
     mise_tool_applies "$tool" || continue
     cleanup_legacy_files "$cmd"
     validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
   if [ "$OS" = Darwin ]; then
-    local brew_clang=""
+    local brew_clang="" eza_install
     brew_clang="$(brew --prefix llvm 2>/dev/null || true)"
     if [ -n "$brew_clang" ] && [ -x "$brew_clang/bin/clang" ]; then
       remove_legacy_file "${LOCAL_BIN}/clang" "$brew_clang/bin/clang"
+    fi
+    eza_install="${HOME}/.local/share/mise/installs/github-eza-community-eza"
+    if [ -d "$eza_install" ]; then
+      info "removing leftover mise eza on macOS"
+      rm -rf "$eza_install"
+      if [ -x "$MISE_BIN" ]; then
+        mise_cmd reshim >/dev/null 2>&1 \
+          || warn "could not refresh mise shims after removing leftover eza"
+      fi
     fi
   fi
   hash -r 2>/dev/null || true
@@ -1448,7 +1479,7 @@ install_codex() {
   while IFS= read -r pkg; do
     [ -z "$pkg" ] || packages+=("$pkg")
   done < <(legacy_packages codex)
-  remove_legacy_packages "${packages[@]}"
+  remove_legacy_packages ${packages[@]+"${packages[@]}"}
 }
 
 install_grok() {
@@ -1473,7 +1504,7 @@ install_herdr() {
   while IFS= read -r pkg; do
     [ -z "$pkg" ] || packages+=("$pkg")
   done < <(legacy_packages herdr)
-  remove_legacy_packages "${packages[@]}"
+  remove_legacy_packages ${packages[@]+"${packages[@]}"}
 }
 
 run_additional_installs() (
@@ -1592,6 +1623,8 @@ verify_setup() {
     info "Homebrew llvm"
     load_brew_llvm_env
     if ! verify_brew_llvm; then required_failed=1; fi
+    info "Homebrew eza"
+    if ! check_cmds eza; then required_failed=1; fi
   fi
   info "additional commands"
   if ! check_cmds claude grok herdr; then required_failed=1; fi
@@ -1612,7 +1645,8 @@ remote version lookup. Packages from legacy Brew, APT, Pacman, and direct-instal
 sources are removed only after the replacement validates. --upgrade advances the
 tracked multi-platform mise lock and installs it. Native OS package upgrades
 remain separate, except LLVM: Homebrew llvm on macOS and the locked Linux mise
-toolchain stay on the same version.
+toolchain stay on the same version. GitHub eza has no macOS archives; macOS
+installs Homebrew eza instead.
 EOF
 }
 
@@ -1659,7 +1693,7 @@ main() {
     --optional \
     wget imagemagick time
   if [ "$PM" = brew ]; then
-    install_packages llvm
+    install_packages llvm eza
   fi
   have git || die "git is required"
   have curl || die "curl is required"

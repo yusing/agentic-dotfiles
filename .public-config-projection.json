@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "aeecdd4de5d430b2357f63c218c28fc450c64c31",
+  "sourceCommit": "45cf63ec81bee35babb6016972e161e11a5faf7d",
   "outputs": [
     {
       "path": ".bashrc",
@@ -418,13 +418,13 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "00974e45b5d0001d65499c2c768da24328412c226b79d6ced22d60fbd41e6a33",
+      "sha256": "818de69dc13f7ed892b09787a141f7024a5c05770a728d65796a599c7452cd95",
       "executable": false
     },
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "e3d7d554da147cbed150fcb51aa325cd28d5b1c39cf2e40ca7c0ba644057f5e0",
+      "sha256": "de6a44b592d851b820abed06851fd137086472c0dae85b10e7b05f95b87c4566",
       "executable": false
     },
     {
@@ -538,7 +538,7 @@
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "88edb45d652bf98c663a96ec354173da14c4c38a9053e4f0968677b4336ad364",
+      "sha256": "78136ed41a3b142aabc9ab7f47f4b700e17c2fef6dcad09b979c4043d9fd5cf9",
       "executable": true
     },
     {
@@ -1023,13 +1023,13 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "4bcee4fd4624def63140732d4626724ebfbcafd7d98903d576bb11ba6094778d",
+      "sha256": "a34d6442f4670e52bb576110b31e05e49c64a552827561bd802f9d565bb354bf",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "b9c57fa53b0c62e574d2bec1d7acabf2c4097c0b8bc60a0bbbf7bcdf06e16866",
+      "sha256": "33fdf89fb1192ebd377bebaf80653c9b90f8a1bf4163c3a7a0b4e6fce1ebf4f8",
       "executable": true
     }
   ]

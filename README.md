@@ -63,6 +63,9 @@ by the checkout are copied to `~/.local/share/dotfiles-setup/` first. Untracked
 files this repository does not own are left in place. A normal rerun reconciles
 every managed tool to the tracked lock without querying remote version APIs.
 Go is installed first so the source-built Go tools use the locked toolchain.
+Bun is installed next so mise's npm backend uses bun. On macOS, Homebrew owns
+llvm and eza: GitHub does not publish darwin eza archives, and llvm stays on
+the same version as the locked Linux toolchain.
 After every replacement validates, it removes explicitly mapped
 duplicate Brew, APT, and Pacman packages in one package-manager transaction,
 then removes legacy direct-install copies. A package that something else
