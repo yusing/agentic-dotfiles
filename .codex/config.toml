@@ -30,7 +30,7 @@ generate_memories = false
 theme = "catppuccin-mocha"
 status_line_use_colors = true
 session_picker_view = "comfortable"
-status_line = ["model-with-reasoning", "git-branch", "context-used", "fast-mode", "project-name", "run-state", "task-progress", "thread-id", "branch-changes", "weekly-limit", "codex-version"]
+status_line = ["model-with-reasoning", "git-branch", "context-used", "fast-mode", "task-progress", "thread-id", "branch-changes", "weekly-limit", "context-window-size"]
 
 [features]
 responses_websockets_v2 = true
