@@ -1,0 +1,242 @@
+:root {
+  color-scheme: light dark;
+  --ground: #f5f4ef; --paper: #fffefa; --ink: #202c2b; --muted: #606d68;
+  --line: #d6ddd5; --accent: #176855; --tint: #e9f3ed; --code: #edf0e9;
+  --warn: #865016; --warn-bg: #fff3dc; --danger: #a13932; --danger-bg: #fbece8;
+  --blue: #295c85; --blue-bg: #edf3f9;
+  /* The masthead rule: emphatic, but never brighter than the text it sits under. */
+  --rule: #202c2b;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Iowan Old Style", Georgia, "Palatino Linotype", "Times New Roman", serif;
+  --mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+  /* One measure for every prose column, so all body text shares a right edge.
+     Set in ch but calibrated against measured characters a line, because this
+     face's "0" is wider than its average glyph. */
+  --measure: 58ch;
+  /* Serif for reading, sans for naming: prose is the document, and every
+     heading, label and figure is apparatus around it. */
+  font-family: var(--serif);
+  font-size: 17px; line-height: 1.62;
+}
+* { box-sizing: border-box; }
+body { overflow-wrap: anywhere; margin: 0; background: var(--ground); color: var(--ink); }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+::selection { background: var(--accent); color: var(--paper); }
+.page { max-width: 1280px; margin: auto; padding-inline: max(48px, env(safe-area-inset-left)) max(48px, env(safe-area-inset-right)); }
+.masthead { padding: 52px 0 46px; border-bottom: 2px solid var(--rule); }
+.masthead-meta > *, .contents li, .contents a { min-width: 0; }
+.masthead-meta { display: flex; gap: 24px; justify-content: space-between; align-items: start; }
+/* Every small label is the same object: sans, tracked out, upper case. Reserving
+   mono for code alone is most of what separates a document from a dashboard. */
+.eyebrow, .edition, .kicker, .status, .chapter-number, .code-header {
+  font-family: var(--sans);
+  font-size: .71rem; line-height: 1.5; letter-spacing: .13em; font-weight: 600; text-transform: uppercase;
+}
+.eyebrow { color: var(--accent); }
+.edition { white-space: nowrap; color: var(--muted); }
+h1 { font: 700 clamp(2.5rem, 5.2vw, 4.4rem)/1.04 var(--sans); letter-spacing: -.025em; max-width: 20ch; margin: 26px 0 22px; text-wrap: balance; }
+/* Larger text needs a shorter line than body prose at the same character count. */
+.lede { color: var(--muted); max-width: 56ch; font-size: 1.16rem; margin: 0; text-wrap: pretty; }
+.reading-layout { display: flex; align-items: flex-start; gap: 44px; padding-top: 38px; }
+.contents { flex: 0 0 195px; position: sticky; top: 28px; max-height: calc(100vh - 56px); overflow-y: auto; }
+.contents .kicker { color: var(--muted); margin: 0 0 18px; }
+.contents ol { list-style: none; margin: 0; padding: 0; }
+/* Opt out of the prose li spacing: it would offset the narrow-screen grid columns. */
+.contents li { margin: 0; }
+/* Baseline, not box top: the number is set smaller than the title, so the two
+   only sit on a shared line when their baselines are what is aligned. */
+.contents a { display: flex; align-items: baseline; gap: 12px; border-left: 2px solid transparent; padding: 9px 0 9px 11px; text-decoration: none; font: .78rem/1.45 var(--sans); color: var(--muted); transition: color .15s ease, border-left-color .15s ease; }
+/* flex: none keeps the two-digit number on one line when the column is narrow. */
+.contents a span { flex: none; color: var(--accent); font-size: .71rem; font-weight: 600; line-height: 1.62; letter-spacing: .1em; font-variant-numeric: tabular-nums; }
+.contents a:hover { color: var(--accent); }
+/* Reading position, without scripts. Each chapter names a view timeline and
+   lights its own entry while it crosses a thin probe band 22% down the
+   viewport, so exactly one entry is ever active. The renderer emits the
+   per-chapter half; browsers without scroll-driven animations just show no
+   active entry, which is the behaviour this replaced. Marker colour only, so
+   nothing reflows as the reader scrolls. */
+@keyframes toc-here { from, to { color: var(--ink); border-left-color: var(--accent); } }
+/* The renderer also emits a :target fallback, guarded by @supports, so browsers
+   without scroll-driven animations still mark the entry the reader clicked. */
+.contents a.here { color: var(--ink); border-left-color: var(--accent); }
+main { min-width: 0; flex: 1; }
+h2, h3, h4 { font-family: var(--sans); line-height: 1.2; letter-spacing: -.015em; text-wrap: balance; }
+h2 { font-size: 1.5rem; font-weight: 700; margin: 0 0 18px; }
+h3 { font-size: 1.06rem; font-weight: 600; margin: 0 0 14px; }
+h4 { font-size: .97rem; font-weight: 600; }
+p { margin: 0 0 16px; }
+p:last-child { margin-bottom: 0; }
+ul { padding-left: 24px; }
+li + li { margin-top: 6px; }
+.block { margin-bottom: 28px; scroll-margin-top: 24px; overflow-wrap: anywhere; }
+.chapter { margin-top: 58px; }
+.chapter:first-child { margin-top: 0; }
+/* One left edge. The number sits above the title rather than in its own gutter,
+   so the number, title, summary and every block below all start at the same x. */
+.chapter-heading { padding-top: 24px; margin-bottom: 26px; border-top: 1px solid var(--line); scroll-margin-top: 24px; }
+.chapter-number { display: block; color: var(--muted); margin-bottom: 10px; font-variant-numeric: tabular-nums; }
+.chapter-heading h2 { margin: 0; font-size: 1.72rem; letter-spacing: -.02em; }
+/* Every prose column shares one measure, so the text has a single right edge too. */
+.block-prose, .chapter-heading p, .callout p, .callout li, .evidence p, figcaption { max-width: var(--measure); }
+.chapter-heading p { color: var(--muted); margin-top: 10px; text-wrap: pretty; }
+.kicker { display: block; color: var(--accent); margin-bottom: 12px; }
+.callout { padding: 20px 24px; background: var(--tint); border-left: 3px solid var(--accent); }
+/* Quieter than the same level in the main flow, but still ordered h2 > h3. */
+.callout h2 { font-size: 1.24rem; }
+.callout h3 { font-size: 1.02rem; }
+.callout.warning { background: var(--warn-bg); border-left-color: var(--warn); }
+.callout.warning .kicker { color: var(--warn); }
+.callout.danger { background: var(--danger-bg); border-left-color: var(--danger); }
+.callout.danger .kicker { color: var(--danger); }
+.callout.note { background: var(--blue-bg); border-left-color: var(--blue); }
+.callout.note .kicker { color: var(--blue); }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 175px), 1fr)); gap: 12px; }
+.capability { background: var(--paper); border: 1px solid var(--line); padding: 20px; }
+.capability h3, .capability h4, .capability-label { display: block; font-family: var(--sans); margin: 16px 0 9px; font-size: .88rem; font-weight: 600; line-height: 1.4; letter-spacing: 0; }
+.capability p { color: var(--muted); font-size: .85rem; line-height: 1.55; }
+/* Barely rounded: small inline chrome keeps 2px, the large plates go square.
+   Size and tracking come from the shared label rule, so every label matches. */
+.status { display: inline-block; border-radius: 2px; padding: 3px 8px; color: var(--muted); background: var(--code); letter-spacing: .08em; }
+.status.supported, .status.done { color: var(--accent); background: var(--tint); }
+.status.unsupported, .status.blocked { color: var(--danger); background: var(--danger-bg); }
+.status.partial, .status.todo { color: var(--warn); background: var(--warn-bg); }
+/* A top rule instead of a dashed box: it reads as a pinned aside, not a cut-out. */
+.evidence { padding: 20px 24px; background: var(--paper); border-top: 2px solid var(--accent); }
+.evidence p { font-size: .94rem; }
+/* One grid for the whole list so every location starts at the same x. */
+.sources { padding: 14px 0 0; margin: 18px 0 0; list-style: none; border-top: 1px solid var(--line); font-family: var(--sans); font-size: .78rem;
+  display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 7px 14px; }
+.sources li { display: contents; }
+/* No chip, so no size step either: this is the list's own text, set in mono. */
+.sources code { background: transparent; color: var(--muted); padding: 0; font-size: inherit; }
+.muted { color: var(--muted); }
+.comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 235px), 1fr)); border: 1px solid var(--line); background: var(--paper); }
+.comparison-column { padding: 24px; border-inline-start: 1px solid var(--line); }
+.comparison-column:first-child { border-inline-start: 0; }
+.comparison-column p { font-size: .94rem; }
+figure { margin: 0; }
+figcaption { color: var(--muted); font-size: .82rem; margin-top: 12px; }
+.table-scroll, .diagram-scroll { max-width: 100%; overflow-x: auto; border: 1px solid var(--line); background: var(--paper); }
+/* Hug the drawing: a diagram narrower than the column should not sit in an empty frame. */
+.diagram-scroll { width: fit-content; }
+table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: .86rem; line-height: 1.55; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; vertical-align: top; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+thead th { font-family: var(--sans); background: var(--code); color: var(--muted); font-size: .71rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+tbody th { font-weight: 600; }
+tr:last-child td, tr:last-child th { border-bottom: 0; }
+code, pre { font-family: var(--mono); }
+/* Relative so inline code tracks its surrounding text, but .83em compounded
+   down to ~10.5px inside the smaller lists. */
+code { background: var(--code); padding: .1em .34em; border-radius: 2px; font-size: .87em; }
+pre { overflow-x: auto; padding: 22px; line-height: 1.7; font-size: .79rem; tab-size: 2; }
+pre code { padding: 0; background: none; font-size: inherit; border-radius: 0; }
+.code-header { padding: 10px 20px; background: var(--code); border: 1px solid var(--line); color: var(--muted); }
+.code-block { margin: 0; background: var(--paper); border: 1px solid var(--line); border-top: 0; }
+.file-tree { background: var(--paper); border: 1px solid var(--line); }
+.tree-note { color: var(--muted); }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 22px; margin: 0; padding: 24px 0; border-block: 1px solid var(--line); }
+.metrics dt { font-family: var(--sans); font-size: .71rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+/* Sans for the figure: a serif numeral no longer stands apart from serif prose. */
+.metrics dd { margin: 7px 0; font: 700 2.3rem/1.12 var(--sans); letter-spacing: -.03em; color: var(--accent); font-variant-numeric: tabular-nums; }
+.metrics .metric-context { margin-top: 10px; font: .79rem/1.5 var(--sans); letter-spacing: 0; color: var(--muted); text-wrap: pretty; }
+.checklist { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+/* A fixed badge column so item titles align however wide the status word is.
+   Sized for the longest badge now that the labels are tracked out. */
+.checklist li { display: grid; grid-template-columns: 5.2rem 1fr; align-items: start; gap: 15px; padding: 16px 0; margin: 0; border-bottom: 1px solid var(--line); }
+.checklist .status { margin-top: 3px; justify-self: start; }
+/* The item title names a thing, so it is set like the other names: sans. */
+.checklist strong { font-family: var(--sans); font-weight: 600; font-size: .94rem; }
+.checklist p { color: var(--muted); font-size: .88rem; margin-top: 4px; }
+.glossary { margin: 0; }
+.glossary > div { display: grid; grid-template-columns: minmax(130px, 1fr) 3fr; gap: 20px; padding: 17px 0; border-bottom: 1px solid var(--line); }
+.glossary dt { font-family: var(--sans); font-weight: 600; font-size: .94rem; }
+.glossary dd { margin: 0; color: var(--muted); font-size: .91rem; }
+/* The width attribute carries each diagram's own measured size; no blanket floor. */
+.diagram-scroll svg { display: block; max-width: none; height: auto; font-family: var(--sans); }
+.graph-node { fill: var(--paper); stroke: var(--line); stroke-width: 1.5; }
+.graph-node.initial { fill: var(--tint); stroke: var(--accent); }
+.graph-node.terminal { stroke: var(--ink); stroke-width: 2.5; }
+.node-label { fill: var(--ink); font-size: 16px; font-weight: 650; }
+.node-detail { fill: var(--muted); font-size: 13px; }
+.state-kind { fill: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: .12em; }
+.connector { stroke: var(--accent); stroke-width: 1.5; fill: none; }
+.arrowhead { fill: var(--accent); }
+.connector.response { stroke-dasharray: 5 4; }
+.connector.event { stroke-width: 2.5; }
+.edge-badge { fill: var(--paper); stroke: var(--accent); }
+.edge-number { fill: var(--accent); text-anchor: middle; font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.lifeline { stroke: var(--line); stroke-dasharray: 4 5; }
+.participant-label { fill: var(--ink); font-size: 13px; text-anchor: middle; font-weight: 650; }
+.message-label { fill: var(--ink); font-size: 13px; text-anchor: middle; }
+.self-label { fill: var(--ink); font-size: 13px; }
+.diagram-node-key { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* Sans, like the diagram it annotates: this list is apparatus, not prose. */
+.edge-list { margin: 14px 0 0; padding-left: 28px; font-family: var(--sans); font-size: .79rem; }
+.edge-list li { padding: 6px 0 6px 5px; }
+.edge-list li::marker { color: var(--accent); font-variant-numeric: tabular-nums; }
+.edge-route { display: block; font-weight: 600; }
+/* Explicit size: the browser's `smaller` default dropped the message kind to
+   10.7px, the smallest real text in the transcript. */
+.edge-route small { color: var(--muted); font-weight: 400; margin-left: 6px; font-size: .92em; }
+footer { display: flex; justify-content: space-between; gap: 16px; padding: 24px 0 38px; margin-top: 65px; border-top: 1px solid var(--line); font-family: var(--sans); font-size: .74rem; color: var(--muted); }
+.skip-link { position: fixed; top: -100px; left: 16px; padding: 10px 18px; background: var(--paper); z-index: 10; }
+.skip-link:focus { top: 12px; }
+@media (prefers-color-scheme: dark) {
+  :root { --ground: #151d1b; --paper: #1c2723; --ink: #e2ebe2; --muted: #a5b4a9; --line: #394a40; --accent: #90d5b7; --tint: #223b30; --code: #29372f; --warn: #edc483; --warn-bg: #3d3020; --danger: #f0a8a0; --danger-bg: #402a27; --blue: #a5cbed; --blue-bg: #22333f; --rule: #6f8579; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+@media (max-width: 960px) {
+  .page { padding-inline: max(28px, env(safe-area-inset-left)) max(28px, env(safe-area-inset-right)); }
+  .reading-layout { display: block; padding-top: 24px; }
+  .contents { position: static; max-height: none; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+  .contents ol { display: flex; flex-wrap: wrap; gap: 0 22px; }
+  .contents a { padding: 6px 0; }
+  main { max-width: 850px; margin-inline: auto; }
+}
+@media (max-width: 600px) {
+  :root { font-size: 16px; }
+  .page { padding-inline: max(18px, env(safe-area-inset-left)) max(18px, env(safe-area-inset-right)); }
+  .masthead { padding: 30px 0; }
+  .masthead-meta { display: block; }
+  .edition { display: none; }
+  h1 { margin-top: 25px; }
+  .lede { font-size: 1.05rem; }
+  .chapter-heading h2 { font-size: 1.44rem; }
+  .contents ol { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  .chapter { margin-top: 40px; }
+  .callout, .evidence, .comparison-column { padding: 20px; }
+  .glossary > div { grid-template-columns: 1fr; gap: 5px; }
+  footer { flex-direction: column; gap: 4px; }
+}
+@media print {
+  :root { color-scheme: light; --ground: white; --paper: white; --ink: #111; --muted: #444; --line: #bbb; --accent: #175643; --tint: #eef5f1; --code: #eee; --warn: #76450d; --warn-bg: #fff5e3; --danger: #922c25; --danger-bg: #fff0ed; --blue: #244f72; --blue-bg: #eff5fa; --rule: #111; font-size: 10pt; }
+  .page { max-width: none; padding: 0; }
+  .masthead { padding: 0 0 20px; }
+  h1 { font-size: 30pt; }
+  .chapter-heading h2 { font-size: 17pt; }
+  .contents, .skip-link { display: none; }
+  .reading-layout { display: block; }
+  .chapter { margin-top: 30px; }
+  h2, h3, .chapter-heading { break-after: avoid; }
+  .callout, .capability, .metrics, .checklist li { break-inside: avoid; }
+  /* The page has no side padding when printed, so a tinted callout would run a
+     band to the sheet edge. The left rule alone carries the same meaning. */
+  .callout { background: none; padding: 2px 0 2px 16px; }
+  .table-scroll, .diagram-scroll { overflow: visible; }
+  .print-text-only .diagram-scroll { display: none; }
+  .diagram-node-key { position: static; width: auto; height: auto; margin: 14px 0; overflow: visible; clip-path: none; white-space: normal; }
+  .diagram-node-key > div { break-inside: avoid; margin-bottom: 8px; }
+  .diagram-node-key dt { font-weight: 650; }
+  .diagram-node-key dd { margin: 0; color: var(--muted); }
+  .edge-list li { break-inside: avoid; }
+  table { min-width: 0; table-layout: fixed; }
+  /* Shrink an oversized diagram to the page, but never enlarge a small one. */
+  .diagram-scroll svg { max-width: 100%; max-height: 230mm; }
+  pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+  a { color: inherit; }
+  footer { margin-top: 30px; }
+}

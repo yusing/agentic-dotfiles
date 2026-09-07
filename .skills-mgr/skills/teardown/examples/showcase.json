@@ -1,0 +1,384 @@
+{
+  "schema_version": "1.0",
+  "type": "concept-guide",
+  "eyebrow": "TEARDOWN · A FIELD GUIDE TO STRUCTURED EXPLANATIONS",
+  "title": "Make the idea visible.",
+  "lede": "A good visual explanation does more than look organized. It helps the reader see a boundary, follow a behavior, or make a decision. Here is a small language for doing that well.",
+  "blocks": [
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "The agent explains. The renderer composes.",
+      "body_md": "Give the agent a vocabulary of ideas, not a blank HTML canvas. **JSON carries the argument; the renderer carries the visual system.** The result stays editable, inspectable, and consistent."
+    },
+    {
+      "type": "capability-grid",
+      "cells": [
+        {
+          "label": "Compose explanations",
+          "status": "supported",
+          "detail": "Fifteen block types, selected for the idea rather than the decoration."
+        },
+        {
+          "label": "Open without a server",
+          "status": "supported",
+          "detail": "One HTML file, with embedded styling and no runtime requests."
+        },
+        {
+          "label": "Verify source claims",
+          "status": "unsupported",
+          "detail": "A renderer can check structure. The author still owns the evidence."
+        },
+        {
+          "label": "Understand any Markdown",
+          "status": "partial",
+          "detail": "A small, safe grammar. Use dedicated blocks for richer structures."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Separate meaning from presentation",
+      "summary": "One stable boundary makes the rest of the workflow simpler."
+    },
+    {
+      "type": "prose",
+      "body_md": "A useful explanation has two jobs: make a claim clear, then make it credible. Those jobs should survive a change in colors or typography. Here, the document is the durable source; HTML is a generated reading surface."
+    },
+    {
+      "type": "comparison",
+      "title": "Two ways to make a visual explanation",
+      "columns": [
+        {
+          "label": "Free-form HTML",
+          "body_md": "A flexible canvas for a bespoke illustration.\n\n- Every document carries layout decisions.\n- Content and styling can become tangled.\n- Review includes executable markup."
+        },
+        {
+          "label": "Structured blocks",
+          "body_md": "A shared visual language for recurring explanatory work.\n\n- The author chooses the form of the idea.\n- The renderer owns consistent presentation.\n- Validation catches structural mistakes early."
+        }
+      ]
+    },
+    {
+      "type": "flow",
+      "title": "A small pipeline with a clear trust boundary",
+      "nodes": [
+        {
+          "id": "question",
+          "label": "Question + source material",
+          "detail": "The reader’s actual uncertainty, plus inspected evidence."
+        },
+        {
+          "id": "document",
+          "label": "Structured explanation",
+          "detail": "The agent selects blocks and writes the source JSON."
+        },
+        {
+          "id": "validator",
+          "label": "Schema + relationship checks",
+          "detail": "Shape, block types, node references, and row widths."
+        },
+        {
+          "id": "html",
+          "label": "Standalone HTML",
+          "detail": "Escaped content, embedded CSS, no browser scripts."
+        }
+      ],
+      "edges": [
+        {
+          "from": "question",
+          "to": "document",
+          "label": "Interpret and substantiate the explanation"
+        },
+        {
+          "from": "document",
+          "to": "validator",
+          "label": "Submit a versioned document"
+        },
+        {
+          "from": "validator",
+          "to": "html",
+          "label": "Render only when all checks pass"
+        }
+      ],
+      "caption": "This is the actual package boundary. Source investigation happens before rendering, not inside it."
+    },
+    {
+      "type": "evidence",
+      "confidence": "observed",
+      "text_md": "The renderer imports the bundled schema validator before generating HTML. Its output embeds CSS and contains no browser script. Those are implementation properties, not claims about the source material being explained.",
+      "sources": [
+        {
+          "label": "Validation entry point",
+          "location": "teardown/scripts/validate.mjs · validate()"
+        },
+        {
+          "label": "HTML composition",
+          "location": "teardown/scripts/html.mjs · render()"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Pick the form that reveals the idea",
+      "summary": "A flow, a sequence, and a state machine answer different questions."
+    },
+    {
+      "type": "table",
+      "title": "Three views, three questions",
+      "columns": [
+        "Reader’s question",
+        "Block",
+        "What the shape preserves"
+      ],
+      "rows": [
+        [
+          "What connects to what?",
+          "flow",
+          "Nodes and directed relationships"
+        ],
+        [
+          "Who acts next?",
+          "sequence",
+          "Participants and message order"
+        ],
+        [
+          "What can happen from here?",
+          "state-machine",
+          "States and allowed transitions"
+        ]
+      ],
+      "caption": "Choose by the reader’s uncertainty, not by which diagram looks more sophisticated."
+    },
+    {
+      "type": "sequence",
+      "title": "From source file to reading surface",
+      "participants": [
+        {
+          "id": "author",
+          "label": "Author"
+        },
+        {
+          "id": "cli",
+          "label": "Renderer CLI"
+        },
+        {
+          "id": "disk",
+          "label": "Local files"
+        }
+      ],
+      "steps": [
+        {
+          "from": "author",
+          "to": "disk",
+          "label": "Save the document JSON",
+          "kind": "request"
+        },
+        {
+          "from": "author",
+          "to": "cli",
+          "label": "Render input.json → output.html",
+          "kind": "request"
+        },
+        {
+          "from": "cli",
+          "to": "disk",
+          "label": "Read the input",
+          "kind": "request"
+        },
+        {
+          "from": "disk",
+          "to": "cli",
+          "label": "Return JSON bytes",
+          "kind": "response"
+        },
+        {
+          "from": "cli",
+          "to": "cli",
+          "label": "Validate shape and relationships",
+          "kind": "event"
+        },
+        {
+          "from": "cli",
+          "to": "disk",
+          "label": "Write the generated HTML",
+          "kind": "request"
+        },
+        {
+          "from": "cli",
+          "to": "author",
+          "label": "Report the output path",
+          "kind": "response"
+        }
+      ],
+      "caption": "Success path only. Invalid input produces an error instead of an output file."
+    },
+    {
+      "type": "state-machine",
+      "title": "A document’s authoring lifecycle",
+      "states": [
+        {
+          "id": "draft",
+          "label": "Draft",
+          "kind": "initial",
+          "detail": "The content is still being shaped."
+        },
+        {
+          "id": "checked",
+          "label": "Structurally valid",
+          "kind": "normal",
+          "detail": "The JSON meets the schema and relationship rules."
+        },
+        {
+          "id": "reviewed",
+          "label": "Ready to share",
+          "kind": "terminal",
+          "detail": "The author has also checked claims and visual clarity."
+        }
+      ],
+      "transitions": [
+        {
+          "from": "draft",
+          "to": "checked",
+          "label": "Validation passes"
+        },
+        {
+          "from": "checked",
+          "to": "draft",
+          "label": "Content or structure needs revision"
+        },
+        {
+          "from": "checked",
+          "to": "reviewed",
+          "label": "Evidence and rendered document have been inspected"
+        }
+      ],
+      "caption": "An illustrative authoring model, not persistent state maintained by the CLI. Valid JSON is not proof of a sound explanation."
+    },
+    {
+      "type": "callout",
+      "tone": "warning",
+      "title": "“Unsupported” is a conclusion, not a default.",
+      "body_md": "If you have not checked whether a capability exists, label it **unknown**. A confident-looking card should not turn missing evidence into a negative finding."
+    },
+    {
+      "type": "section",
+      "title": "Keep the artifact easy to inspect",
+      "summary": "A small package boundary, a plain command, and a source file you can edit."
+    },
+    {
+      "type": "file-tree",
+      "title": "What travels with the skill",
+      "entries": [
+        {
+          "path": "SKILL.md",
+          "responsibility": "Authoring and rendering workflow"
+        },
+        {
+          "path": "schema.json",
+          "responsibility": "Allowed document and block shapes"
+        },
+        {
+          "path": "scripts/render.mjs",
+          "responsibility": "CLI input and safe file output"
+        },
+        {
+          "path": "scripts/validate.mjs",
+          "responsibility": "Shape and relationship validation"
+        },
+        {
+          "path": "scripts/html.mjs",
+          "responsibility": "Escaped block rendering"
+        },
+        {
+          "path": "assets/style.css",
+          "responsibility": "Shared responsive visual system"
+        },
+        {
+          "path": "references/blocks.md",
+          "responsibility": "Block selection and text grammar"
+        },
+        {
+          "path": "examples/showcase.json",
+          "responsibility": "This document’s source"
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "title": "Render, then open the result",
+      "language": "shell",
+      "code": "node teardown/scripts/render.mjs \\\n  teardown/examples/showcase.json \\\n  -o output/showcase.html",
+      "caption": "Run from the package root after creating output/. Existing output is protected unless --force is supplied."
+    },
+    {
+      "type": "metrics",
+      "items": [
+        {
+          "label": "Built-in block types",
+          "value": "15",
+          "context": "The closed block union in schema version 1.0."
+        },
+        {
+          "label": "Runtime packages",
+          "value": "0",
+          "context": "Node.js 22+ standard modules only."
+        },
+        {
+          "label": "Reading artifact",
+          "value": "1 HTML",
+          "context": "No accompanying assets needed after rendering."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Finish with understanding, not just valid JSON",
+      "summary": "Structure can be checked automatically. The argument still needs judgment."
+    },
+    {
+      "type": "checklist",
+      "title": "Before sharing an explanation",
+      "items": [
+        {
+          "label": "Validate the document",
+          "status": "done",
+          "detail": "This showcase was rendered through the same validation boundary as other documents."
+        },
+        {
+          "label": "Inspect the claims and their sources",
+          "status": "todo",
+          "detail": "For a real teardown, inspect the actual system; examples are not evidence about it."
+        },
+        {
+          "label": "Check the narrow-screen view",
+          "status": "todo",
+          "detail": "Keep important labels readable and split overloaded diagrams."
+        },
+        {
+          "label": "Mark unresolved facts honestly",
+          "status": "blocked",
+          "detail": "Illustrative status: a missing source should remain an explicit question."
+        }
+      ]
+    },
+    {
+      "type": "glossary",
+      "title": "A few terms used here",
+      "terms": [
+        {
+          "term": "Schema",
+          "definition": "The allowed structure of a document: its fields, values, and block shapes."
+        },
+        {
+          "term": "Renderer",
+          "definition": "The program that turns a valid content document into a reading surface."
+        },
+        {
+          "term": "Evidence",
+          "definition": "An observation or source that supports a particular claim. A polished layout is not evidence."
+        }
+      ]
+    }
+  ]
+}

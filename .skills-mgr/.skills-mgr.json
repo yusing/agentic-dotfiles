@@ -166,6 +166,9 @@
         "locator": "https://github.com/midudev/autoskills/tree/main/packages/autoskills/skills-registry/tauri-v2"
       }
     },
+    "teardown": {
+      "enabled": true
+    },
     "thermo-nuclear-code-quality-review": {
       "enabled": true,
       "remote": {

@@ -185,6 +185,7 @@ const PROJECTED_SKILL_NAMES = [
 	"shadcn",
 	"shadowtree",
 	"supabase-postgres-best-practices",
+	"teardown",
 	"user-experience",
 	"using-pjdoc",
 	"writing-for-agents",
