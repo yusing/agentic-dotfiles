@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.4";
+export const VERSION = "1.1.5";
 
 type TreeEntry = {
 	mode: string;
@@ -224,7 +224,6 @@ const PRIVATE_LINE_TOKENS = [
 	"inshellisense",
 	"install_my_ca",
 	"masterpassword",
-	"pi-orc",
 	"/.config/kaku/",
 	".pve",
 ];

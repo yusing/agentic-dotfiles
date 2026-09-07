@@ -278,9 +278,6 @@ if _zfm_command_exists git; then
     alias 'gca!'='git agent commit --amend'
 fi
 
-if _zfm_command_exists pi; then
-fi
-
 disk-usage() {
     df -h / | tail -1 | awk '{print $3 "/" $2 " (" $5 ")"}'
 }

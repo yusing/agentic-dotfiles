@@ -314,9 +314,6 @@ if check-command git
     abbr --add --position command gca! 'git agent commit --amend'
 end
 
-if check-command pi
-end
-
 function disk-usage
     # Output example: 55G/900G (6%)
     df -h / | tail -1 | awk '{print $3 "/" $2 " (" $5 ")"}'
