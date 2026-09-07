@@ -64,8 +64,6 @@ export PATH="${MISE_SHIMS}:${LOCAL_BIN}:${HOME}/.grok/bin:${HOME}/.bun/bin:${PAT
 export DEBIAN_FRONTEND=noninteractive
 export NONINTERACTIVE=1
 export GIT_TERMINAL_PROMPT=0
-# Comma fallback only handles HTTP 404/410. Pipe falls back on DNS failure
-# when the LAN module proxy is unreachable.
 
 OS="$(uname -s)"
 ARCH="$(uname -m)"
