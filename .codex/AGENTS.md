@@ -107,13 +107,15 @@ that workflow owns the final artifact format.
 For an explicit code-review request, state when the requested scope extends beyond the pending diff.
 
 After implementation and focused validation of a production or operational change are complete,
-decide whether independent inspection is needed. It is needed only when a plausible defect
-would have meaningful user, data, security, compatibility, or operational impact and source
-inspection can find it beyond focused checks and direct diff review.
+decide whether independent inspection is needed from the actual change and remaining evidence.
+Before dispatch, identify a plausible defect with meaningful user, data, security, compatibility,
+or operational impact, why completed checks do not cover it, and what independent source
+inspection could establish. Include that concrete residual risk in the review scope. If none
+remains, finish without review; the surrounding system's importance alone is not a launch reason.
 
 Native review roles are the only owners of independent inspection; root diff review and tests are
 validation, not substitutes. Reuse applicable completed reviews across commits and phases.
-For material changes, unresolved findings, or uncovered integration risks, reuse reviewers for targeted follow-ups or
+When the residual-risk gate is met, reuse reviewers for targeted follow-ups or
 spawn `reviewer`, `simplify-checker`, or both when fresh context is needed. Dispatch independent
 scopes concurrently and give each its exact review scope directly. Include input artifacts only
 for evidence produced by another spawned agent. Request a result artifact only when another spawned agent will consume the review; when the
