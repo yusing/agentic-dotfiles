@@ -735,8 +735,13 @@ github:microsoft/TypeScript|tsc
 github:llvm/llvm-project|clang
 pipx:rich-cli|rich
 github:vi/websocat|websocat
+npm:@kilocode/cli|kilocode
+npm:@tailwindcss/cli|tailwindcss
 npm:@trunkio/launcher|trunk
+npm:agent-browser|agent-browser
+npm:ccstatusline|ccstatusline
 npm:ctx7|ctx7
+npm:oxlint-tsgolint|tsgolint
 npm:scriptc|scriptc
 npm:vite|vite
 http:wrk|wrk
@@ -1289,15 +1294,20 @@ remove_legacy_file() {
 
 legacy_bun_package() {
   case "$1" in
+    agent-browser) printf '%s\n' agent-browser ;;
+    ccstatusline) printf '%s\n' ccstatusline ;;
     ctx7) printf '%s\n' ctx7 ;;
     hunk) printf '%s\n' hunkdiff ;;
+    kilocode) printf '%s\n' @kilocode/cli ;;
     oxfmt) printf '%s\n' oxfmt ;;
     oxlint) printf '%s\n' oxlint ;;
     pnpm) printf '%s\n' pnpm ;;
     scriptc) printf '%s\n' scriptc ;;
+    tailwindcss) printf '%s\n' @tailwindcss/cli ;;
     tldr) printf '%s\n' tldr ;;
     trunk) printf '%s\n' @trunkio/launcher ;;
     tsc) printf '%s\n' typescript ;;
+    tsgolint) printf '%s\n' oxlint-tsgolint ;;
     vite) printf '%s\n' vite ;;
   esac
 }
@@ -1383,15 +1393,20 @@ cleanup_legacy_files() {
       remove_legacy_file "${LEGACY_GOBIN}/${cmd}" "$replacement"
       remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
       ;;
-    actionlint|bat|clang|codex|ctx7|delta|eza|fastfetch|gh|git-lfs|hunk|hyperfine|jq|just|micro|oh-my-posh|oxfmt|oxlint|pnpm|rclone|rg|rtk|scriptc|shellcheck|shfmt|tldr|tmux|typos|vite|watchexec|yq|zoxide|trunk|wrk|websocat|rich|tsc)
+    actionlint|agent-browser|bat|ccstatusline|clang|codex|ctx7|delta|eza|fastfetch|gh|git-lfs|hunk|hyperfine|jq|just|kilocode|micro|oh-my-posh|oxfmt|oxlint|pnpm|rclone|rg|rtk|scriptc|shellcheck|shfmt|tailwindcss|tldr|tmux|tsgolint|typos|vite|watchexec|yq|zoxide|trunk|wrk|websocat|rich|tsc)
       remove_legacy_file "${LOCAL_BIN}/${cmd}" "$replacement"
       case "$cmd" in
-        ctx7|oxfmt|oxlint|pnpm|scriptc|tldr|trunk|tsc|vite)
+        agent-browser|ccstatusline|ctx7|oxfmt|oxlint|pnpm|scriptc|tailwindcss|tldr|trunk|tsc|tsgolint|vite)
           remove_legacy_file "${HOME}/.bun/bin/${cmd}" "$replacement"
           ;;
         hunk)
           remove_legacy_file "${HOME}/.bun/bin/hunk" "$replacement"
           remove_legacy_file "${HOME}/.bun/bin/hunkdiff" "$replacement"
+          ;;
+        kilocode)
+          remove_legacy_file "${LOCAL_BIN}/kilo" "$(mise_cmd which kilo 2>/dev/null || true)"
+          remove_legacy_file "${HOME}/.bun/bin/kilocode" "$replacement"
+          remove_legacy_file "${HOME}/.bun/bin/kilo" "$(mise_cmd which kilo 2>/dev/null || true)"
           ;;
       esac
       ;;

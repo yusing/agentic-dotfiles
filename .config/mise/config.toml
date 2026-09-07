@@ -14,8 +14,13 @@ bun = "latest"
 # GitHub ships websocat.<target-triple>; keep the command name websocat.
 "github:vi/websocat" = { version = "latest", bin = "websocat" }
 # bun is installed before these so the npm backend uses bun, not npm.
+"npm:@kilocode/cli" = "latest"
+"npm:@tailwindcss/cli" = "latest"
 "npm:@trunkio/launcher" = "latest"
+"npm:agent-browser" = "latest"
+"npm:ccstatusline" = "latest"
 "npm:ctx7" = "latest"
+"npm:oxlint-tsgolint" = "latest"
 "npm:scriptc" = "latest"
 "npm:vite" = "latest"
 # Build only the checksum-locked source archive published by wg/wrk.

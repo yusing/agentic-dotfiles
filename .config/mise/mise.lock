@@ -1855,14 +1855,39 @@ url = "https://github.com/wg/wrk/archive/refs/tags/4.2.0.tar.gz"
 checksum = "sha256:e255f696bff6e329f5d19091da6b06164b8d59d62cb9e673625bdcd27fe7bdad"
 url = "https://github.com/wg/wrk/archive/refs/tags/4.2.0.tar.gz"
 
+[[tools."npm:@kilocode/cli"]]
+version = "7.5.15"
+backend = "npm:@kilocode/cli"
+specifiers = ["latest"]
+
+[[tools."npm:@tailwindcss/cli"]]
+version = "4.3.3"
+backend = "npm:@tailwindcss/cli"
+specifiers = ["latest"]
+
 [[tools."npm:@trunkio/launcher"]]
 version = "1.3.4"
 backend = "npm:@trunkio/launcher"
 specifiers = ["latest"]
 
+[[tools."npm:agent-browser"]]
+version = "0.36.0"
+backend = "npm:agent-browser"
+specifiers = ["latest"]
+
+[[tools."npm:ccstatusline"]]
+version = "2.2.29"
+backend = "npm:ccstatusline"
+specifiers = ["latest"]
+
 [[tools."npm:ctx7"]]
 version = "0.5.10"
 backend = "npm:ctx7"
+specifiers = ["latest"]
+
+[[tools."npm:oxlint-tsgolint"]]
+version = "7.0.2001"
+backend = "npm:oxlint-tsgolint"
 specifiers = ["latest"]
 
 [[tools."npm:scriptc"]]
