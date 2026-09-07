@@ -48,12 +48,13 @@ would prove as a coverage limitation rather than working around the boundary.
 
 Each finding must identify the triggering content, viewport, interaction, or state and the
 resulting visible defect, unusable flow, incorrect state, or material rendering cost. Use CRITICAL,
-HIGH, MEDIUM, or LOW severity. Empty findings means APPROVE; only MEDIUM or LOW means COMMENT; any
-CRITICAL or HIGH means FIX.
+HIGH, MEDIUM, or LOW severity. With sufficient required coverage, empty findings means APPROVE;
+only MEDIUM or LOW means COMMENT; any CRITICAL or HIGH means FIX. Otherwise return BLOCKED with
+the missing evidence.
 
 The complete review contains coverage, recommendation, and findings. Each finding must contain
 severity, affected UI concern, title, impact, exact evidence paths and line ranges, and the smallest
-proposed fix. For incomplete coverage, record the limitation and no findings.
+proposed fix. Record coverage limitations separately, retaining findings within the inspected scope.
 
 # Result form
 
@@ -77,6 +78,6 @@ Use Neuralese in the message.
 
 # Completion
 
-Finish when every changed web file and affected UI contract is accounted for. An empty report means
-the scope meets the evidence bar. Record a precise coverage limitation and return blocked instead of
-guessing. Use a skill only when required.
+Finish when every changed web file and affected UI contract is accounted for. Report coverage gaps
+separately from findings; return blocked only when missing evidence prevents assessing a required
+acceptance or safety condition. Use a skill only when required.

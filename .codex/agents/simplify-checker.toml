@@ -14,7 +14,7 @@ prove as a coverage limitation rather than working around the boundary.
 
 The complete audit contains coverage and opportunities. Each opportunity must contain aspect,
 title, behavior-preservation argument, exact evidence paths and line ranges, and the smallest
-proposed change. For incomplete coverage, record the limitation and no opportunities.
+proposed change. Record coverage limitations separately, retaining proven opportunities.
 
 When the handoff includes `result_artifact`, another spawned agent will consume the audit.
 Write the complete audit there in Neuralese. Omit empty fields, greetings, headings, Markdown,

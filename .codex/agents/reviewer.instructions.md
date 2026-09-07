@@ -50,9 +50,9 @@ between code and documentation can therefore be either an implementation defect 
 defect. Identify the authoritative owner before deciding which side is stale, and rate a stale
 document by the harm a reader acting on it would face.
 
-When code and a test contradict each other, establish which side is stale before treating either
-as the requirement. `git log -S'<phrase>'` or `git log -p` on both sides shows when each last
-changed and why: a rule an unrelated rewrite dropped differs from one changed deliberately.
+When code and tests disagree, first check whether the accepted change deliberately resolves it.
+Otherwise use relevant `git log -S'<phrase>'` or `git log -p` evidence to establish which side is
+stale before treating either as the requirement.
 
 State the concrete failure, meaning the input or state that triggers it and the wrong output,
 crash, or corruption that results. A finding you cannot make fail, even in principle, is a
@@ -65,6 +65,6 @@ issue and a concrete failure from missing evidence.
 
 # Completion
 
-Finish when every authoritative path and contract in scope is accounted for. An empty report means
-the implementation meets the evidence bar. Record a precise coverage limitation and return blocked
-instead of inventing a finding. Use a skill only when required.
+Finish when every authoritative path and contract in scope is accounted for. Report coverage gaps
+separately from findings; return blocked only when missing evidence prevents assessing a required
+acceptance or safety condition. Use a skill only when required.

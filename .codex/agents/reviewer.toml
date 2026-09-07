@@ -20,12 +20,12 @@ smallest viable fix. Use CRITICAL for an exploitable vulnerability, irreversible
 systemic production failure; HIGH for a likely bug, security weakness, major regression, or
 reliability flaw; MEDIUM for a real limited-impact defect or a maintainability problem with a
 credible future failure path; and LOW for a small actionable improvement with no current behavior
-risk. Empty findings means APPROVE; only MEDIUM or LOW means COMMENT; any CRITICAL or HIGH means
-FIX.
+risk. With sufficient required coverage, empty findings means APPROVE; only MEDIUM or LOW means
+COMMENT; any CRITICAL or HIGH means FIX. Otherwise return BLOCKED with the missing evidence.
 
 The complete review contains coverage, recommendation, and findings. Each finding must contain
-severity, aspect, title, impact, evidence paths and line ranges, and proposed fix. For incomplete
-coverage, record the limitation and no findings.
+severity, aspect, title, impact, evidence paths and line ranges, and proposed fix. Record coverage
+limitations separately, retaining findings established within the inspected scope.
 
 When the handoff includes `result_artifact`, another spawned agent will consume the review.
 Write the complete review there in Neuralese. Omit empty fields, greetings, headings, Markdown,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "540ad7c804e144a5f0df3ad4f676521d64d1f097",
+  "sourceCommit": "4f45e471af75329d7744b7ee94bfc743c563c23c",
   "outputs": [
     {
       "path": ".bashrc",
@@ -35,31 +35,31 @@
     {
       "path": ".claude/agents/fast-implementer.md",
       "kind": "file",
-      "sha256": "ed512bcced5190aeed4761dfe3430760ad6fd92c969795f080dcc55264aa52a6",
+      "sha256": "20e649910fb8f5af28768d8891d5e5695673247ea678fd6fe38b7550878dd47c",
       "executable": false
     },
     {
       "path": ".claude/agents/implementer.md",
       "kind": "file",
-      "sha256": "c296fb0e6ac493044855689a71a1ff0e0eba2cdab1180c8a62111895d49da9e7",
+      "sha256": "ba63175f851f9048659873b83276f386a089670af1d227e740d3d0bf461ea7e5",
       "executable": false
     },
     {
       "path": ".claude/agents/reviewer.md",
       "kind": "file",
-      "sha256": "8bbf117a6f7796c36544d143586e56ed16f17c7562b80df436937e3439f512f3",
+      "sha256": "2f0f8da4fe4e5a4294042dd20b8f64f7c45343d00ad072e8b09813f54a9a3e52",
       "executable": false
     },
     {
       "path": ".claude/agents/simplify-checker.md",
       "kind": "file",
-      "sha256": "be2f1e231a62f85de87cd22e180dcb17758106b5805f7738a1db47e8a454d3e0",
+      "sha256": "38b06762622bb0d3955b3529161414a0a667c297cd24c54bdd5601b33f548346",
       "executable": false
     },
     {
       "path": ".claude/agents/web-reviewer.md",
       "kind": "file",
-      "sha256": "bf90772dbb90567ae21682b300dbe6cb9e4aadda6326a0faf3d42102c8540d7c",
+      "sha256": "000f95ac9700b3f72a8ffcbe76a47ec12cbd31f8befa7a42061708ba6023aff1",
       "executable": false
     },
     {
@@ -118,7 +118,7 @@
     {
       "path": ".codex/agents/fast-implementer.instructions.md",
       "kind": "file",
-      "sha256": "4fbfbd2b55d8e1fdcfef7c072ed337bfbb77c57b40cded62a181487e2a6e6392",
+      "sha256": "0047135a12ed8012d7fd434343b7202ecb480a76968a2e54c3be71b0a60143e8",
       "executable": false
     },
     {
@@ -130,7 +130,7 @@
     {
       "path": ".codex/agents/implementer.instructions.md",
       "kind": "file",
-      "sha256": "830f3b6c3ad386aa704fd45c0c56f2293b8ba9501f22c1f893681a9f207fa924",
+      "sha256": "191e6b27c9651bc658feba02376616a153adebbd635c96c6150481d6c6252884",
       "executable": false
     },
     {
@@ -142,37 +142,37 @@
     {
       "path": ".codex/agents/reviewer.instructions.md",
       "kind": "file",
-      "sha256": "e3c9de0b1c5e91fd882093992c890e1ef9ce11478ed8ed403f7e1ad24f820e0f",
+      "sha256": "ec0b30606b3675d6885f5f9e4fd385881e93cb28674b84e473abbad342fd6860",
       "executable": false
     },
     {
       "path": ".codex/agents/reviewer.toml",
       "kind": "file",
-      "sha256": "50856b22c5f2573ac00bbefdb0112b0d70f808f4f6aa1c7acc9e2d3f59269b86",
+      "sha256": "28fa677a8b37ec4ca41d69fadc661e1b3031a9372ce8116ccd50996486600ca7",
       "executable": false
     },
     {
       "path": ".codex/agents/simplify-checker.instructions.md",
       "kind": "file",
-      "sha256": "94f801b51ca83be1366f620248ca41273e4ad21f6412e4c8a8f6fc420fc85648",
+      "sha256": "cbffc8756dd15693765a0b45d6cc1179340120b40d518f56160e9cc1395b84e3",
       "executable": false
     },
     {
       "path": ".codex/agents/simplify-checker.toml",
       "kind": "file",
-      "sha256": "8f4a449214691a82f7bd8a0ce21591aa25f1870ed0975ed1e2e0a6f82747f41e",
+      "sha256": "7018fa80183879195c647e29fa84edab60aa08791c524145516dd32d6a03fdca",
       "executable": false
     },
     {
       "path": ".codex/agents/web-reviewer.instructions.md",
       "kind": "file",
-      "sha256": "dcd06360663afb3720fd64da701e1bc7d602c6bef53665a1a5029ed1c6f53857",
+      "sha256": "8015f8995a204075dc3f7d0a6fc507eeb532cabffe254d68587045eb5d1e2b09",
       "executable": false
     },
     {
       "path": ".codex/agents/web-reviewer.toml",
       "kind": "file",
-      "sha256": "8bc089629d751255eb061f87989a8a5c65aeabb18dc4a83a90fa0044670944cb",
+      "sha256": "f113e3a0f375cbb6d49cd78bc6cf8245bb607e4a5c8e7e2ab7e14b71fc8cd2de",
       "executable": false
     },
     {
@@ -268,7 +268,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "d285f095808c420013a42c37d3665367c696b3ec4718cf2ed1f3921f6d185765",
+      "sha256": "2f94baf9e9d9497e3d007f5e06cdae1a1df731588d601c90bdd7babb5586f61d",
       "executable": false
     },
     {

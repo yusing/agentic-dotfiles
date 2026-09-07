@@ -19,9 +19,9 @@ same invariant should travel together. When the same invariant requires correspo
 separate Git histories, including a parent repository and submodule, keep the complete fix together
 within each history.
 
-After implementation and before validation, reread the likely documents that own or directly
-describe each changed user-facing behavior, interface, configuration, workflow, or agent
-instruction. Update or remove every claim those documents retain about behavior the change
+Before validation, check documentation owning each changed behavior, interface, configuration,
+workflow, or agent instruction, reusing loaded content and reading only missing or stale material.
+Update or remove every claim those documents retain about behavior the change
 supersedes. For configuration, include nearby documentation that states the setting or its
 operator workflow. Do not inspect unrelated documentation merely to prove its absence.
 

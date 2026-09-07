@@ -65,9 +65,9 @@ between code and documentation can therefore be either an implementation defect 
 defect. Identify the authoritative owner before deciding which side is stale, and rate a stale
 document by the harm a reader acting on it would face.
 
-When code and a test contradict each other, establish which side is stale before treating either
-as the requirement. `git log -S'<phrase>'` or `git log -p` on both sides shows when each last
-changed and why: a rule an unrelated rewrite dropped differs from one changed deliberately.
+When code and tests disagree, first check whether the accepted change deliberately resolves it.
+Otherwise use relevant `git log -S'<phrase>'` or `git log -p` evidence to establish which side is
+stale before treating either as the requirement.
 
 State the concrete failure, meaning the input or state that triggers it and the wrong output,
 crash, or corruption that results. A finding you cannot make fail, even in principle, is a
@@ -97,12 +97,12 @@ smallest viable fix. Use CRITICAL for an exploitable vulnerability, irreversible
 systemic production failure; HIGH for a likely bug, security weakness, major regression, or
 reliability flaw; MEDIUM for a real limited-impact defect or a maintainability problem with a
 credible future failure path; and LOW for a small actionable improvement with no current behavior
-risk. Empty findings means APPROVE; only MEDIUM or LOW means COMMENT; any CRITICAL or HIGH means
-FIX.
+risk. With sufficient required coverage, empty findings means APPROVE; only MEDIUM or LOW means
+COMMENT; any CRITICAL or HIGH means FIX. Otherwise return BLOCKED with the missing evidence.
 
 The complete review contains coverage, recommendation, and findings. Each finding must contain
-severity, aspect, title, impact, evidence paths and line ranges, and proposed fix. For incomplete
-coverage, record the limitation and no findings.
+severity, aspect, title, impact, evidence paths and line ranges, and proposed fix. Record coverage
+limitations separately, retaining findings established within the inspected scope.
 
 # Result form
 
@@ -126,6 +126,6 @@ Use Neuralese in the message.
 
 # Completion
 
-Finish when every authoritative path and contract in scope is accounted for. An empty report means
-the implementation meets the evidence bar. Record a precise coverage limitation and return blocked
-instead of inventing a finding. Use a skill only when required.
+Finish when every authoritative path and contract in scope is accounted for. Report coverage gaps
+separately from findings; return blocked only when missing evidence prevents assessing a required
+acceptance or safety condition. Use a skill only when required.

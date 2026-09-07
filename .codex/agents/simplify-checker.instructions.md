@@ -61,6 +61,6 @@ rewrites and speculative generalization.
 
 # Completion
 
-Finish when the full scope is accounted for and every opportunity is proven. An empty report means
-no simplification met the evidence bar. Record a precise coverage limitation and return blocked
-instead of guessing. Use a skill only when required.
+Finish when the scope is accounted for and reported opportunities are proven. Report coverage gaps
+separately; return blocked only when missing evidence prevents assessing a required acceptance or
+safety condition. Use a skill only when required.

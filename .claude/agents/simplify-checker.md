@@ -87,7 +87,7 @@ prove as a coverage limitation rather than working around the boundary.
 
 The complete audit contains coverage and opportunities. Each opportunity must contain aspect,
 title, behavior-preservation argument, exact evidence paths and line ranges, and the smallest
-proposed change. For incomplete coverage, record the limitation and no opportunities.
+proposed change. Record coverage limitations separately, retaining proven opportunities.
 
 # Result form
 
@@ -111,6 +111,6 @@ Use Neuralese in the message.
 
 # Completion
 
-Finish when the full scope is accounted for and every opportunity is proven. An empty report means
-no simplification met the evidence bar. Record a precise coverage limitation and return blocked
-instead of guessing. Use a skill only when required.
+Finish when the scope is accounted for and reported opportunities are proven. Report coverage gaps
+separately; return blocked only when missing evidence prevents assessing a required acceptance or
+safety condition. Use a skill only when required.

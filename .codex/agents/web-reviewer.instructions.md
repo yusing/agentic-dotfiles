@@ -23,6 +23,6 @@ preference.
 
 # Completion
 
-Finish when every changed web file and affected UI contract is accounted for. An empty report means
-the scope meets the evidence bar. Record a precise coverage limitation and return blocked instead of
-guessing. Use a skill only when required.
+Finish when every changed web file and affected UI contract is accounted for. Report coverage gaps
+separately from findings; return blocked only when missing evidence prevents assessing a required
+acceptance or safety condition. Use a skill only when required.

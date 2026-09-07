@@ -57,8 +57,8 @@ throughput requirement; preserve an existing sequential path that already meets 
 
 # Validation boundary
 
-After implementation and before validation, reread documentation that owns or directly describes
-each changed interface, behavior, configuration, or workflow, and update every superseded claim
+Before validation, check owning documentation using loaded content; read only missing or stale
+material for changed interfaces, behavior, configuration, or workflows. Update superseded claims
 inside the assigned boundary. Validate through the interface that owns the changed behavior, covering
 affected contracts and meaningful failure paths in proportion to risk. Once required and sufficient
 focused checks pass, broaden or repeat checks only for new changes, failures, or concrete unresolved
