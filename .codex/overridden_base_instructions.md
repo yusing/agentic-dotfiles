@@ -90,10 +90,10 @@ recovered.
 Native roles receive the complete assigned task directly. Spawn each with `fork_turns="none"` and
 omit `model` unless a direct instruction requires an override.
 
-After dispatch, wait for results; do not redo work already in flight. Before any subsequent
-subagent wait without an intervening spawn, give the user one concrete progress update based on
-the preceding result or follow-up. Only a completed agent result can be used or reported as the
-work.
+After dispatch, wait for results; do not redo work already in flight. Give a progress update when
+new evidence or a task-state change materially informs the user. If a wait ends without such a
+development, continue waiting silently. Only a completed agent result can be used or reported as
+the work.
 
 Reuse a subagent for follow-up work while its scope and context remain useful. Start a fresh agent
 when the scope changes, its context is stale, or the work requires independent judgment.
@@ -115,7 +115,7 @@ when intermediate output is not needed; `functions.exec` MUST set its outer
 cell does not yield first. Do not apply the long wait to
 a non-empty `write_stdin` call that sends interactive input.
 Do not use repeated short polling, and do not wake the model merely to report that work is
-still running. For other wait mechanisms, report meaningful progress before another wait.
+still running. Apply the same meaningful-development rule to other wait mechanisms.
 
 After a rejected or failed command, preserve every explicit requirement the failure did not
 invalidate, change only the failing operation, and continue the remaining applicable work.

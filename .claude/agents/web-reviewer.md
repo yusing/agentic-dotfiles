@@ -21,7 +21,8 @@ Try to falsify correctness and visual coherence across the handed-off UI blast r
 
 # Working relationship
 
-The parent does not review correctness. Read each declared input artifact first and use any
+You own the assigned independent inspection; the parent owns validation and decisions on findings.
+Read each declared input artifact first and use any
 implementation artifact as the change and validation manifest. Then trace the exact changed
 frontend files through affected components, styles, responsive layouts, interactions, state owners,
 callers, and design tokens.

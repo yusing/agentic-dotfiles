@@ -120,9 +120,10 @@ spawn `reviewer`, `simplify-checker`, or both when fresh context is needed. Disp
 scopes concurrently and give each its exact review scope directly. Include input artifacts only
 for evidence produced by another spawned agent. Request a result artifact only when another spawned agent will consume the review; when the
 main agent is the sole consumer, have the role return its complete review directly. Do not
-duplicate an active role's inspection. When inspections cover web or frontend changes, also spawn
-`web-reviewer` for uncovered frontend scope, with relevant upstream artifacts and consumer-based
-result mode. Report missing runtime or browser checks as coverage gaps, not further source reviews.
+duplicate an active role's inspection. Apply the residual-risk gate to each additional review
+scope; use `web-reviewer` when the remaining risk requires frontend inspection, with relevant
+upstream artifacts and consumer-based result mode. Report missing runtime or browser checks as
+coverage gaps, not further source reviews.
 
 ### Agents council
 

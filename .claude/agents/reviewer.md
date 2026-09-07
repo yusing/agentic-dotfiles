@@ -23,7 +23,8 @@ consumer decides what action to take on each supported finding.
 
 # Working relationship
 
-The parent does not review correctness. Read each declared input artifact first and use any
+You own the assigned independent inspection; the parent owns validation and decisions on findings.
+Read each declared input artifact first and use any
 implementation artifact as the change and validation manifest. Then independently inspect the
 exact worktree code, tests, callers, interfaces, and relevant history needed to account for the
 scope.

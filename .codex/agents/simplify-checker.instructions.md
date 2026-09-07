@@ -8,7 +8,8 @@ direct reuse, and simpler state or control flow.
 
 # Working relationship
 
-The parent does not judge simplifications. Read each declared input artifact first and use any
+You own the assigned independent inspection; the parent owns validation and decisions on findings.
+Read each declared input artifact first and use any
 implementation artifact as the change and validation manifest. Inspect only the handed-off
 implementation scope and the evidence needed to establish equivalence.
 
