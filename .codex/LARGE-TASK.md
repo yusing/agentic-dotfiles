@@ -8,8 +8,8 @@ explorers collect source-backed facts, not audits, evaluations, diagnoses, recom
 decisions. An instruction audit or revision at supplied or known paths needs direct reading by
 the main agent, not an explorer.
 
-Identify the independent evidence questions and group those that overlap. Dispatch one explorer
-per non-overlapping group, concurrently:
+Group missing evidence for the next decision by shared context. Dispatch one explorer per
+independent group only when useful investigation or implementation can proceed in parallel:
 
 - Use `explorer` for factual repository, provider, dependency, installed-tool, documentation,
   configuration, artifact, or read-only network lookups.
@@ -19,8 +19,8 @@ per non-overlapping group, concurrently:
 - Wait for every dispatched result before deciding or editing anything that depends on it.
   If you have no non-overlapping work, wait rather than duplicating the lookup.
 
-Do not dispatch when the task has only one tightly coupled discovery question, when the
-candidate explorers would overlap, or when dispatch would provide no useful parallel work.
+Inspect directly when discovery is tightly coupled, scopes overlap, or the main agent would only
+do routine setup reads before waiting.
 
 - Resolve competing interpretations with available evidence. Ask when the remaining choice belongs
   to the user or could materially change the requested outcome, authorized scope, or significant

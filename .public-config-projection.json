@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b15b58cc93edb15f149bbfce2e9e7cc9080eef6b",
+  "sourceCommit": "0a7c1987494c7cf6b3ff558d008fd49c32932ddb",
   "outputs": [
     {
       "path": ".bashrc",
@@ -76,7 +76,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "97a1505c9787183cee407c2ff6c1c9cb03f0b03f0385a6c752763e8b3b1f6534",
+      "sha256": "717049b6487af7c5bd27099682301066ca60897394102104c5d6596abb417001",
       "executable": false
     },
     {
@@ -274,7 +274,7 @@
     {
       "path": ".codex/LARGE-TASK.md",
       "kind": "file",
-      "sha256": "baf0574eb5c927478f022e072c0a80226846634d03dc8eb0ace64ec7d62f2aa4",
+      "sha256": "dd279ff4bd5efa8618e16c4185782746a6b315ad83d5472de0107d944a5f1ae2",
       "executable": false
     },
     {

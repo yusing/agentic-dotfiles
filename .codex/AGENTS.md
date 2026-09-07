@@ -87,8 +87,8 @@ to a file instead of returning it to the conversation.
 
 ## Agent communication
 
-Native roles receive the complete assigned task directly in fresh context. Use the client's native
-fresh-context mechanism rather than copying inherited conversation history into the handoff.
+Native roles receive the complete assigned task directly in fresh context: question or risk,
+exclusive scope, and completion evidence. Use the client's fresh-context mechanism, not copied history.
 
 Agent-to-Main communication always uses messages. Main should create one artifact root only if the task includes Agent-to-Agent communication.
 For example: `explorer`->message->`main`; `council-member` A->artifact path->main->`council-member` B.
@@ -112,13 +112,15 @@ would have meaningful user, data, security, compatibility, or operational impact
 inspection can find it beyond focused checks and direct diff review.
 
 Native review roles are the only owners of independent inspection; root diff review and tests are
-validation, not substitutes. When inspection is needed, autonomously select `reviewer`,
-`simplify-checker`, or both, then spawn the selected roles concurrently and give each its exact
-review scope directly. Include input artifacts only for evidence produced by another spawned
-agent. Request a result artifact only when another spawned agent will consume the review; when the
+validation, not substitutes. Reuse applicable completed reviews across commits and phases.
+For material changes, unresolved findings, or uncovered integration risks, reuse reviewers for targeted follow-ups or
+spawn `reviewer`, `simplify-checker`, or both when fresh context is needed. Dispatch independent
+scopes concurrently and give each its exact review scope directly. Include input artifacts only
+for evidence produced by another spawned agent. Request a result artifact only when another spawned agent will consume the review; when the
 main agent is the sole consumer, have the role return its complete review directly. Do not
 duplicate an active role's inspection. When inspections cover web or frontend changes, also spawn
-`web-reviewer` with the same scope, relevant upstream artifacts, and consumer-based result mode.
+`web-reviewer` for uncovered frontend scope, with relevant upstream artifacts and consumer-based
+result mode. Report missing runtime or browser checks as coverage gaps, not further source reviews.
 
 ### Agents council
 
