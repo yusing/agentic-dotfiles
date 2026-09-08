@@ -188,17 +188,21 @@ adopt one layer at a time and roll back anything that does not fit.
 
 ```text
 .
+├── setup.sh               # Bootstrap and tool installation
+├── setup.json             # Package and tool declarations
 ├── AGENTS.md              # Repository-specific agent guidance
+├── CONTEXT-*.md           # Ownership maps for instructions, hooks, and shell
 ├── .codex/                # Codex settings, base instructions, agents, hooks, and skills
 ├── .claude/               # Claude Code settings and agents
 ├── .grok/                 # Grok settings and Codex-hook adapters
-├── .skills-mgr/skills/    # Reusable cross-client skills
+├── .skills-mgr/           # Skill registry and shared skill sources
 ├── .config/fish/          # Primary shell configuration
 ├── .zshrc                 # Zsh-specific configuration
 ├── .zsh/                  # Shared behavior ported from Fish to Zsh
 ├── .bashrc                # Bash-specific configuration
-├── .config/               # Selected editor, terminal, and CLI settings
-└── .local/bin/            # Small development utilities
+├── .config/               # Editors, terminal, and CLI settings
+├── .local/bin/            # Small development utilities
+└── .local/lib/            # Helper sources used by setup and hooks
 ```
 
 ## License
