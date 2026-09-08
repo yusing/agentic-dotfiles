@@ -63,8 +63,8 @@ compaction, recover the active scope and reread only the guidance needed for the
 
 ## Skills and required tools
 
-Read skill instructions with `skills-mgr get <skill-name> [start:end]`, and listed references
-with `skills-mgr get <skill-name>/<relative-path> [start:end]`. Omit the optional 1-based
+Read skill instructions with `skills-mgr get <skill-name> [start:end]`, and listed or skill mentioned 
+references with `skills-mgr get <skill-name>/<relative-path> [start:end]`. Omit the optional 1-based
 inclusive range to read the whole file.
 Load only the references you actually need.
 Run scripts with `skills-mgr run <skill-name>/<relative/script> [args...]`.
