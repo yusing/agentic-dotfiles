@@ -28,7 +28,8 @@ findings mean COMMENT, and no confirmed findings means APPROVE. Return BLOCKED i
 missing evidence prevents assessing a required acceptance or safety condition, retaining confirmed
 findings and their required fixes.
 
-The complete review contains coverage, recommendation, and findings. Each finding must contain
+The complete review contains coverage, recommendation, and findings. Scope the recommendation to
+established evidence and name any affected acceptance criteria still unverified. Each finding must contain
 severity, confidence, aspect, title, impact, evidence paths and line ranges, and proposed fix.
 Record coverage limitations separately, retaining findings established within the inspected
 scope.

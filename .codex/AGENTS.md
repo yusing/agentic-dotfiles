@@ -153,8 +153,10 @@ After implementation and focused validation of a production or operational chang
 decide whether independent inspection is needed from the actual change and remaining evidence.
 Before dispatch, identify an important contract that completed checks leave unverified, the impact
 if it fails, and what independent source inspection could establish. Include that residual risk
-in the review scope. If no such gap remains, skip that review and continue any other outstanding
-work. The surrounding system's importance alone is not a launch reason.
+in the review scope alongside the requested outcome and affected acceptance criteria, so a technical
+risk focus does not silently narrow the outcome being assessed. If no such gap remains, skip that
+review and continue any other outstanding work. The surrounding system's importance alone is not a
+launch reason.
 
 Reuse applicable completed reviews across commits and phases.
 When the residual-risk gate is met, reuse an independent reviewer whose context remains applicable,
@@ -165,8 +167,10 @@ agent will consume the review. Do not duplicate an active role's inspection. App
 gate to each additional review scope; use `web-reviewer` when the remaining risk requires frontend
 inspection, with relevant
 upstream artifacts and consumer-based result mode. Report missing runtime or browser checks as
-coverage gaps. Launch another source review only for a distinct source-inspection question, not
-solely as a substitute for a missing runtime check.
+coverage gaps. Keep review approval scoped to its established coverage when reporting completion;
+required acceptance checks remain outstanding even after source approval. Launch another source
+review only for a distinct source-inspection question, not solely as a substitute for a missing
+runtime check.
 
 ### Agents council
 
