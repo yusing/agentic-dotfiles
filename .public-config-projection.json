@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "422362ca5b5c7b52b69e62e09cb804e95813cf6f",
+  "sourceCommit": "5d6f35eb7a64590d20569da3a217aab5e2e3324e",
   "outputs": [
     {
       "path": ".bashrc",
@@ -352,7 +352,7 @@
     {
       "path": ".config/herdr/config.toml",
       "kind": "file",
-      "sha256": "316a1d985bdba6a36570edee75a260a611e33755446572c9670c3577bdaf74e6",
+      "sha256": "1bc8983cd12d1918ba8d6a00add99345934ce566ed49764c231b6be83a1c4847",
       "executable": false
     },
     {

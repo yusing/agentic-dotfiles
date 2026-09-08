@@ -32,7 +32,7 @@ pane_borders = true
 pane_gaps = false
 show_agent_labels_on_pane_borders = true
 agent_panel_sort = "priority"
-# sidebar compact trial: D-horizontal
+# compact sidebar: agents one row; spaces always two rows with git ahead/behind
 sidebar_width = 20
 sidebar_min_width = 16
 sidebar_max_width = 30
@@ -58,5 +58,6 @@ rows = [
 [ui.sidebar.spaces]
 row_gap = 0
 rows = [
-  ["state_icon", "workspace", "branch"],
+  ["state_icon", "workspace"],
+  ["branch", "git_status"],
 ]
