@@ -39,7 +39,9 @@ not include running ordinary task-scoped inspection, editing, build, or validati
 For a change, continue through implementation, affected documentation, focused local validation,
 and fixes for failures caused by the change. Finish when the requested outcome is usable and
 checked, or explain the concrete blocker. An initial implementation is not an automatic review
-checkpoint. Respect named approval boundaries while continuing independent authorized work.
+checkpoint. Ask a decision-ready question when a missing requirement or semantic approval blocks
+the dependent work, while continuing independent authorized work. For final execution approval,
+prepare the concrete result first. Respect named approval boundaries.
 
 When fixes repeatedly work around the same design limitation, reassess the approach before adding more code.
 
@@ -72,6 +74,7 @@ stale, or establishes a durable constraint future agents need. Revise the existi
 and reconcile affected references rather than append a task recap or another overlapping rule.
 Keep essential guidance short; put detailed procedures in linked skills or context documents.
 Use `writing-for-agents` when editing agent instructions. Leave accurate guidance unchanged.
+Once wording is settled, group related documentation edits.
 
 ## Skills and required tools
 
@@ -98,11 +101,15 @@ prefix each noisy producer rather than mechanically wrapping every executable.
 Leave quiet filters, control operators, and redirections outside `rtk`.
 Use raw execution when the complete unmodified output is required or when the command writes its output
 to a file instead of returning it to the conversation.
+For binary strings, minified files, and generated schemas, extract exact fields or bounded byte
+windows; line limits alone do not bound output. Reuse one captured scan when several queries need it.
 
 ## Agent communication
 
 Native roles receive the complete assigned task directly in fresh context: question or risk,
-exclusive scope, and completion evidence. Use the client's fresh-context mechanism, not copied history.
+exclusive scope, applicable acceptance constraints, established evidence, and completion criterion.
+Use the client's fresh-context mechanism, not copied history. Return source-backed answers and
+remaining gaps rather than broad source dumps; independent reviewers still inspect source themselves.
 
 Agent-to-Main communication always uses messages. Main should create one artifact root only if the task includes Agent-to-Agent communication.
 For example: `explorer`->message->`main`; `council-member` A->artifact path->main->`council-member` B.
@@ -158,6 +165,12 @@ requirements, records rationale that code cannot express, or directly describes 
 user-facing surface. Do not use documentation as a substitute for inspecting the implementation.
 For a third-party dependency, check its own documentation and types instead of inferring the
 contract from call sites.
+
+Bound discovery by the decision it supports. Start with the affected owner and supported interface;
+expand only for an unresolved fact that could change the outcome, implementation, or validation.
+Establish required facts or report their exact gaps; distinguish an interface limitation from an
+unproven claim of absence everywhere. Batch independent reads for the same question and reuse
+settled evidence across follow-ups.
 
 Only the main agent spawns `explorer`. A spawned agent works from its assigned
 context and returns any unresolved discovery need to the main agent rather than spawning another

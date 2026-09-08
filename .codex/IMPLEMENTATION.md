@@ -7,11 +7,23 @@ Start with the smallest working end-to-end version, then add capabilities withou
 behavior that the current requirements still accept. A behavior superseded by the current request
 is not a compatibility obligation.
 
-Validate the assumptions behind the approach, not only whether it runs. Test through the interface
-that owns the changed behavior. Cover affected contracts, meaningful
+Validate the assumptions behind the approach before choosing its storage or delivery mechanism.
+When changing identity or lifetime, establish stable identity, state surviving completion/expiry
+and session changes, behavior under capacity pressure, and the consumer's final-result contract.
+Turn the affected invariants into focused acceptance tests, then implement against them. Auxiliary
+state must not displace essential recovery state or the substantive result.
+
+Test through the interface that owns the changed behavior. Cover affected contracts, meaningful
 failure paths, and required checks in proportion to risk. Prefer existing focused checks; add tests
 when they protect behavior rather than mirror the implementation. Once sufficient checks pass,
 broaden or repeat validation only for new changes, failures, or a concrete unresolved concern.
+Keep required integrated checks and risk-triggered independent inspection.
+
+Run new timing/concurrency tests separately first, with explicit timeouts based on expected or
+observed duration plus headroom. Exercise long lifetimes with controlled state or a suitable test
+clock, keeping setup in test sources. A timeout is a failure to diagnose, not permission to weaken
+assertions. Before rerunning a superseded validation job, resolve the old job's status within the
+applicable process-control authorization; editing files does not update a running test binary.
 
 Keep the demonstrated failure and violated invariant together as the unit of implementation and
 of any authorized commit. Helper code, callers, tests, documentation, and cleanup that restore the
