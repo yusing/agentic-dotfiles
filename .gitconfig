@@ -12,8 +12,12 @@
 [init]
   defaultBranch = main
 [core]
-  pager = hunk pager
+  pager = delta
   excludesfile = $HOME/.gitignore_global
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
 [alias]
 	# Use a temporary index so untracked files appear without changing the real staging area.
 	diffstat = "!f() { prefix=${GIT_PREFIX:-.}; index=$(git rev-parse --git-path index) || return; tmpdir=$(mktemp -d \"${TMPDIR:-/tmp}/git-diffstat.XXXXXX\") || return; tmp=\"$tmpdir/index\"; trap 'rm -f \"$tmp\" \"$tmp.lock\"; rmdir \"$tmpdir\" 2>/dev/null' EXIT HUP INT TERM; if test -f \"$index\"; then cp \"$index\" \"$tmp\" || return; else GIT_INDEX_FILE=\"$tmp\" git read-tree --empty || return; fi; if test \"$1\" = --; then shift; fi; if test \"$#\" -eq 0; then set -- .; else cd \"$prefix\" || return; fi; GIT_INDEX_FILE=\"$tmp\" git add -N -- \"$@\" && GIT_INDEX_FILE=\"$tmp\" git diff --shortstat -- \"$@\"; }; f"
