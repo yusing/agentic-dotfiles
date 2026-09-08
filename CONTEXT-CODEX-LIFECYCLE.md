@@ -9,8 +9,10 @@
    `.codex/AGENTS.md` for durable workflow guidance and the root `AGENTS.md` for repository context
    routing. The routed context maps and skill bodies are loaded only when their triggers match.
    Codex also discovers `.codex/agents/*.toml`; each role description guides role selection,
-   while the spawning client or tool owns invocation mechanics. Each selected role receives
-   its paired complete model prompt before its first turn. Active hooks are assembled from
+   while the spawning client or tool owns invocation mechanics. A role inherits the parent's base
+   instructions and receives inherited `AGENTS.md` guidance. Its TOML `developer_instructions`
+   adds role-specific behavior, boundaries, and result requirements without repeating shared policy.
+   Role files do not use `model_instructions_file`. Active hooks are assembled from
    `.codex/hooks.json`, any inline hook configuration, and manifests for enabled plugins.
 2. **Session start.** At startup and after context compaction or clearing,
    `.codex/hooks.json` runs `.codex/hooks/bin/check_project` and the automatic

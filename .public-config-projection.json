@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3c8696d8906f951fea40fc6b15f206e5b5ddc450",
+  "sourceCommit": "c968bfeb6bedb7ab1f0ab96b4d0990c5fb66abd5",
   "outputs": [
     {
       "path": ".bashrc",
@@ -17,49 +17,49 @@
     {
       "path": ".claude/agents/council-investigator.md",
       "kind": "file",
-      "sha256": "06dc926bcc6507d6491df442cba233d15e3084e1f4573ebd1fdb887917168980",
+      "sha256": "05146125d9b53328b2813e4bd9650e246508f5abf7ab1a3e26b7714ccea62dcc",
       "executable": false
     },
     {
       "path": ".claude/agents/council-member.md",
       "kind": "file",
-      "sha256": "0561222401bec30607bd2568bfa9204da889f58755d0b0b2882d4c82125a889c",
+      "sha256": "b759e97ba39610214e1ffa2ee3554da21e8c98f0e95854156ec97cbe8e4aca7b",
       "executable": false
     },
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "62f9ee25769a1173046ad995d635373219e284ee87d331a42b9e1e3947c22278",
+      "sha256": "d313096ac5c69976edd8b803b4280eb7ff6e82a6a55e972ed89942efa15322a0",
       "executable": false
     },
     {
       "path": ".claude/agents/fast-implementer.md",
       "kind": "file",
-      "sha256": "4aed16c0d8000e9d6246cdda5fe894c5a62fb18d87fc50aeb3057c8fef98edef",
+      "sha256": "4ede76bd7ea82dec9edf5ed66c3a613a093c2416f8edeb1ba3d4cbbc527f5725",
       "executable": false
     },
     {
       "path": ".claude/agents/implementer.md",
       "kind": "file",
-      "sha256": "2f4c281239eaa94a269b53280b22c6af235b24c28e5a1bb4b465fc2f231ffce2",
+      "sha256": "d26ae8b271e593fcdbc09880cb41ed59eaa7506f027d5adb0e1aadb5e6eb705b",
       "executable": false
     },
     {
       "path": ".claude/agents/reviewer.md",
       "kind": "file",
-      "sha256": "0203169a69011c2405323dbc368459f6e01566b212b38c2d82ab4b8e39d7d699",
+      "sha256": "a99c51d60aa66c6d8e1092d59bc4ef5824d7ac3a975cd3ebcac816457511bdad",
       "executable": false
     },
     {
       "path": ".claude/agents/simplify-checker.md",
       "kind": "file",
-      "sha256": "2a0dc2887bf5554a16ebb643dba40088e5eb0c9d09c20f76b67dab3558fd2594",
+      "sha256": "417fd6184457eb5c8e8c5e90fc8a623dd1454d06b4b2f0971869a4e91434912d",
       "executable": false
     },
     {
       "path": ".claude/agents/web-reviewer.md",
       "kind": "file",
-      "sha256": "6cde243c911cccc6b61f5cb418031dd7b292439e9e002fb274c011209f60e1cf",
+      "sha256": "4ede576b107ccb69a645e7ef0bc817e43a0c1ea38dbe4c3a08dfe565fef652e5",
       "executable": false
     },
     {
@@ -76,103 +76,55 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "ccb971193fcc63dbae55ea6aeadbd03fdf2db5bedb162d8079b338b6ad1b13fd",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/council-investigator.instructions.md",
-      "kind": "file",
-      "sha256": "0f721122db2e6a1b0e6df3541cb6e5f26e40bf58efcb9314d51d5198d7c80548",
+      "sha256": "b8ea29ae9a18ed104c84532ab6947cb28792b99c377d32855b63fbfaf60a3e11",
       "executable": false
     },
     {
       "path": ".codex/agents/council-investigator.toml",
       "kind": "file",
-      "sha256": "5b9d1e21df181878493501860de36d628483515202472a5ddc514010c043ea6c",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/council-member.instructions.md",
-      "kind": "file",
-      "sha256": "99054dd105a1b28f53206d7add097ea5e4326b5c55750fbd0fae9f71669eb91c",
+      "sha256": "addafba43afcae801806fad940ff716b5df4332197c687745aabd3d5be182c5f",
       "executable": false
     },
     {
       "path": ".codex/agents/council-member.toml",
       "kind": "file",
-      "sha256": "fb8ff6d34dddc7b06f1458282b95807cf102e4329a65e7a3c74ca9eeafcdad8f",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/explorer.instructions.md",
-      "kind": "file",
-      "sha256": "2757b93721af8a702bc75b6d112b5904626d465602ee344976fd81165c72c5d0",
+      "sha256": "e51aa31d1150a20193c2296af3295b8a4333bcbc590b92d979d8508df8889fe0",
       "executable": false
     },
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "8356d4b4fd5d04c7141dd201296f54a39e2583e37bda5100446831549ea58822",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/fast-implementer.instructions.md",
-      "kind": "file",
-      "sha256": "6d104d6640f228ecec6cb1854e1e0e0a7269f93711d9e2cc11957a7772f402be",
+      "sha256": "b305bb0b2c1ffb7add69b9e1af1b3db4bd371d7b54a40b54305ba18d6714d31a",
       "executable": false
     },
     {
       "path": ".codex/agents/fast-implementer.toml",
       "kind": "file",
-      "sha256": "b115de931e8ef32f4541d3caf6e1a4d5160eb401993bbc5b6b92bb2ab3a5f4bb",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/implementer.instructions.md",
-      "kind": "file",
-      "sha256": "8ad3b2d1325217dce3b1647e4807bf0e84e957ccdc833f93a383757409082fb8",
+      "sha256": "5289e8cac9c97e44358dff8a175b1264580b97f994e22874858c1d40491f9e0d",
       "executable": false
     },
     {
       "path": ".codex/agents/implementer.toml",
       "kind": "file",
-      "sha256": "8aaffea7f434fefb14998fc4fe4e912f2dd80ce6dcdd6f279a22f6cb3e62e4c4",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/reviewer.instructions.md",
-      "kind": "file",
-      "sha256": "0905680bad43ea3d521694867b72e872706d2df388fbeed3e482f54091050087",
+      "sha256": "e33cab5f5cbf24732edb8b964c3db2d906e702e43e81ff070f403f140da762f9",
       "executable": false
     },
     {
       "path": ".codex/agents/reviewer.toml",
       "kind": "file",
-      "sha256": "dfac2ab3d6c15d1f39109c7ceb684cc218882258dd31debd57351dd274cb1a84",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/simplify-checker.instructions.md",
-      "kind": "file",
-      "sha256": "3e6b8ba8359dcd44d2c8a61b8be80108a0b24b6187f0ac1fc3c0930993c4be4b",
+      "sha256": "c164559433143bc51b68b5c3337ba4bb74bb85b96a5dbd71f03650ebf50efb3c",
       "executable": false
     },
     {
       "path": ".codex/agents/simplify-checker.toml",
       "kind": "file",
-      "sha256": "d2ad52134c20fb5f0c7c087d656f32a97a7b860a747261560d883a91b5e1a4ee",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/web-reviewer.instructions.md",
-      "kind": "file",
-      "sha256": "41e461b4b0cabff7ff6d4230eb86483320fc5c1444dbeafc0e2e28370f0cdd16",
+      "sha256": "1b10e4167fe362d6b27ff9cf7892e2f39e8c796026e418a148c07e2d411ff27c",
       "executable": false
     },
     {
       "path": ".codex/agents/web-reviewer.toml",
       "kind": "file",
-      "sha256": "5881922d48b50f4cfc8749d801b03767199ec71da6bebe4a34e3078f47087259",
+      "sha256": "fe207ef2ea76f3702ec1d7881b7024048aaf14ce235e1d58cd03b377cd42381e",
       "executable": false
     },
     {
@@ -268,7 +220,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "da40d22851717f2b67c923f9bab2404f2d4ee3cd026e5a4b1161a7bc6b3fc2fd",
+      "sha256": "0a24b54ad105270c7fc2eb9b8d0a4d69f497adbfedacdccc06eac0536377e84b",
       "executable": false
     },
     {
@@ -466,7 +418,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "dc0671bfa62e8d4b6d9a34547e6a860fe51821d21c747df25363198e1b8e8c9b",
+      "sha256": "15bc33651fda6ec2934502da240cf501c6d9112ba60c3834dea41444269426e0",
       "executable": false
     },
     {
@@ -527,12 +479,6 @@
       "path": ".local/bin/grok-explore",
       "kind": "file",
       "sha256": "3d70e20b904f16f39469e81bd69df279804ea02e566eec547b023f1b53fa5ded",
-      "executable": true
-    },
-    {
-      "path": ".local/bin/sync-claude-agent-ports",
-      "kind": "file",
-      "sha256": "e1a6556c35f64ebeb1d37c3373bc456818e7cd1b794a38a11d465dca408a1edc",
       "executable": true
     },
     {
@@ -1041,13 +987,13 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "4ee6c04638f24bf602dce1f8b2296c9fd76847e65d1d05767316bf996431cc73",
+      "sha256": "33dec3ef168942838fc05192a5ad9d03acc732a0bbc0333ce054c044e97c0a12",
       "executable": false
     },
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "b6a81570841915ac505c4b6e5ed0f59791655341023389fca47173ea2103740f",
+      "sha256": "723a0699043343468f805a728c130b17b2b63e07f528d1ddc682f34e0e107aca",
       "executable": false
     },
     {
@@ -1077,7 +1023,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "15b69857a4703904e518983de7802a4a7f9f33ea1182823a12b7cbadef900ddb",
+      "sha256": "14561e84ab6a3d0ed4be04cf0c098ee27a10b4c697a04ae5007c79ce4650a2c6",
       "executable": false
     },
     {

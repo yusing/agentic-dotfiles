@@ -1,11 +1,11 @@
 # Claude agent port
 
-`.claude/agents/*.md` ports the Codex native roles in `.codex/agents/*.toml`. Each generated Claude
-file carries one complete role: Claude has no separate developer channel, so the Markdown body
-carries both the model prompt and the TOML `developer_instructions` contract. The Codex role pair
-remains the design owner. Run `.local/bin/sync-claude-agent-ports` after changing one; do not copy
-the change into the Claude file by hand. The helper applies the client-specific mappings and
-regenerates every Claude role. Its `--check` mode reports drift without writing.
+`.claude/agents/*.md` ports the Codex native roles in `.codex/agents/*.toml`. Each TOML
+`developer_instructions` contains the complete role and task/result contract; the generated
+Markdown body carries that text with client-specific mappings. The TOML is the design owner.
+Run `.local/bin/sync-claude-agent-ports` after changing it; do not edit generated roles by hand.
+The compiled helper's source and changelog live in `.local/lib/sync-claude-agent-ports/`.
+Its `--check` mode reports drift without writing.
 
 Field mapping is the helper's concern. `model` and `model_reasoning_effort` become Claude's
 `model` and `effort`, unless the role's Claude metadata specifies its own model or effort.
@@ -13,16 +13,15 @@ The simplification role keeps its Claude Sonnet/high budget independently of Cod
 The implementation roles keep Opus/medium and Sonnet/high independently of Codex routing.
 Council roles use `model: inherit` in the helper's metadata, omitting both generated fields so
 Claude continues to inherit its parent settings.
-`fork_turns` and `service_tier` have no Claude counterpart and are
-dropped: a Claude subagent always starts from a fresh context, which is what `fork_turns="none"`
-selects under Codex. The Codex handoff fields `input_artifacts` and `result_artifact` are
+`service_tier` has no Claude counterpart and is dropped. Claude subagents start from a fresh
+context. The Codex handoff fields `input_artifacts` and `result_artifact` are
 harness structure with no Claude equivalent, so each body states the same contract in terms of
 artifact paths the parent names in the task text.
 
 The helper copies each descriptive role summary from the TOML without adding invocation policy.
 Colors, tool allowlists, and the Codex-to-Claude model mapping live in the helper. A new Codex role
 or an unmapped model makes generation fail until that platform metadata is supplied. The behavioral
-prompt and developer contract are read directly from the native pair, so edits to either source
+prompt and task/result contract are read directly from the native TOML, so source edits
 cannot pass the focused test while generated ports are stale.
 
 Claude enforces structurally what Codex states by prompt. The `tools` allowlist omits `Agent`,
@@ -61,7 +60,7 @@ command boundary rests on the role body alone.
 
 Its focused test is `.local/tests/claude_agent_port_test.py`, which runs the generator in `--check`
 mode and asserts the Codex-to-Claude role correspondence, tool boundaries, and guard registration.
-Add the Codex source pair and its Claude-specific metadata together, then run the helper; stale or
+Add the Codex TOML and its Claude-specific metadata together, then run the helper; stale or
 missing generated output fails the test.
 
 ## Session start

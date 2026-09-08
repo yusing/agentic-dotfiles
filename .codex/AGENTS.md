@@ -127,15 +127,22 @@ is unchanged.
 
 Give native roles the task and context needed for their assignment: the question or outcome,
 ownership boundary, acceptance constraints, available evidence, known gaps, and completion criterion.
-Use the client's fresh-context mechanism and supply necessary background directly. Assign exclusive
-edit ownership; permit supporting reads needed for the assignment. Return source-backed answers
-and remaining gaps; independent reviewers inspect source themselves.
+Supply the necessary background directly or through useful inherited history, preserving any
+independent evidence boundary. Assign exclusive edit ownership; permit supporting reads needed
+for the assignment. Return source-backed answers and remaining gaps; independent reviewers inspect
+source themselves.
+
+Native roles inherit the base instructions and this guidance. Role definitions add only their
+specialty, execution boundary, and result requirements; keep shared policies with their owners.
 
 Agent-to-Main communication uses messages containing the substantive result. An artifact for an
 identified downstream agent supplements, rather than replaces, that message. Preserve explicit
 council evidence-isolation rules. Create one artifact root when a result first needs to pass
 between spawned agents.
 For example: `explorer`->message->`main`; `council-member` A->artifact path->main->`council-member` B.
+
+When a follow-up revises an artifact, update the same path and retain the complete current result.
+For relays, pass the original producer artifact rather than reconstructing its evidence.
 
 ### Artifact Format
 

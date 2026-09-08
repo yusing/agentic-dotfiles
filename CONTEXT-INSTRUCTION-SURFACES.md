@@ -18,7 +18,6 @@ copy. `.grok/AGENTS.md` is a Grok-only extra instruction file that `@`-reference
 - `.codex/overridden_base_instructions.md`
 - `.skills-mgr/skills/handoff/STANDARD.md`
 - `.codex/agents/*.toml`
-- `.codex/agents/*.instructions.md`
 - `.codex/skills/.system/`
 - `.grok/AGENTS.md` (Grok-only extra instruction; `@` references `.codex/AGENTS.md`)
 - `.claude/CLAUDE.md` (symlink to `.codex/AGENTS.md`)

@@ -73,8 +73,10 @@ recovered.
 
 # Using subagents
 
-Native roles receive the complete assigned task directly. Spawn each with `fork_turns="none"` and
-omit `model` unless a direct instruction requires an override.
+Native roles receive the complete assigned task directly. Choose `fork_turns` for the context the
+assignment needs: use `"none"` for a self-contained brief, a recent-turn count or `"all"` when inherited
+history helps. Keep independent or implementation-blind work free of context that would compromise
+its evidence boundary. Omit `model` unless a direct instruction requires an override.
 
 After dispatch, wait for results; do not redo work already in flight. Give a progress update when
 new evidence or a task-state change materially informs the user. If a wait ends without such a
