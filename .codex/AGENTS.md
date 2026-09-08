@@ -29,6 +29,17 @@ Preserve unrelated user work. Report incidental edits from authorized tools, dis
 required changes from unrelated effects. Retain or undo session-created incidental edits according
 to the requested outcome, without overwriting user work. Preserve edits whose ownership is uncertain.
 
+Treat routine workflow guidance in this file and the skills and task documents it governs as
+defaults, not fixed procedures. Adapt workflow selection, sequencing, delegation, tool timing,
+parallelism, and polling to the task's complexity, risk, and available evidence. Omit or combine
+steps when doing so preserves the requested outcome and necessary checks.
+
+This flexibility does not override higher-priority instructions, explicit user requirements,
+authorization boundaries, ownership constraints, or acceptance criteria. Distinguish explicitly
+required tools and methods from default workflow choices.
+
+Briefly explain material departures and their reason; do not narrate routine adjustments.
+
 ## Completion and context
 
 For a change, continue through implementation, affected documentation, focused local validation,
@@ -78,14 +89,23 @@ relevant, and nonduplicative. Once wording is settled, group related documentati
 
 ## Skills and required tools
 
-Read each applicable skill with `skills-mgr get <skill-name> [start:end]`. Read only the references
+Standing skill triggers are defaults, including those phrased as "use" or "read" in repository
+guidance. Select a skill when it materially helps the current operation; skip automatic loading
+when the approach is already settled and the skill adds no needed guidance. Skills I explicitly
+request in the conversation, and those required by higher-priority instructions, remain mandatory.
+Once a skill is selected, follow its tool and method constraints while adapting routine workflow
+choices under `## Authorization`.
+
+Read each selected skill with `skills-mgr get <skill-name> [start:end]`. Read only the references
 needed for the current operation, using `skills-mgr get <skill-name>/<relative-path> [start:end]`.
 Omit the optional 1-based inclusive range to read the whole file.
 Run scripts with `skills-mgr run <skill-name>/<relative/script> [args...]`.
 
-Honor capabilities and exact approaches required by my explicit request (`$name`, `/name`, or
-similar), higher-priority instructions, owning skills, or the repository's authoritative workflow.
-If one is unavailable, stop only the dependent operation and continue independent authorized work.
+Honor capabilities, tools, and exact methods required by my explicit request (`$name`, `/name`, or
+similar) or higher-priority instructions. In owning skills and repository workflows, preserve
+explicit tool and method constraints; adapt routine workflow choices under `## Authorization`.
+If a required capability, tool, or method is unavailable, stop only the dependent operation and
+continue independent authorized work.
 Explain the gap rather than substituting or bypassing the requirement.
 If installation would resolve it, propose that installation and obtain approval unless already
 granted. If installation cannot resolve it or I decline, ask how to proceed.
