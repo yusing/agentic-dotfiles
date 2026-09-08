@@ -1,9 +1,10 @@
 #!/bin/bash
-# version: 2.2.2
+# version: 2.2.3
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
-# Safe to re-run after a mid-flight failure. Unrelated files already in $HOME
+# Existing home repositories with a commit at HEAD skip Git setup.
+# Safe to re-run tool installation after a mid-flight failure. Unrelated files in $HOME
 # are left in place. Files that would be overwritten by the checkout are copied
 # to ~/.local/share/dotfiles-setup/ first.
 
@@ -11,7 +12,6 @@ set -euo pipefail
 
 REPO_URL="https://github.com/yusing/agentic-dotfiles.git"
 REPO_SLUG="yusing/agentic-dotfiles"
-PRIVATE_REPO_SLUG="yusing/dotfiles"
 GIT_NAME="yusing"
 GIT_EMAIL="yusing.wys@gmail.com"
 LOCAL_BIN="${HOME}/.local/bin"
@@ -758,18 +758,6 @@ configure_git_identity() {
   fi
 }
 
-ensure_origin() {
-  local url=""
-  if url="$(git remote get-url origin 2>/dev/null)"; then
-    case "$url" in
-      *github.com[:/]"$REPO_SLUG"*) return 0 ;;
-      *[:/]"$PRIVATE_REPO_SLUG"|*[:/]"$PRIVATE_REPO_SLUG".git) return 1 ;;
-    esac
-    die "origin is $url; refusing to replace a different repository in $HOME"
-  fi
-  git remote add origin "$REPO_URL"
-}
-
 # Copy overlapping paths out of the way so a dirty $HOME can still take the
 # tracked files from origin/main. Identical untracked files still have to move;
 # git will not overwrite them in place.
@@ -820,47 +808,35 @@ backup_checkout_collisions() {
   fi
 }
 
-drop_bootstrap_empty_commit() {
-  local ahead
-  git rev-parse --verify --quiet HEAD >/dev/null || return 0
-  git show-ref --verify --quiet refs/remotes/origin/main || return 0
-  ahead="$(git rev-list --count origin/main..HEAD)"
-  # Mixed reset keeps dirty tracked files. checkout -f would throw them away.
-  if [ "$ahead" -eq 1 ] \
-    && [ "$(git log -1 --format=%s)" = rebase ] \
-    && [ -z "$(git diff --stat origin/main HEAD)" ]; then
-    info "dropping leftover bootstrap commit"
-    git reset origin/main
-  fi
-}
-
 setup_home_repo() {
-  local update_checkout
   cd "$HOME"
 
-  if [ ! -d .git ]; then
-    info "initializing git repository in $HOME"
-    if git init -b main >/dev/null 2>&1; then
-      true
-    else
-      git init
-      git checkout -B main >/dev/null 2>&1 || true
-    fi
-  fi
-
-  # A recognized private source checkout is already authoritative. Keep its
-  # origin, history, and identity, but still activate the tracked hooks.
-  if ensure_origin; then
-    update_checkout=1
-  else
-    update_checkout=0
-  fi
-  git config --local core.hooksPath .githooks
-  if [ "$update_checkout" -eq 0 ]; then
-    info "preserving private repository checkout at $HOME"
+  # Require a home repository, not an enclosing repository discovered by Git.
+  if { [ -e .git ] || [ -L .git ]; } \
+    && git rev-parse --verify --quiet HEAD^{commit} >/dev/null 2>&1; then
+    info "git repository already present at $HOME; skipping git setup"
     return 0
   fi
 
+  info "initializing git repository in $HOME"
+  if git init -b main >/dev/null 2>&1; then
+    true
+  else
+    git init
+    git checkout -B main >/dev/null 2>&1 || true
+  fi
+
+  local origin_url
+  origin_url="$(git remote get-url origin 2>/dev/null || true)"
+  if [ -z "$origin_url" ]; then
+    git remote add origin "$REPO_URL"
+  elif [ "$origin_url" != "$REPO_URL" ]; then
+    case "$origin_url" in
+      *github.com[:/]"$REPO_SLUG"*) ;;
+      *) die "origin is $origin_url; refusing to replace a different repository in $HOME" ;;
+    esac
+  fi
+  git config --local core.hooksPath .githooks
   configure_git_identity
   info "fetching origin"
   git fetch origin
@@ -869,39 +845,8 @@ setup_home_repo() {
     || die "origin/main does not exist on $REPO_URL"
 
   backup_checkout_collisions origin/main
-
-  if ! git rev-parse --verify --quiet HEAD >/dev/null; then
-    info "checking out origin/main"
-    git checkout -f -B main origin/main
-    return 0
-  fi
-
-  drop_bootstrap_empty_commit
-
-  if [ "$(git symbolic-ref --short HEAD 2>/dev/null || true)" != main ]; then
-    git branch -M main 2>/dev/null || git checkout -B main
-  fi
-
-  if ! git diff --quiet || ! git diff --cached --quiet; then
-    info "stashing local tracked changes"
-    git stash push -m "setup.sh: local tracked changes"
-    STASHED=1
-  else
-    STASHED=0
-  fi
-
-  info "rebasing onto origin/main"
-  if ! git pull --rebase origin main; then
-    git rebase --abort >/dev/null 2>&1 || true
-    if [ "${STASHED:-0}" -eq 1 ]; then
-      git stash pop || true
-    fi
-    die "git pull --rebase origin main failed; resolve the repo in $HOME and re-run"
-  fi
-
-  if [ "${STASHED:-0}" -eq 1 ]; then
-    git stash pop || warn "stash pop had conflicts; resolve them in $HOME"
-  fi
+  info "checking out origin/main"
+  git checkout -f -B main origin/main
 }
 
 rewrite_home_paths() {
@@ -1749,7 +1694,8 @@ Mise declarations also live in setup.json; .config/mise/config.toml is generated
 Removing an entry stops managing it; it does not uninstall existing software.
 
 Install missing native and locked cross-platform tools, reconcile each tool to
-its declared owner, then check the agentic-dotfiles repository out into $HOME.
+its declared owner, then check the agentic-dotfiles repository out into $HOME
+unless the home repository already has a commit at HEAD, which skips Git setup.
 
 Without --upgrade, added or changed declarations refresh their lock entries;
 unchanged tools retain their locked versions without a full remote refresh. Packages from legacy Brew, APT, Pacman, and direct-install

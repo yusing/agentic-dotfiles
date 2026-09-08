@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.3
+
+Skip Git setup only when the home repository has a commit at HEAD, including worktrees. Continue bootstrap for empty repositories, reusing the expected origin and rejecting unrelated origins. Preserve non-empty repository configuration and state while continuing tool setup.
+
 ## 2.2.2
 
 Disable mise Go toolchain GOBIN redirection. Validate Go-package commands in their own mise installation, reinstall missing package binaries even when a stray copy exists, and remove duplicate declared Go commands from installed Go toolchains only after validating the replacement. Preserve unrelated commands and links to the replacement.

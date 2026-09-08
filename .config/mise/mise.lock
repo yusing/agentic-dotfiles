@@ -23,24 +23,24 @@ url = "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep-15
 url_api = "https://api.github.com/repos/BurntSushi/ripgrep/releases/assets/478118851"
 
 [[tools."aqua:JanDeDobbeleer/oh-my-posh"]]
-version = "31.1.3"
+version = "31.2.0"
 backend = "aqua:JanDeDobbeleer/oh-my-posh"
 specifiers = ["latest"]
 
 [tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.linux-arm64"]
-checksum = "sha256:1f80cf4d12aa54e01b0edfecf5d4041187abdb7d58e0afcb8748158cbe1ced5c"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.3/posh-linux-arm64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/545646200"
+checksum = "sha256:a5a18c72fc96711b73d0c0846293f8fe5a3441c1dc5c2c84ae74cf2ad1c3f44f"
+url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.2.0/posh-linux-arm64"
+url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/549237911"
 
 [tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.linux-x64"]
-checksum = "sha256:c9c2f59618ff72ca1acc38e1cd87aa3198311bc5d4814e793f525dd1dfb522b5"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.3/posh-linux-amd64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/545646206"
+checksum = "sha256:c070fe832bebe0530ec2734cf90addfcc5f81d1bfac11eff22721e9b301836e1"
+url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.2.0/posh-linux-amd64"
+url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/549237917"
 
 [tools."aqua:JanDeDobbeleer/oh-my-posh"."platforms.macos-arm64"]
-checksum = "sha256:65143577ab6cb46c1db0502f66337069d50c5b3cfb473f1d2805d9c93d97dac6"
-url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.1.3/posh-darwin-arm64"
-url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/545646210"
+checksum = "sha256:e1111a29376de792d791f2c61130cfcd1d48d3cefbde9136783309fd384ee22a"
+url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v31.2.0/posh-darwin-arm64"
+url_api = "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/assets/549237919"
 
 [[tools."aqua:ajeetdsouza/zoxide"]]
 version = "0.10.0"
@@ -418,44 +418,44 @@ url = "https://github.com/mvdan/sh/releases/download/v3.14.1/shfmt_v3.14.1_darwi
 url_api = "https://api.github.com/repos/mvdan/sh/releases/assets/547320930"
 
 [[tools."aqua:oxc-project/oxc/oxfmt"]]
-version = "1.81.0"
+version = "1.82.0"
 backend = "aqua:oxc-project/oxc/oxfmt"
 specifiers = ["latest"]
 
 [tools."aqua:oxc-project/oxc/oxfmt"."platforms.linux-arm64"]
-checksum = "sha256:a85df4acc7ffd378ea5990712b769e580f5c9cd7818bb66f2449b3e362f6bae1"
-url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxfmt-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734188"
+checksum = "sha256:b738733446781432fc6874b9e9328def0c5cd1c69335bcf258078e429e4887e1"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.82.0/oxfmt-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/548949472"
 
 [tools."aqua:oxc-project/oxc/oxfmt"."platforms.linux-x64"]
-checksum = "sha256:c64538f889330f1ca27c588b38b3605fd9ff477fa2eeb5efddb92c7e9862a9c8"
-url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxfmt-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734246"
+checksum = "sha256:7fcda58499e25a261069022f3c6b9827da4bcc729a6181214c0645b3e30d1603"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.82.0/oxfmt-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/548949513"
 
 [tools."aqua:oxc-project/oxc/oxfmt"."platforms.macos-arm64"]
-checksum = "sha256:83cb74205190cce07983775f53d2063bf6946bbc9c63028fd000c5c3632be8ce"
-url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxfmt-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734190"
+checksum = "sha256:2c0a483844922828a8b9b78684cb01e9283242250cad5d7303eb2cce0e027175"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.82.0/oxfmt-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/548949469"
 
 [[tools."aqua:oxc-project/oxc/oxlint"]]
-version = "1.81.0"
+version = "1.82.0"
 backend = "aqua:oxc-project/oxc/oxlint"
 specifiers = ["latest"]
 
 [tools."aqua:oxc-project/oxc/oxlint"."platforms.linux-arm64"]
-checksum = "sha256:e80f0a157a6ebbba332848a19f93f2fe593c42bc69d51d316446ada1ae47abc8"
-url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxlint-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734294"
+checksum = "sha256:0c59db096ce59b5d690b3e7c75d5b729e565e730634f067d352ce7eb857d944a"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.82.0/oxlint-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/548949529"
 
 [tools."aqua:oxc-project/oxc/oxlint"."platforms.linux-x64"]
-checksum = "sha256:d176d586ff131466383c70ce655afee7dc5a0f0e8fcbdebc8e1320021431e69c"
-url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxlint-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734366"
+checksum = "sha256:2284a516360c42166b9f0b1c1aa6920322d3385d93a7ff7061d2d8ed77ec1e35"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.82.0/oxlint-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/548949584"
 
 [tools."aqua:oxc-project/oxc/oxlint"."platforms.macos-arm64"]
-checksum = "sha256:329c5853e91fc0eb7fe84e324b606391a6b4ab7d85b573a9d7862571d307ea3f"
-url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxlint-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/539734287"
+checksum = "sha256:e420b7f67fc1ec5426c932a7e5b07e546c67c661c9b7116ba6c8c9648ff96074"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.82.0/oxlint-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/548949519"
 
 [[tools."aqua:pnpm/pnpm"]]
 version = "12.3.4"
@@ -672,6 +672,7 @@ checksum = "sha256:434d82b4c5f691b6f0423f30a4b931df4afded19b05a795a280192fdf8a61
 url = "https://github.com/atuinsh/atuin/releases/download/v18.21.0/atuin-x86_64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/atuinsh/atuin/releases/assets/538647975"
 provenance = "github-attestations"
+provenance_verified = true
 
 [tools."github:atuinsh/atuin"."platforms.macos-arm64"]
 checksum = "sha256:c78ac159c89c38ee0b56eb6a11d9c0a7340de3a03b98fbbccd44f8e2d91e6e6e"
@@ -718,6 +719,7 @@ checksum = "sha256:18da30f77f475688a18f7704d23f9f155ae007ed9922dbed6850a9419d9fe
 url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.0/LLVM-23.1.0-Linux-X64.tar.xz"
 url_api = "https://api.github.com/repos/llvm/llvm-project/releases/assets/529922072"
 provenance = "github-attestations"
+provenance_verified = true
 
 [[tools."github:microsoft/TypeScript"]]
 version = "7.0.2"
@@ -758,6 +760,7 @@ checksum = "sha256:a0d7d963f2bced8a4fa7ab1a42f24140abdb40ba6033f0996dea2e826e341
 url = "https://github.com/tldr-pages/tlrc/releases/download/v1.13.1/tlrc-v1.13.1-x86_64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/tldr-pages/tlrc/releases/assets/427272471"
 provenance = "github-attestations"
+provenance_verified = true
 
 [tools."github:tldr-pages/tlrc"."platforms.macos-arm64"]
 checksum = "sha256:7dd8c585da66c9977ecff5d50a93c4c77a946322668b7ab2e0082dd07d11eddf"
@@ -849,7 +852,7 @@ backend = "npm:@trunkio/launcher"
 specifiers = ["latest"]
 
 [[tools."npm:agent-browser"]]
-version = "0.36.0"
+version = "0.37.0"
 backend = "npm:agent-browser"
 specifiers = ["latest"]
 

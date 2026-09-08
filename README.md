@@ -56,6 +56,10 @@ bash setup.sh --upgrade   # upgrade setup-managed packages and tools
 
 Setup supports macOS, Debian/Ubuntu, and Arch-based Linux. It can be rerun after
 failure and backs up checkout collisions under `~/.local/share/dotfiles-setup/`.
+When the home Git repository has a commit at `HEAD` (including worktrees), Git
+setup is skipped: no identity, hooks, remote, branch, fetch, stash, or pull changes.
+Empty repositories continue through bootstrap; an existing unrelated origin is rejected.
+Tool installation and configuration still run.
 Unrelated files are left alone. `--upgrade` also upgrades installed native packages
 declared in `setup.json`, including optional packages, through Homebrew or APT.
 Only declared packages are targeted; their required dependencies may also change.

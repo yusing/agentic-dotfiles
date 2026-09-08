@@ -203,6 +203,7 @@ if [[ -o interactive ]]; then
     _zfm_command_exists codex && eval "$(codex completion zsh)"
     _zfm_command_exists grok && eval "$(grok completions zsh)"
     _zfm_command_exists gh && eval "$(gh completion --shell zsh)"
+    _zfm_command_exists herdr && eval "$(herdr completion zsh)"
     _zfm_command_exists shadowtree && eval "$(shadowtree completion zsh)"
     if (( $+functions[compdef] )); then
         _zfm_command_exists golangci-lint && eval "$(golangci-lint completion zsh)"
