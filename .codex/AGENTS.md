@@ -61,6 +61,18 @@ follow-ups and approvals continue the current task without restarting discovery.
 native role leaves that role responsible for its assigned implementation or review. After
 compaction, recover the active scope and reread only the guidance needed for the remaining work.
 
+## Documentation maintenance
+
+README is user-facing documentation, not a changelog, implementation journal, or agent guidance.
+Update it when the change affects what readers need to understand, choose, or do; preserve
+concrete explanations and useful examples. Use `writing-readme` for writing or reviewing it.
+
+Maintain applicable AGENTS.md when your change makes its ownership, paths, commands, or rules
+stale, or establishes a durable constraint future agents need. Revise the existing owning rule
+and reconcile affected references rather than append a task recap or another overlapping rule.
+Keep essential guidance short; put detailed procedures in linked skills or context documents.
+Use `writing-for-agents` when editing agent instructions. Leave accurate guidance unchanged.
+
 ## Skills and required tools
 
 Read skill instructions with `skills-mgr get <skill-name> [start:end]`, and listed or skill mentioned 

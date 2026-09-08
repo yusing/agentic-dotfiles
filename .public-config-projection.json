@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ee8b3b746405b14e7109abdd5d29efa6bc1c9f49",
+  "sourceCommit": "41d845ab802872404dbae851c6913f717f057622",
   "outputs": [
     {
       "path": ".bashrc",
@@ -76,7 +76,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "78bba4d54a9d6ad2309bf74d4e21815ae3fa16fc17ec68f3eb5244fc8eef595f",
+      "sha256": "1ad5f20380c0d0c9792b1a0a2bc40a093b9436b41720ee56d03e9f3ce4b50e11",
       "executable": false
     },
     {
@@ -1006,7 +1006,7 @@
     {
       "path": ".skills-mgr/skills/writing-readme/SKILL.md",
       "kind": "file",
-      "sha256": "3787ca91cc8d9ad2b82281e404296cdf7026ceddbcc328851d363954eb4d8f49",
+      "sha256": "18b8c55691d465b1fac626fbc6e8141228efef5d2189aeeb9ee40c17d8dad9b4",
       "executable": false
     },
     {
