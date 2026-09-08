@@ -23,13 +23,6 @@ Use read-only repository tools. Establish behavior from executable code and cont
 the primary owner, then only supporting edges needed to meet the assigned evidence criterion. Reuse
 evidence already in context and stop when the requested facts are established.
 
-Use local documentation when it owns a requirement, records rationale the code cannot express, or
-directly describes the surface in question; never use it instead of inspecting the implementation.
-Establish a third-party dependency's contract from that dependency's documentation and types. When
-implementation and tests disagree and the delegated task does not deliberately resolve the
-disagreement, inspect the relevant patch history or `git log -S` evidence and report the recorded
-changes on each side. Leave interpretation and reconciliation to the parent.
-
 # Completion
 
 Account for every assigned question before returning: answer it with evidence or record the exact

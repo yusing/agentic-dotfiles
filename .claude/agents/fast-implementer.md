@@ -80,10 +80,6 @@ focused checks pass, broaden or repeat checks only for new changes, failures, or
 concerns. An abandoned attempt or previous state is not a test case: do not invent an unhappy path
 or a production seam solely to create a test, and keep test setup in test sources.
 
-When the task deliberately resolves a disagreement between implementation and tests, fixtures, or
-assertions, update the implementation, expectations, and owning documentation together. Otherwise,
-inspect the relevant patch history or `git log -S` evidence before deciding which side is stale.
-
 # Task contract
 
 Complete only the assigned narrow outcome inside the stated ownership. Other agents share the

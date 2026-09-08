@@ -26,22 +26,18 @@ plan; implement and validate in scope for a change, build, or fix.
 Preserve and report incidental changes made by an authorized formatter, generator,
 or other tool rather than overwriting possible user work.
 
-An external write creates, modifies, publishes, sends, uploads, or deletes state in an external
-service, remote repository, hosted environment, device, or another user's system. Read-only
-network requests are not external writes.
-
-Process control means starting, stopping, restarting, signalling, or otherwise changing the
-lifecycle of an existing or persistent service, agent, collection, or user-owned process. It does
-not include running ordinary task-scoped inspection, editing, build, or validation commands.
+Process control means changing the lifecycle of an existing or persistent service, agent, 
+collection, or user-owned process. It does not include running ordinary task-scoped inspection,
+editing, build, or validation commands.
 
 ## Completion and context
 
 For a change, continue through implementation, affected documentation, focused local validation,
 and fixes for failures caused by the change. Finish when the requested outcome is usable and
-checked, or explain the concrete blocker. An initial implementation is not an automatic review
-checkpoint. Ask a decision-ready question when a missing requirement or semantic approval blocks
-the dependent work, while continuing independent authorized work. For final execution approval,
-prepare the concrete result first. Respect named approval boundaries.
+checked, or explain the concrete blocker. 
+Ask a decision-ready question when a missing requirement or semantic approval blocks
+the dependent work, while continuing independent authorized work.
+Prepare the concrete result first before execution and respect named approval boundaries.
 
 When fixes repeatedly work around the same design limitation, reassess the approach before adding more code.
 
@@ -57,6 +53,8 @@ Load additional guidance when it changes the work:
 - Read `$HOME/.codex/IMPLEMENTATION.md` for behavioral changes or substantive implementation
   and review. It owns validation, hygiene, and complexity decisions. Mechanical-only edits need
   the affected content and applicable repository rules, not this additional workflow.
+
+These are task documents, not skills.
 
 Read each applicable document once per context; reread only if it changes or I ask. Direct
 follow-ups and approvals continue the current task without restarting discovery. Dispatching a
@@ -84,16 +82,12 @@ inclusive range to read the whole file.
 Load only the references you actually need.
 Run scripts with `skills-mgr run <skill-name>/<relative/script> [args...]`.
 
-`SMALL-TASK.md`, `LARGE-TASK.md`, and `IMPLEMENTATION.md` are task documents, not skills. Only
-`skills-mgr get` reads use skill-specific timing and batching rules.
-
 If a skill, tool, CLI, package, runtime, or exact approach explicitly required by me (`$name`, `/name`, or similar form),
 a higher-priority instruction, an owning skill, or the repository's authoritative workflow is
 unavailable, stop the dependent operation rather than substituting, working around,
 reimplementing, or skipping it. Continue independent authorized work.
 Explain why it is required and propose an installation, then install only once I agree. If I
-decline the installation, ask me how to proceed. Do not introduce or require a dependency solely
-for an optional implementation choice; use the simplest suitable available approach instead.
+decline the installation, ask me how to proceed.
 
 Noisy output: prefix each shell producer expected to emit large stdout/stderr with `rtk`,
 including a user-supplied command that omits the prefix. In a compound command or pipeline,
@@ -134,14 +128,11 @@ or operational impact, why completed checks do not cover it, and what independen
 inspection could establish. Include that concrete residual risk in the review scope. If none
 remains, finish without review; the surrounding system's importance alone is not a launch reason.
 
-Native review roles are the only owners of independent inspection; root diff review and tests are
-validation, not substitutes. Reuse applicable completed reviews across commits and phases.
-When the residual-risk gate is met, reuse reviewers for targeted follow-ups or
-spawn `reviewer`, `simplify-checker`, or both when fresh context is needed. Dispatch independent
+Reuse applicable completed reviews across commits and phases.
+When the residual-risk gate is met, reuse agent for targeted follow-ups or
+spawn new `reviewer`, `simplify-checker`, or both when fresh context is needed. Dispatch independent
 scopes concurrently and give each its exact review scope directly. Include input artifacts only
-for evidence produced by another spawned agent. Request a result artifact only when another spawned agent will consume the review; when the
-main agent is the sole consumer, have the role return its complete review directly. Do not
-duplicate an active role's inspection. Apply the residual-risk gate to each additional review
+for evidence produced by another spawned agent. Request a result artifact only when another spawned agent will consume the review; Do not duplicate an active role's inspection. Apply the residual-risk gate to each additional review
 scope; use `web-reviewer` when the remaining risk requires frontend inspection, with relevant
 upstream artifacts and consumer-based result mode. Report missing runtime or browser checks as
 coverage gaps, not further source reviews.
@@ -158,23 +149,12 @@ belongs to me.
 Explorers retrieve missing facts; they do not reason about what should change. Keep audits,
 reviews, evaluations, diagnosis, recommendations, and decisions with the main agent or the
 appropriate non-explorer role. For an instruction audit or revision at supplied or known paths,
-read the instructions directly instead of spawning an explorer.
-
-Use code to establish how the repository behaves. Read local documentation when it owns
-requirements, records rationale that code cannot express, or directly describes a changed
-user-facing surface. Do not use documentation as a substitute for inspecting the implementation.
-For a third-party dependency, check its own documentation and types instead of inferring the
-contract from call sites.
+read the instructions directly instead.
 
 Bound discovery by the decision it supports. Start with the affected owner and supported interface;
 expand only for an unresolved fact that could change the outcome, implementation, or validation.
 Establish required facts or report their exact gaps; distinguish an interface limitation from an
-unproven claim of absence everywhere. Batch independent reads for the same question and reuse
-settled evidence across follow-ups.
-
-Only the main agent spawns `explorer`. A spawned agent works from its assigned
-context and returns any unresolved discovery need to the main agent rather than spawning another
-exploration agent.
+unproven claim of absence everywhere. Reuse settled evidence across follow-ups.
 
 Resolve the full independent question set before waiting. Reuse finished equivalent results, count
 active equivalents as already launched, and group related questions by shared context. Launch the
@@ -182,23 +162,12 @@ remaining independent groups concurrently, then wait for every result needed for
 Launch another only when the question or available evidence
 changes enough to matter, or when the earlier explorer fails or gives an unusable result.
 
-When implementation behavior and its tests, fixtures, or assertions disagree, first determine
-whether the current request or authorized change deliberately resolves the disagreement. If it
-does, update the implementation, expectations, and owning documentation together to express the
-requested final behavior. Otherwise, inspect the relevant `git log -S` output or patch history.
-Restore a rule that an unrelated rewrite dropped. Update an expectation when the current request
-or history establishes that the behavior changed deliberately, and cite the commit when history
-supplied that evidence.
-
 ## Active work
 
 When I prefix a message with `oneoff:`, start a standalone aside without adding it to or replacing
 the standing request. Direct follow-ups that refer to the aside remain part of it without requiring
 the prefix again. Once the aside and its direct follow-ups are resolved, carry none of their
 requirements into the standing work and resume the earlier request from its existing state.
-
-A change to configuration, scheduling, implementation, or desired output does not authorize
-process control.
 
 When a collection is underway and its scheduling changes, keep the completed and running items
 and apply the change only to work that has not started yet.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "9cda55ee4fbf51df3272710b2e7eb26aa2615e8d",
+  "sourceCommit": "f46252b3f03b8489a7b7e7e35b2bf24e178fa998",
   "outputs": [
     {
       "path": ".bashrc",
@@ -17,7 +17,7 @@
     {
       "path": ".claude/agents/council-investigator.md",
       "kind": "file",
-      "sha256": "efe64ac4a76596562a802ddbde73359ec1365a9059bcd1497866dc6c5052817e",
+      "sha256": "46db2aa477afcacc82eecda33936939e961cbe2ecb5f4bba378344d2fa9bdd11",
       "executable": false
     },
     {
@@ -29,25 +29,25 @@
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "514108449b8e1195b418b33feb5304d74b4fe4e32e70bafebda36292f9862f1e",
+      "sha256": "352dbe1aa5f199194d5ad763a9e5ddd35fa84d79663f9cb50be2e8d613cce8ed",
       "executable": false
     },
     {
       "path": ".claude/agents/fast-implementer.md",
       "kind": "file",
-      "sha256": "20e649910fb8f5af28768d8891d5e5695673247ea678fd6fe38b7550878dd47c",
+      "sha256": "59fa543e5c19c7061ae30f2a3f59f57edbfd2e06c16ce19d73ad12d201f07c95",
       "executable": false
     },
     {
       "path": ".claude/agents/implementer.md",
       "kind": "file",
-      "sha256": "ba63175f851f9048659873b83276f386a089670af1d227e740d3d0bf461ea7e5",
+      "sha256": "b8f1e592ddb231a7f6b28b89d512d278d9a3ea938faf292c18d9b8e4724ac108",
       "executable": false
     },
     {
       "path": ".claude/agents/reviewer.md",
       "kind": "file",
-      "sha256": "9e004cb45ce020dada6ea1cc8423273046cc75d243de3051481cc0c872d9ff8c",
+      "sha256": "4eb6e74444fd8c190e15d3d01215ad1c16fb0fc0b01900f6d8f5e64798e7cd5e",
       "executable": false
     },
     {
@@ -76,13 +76,13 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "c6efba81fbe4886387f6d3e7243fa437a4421eadbe4c92c92169ff0bcd85bae2",
+      "sha256": "7943351154773da52a999b0d3f9a0d8c905191d5f89cd2195036cec92f2b3121",
       "executable": false
     },
     {
       "path": ".codex/agents/council-investigator.instructions.md",
       "kind": "file",
-      "sha256": "d8c4c874aed8b814ff64d389d561dc34053c6bc49cdb8ed06b50bd9accdee173",
+      "sha256": "0f721122db2e6a1b0e6df3541cb6e5f26e40bf58efcb9314d51d5198d7c80548",
       "executable": false
     },
     {
@@ -106,7 +106,7 @@
     {
       "path": ".codex/agents/explorer.instructions.md",
       "kind": "file",
-      "sha256": "23b870f9fc6dcc868931cd5c13656bf23bfd755a8d32d82fec155b242b3b2197",
+      "sha256": "2757b93721af8a702bc75b6d112b5904626d465602ee344976fd81165c72c5d0",
       "executable": false
     },
     {
@@ -118,7 +118,7 @@
     {
       "path": ".codex/agents/fast-implementer.instructions.md",
       "kind": "file",
-      "sha256": "0047135a12ed8012d7fd434343b7202ecb480a76968a2e54c3be71b0a60143e8",
+      "sha256": "c7bb2cce4e9762ded42d95b30cbfe633103a51c9b6a5120e91409dcd0af6668e",
       "executable": false
     },
     {
@@ -130,7 +130,7 @@
     {
       "path": ".codex/agents/implementer.instructions.md",
       "kind": "file",
-      "sha256": "191e6b27c9651bc658feba02376616a153adebbd635c96c6150481d6c6252884",
+      "sha256": "dc3aa10a44aaa3ae3573645917754e9416f0bfd82eb47cbb927772eeb0f4efd5",
       "executable": false
     },
     {
@@ -142,7 +142,7 @@
     {
       "path": ".codex/agents/reviewer.instructions.md",
       "kind": "file",
-      "sha256": "883df83e7778df1f23cfb5bc4a76ec8b9328e899db250d611cf73cfea399107f",
+      "sha256": "5516e9a9106bc06e45a103f52ea3bfa2616984080b50ed99590a35fc464d5293",
       "executable": false
     },
     {
@@ -280,7 +280,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "711d232c59190a4a76191150bdba0f33f3d566ffaad44483c0f7a7332156d3fd",
+      "sha256": "6d59f826ece7c71d71ad3c1d812bffd4b12a883b7f2cf549a342d5d2ded21db9",
       "executable": false
     },
     {

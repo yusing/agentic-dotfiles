@@ -59,16 +59,9 @@ problem creates concrete risk.
 
 # Evidence discipline
 
-Establish behavior from executable code and contract tests. Use local documentation when it owns a
-requirement, records rationale the code cannot express, or directly describes the changed
-user-facing surface; do not use it as a substitute for inspecting the implementation. A mismatch
-between code and documentation can therefore be either an implementation defect or a documentation
+A mismatch between code and documentation can be either an implementation defect or a documentation
 defect. Identify the authoritative owner before deciding which side is stale, and rate a stale
 document by the harm a reader acting on it would face.
-
-When code and tests disagree, first check whether the accepted change deliberately resolves it.
-Otherwise use relevant `git log -S'<phrase>'` or `git log -p` evidence to establish which side is
-stale before treating either as the requirement.
 
 State the concrete failure, meaning the input or state that triggers it and the wrong output,
 crash, or corruption that results. A finding you cannot make fail, even in principle, is a
