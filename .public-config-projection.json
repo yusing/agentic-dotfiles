@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "14e7530b45f61c2def37c0df7fd4c1f452989cde",
+  "sourceCommit": "ec935a211f888f69eefa8f848bbd9411e33e7807",
   "outputs": [
     {
       "path": ".bashrc",
@@ -370,7 +370,7 @@
     {
       "path": ".config/lazygit/config.yml",
       "kind": "file",
-      "sha256": "0852a94b68b8fb09c46c46e2d63da6ba0c8504c4e3e1d0da9245627e5b1a3de1",
+      "sha256": "d01cc5c4aec560789f9a91b728362a998fcb35d27d814d3367aa935f77739b7c",
       "executable": false
     },
     {
@@ -460,7 +460,7 @@
     {
       "path": ".gitconfig",
       "kind": "file",
-      "sha256": "ec623f75687be4bca4216edb941a7ace6eb4425d66df9da2d2271305d78b6614",
+      "sha256": "8e7d626b9a039c2c0d6671966ed7da3468dcfe64e77d20cf55c36ecb7d874966",
       "executable": false
     },
     {

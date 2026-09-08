@@ -1,7 +1,15 @@
 gui:
   showCommandLog: false
+  showNumstatInFilesView: true
   shrinkSidePanelsToContent: true
+  expandFocusedSidePanel: true
+  expandedSidePanelWeight: 2
   useHunkModeInStagingView: true
+  showListFooter: false
+  showBottomLine: false
+  nerdFontsVersion: "3"
+  showDivergenceFromBaseBranch: arrowAndNumber
+  switchTabsWithPanelJumpKeys: true
   theme:
     activeBorderColor:
       - '#cba6f7'
@@ -32,7 +40,12 @@ gui:
     '*': '#b4befe'
 
 git:
+  log:
+    showWholeGraph: true
   diffRenderers:
+    - name: delta
+      colorArg: always
+      command: delta --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
     - name: hunk
       colorArg: always
       command: hunk pager --mode stack
