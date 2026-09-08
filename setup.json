@@ -1,6 +1,10 @@
 {
   "version": 2,
   "native": {
+    "font-cascadia-code-nf": {"packages": {"brew": ["font-cascadia-code-nf"]}, "commands": []},
+    "font-cascadia-mono-nf": {"packages": {"brew": ["font-cascadia-mono-nf"]}, "commands": []},
+    "font-ibm-plex-sans": {"packages": {"brew": ["font-ibm-plex-sans"]}, "commands": []},
+    "font-jetbrains-mono-nerd-font": {"packages": {"brew": ["font-jetbrains-mono-nerd-font"]}, "commands": []},
     "wrk": {"packages": {"apt": ["wrk"], "pacman": ["wrk"], "brew": ["wrk"]}, "commands": []},
     "git": {"packages": {"apt": ["git"], "pacman": ["git"], "brew": ["git"]}, "commands": ["git"]},
     "curl": {"packages": {"apt": ["curl"], "pacman": ["curl"], "brew": ["curl"]}, "commands": ["curl"]},

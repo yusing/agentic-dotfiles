@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.10";
+export const VERSION = "1.1.11";
 
 type TreeEntry = {
 	mode: string;
@@ -78,6 +78,7 @@ const TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS = new Set([
 	".zshrc",
 	".config/ghostty/config",
 	".config/skhd/skhdrc",
+	".config/kaku/kaku.lua",
 ]);
 
 const EXACT_PATHS = new Set([
@@ -137,6 +138,7 @@ const EXACT_PATHS = new Set([
 	".config/fish/config.fish",
 	".config/gh/config.yml",
 	".config/ghostty/config",
+	".config/kaku/kaku.lua",
 	".config/herdr/config.toml",
 	".config/herdr/status.sh",
 	".config/hunk/config.toml",

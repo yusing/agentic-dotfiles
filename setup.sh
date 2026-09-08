@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.2.4
+# version: 2.2.5
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -584,7 +584,7 @@ upgrade_configured_packages() {
       ;;
     brew)
       brew update || return 1
-      HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade --formula "${packages[@]}" || return 1
+      HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade "${packages[@]}" || return 1
       ;;
     *) die "unknown package manager: $PM" ;;
   esac
@@ -1176,7 +1176,7 @@ installed_pm_package() {
         && printf '%s\n' "$1"
       ;;
     brew)
-      brew list --formula "$1" >/dev/null 2>&1 \
+      [ -n "$(brew list --versions "$1" 2>/dev/null)" ] \
         && printf '%s\n' "$1"
       ;;
     pacman)

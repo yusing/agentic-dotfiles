@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.5
+
+Install Cascadia Code NF, Cascadia Mono NF, IBM Plex Sans, and JetBrainsMono Nerd Font on macOS. The tracked Kaku configuration preserves stock fonts and theme-dependent weights, adding JetBrainsMono Nerd Font Mono as a fallback. Include declared Homebrew casks alongside formulae in native upgrade detection and execution; Linux package selections are unchanged.
+
 ## 2.2.4
 
 Use a compiled TypeScript helper with syntax-aware JSON and TOML parsers to normalize /home, /User, and /Users home paths and agent configuration $HOME references. Merge colliding keys recursively in source order, keeping later conflicting values. Retain comments and untouched formatting when no merge is needed. Run rewriting after tools and helpers are installed.

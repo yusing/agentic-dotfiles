@@ -83,6 +83,8 @@ __pycache__
 !/.config/herdr/status.sh
 !/.config/hunk/
 !/.config/hunk/config.toml
+!/.config/kaku/
+!/.config/kaku/kaku.lua
 !/.config/lazygit/
 !/.config/lazygit/config.yml
 !/.config/micro/

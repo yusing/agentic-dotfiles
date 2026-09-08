@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "de01025582fbc78b6792978dc991270f04026a3d",
+  "sourceCommit": "ba2b5f59c6e56425a72c7de11ddf375fa8af4ed5",
   "outputs": [
     {
       "path": ".bashrc",
@@ -368,6 +368,12 @@
       "executable": false
     },
     {
+      "path": ".config/kaku/kaku.lua",
+      "kind": "file",
+      "sha256": "2d2ab59c070edbf5f42c092d84f166281e965ab98ab633318fcfd07e0348cdc0",
+      "executable": false
+    },
+    {
       "path": ".config/lazygit/config.yml",
       "kind": "file",
       "sha256": "d01cc5c4aec560789f9a91b728362a998fcb35d27d814d3367aa935f77739b7c",
@@ -466,7 +472,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "197f5eaaf53640ee45aee0946125cb0deabd4b44d56642b32e6aee4e27ba2e85",
+      "sha256": "51b2c00db00516f1c17a5e9e3b961fff443f9666ad5c92468831f662de13d5a3",
       "executable": false
     },
     {
@@ -538,7 +544,7 @@
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "4488962da77a5ed0de42d281efe5071d331d08e22407c1d9846eec95e0d8979f",
+      "sha256": "906bbf5b96bef5d9aaf28224b737ae119adadf58bd15495302fe60441278063f",
       "executable": true
     },
     {
@@ -1101,19 +1107,19 @@
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "2b751cfd14101ba17a2a56d82fc3fc38dfd5808a57265b23929ee6f8c32ea47d",
+      "sha256": "a5cdbcb0547674ae472d26edec26366b39b714e2752b4e7fd624ebf351f68325",
       "executable": false
     },
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "33b21f1945ce26fc20964d0db6522fde32a823ab67f8c07f8d96564950bdd164",
+      "sha256": "ba386eda8aec3bc5bd1feb2cb0cd3d7e9bc98b0a8643623d86327b8004aa8195",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "b46215ac2bf450bab57097275d2df33587b0b180004dfe337c142f88051b0cc2",
+      "sha256": "338f728e954ff073ce918dfbe4b9b3724289303c6631632508d37ddaa754a539",
       "executable": true
     }
   ]
