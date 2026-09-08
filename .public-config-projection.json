@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ea6aec06f653b2e5aeb58b664537726c2be78908",
+  "sourceCommit": "4d46200d4bf8db2621b37efcff884d4e2d838e48",
   "outputs": [
     {
       "path": ".bashrc",
@@ -790,7 +790,7 @@
     {
       "path": ".skills-mgr/skills/orchestrated-workflow/SKILL.md",
       "kind": "file",
-      "sha256": "c1d7c9ea9d8e0f2631d0df8ecae619a5f7c2e34963bbec8e2b7d4bf7ad430bbe",
+      "sha256": "c931c049ab1c5f9935f963d2ca236bc4ec4f0fb09373e6d7d80c4a442f94d391",
       "executable": false
     },
     {
