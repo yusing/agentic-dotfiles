@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "01796a36c43647dd63b1731ca0148566298f92fb",
+  "sourceCommit": "094bb2fd5a7c79453227cdab2ca4aec49f7645eb",
   "outputs": [
     {
       "path": ".bashrc",
@@ -290,9 +290,21 @@
       "executable": false
     },
     {
+      "path": ".codex/skills/session-usage/scripts/session_usage_test.py",
+      "kind": "file",
+      "sha256": "a8eec93599edb560b4771d16e5dd5efee8c1338d2258eb687f2f65d0be614f60",
+      "executable": false
+    },
+    {
+      "path": ".codex/skills/session-usage/scripts/session_usage.py",
+      "kind": "file",
+      "sha256": "06fbafc133358f5005846b6f5c4ad3be63eae6efce6ffc5ebc588d4650badcfd",
+      "executable": false
+    },
+    {
       "path": ".codex/skills/session-usage/SKILL.md",
       "kind": "file",
-      "sha256": "06c115083cba295ec78ee5ee8afc4ea0d79a5a920130ac65c2c1f2fc4639fe97",
+      "sha256": "3cf970d701b85e14fa0248348cd4821d61f31f7ba805c1fe3f81bdf84cd3ab70",
       "executable": false
     },
     {
@@ -454,7 +466,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "6af006e32128b3eea036e3c36dd0a6e5db4e74b8cd9c3efa2b5e486736626703",
+      "sha256": "dc0671bfa62e8d4b6d9a34547e6a860fe51821d21c747df25363198e1b8e8c9b",
       "executable": false
     },
     {

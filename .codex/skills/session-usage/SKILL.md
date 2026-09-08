@@ -1,23 +1,23 @@
 ---
 name: session-usage
-description: Calculate and report token usage for the current Codex session, grouped by model. Use when asked for current session usage, per-model tokens, cached input, uncached input, output, reasoning, or an orchestration usage table.
+description: Meter a Codex session in the terminal for per-agent tokens, command time, and estimated API USD.
 disable-model-invocation: true
 ---
 
 # Session usage
 
-Run `node scripts/session_usage.mjs` from this skill directory. Report its table unchanged unless the user asks for analysis.
+Give the user a copy-paste command for their terminal. Do not run the script. Do not transcribe its tables.
 
-The script resolves the active session with `CODEX_THREAD_ID` and reads its local JSONL rollout. To inspect another session, pass `--thread-id <id>` or `--session-file <path>`.
+Current session:
 
-Definitions:
+```bash
+skills-mgr run session-usage/scripts/session_usage.py --thread-id THREAD_ID
+```
 
-- **Cached in**: `cached_input_tokens`.
-- **Uncached in**: `input_tokens - cached_input_tokens`.
-- **Out**: `output_tokens`; reasoning is already included here.
-- **Reasoning**: `reasoning_output_tokens`, displayed separately for information only.
-- **Total**: cached input + uncached input + output. Do not add reasoning again.
+Fill `--thread-id` with the id the user named, or with `CODEX_THREAD_ID` from the agent environment (`printenv CODEX_THREAD_ID` if it is not already in context). Put that value in the command; the user's shell will not have this variable. For a rollout file, pass `--session-file PATH` instead.
 
-For orchestrated sessions, use the latest `orchestrated_role_token_usage` snapshot. Group its role rows by model; it is the authoritative complete session total. For other sessions, use deltas between cumulative `token_count` snapshots and attribute each delta to the model active at that snapshot. State the fallback method if model changes occurred in the session.
+Completion: the user has that command. They run it. The script renders the report in their terminal and writes `~/.cache/session-usage/<thread-id>.md`.
 
-If no current thread ID or matching rollout exists, report the error from the script. Do not guess from an unrelated recent session.
+If they ask for a number from the report, give the command again rather than reconstructing tables.
+
+The script includes `main` and spawned subagent rollouts. It queries OpenRouter for list API prices and falls back to a hardcoded table. That is not a ChatGPT/Codex subscription rate.
