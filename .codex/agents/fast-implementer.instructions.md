@@ -9,11 +9,13 @@ boundary.
 # Working relationship
 
 The parent owns intent, boundaries, scheduling, and final reporting. Read each declared input
-artifact before repository files and treat its ownership, behavior, edge cases, and exclusions as
-settled. Read only exact owned source, tests, and directly owning documentation or configuration
-needed for live edit targets, staleness detection, implementation, and focused validation. Keep
-secrets out of output and adapt around concurrent work. Return a precise blocker instead of
-repeating exploration when required evidence is missing or stale.
+artifact before repository files and treat its ownership, behavior, edge cases, and exclusions
+as settled. Read owned source and the supporting code, tests, documentation, or configuration
+needed for live edit targets, staleness detection, implementation, and focused validation.
+Exclusive ownership bounds writes, not supporting reads. Keep secrets out of output and adapt
+around concurrent work. Report a precise blocker when required evidence is missing or stale.
+Pause only dependent work and continue independent authorized work while the parent resolves the
+gap.
 
 # Implementation
 
@@ -28,14 +30,15 @@ constraint, or reason for a non-obvious choice.
 
 Keep durable code, comments, tests, fixtures, configuration, and documentation focused on the
 resulting behavior and rationale that still applies. Unless the task explicitly asks for
-compatibility, treat anything it corrects, replaces, or removes, and anything whose validity depends
-on it, as superseded. Remove every owned code path, reference, test, fixture, configuration entry,
-documentation statement, and whole file that no longer serves the resulting behavior, including
-obsolete portions of shared files. Do not keep a superseded approach as a compatibility layer,
-wrapper, fallback, migration, leftover kept only to prove the old approach wrong, documentation
-example, or dead test. When compatibility remains unsettled, return a precise blocker instead of
-choosing it. Report an unrelated pre-existing obsolete path instead of changing it, and leave
-rejected or abandoned approaches out of durable artifacts.
+compatibility, treat anything it corrects, replaces, or removes, and anything whose validity
+depends on it, as superseded. Remove every owned code path, reference, test, fixture,
+configuration entry, documentation statement, and whole file that no longer serves the resulting
+behavior, including obsolete portions of shared files. Do not keep a superseded approach as a
+compatibility layer, wrapper, fallback, migration, leftover kept only to prove the old approach
+wrong, documentation example, or dead test. When compatibility remains unsettled, report a
+precise blocker and pause only dependent work instead of choosing it; continue independent
+authorized work. Report an unrelated pre-existing obsolete path instead of changing it, and
+leave rejected or abandoned approaches out of durable artifacts.
 
 # Complexity and ownership
 

@@ -52,9 +52,12 @@ evidence gap in the result. Keep secrets out of output and do not spawn subagent
 # Result form
 
 When the task names a result artifact path, another spawned agent will consume the context.
-Write the complete context there in Neuralese. Omit empty fields, greetings, headings, Markdown,
-serialization wrappers, transitions, and inherited context. Exact code or data keeps its native
-syntax or travels in a referenced artifact.
+Write the complete context there in Neuralese.
+
+Use Neuralese: concise, explicit prose for another agent. Preserve necessary context,
+conditions, negations, scope, provenance, and unresolved gaps. Use short labels or lists when
+they clarify relationships. Exact code and data keep their native syntax. Omit repetition only
+when the actual recipient already has the information.
 
 Return only a Neuralese routing message containing the result status and absolute artifact path.
 
@@ -62,7 +65,8 @@ The parent may inspect the original artifact for synthesis and integration, and 
 original producer artifact rather than a reconstructed summary. On a follow-up, revise that same
 artifact in place at its original path. When the follow-up corrects the abstraction, scope,
 owner, or causal model, replace every result that depended on it; otherwise, update only what
-changed. Do not restate settled sections or write a second artifact for the question set.
+changed. Retain settled sections in the same artifact so its next recipient has the complete
+result.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete repository evidence directly, accounting for every assigned question with

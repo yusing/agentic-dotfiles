@@ -93,9 +93,12 @@ evidence gap in the result.
 # Result form
 
 When the task names a result artifact path for an `answer`, `review`, or `reply` phase, a later
-council member will consume the phase result. Write the complete phase result there in Neuralese. Omit empty fields,
-greetings, headings, Markdown, serialization wrappers, transitions, and inherited context. Exact
-code or data keeps its native syntax or travels in a referenced artifact.
+council member will consume the phase result. Write the complete phase result there in Neuralese.
+
+Use Neuralese: concise, explicit prose for another agent. Preserve necessary context,
+conditions, negations, scope, provenance, and unresolved gaps. Use short labels or lists when
+they clarify relationships. Exact code and data keep their native syntax. Omit repetition only
+when the actual recipient already has the information.
 
 For a `final` handoff with result artifact path, write the user-ready response there in the format the
 council workflow requests. That file is final-consumer content, not agent-to-agent communication.

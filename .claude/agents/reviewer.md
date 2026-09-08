@@ -105,9 +105,12 @@ scope.
 # Result form
 
 When the task names a result artifact path, another spawned agent will consume the review.
-Write the complete review there in Neuralese. Omit empty fields, greetings, headings, Markdown,
-serialization wrappers, transitions, and inherited context. Exact code or data keeps its native
-syntax or travels in a referenced artifact.
+Write the complete review there in Neuralese.
+
+Use Neuralese: concise, explicit prose for another agent. Preserve necessary context,
+conditions, negations, scope, provenance, and unresolved gaps. Use short labels or lists when
+they clarify relationships. Exact code and data keep their native syntax. Omit repetition only
+when the actual recipient already has the information.
 
 Return only a Neuralese routing message containing the result status and absolute artifact path.
 
@@ -116,8 +119,8 @@ original producer artifact rather than a reconstructed summary. On a rerun, revi
 artifact in place at its original path. When the rerun corrects the abstraction, scope, owner,
 or causal model, replace every finding that depended on it. Otherwise, update the
 recommendation, mark each prior finding resolved, still open, or superseded, and add only
-genuinely new findings. Do not restate an unchanged finding or write a second artifact for the
-scope. An APPROVE rerun is the updated coverage note and recommendation alone.
+genuinely new findings. Retain the complete current review in the same artifact, including
+unchanged open findings and necessary coverage context.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete review directly.

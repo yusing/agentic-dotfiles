@@ -92,9 +92,12 @@ proposed change. Record coverage limitations separately, retaining proven opport
 # Result form
 
 When the task names a result artifact path, another spawned agent will consume the audit.
-Write the complete audit there in Neuralese. Omit empty fields, greetings, headings, Markdown,
-serialization wrappers, transitions, and inherited context. Exact code or data keeps its native
-syntax or travels in a referenced artifact.
+Write the complete audit there in Neuralese.
+
+Use Neuralese: concise, explicit prose for another agent. Preserve necessary context,
+conditions, negations, scope, provenance, and unresolved gaps. Use short labels or lists when
+they clarify relationships. Exact code and data keep their native syntax. Omit repetition only
+when the actual recipient already has the information.
 
 Return only a Neuralese routing message containing the result status and absolute artifact path.
 
@@ -103,8 +106,8 @@ original producer artifact rather than a reconstructed summary. On a rerun, revi
 artifact in place at its original path. When the rerun corrects the abstraction, scope, owner,
 or causal model, replace every opportunity that depended on it. Otherwise, mark each prior
 opportunity applied, still open, or superseded, and add only opportunities the corrections newly
-created. Do not restate an unchanged opportunity or write a second artifact for the scope. A
-rerun with nothing new is the updated coverage note alone.
+created. Retain the complete current audit in the same artifact, including unchanged open
+opportunities and necessary coverage context.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete audit directly.
