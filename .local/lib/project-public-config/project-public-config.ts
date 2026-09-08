@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.8";
+export const VERSION = "1.1.10";
 
 type TreeEntry = {
 	mode: string;
@@ -158,6 +158,10 @@ const EXACT_PATHS = new Set([
 	".grok/hooks/skills_path_guard.ts",
 	".local/bin/check_project",
 	".local/bin/compile-agent-tools",
+	".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
+	".local/lib/rewrite-home-paths/package.json",
+	".local/lib/rewrite-home-paths/bun.lock",
+	".local/lib/rewrite-home-paths/CHANGELOG.md",
 	".local/bin/grok-explore",
 	".local/bin/sync-claude-agent-ports",
 	COMMAND_PATH,
@@ -952,10 +956,12 @@ async function synchronize(destination: string, staged: string, projection: Map<
 	const previouslyOwned = new Set(previousOutputs.keys());
 	previouslyOwned.add(OUTPUT_MANIFEST_PATH);
 
-	for (const path of projection.keys()) {
+	for (const [path, entry] of projection) {
 		const target = destinationPath(destination, path);
 		await assertSafeParents(destination, path);
-		if (!previouslyOwned.has(path) && (await pathExists(target))) {
+		// Identical unowned files can be claimed: they already match, so
+		// taking ownership does not overwrite destination-authored work.
+		if (!previouslyOwned.has(path) && !(await sameEntry(target, entry)) && (await pathExists(target))) {
 			throw new Error(`destination path is not owned by the projection: ${path}`);
 		}
 	}

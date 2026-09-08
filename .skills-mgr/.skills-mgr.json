@@ -10,12 +10,6 @@
     "code-review": {
       "enabled": false
     },
-    "code-simplifier": {
-      "enabled": true
-    },
-    "codebase-design": {
-      "enabled": true
-    },
     "codebase-review": {
       "enabled": true
     },
@@ -38,7 +32,13 @@
       "enabled": true
     },
     "frontend-design": {
-      "enabled": true
+      "enabled": true,
+      "remote": {
+        "provider": "skills.sh",
+        "id": "anthropics/skills/frontend-design",
+        "name": "frontend-design",
+        "locator": "anthropics/skills/frontend-design"
+      }
     },
     "gh-fix-ci": {
       "enabled": false
@@ -59,7 +59,13 @@
       "enabled": true
     },
     "herdr": {
-      "enabled": "command -v herdr && [ \"$PWD\" == \"$HOME\" ]"
+      "enabled": "command -v herdr && [ \"$PWD\" == \"$HOME\" ]",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "herdrdev/herdr/herdr",
+        "name": "herdr",
+        "locator": "herdrdev/herdr/herdr"
+      }
     },
     "high-end-visual-design": {
       "enabled": "lang tsx | lang jsx | lang html | lang css",
@@ -80,7 +86,13 @@
       "enabled": "(lang js || lang ts) && has_dependency juststore"
     },
     "minimalist-ui": {
-      "enabled": "lang tsx || lang jsx || lang html || lang css"
+      "enabled": "lang tsx || lang jsx || lang html || lang css",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "leonxlnx/taste-skill/minimalist-ui",
+        "name": "minimalist-ui",
+        "locator": "leonxlnx/taste-skill/minimalist-ui"
+      }
     },
     "new-project": {
       "enabled": true
@@ -94,17 +106,26 @@
     "postgres-17-18-features": {
       "enabled": "lang postgres"
     },
-    "postgres-patterns": {
-      "enabled": "lang psql"
-    },
     "read-codex-session": {
       "enabled": true
     },
     "rust-async-patterns": {
-      "enabled": "lang rust"
+      "enabled": "lang rust",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "wshobson/agents/rust-async-patterns",
+        "name": "rust-async-patterns",
+        "locator": "wshobson/agents/rust-async-patterns"
+      }
     },
     "rust-best-practices": {
-      "enabled": "lang rust"
+      "enabled": "lang rust",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "apollographql/skills/rust-best-practices",
+        "name": "rust-best-practices",
+        "locator": "apollographql/skills/rust-best-practices"
+      }
     },
     "rust-patterns": {
       "enabled": "lang rust",
@@ -144,9 +165,6 @@
     },
     "skill-creator": {
       "enabled": true
-    },
-    "sonic-json": {
-      "enabled": "lang go && has_dependency github.com/bytedance/sonic"
     },
     "supabase-postgres-best-practices": {
       "enabled": "lang postgres",
@@ -202,9 +220,6 @@
     "using-pjdoc": {
       "enabled": true
     },
-    "using-shadowtree": {
-      "enabled": "tooling shadowtree"
-    },
     "vercel-react-best-practices": {
       "enabled": "lang node && has_dependency react",
       "remote": {
@@ -222,9 +237,6 @@
         "name": "vercel-react-native-skills",
         "locator": "vercel-labs/agent-skills/vercel-react-native-skills"
       }
-    },
-    "verify-conformance": {
-      "enabled": true
     },
     "visualize": {
       "enabled": true

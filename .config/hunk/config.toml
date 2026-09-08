@@ -1,4 +1,4 @@
-theme = "tokyo-night"
+theme = "catppuccin-mocha"
 mode = "split"
 line_numbers = true
 wrap_lines = false

@@ -1,0 +1,9 @@
+{
+  "name": "rewrite-home-paths",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "jsonc-parser": "3.3.1",
+    "toml-eslint-parser": "1.0.3"
+  }
+}

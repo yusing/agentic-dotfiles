@@ -1,5 +1,5 @@
 #!/bin/sh
-# version: 1.0.1
+# version: 1.0.2
 # Rebuild user-owned helper and hook binaries for this machine.
 
 set -eu
@@ -31,6 +31,11 @@ compile_helper() {
 	bun build --compile --outfile="$out" "$src"
 	chmod 755 "$out"
 }
+
+if [ -f "$LOCAL_LIB/rewrite-home-paths/package.json" ]; then
+	(cd "$LOCAL_LIB/rewrite-home-paths" && bun install --frozen-lockfile --ignore-scripts)
+	compile_helper "$LOCAL_LIB/rewrite-home-paths/rewrite-home-paths.ts" "$LOCAL_BIN/rewrite-home-paths"
+fi
 
 compile_hook "$HOOKS/generated_code_guard.ts" "$BIN/generated_code_guard"
 compile_hook "$HOOKS/subagent_exec_guard.ts" "$BIN/subagent_exec_guard"

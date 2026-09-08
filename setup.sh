@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.2.3
+# version: 2.2.4
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -850,72 +850,7 @@ setup_home_repo() {
 }
 
 rewrite_home_paths() {
-  local changed
-  changed="$(CONFIG_SOURCE_HOME="/home/${GIT_NAME}" py - <<'PY'
-import os
-import subprocess
-from pathlib import Path
-
-home = Path(os.environ["HOME"])
-source_home = os.environ["CONFIG_SOURCE_HOME"]
-tracked = subprocess.run(
-    ["git", "ls-files", "-z"],
-    check=True,
-    stdout=subprocess.PIPE,
-).stdout.decode().split("\0")
-
-
-def is_runtime_config(path: Path) -> bool:
-    name = path.as_posix()
-    if name in {
-        ".claude/settings.json",
-        ".codex/config.toml",
-        ".codex/hooks.json",
-        ".config/fish/config.fish",
-        ".gitconfig",
-        ".grok/config.toml",
-        ".bashrc",
-        ".zsh/fish-mirror.zsh",
-        ".zshrc",
-    }:
-        return True
-    if name.startswith(".claude/agents/"):
-        return path.suffix == ".md"
-    if name.startswith(".codex/agents/"):
-        return path.suffix == ".toml"
-    if name.startswith(".grok/hooks/"):
-        return path.suffix in {".json", ".toml", ".yaml", ".yml"}
-    return name.startswith(".config/") and path.suffix in {
-        ".json",
-        ".toml",
-        ".yaml",
-        ".yml",
-    }
-
-
-changed = 0
-for name in tracked:
-    relative = Path(name)
-    if not name or not is_runtime_config(relative):
-        continue
-    path = home / relative
-    if not path.is_file() or path.is_symlink():
-        continue
-    text = path.read_text(encoding="utf-8")
-    resolved = text.replace(source_home, str(home))
-    if relative.parts[0] in {".claude", ".codex", ".grok"}:
-        resolved = resolved.replace("$HOME", str(home))
-    if resolved == text:
-        continue
-    path.write_text(resolved, encoding="utf-8")
-    changed += 1
-
-print(changed)
-PY
-)"
-  if [ "$changed" -gt 0 ]; then
-    info "resolved home paths in $changed configuration files"
-  fi
+  "${LOCAL_BIN}/rewrite-home-paths"
 }
 
 # ---------------------------------------------------------------------------
@@ -1811,9 +1746,6 @@ main() {
   STEP="setup home git repository"
   setup_home_repo
 
-  STEP="resolve home paths in configuration"
-  rewrite_home_paths
-
   STEP="validate mise inventory"
   setup_config mise-records >/dev/null
 
@@ -1837,6 +1769,9 @@ main() {
   if [ -x "${LOCAL_BIN}/compile-agent-tools" ]; then
     "${LOCAL_BIN}/compile-agent-tools"
   fi
+
+  STEP="resolve home paths in configuration"
+  rewrite_home_paths
 
   STEP="reconcile tool ownership"
   cleanup_legacy_tool_sources

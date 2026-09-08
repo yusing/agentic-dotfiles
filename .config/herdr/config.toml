@@ -32,6 +32,10 @@ pane_borders = true
 pane_gaps = false
 show_agent_labels_on_pane_borders = true
 agent_panel_sort = "priority"
+# sidebar compact trial: D-horizontal
+sidebar_width = 20
+sidebar_min_width = 16
+sidebar_max_width = 30
 # Herdr 0.8 has one tab row, so keep the remaining metrics but minimize single-row spacing.
 tab_bar_right = [
   { type = "command", command = "~/.config/herdr/status.sh application", interval_seconds = 5, timeout_seconds = 2 },
@@ -44,3 +48,15 @@ tab_bar_right = [
   { type = "datetime", format = "󰃰 %d.%m %H:%M" },
 ]
 tab_bar_right_separator = "  "
+
+[ui.sidebar.agents]
+row_gap = 0
+rows = [
+  ["state_icon", "agent", "workspace"],
+]
+
+[ui.sidebar.spaces]
+row_gap = 0
+rows = [
+  ["state_icon", "workspace", "branch"],
+]

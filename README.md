@@ -60,6 +60,12 @@ When the home Git repository has a commit at `HEAD` (including worktrees), Git
 setup is skipped: no identity, hooks, remote, branch, fetch, stash, or pull changes.
 Empty repositories continue through bootstrap; an existing unrelated origin is rejected.
 Tool installation and configuration still run.
+Setup rewrites `/home/<user>`, `/User/<user>`, and `/Users/<user>` paths in
+tracked runtime configuration to the current home, plus `$HOME` in agent
+configuration. Colliding JSON and TOML keys are merged recursively; later values
+win conflicts, including arrays. A compiled TypeScript helper runs after tool
+installation and compilation. Files requiring a merge are reformatted, with comments
+retained in a leading block; files without collisions retain their surrounding formatting.
 Unrelated files are left alone. `--upgrade` also upgrades installed native packages
 declared in `setup.json`, including optional packages, through Homebrew or APT.
 Only declared packages are targeted; their required dependencies may also change.
@@ -101,39 +107,65 @@ development environment.
 
 ## Agent Skills
 
-The table covers local shared skills under [`.skills-mgr/skills/`](.skills-mgr/skills/)
-and Codex-only skills directly under [`.codex/skills/`](.codex/skills/). “Model
-visible” means the model can select the skill itself. Conditions come from
-[`.skills-mgr/.skills-mgr.json`](.skills-mgr/.skills-mgr.json) and describe when a
-skill is enabled; each skill's instructions determine when it applies.
+The table covers skills registered in
+[`.skills-mgr/.skills-mgr.json`](.skills-mgr/.skills-mgr.json). Source is Shared
+for local skills under [`.skills-mgr/skills/`](.skills-mgr/skills/), Codex for
+Codex-only skills under [`.codex/skills/`](.codex/skills/) or Codex plugins, and
+Remote for skills installed from a JSON locator. Disabled entries are omitted.
+“Model visible” means the model can select the skill itself. Conditions come
+from the JSON and describe when a skill is enabled; each skill's instructions
+determine when it applies.
 
-| Name | Purpose | Model visible | Condition |
-| --- | --- | --- | --- |
-| `assess-change-impact` | Map callers affected by a shared change | Yes | Always |
-| `build-code-skeleton` | Create an initial compile-safe project skeleton | Yes | Always |
-| `codebase-review` | Review the whole working tree | No | Always |
-| `council` | Gather independent agent judgments | Yes | Always |
-| `deliver-vertical-slice` | Deliver an approved change end to end | Yes | Always |
-| `deslop` | Reduce production code while preserving behavior | No | Always |
-| `dump-last-response` | Save the preceding assistant response | No | Always |
-| `final-review` | Review a completed delivery independently | Yes | Always |
-| `go-json-v2` | Apply Go's `encoding/json/v2` APIs | Yes | Go project |
-| `go-microoptimizations` | Optimize measured Go hot paths | No | Go project |
-| `golang-best-practices` | Apply modern Go practices | Yes | Go project |
-| `handoff` | Prepare a compact handoff for another agent | No | Always |
-| `human-flavoured-writing` | Write natural, human-sounding project copy | No | Always |
-| `js-ts-best-practices` | Apply JavaScript and TypeScript practices | Yes | JavaScript or TypeScript project |
-| `juststore-rendering-optimizer` | Reduce React rerenders with juststore | Yes | JavaScript or TypeScript project with `juststore` |
-| `new-project` | Run the new-project workflow | Yes | Always |
-| `orchestrated-workflow` | Coordinate a change through native agents | No | Always |
-| `postgres-17-18-features` | Apply PostgreSQL 17 and 18 features | Yes | PostgreSQL project |
-| `read-codex-session` | Inspect local Codex session transcripts | No | Always |
-| `scriptc-compiler` | Read scriptc documentation | Yes | Always |
-| `session-usage` | Report current Codex token usage | No | Always |
-| `shadowtree` | Run and author Shadowtree recipes | Yes | Always |
-| `user-experience` | Improve user-facing workflow behavior | Yes | Always |
-| `using-pjdoc` | Validate indexed project documentation | Yes | Always |
-| `writing-readme` | Write or improve repository READMEs | Yes | Always |
+| Name | Source | Purpose | Model visible | Condition |
+| --- | --- | --- | --- | --- |
+| `assess-change-impact` | Shared | Map callers affected by a shared change | Yes | Always |
+| `build-code-skeleton` | Shared | Create an initial compile-safe project skeleton | Yes | Always |
+| `codebase-review` | Shared | Review the whole working tree | No | Always |
+| `context7-mcp` | Codex | Fetch current library documentation from Context7 | No | Always |
+| `council` | Shared | Gather independent agent judgments | Yes | Always |
+| `deliver-vertical-slice` | Shared | Deliver an approved change end to end | Yes | Always |
+| `deslop` | Shared | Reduce production code while preserving behavior | No | Always |
+| `dump-last-response` | Codex | Save the preceding assistant response | No | Always |
+| `final-review` | Shared | Review a completed delivery independently | Yes | Always |
+| `frontend-design` | Remote | Shape distinctive visual design for UI work | Yes | Always |
+| `go-json-v2` | Shared | Apply Go's `encoding/json/v2` APIs | Yes | Go project |
+| `go-microoptimizations` | Shared | Optimize measured Go hot paths | No | Go project |
+| `golang-best-practices` | Shared | Apply modern Go practices | Yes | Go project |
+| `handoff` | Shared | Prepare a compact handoff for another agent | No | Always |
+| `herdr` | Remote | Control Herdr panes, tabs, and agent sessions | Yes | Home directory with `herdr` |
+| `high-end-visual-design` | Remote | Apply high-end visual design details | Yes | TSX, JSX, HTML, or CSS project |
+| `human-flavoured-writing` | Shared | Write natural, human-sounding project copy | No | Always |
+| `js-ts-best-practices` | Shared | Apply JavaScript and TypeScript practices | Yes | JavaScript or TypeScript project |
+| `juststore-rendering-optimizer` | Shared | Reduce React rerenders with juststore | Yes | JavaScript or TypeScript project with `juststore` |
+| `minimalist-ui` | Remote | Design clean editorial-style interfaces | Yes | TSX, JSX, HTML, or CSS project |
+| `new-project` | Shared | Run the new-project workflow | Yes | Always |
+| `openai-docs` | Codex | Look up Codex and OpenAI product documentation | Yes | Always |
+| `orchestrated-workflow` | Shared | Coordinate a change through native agents | No | Always |
+| `postgres-17-18-features` | Shared | Apply PostgreSQL 17 and 18 features | Yes | PostgreSQL project |
+| `read-codex-session` | Codex | Inspect local Codex session transcripts | No | Always |
+| `rust-async-patterns` | Remote | Apply Tokio async Rust patterns | Yes | Rust project |
+| `rust-best-practices` | Remote | Apply idiomatic Rust coding standards | Yes | Rust project |
+| `rust-patterns` | Remote | Apply idiomatic Rust patterns | Yes | Rust project |
+| `scriptc-compiler` | Shared | Read scriptc documentation | Yes | Always |
+| `session-usage` | Codex | Report current Codex token usage | No | Always |
+| `shadcn` | Remote | Work with shadcn/ui components | Yes | Node project with `components.json` |
+| `shadowtree` | Shared | Run and author Shadowtree recipes | Yes | Always |
+| `show-me` | Remote | Explain a topic with concise diagrams | Yes | Always |
+| `skill-creator` | Codex | Create or update a Codex skill | Yes | Always |
+| `supabase-postgres-best-practices` | Remote | Apply Supabase PostgreSQL practices | Yes | PostgreSQL project |
+| `tauri-v2` | Remote | Build with Tauri v2 | Yes | Tauri v2 project |
+| `teardown` | Shared | Render structured visual explanations to HTML | Yes | Always |
+| `thermo-nuclear-code-quality-review` | Remote | Run a strict maintainability review | No | Always |
+| `ui-ux-pro-max` | Remote | Design or review UI and UX | Yes | TSX, JSX, HTML, or CSS project |
+| `use-modern-go` | Remote | Apply modern Go guidelines | Yes | Go project |
+| `user-experience` | Shared | Improve user-facing workflow behavior | Yes | Always |
+| `using-pjdoc` | Shared | Validate indexed project documentation | Yes | Always |
+| `vercel-react-best-practices` | Remote | Apply Vercel React practices | Yes | Node project with React |
+| `vercel-react-native-skills` | Remote | Apply Vercel React Native practices | Yes | Node project with React Native |
+| `visualize` | Codex | Create in-conversation visual explanations | No | Always |
+| `web-design-guidelines` | Remote | Review UI against web interface guidelines | Yes | TSX, JSX, HTML, or CSS project |
+| `writing-for-agents` | Remote | Write skills and agent instruction documents | Yes | Always |
+| `writing-readme` | Shared | Write or improve repository READMEs | Yes | Always |
 
 ## Adapting the Shell Setup
 

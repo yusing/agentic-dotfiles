@@ -41,6 +41,8 @@ and fixes for failures caused by the change. Finish when the requested outcome i
 checked, or explain the concrete blocker. An initial implementation is not an automatic review
 checkpoint. Respect named approval boundaries while continuing independent authorized work.
 
+When fixes repeatedly work around the same design limitation, reassess the approach before adding more code.
+
 Read explicitly referenced task or handoff documents to recover the requested outcome, operation,
 and scope. Routine local work needs the supplied paths, applicable repository guidance, and the
 affected boundary, not a full repository map or a stack of workflow documents.

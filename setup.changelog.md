@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.4
+
+Use a compiled TypeScript helper with syntax-aware JSON and TOML parsers to normalize /home, /User, and /Users home paths and agent configuration $HOME references. Merge colliding keys recursively in source order, keeping later conflicting values. Retain comments and untouched formatting when no merge is needed. Run rewriting after tools and helpers are installed.
+
 ## 2.2.3
 
 Skip Git setup only when the home repository has a commit at HEAD, including worktrees. Continue bootstrap for empty repositories, reusing the expected origin and rejecting unrelated origins. Preserve non-empty repository configuration and state while continuing tool setup.

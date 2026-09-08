@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "07d37abb271329eb7f0f1156e912e89d268ec64e",
+  "sourceCommit": "a55c4d0a264d2ea736988e1c6a2b95bb380f3fca",
   "outputs": [
     {
       "path": ".bashrc",
@@ -76,7 +76,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "39913869591b932fb740a5d90268ecd7fa75f9bd65536f787e646075f3a785f5",
+      "sha256": "50164492a9a22c02c2e6304d14e24b7706a0a55450fd0dcfdb457c1981f85c9a",
       "executable": false
     },
     {
@@ -352,7 +352,7 @@
     {
       "path": ".config/herdr/config.toml",
       "kind": "file",
-      "sha256": "f24b7d3366bc6d5db7a842b975a38ed679e008b4d6048f756acd09ca7396d5d1",
+      "sha256": "316a1d985bdba6a36570edee75a260a611e33755446572c9670c3577bdaf74e6",
       "executable": false
     },
     {
@@ -364,13 +364,13 @@
     {
       "path": ".config/hunk/config.toml",
       "kind": "file",
-      "sha256": "28f0b8b031608d1328a1508d6c15932ca028300359d01bdc89ad343dc363f5e1",
+      "sha256": "0522864ce2c8ed71e17edcc8a52296aea853ee6a0d8ed301503e125a574ba0f3",
       "executable": false
     },
     {
       "path": ".config/lazygit/config.yml",
       "kind": "file",
-      "sha256": "9a3adc3154378250aead27f8a619561b3185a002069d6be796afe35d20861d13",
+      "sha256": "0852a94b68b8fb09c46c46e2d63da6ba0c8504c4e3e1d0da9245627e5b1a3de1",
       "executable": false
     },
     {
@@ -466,7 +466,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "1b29bb754af41f3359229d53fd79fc348c164dd7d09d84211b21c850103b1808",
+      "sha256": "197f5eaaf53640ee45aee0946125cb0deabd4b44d56642b32e6aee4e27ba2e85",
       "executable": false
     },
     {
@@ -520,7 +520,7 @@
     {
       "path": ".local/bin/compile-agent-tools",
       "kind": "file",
-      "sha256": "19c32f1c7a77387c80f832d8e8240b380de23a6226d3b2a1a468be42d59f8f7b",
+      "sha256": "055fa846efdc08ba856193fd65ef2792fcb2b02b44e1dfcb56704a4a4130b4c3",
       "executable": true
     },
     {
@@ -538,13 +538,37 @@
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "8513567906f35ed263119c9b4b025f167d5ee5e7af2d4b9f1af72c300876f266",
+      "sha256": "4488962da77a5ed0de42d281efe5071d331d08e22407c1d9846eec95e0d8979f",
       "executable": true
+    },
+    {
+      "path": ".local/lib/rewrite-home-paths/bun.lock",
+      "kind": "file",
+      "sha256": "58902e8e8408f8b90aa62d26f7b95b7cc15ba34731ab035bb38ef234a99cca4f",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/rewrite-home-paths/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "7b1f306e57a4dd1c7b3017a7658f4d8d8de39565ed84eb752c1e8d82047b63e2",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/rewrite-home-paths/package.json",
+      "kind": "file",
+      "sha256": "d50befef5be364568275295a588927e970992010eed30cce2762cd6ca0cf751b",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
+      "kind": "file",
+      "sha256": "5cedbd3a719784129fd359abd27ab90926bab2548100afdd431625fe76f97ddf",
+      "executable": false
     },
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "58c2a47f8d0cf64bab29f98c5d2231f142ca2e9135f763ade9604e3b5ffecea5",
+      "sha256": "70d5cea174f652eefcb7fad70f514d7e5e6262faf9b688fd235511c6f083d136",
       "executable": false
     },
     {
@@ -854,6 +878,54 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/teardown/assets/style.css",
+      "kind": "file",
+      "sha256": "5e8843a015b4833cfb9625956990150fd41e2c723b2b74d2ff32299d2bf5a5c7",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/examples/showcase.json",
+      "kind": "file",
+      "sha256": "ec6d3162ed00182e405ff25cf2abc8dd3c3afbccca7f2fdfd2b7f82e47921f77",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/references/blocks.md",
+      "kind": "file",
+      "sha256": "72ac5f886af1b15be3b8a2c5d0cc0ec0adc2b0ef8a6e2424cd068c95e7635f50",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/schema.json",
+      "kind": "file",
+      "sha256": "3064bf2597f94a0e24a137995e0de28450a4efc384861d638250d2fdd7b89572",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/scripts/html.mjs",
+      "kind": "file",
+      "sha256": "82a8b519e176d83ef6a735eddb15b10fc238819415f482417137be561a79176c",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/scripts/render.mjs",
+      "kind": "file",
+      "sha256": "467b455a5521ce16201500a9ec1462a202fd799148ddd83dda7ad401da750fb7",
+      "executable": true
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/scripts/validate.mjs",
+      "kind": "file",
+      "sha256": "e531d96eaac578916026ac510be26e0e4b9229b92d43e02e8538b7051157e36c",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/SKILL.md",
+      "kind": "file",
+      "sha256": "40450e0036579eaaf71f87593dd45ea63e77c4564b42cd0637b1c4fb0cf91f22",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/user-experience/agents/openai.yaml",
       "kind": "file",
       "sha256": "de762c7d1c56c6ba17ebdf67f3f023a5cf6417d43bb0875b658056e01b9cf23b",
@@ -1023,13 +1095,13 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "1e485aae8caf71eab5926ecdbc22f05fa0068aaa3c75c6e73f0c0828a3da8c6a",
+      "sha256": "3b0f9bc87a5b67be1d19880c8e1cce462c37dfefbd7104b0bd88669c02aac95c",
       "executable": false
     },
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "5fb60ad6cfb647cb648292263c1b62d24d38801e8e960a2a24e8568439af500a",
+      "sha256": "2b751cfd14101ba17a2a56d82fc3fc38dfd5808a57265b23929ee6f8c32ea47d",
       "executable": false
     },
     {
@@ -1041,7 +1113,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "0e334ee1e288b81ac69703f896e160bf04801a3cb309a6f41b3134a504fe1b13",
+      "sha256": "b46215ac2bf450bab57097275d2df33587b0b180004dfe337c142f88051b0cc2",
       "executable": true
     }
   ]
