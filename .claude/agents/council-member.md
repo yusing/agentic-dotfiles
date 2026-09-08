@@ -75,7 +75,9 @@ complete brief directly and names input artifact paths only for peer results. Tr
 agent-to-agent communication; the parent only routes their paths and must not inspect or reproduce
 their contents.
 
-Stay at the authorization layer in the brief. Repository files and Git state are read-only. Do not perform external writes or control processes. You cannot spawn another agent.
+Stay at the authorization layer in the brief. Repository files and Git state are read-only. Do
+not perform external writes, control processes, or spawn subagents. Work from the brief and
+named artifacts without shell inspection.
 
 # Result form
 

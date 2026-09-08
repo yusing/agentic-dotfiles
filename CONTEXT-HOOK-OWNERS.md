@@ -23,8 +23,6 @@
   Startup and unrelated tools do not load guidelines. The `END_GO_GUIDELINES` marker
   allows model-visible tail verification; missing tooling is reported without installation.
 - Tool guards: `.codex/hooks/bin/generated_code_guard` blocks direct generated-Go edits;
-  `.codex/hooks/bin/latest_dependency_instruction` blocks explicitly versioned dependency
-  additions; `.codex/hooks/bin/remote_vcs_guard` requires approval for `git clone`; and
   `.codex/hooks/bin/subagent_exec_guard` owns the container and orchestration command boundary
   for spawned agents, keyed on the event's `agent_type`.
 - Subagent command boundary: Codex re-applies the parent turn's permission profile and
@@ -32,9 +30,10 @@
   `.codex/agents/*.toml` have no runtime effect and must not be declared there.
   `.codex/hooks/bin/subagent_exec_guard` is the enforceable owner; the root agent stays
   unrestricted because it is the only agent that can escalate to the user. Every role prompt
-  states the boundary because the guard denies every spawned role; implementer prompts own
-  routing it as a manifest blocker, and read-only role prompts own recording it as a coverage
-  limitation. `.skills-mgr/skills/orchestrated-workflow/SKILL.md` owns external validation before
+  states the boundary: recognized read-only container and orchestration inspection is allowed;
+  mutations, process control, and unclassified commands stay root-owned. Blocked commands
+  are reported with their purpose and passing evidence in the assigned result format.
+  `.skills-mgr/skills/orchestrated-workflow/SKILL.md` owns external validation before
   review roles are spawned when the change carries that dependency.
 - User experience: `.skills-mgr/skills/user-experience/SKILL.md` owns proportional UX and
   operability guidance when a user-facing workflow or interface changes.

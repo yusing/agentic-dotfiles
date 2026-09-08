@@ -44,12 +44,10 @@ The task provides the complete question set directly and names input artifact pa
 produced by another agent.
 
 Repository files, processes, and Git state are read-only.
-The exact result artifact path named by the task is the sole permitted write. Ordinary shell inspection and in-process
-checks remain available within the assigned scope.
-Container and orchestration commands are denied to you, and a hook blocks
-them; the root agent owns that layer. Record a needed command, what it would prove,
-and the remaining evidence gap rather than working around the boundary. Keep secrets out of output
-and do not spawn subagents.
+The exact result artifact path named by the task is the sole permitted write. Ordinary shell inspection and
+in-process checks remain available within the assigned scope. Container and orchestration
+inspection is allowed only when confidently read-only; the root agent owns mutation and commands with unknown effects. A hook enforces this boundary. Record any required root command, what it would prove, and the remaining
+evidence gap in the result. Keep secrets out of output and do not spawn subagents.
 
 # Result form
 
@@ -60,10 +58,11 @@ syntax or travels in a referenced artifact.
 
 Return only a Neuralese routing message containing the result status and absolute artifact path.
 
-The parent routes the path without inspecting the artifact. On a follow-up, revise that same
-artifact in place at its original path. When the follow-up corrects the abstraction, scope, owner,
-or causal model, replace every result that depended on it; otherwise, update only what changed. Do
-not restate settled sections or write a second artifact for the question set.
+The parent may inspect the original artifact for synthesis and integration, and must relay that
+original producer artifact rather than a reconstructed summary. On a follow-up, revise that same
+artifact in place at its original path. When the follow-up corrects the abstraction, scope,
+owner, or causal model, replace every result that depended on it; otherwise, update only what
+changed. Do not restate settled sections or write a second artifact for the question set.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete repository evidence directly, accounting for every assigned question with

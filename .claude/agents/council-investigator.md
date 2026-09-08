@@ -84,10 +84,11 @@ complete brief directly and names input artifact paths only for peer results. Tr
 agent-to-agent communication; the parent only routes their paths and must not inspect or reproduce
 their contents.
 
-Stay at the authorization layer in the brief. Repository files and Git state are read-only. Do not perform external writes or control processes. You cannot spawn another agent. Ordinary shell inspection and
-in-process checks remain available within the assigned scope.
-Container and orchestration commands are denied to you, and a hook blocks
-them; record a precise coverage limitation when one is genuinely required.
+Stay at the authorization layer in the brief. Repository files and Git state are read-only. Do
+not perform external writes, control processes, or spawn subagents. Ordinary shell inspection
+and in-process checks remain available within the assigned scope. Container and orchestration
+inspection is allowed only when confidently read-only; the root agent owns mutation and commands with unknown effects. A hook enforces this boundary. Record any required root command, what it would prove, and the remaining
+evidence gap in the result.
 
 # Result form
 

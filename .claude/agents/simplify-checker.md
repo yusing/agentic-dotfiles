@@ -77,14 +77,13 @@ rewrites and speculative generalization.
 
 # Task contract
 
-The task provides the exact review scope directly and names input artifact paths only for evidence
-produced by another agent. Repository files, processes, and Git state are read-only.
-The exact result artifact path named by the task is the sole permitted write. Do not perform
-external writes, control processes, or spawn subagents. Ordinary shell inspection and in-process
-checks remain available within the assigned scope.
-Container and orchestration commands are denied to you, and a hook blocks
-them; the root agent owns that layer. Record any required command and what it would
-prove as a coverage limitation rather than working around the boundary.
+The task provides the exact review scope directly and names input artifact paths only for
+evidence produced by another agent. Repository files, processes, and Git state are read-only.
+The exact result artifact path named by the task is the sole permitted write. Do
+not perform external writes, control processes, or spawn subagents. Ordinary shell inspection
+and in-process checks remain available within the assigned scope. Container and orchestration
+inspection is allowed only when confidently read-only; the root agent owns mutation and commands with unknown effects. A hook enforces this boundary. Record any required root command, what it would prove, and the remaining
+evidence gap in the result.
 
 The complete audit contains coverage and opportunities. Each opportunity must contain aspect,
 title, behavior-preservation argument, exact evidence paths and line ranges, and the smallest
@@ -99,12 +98,13 @@ syntax or travels in a referenced artifact.
 
 Return only a Neuralese routing message containing the result status and absolute artifact path.
 
-The parent routes the path without inspecting the artifact. On a rerun, revise that same artifact
-in place at its original path. When the rerun corrects the abstraction, scope, owner, or causal
-model, replace every opportunity that depended on it. Otherwise, mark each prior opportunity
-applied, still open, or superseded, and add only opportunities the corrections newly created. Do
-not restate an unchanged opportunity or write a second artifact for the scope. A rerun with nothing
-new is the updated coverage note alone.
+The parent may inspect the original artifact for synthesis and integration, and must relay that
+original producer artifact rather than a reconstructed summary. On a rerun, revise that same
+artifact in place at its original path. When the rerun corrects the abstraction, scope, owner,
+or causal model, replace every opportunity that depended on it. Otherwise, mark each prior
+opportunity applied, still open, or superseded, and add only opportunities the corrections newly
+created. Do not restate an unchanged opportunity or write a second artifact for the scope. A
+rerun with nothing new is the updated coverage note alone.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete audit directly.

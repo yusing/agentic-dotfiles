@@ -1,4 +1,4 @@
-export const VERSION = "1.0.1";
+export const VERSION = "1.0.3";
 
 export const SHELLS = new Set(["bash", "dash", "sh", "zsh"]);
 const COMMAND_PREFIXES = new Set(["!", "do", "elif", "exec", "if", "then"]);
@@ -6,6 +6,14 @@ const ASSIGNMENT = /^[A-Za-z_][A-Za-z0-9_]*=/;
 const SEPARATORS = new Set([";", "&", "|", "(", ")", "{", "}", "\n"]);
 const PUNCTUATION = new Set([";", "&", "|", "(", ")", "{", "}", "\n"]);
 const WHITESPACE = new Set([" ", "\t", "\r"]);
+
+// All shell scans use the same comment boundary and preserve the newline,
+// which still separates any real command that follows the comment.
+function commentEnd(command: string, index: number, tokenBoundary: boolean): number {
+  if (!tokenBoundary || command[index] !== "#") return index;
+  while (index < command.length && command[index] !== "\n") index += 1;
+  return index;
+}
 
 export function isSeparatorToken(token: string): boolean {
   return token.length > 0 && [...token].every((character) => SEPARATORS.has(character));
@@ -44,10 +52,10 @@ export function shellTokens(
         continue;
       }
 
-      if (start === "'" || start === '"') {
-        const [quoted, next] = readQuoted(command, index);
-        pushToken(quoted);
-        index = next;
+      // A comment starts only at a token boundary, never inside a word.
+      const afterComment = commentEnd(command, index, true);
+      if (afterComment !== index) {
+        index = afterComment;
         continue;
       }
 
@@ -74,7 +82,9 @@ export function shellTokens(
         token += character;
         index += 1;
       }
-      pushToken(token);
+      // Adjacent quoted/unquoted fragments form one word, including empty
+      // quoted arguments whose position matters to option-value consumers.
+      tokens.push(token);
     }
   } catch {
     return [];
@@ -241,8 +251,14 @@ export function commandSubstitutions(command: string): string[] {
   const substitutions: string[] = [];
   let quote: string | undefined;
   let index = 0;
+  let tokenBoundary = true;
   while (index < command.length) {
     const character = command[index] ?? "";
+    const afterComment = commentEnd(command, index, quote === undefined && tokenBoundary);
+    if (afterComment !== index) {
+      index = afterComment;
+      continue;
+    }
     if (quote === "'") {
       if (character === "'") {
         quote = undefined;
@@ -251,10 +267,12 @@ export function commandSubstitutions(command: string): string[] {
       continue;
     }
     if (character === "\\") {
+      if (index + 1 < command.length && command[index + 1] !== "\n") tokenBoundary = false;
       index += 2;
       continue;
     }
     if (character === "'") {
+      tokenBoundary = false;
       if (quote === undefined) {
         quote = "'";
       }
@@ -262,11 +280,13 @@ export function commandSubstitutions(command: string): string[] {
       continue;
     }
     if (character === '"') {
+      tokenBoundary = false;
       quote = quote === '"' ? undefined : '"';
       index += 1;
       continue;
     }
     if (character === "$" && command[index + 1] === "(") {
+      tokenBoundary = false;
       const extracted = parenthesizedSubstitution(command, index + 2);
       if (extracted === undefined) {
         index += 2;
@@ -277,6 +297,7 @@ export function commandSubstitutions(command: string): string[] {
       continue;
     }
     if (character === "`") {
+      tokenBoundary = false;
       let end = index + 1;
       let closed = false;
       while (end < command.length) {
@@ -297,6 +318,7 @@ export function commandSubstitutions(command: string): string[] {
       }
       continue;
     }
+    tokenBoundary = quote === undefined && (WHITESPACE.has(character) || PUNCTUATION.has(character));
     index += 1;
   }
   return substitutions;

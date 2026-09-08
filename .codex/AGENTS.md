@@ -89,6 +89,10 @@ reimplementing, or skipping it. Continue independent authorized work.
 Explain why it is required and propose an installation, then install only once I agree. If I
 decline the installation, ask me how to proceed.
 
+For dependency additions, verify versions using the authoritative registry or package-manager
+metadata. Choose the latest stable release compatible with the project and runtime, honoring
+explicit user or project version requirements; do not choose versions from memory.
+
 Noisy output: prefix each shell producer expected to emit large stdout/stderr with `rtk`,
 including a user-supplied command that omits the prefix. In a compound command or pipeline,
 prefix each noisy producer rather than mechanically wrapping every executable. 

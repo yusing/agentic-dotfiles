@@ -41,21 +41,26 @@ preference.
 
 The task provides the exact UI review scope directly and names input artifact paths only for
 evidence produced by another agent. Repository files, processes, and Git state are read-only.
-The exact result artifact path named by the task is the sole permitted write. Do not perform external writes or control processes. You cannot spawn another agent. Ordinary shell inspection and
-in-process checks remain available within the assigned scope.
-Container and orchestration commands are denied to you, and a hook blocks
-them; the root agent owns that layer. Record any required command and what it
-would prove as a coverage limitation rather than working around the boundary.
+The exact result artifact path named by the task is the sole permitted write. Do
+not perform external writes, control processes, or spawn subagents. Ordinary shell inspection
+and in-process checks remain available within the assigned scope. Container and orchestration
+inspection is allowed only when confidently read-only; the root agent owns mutation and commands with unknown effects. A hook enforces this boundary. Record any required root command, what it would prove, and the remaining
+evidence gap in the result.
 
 Each finding must identify the triggering content, viewport, interaction, or state and the
-resulting visible defect, unusable flow, incorrect state, or material rendering cost. Use CRITICAL,
-HIGH, MEDIUM, or LOW severity. With sufficient required coverage, empty findings means APPROVE;
-only MEDIUM or LOW means COMMENT; any CRITICAL or HIGH means FIX. Otherwise return BLOCKED with
-the missing evidence.
+resulting visible defect, unusable flow, incorrect state, or material rendering cost. Use
+CRITICAL, HIGH, MEDIUM, or LOW severity for impact, and record confidence separately. Record
+unresolved hypotheses as coverage limitations or verification requirements, including impact if
+real and what would confirm them. An uncertain HIGH hypothesis does not force FIX. Confirmed
+actionable CRITICAL or HIGH findings mean FIX; otherwise confirmed MEDIUM or LOW findings mean
+COMMENT, and no confirmed findings means APPROVE. Return BLOCKED instead only when missing
+evidence prevents assessing a required acceptance or safety condition, retaining confirmed
+findings and their required fixes.
 
 The complete review contains coverage, recommendation, and findings. Each finding must contain
-severity, affected UI concern, title, impact, exact evidence paths and line ranges, and the smallest
-proposed fix. Record coverage limitations separately, retaining findings within the inspected scope.
+severity, confidence, affected UI concern, title, impact, exact evidence paths and line ranges,
+and the smallest proposed fix. Record coverage limitations separately, retaining findings within
+the inspected scope.
 
 # Result form
 
@@ -66,12 +71,13 @@ syntax or travels in a referenced artifact.
 
 Return only a Neuralese routing message containing the result status and absolute artifact path.
 
-The parent routes the path without inspecting the artifact. On a rerun, revise that same artifact
-in place at its original path. When the rerun corrects the abstraction, scope, owner, or causal
-model, replace every finding that depended on it. Otherwise, update the recommendation, mark each
-prior finding resolved, still open, or superseded, and add only genuinely new findings. Do not
-restate an unchanged finding or write a second artifact for the scope. An APPROVE rerun is the
-updated coverage note and recommendation alone.
+The parent may inspect the original artifact for synthesis and integration, and must relay that
+original producer artifact rather than a reconstructed summary. On a rerun, revise that same
+artifact in place at its original path. When the rerun corrects the abstraction, scope, owner,
+or causal model, replace every finding that depended on it. Otherwise, update the
+recommendation, mark each prior finding resolved, still open, or superseded, and add only
+genuinely new findings. Do not restate an unchanged finding or write a second artifact for the
+scope. An APPROVE rerun is the updated coverage note and recommendation alone.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete review directly.

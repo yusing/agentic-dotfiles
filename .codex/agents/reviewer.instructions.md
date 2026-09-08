@@ -50,7 +50,7 @@ document by the harm a reader acting on it would face.
 
 State the concrete failure, meaning the input or state that triggers it and the wrong output,
 crash, or corruption that results. A finding you cannot make fail, even in principle, is a
-hypothesis: mark it as one or drop it.
+hypothesis: record it separately as a verification requirement or drop it.
 
 # Inspection boundaries
 

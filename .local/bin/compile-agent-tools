@@ -1,5 +1,5 @@
 #!/bin/sh
-# version: 1.0.2
+# version: 1.0.3
 # Rebuild user-owned helper and hook binaries for this machine.
 
 set -eu
@@ -39,8 +39,6 @@ fi
 
 compile_hook "$HOOKS/generated_code_guard.ts" "$BIN/generated_code_guard"
 compile_hook "$HOOKS/subagent_exec_guard.ts" "$BIN/subagent_exec_guard"
-compile_hook "$HOOKS/latest_dependency_instruction.ts" "$BIN/latest_dependency_instruction"
-compile_hook "$HOOKS/remote_vcs_guard.ts" "$BIN/remote_vcs_guard"
 compile_hook "$HOOKS/go_guidelines.ts" "$BIN/go_guidelines"
 compile_hook "$HOOKS/skills_mgr_inventory.ts" "$BIN/skills_mgr_inventory"
 compile_hook "$HOOKS/check_project.ts" "$BIN/check_project"

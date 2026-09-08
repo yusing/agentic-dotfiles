@@ -78,25 +78,11 @@ class PortError(Exception):
     pass
 
 
-CONTAINER_BOUNDARY = (
-    r"Container\s+and\s+orchestration\s+commands\s+are\s+denied\s+to\s+"
-    r"(?:you|this\s+role);"
-)
-
-
 def replace_once(text: str, old: str, new: str, *, role: str) -> str:
     count = text.count(old)
     if count != 1:
         raise PortError(f"{role}: expected one occurrence of {old!r}, found {count}")
     return text.replace(old, new, 1)
-
-
-def remove_container_instruction(text: str) -> str:
-    pattern = re.compile(
-        rf"\s*{CONTAINER_BOUNDARY}.*?(?=\n\n|\Z)",
-        re.DOTALL,
-    )
-    return pattern.sub("", text)
 
 
 def adapt_text(text: str, *, has_bash: bool) -> str:
@@ -127,16 +113,10 @@ def adapt_text(text: str, *, has_bash: bool) -> str:
 
     if has_bash:
         text = re.sub(
-            CONTAINER_BOUNDARY,
-            "Container and orchestration commands are denied to you, and a hook blocks\n"
-            "them;",
+            r"owns\s+mutation\s+and\s+commands\s+with\s+unknown\s+effects\.",
+            "owns mutation and commands with unknown effects. A hook enforces this boundary.",
             text,
         )
-        text = text.replace(
-            ". Container and orchestration commands", ".\nContainer and orchestration commands"
-        )
-    else:
-        text = remove_container_instruction(text)
 
     return text.strip()
 
@@ -268,7 +248,7 @@ def render_role(role: str) -> str:
         f"# Result form\n\n{result_form}\n\n"
         f"# Completion\n\n{completion}\n"
     )
-    if "Bash" in tools and not re.search(r"and a hook blocks\s+them", body):
+    if "Bash" in tools and "A hook enforces this boundary." not in body:
         raise PortError(f"{role}: Bash role has no container-command boundary")
     return render_frontmatter(role, config) + body
 

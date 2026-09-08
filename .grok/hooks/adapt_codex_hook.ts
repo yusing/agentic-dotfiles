@@ -3,20 +3,12 @@ import * as os from "os";
 import * as path from "path";
 import { responseFor as generatedCodeResponse } from "../../.codex/hooks/generated_code_guard.ts";
 import { responseFor as goGuidelinesResponse } from "../../.codex/hooks/go_guidelines.ts";
-import { responseFor as latestDependencyResponse } from "../../.codex/hooks/latest_dependency_instruction.ts";
-import { responseFor as remoteVcsResponse } from "../../.codex/hooks/remote_vcs_guard.ts";
 import { responseFor as subagentExecResponse } from "../../.codex/hooks/subagent_exec_guard.ts";
 import { asString, handleVersion, isRecord, readEvent, runCommand } from "../../.codex/hooks/lib/hook_runtime.ts";
 
-export const VERSION = "1.1.0";
+export const VERSION = "1.1.1";
 
 type PolicyFn = (event: unknown) => Record<string, unknown> | undefined;
-
-const BASH_PRE_TOOL_USE = [
-  "subagent_exec_guard",
-  "latest_dependency_instruction",
-  "remote_vcs_guard",
-];
 
 const CODEX_HOOKS = path.join(os.homedir(), ".codex", "hooks");
 
@@ -299,12 +291,6 @@ function policyFor(id: string): PolicyFn | undefined {
   if (id === "go_guidelines") {
     return goGuidelinesResponse;
   }
-  if (id === "latest_dependency_instruction") {
-    return latestDependencyResponse;
-  }
-  if (id === "remote_vcs_guard") {
-    return remoteVcsResponse;
-  }
   if (id === "subagent_exec_guard") {
     return subagentExecResponse;
   }
@@ -315,9 +301,6 @@ function inProcessIds(argv: string[]): string[] | undefined {
   const first = path.basename(argv[0] ?? "");
   if (first.length === 0) {
     return undefined;
-  }
-  if (first === "bash_pre_tool_use") {
-    return BASH_PRE_TOOL_USE;
   }
   if (policyFor(first) !== undefined) {
     return [first];

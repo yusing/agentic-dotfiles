@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook bash_pre_tool_use",
+            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook subagent_exec_guard",
             "timeout": 5,
             "statusMessage": "Checking Bash command policy"
           }

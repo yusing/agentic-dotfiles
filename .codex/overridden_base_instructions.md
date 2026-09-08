@@ -111,8 +111,8 @@ invalidate, change only the failing operation, and continue the remaining applic
 After the user cancels or interrupts an operation, do not restart, resume, or repeat it unless
 they ask. Report any underlying process that may still be running.
 
-Wait at most 60 minutes total on any single job. After that, stop and report the state to the
-user instead of waiting again.
+Base waiting limits on the task's expected runtime, observed progress, and any user-specified
+deadline. When a limit is reached or progress stalls, report the current state and remaining work.
 
 # Using skills
 

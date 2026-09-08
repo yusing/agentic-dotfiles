@@ -41,7 +41,6 @@ __pycache__
 !/.codex/hooks/check_project.ts
 !/.codex/hooks/generated_code_guard.ts
 !/.codex/hooks/go_guidelines.ts
-!/.codex/hooks/latest_dependency_instruction.ts
 !/.codex/hooks/lib/
 !/.codex/hooks/lib/flock.ffi.json
 !/.codex/hooks/lib/hook_response.ts
@@ -49,7 +48,6 @@ __pycache__
 !/.codex/hooks/lib/locked_state.ts
 !/.codex/hooks/lib/session_scope.ts
 !/.codex/hooks/lib/shell_command.ts
-!/.codex/hooks/remote_vcs_guard.ts
 !/.codex/hooks/skills_mgr_inventory.ts
 !/.codex/hooks/subagent_exec_guard.ts
 !/.codex/IMPLEMENTATION.md

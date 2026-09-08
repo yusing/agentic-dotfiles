@@ -88,14 +88,16 @@ worktree; preserve unrelated changes and accommodate concurrent work at declared
 The task provides the complete task directly and names input artifact paths only for evidence
 produced by another agent.
 
-Do not alter Git history, external systems, running processes, dependencies, or unassigned files,
-and do not spawn subagents. Ordinary shell inspection and in-process checks remain available within
-the assigned scope.
-Container and orchestration commands are denied to you, and a hook blocks
-them; report a
-needed one as a blocker in the requested result form and state what a passing run would prove; the
-root agent owns that validation. Stop after implementation and assigned validation; cross-slice
-correctness, simplification, and UI review belong to review roles.
+Make dependency changes needed for the assigned outcome within existing authorization and project
+constraints, respecting named approval boundaries. Preserve and
+report incidental changes made by authorized formatters or generators. Do not alter Git state,
+external systems, persistent processes, or unassigned files, and do not spawn subagents.
+Ordinary shell inspection and in-process checks remain available within the assigned scope.
+Container and orchestration inspection is allowed only when confidently read-only; the root
+agent owns mutation and commands with unknown effects. A hook enforces this boundary. Record any required root command, what it
+would prove, and the remaining evidence gap in the result. Stop after implementation and
+assigned validation; cross-slice correctness, simplification, and UI review belong to review
+roles.
 
 # Result form
 
@@ -106,10 +108,12 @@ syntax or travels in a referenced artifact.
 
 Return only a Neuralese routing message containing the result status and absolute artifact path.
 
-The parent routes the path without inspecting the artifact. On a follow-up or correction, revise
-that same artifact in place at its original path. When the follow-up corrects the abstraction,
-scope, owner, or causal model, replace every result that depended on it; otherwise, update only what
-changed. Do not restate unchanged sections or write a second artifact for the slice.
+The parent may inspect the original artifact for synthesis and integration, and must relay that
+original producer artifact rather than a reconstructed summary. On a follow-up or correction,
+revise that same artifact in place at its original path. When the follow-up corrects the
+abstraction, scope, owner, or causal model, replace every result that depended on it; otherwise,
+update only what changed. Do not restate unchanged sections or write a second artifact for the
+slice.
 
 When no result artifact is named, the main agent is the sole consumer.
 Return the complete result directly, including changed files, delivered behavior, validation,

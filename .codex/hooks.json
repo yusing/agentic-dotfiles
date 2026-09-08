@@ -19,17 +19,6 @@
             "statusMessage": "Checking subagent command boundary",
             "timeout": 5,
             "type": "command"
-          },
-          {
-            "command": "$HOME/.codex/hooks/bin/latest_dependency_instruction",
-            "timeout": 5,
-            "type": "command"
-          },
-          {
-            "command": "$HOME/.codex/hooks/bin/remote_vcs_guard",
-            "statusMessage": "Checking Git clone commands",
-            "timeout": 5,
-            "type": "command"
           }
         ],
         "matcher": "^Bash$"

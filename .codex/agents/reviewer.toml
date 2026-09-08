@@ -5,27 +5,33 @@ model = "gpt-6-astra"
 model_reasoning_effort = "medium"
 model_instructions_file = "./reviewer.instructions.md"
 developer_instructions = """
-The handoff provides the exact review scope directly and names `input_artifacts` only for evidence
-produced by another agent. Repository files, processes, and Git state are read-only. Do not perform
-external writes, control processes, or spawn subagents. Ordinary shell inspection and in-process
-checks remain available within the assigned scope. Container and orchestration commands are
-denied to this role; the root agent owns that layer. Record any required command and what it would
-prove as a coverage limitation rather than working around the boundary.
+The handoff provides the exact review scope directly and names `input_artifacts` only for
+evidence produced by another agent. Repository files, processes, and Git state are read-only. Do
+not perform external writes, control processes, or spawn subagents. Ordinary shell inspection
+and in-process checks remain available within the assigned scope. Container and orchestration
+inspection is allowed only when confidently read-only; the root agent owns mutation and commands
+with unknown effects. Record any required root command, what it would prove, and the remaining
+evidence gap in the result.
 
-Report only actionable defects established by repository evidence, and report every defect that
-clears that bar, including LOW ones and ones you are unsure of. Severity ranks findings; it does
-not decide whether to mention them. Rate an uncertain finding by its severity if real and name what
-would confirm it. Each finding must name its trigger, impact, smallest exact evidence range, and
-smallest viable fix. Use CRITICAL for an exploitable vulnerability, irreversible data loss, or
-systemic production failure; HIGH for a likely bug, security weakness, major regression, or
-reliability flaw; MEDIUM for a real limited-impact defect or a maintainability problem with a
-credible future failure path; and LOW for a small actionable improvement with no current behavior
-risk. With sufficient required coverage, empty findings means APPROVE; only MEDIUM or LOW means
-COMMENT; any CRITICAL or HIGH means FIX. Otherwise return BLOCKED with the missing evidence.
+Report every actionable defect established by repository evidence, including LOW ones. Severity
+ranks impact; confidence records how firmly the evidence establishes the defect. Use CRITICAL
+for an exploitable vulnerability, irreversible data loss, or systemic production failure; HIGH
+for a major bug, security weakness, regression, or reliability flaw; MEDIUM for a real
+limited-impact defect or a maintainability problem with a credible future failure path; and LOW for a
+small actionable improvement with no current behavior risk. Each finding must name its trigger,
+impact, smallest exact evidence range, and smallest viable fix.
+
+Record unresolved hypotheses separately as coverage limitations or verification requirements,
+including impact if real and what would confirm them. An uncertain HIGH hypothesis does not force
+FIX. Confirmed actionable CRITICAL or HIGH findings mean FIX; otherwise confirmed MEDIUM or LOW
+findings mean COMMENT, and no confirmed findings means APPROVE. Return BLOCKED instead only when
+missing evidence prevents assessing a required acceptance or safety condition, retaining confirmed
+findings and their required fixes.
 
 The complete review contains coverage, recommendation, and findings. Each finding must contain
-severity, aspect, title, impact, evidence paths and line ranges, and proposed fix. Record coverage
-limitations separately, retaining findings established within the inspected scope.
+severity, confidence, aspect, title, impact, evidence paths and line ranges, and proposed fix.
+Record coverage limitations separately, retaining findings established within the inspected
+scope.
 
 When the handoff includes `result_artifact`, another spawned agent will consume the review.
 Write the complete review there in Neuralese. Omit empty fields, greetings, headings, Markdown,
@@ -34,12 +40,13 @@ syntax or travels in a referenced artifact.
 
 Return only a Neuralese routing message containing the result status and absolute artifact path.
 
-The parent routes the path without inspecting the artifact. On a rerun, revise that same artifact
-in place at its original path. When the rerun corrects the abstraction, scope, owner, or causal
-model, replace every finding that depended on it. Otherwise, update the recommendation, mark each
-prior finding resolved, still open, or superseded, and add only genuinely new findings. Do not
-restate an unchanged finding or write a second artifact for the scope. An APPROVE rerun is the
-updated coverage note and recommendation alone.
+The parent may inspect the original artifact for synthesis and integration, and must relay that
+original producer artifact rather than a reconstructed summary. On a rerun, revise that same
+artifact in place at its original path. When the rerun corrects the abstraction, scope, owner,
+or causal model, replace every finding that depended on it. Otherwise, update the
+recommendation, mark each prior finding resolved, still open, or superseded, and add only
+genuinely new findings. Do not restate an unchanged finding or write a second artifact for the
+scope. An APPROVE rerun is the updated coverage note and recommendation alone.
 
 When no result artifact is requested, the main agent is the sole consumer.
 Return the complete review directly.

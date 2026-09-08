@@ -17,9 +17,10 @@
    skill-inventory reporter. Resuming an existing session does not run
    these root-session hooks. Matched events receive project context and current skill metadata
    without selecting implementation or validation work.
-3. **Tool loop.** Before matched tools run, guards may reject generated-Go edits, versioned
-   dependency additions, unapproved Git clones, or container commands from spawned agents. The
-   remaining guards are silent when their policies do not apply.
+3. **Tool loop.** Before matched tools run, guards may reject generated-Go edits or container
+   mutations and unclassified commands from spawned agents. Recognized read-only container
+   inspection remains available. General authorization governs cloning, and shared standing
+   guidance owns dependency version selection. Guards are silent when their policies do not apply.
 4. **Turn end.** All matching hooks from active configuration sources run for their lifecycle
    event. The enabled Browser plugin currently contributes a `Stop` MCP hook independently of
    `.codex/hooks.json`.
