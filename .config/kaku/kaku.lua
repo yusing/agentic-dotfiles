@@ -87,7 +87,7 @@ end
 -- 1) Font family and size (default: JetBrains Mono, size auto 15/17)
 -- config.font = wezterm.font('Menlo')
 -- config.font_size = 16.0
--- config.line_height = 1.1  -- default 1.28; use 1.0-1.1 if QR codes or TUI charts look stretched
+config.line_height = 1.1  -- default 1.28; use 1.0-1.1 if QR codes or TUI charts look stretched
 --
 -- 2) Color scheme (a fixed scheme disables light/dark auto switching)
 -- config.color_scheme = 'Catppuccin Mocha'

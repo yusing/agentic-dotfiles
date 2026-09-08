@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "5d6f35eb7a64590d20569da3a217aab5e2e3324e",
+  "sourceCommit": "ee8b3b746405b14e7109abdd5d29efa6bc1c9f49",
   "outputs": [
     {
       "path": ".bashrc",
@@ -370,7 +370,7 @@
     {
       "path": ".config/kaku/kaku.lua",
       "kind": "file",
-      "sha256": "2d2ab59c070edbf5f42c092d84f166281e965ab98ab633318fcfd07e0348cdc0",
+      "sha256": "b2edb504172a33d8af5bd4af7130c72a66eec370a57078943dbf50bcab0b2ba8",
       "executable": false
     },
     {
