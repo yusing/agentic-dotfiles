@@ -28,6 +28,7 @@
     "tools": {
       "go": "latest",
       "bun": "latest",
+      "node": "latest",
       "github:microsoft/TypeScript": {"version": "latest", "matching_regex": "^typescript-(linux|darwin|win32)-", "strip_components": 1, "bin_path": "lib"},
       "github:llvm/llvm-project": {"version": "latest", "os": ["linux"], "version_prefix": "llvmorg-", "matching_regex": "^LLVM-.*-Linux-(X64|ARM64)\\.tar\\.xz$", "strip_components": 1, "bin_path": "bin"},
       "pipx:rich-cli": {"version": "latest", "uvx": true},
