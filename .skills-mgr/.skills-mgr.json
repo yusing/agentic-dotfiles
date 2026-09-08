@@ -1,6 +1,15 @@
 {
   "schema_revision": 3,
   "skills": {
+    "archify": {
+      "enabled": true,
+      "remote": {
+        "provider": "skills.sh",
+        "id": "tt-a1i/archify/archify",
+        "name": "archify",
+        "locator": "tt-a1i/archify/archify"
+      }
+    },
     "assess-change-impact": {
       "enabled": true
     },
@@ -150,15 +159,6 @@
     },
     "shadowtree": {
       "enabled": true
-    },
-    "show-me": {
-      "enabled": true,
-      "remote": {
-        "provider": "skills.sh",
-        "id": "humanlayer/skills/show-me",
-        "name": "show-me",
-        "locator": "humanlayer/skills/show-me"
-      }
     },
     "skill-creator": {
       "enabled": true
