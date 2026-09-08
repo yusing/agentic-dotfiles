@@ -106,9 +106,6 @@
     "postgres-17-18-features": {
       "enabled": "lang postgres"
     },
-    "read-codex-session": {
-      "enabled": true
-    },
     "rust-async-patterns": {
       "enabled": "lang rust",
       "remote": {

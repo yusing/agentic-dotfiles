@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6c9993ba81128086f0aa1621e799debbd244201e",
+  "sourceCommit": "01796a36c43647dd63b1731ca0148566298f92fb",
   "outputs": [
     {
       "path": ".bashrc",
@@ -290,12 +290,6 @@
       "executable": false
     },
     {
-      "path": ".codex/skills/read-codex-session/SKILL.md",
-      "kind": "file",
-      "sha256": "4d23fb1dfb647dd9ea11c1be12735a8e7cd6e6be15555316ac0e234d99001ba3",
-      "executable": false
-    },
-    {
       "path": ".codex/skills/session-usage/SKILL.md",
       "kind": "file",
       "sha256": "06c115083cba295ec78ee5ee8afc4ea0d79a5a920130ac65c2c1f2fc4639fe97",
@@ -460,7 +454,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "5919cdb5baa5a5c9a8b3c0a8d4f9babeafde3b0e91a645657cf35bdc6036254b",
+      "sha256": "6af006e32128b3eea036e3c36dd0a6e5db4e74b8cd9c3efa2b5e486736626703",
       "executable": false
     },
     {
@@ -562,7 +556,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "70d5cea174f652eefcb7fad70f514d7e5e6262faf9b688fd235511c6f083d136",
+      "sha256": "1d347577976d6f961b9afbf953ae2feb07fb9e8ee180481eb42aab318e5d01c6",
       "executable": false
     },
     {
