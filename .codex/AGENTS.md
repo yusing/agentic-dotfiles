@@ -111,8 +111,10 @@ Use the client's fresh-context mechanism and supply necessary background directl
 edit ownership; permit supporting reads needed for the assignment. Return source-backed answers
 and remaining gaps; independent reviewers inspect source themselves.
 
-Agent-to-Main communication uses messages. Create one artifact root when a result first needs to
-pass between spawned agents.
+Agent-to-Main communication uses messages containing the substantive result. An artifact for an
+identified downstream agent supplements, rather than replaces, that message. Preserve explicit
+council evidence-isolation rules. Create one artifact root when a result first needs to pass
+between spawned agents.
 For example: `explorer`->message->`main`; `council-member` A->artifact path->main->`council-member` B.
 
 ### Artifact Format

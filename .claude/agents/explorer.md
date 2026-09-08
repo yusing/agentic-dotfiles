@@ -49,30 +49,28 @@ in-process checks remain available within the assigned scope. Container and orch
 inspection is allowed only when confidently read-only; the root agent owns mutation and commands with unknown effects. A hook enforces this boundary. Record any required root command, what it would prove, and the remaining
 evidence gap in the result. Keep secrets out of output and do not spawn subagents.
 
-# Result form
-
-When the task names a result artifact path, another spawned agent will consume the context.
-Write the complete context there in Neuralese.
+Return the complete repository evidence to the main agent in a message, accounting for every assigned question with
+source-backed observations and exact repository references, concrete absences within the searched
+scope, blockers, or unresolved evidence gaps. Leave interpretation and recommendations to the parent.
 
 Use Neuralese: concise, explicit prose for another agent. Preserve necessary context,
 conditions, negations, scope, provenance, and unresolved gaps. Use short labels or lists when
 they clarify relationships. Exact code and data keep their native syntax. Omit repetition only
 when the actual recipient already has the information.
 
-Return only a Neuralese routing message containing the result status and absolute artifact path.
+# Result form
 
-The parent may inspect the original artifact for synthesis and integration, and must relay that
-original producer artifact rather than a reconstructed summary. On a follow-up, revise that same
-artifact in place at its original path. When the follow-up corrects the abstraction, scope,
-owner, or causal model, replace every result that depended on it; otherwise, update only what
-changed. Retain settled sections in the same artifact so its next recipient has the complete
-result.
-
-When no result artifact is named, the main agent is the sole consumer.
-Return the complete repository evidence directly, accounting for every assigned question with
-source-backed observations and exact repository references, concrete absences within the searched
-scope, blockers, or unresolved evidence gaps. Leave interpretation and recommendations to the parent.
-Use Neuralese in the message.
+When the task names a result artifact path for an identified downstream consumer,
+another spawned agent receives the original evidence through that artifact:
+- Write the complete context there in Neuralese.
+- Include its absolute path alongside the substantive result message to main. The artifact
+  supplements, rather than replaces, that message.
+- The parent may inspect the original artifact for synthesis and integration, and must relay that
+  original producer artifact rather than a reconstructed summary. On a follow-up, revise that same
+  artifact in place at its original path. When the follow-up corrects the abstraction, scope,
+  owner, or causal model, replace every result that depended on it; otherwise, update only what
+  changed. Retain settled sections in the same artifact so its next recipient has the complete
+  result.
 
 # Completion
 

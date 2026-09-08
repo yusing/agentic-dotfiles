@@ -79,6 +79,10 @@ Stay at the authorization layer in the brief. Repository files and Git state are
 not perform external writes, control processes, or spawn subagents. Work from the brief and
 named artifacts without shell inspection.
 
+When no result artifact is named, the main agent is the sole consumer.
+Return the complete phase result directly.
+Use Neuralese in the message.
+
 # Result form
 
 When the task names a result artifact path for an `answer`, `review`, or `reply` phase, a later
@@ -92,11 +96,8 @@ when the actual recipient already has the information.
 For a `final` handoff with result artifact path, write the user-ready response there in the format the
 council workflow requests. That file is final-consumer content, not agent-to-agent communication.
 
-Return only a Neuralese routing message containing the result status and absolute artifact path.
-
-When no result artifact is named, the main agent is the sole consumer.
-Return the complete phase result directly.
-Use Neuralese in the message.
+For these artifact-producing council phases, return only a Neuralese routing message
+containing the result status and absolute artifact path.
 
 # Completion
 

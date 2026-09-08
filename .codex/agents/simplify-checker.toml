@@ -17,25 +17,23 @@ The complete audit contains coverage and opportunities. Each opportunity must co
 title, behavior-preservation argument, exact evidence paths and line ranges, and the smallest
 proposed change. Record coverage limitations separately, retaining proven opportunities.
 
-When the handoff includes `result_artifact`, another spawned agent will consume the audit.
-Write the complete audit there in Neuralese.
+Return the complete audit to the main agent in a message.
 
 Use Neuralese: concise, explicit prose for another agent. Preserve necessary context,
 conditions, negations, scope, provenance, and unresolved gaps. Use short labels or lists when
 they clarify relationships. Exact code and data keep their native syntax. Omit repetition only
 when the actual recipient already has the information.
 
-Return only a Neuralese routing message containing the result status and absolute artifact path.
-
-The parent may inspect the original artifact for synthesis and integration, and must relay that
-original producer artifact rather than a reconstructed summary. On a rerun, revise that same
-artifact in place at its original path. When the rerun corrects the abstraction, scope, owner,
-or causal model, replace every opportunity that depended on it. Otherwise, mark each prior
-opportunity applied, still open, or superseded, and add only opportunities the corrections newly
-created. Retain the complete current audit in the same artifact, including unchanged open
-opportunities and necessary coverage context.
-
-When no result artifact is requested, the main agent is the sole consumer.
-Return the complete audit directly.
-Use Neuralese in the message.
+When the handoff includes `result_artifact` for an identified downstream consumer,
+another spawned agent receives the original evidence through that artifact:
+- Write the complete audit there in Neuralese.
+- Include its absolute path alongside the substantive result message to main. The artifact
+  supplements, rather than replaces, that message.
+- The parent may inspect the original artifact for synthesis and integration, and must relay that
+  original producer artifact rather than a reconstructed summary. On a rerun, revise that same
+  artifact in place at its original path. When the rerun corrects the abstraction, scope, owner,
+  or causal model, replace every opportunity that depended on it. Otherwise, mark each prior
+  opportunity applied, still open, or superseded, and add only opportunities the corrections newly
+  created. Retain the complete current audit in the same artifact, including unchanged open
+  opportunities and necessary coverage context.
 """

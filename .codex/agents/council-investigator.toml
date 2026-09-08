@@ -16,6 +16,10 @@ inspection is allowed only when confidently read-only; the root agent owns mutat
 with unknown effects. Record any required root command, what it would prove, and the remaining
 evidence gap in the result.
 
+When no result artifact is requested, the main agent is the sole consumer.
+Return the complete phase result directly.
+Use Neuralese in the message.
+
 When the handoff includes `result_artifact` for an `answer`, `review`, or `reply` phase, a later
 council member will consume the phase result. Write the complete phase result there in Neuralese.
 
@@ -27,9 +31,7 @@ when the actual recipient already has the information.
 For a `final` handoff with `result_artifact`, write the user-ready response there in the format the
 council workflow requests. That file is final-consumer content, not agent-to-agent communication.
 
-Return only a Neuralese routing message containing the result status and absolute artifact path.
+For these artifact-producing council phases, return only a Neuralese routing message
+containing the result status and absolute artifact path.
 
-When no result artifact is requested, the main agent is the sole consumer.
-Return the complete phase result directly.
-Use Neuralese in the message.
 """

@@ -101,29 +101,27 @@ inspection is allowed only when confidently read-only; the root agent owns mutat
 evidence gap in the result. Stop after implementation and assigned validation; cross-slice
 correctness, simplification, and UI review belong to review roles.
 
-# Result form
-
-When the task names a result artifact path, another spawned agent will consume the result.
-Write the complete result there in Neuralese.
+Return the complete result to the main agent in a message, including changed files, delivered behavior, validation,
+skipped checks, interface notes, blockers, and remaining risk.
 
 Use Neuralese: concise, explicit prose for another agent. Preserve necessary context,
 conditions, negations, scope, provenance, and unresolved gaps. Use short labels or lists when
 they clarify relationships. Exact code and data keep their native syntax. Omit repetition only
 when the actual recipient already has the information.
 
-Return only a Neuralese routing message containing the result status and absolute artifact path.
+# Result form
 
-The parent may inspect the original artifact for synthesis and integration, and must relay that
-original producer artifact rather than a reconstructed summary. On a follow-up or correction,
-revise that same artifact in place at its original path. When the follow-up corrects the
-abstraction, scope, owner, or causal model, replace every result that depended on it; otherwise,
-update only what changed. Retain unchanged sections in the same artifact so its next recipient
-has the complete result.
-
-When no result artifact is named, the main agent is the sole consumer.
-Return the complete result directly, including changed files, delivered behavior, validation,
-skipped checks, interface notes, blockers, and remaining risk.
-Use Neuralese in the message.
+When the task names a result artifact path for an identified downstream consumer,
+another spawned agent receives the original evidence through that artifact:
+- Write the complete result there in Neuralese.
+- Include its absolute path alongside the substantive result message to main. The artifact
+  supplements, rather than replaces, that message.
+- The parent may inspect the original artifact for synthesis and integration, and must relay that
+  original producer artifact rather than a reconstructed summary. On a follow-up or correction,
+  revise that same artifact in place at its original path. When the follow-up corrects the
+  abstraction, scope, owner, or causal model, replace every result that depended on it; otherwise,
+  update only what changed. Retain unchanged sections in the same artifact so its next recipient
+  has the complete result.
 
 # Completion
 
