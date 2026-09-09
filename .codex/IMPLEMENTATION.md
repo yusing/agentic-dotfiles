@@ -1,13 +1,14 @@
 # Implementation
 
 Choose the simplest implementation that meets the full request. Start end-to-end, then extend
-without regressing still-required behavior. Reassess before adding complexity; review findings
-alone do not expand scope.
+without regressing behavior the current requirements still accept. Reassess before adding
+complexity; review findings alone do not expand scope.
 
 Validate assumptions before choosing storage or delivery. For identity or lifetime changes,
 establish stable identity, state retention across completion, expiry, and sessions, capacity
-behavior, and the consumer's final-result contract. Test these invariants; auxiliary state must
-not displace recovery state or substantive results.
+behavior, and the consumer's final-result contract. Write focused acceptance tests for these
+invariants before implementing. Auxiliary state must not displace recovery state or substantive
+results.
 
 Keep each demonstrated failure and violated invariant together with its fix: helpers, callers,
 tests, documentation, and cleanup. Any authorized commits should preserve that unit within each
@@ -33,7 +34,8 @@ missing or stale owners, and remove superseded claims. Stay within affected docu
 
 For operations whose silence would obscure progress, expose meaningful milestones or measurable
 completion through the owning interface, reusing host progress, logging, or job-state facilities.
-Start/finish notices alone are insufficient. Progress must remain auxiliary to core behavior.
+Start/finish notices alone are insufficient. Progress must remain auxiliary and must not determine
+or interfere with successful core behavior.
 
 Use bounded concurrency for new operations only when independent work benefits a requirement
 such as latency or throughput. Preserve sequential paths that already meet requirements.

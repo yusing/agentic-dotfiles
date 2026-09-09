@@ -139,7 +139,9 @@ A skill is a set of instructions provided through a `SKILL.md` source. The skill
   * When variants exist, select only the relevant references and note the choice.
 
 - Read skills:
-  * One at a time: do not batch a skill read with another skill read or with other commands.
+  * Batch independent skill reads and already-known references for the current operation in one
+    tool call, alongside other independent reads. Sequence reads whose selection depends on
+    earlier results.
   * If a skill read is truncated, retrieve only the unread remainder;
     that continuation is part of the same skill read.
   * Read each matching skill just before its operation begins, and leave later implementation,

@@ -48,6 +48,9 @@ Read named task or handoff documents to recover outcome, operation, and scope. S
 with supplied paths, repository guidance, and the affected boundary; follow further pointers only
 for unresolved questions.
 
+Batch independent reads of already-applicable task documents, skills, and references in one tool
+call. Sequence reads only when earlier results determine the next read.
+
 These are task documents, not skills:
 
 - `$HOME/.codex/SMALL-TASK.md`: optional scoped-execution guide, not a prerequisite.
@@ -91,9 +94,9 @@ skills and repository workflows. If unavailable, explain the gap without substit
 stop only dependent work. Propose installation with approval unless already granted. If installation
 cannot help or I decline, ask how to proceed.
 
-For dependencies, honor explicit user or project version requirements first. Otherwise, verify the
-latest stable release compatible with the project and runtime using the authoritative registry or
-package-manager metadata, not memory.
+For dependency additions, honor explicit user or project version requirements first. Otherwise,
+verify the latest stable release compatible with the project and runtime using the authoritative
+registry or package-manager metadata, not memory.
 
 Use `rtk` for shell commands expected to produce large stdout/stderr, including user-supplied
 commands. Apply it to noisy producers, leaving quiet filters, control operators, and redirections
@@ -113,9 +116,10 @@ Roles inherit base instructions and this guidance. Definitions add only specialt
 boundary, and result requirements; shared policies stay with their owners.
 
 Agent-to-Main communication uses messages containing substantive results. Artifacts supplement
-messages only for identified downstream agents. Create one artifact root at the first inter-agent
-handoff. Preserve council evidence isolation. Revise artifacts at the same path with the complete
-current result; relay the producer's original artifact rather than reconstructing evidence.
+messages only for identified downstream agents. Create one artifact root when a result first needs
+to pass between spawned agents. Preserve council evidence isolation. Revise artifacts at the same
+path with the complete current result; relay the producer's original artifact rather than
+reconstructing evidence.
 
 ### Artifact format
 
@@ -170,9 +174,10 @@ Launch again only for materially changed questions or evidence, or failed/unusab
 
 ## Active work
 
-`oneoff:` starts a standalone aside without changing the standing request. Direct follow-ups remain
-part of the aside without repeating the prefix. Once resolved, drop aside-only requirements and
-resume the earlier request from its existing state. Preserve preferences stated as ongoing.
+`oneoff:` starts a standalone aside without changing the standing request. Follow-ups referring to
+the aside remain part of it without repeating the prefix. Once resolved, drop aside-only
+requirements and resume the earlier request from its existing state. Preserve preferences stated
+as ongoing.
 
 Scheduling changes to a collection affect only unstarted items; preserve completed and running
 work. If a live transition would duplicate work, corrupt output, or disturb the active item, leave
