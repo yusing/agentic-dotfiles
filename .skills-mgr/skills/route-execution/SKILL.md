@@ -1,12 +1,37 @@
 ---
-name: orchestrated-workflow
-description: Orchestrate authorized implementation when substantial independent outcomes can run in parallel or coupled behavioral owners need explicit integration handoffs. Reduce ownership collisions, evidence loss, and repeated checks. Not for isolated edits, review-only tasks, or replacing an active delivery workflow.
+name: route-execution
+description: Select and brief execution agents once delegation is chosen for implementation, drafting, or mechanical work; coordinate multiple owners when their outcomes need integration. Not for deciding task scope, review-only work, or replacing an active delivery workflow.
 ---
 
-# Orchestrated Workflow
+# Route execution
 
-Active guidance governs authorization, agent invocation and reuse, review gates, safety, cleanup,
-and Git operations. This skill adds coordination, not a second copy of those rules.
+Use after delegation is selected under the active task guidance. `IMPLEMENTATION.md` owns the
+local-versus-delegated execution decision and validation; shared instructions own authorization,
+agent reuse, and review gates. This skill owns delegate selection, handoffs, and multi-owner
+coordination. A single-owner assignment uses only selection and briefing below; task completion
+still follows the active task guidance. Later sections apply only to multi-owner coordination.
+
+## Select and brief the delegate
+
+Choose a role by the assignment's remaining uncertainty, required capability, and available
+harness tools. Give the outcome, owned paths, settled contracts, exclusions, checks, and escalation
+conditions. Supply needed decisions, not an implementation tutorial. Bundle related small work
+and use only history that helps the delegate avoid rediscovery.
+
+### Codex model selection
+
+These settings apply only to Codex; other harnesses retain their native role and model settings.
+Keep Astra on orchestration, difficult reasoning, and quality judgment. For `implementer`, main
+explicitly chooses `gpt-6-astra` with `low` reasoning for unresolved local complexity, or
+`gpt-5.6-sol` with `high` reasoning for settled contracts needing sustained implementation work.
+Use `fast-implementer` for small settled changes, with its configured budget. For narrow,
+repeatable edits or drafting, use an available write-capable worker with `gpt-5.6-luna`;
+`explorer` stays read-only. Task size alone does not justify Astra execution.
+
+Send both model and reasoning effort on each `implementer` spawn. Where full-history forks
+prevent overrides, use `fork_turns="none"` or a supported recent-turn count and supply missing
+task context. If the required role or override is unavailable, report the gap rather than
+silently inheriting a different budget.
 
 ## Select when coordination pays
 
@@ -30,14 +55,6 @@ handoffs rather than dividing away the required behavior.
 For a risky lifecycle, establish before implementation what proves ownership or completion, when
 that proof expires, and what survives cancellation or replacement. Assign cross-boundary validation
 to an explicit integration owner; an existing implementer can fill that responsibility.
-
-## Delegate proportionally
-
-Use `fast-implementer` for narrow settled work and `implementer` for substantial coherent work.
-Root may handle a tiny, isolated, settled change when delegation adds more overhead than value,
-provided it has no shared lifecycle/protocol implications and overlaps no delegated ownership.
-If those conditions stop holding, transfer the coherent slice and its evidence instead of expanding
-the exception. Agent reuse follows behavioral ownership and useful context, not commit count.
 
 ## Preserve producer evidence
 

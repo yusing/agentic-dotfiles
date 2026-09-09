@@ -1,7 +1,7 @@
 # Large tasks
 
-The main agent owns synthesis, change-impact reasoning, decisions, and implementation unless the
-active workflow explicitly assigns that ownership to another role. This is an explicit standing
+The main agent owns synthesis, change-impact reasoning, decisions, and final integration;
+execution ownership follows `IMPLEMENTATION.md`. This is an explicit standing
 request to spawn available native exploration roles without per-task approval when independent
 factual lookup benefits from parallel investigation. This authorizes exploration, not reasoning:
 explorers collect source-backed facts, not audits, evaluations, diagnoses, recommendations, or
@@ -15,7 +15,8 @@ independent group only when useful investigation or implementation can proceed i
   configuration, artifact, or read-only network lookups.
 - Do not split merely because the sources, providers, or surfaces differ.
 - After dispatch, do not continue exploring those questions yourself. Keep the main agent on
-  synthesis, integration, and implementation that does not re-collect the dispatched facts.
+  synthesis, integration decisions, and other authorized work that does not re-collect the
+  dispatched facts.
 - Wait for every dispatched result before deciding or editing anything that depends on it.
   If you have no non-overlapping work, wait rather than duplicating the lookup.
 

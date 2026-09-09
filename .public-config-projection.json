@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "aa531a258bb57963815d267204f59822d7cf1289",
+  "sourceCommit": "ba19390c5cf1bb4ada4f78b3991d837df297b5dc",
   "outputs": [
     {
       "path": ".bashrc",
@@ -100,13 +100,13 @@
     {
       "path": ".codex/agents/fast-implementer.toml",
       "kind": "file",
-      "sha256": "5289e8cac9c97e44358dff8a175b1264580b97f994e22874858c1d40491f9e0d",
+      "sha256": "07461d26530917be8a38fefc3f34dd047a1f765e4156897393acb5d884d9b1ae",
       "executable": false
     },
     {
       "path": ".codex/agents/implementer.toml",
       "kind": "file",
-      "sha256": "e33cab5f5cbf24732edb8b964c3db2d906e702e43e81ff070f403f140da762f9",
+      "sha256": "b5ae3beb7b5c75f085391c59ca6eb4728ee4bf3e0eaa64a289585cd26e0fdc5d",
       "executable": false
     },
     {
@@ -208,13 +208,13 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "44bf7514a4993d99a649f97573984e84ac10ac0e568c4a5b0945db9baea6be4f",
+      "sha256": "16dafe5d567fc7c5fe6f349f3ddb371ca2fd9257eca1c2c87c99a4cc1d2d51ab",
       "executable": false
     },
     {
       "path": ".codex/LARGE-TASK.md",
       "kind": "file",
-      "sha256": "dd279ff4bd5efa8618e16c4185782746a6b315ad83d5472de0107d944a5f1ae2",
+      "sha256": "a08d60a27febfa10d79f3684731a70afc8c5e8101aa72b0fdd03183b63047a87",
       "executable": false
     },
     {
@@ -262,7 +262,7 @@
     {
       "path": ".codex/SMALL-TASK.md",
       "kind": "file",
-      "sha256": "926cae329678d40f19501d27331cc6d12c22cbac41f8ca28c97e90f983efc053",
+      "sha256": "a7b4c4b6e67764b2c42d45a00f1f5f8d639b2568716ca271079cc1af6f4eb6aa",
       "executable": false
     },
     {
@@ -418,7 +418,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "15bc33651fda6ec2934502da240cf501c6d9112ba60c3834dea41444269426e0",
+      "sha256": "3a82ab6c5b8953eb8428d07b0435bc173300620cbfc6841b3f09b2427355a014",
       "executable": false
     },
     {
@@ -484,7 +484,7 @@
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "21b10b93dbda7babbd4a115c7d2cacb166fd42a890a15bf7bba86088654cf460",
+      "sha256": "5ac6e56d6b119059fef8ae6e527a1cbc7c8c8f90e9f889b6493b850325a2f7ea",
       "executable": true
     },
     {
@@ -514,7 +514,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "8c998952c0d0a95080b5b5ac1d8176ec1706ea52f8d4dae5bb4d3ceade88606e",
+      "sha256": "31b1604d643861ff29cb773420506c0ac1210e7c3c7ca17000b84372e71db1fd",
       "executable": false
     },
     {
@@ -586,7 +586,7 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "ef60a49e0c4bf6ba5df6116affe963f08f7973dfd89ac0431d4b7f4b4b8f2e60",
+      "sha256": "d0b13cfc312ea58ef87db4aefda3ec305fad27596889594b26c661265bf3e1d2",
       "executable": false
     },
     {
@@ -728,12 +728,6 @@
       "executable": false
     },
     {
-      "path": ".skills-mgr/skills/orchestrated-workflow/SKILL.md",
-      "kind": "file",
-      "sha256": "c931c049ab1c5f9935f963d2ca236bc4ec4f0fb09373e6d7d80c4a442f94d391",
-      "executable": false
-    },
-    {
       "path": ".skills-mgr/skills/postgres-17-18-features/agents/openai.yaml",
       "kind": "file",
       "sha256": "257ebb6a5ce79401c6a2e18c876e81776b9ab92705549078b25deaf7e8c80862",
@@ -761,6 +755,12 @@
       "path": ".skills-mgr/skills/postgres-17-18-features/SKILL.md",
       "kind": "file",
       "sha256": "85fe1a997d7af6c19f4132675b69bdffc4138849ef004ba6d278e5fc6e29cf93",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/route-execution/SKILL.md",
+      "kind": "file",
+      "sha256": "7c397a2695d3fb464c9ee3f5f9df72e0263e1586b4f558d1bfcfc86b4ede990f",
       "executable": false
     },
     {
@@ -987,7 +987,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "33dec3ef168942838fc05192a5ad9d03acc732a0bbc0333ce054c044e97c0a12",
+      "sha256": "a25faa5f9e2353313959230865a229e0283809e894f8d326addbd99c3f3f7616",
       "executable": false
     },
     {
@@ -1017,7 +1017,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "86eee5d64ca7fe75b5bddab00d11f5589c71a33e85a918232c0ebfdbbff15006",
+      "sha256": "3b876a022fe035ac83e10b5a1740dfb1d5c70154c2c12e02bb4556a3467bd13c",
       "executable": false
     },
     {
@@ -1041,7 +1041,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "7ea81ea286b0eb8f536b4ebe21fbb32f23dc8ab341eb4ea8a3ffe0c6afc2ef8a",
+      "sha256": "c6e7aa8ac0f181a7b6c8d794df7979ae756ef554b168a44ee5998f30182d4415",
       "executable": false
     },
     {

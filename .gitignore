@@ -191,8 +191,6 @@ __pycache__
 !/.skills-mgr/skills/new-project/agents/
 !/.skills-mgr/skills/new-project/agents/openai.yaml
 !/.skills-mgr/skills/new-project/SKILL.md
-!/.skills-mgr/skills/orchestrated-workflow/
-!/.skills-mgr/skills/orchestrated-workflow/SKILL.md
 !/.skills-mgr/skills/postgres-17-18-features/
 !/.skills-mgr/skills/postgres-17-18-features/agents/
 !/.skills-mgr/skills/postgres-17-18-features/agents/openai.yaml
@@ -201,6 +199,8 @@ __pycache__
 !/.skills-mgr/skills/postgres-17-18-features/references/queries-and-loading.md
 !/.skills-mgr/skills/postgres-17-18-features/references/schema-and-dml.md
 !/.skills-mgr/skills/postgres-17-18-features/SKILL.md
+!/.skills-mgr/skills/route-execution/
+!/.skills-mgr/skills/route-execution/SKILL.md
 !/.skills-mgr/skills/scriptc-compiler/
 !/.skills-mgr/skills/scriptc-compiler/agents/
 !/.skills-mgr/skills/scriptc-compiler/agents/openai.yaml

@@ -1,7 +1,7 @@
 name = "fast-implementer"
 description = "Fast implementation agent for a small, settled repository change."
 model = "gpt-5.6-sol"
-model_reasoning_effort = "low"
+model_reasoning_effort = "medium"
 service_tier = "priority"
 developer_instructions = '''
 # Role

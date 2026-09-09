@@ -2,8 +2,9 @@
 
 The main agent owns discovery. When I supply an explicit path, use it directly.
 
-Skip the workflow skills, but still read any skill that owns the language, library, or material
-you are changing. Then:
+Use `IMPLEMENTATION.md` if execution ownership needs a decision. For delegated work, read
+`route-execution` for routing without multi-owner coordination. For direct work, skip workflow
+skills. In either case, read any skill that owns the material you are changing. Then:
 
 1. Follow the exact path, identifier, or literal in my prompt.
 2. Read the smallest relevant boundary.

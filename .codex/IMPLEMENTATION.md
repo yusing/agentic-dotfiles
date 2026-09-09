@@ -14,7 +14,27 @@ Keep each demonstrated failure and violated invariant together with its fix: hel
 tests, documentation, and cleanup. Any authorized commits should preserve that unit within each
 Git history, including parent repositories and submodules.
 
+## Execution ownership
+
+Main owns intent, contracts, difficult reasoning, acceptance, and final quality decisions. For
+simple tasks, direct execution can be the fastest and cheapest complete path. Delegate settled
+implementation, documentation, test authoring, or routine validation when a suitable worker saves
+enough execution effort to outweigh handoff and likely rework. This authorizes delegation within
+the active harness's tool and parallelism constraints. Once selected, use `route-execution` to
+choose and brief the delegate.
+Preserve direct requests for main-agent execution and each harness's available roles and tools.
+
+Keep coherent code, tests, documentation, and corrections with one execution owner. Main designs
+difficult failure cases and evaluates evidence; the owner writes and runs the checks. Escalate
+concrete ambiguity or demonstrated capability limits, then return settled execution to the
+suitable owner rather than repeating the entire task through progressively stronger models.
+Accept adequate work without cosmetic rewrites. Judge economy by completed work and rework,
+not token reduction alone.
+
 ## Validation
+
+Execution ownership changes who does the work, not which required checks or independent
+inspections must pass.
 
 Test through the owning interface. Cover affected contracts, meaningful failures, and required
 checks in proportion to risk. Prefer focused existing checks; add tests that protect behavior,

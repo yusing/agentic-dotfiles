@@ -25,6 +25,7 @@ review follow-ups, fixups, and autosquash. No separate planning artifact is need
 ## Each slice
 
 Choose the smallest ordered end-to-end slices that cover all accepted items and dependencies.
+Assign each slice's execution owner using `IMPLEMENTATION.md`.
 Implement through the real entry point and authoritative owners, with only the enabling UI,
 services, integrations, and persistence needed. Remove replaced stubs and obsolete routes without
 narrowing the accepted outcome.

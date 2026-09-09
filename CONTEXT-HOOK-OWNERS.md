@@ -36,8 +36,8 @@
   states the boundary: recognized read-only container and orchestration inspection is allowed;
   mutations, process control, and unclassified commands stay root-owned. Blocked commands
   are reported with their purpose and passing evidence in the assigned result format.
-  `.skills-mgr/skills/orchestrated-workflow/SKILL.md` owns external validation before
-  review roles are spawned when the change carries that dependency.
+  `.codex/IMPLEMENTATION.md` owns validation requirements; execution-agent selection and
+  multi-owner coordination live in `.skills-mgr/skills/route-execution/SKILL.md`.
 - User experience: `.skills-mgr/skills/user-experience/SKILL.md` owns proportional UX and
   operability guidance when a user-facing workflow or interface changes.
 

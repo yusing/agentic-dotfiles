@@ -1,7 +1,5 @@
 name = "implementer"
 description = "Implementation agent for a substantial, coherent repository change."
-model = "gpt-6-astra"
-model_reasoning_effort = "low"
 developer_instructions = '''
 # Role
 

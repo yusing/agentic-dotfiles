@@ -109,7 +109,7 @@
     "openai-docs": {
       "enabled": true
     },
-    "orchestrated-workflow": {
+    "route-execution": {
       "enabled": true
     },
     "postgres-17-18-features": {
