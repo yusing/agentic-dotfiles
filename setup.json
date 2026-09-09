@@ -99,7 +99,8 @@
       "go:golang.org/x/tools/cmd/deadcode": "latest",
       "go:github.com/yusing/skills-mgr": "latest",
       "go:github.com/yusing/git-agent/cmd/git-agent": "latest",
-      "go:github.com/yusing/shadowtree/cmd/shadowtree": "latest"
+      "go:github.com/yusing/shadowtree/cmd/shadowtree": "latest",
+      "go:github.com/swaggo/swag/cmd/swag": "latest"
     }
   },
   "mise_commands": {
