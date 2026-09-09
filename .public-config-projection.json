@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "c968bfeb6bedb7ab1f0ab96b4d0990c5fb66abd5",
+  "sourceCommit": "be420fc22838819c1408e8a8fe773bd23591b8e1",
   "outputs": [
     {
       "path": ".bashrc",
@@ -136,7 +136,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "8dc1a1ae841365ac3ac13d7b3d4c6aac226af4140db4b23d047e8198b342c539",
+      "sha256": "12c0123c484e88a42eee6267006f8a5cd747eb0d3ba0951baf78bb585c0abc00",
       "executable": false
     },
     {
@@ -472,7 +472,7 @@
     {
       "path": ".local/bin/compile-agent-tools",
       "kind": "file",
-      "sha256": "cd80b4bf6995971ee4251f825b4b60acb0bfadcc7145f1c221dfb418f657eb83",
+      "sha256": "e390229b91ae26a57a28e40a8fe9256ffcc375baf69cb8cd681100ba7582fe4b",
       "executable": true
     },
     {
@@ -993,7 +993,7 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "723a0699043343468f805a728c130b17b2b63e07f528d1ddc682f34e0e107aca",
+      "sha256": "7b6a222b7210811a216d3315a4867a9cd96160c140af6b967d38e614898572cf",
       "executable": false
     },
     {
@@ -1017,7 +1017,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "723d5c22efbfbf614696ba12a3b3e256f3f7cdceab744ed1f2efd1fdcf633a03",
+      "sha256": "86eee5d64ca7fe75b5bddab00d11f5589c71a33e85a918232c0ebfdbbff15006",
       "executable": false
     },
     {

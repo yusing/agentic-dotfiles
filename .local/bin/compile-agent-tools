@@ -1,5 +1,5 @@
 #!/bin/sh
-# version: 1.0.3
+# version: 1.0.4
 # Rebuild user-owned helper and hook binaries for this machine.
 
 set -eu
@@ -42,6 +42,7 @@ compile_hook "$HOOKS/subagent_exec_guard.ts" "$BIN/subagent_exec_guard"
 compile_hook "$HOOKS/go_guidelines.ts" "$BIN/go_guidelines"
 compile_hook "$HOOKS/skills_mgr_inventory.ts" "$BIN/skills_mgr_inventory"
 compile_hook "$HOOKS/check_project.ts" "$BIN/check_project"
+compile_hook "$HOOKS/session_start_context.ts" "$BIN/session_start_context"
 compile_hook "$GROK_HOOKS/adapt_codex_hook.ts" "$GROK_BIN/adapt_codex_hook"
 compile_hook "$GROK_HOOKS/skills_path_guard.ts" "$GROK_BIN/skills_path_guard"
 

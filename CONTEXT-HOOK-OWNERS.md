@@ -14,8 +14,11 @@
   and Go version, and its `--without-git` option omits the VCS report for a client that
   already reports plain Git state itself; `.codex/hooks.json` injects root-session project
   context and skill inventory at startup and after context compaction or
-  clearing while excluding session resume, and injects the current skill inventory into fresh
-  subagent context.
+  clearing while excluding session resume. `.codex/hooks/bin/session_start_context`
+  skips the project and skill context commands on fork startup when the transcript's first
+  `session_meta` record has `forked_from_id`; unavailable metadata keeps the commands enabled.
+  Compaction and clearing still refresh context. The registry injects the current skill inventory
+  into fresh subagent context.
 - Go skill delivery: `.codex/hooks/bin/go_guidelines` appends the installed CLI's complete,
   module-version-specific list after a direct `skills-mgr get golang-best-practices` call.
   PostToolUse registers it for Codex, Claude, Grok, and the OMP bridge. The read's working

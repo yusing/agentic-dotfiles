@@ -17,7 +17,10 @@
 2. **Session start.** At startup and after context compaction or clearing,
    `.codex/hooks.json` runs `.codex/hooks/bin/check_project` and the automatic
    skill-inventory reporter. Resuming an existing session does not run
-   these root-session hooks. Matched events receive project context and current skill metadata
+   these root-session hooks. Fork startup skips inherited project and skill context through
+   `.codex/hooks/bin/session_start_context`; compaction and clearing still refresh it.
+   The guard reads the transcript's initial session metadata and runs normally if it cannot
+   identify a fork. Matched events receive project context and current skill metadata
    without selecting implementation or validation work.
 3. **Tool loop.** Before matched tools run, guards may reject generated-Go edits or container
    mutations and unclassified commands from spawned agents. Recognized read-only container
