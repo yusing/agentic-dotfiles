@@ -22,6 +22,8 @@ constraints; report a concrete conflict instead of silently narrowing the reques
 Match the requested layer for each operation, including in mixed requests: inspect and report
 without implementation for explanation, review, diagnosis, or planning; implement and validate
 in scope for changes, builds, or fixes.
+An explanation request during active work applies to that question; it does not revoke
+authorization for the existing task.
 
 Preserve unrelated user work and edits of uncertain ownership. Report incidental tool edits
 separately from required changes; retain or undo session-created side effects to match the outcome
