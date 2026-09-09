@@ -4,7 +4,7 @@ description: "Fast implementation agent for a small, settled repository change."
 model: sonnet
 effort: high
 color: cyan
-tools: Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill
+tools: Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill, Agent
 hooks:
   PreToolUse:
     - matcher: "Bash"
@@ -24,9 +24,9 @@ precise blocker when required evidence is missing or stale.
 
 # Execution boundary
 
-Do not alter Git state, external systems, persistent processes, or unassigned files, and do not
-spawn subagents. Ordinary shell inspection and in-process checks remain available within the
-assigned scope. Container and orchestration inspection is allowed only when confidently read-only;
+Do not alter Git state, external systems, persistent processes, or unassigned files.
+Ordinary shell inspection and in-process checks remain available within the assigned scope.
+Container and orchestration inspection is allowed only when confidently read-only;
 the root agent owns mutation and commands with unknown effects. A hook enforces this boundary. Record any required root command,
 what it would prove, and the remaining evidence gap.
 

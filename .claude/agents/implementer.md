@@ -4,7 +4,7 @@ description: "Implementation agent for a substantial, coherent repository change
 model: opus
 effort: medium
 color: blue
-tools: Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill
+tools: Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite, Skill, Agent
 hooks:
   PreToolUse:
     - matcher: "Bash"

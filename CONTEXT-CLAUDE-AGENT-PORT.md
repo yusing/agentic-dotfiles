@@ -25,8 +25,9 @@ or an unmapped model makes generation fail until that platform metadata is suppl
 prompt and task/result contract are read directly from the native TOML, so source edits
 cannot pass the focused test while generated ports are stale.
 
-The Claude `tools` allowlist omits `Agent`, so these ports do not expose nested-agent dispatch.
-The generator leaves inspection workflow instructions with the shared AGENTS.md.
+Only the two implementation roles include `Agent` in their `tools` allowlist, so they can dispatch
+independent inspections under shared AGENTS.md. This requires a Claude runtime and depth limit
+that permit nested agents; the generator does not configure runtime limits.
 The allowlist omits `Edit` and `NotebookEdit` for the review and council roles, so they
 cannot change repository files. `Write` stays on every role because a relayed result artifact is
 the one permitted write, and the role body owns that limit.

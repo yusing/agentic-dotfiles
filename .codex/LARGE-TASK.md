@@ -15,18 +15,9 @@ and a useful brief. Leave delegate-local implementation, source-inspection, and 
 to the owner; consume source-backed results and inspect further only for a concrete integration
 decision or gap.
 
-Group missing evidence for the next decision by shared context. Dispatch one explorer per
-independent group only when useful investigation or implementation can proceed in parallel:
-
-- Use `explorer` for factual repository, provider, dependency, installed-tool, documentation,
-  configuration, artifact, or read-only network lookups.
-- Do not split merely because the sources, providers, or surfaces differ.
-- After dispatch, do not continue exploring those questions yourself. Keep the main agent on
-  synthesis, integration decisions, and other authorized work that does not re-collect the
-  dispatched facts.
-- Wait for every dispatched result before deciding or editing anything that depends on it.
-  Continue independent authorized work while waiting; if you have no non-overlapping work, wait
-  rather than duplicating the lookup.
+Use `explorer` for factual repository, provider, dependency, installed-tool, documentation,
+configuration, artifact, or read-only network lookups. Follow shared exploration guidance for
+grouping and coordination; differing sources, providers, or surfaces alone do not justify a split.
 
 Inspect directly when discovery is tightly coupled, scopes overlap, or the main agent would only
 do routine setup reads before waiting.

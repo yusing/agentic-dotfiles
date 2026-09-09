@@ -55,7 +55,6 @@ call. Sequence reads only when earlier results determine the next read.
 
 These are task documents, not skills:
 
-- `$HOME/.codex/SMALL-TASK.md`: optional scoped-execution guide, not a prerequisite.
 - Read `$HOME/.codex/LARGE-TASK.md` when diagnosis requires investigating multiple possible causes,
   work crosses ownership boundaries, or correctness depends on lifecycle, concurrency, or
   compatibility. It owns evidence delegation and synthesis.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d1501592adcc55d19f6f8d0a6319067f2239e679",
+  "sourceCommit": "6823046804af45b3c79830c95482df9b41fe5488",
   "outputs": [
     {
       "path": ".bashrc",
@@ -35,13 +35,13 @@
     {
       "path": ".claude/agents/fast-implementer.md",
       "kind": "file",
-      "sha256": "4ede76bd7ea82dec9edf5ed66c3a613a093c2416f8edeb1ba3d4cbbc527f5725",
+      "sha256": "08cbd390e542b942b481f7b6c8d8560fda4238a1fc588f3f9bd3a87015ac78a2",
       "executable": false
     },
     {
       "path": ".claude/agents/implementer.md",
       "kind": "file",
-      "sha256": "df140e8fef6acdea5f6cbb2f781e73cdcb43360e844b68160d2a60e553b8ab72",
+      "sha256": "13c1a9aa862c337d057a97efdd12d3023d0d4e0687d3158e74df9c4e715173d1",
       "executable": false
     },
     {
@@ -76,7 +76,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "dfdfc75ed172d715b21324f5710a75aa51a489c76f216f6c43c1bd0af2ea486e",
+      "sha256": "6a744235e432949c6befcdb1e4ea09b9a4fc4247f1f2e5c53842063232e7831c",
       "executable": false
     },
     {
@@ -100,7 +100,7 @@
     {
       "path": ".codex/agents/fast-implementer.toml",
       "kind": "file",
-      "sha256": "07461d26530917be8a38fefc3f34dd047a1f765e4156897393acb5d884d9b1ae",
+      "sha256": "fa6b51422141fa7b8375252a87954cf0674701d65e9208fb194309a7cd1758dd",
       "executable": false
     },
     {
@@ -208,19 +208,19 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "9c9b5f6349eab9e9c4b3bbd6b46d7fcf209ba5e5ddb13cf8a34f2833456624eb",
+      "sha256": "453c6c9fa07d9ea8debbcd4d5fb054bdfb60c5383264302a417ba606032631d5",
       "executable": false
     },
     {
       "path": ".codex/LARGE-TASK.md",
       "kind": "file",
-      "sha256": "d129925809f8eea674b3a26bd3949be04c474d3f8c7e1667e830264cdbb7cd65",
+      "sha256": "937fd6656256b6c1790be6f75bb46f7692114b2e74dd41311d17e81c789fa7e6",
       "executable": false
     },
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "9d499c1c0c347aace0a56edb3b10ecee0de79595c10fde9ce2ea1a8f5cca51be",
+      "sha256": "bd8c391f568aa78932cd33cc4229f262461164296bdd7d1a824ffb2ac0d84535",
       "executable": false
     },
     {
@@ -257,12 +257,6 @@
       "path": ".codex/skills/session-usage/SKILL.md",
       "kind": "file",
       "sha256": "2fccbabec440d693d85b7e00c7d4c6529cf42d17ee77c87e7de30cf5a0018c8e",
-      "executable": false
-    },
-    {
-      "path": ".codex/SMALL-TASK.md",
-      "kind": "file",
-      "sha256": "c5d7124164eb06e730a2bc46051fd9fba6f3e547ca84e7f9df60fcd438abcf33",
       "executable": false
     },
     {
@@ -418,7 +412,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "38e3a23c7169d73a718d2d018bd0578ba440e0e5ae0e6dba9b93552b5aa68f45",
+      "sha256": "7e82fd585e1be63ed589c09b40291d73f6b420c66b41f9322fc63cfa1fffae42",
       "executable": false
     },
     {
@@ -496,7 +490,7 @@
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "00ef768940fa62b0c746f635e8d8980d65dcc3cc2b36ffbc9b3abbc978a8f55e",
+      "sha256": "e95e868f32611d2981f9f1f8e84815d2657f975c585805700719e35d780ccfa2",
       "executable": true
     },
     {
@@ -999,7 +993,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "a6e41429f7df34c03655d06970e002d9b1ba99856fed705247928876536964eb",
+      "sha256": "4fca24ad5d5379dc3b9f96bfe5be7d0ab74a97ef7693d5b7135ca09638243416",
       "executable": false
     },
     {
@@ -1035,7 +1029,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "14561e84ab6a3d0ed4be04cf0c098ee27a10b4c697a04ae5007c79ce4650a2c6",
+      "sha256": "362bcfef8ede5c681f7481ee45b63b344af46d1ab1329fae1a8305ca63ef64d5",
       "executable": false
     },
     {

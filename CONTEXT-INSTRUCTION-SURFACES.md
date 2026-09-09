@@ -12,7 +12,6 @@ copy. `.grok/AGENTS.md` is a Grok-only extra instruction file that `@`-reference
 
 - `AGENTS.md`
 - `.codex/AGENTS.md`
-- `.codex/SMALL-TASK.md`
 - `.codex/LARGE-TASK.md`
 - `.codex/IMPLEMENTATION.md`
 - `.codex/overridden_base_instructions.md`
@@ -22,10 +21,8 @@ copy. `.grok/AGENTS.md` is a Grok-only extra instruction file that `@`-reference
 - `.grok/AGENTS.md` (Grok-only extra instruction; `@` references `.codex/AGENTS.md`)
 - `.claude/CLAUDE.md` (symlink to `.codex/AGENTS.md`)
 - `.claude/agents/*.md`
-- `.claude/rules/`
 - `.agents/skills/`
 - `.skills-mgr/skills/`
-- `.agents/skills/handoff/STANDARD.md`
 - `.agents/skills/handoff/SKILL.md`
 
 ## Reference dumps

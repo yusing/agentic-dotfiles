@@ -51,9 +51,10 @@ Test through the owning interface. Cover affected contracts, meaningful failures
 checks in proportion to risk. Prefer focused existing checks; add tests that protect behavior,
 not mirror implementation. Broaden or repeat passing checks only for changes, failures, or a
 concrete remaining concern. Retain required integrated checks and risk-triggered independent review.
+Do not invent unhappy paths or production seams solely for tests; keep setup in test sources.
 
 Run new timing/concurrency tests separately first, with realistic timeouts plus headroom. Use
-controlled state or a test clock for long lifetimes; keep setup in tests. Diagnose timeouts rather
+controlled state or a test clock for long lifetimes. Diagnose timeouts rather
 than weaken assertions. Before rerunning superseded validation, resolve the old job's status
 within process-control authorization: file edits do not update a running test binary.
 
@@ -81,9 +82,6 @@ all material dependent on it, including obsolete portions of shared files. Keep 
 wrappers, fallbacks, migrations, examples, or tests. Ask if compatibility is uncertain; report
 unrelated pre-existing obsolete paths for the user to decide.
 
-Test real contracts and failure paths, not an approach merely because it once existed. Do not
-invent unhappy paths or production seams solely for tests; keep setup in test sources.
-
 ## Edit readiness
 
 Separate responsibilities. Reuse suitable project dependencies; judge additions by provenance,
@@ -98,15 +96,15 @@ reject unsupported findings. The request establishes capability scope; gates con
 implementation. Explain conflicts rather than silently narrowing the request. Keep gate analysis
 internal; report results, evidence, and actionable caveats.
 
-- `N` Ownership: keep policy with its caller, provider, runtime, or protocol owner. Forwarders
+- Ownership: keep policy with its caller, provider, runtime, or protocol owner. Forwarders
   must not redefine external contracts, fields, limits, or retries.
-- `O` Simplicity: remove duplicate representations and needless abstractions. Inline sole-caller
-  helpers unless they preserve shared policy, an invariant, or a nontrivial algorithm.
-- `D` Duplication: trust authoritative validation. Extra checks need a distinct boundary and
+- Simplicity: use the smallest mechanism for a necessary responsibility, resource, invariant,
+  shared policy, or nontrivial algorithm. Remove duplicate representations and needless abstractions.
+  Inline sole-caller helpers unless they preserve shared policy, an invariant, or a nontrivial
+  algorithm. Local resource guards are not external protocol limits.
+- Duplication: trust authoritative validation. Extra checks need a distinct boundary and
   owner-derived rules, not stricter downstream policy.
-- `I` Reachability: handle accepted inputs, not impossible branches. Check corruption or external
+- Reachability: handle accepted inputs, not impossible branches. Check corruption or external
   mutation at the boundary where it can occur.
-- `U` Evidence: establish owner, reproducer, failure, invariant, and consumer before adding
+- Evidence: establish owner, reproducer, failure, invariant, and consumer before adding
   convenience, limits, or compatibility behavior.
-- `J` Justified: use the smallest mechanism for a necessary responsibility, resource, invariant,
-  shared policy, or nontrivial algorithm. Local resource guards are not external protocol limits.
