@@ -115,18 +115,15 @@ Return source-backed answers and gaps; independent reviewers inspect source them
 Roles inherit base instructions and this guidance. Definitions add only specialty, execution
 boundary, and result requirements; shared policies stay with their owners.
 
+Use Neuralese for agent messages and artifacts: concise prose, only recipient-useful formatting.
+Preserve context, conditions, negations, scope, provenance, and gaps; omit only known repetition.
+Keep code/data syntax and plain `path:line` references; honor required final-consumer formats.
+
 Agent-to-Main communication uses messages containing substantive results. Artifacts supplement
 messages only for identified downstream agents. Create one artifact root when a result first needs
 to pass between spawned agents. Preserve council evidence isolation. Revise artifacts at the same
 path with the complete current result; relay the producer's original artifact rather than
 reconstructing evidence.
-
-### Artifact format
-
-Use Neuralese: concise, explicit agent-facing prose preserving context, conditions, negations,
-scope, provenance, and gaps. Use short labels or lists where helpful; omit repetition only when
-already known to the recipient. Keep code and data in native syntax, repository references as
-plain `path:line` tokens. A workflow's final-consumer format takes precedence.
 
 ### Independent inspection
 

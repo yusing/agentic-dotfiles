@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6896f78fc723ddabd2d4e55171c99a028b039b32",
+  "sourceCommit": "1e5f2e8508c13f16f333731ddddde03d72b52782",
   "outputs": [
     {
       "path": ".bashrc",
@@ -76,7 +76,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "a59babb8f720a687ff1a77f4d0a917b3080603d84eb675a7609cde8bd625bb8c",
+      "sha256": "500be61beb4181a9bece7a95b42f03fea41fd9bc3b7c59c97f85990a55c4bbf5",
       "executable": false
     },
     {
