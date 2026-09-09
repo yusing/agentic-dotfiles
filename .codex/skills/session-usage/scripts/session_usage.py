@@ -835,85 +835,28 @@ def status_text(
     )
 
 
-def _add_rich_table(
-    console: Any,
-    title: str,
-    headers: list[str],
-    rows: list[list[str]],
-    numeric: set[int],
-) -> None:
-    from rich import box
-    from rich.table import Table
-
-    grid = Table(
-        title=title,
-        box=box.SIMPLE_HEAVY,
-        header_style="bold cyan",
-        show_lines=False,
-        pad_edge=False,
-        expand=True,
-    )
-    last = len(headers) - 1
-    for index, header in enumerate(headers):
-        grid.add_column(
-            header,
-            justify="right" if index in numeric else "left",
-            overflow="fold" if index == last else "ellipsis",
-            no_wrap=index != last,
-        )
-    for row in rows:
-        style = "bold" if row and row[0] == "total" else None
-        grid.add_row(*row, style=style)
-    console.print(grid)
-
-
-def display_with_rich(
-    agents: list[AgentMeter],
-    commands: list[CommandRow],
-    notes: list[str],
-    stream: Any,
-) -> bool:
-    try:
-        from rich.console import Console
-    except ImportError:
-        return False
-    console = Console(file=stream, force_terminal=True, color_system="auto")
-    token_headers, token_rows = token_table(agents)
-    usd_headers, usd_rows = usd_table(agents)
-    command_headers, command_rows = command_table(commands)
-    console.rule("[bold]Session usage")
-    _add_rich_table(console, "Tokens", token_headers, token_rows, {3, 4, 5, 6, 7, 8})
-    _add_rich_table(console, "API USD", usd_headers, usd_rows, {3})
-    _add_rich_table(console, "Commands", command_headers, command_rows, {0})
-    for line in captions(agents, notes):
-        console.print(line, style="dim")
-    return True
-
-
-def display_with_cli(report: Path, stream: Any) -> str | None:
-    import shutil
+def display_with_bun(report: Path, stream: Any) -> bool:
     import subprocess
 
-    commands = []
-    rich_cli = shutil.which("rich")
-    if rich_cli:
-        commands.append((rich_cli, ["--markdown", "--force-terminal", str(report)]))
-    glow = shutil.which("glow")
-    if glow:
-        commands.append((glow, [str(report)]))
-    for binary, args in commands:
-        try:
-            result = subprocess.run(
-                [binary, *args],
-                stdout=stream,
-                stderr=subprocess.DEVNULL,
-                check=False,
-            )
-        except OSError:
-            continue
-        if result.returncode == 0:
-            return Path(binary).name
-    return None
+    # Pass the path as data, never interpolate report contents into JavaScript.
+    script = (
+        "const markdown = await Bun.file(process.argv[1]).text();"
+        "process.stdout.write(Bun.markdown.ansi(markdown, "
+        "{columns: process.stdout.columns || 80}));"
+    )
+    try:
+        result = subprocess.run(
+            ["bun", "--eval", script, str(report)],
+            stdout=stream,
+            check=False,
+        )
+    except OSError as error:
+        print(f"session-usage: Bun renderer unavailable: {error}", file=sys.stderr)
+        return False
+    if result.returncode != 0:
+        print("session-usage: Bun renderer failed; report saved", file=sys.stderr)
+        return False
+    return True
 
 
 def show_to_user(
@@ -934,11 +877,8 @@ def show_to_user(
             return "file"
         stream = tty
     try:
-        if display_with_rich(agents, commands, notes, stream):
-            return "rich"
-        cli = display_with_cli(report, stream)
-        if cli:
-            return cli
+        if display_with_bun(report, stream):
+            return "bun"
     finally:
         if tty is not None:
             tty.close()

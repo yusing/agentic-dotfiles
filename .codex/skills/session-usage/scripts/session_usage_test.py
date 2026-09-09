@@ -14,7 +14,7 @@ from unittest.mock import patch
 from session_usage import (
     FALLBACK_USD_PER_MILLION,
     cost_for_request,
-    display_with_rich,
+    show_to_user,
     fallback_rates,
     main,
     match_openrouter_model,
@@ -248,8 +248,8 @@ class SessionUsageTest(unittest.TestCase):
     def test_status_text_is_short(self) -> None:
         root = self.write_tree()
         agents, commands, notes = meter_session(root, self.home, fetcher=None)
-        text = status_text(agents, Path("/tmp/report.md"), "rich")
-        self.assertIn("session-usage: shown via rich", text)
+        text = status_text(agents, Path("/tmp/report.md"), "bun")
+        self.assertIn("session-usage: shown via bun", text)
         self.assertIn("agents 2", text)
         self.assertIn("usd $", text)
         self.assertNotIn("## Tokens", text)
@@ -297,15 +297,36 @@ class SessionUsageTest(unittest.TestCase):
         self.assertIn("## Tokens", out)
         self.assertIn("cargo test", out)
 
-    def test_display_with_rich(self) -> None:
+    def test_display_with_bun(self) -> None:
         root = self.write_tree()
         agents, commands, notes = meter_session(root, self.home, fetcher=None)
-        buf = io.StringIO()
-        self.assertTrue(display_with_rich(agents, commands, notes, buf))
-        shown = buf.getvalue()
-        self.assertIn("Tokens", shown)
-        self.assertIn("API USD", shown)
-        self.assertIn("/root/explorer", shown)
+        report = self.home / "report with spaces.md"
+        markdown = render(agents, commands, notes)
+        with tempfile.TemporaryFile(mode="w+", encoding="utf-8") as stream:
+            with patch("sys.stdout", stream), patch.object(stream, "isatty", return_value=True):
+                self.assertEqual(show_to_user(agents, commands, notes, markdown, report), "bun")
+            stream.seek(0)
+            shown = stream.read()
+        self.assertEqual(report.read_text(), markdown)
+        for text in ("Tokens", "API USD", "Commands", "/root/explorer", "cargo test", "1,500"):
+            self.assertIn(text, shown)
+
+    def test_bun_failure_preserves_report(self) -> None:
+        root = self.write_tree()
+        agents, commands, notes = meter_session(root, self.home, fetcher=None)
+        report = self.home / "report.md"
+        markdown = render(agents, commands, notes)
+        for failure in (FileNotFoundError("bun"), None):
+            with self.subTest(failure=failure), tempfile.TemporaryFile(mode="w+") as stream:
+                with (
+                    patch("sys.stdout", stream),
+                    patch.object(stream, "isatty", return_value=True),
+                    patch("subprocess.run", side_effect=failure) as run,
+                    patch("sys.stderr", io.StringIO()),
+                ):
+                    run.return_value.returncode = 1
+                    self.assertEqual(show_to_user(agents, commands, notes, markdown, report), "file")
+                self.assertEqual(report.read_text(), markdown)
 
 
 if __name__ == "__main__":
