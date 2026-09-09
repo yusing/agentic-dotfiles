@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d4ae7d0a1be74f84153c60280fe7f919b7173243",
+  "sourceCommit": "4d501bde49b87de09637f1b206f0438a13929abb",
   "outputs": [
     {
       "path": ".bashrc",
@@ -142,7 +142,7 @@
     {
       "path": ".codex/hooks/check_project.ts",
       "kind": "file",
-      "sha256": "8f160e852943e5341b4041247a4dbbb6b6000d98ea0b2ec8a23378d8cd4d7bd7",
+      "sha256": "b789bf520d623745a02a8105e031c32ccdaff1796f5b3435e7967dc29b188b7d",
       "executable": false
     },
     {

@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { at, handleVersion, programArgs, runCommand } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.0.1";
 
 function languageFor(ext: string): string | undefined {
   switch (ext) {
@@ -312,22 +312,35 @@ function main(): number {
   if (withoutGit && (vcs === "git" || vcs === "none")) {
     reportVcs = false;
   }
+  const lines: string[] = [];
   if (reportVcs) {
-    process.stdout.write(`vcs: ${vcs}\n`);
+    lines.push(`vcs: ${vcs}`);
   }
-  process.stdout.write(
-    `task_runner: ${taskRunner}\nlanguages: ${languages}\ngo_version: ${version}\nproject_instructions: |\n`,
+  lines.push(
+    `task_runner: ${taskRunner}`,
+    `languages: ${languages}`,
+    `go_version: ${version}`,
   );
+  const instructions: string[] = [];
   if (vcs !== "none" && reportVcs) {
-    process.stdout.write(
-      "  ## Version control\n  - Treat detected VCS as read-only unless user authorizes writes.\n",
+    instructions.push(
+      "  ## Version control",
+      "  - Treat detected VCS as read-only unless user authorizes writes.",
     );
   }
   if (taskRunner !== "none") {
-    process.stdout.write(
-      `  ## Task runner\n  - Prefer \`${taskRunner}\` recipes over underlying raw commands.\n`,
+    instructions.push(
+      "  ## Task runner",
+      `  - Prefer \`${taskRunner}\` recipes over underlying raw commands.`,
     );
   }
+  if (instructions.length > 0) {
+    lines.push("project_instructions: |");
+    for (const instruction of instructions) {
+      lines.push(instruction);
+    }
+  }
+  process.stdout.write(`<project>\n${lines.join("\n")}\n</project>\n`);
   return 0;
 }
 
