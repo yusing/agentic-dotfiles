@@ -1,9 +1,11 @@
 # Large tasks
 
+## Main's evidence delegation
+
 The main agent owns synthesis, change-impact reasoning, decisions, and final integration;
-execution ownership follows `IMPLEMENTATION.md`. This is an explicit standing
-request to spawn available native exploration roles without per-task approval when independent
-factual lookup benefits from parallel investigation. This authorizes exploration, not reasoning:
+execution ownership follows `IMPLEMENTATION.md`. This is an explicit standing request for main to
+spawn available native exploration roles without per-task approval when independent factual lookup
+benefits from parallel investigation. This authorizes exploration, not reasoning:
 explorers collect source-backed facts, not audits, evaluations, diagnoses, recommendations, or
 decisions. An instruction audit or revision at supplied or known paths needs direct reading by
 the main agent, not an explorer.
@@ -22,6 +24,8 @@ independent group only when useful investigation or implementation can proceed i
 
 Inspect directly when discovery is tightly coupled, scopes overlap, or the main agent would only
 do routine setup reads before waiting.
+
+## Scoped investigation
 
 - Resolve competing interpretations with available evidence. Ask when the remaining choice belongs
   to the user or could materially change the requested outcome, authorized scope, or significant

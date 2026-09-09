@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ba19390c5cf1bb4ada4f78b3991d837df297b5dc",
+  "sourceCommit": "d4ae7d0a1be74f84153c60280fe7f919b7173243",
   "outputs": [
     {
       "path": ".bashrc",
@@ -208,13 +208,13 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "16dafe5d567fc7c5fe6f349f3ddb371ca2fd9257eca1c2c87c99a4cc1d2d51ab",
+      "sha256": "9e245ef97feed8267a1aafdadb18573bc752d5be5fe5c8cbeafc61da02f7791b",
       "executable": false
     },
     {
       "path": ".codex/LARGE-TASK.md",
       "kind": "file",
-      "sha256": "a08d60a27febfa10d79f3684731a70afc8c5e8101aa72b0fdd03183b63047a87",
+      "sha256": "4e72a9127f9e7d8a43a4c9281561d6bfe770761fcd7d9afc26e7b633d25f18b3",
       "executable": false
     },
     {
@@ -262,7 +262,7 @@
     {
       "path": ".codex/SMALL-TASK.md",
       "kind": "file",
-      "sha256": "a7b4c4b6e67764b2c42d45a00f1f5f8d639b2568716ca271079cc1af6f4eb6aa",
+      "sha256": "c5d7124164eb06e730a2bc46051fd9fba6f3e547ca84e7f9df60fcd438abcf33",
       "executable": false
     },
     {
@@ -760,7 +760,7 @@
     {
       "path": ".skills-mgr/skills/route-execution/SKILL.md",
       "kind": "file",
-      "sha256": "7c397a2695d3fb464c9ee3f5f9df72e0263e1586b4f558d1bfcfc86b4ede990f",
+      "sha256": "30436dbdc7b7c4a64a4adf6d99501f483f985fc0e496de006f01dcb67a032653",
       "executable": false
     },
     {
@@ -1041,7 +1041,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "c6e7aa8ac0f181a7b6c8d794df7979ae756ef554b168a44ee5998f30182d4415",
+      "sha256": "a559142275abd06cc8d8eddd1849470732f791cb0009d9a8306de530dfbfb729",
       "executable": false
     },
     {

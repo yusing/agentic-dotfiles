@@ -1,15 +1,20 @@
 ---
 name: route-execution
-description: Select and brief execution agents once delegation is chosen for implementation, drafting, or mechanical work; coordinate multiple owners when their outcomes need integration. Not for deciding task scope, review-only work, or replacing an active delivery workflow.
+description: Route main with unsettled execution ownership to IMPLEMENTATION.md, then select and brief delegates for implementation, drafting, or mechanical work when delegation is chosen. Coordinate multiple owners as needed. Not for already-assigned subagents, review-only work, or replacing an active delivery workflow.
 ---
 
 # Route execution
 
-Use after delegation is selected under the active task guidance. `IMPLEMENTATION.md` owns the
-local-versus-delegated execution decision and validation; shared instructions own authorization,
-agent reuse, and review gates. This skill owns delegate selection, handoffs, and multi-owner
-coordination. A single-owner assignment uses only selection and briefing below; task completion
-still follows the active task guidance. Later sections apply only to multi-owner coordination.
+Use when main has unsettled execution ownership or is assigning delegated work. If ownership is
+unsettled, consult the execution-ownership section of `$HOME/.codex/IMPLEMENTATION.md`. When direct
+execution is selected, return to the task guidance without dispatching. Already-assigned subagents
+do not need this skill.
+
+`IMPLEMENTATION.md` owns the execution decision and validation; shared instructions own
+authorization, agent reuse, and review gates. This skill owns delegate selection, handoffs, and
+multi-owner coordination. A single-owner assignment uses only selection and briefing below;
+task completion still follows the active task guidance. Later sections apply only to multi-owner
+coordination.
 
 ## Select and brief the delegate
 

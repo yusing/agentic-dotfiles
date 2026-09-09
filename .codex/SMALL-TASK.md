@@ -1,10 +1,10 @@
 # Small tasks
 
-The main agent owns discovery. When I supply an explicit path, use it directly.
+The executing agent owns scoped discovery. When I supply an explicit path, use it directly.
 
-Use `IMPLEMENTATION.md` if execution ownership needs a decision. For delegated work, read
-`route-execution` for routing without multi-owner coordination. For direct work, skip workflow
-skills. In either case, read any skill that owns the material you are changing. Then:
+Main uses `IMPLEMENTATION.md` for unsettled execution ownership and `route-execution` when
+assigning a delegate. For direct or already-assigned execution, skip routing and coordination
+skills. Read any skill that owns the material you are changing. Then:
 
 1. Follow the exact path, identifier, or literal in my prompt.
 2. Read the smallest relevant boundary.

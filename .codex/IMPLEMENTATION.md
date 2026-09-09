@@ -16,8 +16,14 @@ Git history, including parent repositories and submodules.
 
 ## Execution ownership
 
-Main owns intent, contracts, difficult reasoning, acceptance, and final quality decisions. For
-simple tasks, direct execution can be the fastest and cheapest complete path. Delegate settled
+An assigned subagent already has its role and scope. Apply this document within that assignment,
+resolve permitted local implementation details, and return scope or ownership changes and blockers
+to the parent. Reading task guidance does not reopen assignment or grant delegation permissions.
+
+### Main's routing decision
+
+Main owns user intent, cross-owner contracts, acceptance, and final quality decisions. For simple
+tasks, direct execution can be the fastest and cheapest complete path. Delegate settled
 implementation, documentation, test authoring, or routine validation when a suitable worker saves
 enough execution effort to outweigh handoff and likely rework. This authorizes delegation within
 the active harness's tool and parallelism constraints. Once selected, use `route-execution` to
