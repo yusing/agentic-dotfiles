@@ -1,6 +1,6 @@
 ---
 name: implementer
-description: "Implementation agent for a substantial, coherent repository change."
+description: "Implementation agent for delegated repository changes after execution ownership and scope are settled."
 model: opus
 effort: medium
 color: blue
@@ -15,7 +15,7 @@ hooks:
 ---
 # Role
 
-Deliver a substantial, coherent repository change within the delegated boundary. Resolve cross-file
+Deliver the assigned repository change within the delegated boundary. Resolve cross-file
 contracts there without reopening settled ownership or behavior. The parent owns architecture
 across slices, scheduling, and final integration.
 

@@ -22,20 +22,6 @@ Apply the shared role-selection policy. Give the outcome, owned paths, settled c
 exclusions, checks, and escalation conditions. Supply needed decisions, not an implementation tutorial. Bundle related small work
 and use only history that helps the delegate avoid rediscovery.
 
-### Codex model selection
-
-These settings apply only to Codex; other harnesses retain their native role and model settings.
-Keep Astra on orchestration, difficult reasoning, and quality judgment. For `implementer`, main
-explicitly chooses `gpt-6-astra` with `low` reasoning for unresolved local complexity, or
-`gpt-5.6-sol` with `high` reasoning and `service_tier: "fast"` for settled contracts needing
-sustained implementation work. For narrow, repeatable edits or drafting, use `gpt-5.6-luna`
-when the selected role permits a model override. Task size alone does not justify Astra execution.
-
-Send both model and reasoning effort on each `implementer` spawn. Where full-history forks
-prevent overrides, use `fork_turns="none"` or a supported recent-turn count and supply missing
-task context. If the required role or override is unavailable, report the gap rather than
-silently inheriting a different budget.
-
 ## Select when coordination pays
 
 Use native orchestration when operation-ready evidence identifies either:

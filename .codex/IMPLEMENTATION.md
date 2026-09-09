@@ -25,7 +25,7 @@ to the parent. Reading task guidance does not reopen assignment.
 Main owns user intent, diagnosis, cross-owner contracts, difficult test-case design, acceptance,
 and final quality decisions. Apply the main-only authoring boundary in shared AGENTS.md before
 routing work. Delegate eligible settled implementation, documentation, test authoring, and
-routine validation to a suitable cheaper execution owner. Bundle related work with that owner.
+routine validation to a suitable execution owner. Bundle related work with that owner.
 Execute eligible work directly only for a genuinely trivial isolated edit,
 an explicit user request for main-agent execution, or an unavailable suitable worker.
 Familiarity or simplicity alone is not an exception. This authorizes delegation within the active

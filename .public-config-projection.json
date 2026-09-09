@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "c47cd21008be6e694169455a642b5ab04e5a777f",
+  "sourceCommit": "b16f963437c424fc9bee78e37b22dd6fe3f983dc",
   "outputs": [
     {
       "path": ".bashrc",
@@ -33,15 +33,9 @@
       "executable": false
     },
     {
-      "path": ".claude/agents/fast-implementer.md",
-      "kind": "file",
-      "sha256": "1eef140ea4aa30e531b30375c87da29561e286c13b7e7dcde576352833365585",
-      "executable": false
-    },
-    {
       "path": ".claude/agents/implementer.md",
       "kind": "file",
-      "sha256": "6330d5c6d019a2e5db9c41dd5b7867b5b906673efebf9d54f4acffc35f867773",
+      "sha256": "e0b7cf7eb40b7a38ae9910c17200036a71ead77e4b523dafbb56ecec82a865c1",
       "executable": false
     },
     {
@@ -94,19 +88,13 @@
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "9b3345d885ff65c767d8d23517773d340e8ff0eb9a505146f9878e4965c5194f",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/fast-implementer.toml",
-      "kind": "file",
-      "sha256": "5d20fcda0f150698e03e56bf6722b67e4e17881ec74b978607a11537cd43f462",
+      "sha256": "2c1b52b0766a24a37288433de0992da2ee171c0fa7d773a6e82271f11052a052",
       "executable": false
     },
     {
       "path": ".codex/agents/implementer.toml",
       "kind": "file",
-      "sha256": "e282b1523e43064d0215043b552ebc1aca653b9c3c589a7e2cd35df7cf3a9f33",
+      "sha256": "e29a68adad6818fa9af8ede45306fe783a02f2b9db58ee779a0b6ffd99f338de",
       "executable": false
     },
     {
@@ -208,7 +196,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "003d12cac38eb49c7d42641694c356bd7a0a9a9f41a947df6e3a8858bc66c4c3",
+      "sha256": "b54d9929073f88fe78968cbf87bbd74d38be894e3a1ff46dd2c78a98e56e4fd3",
       "executable": false
     },
     {
@@ -412,7 +400,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "b36173665882ab6858aea6aac424aa469fc0af45b2c532721611f5a1daf8be92",
+      "sha256": "b15ca865ca56ae5ea366ae68e4de67ff5ba48a6d0b42536ed550abc11cc1bf2f",
       "executable": false
     },
     {
@@ -766,7 +754,7 @@
     {
       "path": ".skills-mgr/skills/route-execution/SKILL.md",
       "kind": "file",
-      "sha256": "b43f44f87550e87594bfbb22b3d0cf62e7236ca14253d4625eccd2136c399798",
+      "sha256": "4ba0469e74e7d8a9ea3e2d8e6dea91ef61b410df9732de6b37be9cc36e54d6ba",
       "executable": false
     },
     {
@@ -993,7 +981,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "9998c73b754a778856be94399fbc6a9950a2d02c3c2d3bb66095f0fa8b8d194d",
+      "sha256": "1ab017a3ebc6df5bc30f30cb24e82aa4cb1c2df10e88a6a32ef34098077b9f29",
       "executable": false
     },
     {

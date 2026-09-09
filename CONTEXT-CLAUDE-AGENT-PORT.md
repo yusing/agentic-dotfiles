@@ -10,11 +10,11 @@ Its `--check` mode reports drift without writing.
 Field mapping is the helper's concern. `model` and `model_reasoning_effort` become Claude's
 `model` and `effort`, unless the role's Claude metadata specifies its own model or effort.
 The simplification role keeps its Claude Sonnet/high budget independently of Codex routing.
-The implementation roles keep Opus/medium and Sonnet/high independently of Codex routing.
+The implementation role keeps Opus/medium independently of Codex routing.
 Explicit Claude metadata still applies when a Codex role omits its model and effort for dispatch.
 Council roles use `model: inherit` in the helper's metadata, omitting both generated fields so
 Claude continues to inherit its parent settings.
-`service_tier` has no Claude counterpart and is dropped. Claude subagents start from a fresh
+Claude subagents start from a fresh
 context. The Codex handoff fields `input_artifacts` and `result_artifact` are
 harness structure with no Claude equivalent, so each body states the same contract in terms of
 artifact paths the parent names in the task text.
@@ -25,7 +25,7 @@ or an unmapped model makes generation fail until that platform metadata is suppl
 prompt and task/result contract are read directly from the native TOML, so source edits
 cannot pass the focused test while generated ports are stale.
 
-Only the two implementation roles include `Agent` in their `tools` allowlist, so they can dispatch
+Only the implementation role includes `Agent` in its `tools` allowlist, so it can dispatch
 independent inspections under shared AGENTS.md. This requires a Claude runtime and depth limit
 that permit nested agents; the generator does not configure runtime limits.
 The allowlist omits `Edit` and `NotebookEdit` for the review and council roles, so they
