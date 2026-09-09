@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.6
+
+Probe Homebrew casks explicitly when checking installed packages. Recognize installed fonts during setup verification, skip reinstalling them, and include them in native upgrades.
+
 ## 2.2.5
 
 Install Cascadia Code NF, Cascadia Mono NF, IBM Plex Sans, and JetBrainsMono Nerd Font on macOS. The tracked Kaku configuration preserves stock fonts and theme-dependent weights, adding JetBrainsMono Nerd Font Mono as a fallback. Include declared Homebrew casks alongside formulae in native upgrade detection and execution; Linux package selections are unchanged.

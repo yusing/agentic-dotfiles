@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.2.5
+# version: 2.2.6
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -211,7 +211,7 @@ have_logical() {
     while IFS= read -r cmd; do
       case "$PM" in
         apt) if dpkg-query -W -f='${Status}\n' "$cmd" 2>/dev/null | grep -q 'install ok installed'; then return 0; fi ;;
-        brew) if [ -n "$(brew list --versions "$cmd" 2>/dev/null)" ]; then return 0; fi ;;
+        brew) if installed_pm_package "$cmd" >/dev/null; then return 0; fi ;;
         pacman) if pacman -Q "$cmd" >/dev/null 2>&1; then return 0; fi ;;
       esac
     done <<<"$commands"
@@ -1176,8 +1176,13 @@ installed_pm_package() {
         && printf '%s\n' "$1"
       ;;
     brew)
-      [ -n "$(brew list --versions "$1" 2>/dev/null)" ] \
-        && printf '%s\n' "$1"
+      # Named version queries default to formulae; casks need an explicit probe.
+      if [ -n "$(brew list --versions "$1" 2>/dev/null)" ] \
+        || [ -n "$(brew list --cask --versions "$1" 2>/dev/null)" ]; then
+        printf '%s\n' "$1"
+      else
+        return 1
+      fi
       ;;
     pacman)
       pacman -Qq "$1" 2>/dev/null
