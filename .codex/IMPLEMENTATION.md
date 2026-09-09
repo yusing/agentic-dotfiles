@@ -42,6 +42,9 @@ not token reduction alone.
 Execution ownership changes who does the work, not which required checks or independent
 inspections must pass.
 
+Run new or changed focused checks first, fix their failures, then run required broader or
+integrated checks.
+
 Test through the owning interface. Cover affected contracts, meaningful failures, and required
 checks in proportion to risk. Prefer focused existing checks; add tests that protect behavior,
 not mirror implementation. Broaden or repeat passing checks only for changes, failures, or a

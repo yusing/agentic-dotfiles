@@ -10,6 +10,11 @@ explorers collect source-backed facts, not audits, evaluations, diagnoses, recom
 decisions. An instruction audit or revision at supplied or known paths needs direct reading by
 the main agent, not an explorer.
 
+Before dispatch, require only the discovery needed to establish the outcome, owner, contracts,
+and a useful brief. Leave delegate-local implementation, source-inspection, and validation detail
+to the owner; consume source-backed results and inspect further only for a concrete integration
+decision or gap.
+
 Group missing evidence for the next decision by shared context. Dispatch one explorer per
 independent group only when useful investigation or implementation can proceed in parallel:
 
@@ -20,7 +25,8 @@ independent group only when useful investigation or implementation can proceed i
   synthesis, integration decisions, and other authorized work that does not re-collect the
   dispatched facts.
 - Wait for every dispatched result before deciding or editing anything that depends on it.
-  If you have no non-overlapping work, wait rather than duplicating the lookup.
+  Continue independent authorized work while waiting; if you have no non-overlapping work, wait
+  rather than duplicating the lookup.
 
 Inspect directly when discovery is tightly coupled, scopes overlap, or the main agent would only
 do routine setup reads before waiting.

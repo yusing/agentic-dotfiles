@@ -164,6 +164,16 @@ Bound discovery by the next decision. Start with the affected owner and supporte
 expand only for facts that could change outcome, implementation, or validation. Establish required
 facts or exact gaps; distinguish interface limitations from unproven absence everywhere.
 
+Establish behavior from code and contract tests; use owning documentation for requirements and
+rationale, not instead of code inspection. Establish dependency contracts from their documentation
+and types, not callers alone. When code conflicts with tests, fixtures, or assertions, follow
+explicit authorized contract changes; otherwise inspect patch history or `git log -S` before
+deciding which side is stale, citing the deciding commit. For authorized edits, align
+implementation, expectations, and owning documentation.
+
+Evidence-only agents report conflicts and history; decisions stay within assigned authority.
+Read-only work does not authorize edits. Escalate unresolved intent to the user or parent.
+
 Identify the questions needed for the next decision. When delegation is selected, reuse completed
 equivalent results, account for work already in flight, and group questions by shared context.
 Launch remaining independent groups concurrently; wait for results needed for that decision.
