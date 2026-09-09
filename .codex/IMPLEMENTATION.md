@@ -1,105 +1,79 @@
 # Implementation
 
-Choose the simplest implementation that fully meets the current requirements. Reconsider the
-approach before adding complexity to make it work.
-The "simplest implementation" scope does not expand merely because a review found anything.
-Start with the smallest working end-to-end version, then add capabilities without regressing
-behavior that the current requirements still accept. A behavior superseded by the current request
-is not a compatibility obligation.
+Choose the simplest implementation that meets the full request. Start end-to-end, then extend
+without regressing still-required behavior. Reassess before adding complexity; review findings
+alone do not expand scope.
 
-Validate the assumptions behind the approach before choosing its storage or delivery mechanism.
-When changing identity or lifetime, establish stable identity, state surviving completion/expiry
-and session changes, behavior under capacity pressure, and the consumer's final-result contract.
-Turn the affected invariants into focused acceptance tests, then implement against them. Auxiliary
-state must not displace essential recovery state or the substantive result.
+Validate assumptions before choosing storage or delivery. For identity or lifetime changes,
+establish stable identity, state retention across completion, expiry, and sessions, capacity
+behavior, and the consumer's final-result contract. Test these invariants; auxiliary state must
+not displace recovery state or substantive results.
 
-Test through the interface that owns the changed behavior. Cover affected contracts, meaningful
-failure paths, and required checks in proportion to risk. Prefer existing focused checks; add tests
-when they protect behavior rather than mirror the implementation. Once sufficient checks pass,
-broaden or repeat validation only for new changes, failures, or a concrete unresolved concern.
-Keep required integrated checks and risk-triggered independent inspection.
+Keep each demonstrated failure and violated invariant together with its fix: helpers, callers,
+tests, documentation, and cleanup. Any authorized commits should preserve that unit within each
+Git history, including parent repositories and submodules.
 
-Run new timing/concurrency tests separately first, with explicit timeouts based on expected or
-observed duration plus headroom. Exercise long lifetimes with controlled state or a suitable test
-clock, keeping setup in test sources. A timeout is a failure to diagnose, not permission to weaken
-assertions. Before rerunning a superseded validation job, resolve the old job's status within the
-applicable process-control authorization; editing files does not update a running test binary.
+## Validation
 
-Keep the demonstrated failure and violated invariant together as the unit of implementation and
-of any authorized commit. Helper code, callers, tests, documentation, and cleanup that restore the
-same invariant should travel together. When the same invariant requires corresponding commits in
-separate Git histories, including a parent repository and submodule, keep the complete fix together
-within each history.
+Test through the owning interface. Cover affected contracts, meaningful failures, and required
+checks in proportion to risk. Prefer focused existing checks; add tests that protect behavior,
+not mirror implementation. Broaden or repeat passing checks only for changes, failures, or a
+concrete remaining concern. Retain required integrated checks and risk-triggered independent review.
 
-Before validation, check documentation owning each changed behavior, interface, configuration,
-workflow, or agent instruction, reusing loaded content and reading only missing or stale material.
-Update or remove every claim those documents retain about behavior the change
-supersedes. For configuration, include nearby documentation that states the setting or its
-operator workflow. Do not inspect unrelated documentation merely to prove its absence.
+Run new timing/concurrency tests separately first, with realistic timeouts plus headroom. Use
+controlled state or a test clock for long lifetimes; keep setup in tests. Diagnose timeouts rather
+than weaken assertions. Before rerunning superseded validation, resolve the old job's status
+within process-control authorization: file edits do not update a running test binary.
+
+Before validation, reconcile documentation for changed behavior, interfaces, configuration,
+workflows, and instructions, including nearby operator guidance. Reuse loaded material, read
+missing or stale owners, and remove superseded claims. Stay within affected documentation.
 
 ## Runtime behavior
 
-When a user-facing or operator-facing operation can remain active long enough that silence
-obscures whether it is progressing, expose proportional progress through the interface that owns
-the operation. Reuse progress, logging, or job-state facilities already owned by the host runtime
-or project instead of duplicating them. Report meaningful milestones or measurable completion,
-not merely start and finish. Progress reporting must remain auxiliary and must not determine or
-interfere with successful core behavior.
+For operations whose silence would obscure progress, expose meaningful milestones or measurable
+completion through the owning interface, reusing host progress, logging, or job-state facilities.
+Start/finish notices alone are insufficient. Progress must remain auxiliary to core behavior.
 
-For a new operation, use bounded concurrency when work items are genuinely independent and
-concurrency actually helps meet a requirement such as latency or throughput. Keep an existing
-sequential path sequential when it already meets the current requirements; do not retrofit
-concurrency merely because its work items could run independently.
+Use bounded concurrency for new operations only when independent work benefits a requirement
+such as latency or throughput. Preserve sequential paths that already meet requirements.
 
 ## Hygiene
 
-Keep durable artifacts focused on the final state. Code, comments, documentation, tests, commit
-messages, change descriptions, and final responses should explain the resulting behavior and only
-the rationale that still applies. Do not mention any rejected proposal, abandoned approach, or
-anything that no longer applies.
+Keep code, comments, tests, documentation, commit messages, and reports focused on final behavior
+and still-applicable rationale, not abandoned approaches.
 
-Unless the user explicitly asks for compatibility, treat anything they correct, replace, or
-remove, and anything whose validity depends on it, as superseded. Remove superseded material
-rather than keeping it or describing it as something else. Removal covers every code path,
-reference, test, fixture, configuration entry, documentation statement, and whole file that no
-longer serves the final behavior, including obsolete portions of shared files. Do not keep a
-superseded approach as a compatibility layer, wrapper, fallback, migration, a leftover kept only
-to prove the old approach wrong, documentation example, or dead test.
-When you stumble across an unrelated pre-existing obsolete path, tell the user and let them decide.
-When you are unsure whether compatibility should be preserved, stop and ask.
+Unless compatibility is explicitly requested, remove corrected, replaced, or removed behavior and
+all material dependent on it, including obsolete portions of shared files. Keep no superseded
+wrappers, fallbacks, migrations, examples, or tests. Ask if compatibility is uncertain; report
+unrelated pre-existing obsolete paths for the user to decide.
 
-An abandoned attempt, implementation, or previous state does not become a test case merely because
-it existed. Do not invent an unhappy path or add a production seam solely to create a test case.
-Keep test setup in test sources.
+Test real contracts and failure paths, not an approach merely because it once existed. Do not
+invent unhappy paths or production seams solely for tests; keep setup in test sources.
 
 ## Edit readiness
 
-Separate responsibilities; reuse suitable project dependencies before replacing or adding them.
-Select dependencies for trustworthy provenance, maintenance, and fit, not merely availability.
-Edit authoritative sources, not generated, vendored, or minified outputs; follow local naming,
-error handling, idiom, and comment style. Comment non-obvious invariants, caller contracts,
-workarounds, and tradeoffs even where nearby code has few comments; describe the final behavior.
+Separate responsibilities. Reuse suitable project dependencies; judge additions by provenance,
+maintenance, and fit. Edit authoritative sources, not generated, vendored, or minified outputs.
+Follow local conventions. Comment non-obvious invariants, caller contracts, workarounds, and
+tradeoffs even where nearby code has few comments.
 
 ## Complexity and ownership gate
 
-Apply the relevant gates to design choices and review findings in proportion to their complexity
-and impact. Resolve concrete concerns before keeping a mechanism; unjustified findings may be rejected.
+Apply these gates proportionally to design choices and review findings. Resolve concrete concerns;
+reject unsupported findings. The request establishes capability scope; gates constrain its
+implementation. Explain conflicts rather than silently narrowing the request. Keep gate analysis
+internal; report results, evidence, and actionable caveats.
 
-- `N` — Ownership: leave policy with its caller, provider, runtime, or protocol owner;
-  forwarding helpers must not redefine external contracts, fields, limits, or retry rules.
-- `O` — Simplicity: remove duplicate representations and unnecessary abstractions. Inline a
-  sole-caller helper when doing so loses no shared policy, invariant, or nontrivial algorithm.
-- `D` — Duplication: rely on authoritative validation. Add checks only for a distinct boundary,
-  deriving their rules from its owner rather than imposing stricter downstream policy.
-- `I` — Reachability: handle accepted inputs, not impossible branches. Validate corruption or
-  external mutation at the boundary where it can occur.
-- `U` — Evidence: establish the owner, reproducer, failure, invariant, and consumer before adding
+- `N` Ownership: keep policy with its caller, provider, runtime, or protocol owner. Forwarders
+  must not redefine external contracts, fields, limits, or retries.
+- `O` Simplicity: remove duplicate representations and needless abstractions. Inline sole-caller
+  helpers unless they preserve shared policy, an invariant, or a nontrivial algorithm.
+- `D` Duplication: trust authoritative validation. Extra checks need a distinct boundary and
+  owner-derived rules, not stricter downstream policy.
+- `I` Reachability: handle accepted inputs, not impossible branches. Check corruption or external
+  mutation at the boundary where it can occur.
+- `U` Evidence: establish owner, reproducer, failure, invariant, and consumer before adding
   convenience, limits, or compatibility behavior.
-- `J` — Justified: retain a necessary responsibility, resource, invariant, shared policy, or
-  nontrivial algorithm with the smallest sufficient implementation. A local resource guard is
-  not an external protocol restriction.
-
-The request establishes the need for that capability; these gates constrain its implementation,
-not its scope. Explain concrete conflicts before implementing rather than silently dropping,
-deferring, or narrowing requested behavior. Keep gate analysis internal unless asked about it;
-report the result, evidence, and actionable caveats rather than gate labels or identifier lists.
+- `J` Justified: use the smallest mechanism for a necessary responsibility, resource, invariant,
+  shared policy, or nontrivial algorithm. Local resource guards are not external protocol limits.
