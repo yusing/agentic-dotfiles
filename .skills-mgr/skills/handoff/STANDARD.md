@@ -1,193 +1,118 @@
-Produce an execution-ready Markdown handoff for the next LLM, which will resume the current task.
+# Continuation content standard
 
-## Standard
+Write the smallest self-contained account that lets a fresh session resume the unfinished task.
+Preserve what determines the next action, not the history of how the previous session got there.
 
-Write the minimum sufficient working set. The handoff is complete when the next LLM can perform the first unfinished action without rereading the conversation, repeating completed investigation, or guessing about the outcome, current state, scope, constraints, or validation.
+## Caller boundary
 
-The caller owns the cutoff and delivery. Use the cutoff supplied by the invoking skill or runtime.
-A handoff invocation and the loading, composing, writing, compacting, delivery, or acknowledgement
-it triggers are handoff control flow, not request state or task actions. They never appear in the
-handoff document. This standard defines the handoff document; the caller owns its destination and
-any acknowledgement that follows.
+This standard defines content for either runtime compaction or a file handoff. The caller supplies
+the cutoff and controls delivery, destination, and response format. This standard does not require
+a file, a path-only response, or any particular delivery mechanism.
 
-If a new handoff begins before another caller has delivered its handoff, the new caller supersedes
-the undelivered operation and inherits its cutoff. This includes runtime compaction immediately
-after the file-handoff skill or this standard was read. Resume the unfinished task from immediately
-before the superseded invocation; the superseded caller has no remaining file, response, or
-acknowledgement obligation. Build every section from that inherited cutoff, so neither handoff
-request, the new caller's compaction request, nor intervening handoff control flow can become
-request state, `## Last action`, an active skill, a concern, `Next:`, `Then:`, or any later action.
+Use the task context held at the cutoff. Do not investigate, run checks, or continue implementation
+to prepare the handoff. State material gaps instead of filling them with assumptions.
 
-## Request state
+Handoff requests and their instruction reads, composition, delivery, and acknowledgements are
+control flow, not unfinished user work. If a new caller takes over an undelivered handoff, inherit
+the earlier task cutoff and supersede its delivery obligations. Carry neither caller's handoff
+control flow into the task account. The next session resumes the underlying work, not an abandoned
+file-writing or acknowledgement step.
 
-Begin the handoff with `## Original request`. Treat each distinct requested outcome,
-correction, constraint, or aside as a request item. Classify every request item, including the
-first prompt, the first task request, later messages, and entries inherited from an earlier
-handoff, along two independent axes:
+## Current request
 
-- Kind is `standing` when the item defines or changes the standing outcome, scope, acceptance
-  criteria, or constraints. Kind is `oneoff` when resolving the item does not change that
-  standing request, whether or not the user wrote the `oneoff:` prefix and regardless of where
-  the item appears in the conversation. Direct follow-ups remain with the item they continue.
-- State is `open` when obligations remain and no requested outcome has been verified. State is
-  `partial` when some requested outcome is verified but any response, action, validation,
-  report, or external obligation remains. State is `complete` only when all of the item's
-  obligations are satisfied. An answered informational question is complete.
+Begin with the current task: the requested outcome, acceptance criteria, scope, and still-binding
+constraints. Consolidate repeated requests into one account. Preserve distinct unfinished outcomes;
+a recent subtask must not displace the rest of the request.
 
-A standing constraint remains `[open]` while it governs any unfinished standing item, including
-after the agent has complied with it once. It becomes `[complete]` only when the standing work
-is complete or the user withdraws or supersedes it.
+Read prohibitions as part of the request, including their scope over coordinated actions. Keep a
+prohibited operation out of pending work even when an earlier plan proposed it. Preserve exact
+operational boundaries: prohibiting one command or target does not prohibit every use of its tool.
+Apply user corrections to the affected requirement without discarding compatible requirements.
+Preserve still-valid approvals within their scope; neither a routine nor an inherited plan grants
+additional permission. Record genuinely unresolved authorization as a decision needed, not an action
+to execute.
 
-Text that neither creates a request item nor changes one is not request state. Exclude commentary,
-emotional reactions, and criticism aimed only at the current attempt. When that text contains an
-underlying correction that still changes standing work, retain only the correction.
+Use plain language rather than a verbatim message ledger or mandatory status tags. Keep exact user
+wording when it defines a distinction that paraphrasing would lose. Distinguish a user-approved
+interpretation from an agent's assumption; an assumption does not become user intent through
+repetition.
 
-Re-evaluate kind and state from the current conversation evidence on every handoff. Inherited
-request text and inherited status are inputs, not authoritative state.
+Include an aside only while it has unfinished obligations. If an answered question yielded a fact
+needed for the standing task, carry that fact in its relevant section without mentioning the
+question or its completion.
 
-Across successive handoffs, preserve inherited request wording that remains selected for an
-unfinished item exactly until newer user wording supersedes it. Preserve an inherited confirmed
-interpretation while its request remains unfinished until newer user evidence supersedes it.
+## Useful continuation state
 
-Under `## Original request`, list only standing items whose state remains relevant. Every item
-starts with exactly one status tag:
+Select a detail only if it establishes a needed baseline, changes an unfinished action or decision,
+prevents a specific known wrong turn or repeated investigation, or preserves an outstanding
+obligation. Apply this test to every section, including the last action; none is required merely
+for continuity.
 
-- For `[open]`, reproduce the user's relevant words verbatim and in order. Preserve every word
-  that still defines the outcome, scope, acceptance criteria, or constraints; omit unrelated
-  text from the same message. Never paraphrase, translate, re-scope, or merge retained words.
-- For `[partial]`, preserve the user's words by the same rule, then add `Completed:` with the
-  verified resulting baseline and `Remaining:` with the unfinished obligation. Never make the
-  completed portion executable again.
-- For `[complete]`, state the resulting baseline instead of repeating the original imperative
-  or question wording. Include a completed baseline only when unfinished work depends on it or
-  when its status is needed to make clear that no continuation remains.
+- Describe relevant local changes and their uncommitted or deployed state. Preserve ownership or
+  staging distinctions when they affect safe continuation. Use narrow file or symbol pointers
+  instead of a file-by-file implementation changelog or copied specification.
+- Keep the latest relevant measurement, its acceptance metric, and the remaining gap. Distinguish
+  reported results from checks actually verified for the represented state. Record which behavior
+  remains unchecked; old suite counts and fixed failures do not validate later changes.
+- Keep concise findings and their evidential limits when they prevent repeating expensive work or
+  making an unsupported claim. An unproven limit is not an impossibility result. Leave genuinely
+  unchosen approaches open.
+- Preserve outstanding failures, approvals, reporting, and external obligations. Carry recovery
+  details only for a live recovery need, not because a completed rebase once produced a backup.
+- Carry useful agent findings, not completed-agent rosters, session-local identities, or claims
+  that those agents remain available. For running work, retain the information needed to inspect
+  or resume it, or explicitly identify the recovery gap.
 
-When no standing item is `[open]` or `[partial]`, include `[complete] No standing work remains.`
-Never retain a superseded item.
+Remove superseded plans, completed action lists, abandoned hypotheses, stale identifiers, and
+historical validation chronology. Do not invent documentation reconciliation or cleanup work from
+a stale reference; retain it only when it is genuinely required by the unfinished outcome.
 
-Add `## Confirmed interpretation` only when the user explicitly approved a reading of an
-unfinished request item. Name the item it interprets, attribute the reading to the user, and
-treat it as the binding reading while keeping it separate from their own wording. Never promote
-your own reading of an ambiguous request into this section.
+## Evidence and references
 
-A complete oneoff has no request-state representation. Preserve its resulting baseline only when
-unfinished work depends on it; otherwise remove it even when an inherited handoff retained it.
-When a oneoff remains unfinished, add `## Current oneoff`. When multiple oneoffs remain unfinished,
-list every unfinished oneoff newest first. Start each with `[open]` or `[partial]` according to its
-state and reproduce its relevant words. For `[partial]`, include the same `Completed:` and
-`Remaining:` fields. After the current oneoff completes, resume the remaining oneoffs newest first
-before returning to standing work.
+Attribute binding requirements to the user or their authoritative owner. Prefer repository paths,
+test names, and retrievable evidence over names of agents or inaccessible tool-result identifiers.
+When the conversation is the only source of a useful result, preserve its substance as a reported
+finding. Do not upgrade it to fresh verification. Keep relevant working assumptions revisable,
+with their rationale, rather than restating them as constraints.
 
-When work remains, add `## Continuation`. Order every unfinished obligation by this single priority:
+Include an external path only for a needed input, evidence source, or recovery artifact. Preserve
+the essential conclusion in the handoff when a temporary artifact would otherwise be its only
+source. State known missing or unverified availability and any resulting dependency. A dead path
+must not masquerade as an available source or create an obligation to recreate irrelevant material.
 
-1. Prerequisite incomplete hook obligations, in dependency order and then stable recorded order.
-2. Every unfinished oneoff, newest first.
-3. Unfinished standing items, in their request order.
+Reference maintained specifications when needed; do not copy their bodies or generic system,
+project, and agent instructions. Use relative paths within the workspace and absolute paths for
+external resources. Preserve secrets and sensitive data only as descriptive placeholders, with a
+safe source reference or a necessary reacquisition obligation.
 
-Write exactly one `Next:` line naming the first obligation in that order and its first unfinished
-action. When further obligations remain, write exactly one `Then:` line that lists them in the same
-order and explicitly requires continuing them after `Next:` before a final response. `Next:` selects
-the immediate obligation; `Then:` keeps every later obligation executable as each earlier one
-completes. A final response is due only when no work remains or progress requires user input or an
-external-state change. `[complete]` entries establish current state and produce no action or
-response. Omit `## Continuation` when no work remains. Work remains while any action, response,
-validation, report, hook, or external obligation is unfinished.
+## Actions without frozen recipes
 
-## Attribution
+Describe unfinished operations and checks by intent, relevant test or interface, and indispensable
+inputs such as the replay fixture and acceptance limit. The continuing session chooses execution
+commands from the current project state and applicable instructions. Do not carry shell recipes,
+flags, wrappers, build settings, or installation steps merely because a previous session used or
+planned them.
 
-Every constraint, requirement, exclusion, and decision carries its source. A source is the user,
-a named repository file or test, specific tool output, or the current agent or an explicitly named
-inherited agent only for an entry under `## Working choices`. Name it inline.
+Exact command text may identify a prohibited operation or an explicitly required user method.
+Preserve that meaning and authorization boundary; do not convert it into a suggested recipe.
 
-Drop anything whose source you cannot name. Do not carry an unsourced constraint forward in
-case it mattered; an invented constraint costs the next LLM more than a rediscovered one.
+Include an `Active skills to reread` section only for skills still required by an explicit instruction
+or an ongoing workflow. List their names, not their bodies. Omit previously loaded skills whose
+work is finished, speculative future skills, and an empty section. The current instructions govern
+skill selection when work resumes.
 
-Choices made by the current agent or an inherited agent belong under `## Working choices`, one
-line each: the choice, its named agent source, why it was made, and what would justify changing it.
-They are revisable by default and are not constraints. Never restate one as a constraint, a
-requirement, or user intent.
+## Shape and continuation
 
-Attribution moves in one direction only. A working choice becomes a constraint only when a
-new user message or new evidence makes it one, never because it was repeated before. When an
-inherited constraint has no source, demote it to a working choice only when its rationale is known
-and attributable to an agent; otherwise drop it. Do so silently: write the corrected state, and
-record no note that anything was demoted or dropped. The source requirement is what prevents an
-unsourced constraint from returning, so no tombstone is needed.
+Use short topical headings suited to the live content, such as Task, Current state, Validation,
+Findings, or Remaining decisions. State each fact once. Include no preamble, change history,
+mandatory last-action section, or empty template sections.
 
-Record an approach as ruled out only together with the evidence that ruled it out. Never
-narrow the remaining approaches by omission: leaving an untried approach out of the handoff
-must not read as a decision against it, so when the request still admits several approaches,
-say the choice is open.
+When work remains, put Continuation last. Give the first unfinished action in a `Next:` line and
+any later obligations in a `Then:` line. Respect dependencies: prerequisite hook obligations first,
+then unfinished asides newest first, then standing work in request order. Preserve an incomplete
+hook's owner reference without copying its instructions.
 
-## Selection
-
-The request-state sections above apply their own lifecycle filter. For every other detail,
-include it only when it does at least one of these:
-
-- Enables or changes an unfinished action or decision.
-- Establishes verified state that unfinished work depends on.
-- Prevents a specific known wrong turn or repeated investigation.
-- Preserves an unresolved blocker, dependency, constraint, risk, approval, running operation, hook obligation, or final-report obligation.
-- Identifies a relevant local change and whether its validation is complete.
-
-`## Last action` is the single exception to this filter. Always include it as current continuity
-state, never as permission to replay a completed action.
-
-Represent completed work by its resulting baseline, not by the steps or attempts that produced it. Keep an earlier decision only when it still governs unfinished work.
-
-Use the latest evidence. Remove resolved blockers, superseded plans and attempts, stale identifiers, abandoned hypotheses, completed action lists, conversational chronology, and details retained only as a historical record.
-
-## Format
-
-- The handoff document contains only the handoff. Add no preamble, meta-commentary, or closing summary.
-- Write the current state of the task only. Never mention compaction, an earlier handoff, or how this handoff differs from one before it. The request-state sections state the request as it stands; they are not conversational history.
-- The request-state sections have this fixed order: `## Original request`, then optional
-  `## Confirmed interpretation`, then optional `## Current oneoff`.
-- Add `## Last action` immediately after those request-state sections. Its single line records the
-  most recent task action before the caller's cutoff, why it was performed, and its state. Preserve
-  the inherited last action when no newer task action occurred after its cutoff. For an action, use
-  exactly one of `[complete]`, `[partial]`, `[failed]`, or `[blocked]` and format the line as
-  `<state> <action>: <why>`, for example `[partial] changed foo.go function Foo: implement the
-  requested bar behavior; validation remains`. When no task action has occurred at any represented
-  cutoff, use the exact line `[none] No task action occurred before the cutoff.`
-- After `## Last action`, use short `##` headings for active concerns such as `Current blocker`,
-  `Constraints`, and `References`. Put `## Continuation` last when it is required.
-- Include a section only when it has current content, except `## Original request` and `## Last action`, which are always present. Never add another section merely to satisfy a template.
-- Prefer precise bullets and short paragraphs. State each fact once.
-- Use code blocks only for exact commands, payloads, errors, or data that must be preserved verbatim.
-- Use relative paths for files inside the working directory and absolute paths for external files.
-- Include exact paths, symbols, identifiers, commands, and error text only when continuation depends on them.
-
-## State discipline
-
-- Distinguish verified facts from pending checks and inferences.
-- Preserve the state of relevant uncommitted changes, running processes, deployments, and validations. Do not imply that pending work succeeded.
-- Keep the handoff unbiased. Report what is true and what is unresolved, and leave the next LLM free to choose its own procedure.
-- Preserve validation already completed only when it establishes a baseline that should not be repeated, and state any untested boundary that remains material.
-- Preserve user-requested scope, exclusions, and operational constraints that still govern unfinished work.
-- Mark work the user never requested and the original request does not require as optional, so the next LLM can drop it instead of inheriting it as committed scope.
-- Preserve every unfinished part of the original request, including parts no recent turn worked on. Never let the currently active sub-task stand in for the full request.
-- Safe redaction overrides every verbatim-preservation rule. Replace each secret, credential,
-  personal datum, or related sensitive value with a stable descriptive placeholder. Name a safe
-  reference to its secure source by path or identifier when available; otherwise preserve an
-  obligation to reacquire it from the user or an approved secret manager. Keep unrelated sensitive
-  tool output out entirely.
-- Exclude generic system, developer, and repository instructions; the working directory; completed
-  hook responses; skill bodies; and the bodies of separately available full specifications, plans,
-  ADRs, issues, commits, and diffs. Reference their authoritative path or identifier when unfinished
-  work needs them. When the conversation is the only authoritative source, preserve the selected
-  request wording or baseline instead.
-- Exclude injected `AGENTS.md` contents, but preserve its path when the file itself is an unfinished
-  work target.
-
-## Continuity obligations
-
-- Preserve each incomplete hook obligation and its owning hook path without copying the full hook wording.
-- Treat skill bodies loaded before the handoff as unavailable to the next LLM.
-- For every skill that remains active for unfinished work, add `## Active skills to reread` and list
-  its exact name only. Injected agent instructions own the reread mechanism.
-- Express skill continuity only through that section. Never describe a skill's earlier load state or
-  tell the next LLM to skip its read. Omit skills that no longer apply without mentioning them.
-- Treat unresolved reporting or external obligations as unfinished work.
-
-Do not fabricate state, progress, conclusions, or next steps. The shortest handoff that satisfies the completion standard is the correct handoff.
+Completion includes any required validation, documentation, reporting, and external obligations,
+not implementation alone. If nothing remains, say so without manufacturing another action. If a
+user decision or unavailable dependency blocks progress, identify the concrete gap and preserve
+independent work that can still proceed.
