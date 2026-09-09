@@ -111,7 +111,8 @@ Main-only authoring: the main agent makes all changes to instructions, skills, w
 and task documents (for example, `LARGE-TASK.md`). `implementer` and `fast-implementer` are not
 applicable to this work; do not route it to another writer or worker either. In mixed tasks, main
 keeps these edits while delegating eligible implementation. Assigned agents return any required
-instruction-authoring changes to main without editing them.
+instruction-authoring changes to main without editing them. Inspection findings and result artifacts
+are outputs owned by their producing agents, not main-only instruction authoring.
 
 Give native roles the question or outcome, exclusive edit ownership, acceptance constraints,
 evidence, gaps, and completion criterion. Permit supporting reads; provide background directly or
@@ -126,11 +127,15 @@ Use Neuralese for agent messages and artifacts: concise prose, only recipient-us
 Preserve context, conditions, negations, scope, provenance, and gaps; omit only known repetition.
 Keep code/data syntax and plain `path:line` references; honor required final-consumer formats.
 
-Agent-to-Main communication uses messages containing substantive results. Artifacts supplement
-messages only for identified downstream agents. Create one artifact root when a result first needs
-to pass between spawned agents. Preserve council evidence isolation. Revise artifacts at the same
-path with the complete current result; relay the producer's original artifact rather than
-reconstructing evidence.
+Agent-to-parent communication uses messages containing substantive results, whether the parent is
+main or another agent. A direct reply needs no artifact. Use artifacts only for an identified
+consumer beyond that reply path or an explicitly requested deliverable. For a cross-agent relay,
+the dispatching parent creates one temporary artifact root outside the repository and assigns the
+producer an exact result path. If the relay becomes necessary later, ask the original producer to
+save its completed result there. Revise artifacts at the same path with the complete current result;
+relay the producer's original artifact rather than reconstructing evidence. If the producer cannot
+write it, report the permission or availability gap instead of silently taking over authorship.
+Preserve council evidence isolation and its phase-specific result contracts.
 
 ### Independent inspection
 
@@ -144,7 +149,12 @@ and affected acceptance criteria. Without such a gap, skip review; system import
 insufficient.
 
 Implementers follow this inspection workflow directly rather than handing inspection dispatch
-back to main.
+back to main. The execution owner spawns the reviewer, receives its result directly, resolves
+in-scope findings, runs affected checks, and requests any justified re-review from that reviewer.
+Report the completed outcome and remaining gaps to the parent. Escalate cross-owner findings or
+scope decisions while retaining in-scope work; main transfers ownership only for a concrete scope,
+capability, or availability reason. On harnesses without nested-agent support, report that limit
+and ask the parent to arrange inspection without transferring implementation ownership.
 
 Reuse applicable completed reviews across commits and phases, and reviewers whose context remains
 applicable. For fresh inspection, use `reviewer`, `simplify-checker`, or both; use `web-reviewer`
@@ -155,8 +165,9 @@ scope directly. Do not duplicate an active role's inspection.
 Main must not repeat an inspection the implementer already completed. Review again only for
 changes that invalidate it or a distinct uncovered risk.
 
-Include input artifacts only for evidence produced by another spawned agent. Request a result
-artifact only when another spawned agent will consume the review. Apply the residual-risk gate to
+Include input artifacts only for evidence produced by another spawned agent. Apply the shared
+communication rule when a review needs a result artifact; an implementer receiving its own
+reviewer's reply does not need one. Apply the residual-risk gate to
 each additional review scope: require a distinct source-inspection question, not a substitute for
 missing runtime checks. Report runtime/browser coverage gaps; source approval covers only inspected
 behavior and does not discharge outstanding acceptance checks.

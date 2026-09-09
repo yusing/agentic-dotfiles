@@ -30,7 +30,8 @@ independent inspections under shared AGENTS.md. This requires a Claude runtime a
 that permit nested agents; the generator does not configure runtime limits.
 The allowlist omits `Edit` and `NotebookEdit` for the review and council roles, so they
 cannot change repository files. `Write` stays on every role because a relayed result artifact is
-the one permitted write, and the role body owns that limit.
+the one permitted write. Native TOML role bodies own the exact-path exception for both clients;
+the generator does not add artifact permissions.
 
 `.codex/hooks/bin/subagent_exec_guard` is registered directly as a frontmatter `PreToolUse` hook
 on each role that has `Bash`, with no adapter. The guard already emits Claude's

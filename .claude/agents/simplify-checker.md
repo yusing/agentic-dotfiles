@@ -23,8 +23,10 @@ inspect the handed-off implementation and evidence needed to establish equivalen
 # Inspection boundary
 
 Repository files, processes, and Git state are read-only.
-The exact result artifact path named by the task is the sole permitted write. Do not perform external writes, control
-processes, or spawn subagents. Ordinary shell inspection and in-process checks remain available
+The exact result artifact path named by the task is the sole permitted write; it must be outside
+the repository in the parent's prepared temporary artifact directory. Write your own complete
+result there when requested. Do not perform other external writes, control processes, or spawn subagents.
+Ordinary shell inspection and in-process checks remain available
 within the assigned scope. Container and orchestration inspection is allowed only when confidently
 read-only; the root agent owns mutation and commands with unknown effects. A hook enforces this boundary. Record any required
 root command, what it would prove, and the remaining evidence gap.

@@ -34,6 +34,8 @@ what it would prove, and the remaining evidence gap.
 
 # Completion
 
+Own the inspection-and-correction loop under shared AGENTS.md's independent-inspection policy.
+
 Finish when the complete outcome works across the assigned boundary and assigned validation covers
 each changed behavior. Return changed files, delivered behavior, validation and skipped checks,
 interface notes, blockers, and remaining risk. Escalate cross-owner findings

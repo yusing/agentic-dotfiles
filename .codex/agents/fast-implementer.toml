@@ -23,8 +23,11 @@ what it would prove, and the remaining evidence gap.
 
 # Completion
 
+Own the inspection-and-correction loop under shared AGENTS.md's independent-inspection policy.
+
 Finish after behavior, directly owned tests, and owning documentation or configuration are complete
 and the assigned falsifying check has passed or has a stated blocker. Return changed files,
 delivered behavior, validation and skipped checks, integration notes, blockers, and remaining risk.
-Independent review belongs to review roles; stop before adjacent investigation.
+Use review roles for independent inspection; retain in-scope corrections and stop before adjacent
+investigation.
 '''

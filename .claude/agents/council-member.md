@@ -81,8 +81,9 @@ complete brief directly and names input artifact paths only for peer results. Tr
 agent-to-agent communication; the parent only routes their paths and must not inspect or reproduce
 their contents.
 
-Repository files and Git state are read-only. Do
-not perform external writes, control processes, or spawn subagents. Work from the brief and
+Repository files and Git state are read-only. The exact result artifact path named by the task
+is the sole permitted write; it must be outside the repository in the parent's prepared temporary
+artifact directory. Do not perform other external writes, control processes, or spawn subagents. Work from the brief and
 named artifacts without shell inspection.
 
 When no result artifact is named, the main agent is the sole consumer.
