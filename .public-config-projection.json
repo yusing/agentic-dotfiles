@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ccf08bcbc88d88ac5c57a15303383dc31f3198af",
+  "sourceCommit": "5afb18166a48c54d9a1ef2358cf8c7d1663702c8",
   "outputs": [
     {
       "path": ".bashrc",
@@ -220,7 +220,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "bd8c391f568aa78932cd33cc4229f262461164296bdd7d1a824ffb2ac0d84535",
+      "sha256": "25b35325206ae53ddba4961bdcc016dcfdc7de2aec88526c8134e04494f4b31d",
       "executable": false
     },
     {
