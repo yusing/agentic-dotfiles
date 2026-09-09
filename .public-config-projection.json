@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b16f963437c424fc9bee78e37b22dd6fe3f983dc",
+  "sourceCommit": "5c13fb3b2e893acb9acfcfc7c39745a75b84a94a",
   "outputs": [
     {
       "path": ".bashrc",
@@ -124,7 +124,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "12c0123c484e88a42eee6267006f8a5cd747eb0d3ba0951baf78bb585c0abc00",
+      "sha256": "122236d05d04462aa1d89b075969cecc7554f336b86e9c8b96676629b11d7923",
       "executable": false
     },
     {
