@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.15";
+export const VERSION = "1.1.16";
 
 type TreeEntry = {
 	mode: string;
@@ -96,6 +96,7 @@ const EXACT_PATHS = new Set([
 	"CONTEXT-HOOK-ARCHITECTURE.md",
 	"CONTEXT-HOOK-OWNERS.md",
 	"CONTEXT-INSTRUCTION-SURFACES.md",
+	"CONTEXT-INSTRUCTION-AUTHORING.md",
 	"CONTEXT-SHELL.md",
 	".bashrc",
 	".bunfig.toml",
@@ -248,6 +249,8 @@ so do not treat edits made only in this repository as authoritative.
 
 ## Context index
 
+- Instruction authoring: load \`CONTEXT-INSTRUCTION-AUTHORING.md\` when auditing included
+  instructions, skills, task documents, roles, or instruction-delivery hooks.
 - Instruction surfaces: load \`CONTEXT-INSTRUCTION-SURFACES.md\` when locating static prompts,
   skills, or native Codex, Claude, and Grok roles.
 - Hook architecture: load \`CONTEXT-HOOK-ARCHITECTURE.md\` when inspecting hook registration or

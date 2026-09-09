@@ -17,8 +17,10 @@
   clearing while excluding session resume. `.codex/hooks/bin/session_start_context`
   skips the project and skill context commands on fork startup when the transcript's first
   `session_meta` record has `forked_from_id`; unavailable metadata keeps the commands enabled.
-  Compaction and clearing still refresh context. The registry injects the current skill inventory
-  into fresh subagent context.
+  Compaction and clearing still refresh root context. SubagentStart uses the same wrapper to
+  compare the current inventory with retained hook context in the child transcript. It suppresses
+  only proven identical inventory from a complete transcript of at most 256 KiB. Missing, oversized,
+  malformed, rolled-back, or unsupported history keeps delivery.
 - Go skill delivery: `.codex/hooks/bin/go_guidelines` appends the installed CLI's complete,
   module-version-specific list after a direct `skills-mgr get golang-best-practices` call.
   PostToolUse registers it for Codex, Claude, Grok, and the OMP bridge. The read's working

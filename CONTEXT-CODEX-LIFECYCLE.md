@@ -20,8 +20,11 @@
    these root-session hooks. Fork startup skips inherited project and skill context through
    `.codex/hooks/bin/session_start_context`; compaction and clearing still refresh it.
    The guard reads the transcript's initial session metadata and runs normally if it cannot
-   identify a fork. Matched events receive project context and current skill metadata
-   without selecting implementation or validation work.
+   identify a fork. Thread-spawn startup runs SubagentStart instead of root SessionStart. Its
+   inventory command uses the same wrapper to suppress output only when identical inventory is
+   proven to survive in the child's retained hook context; unknown or missing context keeps delivery.
+   Matched events receive project context, current skill metadata, and session reporting without
+   selecting implementation or validation work.
 3. **Tool loop.** Before matched tools run, guards may reject generated-Go edits or container
    mutations and unclassified commands from spawned agents. Recognized read-only container
    inspection remains available. General authorization governs cloning, and shared standing

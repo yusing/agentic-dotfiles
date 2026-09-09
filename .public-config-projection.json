@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "c487661935d7af9e2e729338b5184611abcdb4e3",
+  "sourceCommit": "ac27834924b1c3e6bdc10d1721f4e4d02ac736f2",
   "outputs": [
     {
       "path": ".bashrc",
@@ -412,7 +412,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "7e82fd585e1be63ed589c09b40291d73f6b420c66b41f9322fc63cfa1fffae42",
+      "sha256": "b36173665882ab6858aea6aac424aa469fc0af45b2c532721611f5a1daf8be92",
       "executable": false
     },
     {
@@ -490,7 +490,7 @@
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "e95e868f32611d2981f9f1f8e84815d2657f975c585805700719e35d780ccfa2",
+      "sha256": "2d551bc6cbdeb66147acaf50a862b6f353cd9edbf6b5b835693d44d21b902178",
       "executable": true
     },
     {
@@ -982,7 +982,7 @@
     {
       "path": "AGENTS.md",
       "kind": "file",
-      "sha256": "e9c45108857fb440b5b00ad9a6cb14eab07e34755acaba459f89ec55cbdb2826",
+      "sha256": "cdb6e2e8e7833a14491ee5c44aa14d5adfbac681e745a0d2c00bc5feb9f0851e",
       "executable": false
     },
     {
@@ -999,7 +999,7 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "7b6a222b7210811a216d3315a4867a9cd96160c140af6b967d38e614898572cf",
+      "sha256": "ab1f7276db6c322ea4f9d1bb4d77d22ba48f12d78f91439f9bb9c6c074f685d5",
       "executable": false
     },
     {
@@ -1023,13 +1023,19 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "3b876a022fe035ac83e10b5a1740dfb1d5c70154c2c12e02bb4556a3467bd13c",
+      "sha256": "680a0f3576d0bf0cd227f7023162bb14a88c9cd6410b88160780a6cd17479eec",
+      "executable": false
+    },
+    {
+      "path": "CONTEXT-INSTRUCTION-AUTHORING.md",
+      "kind": "file",
+      "sha256": "f7681d6af7d98f8a307e8df0ca50fbe93eccb945e5e8a70f5b035779fa6cc18b",
       "executable": false
     },
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "362bcfef8ede5c681f7481ee45b63b344af46d1ab1329fae1a8305ca63ef64d5",
+      "sha256": "589743215926c3074d4273e3dcec4e875d552a3ccb70d0fa41e0e45711e790e9",
       "executable": false
     },
     {

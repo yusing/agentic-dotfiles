@@ -11,6 +11,7 @@ copy. `.grok/AGENTS.md` is a Grok-only extra instruction file that `@`-reference
 ## Paths
 
 - `AGENTS.md`
+- `CONTEXT-INSTRUCTION-AUTHORING.md`
 - `.codex/AGENTS.md`
 - `.codex/LARGE-TASK.md`
 - `.codex/IMPLEMENTATION.md`
