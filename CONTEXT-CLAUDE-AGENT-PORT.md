@@ -26,9 +26,11 @@ prompt and task/result contract are read directly from the native TOML, so sourc
 cannot pass the focused test while generated ports are stale.
 
 Claude enforces structurally what Codex states by prompt. The `tools` allowlist omits `Agent`,
-so no role can spawn another agent, and it omits `Edit` and `NotebookEdit` for the review and
-council roles, so they cannot change repository files. `Write` stays on every role because a
-relayed result artifact is the one permitted write, and the role body owns that limit.
+so no role can spawn another agent. The generator maps the Codex implementer's nested-inspection
+permission to an explicit capability blocker and parent handoff instead of rendering an unusable
+permission. The allowlist omits `Edit` and `NotebookEdit` for the review and council roles, so they
+cannot change repository files. `Write` stays on every role because a relayed result artifact is
+the one permitted write, and the role body owns that limit.
 
 `.codex/hooks/bin/subagent_exec_guard` is registered directly as a frontmatter `PreToolUse` hook
 on each role that has `Bash`, with no adapter. The guard already emits Claude's

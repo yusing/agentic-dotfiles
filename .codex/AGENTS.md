@@ -131,18 +131,28 @@ reconstructing evidence.
 
 For explicit code reviews, state when the requested scope extends beyond the pending diff.
 
-After implementation and focused validation of production or operational changes, assess the
-actual change and remaining evidence. Before dispatch, identify an important contract that
+After implementation and focused validation of production or operational changes, the execution
+owner assesses the actual change and remaining evidence. Before dispatch, identify an important contract that
 completed checks leave unverified, the impact if it fails, and what independent source inspection
 could establish. Include that residual risk in the review scope alongside the requested outcome
 and affected acceptance criteria. Without such a gap, skip review; system importance alone is
 insufficient.
+
+An implementer whose native role permits inspection dispatch completes that inspection before
+returning: launch the permitted review roles, wait for their results, resolve supported in-scope
+findings, rerun checks invalidated by corrections, and return the inspection evidence and finding
+dispositions. A role or harness without that capability returns the exact required scope and
+capability blocker to its parent. Main applies the same gate when it executes the change directly.
 
 Reuse applicable completed reviews across commits and phases, and reviewers whose context remains
 applicable. For fresh inspection, use `reviewer`, `simplify-checker`, or both; use `web-reviewer`
 when the remaining risk requires frontend inspection, with relevant upstream artifacts and
 consumer-based result mode. Dispatch independent scopes concurrently; give each its exact review
 scope directly. Do not duplicate an active role's inspection.
+
+When main receives completed inspection evidence from an implementer, consume and reuse it; the
+handoff alone does not justify another review. Dispatch an additional review only after invalidating
+changes or for a distinct uncovered contract or risk.
 
 Include input artifacts only for evidence produced by another spawned agent. Request a result
 artifact only when another spawned agent will consume the review. Apply the residual-risk gate to

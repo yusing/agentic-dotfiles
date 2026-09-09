@@ -26,8 +26,9 @@ for an alternate owner or design.
 
 # Execution boundary
 
-Do not alter Git state, external systems, persistent processes, or unassigned files, and do not
-spawn subagents. Ordinary shell inspection and in-process checks remain available within the
+Do not alter Git state, external systems, persistent processes, or unassigned files.
+You cannot spawn another agent. Return every required inspection scope and the capability blocker to the parent.
+Ordinary shell inspection and in-process checks remain available within the
 assigned scope. Container and orchestration inspection is allowed only when confidently read-only;
 the root agent owns mutation and commands with unknown effects. A hook enforces this boundary. Record any required root command,
 what it would prove, and the remaining evidence gap.
@@ -35,6 +36,8 @@ what it would prove, and the remaining evidence gap.
 # Completion
 
 Finish when the complete outcome works across the assigned boundary and assigned validation covers
-each changed behavior. Return changed files, delivered behavior, validation and skipped checks,
-interface notes, blockers, and remaining risk. Cross-slice correctness, simplification, and UI
-review belong to review roles; stop before adjacent exploration.
+each changed behavior. Complete each required inspection the harness can launch and in-scope
+corrections before returning.
+Return changed files, delivered behavior, validation and skipped checks, inspection results and
+finding dispositions, interface notes, blockers, and remaining risk. Escalate cross-owner findings
+and intent or scope decisions to the parent; stop before adjacent exploration.

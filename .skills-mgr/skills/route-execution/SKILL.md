@@ -93,6 +93,9 @@ Severity alone does not establish attribution or certainty. Route complete findi
 accountable implementer; root resolves scope and ownership, while conflicting technical evidence
 returns to the responsible implementer or reviewer for resolution.
 
+Treat completed inspection evidence in an implementer's result as the current review record under
+the shared reuse policy; crossing the parent handoff does not invalidate it.
+
 Before reporting completion, reconcile current owner records with the actual changed paths and
 cross-slice interactions. Resolve unowned changes or missing claimed work; report implementation,
 review, and integration status separately rather than equating a checked item with a reviewed whole.
