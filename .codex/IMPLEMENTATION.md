@@ -18,8 +18,7 @@ Git history, including parent repositories and submodules.
 
 An assigned subagent already has its role and scope. Apply this document within that assignment,
 resolve permitted local implementation details, and return scope or ownership changes and blockers
-to the parent. Reading task guidance does not reopen assignment or grant delegation permissions;
-a native role may separately grant narrow inspection dispatch.
+to the parent. Reading task guidance does not reopen assignment.
 
 ### Main's routing decision
 
@@ -43,9 +42,7 @@ not token reduction alone.
 Execution ownership changes who does the work, not which required checks or independent
 inspections must pass.
 
-Follow the shared independent-inspection policy at the current execution owner. Its native role
-controls whether it dispatches reviews or returns a capability blocker. Main's final quality
-decision does not move implementer-owned inspection work back to main.
+Follow the shared independent-inspection policy in AGENTS.md.
 
 Run new or changed focused checks first, fix their failures, then run required broader or
 integrated checks.
