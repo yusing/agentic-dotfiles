@@ -64,6 +64,13 @@ When the home Git repository has a commit at `HEAD` (including worktrees), Git
 setup is skipped: no identity, hooks, remote, branch, fetch, or checkout changes.
 An empty repository is force-checked out to `origin/main`; an existing unrelated
 origin is rejected. Tool installation and configuration still run.
+
+Helper compilation is incremental: unchanged sources and build inputs reuse the
+existing executable. With this repository's `.githooks` enabled, a successful
+merge or rebase (including `git pull`) runs the same incremental build, so helper
+updates do not require a full setup run. Commit amendments do not trigger it.
+You can also run `.local/bin/compile-agent-tools` directly after editing a helper.
+
 Setup rewrites `/home/<user>`, `/User/<user>`, and `/Users/<user>` paths in
 tracked runtime configuration to the current home, plus `$HOME` in agent
 configuration. Colliding JSON and TOML keys are merged recursively; later values

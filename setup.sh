@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.2.6
+# version: 2.2.7
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -253,7 +253,50 @@ ensure_toml_parser() {
 
 # JSON values travel as data, never as shell source. Validate before emitting any
 # records so malformed config cannot turn into a partial install plan.
+# Only main enables this cache, after copying its immutable run snapshot.
+# Manifest fields and query output remain data, including shell metacharacters.
+setup_config_cached() {
+  local wanted_count="$#" wanted_action="${1-}" wanted_arg1="${2-}" wanted_arg2="${3-}"
+  local id status count action arg1 arg2 extra line
+  [ "$wanted_count" -le 3 ] || return 2
+  [ -r "$SETUP_CONFIG_CACHE/manifest" ] || return 2
+  while IFS='|' read -r id status count action arg1 arg2 extra; do
+    [ "$count" = "$wanted_count" ] || continue
+    [ "$action" = "$wanted_action" ] || continue
+    [ "$arg1" = "$wanted_arg1" ] || continue
+    [ "$arg2" = "$wanted_arg2" ] || continue
+    [ -z "$extra" ] || return 2
+    [ -r "$SETUP_CONFIG_CACHE/$id.out" ] || return 2
+    while IFS= read -r line; do
+      printf '%s\n' "$line"
+    done <"$SETUP_CONFIG_CACHE/$id.out"
+    return "$status"
+  done <"$SETUP_CONFIG_CACHE/manifest"
+  return 2
+}
+
+prepare_setup_config_cache() {
+  local cache_dir="$1"
+  setup_config cache-build "$cache_dir" || return 1
+  SETUP_CONFIG_CACHE="$cache_dir"
+  SETUP_CONFIG_CACHE_CONFIG="$SETUP_CONFIG"
+  SETUP_CONFIG_CACHE_PM="$PM"
+  SETUP_CONFIG_CACHE_OS="$OS"
+}
+
 setup_config() {
+  local cache_status
+  if [ -n "${SETUP_CONFIG_CACHE:-}" ] \
+    && [ "$SETUP_CONFIG" = "${SETUP_CONFIG_CACHE_CONFIG:-}" ] \
+    && [ "$PM" = "${SETUP_CONFIG_CACHE_PM:-}" ] \
+    && [ "$OS" = "${SETUP_CONFIG_CACHE_OS:-}" ]; then
+    if setup_config_cached "$@"; then
+      return 0
+    else
+      cache_status=$?
+      [ "$cache_status" -eq 2 ] || return "$cache_status"
+    fi
+  fi
   SETUP_PM="$PM" SETUP_OS="$OS" \
     py - "$SETUP_CONFIG" "$@" <<'PY'
 import json
@@ -400,39 +443,81 @@ try:
                 string(item["origin_contains"])
 
     action = sys.argv[2]
-    name = sys.argv[3] if len(sys.argv) > 3 else ""
+    arguments = sys.argv[3:]
     pm = os.environ["SETUP_PM"]
     platform = {"Darwin": "macos", "Linux": "linux"}.get(os.environ["SETUP_OS"])
-    output = []
-    if action == "validate":
-        pass
-    elif action.startswith("native-"):
-        if action in ("native-required", "native-optional"):
-            output = [key for key, entry in config["native"].items()
-                      if entry["packages"].get(pm, []) and entry.get("optional", False) == (action == "native-optional")]
-        elif action == "native-enabled":
-            sys.exit(0 if config["native"].get(name, {}).get("packages", {}).get(pm) else 1)
-        else:
-            entry = config["native"][name]
-            if action == "native-packages":
-                output = entry["packages"].get(pm, [])
-            elif action == "native-command":
-                output = entry.get("commands", [])[:1]
-            elif action == "native-commands":
-                output = entry.get("commands", [])
-            elif action == "native-prefix":
-                output = [entry.get("brew_prefix", "")]
+
+    def query(query_action, query_arguments):
+        name = query_arguments[0] if query_arguments else ""
+        output = []
+        status = 0
+        if query_action == "validate":
+            pass
+        elif query_action.startswith("native-"):
+            if query_action in ("native-required", "native-optional"):
+                output = [key for key, entry in config["native"].items()
+                          if entry["packages"].get(pm, []) and entry.get("optional", False) == (query_action == "native-optional")]
+            elif query_action == "native-enabled":
+                status = 0 if config["native"].get(name, {}).get("packages", {}).get(pm) else 1
             else:
-                raise ValueError(f"unknown action: {action}")
-    elif action == "mise-render":
-        sys.stdout.write(rendered)
-        sys.exit(0)
-    elif action in ("mise-plan", "mise-verify-lock"):
+                entry = config["native"][name]
+                if query_action == "native-packages":
+                    output = entry["packages"].get(pm, [])
+                elif query_action == "native-command":
+                    output = entry.get("commands", [])[:1]
+                elif query_action == "native-commands":
+                    output = entry.get("commands", [])
+                elif query_action == "native-prefix":
+                    output = [entry.get("brew_prefix", "")]
+                else:
+                    raise ValueError(f"unknown action: {query_action}")
+        elif query_action == "mise-render":
+            return 0, rendered
+        elif query_action.startswith("mise-"):
+            tools = config["mise"]["tools"]
+            def platforms(value):
+                return value.get("os", ["linux", "macos"]) if isinstance(value, dict) else ["linux", "macos"]
+            if query_action == "mise-records":
+                for tool in tools:
+                    command = config["mise_commands"].get(tool, tool.rsplit(":", 1)[-1].rsplit("/", 1)[-1])
+                    string(tool)
+                    string(command)
+                    output.append(f"{tool}|{command}")
+            elif query_action == "mise-applies":
+                status = 0 if name in tools and platform in platforms(tools[name]) else 1
+            elif query_action == "mise-has":
+                status = 0 if name in tools else 1
+            else:
+                raise ValueError(f"unknown action: {query_action}")
+        elif query_action == "vendors":
+            output = [f"{key}|{entry['label']}" for key, entry in config["vendors"].items()]
+        elif query_action == "vendor-field":
+            value = config["vendors"][name].get(query_arguments[1], [])
+            output = value if isinstance(value, list) else [value]
+        elif query_action == "vendor-env":
+            output = [f"{key}={value}" for key, value in config["vendors"][name].get("env", {}).items()]
+        elif query_action.startswith("legacy-"):
+            entry = config["legacy"].get(name, {})
+            if query_action == "legacy-packages":
+                output = entry.get("packages", {}).get(pm, [])
+            elif query_action == "legacy-bun":
+                output = [entry.get("bun", "")]
+            elif query_action == "legacy-files":
+                output = [f"{item['path']}|{item['command']}" for item in entry.get("files", [])]
+            elif query_action == "legacy-directories":
+                output = [f"{item['path']}|{item.get('executable', '')}|{item.get('origin_contains', '')}" for item in entry.get("directories", [])]
+            else:
+                raise ValueError(f"unknown action: {query_action}")
+        else:
+            raise ValueError(f"unknown action: {query_action}")
+        return status, "".join(f"{value}\n" for value in output)
+
+    if action in ("mise-plan", "mise-verify-lock"):
         try:
             import tomllib
         except ImportError:
             import tomli as tomllib
-        root = Path(name)
+        root = Path(arguments[0])
         def read_toml(path):
             return tomllib.loads(path.read_text()) if path.exists() else {}
         previous = read_toml(root / "previous.toml")
@@ -453,7 +538,7 @@ try:
             tools = desired.get("tools", {})
             changed = {
                 tool for tool, value in tools.items()
-                if sys.argv[4] == "1" or previous.get("tools", {}).get(tool) != value
+                if arguments[1] == "1" or previous.get("tools", {}).get(tool) != value
                 or len(old_tools.get(tool, [])) != 1
                 or not lock_matches(tool, value, old_tools[tool][0])
             }
@@ -494,45 +579,43 @@ try:
                     bootstrap.append(f"{runtime}|{mode}\n")
             (root / "bootstrap-tools").write_text("".join(bootstrap))
             print(f"mise lock: {len(changed)} added/changed, {len(set(old_tools) - set(tools))} removed, {len(retained)} retained")
-    elif action.startswith("mise-"):
+    elif action == "cache-build":
+        cache = Path(arguments[0])
+        require(not cache.exists(), "setup config cache already exists")
+        cache.mkdir(mode=0o700)
+        queries = [("native-required",), ("native-optional",), ("mise-render",), ("mise-records",), ("vendors",)]
+        for name in config["native"]:
+            queries.extend((query_action, name) for query_action in
+                           ("native-enabled", "native-packages", "native-command", "native-commands", "native-prefix"))
+        for name in ("llvm", "eza"):
+            if name not in config["native"]:
+                queries.append(("native-enabled", name))
         tools = config["mise"]["tools"]
-        def platforms(value):
-            return value.get("os", ["linux", "macos"]) if isinstance(value, dict) else ["linux", "macos"]
-        if action == "mise-records":
-            for tool in tools:
-                command = config["mise_commands"].get(tool, tool.rsplit(":", 1)[-1].rsplit("/", 1)[-1])
-                string(tool)
-                string(command)
-                output.append(f"{tool}|{command}")
-        elif action == "mise-applies":
-            sys.exit(0 if name in tools and platform in platforms(tools[name]) else 1)
-        elif action == "mise-has":
-            sys.exit(0 if name in tools else 1)
-        else:
-            raise ValueError(f"unknown action: {action}")
-    elif action == "vendors":
-        output = [f"{key}|{entry['label']}" for key, entry in config["vendors"].items()]
-    elif action == "vendor-field":
-        value = config["vendors"][name].get(sys.argv[4], [])
-        output = value if isinstance(value, list) else [value]
-    elif action == "vendor-env":
-        output = [f"{key}={value}" for key, value in config["vendors"][name].get("env", {}).items()]
-    elif action.startswith("legacy-"):
-        entry = config["legacy"].get(name, {})
-        if action == "legacy-packages":
-            output = entry.get("packages", {}).get(pm, [])
-        elif action == "legacy-bun":
-            output = [entry.get("bun", "")]
-        elif action == "legacy-files":
-            output = [f"{item['path']}|{item['command']}" for item in entry.get("files", [])]
-        elif action == "legacy-directories":
-            output = [f"{item['path']}|{item.get('executable', '')}|{item.get('origin_contains', '')}" for item in entry.get("directories", [])]
-        else:
-            raise ValueError(f"unknown action: {action}")
+        for tool in tools:
+            queries.extend((("mise-applies", tool), ("mise-has", tool)))
+        if "github:llvm/llvm-project" not in tools:
+            queries.append(("mise-has", "github:llvm/llvm-project"))
+        for name in config["vendors"]:
+            queries.append(("vendor-env", name))
+            queries.extend(("vendor-field", name, field) for field in
+                           ("path", "url", "shell", "label", "update", "legacy_mise"))
+        legacy_names = set(config["legacy"]) | {"mise"}
+        for tool in tools:
+            legacy_names.add(config["mise_commands"].get(tool, tool.rsplit(":", 1)[-1].rsplit("/", 1)[-1]))
+        for name in sorted(legacy_names):
+            queries.extend((query_action, name) for query_action in
+                           ("legacy-packages", "legacy-bun", "legacy-files", "legacy-directories"))
+        manifest = []
+        for index, cached_query in enumerate(queries):
+            status, text = query(cached_query[0], cached_query[1:])
+            (cache / f"{index}.out").write_text(text)
+            fields = [str(index), str(status), str(len(cached_query)), *cached_query]
+            manifest.append("|".join(fields) + "\n")
+        (cache / "manifest").write_text("".join(manifest))
     else:
-        raise ValueError(f"unknown action: {action}")
-    for value in output:
-        print(value)
+        status, text = query(action, arguments)
+        sys.stdout.write(text)
+        sys.exit(status)
 except (ValueError, KeyError, TypeError, OSError, ImportError) as error:
     print(f"setup config: {error}", file=sys.stderr)
     sys.exit(1)
@@ -913,7 +996,7 @@ validate_mise_tool() {
 }
 
 install_locked_mise_tools() {
-  local tool cmd path
+  local tool cmd path repaired=0
   info "installing the locked Go toolchain"
   mise_cmd install --locked go
   validate_mise_tool go go
@@ -929,10 +1012,11 @@ install_locked_mise_tools() {
     if [ -z "$path" ] || [ ! -x "$path" ]; then
       info "reinstalling $tool so $cmd is available"
       mise_cmd install --force --locked "$tool"
+      validate_mise_tool "$tool" "$cmd"
+      repaired=1
     fi
-    validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
-  mise_cmd reshim
+  [ "$repaired" -eq 0 ] || mise_cmd reshim
 }
 
 validate_mise_lock() {
@@ -1367,8 +1451,10 @@ cleanup_legacy_files() {
   records="$(setup_config legacy-files "$cmd")" || return 1
   while IFS='|' read -r path probe; do
     [ -n "$path" ] || continue
+    path="${HOME}/$path"
+    [ -e "$path" ] || [ -L "$path" ] || continue
     replacement="$(mise_cmd which "$probe" 2>/dev/null || true)"
-    remove_legacy_file "${HOME}/$path" "$replacement"
+    remove_legacy_file "$path" "$replacement"
   done <<<"$records"
   records="$(setup_config legacy-directories "$cmd")" || return 1
   while IFS='|' read -r path probe origin; do
@@ -1392,12 +1478,16 @@ cleanup_go_toolchain_command() {
   case "$cmd" in ''|*/*|go|gofmt|.|..) die "unsafe Go cleanup command: $cmd" ;; esac
   replacement="$(mise_tool_path "$tool" "$cmd")" || return 1
   [ -x "$replacement" ] || die "cannot clean up $cmd without its mise package binary"
-  installs="$(mise_cmd ls go --installed --json)" || return 1
-  installs="$(printf '%s' "$installs" | py -c '
+  if [ "$#" -ge 3 ]; then
+    installs="$3"
+  else
+    installs="$(mise_cmd ls go --installed --json)" || return 1
+    installs="$(printf '%s' "$installs" | py -c '
 import json, sys
 for tool in json.load(sys.stdin):
     print(tool["install_path"])
 ')" || return 1
+  fi
   while IFS= read -r root; do
     [ -n "$root" ] || continue
     case "$root" in /*) ;; *) die "invalid Go installation path: $root" ;; esac
@@ -1407,7 +1497,7 @@ for tool in json.load(sys.stdin):
 }
 
 cleanup_legacy_tool_sources() {
-  local tool cmd pkg
+  local tool cmd pkg go_installs="" go_installs_ready=0
   local packages=() bun_packages=()
   info "reconciling tool ownership"
   while IFS= read -r pkg; do
@@ -1428,7 +1518,20 @@ cleanup_legacy_tool_sources() {
   remove_legacy_bun_packages ${bun_packages[@]+"${bun_packages[@]}"}
   while IFS='|' read -r tool cmd; do
     mise_tool_applies "$tool" || continue
-    cleanup_go_toolchain_command "$tool" "$cmd"
+    case "$tool" in
+      go:*)
+        if [ "$go_installs_ready" -eq 0 ]; then
+          go_installs="$(mise_cmd ls go --installed --json)" || return 1
+          go_installs="$(printf '%s' "$go_installs" | py -c '
+import json, sys
+for tool in json.load(sys.stdin):
+    print(tool["install_path"])
+')" || return 1
+          go_installs_ready=1
+        fi
+        cleanup_go_toolchain_command "$tool" "$cmd" "$go_installs"
+        ;;
+    esac
     cleanup_legacy_files "$cmd"
     validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
@@ -1729,7 +1832,7 @@ main() {
     curl -fsSL "https://raw.githubusercontent.com/${REPO_SLUG}/main/setup.json" -o "$SETUP_RUN_DIR/setup.json"
   fi
   SETUP_CONFIG="$SETUP_RUN_DIR/setup.json"
-  setup_config validate
+  prepare_setup_config_cache "$SETUP_RUN_DIR/cache"
 
   # Bring Arch's system and repository databases forward together before installs.
   if [ "$PM" = pacman ]; then

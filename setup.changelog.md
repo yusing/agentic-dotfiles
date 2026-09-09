@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.7
+
+Reuse validated setup configuration queries within each run instead of starting Python for every lookup. Read installed Go toolchains once during ownership cleanup, skip replacement probes for absent legacy files, and avoid duplicate mise command probes and unnecessary reshimming. Locked tool reconciliation, repair, and final verification remain enabled.
+
 ## 2.2.6
 
 Probe Homebrew casks explicitly when checking installed packages. Recognize installed fonts during setup verification, skip reinstalling them, and include them in native upgrades.

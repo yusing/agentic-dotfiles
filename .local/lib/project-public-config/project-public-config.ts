@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.13";
+export const VERSION = "1.1.14";
 
 type TreeEntry = {
 	mode: string;
@@ -157,6 +157,8 @@ const EXACT_PATHS = new Set([
 	".grok/hooks/skills-path-guard.json",
 	".grok/hooks/skills_path_guard.ts",
 	".local/bin/check_project",
+	".local/lib/compile-agent-tools/compile-agent-tools.ts",
+	".local/lib/compile-agent-tools/CHANGELOG.md",
 	".local/bin/compile-agent-tools",
 	".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
 	".local/lib/rewrite-home-paths/package.json",

@@ -36,10 +36,14 @@ comment at the top. The changelog records every version.
 
 ## Compile
 
-`.local/bin/compile-agent-tools` rebuilds the binaries for the current
-machine. `setup.sh` runs it. Source lives beside the changelog; the runnable
-form is the compiled binary under `.codex/hooks/bin/` or `.grok/hooks/bin/`
-for hooks, and the helper's path under `.local/bin/` for helpers.
+`.local/bin/compile-agent-tools` builds missing or changed binaries for the current
+machine, reusing executables when their source and build inputs are unchanged.
+`setup.sh` and the Git merge/rebase hooks run it. Its short shell bootstrap builds
+the compiler engine from `.local/lib/compile-agent-tools/compile-agent-tools.ts`.
+
+Helper and hook source lives beside its changelog. The runnable form is the compiled
+binary under `.codex/hooks/bin/` or `.grok/hooks/bin/` for hooks, and the helper's
+path under `.local/bin/` for helpers.
 
 `.grok/hooks/bin/adapt_codex_hook` is a user-owned hook command: it adapts
 the Grok envelope and runs TypeScript Codex policy in-process so startup

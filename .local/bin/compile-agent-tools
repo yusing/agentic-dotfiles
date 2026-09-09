@@ -1,70 +1,55 @@
 #!/bin/sh
-# version: 1.0.4
-# Rebuild user-owned helper and hook binaries for this machine.
+# version: 1.1.0
+# Rebuild changed user-owned helper and hook binaries for this machine.
 
 set -eu
 
-HOME=${HOME:?HOME must be set}
-HOOKS=$HOME/.codex/hooks
-GROK_HOOKS=$HOME/.grok/hooks
-BIN=$HOOKS/bin
-GROK_BIN=$GROK_HOOKS/bin
-LOCAL_BIN=$HOME/.local/bin
-LOCAL_LIB=$HOME/.local/lib
+tool_home=${HOME:?HOME must be set}
+local_bin=$tool_home/.local/bin
+engine_source=$tool_home/.local/lib/compile-agent-tools/compile-agent-tools.ts
+engine=$local_bin/compile-agent-tools-engine
+cache_root=${XDG_CACHE_HOME:-"$tool_home/.cache"}/compile-agent-tools
+wrapper_dir=$(CDPATH='' cd -- "$(dirname "$0")" && pwd)
+wrapper=$wrapper_dir/$(basename "$0")
 
-mkdir -p "$BIN" "$GROK_BIN"
+# Git hooks do not activate an interactive shell. Append setup-owned command
+# locations only when needed so caller-selected tools keep precedence.
+if ! command -v bun >/dev/null 2>&1 || ! command -v scriptc >/dev/null 2>&1; then
+	PATH=$PATH:$tool_home/.local/share/mise/shims:$local_bin
+	export PATH
+fi
+bun_path=$(command -v bun)
+bun_identity=$bun_path:$("$bun_path" --version)
+target_identity=$(uname -s)-$(uname -m)
+mkdir -p "$cache_root"
+state=$cache_root/bootstrap.digest
+digest=$(
+	{
+		printf '%s\n' "bun=$bun_identity target=$target_identity flags=build--compile"
+		git hash-object "$wrapper" "$engine_source"
+		[ ! -f "$tool_home/.bunfig.toml" ] || git hash-object "$tool_home/.bunfig.toml"
+	} | git hash-object --stdin
+)
 
-compile_hook() {
-	src=$1
-	out=$2
-	set --
-	if grep -q 'locked_state\.ts' "$src"; then
-		set -- --ffi "$HOOKS/lib/flock.ffi.json"
-	fi
-	scriptc build "$src" -o "$out" --no-keep-c "$@"
-	chmod 755 "$out"
-}
-
-compile_helper() {
-	src=$1
-	out=$2
-	bun build --compile --outfile="$out" "$src"
-	chmod 755 "$out"
-}
-
-if [ -f "$LOCAL_LIB/rewrite-home-paths/package.json" ]; then
-	(cd "$LOCAL_LIB/rewrite-home-paths" && bun install --frozen-lockfile --ignore-scripts)
-	compile_helper "$LOCAL_LIB/rewrite-home-paths/rewrite-home-paths.ts" "$LOCAL_BIN/rewrite-home-paths"
+stored=
+if [ -r "$state" ]; then
+	IFS= read -r stored < "$state" || stored=
+fi
+if [ ! -x "$engine" ] || [ "$stored" != "$digest" ]; then
+	build_temp=$engine.compile-agent-tools.$$
+	state_temp=$state.tmp.$$
+	cleanup() {
+		rm -f "$build_temp" "$state_temp"
+	}
+	trap cleanup EXIT HUP INT TERM
+	"$bun_path" build --compile --outfile="$build_temp" "$engine_source"
+	chmod 755 "$build_temp"
+	mv -f "$build_temp" "$engine"
+	build_temp=
+	printf '%s\n' "$digest" > "$state_temp"
+	mv -f "$state_temp" "$state"
+	state_temp=
+	trap - EXIT HUP INT TERM
 fi
 
-compile_hook "$HOOKS/generated_code_guard.ts" "$BIN/generated_code_guard"
-compile_hook "$HOOKS/subagent_exec_guard.ts" "$BIN/subagent_exec_guard"
-compile_hook "$HOOKS/go_guidelines.ts" "$BIN/go_guidelines"
-compile_hook "$HOOKS/skills_mgr_inventory.ts" "$BIN/skills_mgr_inventory"
-compile_hook "$HOOKS/check_project.ts" "$BIN/check_project"
-compile_hook "$HOOKS/session_start_context.ts" "$BIN/session_start_context"
-compile_hook "$GROK_HOOKS/adapt_codex_hook.ts" "$GROK_BIN/adapt_codex_hook"
-compile_hook "$GROK_HOOKS/skills_path_guard.ts" "$GROK_BIN/skills_path_guard"
-
-if [ -f "$LOCAL_LIB/grok-explore/grok-explore.ts" ]; then
-	compile_helper "$LOCAL_LIB/grok-explore/grok-explore.ts" "$LOCAL_BIN/grok-explore"
-fi
-if [ -f "$LOCAL_LIB/sync-claude-agent-ports/sync-claude-agent-ports.ts" ]; then
-	compile_helper "$LOCAL_LIB/sync-claude-agent-ports/sync-claude-agent-ports.ts" "$LOCAL_BIN/sync-claude-agent-ports"
-fi
-if [ -f "$LOCAL_LIB/claude-config-helper/claude-config-helper.ts" ]; then
-	compile_helper "$LOCAL_LIB/claude-config-helper/claude-config-helper.ts" "$LOCAL_BIN/claude-config-helper"
-fi
-if [ -f "$LOCAL_LIB/patch-bitwarden-cli-fast-exit/patch-bitwarden-cli-fast-exit.ts" ]; then
-	compile_helper "$LOCAL_LIB/patch-bitwarden-cli-fast-exit/patch-bitwarden-cli-fast-exit.ts" "$LOCAL_BIN/patch-bitwarden-cli-fast-exit"
-fi
-compile_helper "$LOCAL_LIB/project-public-config/project-public-config.ts" "$LOCAL_BIN/project-public-config"
-if [ -f "$LOCAL_LIB/svn-merge/svn-merge.ts" ]; then
-	compile_helper "$LOCAL_LIB/svn-merge/svn-merge.ts" "$LOCAL_BIN/svn-merge"
-fi
-if [ -f "$LOCAL_LIB/open-file-in-herdr/open-file-in-herdr.ts" ]; then
-	compile_helper "$LOCAL_LIB/open-file-in-herdr/open-file-in-herdr.ts" "$LOCAL_BIN/open-file-in-herdr"
-fi
-if [ -f "$LOCAL_LIB/deltapath-wifi-routes/deltapath-wifi-routes.ts" ]; then
-	compile_helper "$LOCAL_LIB/deltapath-wifi-routes/deltapath-wifi-routes.ts" "$LOCAL_BIN/deltapath-wifi-routes"
-fi
+exec "$engine" "$@"

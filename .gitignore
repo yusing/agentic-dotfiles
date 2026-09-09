@@ -115,6 +115,9 @@ __pycache__
 !/.local/bin/compile-agent-tools
 !/.local/bin/grok-explore
 !/.local/lib/
+!/.local/lib/compile-agent-tools/
+!/.local/lib/compile-agent-tools/CHANGELOG.md
+!/.local/lib/compile-agent-tools/compile-agent-tools.ts
 !/.local/lib/project-public-config/
 !/.local/lib/project-public-config/project-public-config.ts
 !/.local/lib/rewrite-home-paths/
