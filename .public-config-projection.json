@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3a3df240cd2365721dd2726b3a75dc1b74cc5e8b",
+  "sourceCommit": "6a5e08bdb787667073190116fd018db568a35f21",
   "outputs": [
     {
       "path": ".bashrc",
@@ -94,7 +94,7 @@
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "b305bb0b2c1ffb7add69b9e1af1b3db4bd371d7b54a40b54305ba18d6714d31a",
+      "sha256": "6dd177597e07fbfbb7b98d2487cf9124f82a0d2668ce5bdcb2ece082d9bb8d3d",
       "executable": false
     },
     {
