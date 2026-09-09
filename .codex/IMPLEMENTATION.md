@@ -22,13 +22,13 @@ to the parent. Reading task guidance does not reopen assignment or grant delegat
 
 ### Main's routing decision
 
-Main owns user intent, cross-owner contracts, acceptance, and final quality decisions. For simple
-tasks, direct execution can be the fastest and cheapest complete path. Delegate settled
-implementation, documentation, test authoring, or routine validation when a suitable worker saves
-enough execution effort to outweigh handoff and likely rework. This authorizes delegation within
-the active harness's tool and parallelism constraints. Once selected, use `route-execution` to
-choose and brief the delegate.
-Preserve direct requests for main-agent execution and each harness's available roles and tools.
+Main owns user intent, diagnosis, cross-owner contracts, difficult test-case design, acceptance,
+and final quality decisions. Delegate settled implementation, documentation, test authoring, and
+routine validation to a suitable cheaper execution owner. Bundle related work with that owner.
+Execute directly only for a genuinely trivial isolated edit, an explicit user request for
+main-agent execution, or an unavailable suitable worker. Familiarity or simplicity alone is not
+an exception. This authorizes delegation within the active harness's tool and parallelism
+constraints. Use `route-execution` to choose and brief the delegate.
 
 Keep coherent code, tests, documentation, and corrections with one execution owner. Main designs
 difficult failure cases and evaluates evidence; the owner writes and runs the checks. Escalate
