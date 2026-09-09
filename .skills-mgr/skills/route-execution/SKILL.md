@@ -18,9 +18,8 @@ coordination.
 
 ## Select and brief the delegate
 
-Choose a role by the assignment's remaining uncertainty, required capability, and available
-harness tools. Give the outcome, owned paths, settled contracts, exclusions, checks, and escalation
-conditions. Supply needed decisions, not an implementation tutorial. Bundle related small work
+Apply the shared role-selection policy. Give the outcome, owned paths, settled contracts,
+exclusions, checks, and escalation conditions. Supply needed decisions, not an implementation tutorial. Bundle related small work
 and use only history that helps the delegate avoid rediscovery.
 
 ### Codex model selection
@@ -29,10 +28,8 @@ These settings apply only to Codex; other harnesses retain their native role and
 Keep Astra on orchestration, difficult reasoning, and quality judgment. For `implementer`, main
 explicitly chooses `gpt-6-astra` with `low` reasoning for unresolved local complexity, or
 `gpt-5.6-sol` with `high` reasoning and `service_tier: "fast"` for settled contracts needing
-sustained implementation work.
-Use `fast-implementer` for small settled changes, with its configured budget. For narrow,
-repeatable edits or drafting, use an available write-capable worker with `gpt-5.6-luna`;
-`explorer` stays read-only. Task size alone does not justify Astra execution.
+sustained implementation work. For narrow, repeatable edits or drafting, use `gpt-5.6-luna`
+when the selected role permits a model override. Task size alone does not justify Astra execution.
 
 Send both model and reasoning effort on each `implementer` spawn. Where full-history forks
 prevent overrides, use `fork_turns="none"` or a supported recent-turn count and supply missing
@@ -64,14 +61,8 @@ to an explicit integration owner; an existing implementer can fill that responsi
 
 ## Preserve producer evidence
 
-For agent-to-agent handoffs, the producer publishes complete evidence and the downstream consumer
-receives that original artifact. If a message-only result later needs another agent's inspection,
-ask its producer to publish the handoff; root does not reconstruct it from a summary.
-
-Root may read evidence needed for architecture, intent, or conflicting contracts. Such reading must
-not substitute a root-authored summary for the downstream agent's original evidence. Corrections
-remain producer-owned and identify the applicable revision; return stale or contradictory artifacts
-to their producer.
+Apply the shared artifact and producer-ownership policy in AGENTS.md. Return stale or
+contradictory artifacts to their producer with the applicable revision.
 
 Keep one compact coordination record in the existing handoff or task record, not a parallel report:
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ac27834924b1c3e6bdc10d1721f4e4d02ac736f2",
+  "sourceCommit": "c47cd21008be6e694169455a642b5ab04e5a777f",
   "outputs": [
     {
       "path": ".bashrc",
@@ -76,7 +76,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "2447f2a1a4ecd6b4f23bc9fab5ed8481716a4fff6c5265f306a81dd0f4a731de",
+      "sha256": "10f44b15b686a1a217a37f9c0688d2e9b17430465addcb95d90dca739afbcce4",
       "executable": false
     },
     {
@@ -214,7 +214,7 @@
     {
       "path": ".codex/LARGE-TASK.md",
       "kind": "file",
-      "sha256": "937fd6656256b6c1790be6f75bb46f7692114b2e74dd41311d17e81c789fa7e6",
+      "sha256": "d722e5df82393beb96979d340f6d2852b09d3c8e4c2614c47d37ea1fa1a894f1",
       "executable": false
     },
     {
@@ -574,7 +574,7 @@
     {
       "path": ".skills-mgr/skills/council/SKILL.md",
       "kind": "file",
-      "sha256": "622c9b24855040222123118f8de9ea75b8808960ce1a5df9afa1682717e62e98",
+      "sha256": "30ec5081179ac0f441c019e1207dc2c468c00e1f705babd373c211445728cde7",
       "executable": false
     },
     {
@@ -586,7 +586,7 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/references/recovery-artifact.md",
       "kind": "file",
-      "sha256": "266c9af9b2767521cfde663de09f43116149ad14696b1ae1fd928c83d34d0963",
+      "sha256": "6f2a355fd9a39c41c5840213109773ec92d55664d772ffe6087556495fbae5f0",
       "executable": false
     },
     {
@@ -766,7 +766,7 @@
     {
       "path": ".skills-mgr/skills/route-execution/SKILL.md",
       "kind": "file",
-      "sha256": "65491d869cfd3cbeb530be45935561ac1306e8ac39209433d9803aefb9a5da5f",
+      "sha256": "b43f44f87550e87594bfbb22b3d0cf62e7236ca14253d4625eccd2136c399798",
       "executable": false
     },
     {

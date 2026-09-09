@@ -6,7 +6,7 @@ disable-model-invocation: false
 
 # Council
 
-Use `council-member` agents when an important decision retains multiple evidence-supported
+Convene a council when an important decision retains multiple evidence-supported
 conclusions that available evidence and authoritative owners cannot settle. Preserve independent
 first passes; ordinary inspection follows the standing review policy.
 
@@ -28,18 +28,10 @@ preserving first-pass independence.
 
 ## Choose the composition
 
-Fill the seats chosen above with two roles. Evidence never buys an extra seat.
+Select roles under the shared role-selection policy. Evidence never buys an extra seat.
 
-- `council-member` deliberates implementation-blind, so its proposal cannot be anchored to what
-  already exists.
-- `council-investigator` gathers repository, history, and external-contract evidence itself, so the
-  council's answer is tested against current behavior, feasibility, and cost.
-
-Every council keeps at least one blind member. Seat an
-investigator only when the target turns on facts the brief cannot state neutrally, such as
-feasibility, migration cost, an existing dependency, or a disputed claim about current behavior.
-Fill at most half the seats with investigators: an investigator replaces a blind seat rather than
-adding one.
+Every council keeps at least one blind member. Fill at most half the seats with investigators:
+an investigator replaces a blind seat rather than adding one.
 
 Keep `brief.md` implementation-neutral for every member. The investigator gathers implementation
 evidence itself, so a blind member's first pass never sees it.

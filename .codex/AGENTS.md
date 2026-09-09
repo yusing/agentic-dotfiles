@@ -75,8 +75,7 @@ retain concrete explanations and useful examples, not task history or agent guid
 Update applicable AGENTS.md when ownership, paths, commands, or rules become stale, or new
 requirements must persist. Revise the owning rule and affected references instead of appending
 recaps or duplicates. Preserve accurate, relevant guidance; keep essentials short and link detailed
-procedures. Use `writing-for-agents` when editing agent instructions. Group related edits once
-wording is settled.
+procedures. Group related edits once wording is settled.
 
 ## Skills and required tools
 
@@ -108,20 +107,20 @@ windows; line limits are insufficient. Reuse captured scans while state is uncha
 ## Agent communication
 
 Main-only authoring: the main agent makes all changes to instructions, skills, workflow guidance,
-and task documents (for example, `LARGE-TASK.md`). `implementer` and `fast-implementer` are not
-applicable to this work; do not route it to another writer or worker either. In mixed tasks, main
+and task documents (for example, `LARGE-TASK.md`), including instruction-delivery hooks; do not
+delegate these edits. In mixed tasks, main
 keeps these edits while delegating eligible implementation. Assigned agents return any required
 instruction-authoring changes to main without editing them. Inspection findings and result artifacts
 are outputs owned by their producing agents, not main-only instruction authoring.
+
+Use the available native role descriptions as the trigger for role selection, within authorized
+delegation and ownership boundaries. An assigned agent keeps its existing role and scope.
 
 Give native roles the question or outcome, exclusive edit ownership, acceptance constraints,
 evidence, gaps, and completion criterion. Permit supporting reads; provide background directly or
 through inherited history without compromising independent evidence boundaries. Roles own assigned
 implementation or review; the main agent remains responsible for integration and completion.
 Return source-backed answers and gaps; independent reviewers inspect source themselves.
-
-Roles inherit base instructions and this guidance. Definitions add only specialty, execution
-boundary, and result requirements; shared policies stay with their owners.
 
 Use Neuralese for agent messages and artifacts: concise prose, only recipient-useful formatting.
 Preserve context, conditions, negations, scope, provenance, and gaps; omit only known repetition.
@@ -157,10 +156,9 @@ capability, or availability reason. On harnesses without nested-agent support, r
 and ask the parent to arrange inspection without transferring implementation ownership.
 
 Reuse applicable completed reviews across commits and phases, and reviewers whose context remains
-applicable. For fresh inspection, use `reviewer`, `simplify-checker`, or both; use `web-reviewer`
-when the remaining risk requires frontend inspection, with relevant upstream artifacts and
-consumer-based result mode. Dispatch independent scopes concurrently; give each its exact review
-scope directly. Do not duplicate an active role's inspection.
+applicable. For fresh inspection, select roles from their available descriptions to cover the
+remaining risk, with relevant upstream artifacts and consumer-based result mode.
+Dispatch independent scopes concurrently; give each its exact review scope directly. Do not duplicate an active role's inspection.
 
 Main must not repeat an inspection the implementer already completed. Review again only for
 changes that invalidate it or a distinct uncovered risk.
@@ -180,9 +178,7 @@ available. A council can improve your judgment, but it cannot decide intent that
 
 ## Exploring
 
-Explorers retrieve missing facts. Keep audits, reviews, evaluations, diagnosis, recommendations,
-and decisions with the main agent or an appropriate non-explorer. Read instructions at supplied or
-known paths directly for audits or revision.
+Read instructions at supplied or known paths directly for audits or revision.
 
 Bound discovery by the next decision. Start with the affected owner and supported interface;
 expand only for facts that could change outcome, implementation, or validation. Establish required

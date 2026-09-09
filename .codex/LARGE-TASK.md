@@ -4,20 +4,18 @@
 
 The main agent owns synthesis, change-impact reasoning, decisions, and final integration;
 execution ownership follows `IMPLEMENTATION.md`. This is an explicit standing request for main to
-spawn available native exploration roles without per-task approval when independent factual lookup
-benefits from parallel investigation. This authorizes exploration, not reasoning:
-explorers collect source-backed facts, not audits, evaluations, diagnoses, recommendations, or
-decisions. An instruction audit or revision at supplied or known paths needs direct reading by
-the main agent, not an explorer.
+delegate independent factual lookup without per-task approval when it benefits from parallel
+investigation. This authorizes factual lookup, not delegated reasoning. Select roles under the shared
+role-selection policy. An instruction audit or revision at supplied or known paths needs direct
+reading by the main agent.
 
 Before dispatch, require only the discovery needed to establish the outcome, owner, contracts,
 and a useful brief. Leave delegate-local implementation, source-inspection, and validation detail
 to the owner; consume source-backed results and inspect further only for a concrete integration
 decision or gap.
 
-Use `explorer` for factual repository, provider, dependency, installed-tool, documentation,
-configuration, artifact, or read-only network lookups. Follow shared exploration guidance for
-grouping and coordination; differing sources, providers, or surfaces alone do not justify a split.
+Follow shared exploration guidance for grouping and coordination; differing sources, providers,
+or surfaces alone do not justify a split.
 
 Inspect directly when discovery is tightly coupled, scopes overlap, or the main agent would only
 do routine setup reads before waiting.

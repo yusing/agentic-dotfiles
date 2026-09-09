@@ -15,7 +15,7 @@ This is the complete temporary recovery artifact for the automated change. Recor
 - Native inspections and follow-ups: `<scope and any task-specific constraints>`.
 - Authorized commits, fixups, and autosquash: `<scope>`.
 - Authorized external or destructive effects: `<scope or none>`.
-- Required native review roles: `<reviewer; simplify-checker when needed; web-reviewer for frontend coverage>`.
+- Required native review roles: `<roles selected from available descriptions to cover required inspections>`.
 - Review capability check: `<required roles available, or exact blocker>`.
 
 ## Accepted outcome
