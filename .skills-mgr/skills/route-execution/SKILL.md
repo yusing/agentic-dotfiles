@@ -28,7 +28,8 @@ and use only history that helps the delegate avoid rediscovery.
 These settings apply only to Codex; other harnesses retain their native role and model settings.
 Keep Astra on orchestration, difficult reasoning, and quality judgment. For `implementer`, main
 explicitly chooses `gpt-6-astra` with `low` reasoning for unresolved local complexity, or
-`gpt-5.6-sol` with `high` reasoning for settled contracts needing sustained implementation work.
+`gpt-5.6-sol` with `high` reasoning and `service_tier: "fast"` for settled contracts needing
+sustained implementation work.
 Use `fast-implementer` for small settled changes, with its configured budget. For narrow,
 repeatable edits or drafting, use an available write-capable worker with `gpt-5.6-luna`;
 `explorer` stays read-only. Task size alone does not justify Astra execution.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "5afb18166a48c54d9a1ef2358cf8c7d1663702c8",
+  "sourceCommit": "c487661935d7af9e2e729338b5184611abcdb4e3",
   "outputs": [
     {
       "path": ".bashrc",
@@ -766,7 +766,7 @@
     {
       "path": ".skills-mgr/skills/route-execution/SKILL.md",
       "kind": "file",
-      "sha256": "30436dbdc7b7c4a64a4adf6d99501f483f985fc0e496de006f01dcb67a032653",
+      "sha256": "65491d869cfd3cbeb530be45935561ac1306e8ac39209433d9803aefb9a5da5f",
       "executable": false
     },
     {
