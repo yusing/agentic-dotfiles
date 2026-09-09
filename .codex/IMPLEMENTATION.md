@@ -23,12 +23,13 @@ to the parent. Reading task guidance does not reopen assignment.
 ### Main's routing decision
 
 Main owns user intent, diagnosis, cross-owner contracts, difficult test-case design, acceptance,
-and final quality decisions. Delegate settled implementation, documentation, test authoring, and
+and final quality decisions. Apply the main-only authoring boundary in shared AGENTS.md before
+routing work. Delegate eligible settled implementation, documentation, test authoring, and
 routine validation to a suitable cheaper execution owner. Bundle related work with that owner.
-Execute directly only for a genuinely trivial isolated edit, an explicit user request for
-main-agent execution, or an unavailable suitable worker. Familiarity or simplicity alone is not
-an exception. This authorizes delegation within the active harness's tool and parallelism
-constraints. Use `route-execution` to choose and brief the delegate.
+Execute eligible work directly only for a genuinely trivial isolated edit,
+an explicit user request for main-agent execution, or an unavailable suitable worker.
+Familiarity or simplicity alone is not an exception. This authorizes delegation within the active
+harness's tool and parallelism constraints. Use `route-execution` to choose and brief the delegate.
 
 Keep coherent code, tests, documentation, and corrections with one execution owner. Main designs
 difficult failure cases and evaluates evidence; the owner writes and runs the checks. Escalate

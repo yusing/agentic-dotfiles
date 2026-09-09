@@ -107,6 +107,12 @@ windows; line limits are insufficient. Reuse captured scans while state is uncha
 
 ## Agent communication
 
+Main-only authoring: the main agent makes all changes to instructions, skills, workflow guidance,
+and task documents (for example, `LARGE-TASK.md`). `implementer` and `fast-implementer` are not
+applicable to this work; do not route it to another writer or worker either. In mixed tasks, main
+keeps these edits while delegating eligible implementation. Assigned agents return any required
+instruction-authoring changes to main without editing them.
+
 Give native roles the question or outcome, exclusive edit ownership, acceptance constraints,
 evidence, gaps, and completion criterion. Permit supporting reads; provide background directly or
 through inherited history without compromising independent evidence boundaries. Roles own assigned
