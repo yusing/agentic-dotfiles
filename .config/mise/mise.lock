@@ -62,6 +62,29 @@ checksum = "sha256:b55ae6f2f5f23d0a6ccb3bd4eeb2af9c7e0a6556e5255c82100e40305129b
 url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide-0.10.0-aarch64-apple-darwin.tar.gz"
 url_api = "https://api.github.com/repos/ajeetdsouza/zoxide/releases/assets/466316174"
 
+[[tools."aqua:astral-sh/ruff"]]
+version = "0.16.6"
+backend = "aqua:astral-sh/ruff"
+specifiers = ["latest"]
+
+[tools."aqua:astral-sh/ruff"."platforms.linux-arm64"]
+checksum = "sha256:3c1b99f65b8bf2df64ff099ee072e11b4652813e2c164ec875a26fc9e99be88f"
+url = "https://github.com/astral-sh/ruff/releases/download/0.16.6/ruff-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/ruff/releases/assets/543094369"
+provenance = "github-attestations"
+
+[tools."aqua:astral-sh/ruff"."platforms.linux-x64"]
+checksum = "sha256:0696335ef16615d8c7445ad438750eb0f55b3da6f153df21265a7c6d5750254f"
+url = "https://github.com/astral-sh/ruff/releases/download/0.16.6/ruff-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/ruff/releases/assets/543094461"
+provenance = "github-attestations"
+
+[tools."aqua:astral-sh/ruff"."platforms.macos-arm64"]
+checksum = "sha256:77513748c833b435b82453ba20e07db808ef6c5121945ede80a6cf21bee468a4"
+url = "https://github.com/astral-sh/ruff/releases/download/0.16.6/ruff-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/ruff/releases/assets/543094359"
+provenance = "github-attestations"
+
 [[tools."aqua:astral-sh/uv"]]
 version = "0.12.10"
 backend = "aqua:astral-sh/uv"
@@ -84,6 +107,46 @@ checksum = "sha256:51c6170e8e3a01cef9f33b94f582b7b81ac65046f55d40afb35f9cff5a68c
 url = "https://github.com/astral-sh/uv/releases/download/0.12.10/uv-aarch64-apple-darwin.tar.gz"
 url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/545034336"
 provenance = "github-attestations"
+
+[[tools."aqua:bazelbuild/bazelisk"]]
+version = "1.29.0"
+backend = "aqua:bazelbuild/bazelisk"
+specifiers = ["latest"]
+
+[tools."aqua:bazelbuild/bazelisk"."platforms.linux-arm64"]
+checksum = "sha256:e20e8b0f4f240091b7a55bf17b9398bd4f40ee70ae0208dff95dd4c445fb4010"
+url = "https://github.com/bazelbuild/bazelisk/releases/download/v1.29.0/bazelisk-linux-arm64"
+url_api = "https://api.github.com/repos/bazelbuild/bazelisk/releases/assets/406879161"
+
+[tools."aqua:bazelbuild/bazelisk"."platforms.linux-x64"]
+checksum = "sha256:5a408715e932c0250d28bd84555f12edbf70117de42f9181691c736eacc4a992"
+url = "https://github.com/bazelbuild/bazelisk/releases/download/v1.29.0/bazelisk-linux-amd64"
+url_api = "https://api.github.com/repos/bazelbuild/bazelisk/releases/assets/406879103"
+
+[tools."aqua:bazelbuild/bazelisk"."platforms.macos-arm64"]
+checksum = "sha256:cee851f726789227d5561004e9904a52be45c3efb56f8b38b6993d6adbaa0409"
+url = "https://github.com/bazelbuild/bazelisk/releases/download/v1.29.0/bazelisk-darwin-arm64"
+url_api = "https://api.github.com/repos/bazelbuild/bazelisk/releases/assets/406879037"
+
+[[tools."aqua:boyter/scc"]]
+version = "4.1.0"
+backend = "aqua:boyter/scc"
+specifiers = ["latest"]
+
+[tools."aqua:boyter/scc"."platforms.linux-arm64"]
+checksum = "sha256:6e0d2a1f8d3540ba7df185477dec40bb7340f1b214bfd303147de5cad2bd7b8b"
+url = "https://github.com/boyter/scc/releases/download/v4.1.0/scc_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/boyter/scc/releases/assets/549478881"
+
+[tools."aqua:boyter/scc"."platforms.linux-x64"]
+checksum = "sha256:c7328436d3027f4357d3d7853f7dc3ac2bbcb4ca08f1adad91a27c593884079b"
+url = "https://github.com/boyter/scc/releases/download/v4.1.0/scc_Linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/boyter/scc/releases/assets/549478876"
+
+[tools."aqua:boyter/scc"."platforms.macos-arm64"]
+checksum = "sha256:7201c7aa4aace058d43308462cba72adb18f6094c08c0741727455976d0a0747"
+url = "https://github.com/boyter/scc/releases/download/v4.1.0/scc_Darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/boyter/scc/releases/assets/549478883"
 
 [[tools."aqua:casey/just"]]
 version = "1.58.0"
@@ -168,6 +231,26 @@ checksum = "sha256:9be36612a5a13e9e386dc498fb8e50dc87c72ee42b63db0ea05b32f99a72a
 url = "https://github.com/dandavison/delta/releases/download/0.19.2/delta-0.19.2-aarch64-apple-darwin.tar.gz"
 url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/383662310"
 
+[[tools."aqua:dominikh/go-tools/staticcheck"]]
+version = "2026.2.1"
+backend = "aqua:dominikh/go-tools/staticcheck"
+specifiers = ["latest"]
+
+[tools."aqua:dominikh/go-tools/staticcheck"."platforms.linux-arm64"]
+checksum = "sha256:594421f28ba620ea14b98377cb84a309cf73cc420ba0f52f30c7fa4d92fd2b0e"
+url = "https://github.com/dominikh/go-tools/releases/download/2026.2.1/staticcheck_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/dominikh/go-tools/releases/assets/524230775"
+
+[tools."aqua:dominikh/go-tools/staticcheck"."platforms.linux-x64"]
+checksum = "sha256:91186205a78db3f2d40efb3c102749aef66f85c2204793de7488d163b655aa7c"
+url = "https://github.com/dominikh/go-tools/releases/download/2026.2.1/staticcheck_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/dominikh/go-tools/releases/assets/524230032"
+
+[tools."aqua:dominikh/go-tools/staticcheck"."platforms.macos-arm64"]
+checksum = "sha256:06db0a00e5d44d0d60bc99dab10e1bd49103531054d560af658775450a25f72c"
+url = "https://github.com/dominikh/go-tools/releases/download/2026.2.1/staticcheck_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/dominikh/go-tools/releases/assets/524227332"
+
 [[tools."aqua:fastfetch-cli/fastfetch"]]
 version = "2.68.1"
 backend = "aqua:fastfetch-cli/fastfetch"
@@ -228,6 +311,26 @@ checksum = "sha256:b40ab0ae55c505963e365f271a8d3846efbc170aa17f2607f13df610a9aeb
 url = "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_darwin_arm64.tar.gz"
 url_api = "https://api.github.com/repos/gitleaks/gitleaks/releases/assets/378332059"
 
+[[tools."aqua:go-task/task"]]
+version = "3.53.1"
+backend = "aqua:go-task/task"
+specifiers = ["latest"]
+
+[tools."aqua:go-task/task"."platforms.linux-arm64"]
+checksum = "sha256:e3ad19101493a0112e1f22ae8ccc54bf03e533b1076a0ca1e6c782a09ad2e588"
+url = "https://github.com/go-task/task/releases/download/v3.53.1/task_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/go-task/task/releases/assets/519645523"
+
+[tools."aqua:go-task/task"."platforms.linux-x64"]
+checksum = "sha256:a54a408f6861ff921f6e87774180db31bacd8c1e7c944ca696db9fea49a82fc7"
+url = "https://github.com/go-task/task/releases/download/v3.53.1/task_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/go-task/task/releases/assets/519645449"
+
+[tools."aqua:go-task/task"."platforms.macos-arm64"]
+checksum = "sha256:85d2d96c2380b33d7855b07b3f7a20dc7ca0eda999a26efa0fb5f6f32b366cd7"
+url = "https://github.com/go-task/task/releases/download/v3.53.1/task_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/go-task/task/releases/assets/519645491"
+
 [[tools."aqua:golangci/golangci-lint"]]
 version = "2.13.2"
 backend = "aqua:golangci/golangci-lint"
@@ -249,6 +352,29 @@ provenance = "github-attestations"
 checksum = "sha256:f4bf83f0b64f055c42b28fc9a38861839f69c096e61c788e72dfaae412011789"
 url = "https://github.com/golangci/golangci-lint/releases/download/v2.13.2/golangci-lint-2.13.2-darwin-arm64.tar.gz"
 url_api = "https://api.github.com/repos/golangci/golangci-lint/releases/assets/532995398"
+provenance = "github-attestations"
+
+[[tools."aqua:hadolint/hadolint"]]
+version = "2.15.1"
+backend = "aqua:hadolint/hadolint"
+specifiers = ["latest"]
+
+[tools."aqua:hadolint/hadolint"."platforms.linux-arm64"]
+checksum = "sha256:f6198ef8090f404dbb771abfee086eb8c48ac177f30da7fd3510aca35b344b5d"
+url = "https://github.com/hadolint/hadolint/releases/download/v2.15.1/hadolint-linux-arm64"
+url_api = "https://api.github.com/repos/hadolint/hadolint/releases/assets/496546507"
+provenance = "github-attestations"
+
+[tools."aqua:hadolint/hadolint"."platforms.linux-x64"]
+checksum = "sha256:c7187db94eeeeca956519a6af171adc31453941a1e777961f6e680f697c8c507"
+url = "https://github.com/hadolint/hadolint/releases/download/v2.15.1/hadolint-linux-x86_64"
+url_api = "https://api.github.com/repos/hadolint/hadolint/releases/assets/496546506"
+provenance = "github-attestations"
+
+[tools."aqua:hadolint/hadolint"."platforms.macos-arm64"]
+checksum = "sha256:5c09f3213f8e40406abe048233d985eebef336d4a6a20021be47fadb6cf480a2"
+url = "https://github.com/hadolint/hadolint/releases/download/v2.15.1/hadolint-macos-arm64"
+url_api = "https://api.github.com/repos/hadolint/hadolint/releases/assets/496546505"
 provenance = "github-attestations"
 
 [[tools."aqua:jesseduffield/lazygit"]]
@@ -417,6 +543,26 @@ checksum = "sha256:b7c872db63553ccffc7253aba3ed7d4885a27d83f1ba567b1138c6315a584
 url = "https://github.com/mvdan/sh/releases/download/v3.14.1/shfmt_v3.14.1_darwin_arm64"
 url_api = "https://api.github.com/repos/mvdan/sh/releases/assets/547320930"
 
+[[tools."aqua:nektos/act"]]
+version = "0.2.89"
+backend = "aqua:nektos/act"
+specifiers = ["latest"]
+
+[tools."aqua:nektos/act"."platforms.linux-arm64"]
+checksum = "sha256:daa8679ba9615a74d2d0cec321dc593f21948a2a11bb65862b063d8b930f4bcb"
+url = "https://github.com/nektos/act/releases/download/v0.2.89/act_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/nektos/act/releases/assets/434891274"
+
+[tools."aqua:nektos/act"."platforms.linux-x64"]
+checksum = "sha256:0191d6f1f3b716b5c55820032605d05fc3c1cdbf581ebeff655019e5dd1524c0"
+url = "https://github.com/nektos/act/releases/download/v0.2.89/act_Linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/nektos/act/releases/assets/434891246"
+
+[tools."aqua:nektos/act"."platforms.macos-arm64"]
+checksum = "sha256:48ae218af96725f7635a66de2b87e1e346893b02add0f16b92f560296b2151fc"
+url = "https://github.com/nektos/act/releases/download/v0.2.89/act_Darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/nektos/act/releases/assets/434891257"
+
 [[tools."aqua:oxc-project/oxc/oxfmt"]]
 version = "1.82.0"
 backend = "aqua:oxc-project/oxc/oxfmt"
@@ -500,6 +646,26 @@ checksum = "sha256:c61d7a371c62bcbbe882c3423aa4b8bf63485c248dd0f692997b8f0c3f6d0
 url = "https://github.com/rclone/rclone/releases/download/v1.75.1/rclone-v1.75.1-osx-arm64.zip"
 url_api = "https://api.github.com/repos/rclone/rclone/releases/assets/544645575"
 
+[[tools."aqua:realm/SwiftLint"]]
+version = "0.65.1"
+backend = "aqua:realm/SwiftLint"
+specifiers = ["latest"]
+
+[tools."aqua:realm/SwiftLint"."platforms.linux-arm64"]
+checksum = "sha256:9ffa52f478e6d8eb485d37d14715ffac90abc81c58f3370d598bf75be05605f8"
+url = "https://github.com/realm/SwiftLint/releases/download/0.65.1/swiftlint_linux_arm64.zip"
+url_api = "https://api.github.com/repos/realm/SwiftLint/releases/assets/524187588"
+
+[tools."aqua:realm/SwiftLint"."platforms.linux-x64"]
+checksum = "sha256:caeed6f4a679c35539ffaf124f6c4ab4a8416917f7d8796279dc52b74026059d"
+url = "https://github.com/realm/SwiftLint/releases/download/0.65.1/swiftlint_linux_amd64.zip"
+url_api = "https://api.github.com/repos/realm/SwiftLint/releases/assets/524187586"
+
+[tools."aqua:realm/SwiftLint"."platforms.macos-arm64"]
+checksum = "sha256:c1e429b0599cf1b516f369a2d9ec04eaf0e436f3c12b637df8851fa52ff694d0"
+url = "https://github.com/realm/SwiftLint/releases/download/0.65.1/portable_swiftlint.zip"
+url_api = "https://api.github.com/repos/realm/SwiftLint/releases/assets/524187565"
+
 [[tools."aqua:rhysd/actionlint"]]
 version = "1.7.12"
 backend = "aqua:rhysd/actionlint"
@@ -543,6 +709,23 @@ checksum = "sha256:4fa025cc93a744b6963f4e53a008e5ba3f74b6a38061f4a47c639e1c3023e
 url = "https://github.com/rtk-ai/rtk/releases/download/v0.48.0/rtk-aarch64-apple-darwin.tar.gz"
 url_api = "https://api.github.com/repos/rtk-ai/rtk/releases/assets/544473444"
 
+[[tools."aqua:rust-lang/rustup"]]
+version = "1.29.1"
+backend = "aqua:rust-lang/rustup"
+specifiers = ["latest"]
+
+[tools."aqua:rust-lang/rustup"."platforms.linux-arm64"]
+checksum = "sha256:15f6e4ce9f583b929c996c91562bad6d4454f3281de858b02cdfdef615fac433"
+url = "https://static.rust-lang.org/rustup/archive/1.29.1/aarch64-unknown-linux-gnu/rustup-init"
+
+[tools."aqua:rust-lang/rustup"."platforms.linux-x64"]
+checksum = "sha256:dda7234360b7f578ca8b0ddcb80145646fa61a67c1720a5abc7051b35c9fcb71"
+url = "https://static.rust-lang.org/rustup/archive/1.29.1/x86_64-unknown-linux-gnu/rustup-init"
+
+[tools."aqua:rust-lang/rustup"."platforms.macos-arm64"]
+checksum = "sha256:ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a"
+url = "https://static.rust-lang.org/rustup/archive/1.29.1/aarch64-apple-darwin/rustup-init"
+
 [[tools."aqua:sharkdp/bat"]]
 version = "0.26.1"
 backend = "aqua:sharkdp/bat"
@@ -563,6 +746,26 @@ checksum = "sha256:e30beff26779c9bf60bb541e1d79046250cb74378f2757f8eb250afddb19e
 url = "https://github.com/sharkdp/bat/releases/download/v0.26.1/bat-v0.26.1-aarch64-apple-darwin.tar.gz"
 url_api = "https://api.github.com/repos/sharkdp/bat/releases/assets/323548442"
 
+[[tools."aqua:sharkdp/fd"]]
+version = "10.5.0"
+backend = "aqua:sharkdp/fd"
+specifiers = ["latest"]
+
+[tools."aqua:sharkdp/fd"."platforms.linux-arm64"]
+checksum = "sha256:c0ee43802e3313a317c5af2f4eabd6ba13eeedd595af9775f05e18a13ac4f52c"
+url = "https://github.com/sharkdp/fd/releases/download/v10.5.0/fd-v10.5.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/sharkdp/fd/releases/assets/530482307"
+
+[tools."aqua:sharkdp/fd"."platforms.linux-x64"]
+checksum = "sha256:a1259cd129636efbc3fef123525c1b49e88fe5088c012630983c310e52fdfa95"
+url = "https://github.com/sharkdp/fd/releases/download/v10.5.0/fd-v10.5.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/sharkdp/fd/releases/assets/530481615"
+
+[tools."aqua:sharkdp/fd"."platforms.macos-arm64"]
+checksum = "sha256:b67e1836c468e42e411984b56e52fa7abec08c2bd22c867398e7cc134aac5e12"
+url = "https://github.com/sharkdp/fd/releases/download/v10.5.0/fd-v10.5.0-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/sharkdp/fd/releases/assets/530481346"
+
 [[tools."aqua:sharkdp/hyperfine"]]
 version = "1.20.0"
 backend = "aqua:sharkdp/hyperfine"
@@ -582,6 +785,26 @@ url_api = "https://api.github.com/repos/sharkdp/hyperfine/releases/assets/317831
 checksum = "sha256:f58d0b90993fadfa122a351428c469ce24afef3865f027f0e6e86f0830d088f1"
 url = "https://github.com/sharkdp/hyperfine/releases/download/v1.20.0/hyperfine-v1.20.0-x86_64-apple-darwin.tar.gz"
 url_api = "https://api.github.com/repos/sharkdp/hyperfine/releases/assets/317832526"
+
+[[tools."aqua:sxyazi/yazi"]]
+version = "26.9.1"
+backend = "aqua:sxyazi/yazi"
+specifiers = ["latest"]
+
+[tools."aqua:sxyazi/yazi"."platforms.linux-arm64"]
+checksum = "sha256:02807f08d6b589b65b7516a4e259d83f5995d7a23bb12b3a155141385b370b3a"
+url = "https://github.com/sxyazi/yazi/releases/download/v26.9.1/yazi-aarch64-unknown-linux-gnu.zip"
+url_api = "https://api.github.com/repos/sxyazi/yazi/releases/assets/539261402"
+
+[tools."aqua:sxyazi/yazi"."platforms.linux-x64"]
+checksum = "sha256:a02fe91d3304294048c681f010f1100856872a4e98ecf6927328e888d40a6ad2"
+url = "https://github.com/sxyazi/yazi/releases/download/v26.9.1/yazi-x86_64-unknown-linux-gnu.zip"
+url_api = "https://api.github.com/repos/sxyazi/yazi/releases/assets/539261400"
+
+[tools."aqua:sxyazi/yazi"."platforms.macos-arm64"]
+checksum = "sha256:3921182a21cceb0a505e5dac578e1487d48104caa5f114e9f8adf40b5a7289a9"
+url = "https://github.com/sxyazi/yazi/releases/download/v26.9.1/yazi-aarch64-apple-darwin.zip"
+url_api = "https://api.github.com/repos/sxyazi/yazi/releases/assets/539261410"
 
 [[tools."aqua:tmux/tmux-builds"]]
 version = "3.7c"
@@ -883,6 +1106,11 @@ version = "0.5.10"
 backend = "npm:ctx7"
 specifiers = ["latest"]
 
+[[tools."npm:markdownlint-cli"]]
+version = "0.49.1"
+backend = "npm:markdownlint-cli"
+specifiers = ["latest"]
+
 [[tools."npm:oxlint-tsgolint"]]
 version = "7.0.2001"
 backend = "npm:oxlint-tsgolint"
@@ -904,4 +1132,20 @@ backend = "pipx:rich-cli"
 specifiers = ["latest"]
 
 [tools."pipx:rich-cli".options]
+uvx = "true"
+
+[[tools."pipx:semgrep"]]
+version = "1.176.1"
+backend = "pipx:semgrep"
+specifiers = ["latest"]
+
+[tools."pipx:semgrep".options]
+uvx = "true"
+
+[[tools."pipx:yamllint"]]
+version = "1.38.0"
+backend = "pipx:yamllint"
+specifiers = ["latest"]
+
+[tools."pipx:yamllint".options]
 uvx = "true"
