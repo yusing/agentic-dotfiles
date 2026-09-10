@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "addedd39b4eeb4ea5dbc00d321742d9706442924",
+  "sourceCommit": "79881c96c9f947553673ab8a999fe0b71d681868",
   "outputs": [
     {
       "path": ".bashrc",
@@ -100,19 +100,19 @@
     {
       "path": ".codex/agents/review-correctness.toml",
       "kind": "file",
-      "sha256": "7e97621010a2451de57be2d590cd5ceeb2600e20a1447be3dc6e78a6a6a7ce87",
+      "sha256": "60f3a7f6a9b803fc0c9ca5e56327f716b89642234c893d992da735dfeebd3615",
       "executable": false
     },
     {
       "path": ".codex/agents/review-simplify.toml",
       "kind": "file",
-      "sha256": "a833324f4f310700b6e064dda567543bc956d51109c8f3c4f3cdc9afa72ea513",
+      "sha256": "dd6f182d5e9cf35de955f472335336b6c238a2bc89148d3ee8ac51a7b63405ed",
       "executable": false
     },
     {
       "path": ".codex/agents/web-reviewer.toml",
       "kind": "file",
-      "sha256": "e35cfe66aa0577de950c94534f3de78d7e50cd66408ebe65607febb22b7156b9",
+      "sha256": "e7c5326c462b722b24ebaac019e0709c08774710bf987ccc92eceab6c5bcb866",
       "executable": false
     },
     {
