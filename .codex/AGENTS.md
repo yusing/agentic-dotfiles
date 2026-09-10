@@ -69,8 +69,7 @@ or changed facts. After compaction, recover scope and guidance needed for remain
 ## Documentation maintenance
 
 README explains what users need to understand, choose, or do. Update it when those needs change;
-retain concrete explanations and useful examples, not task history or agent guidance. Use
-`writing-readme` for writing or reviewing it.
+retain concrete explanations and useful examples, not task history or agent guidance.
 
 Update applicable AGENTS.md when ownership, paths, commands, or rules become stale, or new
 requirements must persist. Revise the owning rule and affected references instead of appending
@@ -104,36 +103,22 @@ outside. Use raw execution when complete unmodified output is needed or output g
 For binary strings, minified files, and generated schemas, extract exact fields or bounded byte
 windows; line limits are insufficient. Reuse captured scans while state is unchanged.
 
-## Agent communication
+## Using subagents
 
-Main-only authoring: the main agent makes all changes to instructions, skills, workflow guidance,
-and task documents (for example, `LARGE-TASK.md`), including instruction-delivery hooks; do not
-delegate these edits. Assigned agents return any required instruction-authoring changes to main
-without editing them. Inspection findings and result artifacts
-are outputs owned by their producing agents, not main-only instruction authoring.
+Select roles using the native catalog descriptions within authorized delegation boundaries.
+Assigned agents keep their role and scope; main owns integration and completion.
 
-Use the available native role descriptions as the trigger for role selection, within authorized
-delegation and ownership boundaries. An assigned agent keeps its existing role and scope.
+Only main edits instructions, skills, workflow guidance, task documents, and instruction-delivery
+hooks. Delegates propose changes to these and own their findings and result artifacts.
 
-Give native roles the question or outcome, exclusive edit ownership, acceptance constraints,
-evidence, gaps, and completion criterion. Permit supporting reads; provide background directly or
-through inherited history without compromising independent evidence boundaries. Roles own assigned
-implementation or review; the main agent remains responsible for integration and completion.
-Return source-backed answers and gaps; independent reviewers inspect source themselves.
+Use Neuralese: concise, recipient-focused prose that preserves meaning, provenance, and gaps.
+Keep code/data syntax and plain `path:line` references; follow required output formats.
 
-Use Neuralese for agent messages and artifacts: concise prose, only recipient-useful formatting.
-Preserve context, conditions, negations, scope, provenance, and gaps; omit only known repetition.
-Keep code/data syntax and plain `path:line` references; honor required final-consumer formats.
-
-Agent-to-parent communication uses messages containing substantive results, whether the parent is
-main or another agent. A direct reply needs no artifact. Use artifacts only for an identified
-consumer beyond that reply path or an explicitly requested deliverable. For a cross-agent relay,
-the dispatching parent creates one temporary artifact root outside the repository and assigns the
-producer an exact result path. If the relay becomes necessary later, ask the original producer to
-save its completed result there. Revise artifacts at the same path with the complete current result;
-relay the producer's original artifact rather than reconstructing evidence. If the producer cannot
-write it, report the permission or availability gap instead of silently taking over authorship.
-Preserve council evidence isolation and its phase-specific result contracts.
+Return results directly to the parent. Use artifacts only for an explicit deliverable or another
+consumer. For cross-agent relays, the parent assigns an exact path in a temporary directory outside
+the repository; the producer writes and updates the complete result there. Relay the original
+artifact without rewriting it; report blocked writes instead of taking over authorship.
+Preserve council evidence isolation and result contracts.
 
 ### Independent inspection
 
@@ -158,26 +143,15 @@ available. A council can improve your judgment, but it cannot decide intent that
 
 ## Exploring
 
-Read instructions at supplied or known paths directly for audits or revision.
+Investigate only what could change the next decision, starting at supplied paths and the affected
+owner and interface. Read named instructions directly; distinguish evidence gaps from proof of absence.
 
-Bound discovery by the next decision. Start with the affected owner and supported interface;
-expand only for facts that could change outcome, implementation, or validation. Establish required
-facts or exact gaps; distinguish interface limitations from unproven absence everywhere.
+Keep evidence gathering within assigned authority. Read-only work does not authorize edits.
+Escalate unresolved intent to the user or parent.
 
-Establish behavior from code and contract tests; use owning documentation for requirements and
-rationale, not instead of code inspection. Establish dependency contracts from their documentation
-and types, not callers alone. When code conflicts with tests, fixtures, or assertions, follow
-explicit authorized contract changes; otherwise inspect patch history or `git log -S` before
-deciding which side is stale, citing the deciding commit. For authorized edits, align
-implementation, expectations, and owning documentation.
-
-Evidence-only agents report conflicts and history; decisions stay within assigned authority.
-Read-only work does not authorize edits. Escalate unresolved intent to the user or parent.
-
-Identify the questions needed for the next decision. When delegation is selected, reuse completed
-equivalent results, account for work already in flight, and group questions by shared context.
-Launch remaining independent groups concurrently; wait for results needed for that decision.
-Launch again only for materially changed questions or evidence, or failed/unusable prior results.
+Reuse existing results and avoid work already in flight. When delegating, group questions by shared
+context, run independent groups concurrently, and wait for evidence needed to decide. Revisit only
+changed questions or evidence, or unusable results.
 
 ## Active work
 

@@ -4,6 +4,9 @@ Choose the simplest implementation that meets the full request. Start end-to-end
 without regressing behavior the current requirements still accept. Reassess before adding
 complexity; review findings alone do not expand scope.
 
+When code conflicts with tests or fixtures, follow authorized contract changes;
+otherwise use history and cite the deciding commit. 
+
 ## Validation
 
 Follow the shared independent-inspection policy in AGENTS.md.
@@ -37,6 +40,8 @@ Use bounded concurrency for new operations only when independent work benefits a
 such as latency or throughput. Preserve sequential paths that already meet requirements.
 
 ## Hygiene
+
+Align implementation, tests, and documentation when editing.
 
 Keep code, comments, tests, documentation, commit messages, and reports focused on final behavior
 and still-applicable rationale, not abandoned approaches.
