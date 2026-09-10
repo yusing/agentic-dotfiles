@@ -13,19 +13,18 @@ and `{"decision":"deny","reason":...}` denials. The adapter maps failed result e
 session reporting remains
 client-managed and is not part of the port.
 
-`.grok/hooks/smoke_test.py` asserts that every Codex hook Grok can enforce has a
-port counterpart, that the adapter is executable, and that Grok-specific tool
-matchers remain covered. Add Codex and port registrations together, or that test
-fails. SessionStart project report and skill inventory are not ported: Grok does
+
+SessionStart project report and skill inventory are not ported: Grok does
 not attach that event output to the model.
 
 Port coverage is limited to what a registered hook owns. Deletion policy has no registered
-hook, so no event-scoped owner exists to carry it. Grok receives the destructive-action rule
-from the shared `.codex/AGENTS.md` surface. The fuller destructive-action guidance in
+hook, so no event-scoped owner exists to carry it. Grok receives general authorization and
+user-work preservation guidance from the shared `.codex/AGENTS.md` surface, which does not
+contain the detailed destructive-action procedure. That procedure in
 `.codex/overridden_base_instructions.md` stays Codex-only, because that file is Codex's
 `model_instructions_file` and the port supplies no equivalent. That remaining gap is
-accepted. Closing it would mean registering a deletion guard, which is a new hook, not a
-port change.
+accepted. Closing it requires a separately authorized instruction or enforcement change;
+registering a deletion guard would add a new hook rather than port an existing one.
 
 `.codex/hooks/bin/subagent_exec_guard` is registered and ported, but it acts only on the
 running agent's own `agent_type`, which Codex populates from the spawned thread's role.
@@ -46,11 +45,12 @@ or edited directly. Listing and fetching unknown skills still belong to
 `skills-mgr`.
 `.grok/AGENTS.md` owns the Grok-only extra instruction: at root-session start and
 after compaction the agent runs `$HOME/.codex/hooks/bin/check_project --without-git`
-and `skills-mgr list`; when a spawned subagent begins it runs `skills-mgr list`.
+and `skills-mgr list`. It has no separate subagent-start instruction, and the Grok port
+does not register `SubagentStart`; this port does not establish inventory delivery to children.
 That file `@`-references `.codex/AGENTS.md` for shared standing guidance. Do not
-copy the shared file into the Grok extra file. `.codex/hooks/bin/skills_mgr_inventory`
-and `.codex/hooks/bin/check_project` remain the Codex and Claude session-start
-owners.
+copy the shared file into the Grok extra file. Codex registers direct inventory through
+`session_start_context`; Claude registers `.codex/hooks/bin/skills_mgr_inventory`.
+Both use `.codex/hooks/bin/check_project` for project reporting.
 
 When an instruction changes, edit only its owner. Supporting the same policy in
 multiple clients means sharing or porting the owner, not copying its text into

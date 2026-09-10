@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.18";
+export const VERSION = "1.2.0";
 
 type TreeEntry = {
 	mode: string;
@@ -118,6 +118,7 @@ const EXACT_PATHS = new Set([
 	".codex/hooks/check_project.ts",
 	".codex/hooks/generated_code_guard.ts",
 	".codex/hooks/go_guidelines.ts",
+	".codex/hooks/session_start_context.ts",
 	".codex/hooks/skills_mgr_inventory.ts",
 	".codex/hooks/subagent_exec_guard.ts",
 	".codex/hooks/lib/hook_response.ts",
@@ -165,7 +166,9 @@ const EXACT_PATHS = new Set([
 	".local/lib/rewrite-home-paths/bun.lock",
 	".local/lib/rewrite-home-paths/CHANGELOG.md",
 	".local/bin/grok-explore",
-	".local/bin/sync-claude-agent-ports",
+	".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
+	".local/lib/sync-claude-agent-ports/CHANGELOG.md",
+	".local/lib/project-public-config/CHANGELOG.md",
 	COMMAND_PATH,
 ]);
 
@@ -629,56 +632,42 @@ function projectMarkdown(path: string, text: string): string {
 	if (path === "AGENTS.md") {
 		return PUBLIC_PROJECT_GUIDANCE;
 	}
-	let projected = text;
-	if (path === "README.md") {
-		let omittedLevel = 0;
-		let fence: string | undefined;
-		projected = projected.split(/\r?\n/).filter(line => {
-			// Headings inside fenced examples are content, not section boundaries.
-			const marker = line.match(/^ {0,3}(`{3,}|~{3,})/);
-			if (fence) {
-				if (marker && marker[1][0] === fence[0] && marker[1].length >= fence.length
-					&& line.slice(marker[0].length).trim() === "") fence = undefined;
-				return omittedLevel === 0;
-			}
-			if (marker) {
-				fence = marker[1];
-				return omittedLevel === 0;
-			}
+	let omittedLocal = false;
+	let omittedLevel = 0;
+	let fence: string | undefined;
+	const projected = text.split(/\r?\n/).filter(line => {
+		// Fenced examples are literal content, including headings and omission markers.
+		const marker = line.match(/^ {0,3}(`{3,}|~{3,})/);
+		if (fence) {
+			if (marker && marker[1][0] === fence[0] && marker[1].length >= fence.length
+				&& line.slice(marker[0].length).trim() === "") fence = undefined;
+			return !omittedLocal && omittedLevel === 0;
+		}
+		if (marker) {
+			fence = marker[1];
+			return !omittedLocal && omittedLevel === 0;
+		}
+		if (line.trim() === "<!-- public-config:omit -->") {
+			if (omittedLocal) throw new Error(`${path} contains nested public-config omission blocks`);
+			omittedLocal = true;
+			return false;
+		}
+		if (line.trim() === "<!-- /public-config:omit -->") {
+			if (!omittedLocal) throw new Error(`${path} contains an unmatched public-config omission end`);
+			omittedLocal = false;
+			return false;
+		}
+		if (omittedLocal) return false;
+		if (path === "README.md") {
 			const heading = line.match(/^ {0,3}(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$/);
 			if (heading) {
 				if (omittedLevel && heading[1].length <= omittedLevel) omittedLevel = 0;
 				if (!omittedLevel && heading[2] === "Managing packages") omittedLevel = heading[1].length;
 			}
-			return omittedLevel === 0;
-		}).join("\n");
-	}
-	if (path === "CONTEXT-HOOK-OWNERS.md") {
-		projected = projected
-			.replace(
-				/root-session project\s+context, skill inventory, and Herdr\s+reporting/,
-				"root-session project\n  context and skill inventory",
-			)
-			.replace(/;\s*`\.codex\/herdr-agent-state\.sh` reports[\s\S]*?edited directly\.\n/, ".\n");
-		projected = projected.replace(/\s*FIXME: Port the `SubagentStart`[\s\S]*?delivery\.\n/, "\n");
-	}
-	if (path === "CONTEXT-CODEX-LIFECYCLE.md") {
-		projected = projected
-			.replace(
-				/`\.codex\/hooks\/bin\/check_project`, the automatic skill-inventory\s+reporter, and the single Herdr\s+session reporter/,
-				"`.codex/hooks/bin/check_project` and the automatic\n   skill-inventory reporter",
-			)
-			.replace(
-				/project context, current skill metadata, and\s+session reporting\s+without selecting/,
-				"project context and current skill metadata\n   without selecting",
-			);
-	}
-	if (path === "CONTEXT-INSTRUCTION-SURFACES.md") {
-		projected = projected
-			.split(/\r?\n/)
-			.filter(line => ![".kilocode/", ".omp/", ".pi/"].some(token => line.includes(token)))
-			.join("\n");
-	}
+		}
+		return omittedLevel === 0;
+	}).join("\n");
+	if (omittedLocal) throw new Error(`${path} contains an unclosed public-config omission block`);
 	return `${projected.trimEnd()}\n`;
 }
 

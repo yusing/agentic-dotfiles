@@ -13,34 +13,38 @@
 - Session and subagent start: `.codex/hooks/bin/check_project` detects VCS, task runner, languages,
   and Go version, and its `--without-git` option omits the VCS report for a client that
   already reports plain Git state itself; `.codex/hooks.json` injects root-session project
-  context and skill inventory at startup and after context compaction or
-  clearing while excluding session resume. `.codex/hooks/bin/session_start_context`
+  context and direct `skills-mgr list` output at startup and after context
+  compaction or clearing while excluding session resume. `.codex/hooks/bin/session_start_context`
   skips the project and skill context commands on fork startup when the transcript's first
   `session_meta` record has `forked_from_id`; unavailable metadata keeps the commands enabled.
   Compaction and clearing still refresh root context. SubagentStart uses the same wrapper to
   compare the current inventory with retained hook context in the child transcript. It suppresses
   only proven identical inventory from a complete transcript of at most 256 KiB. Missing, oversized,
-  malformed, rolled-back, or unsupported history keeps delivery.
+  malformed, rolled-back, or unsupported history keeps delivery. The separate
+  `.codex/hooks/bin/skills_mgr_inventory` command adds the `--- skills-mgr injected ---` heading
+  for Claude; it is not the command currently registered by Codex.
+  `CONTEXT-GROK-HOOK-PORT.md` records Grok's missing subagent-start delivery.
 - Go skill delivery: `.codex/hooks/bin/go_guidelines` appends the installed CLI's complete,
   module-version-specific list after a direct `skills-mgr get golang-best-practices` call.
-  PostToolUse registers it for Codex, Claude, Grok, and the OMP bridge. The read's working
+  PostToolUse registers it for Codex, Claude, and Grok. The read's working
   directory selects the module; a literal `cd <module> &&` prefix is also supported.
   Startup and unrelated tools do not load guidelines. The `END_GO_GUIDELINES` marker
   allows model-visible tail verification; missing tooling is reported without installation.
 - Tool guards: `.codex/hooks/bin/generated_code_guard` blocks direct generated-Go edits;
   `.codex/hooks/bin/subagent_exec_guard` owns the container and orchestration command boundary
-  for spawned agents, keyed on the event's `agent_type`.
+  for spawned agents, keyed on the event's `agent_type`. Codex registers the former for
+  `apply_patch|Edit|Write` and the latter for `Bash`; these matcher strings alone do not prove
+  coverage of every client tool or command wrapper. Check the client's hook-name mapping when
+  a tool surface changes.
 - Subagent command boundary: Codex re-applies the parent turn's permission profile and
   approval policy after a role layer, so `sandbox_mode` and `approval_policy` in
   `.codex/agents/*.toml` have no runtime effect and must not be declared there.
-  `.codex/hooks/bin/subagent_exec_guard` is the enforceable owner; the root agent stays
-  unrestricted because it is the only agent that can escalate to the user. Every role prompt
+  `.codex/hooks/bin/subagent_exec_guard` enforces its matched command boundary when the event
+  identifies the running role. The guard exempts root/default agents; they remain subject to
+  task authorization and runtime permissions. Every role prompt
   states the boundary: recognized read-only container and orchestration inspection is allowed;
   mutations, process control, and unclassified commands stay root-owned. Blocked commands
   are reported with their purpose and passing evidence in the assigned result format.
   `.codex/IMPLEMENTATION.md` owns validation requirements.
 - User experience: `.skills-mgr/skills/user-experience/SKILL.md` owns proportional UX and
   operability guidance when a user-facing workflow or interface changes.
-
-Validation commands for instruction and hook owners are listed in
-`CONTEXT-VALIDATION.md`.

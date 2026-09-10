@@ -28,23 +28,24 @@ cannot pass the focused test while generated ports are stale.
 Only the implementation role includes `Agent` in its `tools` allowlist, so it can dispatch
 independent inspections under shared AGENTS.md. This requires a Claude runtime and depth limit
 that permit nested agents; the generator does not configure runtime limits.
-The allowlist omits `Edit` and `NotebookEdit` for the review and council roles, so they
-cannot change repository files. `Write` stays on every role because a relayed result artifact is
-the one permitted write. Native TOML role bodies own the exact-path exception for both clients;
-the generator does not add artifact permissions.
+The allowlist omits `Edit` and `NotebookEdit` for the review and council roles. `Write` stays
+on every role for a relayed result artifact, and evidence-gathering roles also have `Bash`.
+These tool lists are not a filesystem sandbox: native TOML role bodies prohibit repository
+writes and own the exact-path artifact exception for both clients. The generator does not
+add artifact permissions.
 
 `.codex/hooks/bin/subagent_exec_guard` is registered directly as a frontmatter `PreToolUse` hook
-on each role that has `Bash`, with no adapter. The guard already emits Claude's
-`hookSpecificOutput` denial envelope and already keys on `agent_type`, which Claude sets inside
-a subagent. Unlike the Grok port, the guard does not fail open here: a frontmatter hook runs
-only inside its own subagent, so the field always names the running role. `council-member`
+on each role that has `Bash`, with no adapter. The guard emits Claude's
+`hookSpecificOutput` denial envelope and keys on the running role's `agent_type`.
+Enforcement depends on Claude supplying that identity; frontmatter registration alone does
+not prove a runtime payload or permission boundary. `council-member`
 reasons from its brief alone, declares no `Bash`, and therefore registers no guard, while
 `council-investigator` gathers its own repository evidence and registers the guard like the
 review roles. Policy stays in the single Codex implementation; no Claude file repeats the denial
 wording.
 
-Frontmatter hooks in user-level agents under `.claude/agents/` run without a workspace-trust
-grant, so this registration needs no per-folder approval.
+Check the running Claude client's hook delivery and trust behavior when those boundaries matter;
+the generated files and local tests establish configuration, not a live permission guarantee.
 
 ## Grok reads the same role files
 
@@ -62,10 +63,6 @@ reaches Grok, which matches `Bash` and `run_terminal_command` under one matcher 
 guard fails open there for the reason `CONTEXT-GROK-HOOK-PORT.md` records, so under Grok the
 command boundary rests on the role body alone.
 
-Its focused test is `.local/tests/claude_agent_port_test.py`, which runs the generator in `--check`
-mode and asserts the Codex-to-Claude role correspondence, tool boundaries, and guard registration.
-Add the Codex TOML and its Claude-specific metadata together, then run the helper; stale or
-missing generated output fails the test.
 
 ## Session start
 
@@ -84,13 +81,11 @@ have no harness equivalent, which is what makes the registration worth having.
 `.codex/hooks/bin/skills_mgr_inventory` is the shared inventory hook. It owns the
 `--- skills-mgr injected ---` heading so the injected list is not mistaken for Claude's own
 visible skills. `skills-mgr list` scopes itself from the session environment, so the Claude
-registration needs no harness flag or adapter. Claude has no separate post-compaction event:
-the `*` matcher covers the `compact` session source, while the same hook is also registered for
-Claude's subagent starts and post-compaction context.
+registration needs no harness flag or adapter. The current settings register it with `*`
+matchers for `SessionStart`, `SubagentStart`, and `PostCompact`. Check the running client's
+event sequence before assuming one inventory delivery per compaction; the registrations
+themselves do not deduplicate it.
 
 `.claude/hooks/` remains Herdr-managed and untracked. The shared hook is covered by the existing
 `.codex/hooks/*` allowlist entry. The `SessionStart` group that reports the session to Herdr stays
 separate from the two static session-start hooks because Herdr rewrites its own group.
-
-Both are covered by `.local/tests/claude_agent_port_test.py`; `--without-git` itself belongs to
-`.codex/hooks/tests/check_project_test.sh`.

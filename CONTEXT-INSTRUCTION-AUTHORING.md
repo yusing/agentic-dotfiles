@@ -3,12 +3,17 @@
 Check the effective instructions at their consumers, not just the edited file.
 
 For instruction authoring and audits, read the applicable prompting guidance in
-[OpenAI's latest-model guide](https://developers.openai.com/api/docs/guides/latest-model).
+[OpenAI's model guide](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices).
+- Codex: use `openaiDeveloperDocs.fetch_openai_doc({"url":"https://developers.openai.com/api/docs/guides/latest-model"})`.
+- Other agents: open the linked guide.
 
-For codex, use `openaiDeveloperDocs.fetch_openai_doc({"url":"URL_ABOVE"})`.
+Apply the guidance to the requested instruction layer. A documentation refresh does not
+request a model migration, runtime configuration change, or live behavior evaluation.
 
 Use `projects/codex` for Codex source evidence when that checkout is available. Distinguish it
 from the running client and report any source-verification gap.
+For discovery behavior, compare the local implementation with the official
+[AGENTS.md guide](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
 
 - **Inheritance:** Codex children inherit base and host/user instruction context independently of
   conversation history; project AGENTS.md is discovered for the child's environment and cwd.
@@ -32,8 +37,11 @@ from the running client and report any source-verification gap.
   Distinguish role behavior, inherited runtime permissions, and hook enforcement; verify the
   effective boundary before documenting a restriction as enforced.
 - **Discovery and refresh:** Codex project guidance depends on trust, root markers, cwd, and a
-  shared byte limit. In each directory, AGENTS.override.md precedes AGENTS.md and configured fallbacks.
-  Discovery is cached; editing a file alone does not prove a live session has reloaded it.
+  shared byte limit. Codex-home guidance tries AGENTS.override.md before AGENTS.md; project
+  discovery tries those names before configured fallbacks in each directory. The source's
+  project-doc manager reuses cached documents while environment selection and trust stay unchanged;
+  editing a file alone does not prove a live session has reloaded it. Check a fresh session or
+  actual delivered context when reload behavior matters.
 - **Skills and hooks:** Skill catalogs expose metadata, not the selected body. Native catalog
   guidance, hook-injected inventories, and skill bodies are separate instruction surfaces.
   Check the client's parser and effective settings; similarly named frontmatter fields are not
@@ -60,7 +68,16 @@ from the running client and report any source-verification gap.
   metadata, tests, documentation, and projection allowlists aligned. Refresh generated content
   from its owner; retain historical names in historical records.
 
-Before completion, trace the changed guidance for main doing simple work, main delegating,
-an assigned writer or read-only agent, a no-history fork, and affected non-Codex clients. Check
-for conflicting actors, duplicate decisions, missing or circular pointers, and accidental role
-or scope expansion. Syntax and wording assertions alone do not establish correct routing.
+For Codex source checks, start under `projects/codex/codex-rs/`: `core/src/agent/role.rs`
+owns role overrides, `core/src/agent/control/spawn.rs` owns child assembly, and
+`core/src/thread_manager.rs` owns parent user-instruction inheritance.
+`codex-home/src/instructions/mod.rs` owns global instruction lookup, and
+`core/src/agents_md.rs` plus `core/src/agents_md_manager.rs` own project discovery and caching.
+`core/src/hook_runtime.rs` owns hook-context delivery. These paths are evidence, not proof
+that the installed client matches the checkout.
+
+Before completion, trace the affected consumer paths: main doing simple work or delegating,
+an assigned writer or read-only agent, a no-history fork, and non-Codex clients when they share
+the changed owner. Check for conflicting actors, duplicate decisions, missing or circular
+pointers, and accidental role or scope expansion. Syntax and wording assertions alone do not
+establish correct routing.

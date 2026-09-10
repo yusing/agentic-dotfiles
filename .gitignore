@@ -38,6 +38,7 @@ __pycache__
 !/.codex/hooks/lib/locked_state.ts
 !/.codex/hooks/lib/session_scope.ts
 !/.codex/hooks/lib/shell_command.ts
+!/.codex/hooks/session_start_context.ts
 !/.codex/hooks/skills_mgr_inventory.ts
 !/.codex/hooks/subagent_exec_guard.ts
 !/.codex/IMPLEMENTATION.md
@@ -116,12 +117,16 @@ __pycache__
 !/.local/lib/compile-agent-tools/CHANGELOG.md
 !/.local/lib/compile-agent-tools/compile-agent-tools.ts
 !/.local/lib/project-public-config/
+!/.local/lib/project-public-config/CHANGELOG.md
 !/.local/lib/project-public-config/project-public-config.ts
 !/.local/lib/rewrite-home-paths/
 !/.local/lib/rewrite-home-paths/bun.lock
 !/.local/lib/rewrite-home-paths/CHANGELOG.md
 !/.local/lib/rewrite-home-paths/package.json
 !/.local/lib/rewrite-home-paths/rewrite-home-paths.ts
+!/.local/lib/sync-claude-agent-ports/
+!/.local/lib/sync-claude-agent-ports/CHANGELOG.md
+!/.local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts
 !/.skills-mgr/
 !/.skills-mgr/.skills-mgr.json
 !/.skills-mgr/skills/

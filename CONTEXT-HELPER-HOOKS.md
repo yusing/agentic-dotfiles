@@ -50,8 +50,20 @@ the Grok envelope and runs TypeScript Codex policy in-process so startup
 stays inside the 10ms budget. Spawn remains for commands that have no
 imported policy.
 
-Host extensions the client loads as TypeScript (the OMP Codex-hook adapter)
-are the client's extension format, not a helper or hook command. The hook
-commands they execute still follow this file.
 
 Tests are not helpers or hooks.
+
+## Public projection
+
+`.local/lib/project-public-config/project-public-config.ts` owns the filtered output of
+`.local/bin/project-public-config`. The helper reads a committed revision, defaulting to
+`HEAD`; working-tree edits are not projection inputs.
+
+Keep source-only Markdown guidance in complete paragraphs or sections between standalone
+`<!-- public-config:omit -->` and `<!-- /public-config:omit -->` lines. The helper removes
+those blocks before disclosure validation. Markers must be paired and cannot nest; malformed
+blocks fail before destination writes. Keep each surrounding sentence and list readable when
+the block is omitted. Code-fenced examples are literal content, not projection directives.
+
+Maintain the source docs and projector together when public ownership or included paths change.
+Publish helper sources and required build inputs, not machine-specific compiled binaries.

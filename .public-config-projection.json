@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "010b4778c1bb4f214ad76edd2fe8dcf2905e7eb1",
+  "sourceCommit": "f4c9bb983e1b1a10d8e998728c52cb864853a028",
   "outputs": [
     {
       "path": ".bashrc",
@@ -179,6 +179,12 @@
       "path": ".codex/hooks/lib/shell_command.ts",
       "kind": "file",
       "sha256": "2381565136ce1447dc41d4921427e342403d3223bc29b017d5d086ce5a13e510",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/session_start_context.ts",
+      "kind": "file",
+      "sha256": "2baf1541d5de4b574822a93acb080ded6680ebf0e6f7682727ed382f350c7888",
       "executable": false
     },
     {
@@ -400,7 +406,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "4ed848acccdbcd8f09c5b77e1fed89274ca31b805c10206cd660f7cd56550257",
+      "sha256": "6b30e2c8831b8a8cac58129dba3f3beb54d97af878b56da679c268ee6fcbfcd4",
       "executable": false
     },
     {
@@ -476,9 +482,15 @@
       "executable": false
     },
     {
+      "path": ".local/lib/project-public-config/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "05cfec08fde69b58d89092fd5bb28a27190309549fa62e97d50896b9561f937d",
+      "executable": false
+    },
+    {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "8a2270b551f24e58cb6cd1fae362459958abff6f1922a067517c75bd9f5e56f4",
+      "sha256": "91fa7dac4fbf8ec18f67459a259bed49da624113d9f1a2959dedcbed945b130d",
       "executable": true
     },
     {
@@ -503,6 +515,18 @@
       "path": ".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
       "kind": "file",
       "sha256": "5cedbd3a719784129fd359abd27ab90926bab2548100afdd431625fe76f97ddf",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/sync-claude-agent-ports/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "d3f5bc007c04d1fce3cc95930dcef18ec1ae48c14b3d3034cb76e367350dab41",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
+      "kind": "file",
+      "sha256": "889638f70879268e60aa0625f9d6bc84d4a9c33e25a13f415a60d8553fe19774",
       "executable": false
     },
     {
@@ -963,25 +987,25 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "1ab017a3ebc6df5bc30f30cb24e82aa4cb1c2df10e88a6a32ef34098077b9f29",
+      "sha256": "a4e75d5fdc7ced0c68784a026611a2977fb769fc97cd2c181fc68a247952a59b",
       "executable": false
     },
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "ab1f7276db6c322ea4f9d1bb4d77d22ba48f12d78f91439f9bb9c6c074f685d5",
+      "sha256": "e474e68a77671213bc623c79d9cf6a39e7b65b1d68b431e21d68097ff6229a3d",
       "executable": false
     },
     {
       "path": "CONTEXT-GROK-HOOK-PORT.md",
       "kind": "file",
-      "sha256": "d8c776faded456f9643ac489d21c538100487e9268c156ed196b2ab3a3d274a4",
+      "sha256": "3eb38d7bf0118b3336f327664ca2bd9d8fd4060969f30e1a517e252cf8439024",
       "executable": false
     },
     {
       "path": "CONTEXT-HELPER-HOOKS.md",
       "kind": "file",
-      "sha256": "0e3bbe5ec108dd6008ae7a4748839864c9cac3372b082d6fa33b52f4154cdda7",
+      "sha256": "a755f743845104f221f82c828ebaecedc5e64a3d8646f1b9c360fbca38ac0157",
       "executable": false
     },
     {
@@ -993,19 +1017,19 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "d7ec10f348392e9bbfffd0c70474ee8d654e764059ef256547f2d77fb24387b5",
+      "sha256": "137f5a888e0a60f196a6b7704fd8e3363aea7315e13b37a018e9cbaa69954485",
       "executable": false
     },
     {
       "path": "CONTEXT-INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "b968c3ace9e255718a4c0e49c8c6c9b216433e9d15877eab16be00999bdf6229",
+      "sha256": "b8914a8fe6929ffa9125de113ea003d1fa43f1ebac2c7e82fb9abc6c5bfc0abd",
       "executable": false
     },
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "589743215926c3074d4273e3dcec4e875d552a3ccb70d0fa41e0e45711e790e9",
+      "sha256": "39c81fa49ddc64adb7afbf86fe4f594a9a59a5d0cf687de9d69150eb3356c176",
       "executable": false
     },
     {
