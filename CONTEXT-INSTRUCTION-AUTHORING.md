@@ -2,12 +2,10 @@
 
 Check the effective instructions at their consumers, not just the edited file.
 
-For Codex instruction authoring and audits, read the applicable prompting guidance in
-[OpenAI's latest-model guide](https://developers.openai.com/api/docs/guides/latest-model),
-using the built-in OpenAI documentation tool's equivalent page when available. Apply that advice
-within the user's scope, ownership rules, and explicit model and reasoning choices.
-This documentation requirement is Codex-only. For other clients, use their applicable guidance;
-shared instruction changes still need checks at every affected client.
+For instruction authoring and audits, read the applicable prompting guidance in
+[OpenAI's latest-model guide](https://developers.openai.com/api/docs/guides/latest-model).
+
+For codex, use `openaiDeveloperDocs.fetch_openai_doc({"url":"URL_ABOVE"})`.
 
 Use `projects/codex` for Codex source evidence when that checkout is available. Distinguish it
 from the running client and report any source-verification gap.
