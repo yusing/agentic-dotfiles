@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6e89145f4a34b12b24e6aac26a9cce0f4892926e",
+  "sourceCommit": "310649d21500d31d0957f1a3bde7c2384d98bbf7",
   "outputs": [
     {
       "path": ".bashrc",
@@ -41,7 +41,7 @@
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "beae2191847f61e77d9b59493eefdb20958f9d10be857d2d6b9d3255d9d5323b",
+      "sha256": "8190cbe443cf40f1cb4d0c70a5006c05d00e8a23c13e80cf55336d91d8544bdb",
       "executable": false
     },
     {
@@ -100,7 +100,7 @@
     {
       "path": ".codex/agents/review-correctness.toml",
       "kind": "file",
-      "sha256": "7ca09947fa62f4b2365d52bb021620fde46ded37f56fa9b2cd9fa94799a7412d",
+      "sha256": "7e97621010a2451de57be2d590cd5ceeb2600e20a1447be3dc6e78a6a6a7ce87",
       "executable": false
     },
     {
@@ -400,7 +400,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "6bbbb87924b58a05d20edc692fde999a795a582e9a7113364bca3bfd00510018",
+      "sha256": "2dc7d693f178726137e3846ad23d25feff7c6cac96645d70b508294b3b55c8ff",
       "executable": false
     },
     {
@@ -478,7 +478,7 @@
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "2d551bc6cbdeb66147acaf50a862b6f353cd9edbf6b5b835693d44d21b902178",
+      "sha256": "190fbed00cfa01dd580440a2b97454a7011d76b5798cf434274c58f1199991b0",
       "executable": true
     },
     {
@@ -508,25 +508,13 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "31b1604d643861ff29cb773420506c0ac1210e7c3c7ca17000b84372e71db1fd",
+      "sha256": "c083c68f91e01dfde825eea504693143eea7273d88e8cab395da1e332ffa8880",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/.remote-patches/1873c3293f7904f3536872679118a319035d4f4080c13f49620628211cd619c1.patch",
       "kind": "file",
       "sha256": "0ac7b31592c2a6bf8a63ced26954d4acfd6215962c916b4946f09354d86c487f",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/assess-change-impact/agents/openai.yaml",
-      "kind": "file",
-      "sha256": "25463bbb6af884483bd5f42fb5d6378ea2d673047366a719bba02afdb19bc5e5",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/assess-change-impact/SKILL.md",
-      "kind": "file",
-      "sha256": "f7c1522bfbef2512f7ae365401f99ffdc4f02690b68c1e578e3111e520e22d8a",
       "executable": false
     },
     {

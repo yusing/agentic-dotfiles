@@ -10,9 +10,6 @@
         "locator": "tt-a1i/archify/archify"
       }
     },
-    "assess-change-impact": {
-      "enabled": true
-    },
     "build-code-skeleton": {
       "enabled": true
     },

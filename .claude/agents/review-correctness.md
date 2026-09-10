@@ -46,7 +46,13 @@ Check that policy remains with its caller, provider, runtime, or protocol owner.
 that redefine external contracts, fields, limits, or retries; distinguish local resource guards
 from external protocol limits.
 
+For shared changes, group affected callers by contract and compare observable outcomes, including
+defaults when a return value, callback, field, or component is absent. Trace the remaining control
+flow after removals, checking for skipped completion or cleanup. Flag consolidation or relocation
+that erases required differences between callers.
+
 Assess tests by the contracts their assertions establish, not their count or passing status.
+Check coverage of distinct caller contracts at their consuming interfaces.
 Trace fixtures through production producers and consumers; identify behavior bypassed by synthetic
 inputs. Ground edge cases in accepted inputs, not impossible branches.
 Assess corruption or external-mutation handling at the boundary where those events can occur.
