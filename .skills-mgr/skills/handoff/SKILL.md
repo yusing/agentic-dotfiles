@@ -1,6 +1,6 @@
 ---
 name: handoff
-description: Create a compact, actionable, and redacted handoff document for a fresh agent.
+description: Create a compact, actionable, and redacted handoff document for a fresh agent. Also read `handoff/STANDARD.md`.
 disable-model-invocation: true
 ---
 
@@ -8,9 +8,7 @@ Write a concise Markdown handoff document so a fresh agent can resume the work. 
 `HANDOFF.md` in the current workspace. Writing it replaces any earlier handoff at that path, and
 the earlier one stays unread.
 
-Read the handoff standard with `skills-mgr get handoff/STANDARD.md`, then write `HANDOFF.md`.
-Those are the only two actions this skill takes: compose the document from the context you already
-hold, and hand off immediately.
+Compose the document from the context you already hold, and hand off immediately.
 
 The standard owns the document content. This skill owns the cutoff, file destination, and final
 path-only response.

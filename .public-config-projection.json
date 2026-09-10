@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "5c13fb3b2e893acb9acfcfc7c39745a75b84a94a",
+  "sourceCommit": "e9eb105d68176802fb6820b3fd3007f49720c1f1",
   "outputs": [
     {
       "path": ".bashrc",
@@ -664,7 +664,7 @@
     {
       "path": ".skills-mgr/skills/handoff/SKILL.md",
       "kind": "file",
-      "sha256": "3cb6d4d568f3facc82e54bc360392decfb83a290cb009cead74959cd11191d2a",
+      "sha256": "c81bd9d229303ab529c1af5544af946ea8deceecb2b31c68992cea1fb2e2fb05",
       "executable": false
     },
     {
