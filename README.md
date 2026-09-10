@@ -131,7 +131,6 @@ determine when it applies.
 
 | Name | Source | Purpose | Model visible | Condition |
 | --- | --- | --- | --- | --- |
-| `assess-change-impact` | Shared | Map callers affected by a shared change | Yes | Always |
 | `build-code-skeleton` | Shared | Create an initial compile-safe project skeleton | Yes | Always |
 | `codebase-review` | Shared | Review the whole working tree | No | Always |
 | `context7-mcp` | Codex | Fetch current library documentation from Context7 | Yes | Always |
@@ -153,7 +152,6 @@ determine when it applies.
 | `minimalist-ui` | Remote | Design clean editorial-style interfaces | Yes | TSX, JSX, HTML, or CSS project |
 | `new-project` | Shared | Run the new-project workflow | Yes | Always |
 | `openai-docs` | Codex | Look up Codex and OpenAI product documentation | Yes | Always |
-| `route-execution` | Shared | Select execution agents and coordinate work across owners | Yes | Always |
 | `postgres-17-18-features` | Shared | Apply PostgreSQL 17 and 18 features | Yes | PostgreSQL project |
 | `read-codex-session` | Codex | Inspect local Codex session transcripts | No | Always |
 | `rust-async-patterns` | Remote | Apply Tokio async Rust patterns | Yes | Rust project |

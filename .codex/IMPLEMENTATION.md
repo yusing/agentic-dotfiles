@@ -4,30 +4,7 @@ Choose the simplest implementation that meets the full request. Start end-to-end
 without regressing behavior the current requirements still accept. Reassess before adding
 complexity; review findings alone do not expand scope.
 
-## Execution ownership
-
-### Main's routing decision
-
-Main owns user intent, diagnosis, cross-owner contracts, difficult test-case design, acceptance,
-and final quality decisions. Apply the main-only authoring boundary in shared AGENTS.md before
-routing work. Delegate eligible settled implementation, documentation, test authoring, and
-routine validation to a suitable execution owner. Bundle related work with that owner.
-Execute eligible work directly only for a genuinely trivial isolated edit,
-an explicit user request for main-agent execution, or an unavailable suitable worker.
-Familiarity or simplicity alone is not an exception. This authorizes delegation within the active
-harness's tool and parallelism constraints. Use `route-execution` to choose and brief the delegate.
-
-Keep coherent code, tests, documentation, and corrections with one execution owner. Main designs
-difficult failure cases and evaluates evidence; the owner writes and runs the checks. Escalate
-concrete ambiguity or demonstrated capability limits, then return settled execution to the
-suitable owner rather than repeating the entire task through progressively stronger models.
-Accept adequate work without cosmetic rewrites. Judge economy by completed work and rework,
-not token reduction alone.
-
 ## Validation
-
-Execution ownership changes who does the work, not which required checks or independent
-inspections must pass.
 
 Follow the shared independent-inspection policy in AGENTS.md.
 

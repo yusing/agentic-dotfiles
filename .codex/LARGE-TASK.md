@@ -2,10 +2,10 @@
 
 ## Main's evidence delegation
 
-The main agent owns synthesis, change-impact reasoning, decisions, and final integration;
-execution ownership follows `IMPLEMENTATION.md`. This is an explicit standing request for main to
-delegate independent factual lookup without per-task approval when it benefits from parallel
-investigation. This authorizes factual lookup, not delegated reasoning. Select roles under the shared
+The main agent owns synthesis, change-impact reasoning, decisions, and final integration.
+This is an explicit standing request for main to delegate independent factual lookup without
+per-task approval when it benefits from parallel investigation. This authorizes factual lookup,
+not delegated reasoning. Select roles under the shared
 role-selection policy. An instruction audit or revision at supplied or known paths needs direct
 reading by the main agent.
 

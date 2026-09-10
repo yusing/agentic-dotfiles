@@ -106,9 +106,6 @@
     "openai-docs": {
       "enabled": true
     },
-    "route-execution": {
-      "enabled": true
-    },
     "postgres-17-18-features": {
       "enabled": "lang postgres"
     },

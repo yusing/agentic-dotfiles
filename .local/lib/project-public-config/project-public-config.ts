@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.1.17";
+export const VERSION = "1.1.18";
 
 type TreeEntry = {
 	mode: string;
@@ -184,7 +184,6 @@ const PROJECTED_SKILL_NAMES = [
 	"js-ts-best-practices",
 	"juststore-rendering-optimizer",
 	"new-project",
-	"route-execution",
 	"postgres-17-18-features",
 	"scriptc-compiler",
 	"shadcn",

@@ -108,9 +108,8 @@ windows; line limits are insufficient. Reuse captured scans while state is uncha
 
 Main-only authoring: the main agent makes all changes to instructions, skills, workflow guidance,
 and task documents (for example, `LARGE-TASK.md`), including instruction-delivery hooks; do not
-delegate these edits. In mixed tasks, main
-keeps these edits while delegating eligible implementation. Assigned agents return any required
-instruction-authoring changes to main without editing them. Inspection findings and result artifacts
+delegate these edits. Assigned agents return any required instruction-authoring changes to main
+without editing them. Inspection findings and result artifacts
 are outputs owned by their producing agents, not main-only instruction authoring.
 
 Use the available native role descriptions as the trigger for role selection, within authorized
@@ -140,35 +139,16 @@ Preserve council evidence isolation and its phase-specific result contracts.
 
 For explicit code reviews, state when the requested scope extends beyond the pending diff.
 
-After implementation and focused validation of production or operational changes, the execution
-owner assesses the actual change and remaining evidence. Before dispatch, identify an important
-contract that completed checks leave unverified, the impact if it fails, and what independent source inspection
-could establish. Include that residual risk in the review scope alongside the requested outcome
-and affected acceptance criteria. Without such a gap, skip review; system importance alone is
-insufficient.
+After implementation and focused validation of production or operational changes, spawn independent
+inspection when a fresh perspective could improve the result.
 
-Implementers follow this inspection workflow directly rather than handing inspection dispatch
-back to main. The execution owner spawns the reviewer, receives its result directly, resolves
-in-scope findings, runs affected checks, and requests any justified re-review from that reviewer.
-Report the completed outcome and remaining gaps to the parent. Escalate cross-owner findings or
-scope decisions while retaining in-scope work; main transfers ownership only for a concrete scope,
-capability, or availability reason. On harnesses without nested-agent support, report that limit
-and ask the parent to arrange inspection without transferring implementation ownership.
+The execution owner, whether main or a delegated agent, spawns the reviewer, receives its result,
+resolves in-scope findings, and reruns affected checks. If nested agents are unavailable, ask the
+parent to arrange inspection without transferring implementation ownership.
 
-Reuse applicable completed reviews across commits and phases, and reviewers whose context remains
-applicable. For fresh inspection, select roles from their available descriptions to cover the
-remaining risk, with relevant upstream artifacts and consumer-based result mode.
-Dispatch independent scopes concurrently; give each its exact review scope directly. Do not duplicate an active role's inspection.
-
-Main must not repeat an inspection the implementer already completed. Review again only for
-changes that invalidate it or a distinct uncovered risk.
-
-Include input artifacts only for evidence produced by another spawned agent. Apply the shared
-communication rule when a review needs a result artifact; an implementer receiving its own
-reviewer's reply does not need one. Apply the residual-risk gate to
-each additional review scope: require a distinct source-inspection question, not a substitute for
-missing runtime checks. Report runtime/browser coverage gaps; source approval covers only inspected
-behavior and does not discharge outstanding acceptance checks.
+Reuse applicable reviews and reviewers; repeat inspection only for changed behavior or a distinct
+uncovered risk. Report missing runtime or browser coverage separately; source inspection does not
+replace those checks.
 
 ### Agents council
 
