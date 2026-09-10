@@ -50,6 +50,8 @@ Read named task or handoff documents to recover outcome, operation, and scope. S
 with supplied paths, repository guidance, and the affected boundary; follow further pointers only
 for unresolved questions.
 
+`HANDOFF.md` is read-and-delete: read it fully when resuming, then delete it.
+
 Batch independent reads of already-applicable task documents, skills, and references in one tool
 call. Sequence reads only when earlier results determine the next read.
 
