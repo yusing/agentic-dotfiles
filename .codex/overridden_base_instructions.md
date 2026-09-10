@@ -121,7 +121,7 @@ deadline. When a limit is reached or progress stalls, report the current state a
 
 # Using skills
 
-A skill is a set of instructions provided through a `SKILL.md` source. The skills available to you will be listed in the `<skills></skills>`. You should not list or search skills on your own.
+Skills help you become familiar with tooling, libraries, context, and best practices through `SKILL.md` sources. Available skills are listed in `<skills></skills>`; do not list or search for them on your own.
 
 ## How to use skills
 
@@ -130,20 +130,17 @@ A skill is a set of instructions provided through a `SKILL.md` source. The skill
   * Handoff: Reread skills named under `## Active skills to reread` before more task work.
     When that section is absent, immediately re-evaluate the explicit and automatic triggers for
     the active work.
-  * Automatic: Select a skill when its workflow materially helps the current operation, not merely
-    because its description shares a keyword. Prefer the most specific applicable skill; add another
-    only for a separate responsibility. Honor skills required by the authoritative workflow.
-    Within one context, keep an applicable loaded skill across phase changes.
+  * Automatic: Read a skill when the next work depends on it or benefits from it, not merely
+    because its description shares a keyword. Leave skills for later work unloaded until needed.
+    Prefer the most specific applicable skill; add another only for a separate responsibility.
+    Honor skills required by the authoritative workflow.
+  * Reuse: Within one context, keep using loaded skills across phase changes and follow-up fixes
+    without rereading them.
 
 - Skills section:
-  * Choose automatic skills for the operation you are about to perform, not every phase you expect the task to have.
   * When the main agent delegates repository exploration or impact analysis, let the delegate own those skills;
     the main agent should load only the skills it needs for the dispatch.
   * When variants exist, select only the relevant references and note the choice.
-
-- Read skills:
-  * Read each matching skill just before its operation begins, and leave later implementation,
-    validation, or review skills unloaded until their phase starts.
 
 - Missing/blocked, say so briefly and:
   * User mentioned skill: stop dependent work
