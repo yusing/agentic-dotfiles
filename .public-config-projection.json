@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6bf5e237d1bd2791fd10dbc59a8bd2f00a0a7d57",
+  "sourceCommit": "4244c28f779a8928c44366f5cba9b6a0d0a4cc2d",
   "outputs": [
     {
       "path": ".bashrc",
@@ -70,7 +70,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "305199eb9e5401079703af009334b437967033c1a17ce22e20e65e99af71849e",
+      "sha256": "d0fc4edbc5c09cbb0880a4d5aed71bfd1dcf3cbed72cb107e07c1d2e41760b29",
       "executable": false
     },
     {
@@ -214,7 +214,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "3689ad59d62eab3c7e0597db8d44ec1399daa24549d47d7a37fc52b3874d04cd",
+      "sha256": "9c8adedd975e15020a3d4c572790547c4289cf0146b77ba866165640c2f4fc3e",
       "executable": false
     },
     {
