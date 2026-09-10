@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+Include the conditional collaboration and GitHub text guidance referenced by shared instructions.
+
 ## 1.2.0
 
 Project explicitly marked local-only Markdown blocks instead of rewriting context prose.

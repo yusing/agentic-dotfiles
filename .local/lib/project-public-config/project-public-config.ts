@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.2.0";
+export const VERSION = "1.2.1";
 
 type TreeEntry = {
 	mode: string;
@@ -111,6 +111,8 @@ const EXACT_PATHS = new Set([
 	".claude/CLAUDE.md",
 	".claude/settings.json",
 	".codex/AGENTS.md",
+	".codex/COLLABORATION.md",
+	".codex/GITHUB.md",
 	".codex/IMPLEMENTATION.md",
 	".codex/LARGE-TASK.md",
 	".codex/config.toml",

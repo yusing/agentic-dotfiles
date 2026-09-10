@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "4244c28f779a8928c44366f5cba9b6a0d0a4cc2d",
+  "sourceCommit": "b9ff949ca88495b48771f28500fdacdee7846e7c",
   "outputs": [
     {
       "path": ".bashrc",
@@ -70,7 +70,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "d0fc4edbc5c09cbb0880a4d5aed71bfd1dcf3cbed72cb107e07c1d2e41760b29",
+      "sha256": "29c4e063a2ef3a9f568ccff511fc53c984eaa95c6a3c31ad669a3d1a87e69987",
       "executable": false
     },
     {
@@ -116,9 +116,21 @@
       "executable": false
     },
     {
+      "path": ".codex/COLLABORATION.md",
+      "kind": "file",
+      "sha256": "71eb3c96529f63da6eb139db82c0ce9a37150d10c7796deecee95e89feb42f1a",
+      "executable": false
+    },
+    {
       "path": ".codex/config.toml",
       "kind": "file",
       "sha256": "7dba4920fd23fcf916d26e2675cc5c81d8b2f520bf0d2c4d895bbbad766382ca",
+      "executable": false
+    },
+    {
+      "path": ".codex/GITHUB.md",
+      "kind": "file",
+      "sha256": "686f54262c7db6e0646461d218776f3243031e38f428e7a6c8628f734ac3b5a5",
       "executable": false
     },
     {
@@ -202,19 +214,19 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "6ff73aacd292a8197602e85daa85b5f4380bb1ddb8b9a2aafc0e06dd77c24176",
+      "sha256": "ae2fde2a6966cec741a6964b08cb283f65c627a76084714dfed64dd3e165796d",
       "executable": false
     },
     {
       "path": ".codex/LARGE-TASK.md",
       "kind": "file",
-      "sha256": "ff5871fe9291d5fe5c59b343a8adc7f7a5a8568c206ebab1eb6779a6af986e49",
+      "sha256": "56fe02452ad3c128c5ffc88d6fa49aadcd91d3039221b1c8f91c2efa1038ef1f",
       "executable": false
     },
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "9c8adedd975e15020a3d4c572790547c4289cf0146b77ba866165640c2f4fc3e",
+      "sha256": "1738658af17c3816c046181ab63836f659581bec31aed7f3bb6ab497ae8bbd19",
       "executable": false
     },
     {
@@ -406,7 +418,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "6b30e2c8831b8a8cac58129dba3f3beb54d97af878b56da679c268ee6fcbfcd4",
+      "sha256": "d70bb64f6b9c9bb5efc14ee3dd8c721f8a3a5dcef88ba60b211474dc9bc4c79b",
       "executable": false
     },
     {
@@ -484,13 +496,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "05cfec08fde69b58d89092fd5bb28a27190309549fa62e97d50896b9561f937d",
+      "sha256": "330fc21dee37ee6bb19dbc62ea4aa5d9e4a6525258eef7dfdbc6b8f43a76860a",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "91fa7dac4fbf8ec18f67459a259bed49da624113d9f1a2959dedcbed945b130d",
+      "sha256": "775c2f97e53fd2ceea9c337779921ef73a01f6f7167c52c6290060bbc538a1ed",
       "executable": true
     },
     {
@@ -993,7 +1005,7 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "e474e68a77671213bc623c79d9cf6a39e7b65b1d68b431e21d68097ff6229a3d",
+      "sha256": "200d49ab587fedf5e84bf4edf3c57312c0a8c93cf9b59c4788af578e48309cf8",
       "executable": false
     },
     {
@@ -1023,13 +1035,13 @@
     {
       "path": "CONTEXT-INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "b8914a8fe6929ffa9125de113ea003d1fa43f1ebac2c7e82fb9abc6c5bfc0abd",
+      "sha256": "3eb81f78d906de2b13911eb29540bc0375cc5e5c695d5eff9859eabdfe3cc270",
       "executable": false
     },
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "39c81fa49ddc64adb7afbf86fe4f594a9a59a5d0cf687de9d69150eb3356c176",
+      "sha256": "4449967796f9349dbe08bcaf8e42216268978af731f929609539f1e1de9ad691",
       "executable": false
     },
     {

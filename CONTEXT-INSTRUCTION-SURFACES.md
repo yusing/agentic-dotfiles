@@ -15,6 +15,8 @@ shared standing guidance.
 - `CONTEXT-*.md`
 - `.codex/config.toml` (base prompt, compaction prompt, and client settings)
 - `.codex/AGENTS.md`
+- `.codex/COLLABORATION.md`
+- `.codex/GITHUB.md`
 - `.codex/LARGE-TASK.md`
 - `.codex/IMPLEMENTATION.md`
 - `.codex/overridden_base_instructions.md`

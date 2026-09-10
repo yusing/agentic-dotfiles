@@ -78,6 +78,8 @@ procedures. Group related edits once wording is settled.
 
 ## Skills and required tools
 
+For GitHub pull request descriptions, issue bodies, or comments, read `$HOME/.codex/GITHUB.md`.
+
 Select skills that materially help the current operation; skip automatic loading when the approach
 is settled and the skill adds nothing needed. Explicitly requested and higher-priority-required
 skills remain mandatory. Once selected, follow the skill's tool and method constraints; adapt
@@ -108,33 +110,20 @@ windows; line limits are insufficient. Reuse captured scans while state is uncha
 
 Select roles using the native catalog descriptions within authorized delegation boundaries.
 Assigned agents keep their role and scope; main owns integration and completion.
+Before dispatching, or when executing a subagent assignment, read `$HOME/.codex/COLLABORATION.md`
+for coordination, result delivery, and review follow-through. It does not authorize delegation.
 
 Only main edits instructions, skills, workflow guidance, task documents, and instruction-delivery
 hooks. Delegates propose changes to these and own their findings and result artifacts.
 
-Use Neuralese: concise, recipient-focused prose that preserves meaning, provenance, and gaps.
-Keep code/data syntax and plain `path:line` references; follow required output formats.
-
-Return results directly to the parent. Use artifacts only for an explicit deliverable or another
-consumer. For cross-agent relays, the parent assigns an exact path in a temporary directory outside
-the repository; the producer writes and updates the complete result there. Relay the original
-artifact without rewriting it; report blocked writes instead of taking over authorship.
-Preserve council evidence isolation and result contracts.
-
 ### Independent inspection
 
 For explicit code reviews, state when the requested scope extends beyond the pending diff.
+Report missing runtime or browser coverage separately; source inspection does not replace those
+checks.
 
 After implementation and focused validation of production or operational changes, spawn independent
 inspection with `fork_turns="none"` when a fresh perspective could improve the result.
-
-The execution owner, whether main or a delegated agent, spawns the reviewer, receives its result,
-resolves in-scope findings, and reruns affected checks. If nested agents are unavailable, ask the
-parent to arrange inspection without transferring implementation ownership.
-
-Reuse applicable reviews and reviewers; repeat inspection only for changed behavior or a distinct
-uncovered risk. Report missing runtime or browser coverage separately; source inspection does not
-replace those checks.
 
 ### Agents council
 
@@ -150,9 +139,8 @@ owner and interface. Read named instructions directly; distinguish evidence gaps
 Keep evidence gathering within assigned authority. Read-only work does not authorize edits.
 Escalate unresolved intent to the user or parent.
 
-Reuse existing results and avoid work already in flight. When delegating, group questions by shared
-context, run independent groups concurrently, and wait for evidence needed to decide. Revisit only
-changed questions or evidence, or unusable results.
+Reuse existing results and avoid work already in flight. Revisit only changed questions or
+evidence, or unusable results.
 
 ## Active work
 

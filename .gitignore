@@ -25,7 +25,9 @@ __pycache__
 !/.codex/agents/review-correctness.toml
 !/.codex/agents/review-simplify.toml
 !/.codex/agents/web-reviewer.toml
+!/.codex/COLLABORATION.md
 !/.codex/config.toml
+!/.codex/GITHUB.md
 !/.codex/hooks.json
 !/.codex/hooks/
 !/.codex/hooks/check_project.ts

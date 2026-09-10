@@ -16,7 +16,8 @@ integrated checks.
 
 Test through the owning interface. Cover affected contracts, meaningful failures, and required
 checks in proportion to risk. Prefer focused existing checks; add tests that protect behavior,
-not mirror implementation. Broaden or repeat passing checks only for changes, failures, or a
+not mirror implementation. Reversible, low-impact edits need no new tests unless they protect
+a meaningful contract. Broaden or repeat passing checks only for changes, failures, or a
 concrete remaining concern. Retain required integrated checks and risk-triggered independent review.
 Do not invent unhappy paths or production seams solely for tests; keep setup in test sources.
 

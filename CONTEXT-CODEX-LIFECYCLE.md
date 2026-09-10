@@ -9,11 +9,8 @@
    `.codex/AGENTS.md` for durable workflow guidance and the root `AGENTS.md` for repository context
    routing. The routed context maps and skill bodies are loaded only when their triggers match.
    Codex also discovers `.codex/agents/*.toml`; each role description guides role selection,
-   while the spawning client or tool owns invocation mechanics. Children inherit the parent's base
-   and host/global user instructions independently of conversation history. Project `AGENTS.md`
-   is discovered separately for the child's environment. A role's TOML `developer_instructions`
-   replaces the configured developer-instruction slot, not the separate base or user inputs.
-   `CONTEXT-INSTRUCTION-AUTHORING.md` maps the source assembly and cache boundaries.
+   while the spawning client or tool owns invocation mechanics. The assembly, inheritance,
+   and cache boundaries are detailed below.
    Role files do not use `model_instructions_file`. Active hooks are assembled from
    `.codex/hooks.json`, any inline hook configuration, and manifests for enabled plugins.
 2. **Session start.** At startup and after context compaction or clearing,
@@ -47,3 +44,47 @@
 Registration and implementation stay separate throughout this flow: each active configuration
 source decides when its hook runs, the registered command, script, or MCP tool owns its output
 and behavior, and `.codex/AGENTS.md` owns whole-task invariants outside hook coverage.
+
+## Assembly and verification
+
+Use `projects/codex` for Codex source evidence when that checkout is available. Distinguish it
+from the running client and report any source-verification gap. For discovery behavior, compare
+the local implementation with the official
+[AGENTS.md guide](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
+
+- **Inheritance:** Codex children inherit base and host/user instruction context independently of
+  conversation history; project AGENTS.md is discovered for the child's environment and cwd.
+  `fork_turns="none"` is not policy isolation. Give no-history agents a self-contained task brief.
+  Forks can filter tool results and rebuild developer context; carry required evidence explicitly
+  rather than assuming a complete transcript survives.
+- **Tool contract:** Available roles, model overrides, history controls, and nesting limits come
+  from the active client and tool schema. Fixed role settings remain authoritative; a source
+  checkout alone does not establish which capabilities the running client exposes.
+- **Composition:** A Codex role's `developer_instructions` replaces the configured developer
+  instruction slot; it does not append to that slot. Base instructions, AGENTS.md, and runtime-generated
+  context are separate inputs. Trace their assembly before treating inherited text as redundant.
+- **Permissions:** A read-only role description is an instruction, not proof of a runtime sandbox.
+  Distinguish role behavior, inherited runtime permissions, and hook enforcement; verify the
+  effective boundary before documenting a restriction as enforced.
+- **Discovery and refresh:** Codex project guidance depends on trust, root markers, cwd, and a
+  shared byte limit. Codex-home guidance tries AGENTS.override.md before AGENTS.md; project
+  discovery tries those names before configured fallbacks in each directory. The source's
+  project-doc manager reuses cached documents while environment selection and trust stay unchanged;
+  editing a file alone does not prove a live session has reloaded it. Check a fresh session or
+  actual delivered context when reload behavior matters.
+- **Skills and hooks:** Skill catalogs expose metadata, not the selected body. Native catalog
+  guidance, hook-injected inventories, and skill bodies are separate instruction surfaces.
+  Check the client's parser and effective settings; similarly named frontmatter fields are not
+  portable. Codex runtime adds hook context to developer-role history without deduplicating it;
+  a local hook may suppress proven duplicates.
+  Thread-spawn startup dispatches SubagentStart rather than SessionStart; history forks can carry
+  prior hook context alongside fresh injection. Verify startup, subagent, and compaction delivery
+  before removing or duplicating instructions.
+
+For Codex source checks, start under `projects/codex/codex-rs/`: `core/src/agent/role.rs`
+owns role overrides, `core/src/agent/control/spawn.rs` owns child assembly, and
+`core/src/thread_manager.rs` owns parent user-instruction inheritance.
+`codex-home/src/instructions/mod.rs` owns global instruction lookup, and
+`core/src/agents_md.rs` plus `core/src/agents_md_manager.rs` own project discovery and caching.
+`core/src/hook_runtime.rs` owns hook-context delivery. These paths are evidence, not proof
+that the installed client matches the checkout.

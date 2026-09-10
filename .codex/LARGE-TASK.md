@@ -14,7 +14,7 @@ and a useful brief. Leave delegate-local implementation, source-inspection, and 
 to the owner; consume source-backed results and inspect further only for a concrete integration
 decision or gap.
 
-Follow shared exploration guidance for grouping and coordination; differing sources, providers,
+Follow `COLLABORATION.md` for grouping and coordination when delegating; differing sources, providers,
 or surfaces alone do not justify a split.
 
 Inspect directly when discovery is tightly coupled, scopes overlap, or the main agent would only
