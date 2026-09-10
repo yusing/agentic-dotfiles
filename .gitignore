@@ -10,8 +10,8 @@ __pycache__
 !/.claude/agents/council-member.md
 !/.claude/agents/explorer.md
 !/.claude/agents/implementer.md
-!/.claude/agents/reviewer.md
-!/.claude/agents/simplify-checker.md
+!/.claude/agents/review-correctness.md
+!/.claude/agents/review-simplify.md
 !/.claude/agents/web-reviewer.md
 !/.claude/CLAUDE.md
 !/.claude/settings.json
@@ -22,8 +22,8 @@ __pycache__
 !/.codex/agents/council-member.toml
 !/.codex/agents/explorer.toml
 !/.codex/agents/implementer.toml
-!/.codex/agents/reviewer.toml
-!/.codex/agents/simplify-checker.toml
+!/.codex/agents/review-correctness.toml
+!/.codex/agents/review-simplify.toml
 !/.codex/agents/web-reviewer.toml
 !/.codex/config.toml
 !/.codex/hooks.json

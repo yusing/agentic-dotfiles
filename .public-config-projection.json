@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "52f36dbce9b0eb99b22b13ecfda33479bb25ae6f",
+  "sourceCommit": "6e89145f4a34b12b24e6aac26a9cce0f4892926e",
   "outputs": [
     {
       "path": ".bashrc",
@@ -39,15 +39,15 @@
       "executable": false
     },
     {
-      "path": ".claude/agents/reviewer.md",
+      "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "78356b557953915625a8f31c5f49d036fc3d21f13afe96b96b4928df5def040f",
+      "sha256": "beae2191847f61e77d9b59493eefdb20958f9d10be857d2d6b9d3255d9d5323b",
       "executable": false
     },
     {
-      "path": ".claude/agents/simplify-checker.md",
+      "path": ".claude/agents/review-simplify.md",
       "kind": "file",
-      "sha256": "d713fd7dbe5ffab350be37554f42bcccb89d650fd4dd3e3f2c8ab4aa6cbbc6cd",
+      "sha256": "7e656148dd4e9ed598e6a4216cf50870a1f90d2bb8d13bf33daa3f9851fae975",
       "executable": false
     },
     {
@@ -98,15 +98,15 @@
       "executable": false
     },
     {
-      "path": ".codex/agents/reviewer.toml",
+      "path": ".codex/agents/review-correctness.toml",
       "kind": "file",
-      "sha256": "dbc9acd6615ac26c9ce2f9e09597b682e2fe92c077b6d195d5a33b2c86e79e19",
+      "sha256": "7ca09947fa62f4b2365d52bb021620fde46ded37f56fa9b2cd9fa94799a7412d",
       "executable": false
     },
     {
-      "path": ".codex/agents/simplify-checker.toml",
+      "path": ".codex/agents/review-simplify.toml",
       "kind": "file",
-      "sha256": "77a5e2c83f5152e6f608948fd1be602991528b4226c544aeb339ea0cfc628f60",
+      "sha256": "a833324f4f310700b6e064dda567543bc956d51109c8f3c4f3cdc9afa72ea513",
       "executable": false
     },
     {
@@ -196,7 +196,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "b54d9929073f88fe78968cbf87bbd74d38be894e3a1ff46dd2c78a98e56e4fd3",
+      "sha256": "71517304d92c4967875712f496c41ee671ad65161049b86f0c5a025d666f446d",
       "executable": false
     },
     {
@@ -400,7 +400,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "b15ca865ca56ae5ea366ae68e4de67ff5ba48a6d0b42536ed550abc11cc1bf2f",
+      "sha256": "6bbbb87924b58a05d20edc692fde999a795a582e9a7113364bca3bfd00510018",
       "executable": false
     },
     {

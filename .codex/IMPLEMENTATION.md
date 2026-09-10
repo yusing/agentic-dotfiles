@@ -4,21 +4,7 @@ Choose the simplest implementation that meets the full request. Start end-to-end
 without regressing behavior the current requirements still accept. Reassess before adding
 complexity; review findings alone do not expand scope.
 
-Validate assumptions before choosing storage or delivery. For identity or lifetime changes,
-establish stable identity, state retention across completion, expiry, and sessions, capacity
-behavior, and the consumer's final-result contract. Write focused acceptance tests for these
-invariants before implementing. Auxiliary state must not displace recovery state or substantive
-results.
-
-Keep each demonstrated failure and violated invariant together with its fix: helpers, callers,
-tests, documentation, and cleanup. Any authorized commits should preserve that unit within each
-Git history, including parent repositories and submodules.
-
 ## Execution ownership
-
-An assigned subagent already has its role and scope. Apply this document within that assignment,
-resolve permitted local implementation details, and return scope or ownership changes and blockers
-to the parent. Reading task guidance does not reopen assignment.
 
 ### Main's routing decision
 
@@ -89,23 +75,3 @@ Separate responsibilities. Reuse suitable project dependencies; judge additions 
 maintenance, and fit. Edit authoritative sources, not generated, vendored, or minified outputs.
 Follow local conventions. Comment non-obvious invariants, caller contracts, workarounds, and
 tradeoffs even where nearby code has few comments.
-
-## Complexity and ownership gate
-
-Apply these gates proportionally to design choices and review findings. Resolve concrete concerns;
-reject unsupported findings. The request establishes capability scope; gates constrain its
-implementation. Explain conflicts rather than silently narrowing the request. Keep gate analysis
-internal; report results, evidence, and actionable caveats.
-
-- Ownership: keep policy with its caller, provider, runtime, or protocol owner. Forwarders
-  must not redefine external contracts, fields, limits, or retries.
-- Simplicity: use the smallest mechanism for a necessary responsibility, resource, invariant,
-  shared policy, or nontrivial algorithm. Remove duplicate representations and needless abstractions.
-  Inline sole-caller helpers unless they preserve shared policy, an invariant, or a nontrivial
-  algorithm. Local resource guards are not external protocol limits.
-- Duplication: trust authoritative validation. Extra checks need a distinct boundary and
-  owner-derived rules, not stricter downstream policy.
-- Reachability: handle accepted inputs, not impossible branches. Check corruption or external
-  mutation at the boundary where it can occur.
-- Evidence: establish owner, reproducer, failure, invariant, and consumer before adding
-  convenience, limits, or compatibility behavior.
