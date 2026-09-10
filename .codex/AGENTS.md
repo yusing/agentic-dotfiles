@@ -125,7 +125,7 @@ Preserve council evidence isolation and result contracts.
 For explicit code reviews, state when the requested scope extends beyond the pending diff.
 
 After implementation and focused validation of production or operational changes, spawn independent
-inspection when a fresh perspective could improve the result.
+inspection with `fork_turns="none"` when a fresh perspective could improve the result.
 
 The execution owner, whether main or a delegated agent, spawns the reviewer, receives its result,
 resolves in-scope findings, and reruns affected checks. If nested agents are unavailable, ask the
