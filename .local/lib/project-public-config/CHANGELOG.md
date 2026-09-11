@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.3
+
+Match complete private IPv4 addresses without rejecting SNMP object identifiers
+in skill examples. Continue rejecting addresses followed by ports or punctuation.
+
 ## 1.2.2
 
 Remove the retired Go-guidelines hook from the public projection.

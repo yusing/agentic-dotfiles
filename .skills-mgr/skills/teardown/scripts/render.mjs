@@ -5,6 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { randomUUID } from 'node:crypto';
 import { validate } from './validate.mjs';
 import { render } from './html.mjs';
+import { loadImages } from './images.mjs';
 export { validate, render };
 
 const usage = 'Usage: node render.mjs INPUT.json -o OUTPUT.html [--force]\n       node render.mjs INPUT.json --validate\n       node render.mjs --help';
@@ -27,7 +28,7 @@ function main(args) {
   try { document = JSON.parse(raw); } catch { throw new Error('Input is not valid JSON.'); }
   const errors = validate(document);
   if (errors.length) throw new Error(`Invalid teardown document:\n${errors.slice(0, 30).join('\n')}${errors.length > 30 ? '\nFurther errors omitted.' : ''}`);
-  if (validateOnly) { console.log(`Valid: ${resolve(input)}`); return; }
+  if (validateOnly) { loadImages(document, dirname(inputPath)); console.log(`Valid: ${resolve(input)}`); return; }
   const target = resolve(output);
   // Resolve the parent too, so a symlinked directory cannot disguise the input path.
   const canonicalTarget = resolve(realpathSync(dirname(target)), basename(target));
@@ -36,7 +37,14 @@ function main(args) {
   try { targetStat = statSync(target); } catch (error) { if (error.code !== 'ENOENT') throw error; }
   const inputStat = statSync(inputPath);
   if (targetStat && inputStat.dev === targetStat.dev && inputStat.ino === targetStat.ino) throw new Error('Output must not overwrite the input JSON.');
-  const html = render(document);
+  const html = render(document, { inputDirectory: dirname(inputPath) });
+  for (const block of document.blocks.filter(b => b.type === 'image')) {
+    const imagePath = realpathSync(resolve(dirname(inputPath), block.src));
+    const imageStat = statSync(imagePath);
+    if (canonicalTarget === imagePath || (targetStat && imageStat.dev === targetStat.dev && imageStat.ino === targetStat.ino)) {
+      throw new Error('Output must not overwrite a source image.');
+    }
+  }
   if (!force) {
     // Exclusive creation protects output including dangling symlinks.
     const fd = openSync(target, 'wx', 0o600);

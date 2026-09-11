@@ -1,20 +1,69 @@
+import { loadImages } from './images.mjs';
 import { readFileSync } from 'node:fs';
 import { validate } from './validate.mjs';
+import { escape } from './escape.mjs';
+import { mathMarkup } from './math.mjs';
+export { escape };
 
 const css = readFileSync(new URL('../assets/style.css', import.meta.url), 'utf8');
-export const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+function equation(source, display, title = 'Inline equation') {
+  const markup = mathMarkup(source, display);
+  // A conservative print fallback: keep long formulas readable rather than clipping or
+  // shrinking them. Counting presentation text overestimates stacked fractions/scripts.
+  const text = markup.split('<annotation')[0].replace(/<[^>]+>/g, '');
+  const length = [...text].length;
+  const long = length > 40;
+  const scroll = length > 16 ? ` role="region" tabindex="0" aria-label="${escape(title)}, scroll horizontally"` : '';
+  const tag = display === 'block' ? 'div' : 'span';
+  const wrapper = display === 'block' ? 'math-scroll' : 'inline-math-scroll';
+  const className = display === 'block' ? 'math-equation' : 'inline-math';
+  return `<${tag} class="${wrapper}"${scroll}><span class="${className}${long ? ' math-print-source' : ''}">${markup}${long ? `<span class="math-source">${escape(source)}</span>` : ''}</span></${tag}>`;
+}
+
+const badgeTones = new Set(['neutral', 'positive', 'warning', 'danger']);
+
+// Consume a whole badge-like run before checking its closed grammar, so an invalid
+// outer label cannot expose an inner badge or link to the inline tokenizer.
+function badge(text, start) {
+  let end = start + ':badge'.length;
+  function group(open, close) {
+    if (text[end] !== open) return undefined;
+    const begin = ++end;
+    let depth = 1;
+    while (end < text.length && text[end] !== '\n') {
+      const character = text[end++];
+      if (character === open) depth++;
+      else if (character === close && --depth === 0) return text.slice(begin, end - 1);
+    }
+    return undefined;
+  }
+  const label = group('[', ']')?.trim();
+  const tone = group('{', '}');
+  const valid = label && !/[\[\]]/.test(label) && [...label].length <= 40 && badgeTones.has(tone);
+  return { end, html: valid ? `<span class="inline-badge ${tone}">${escape(label)}</span>` : escape(text.slice(start, end)) };
+}
 
 function inline(text) {
   // Tokenize before escaping; unmatched and unsupported syntax remains literal text.
-  const pattern = /`([^`\n]+)`|\*\*([^*\n]+)\*\*|\*([^*\n]+)\*|(?<!!)\[([^\]\n]+)\]\((https?:\/\/[^\s()]+)\)/g;
+  const pattern = /`(?<code>[^`\n]+)`|\\\((?<math>[^\n]*?)\\\)|(?<badgeStart>:badge\[)|\*\*(?<strong>[^*\n]+)\*\*|\*(?<emphasis>[^*\n]+)\*|(?<!!)\[(?<linkLabel>[^\]\n]+)\]\((?<linkUrl>https?:\/\/[^\s()]+)\)/g;
   let result = '', start = 0;
-  for (const match of text.matchAll(pattern)) {
+  let match;
+  while ((match = pattern.exec(text)) !== null) {
     result += escape(text.slice(start, match.index));
-    if (match[1]) result += `<code>${escape(match[1])}</code>`;
-    else if (match[2]) result += `<strong>${escape(match[2])}</strong>`;
-    else if (match[3]) result += `<em>${escape(match[3])}</em>`;
-    else result += `<a href="${escape(match[5])}" rel="noreferrer">${escape(match[4])}</a>`;
-    start = match.index + match[0].length;
+    const token = match.groups;
+    if (token.code !== undefined) result += `<code>${escape(token.code)}</code>`;
+    else if (token.math !== undefined) {
+      try { result += equation(token.math, 'inline'); }
+      catch { result += escape(match[0]); }
+    } else if (token.badgeStart !== undefined) {
+      const parsed = badge(text, match.index);
+      result += parsed.html;
+      pattern.lastIndex = parsed.end;
+    } else if (token.strong !== undefined) result += `<strong>${escape(token.strong)}</strong>`;
+    else if (token.emphasis !== undefined) result += `<em>${escape(token.emphasis)}</em>`;
+    else result += `<a href="${escape(token.linkUrl)}" rel="noreferrer">${escape(token.linkLabel)}</a>`;
+    start = pattern.lastIndex;
   }
   return result + escape(text.slice(start));
 }
@@ -149,23 +198,89 @@ function fileTree(entries) {
   return `<pre class="file-tree" tabindex="0"><code>${lines(root)}</code></pre>`;
 }
 
-function renderBlock(block, i, level) {
+function metricValue(value) {
+  if (typeof value === 'string') return escape(value);
+  const separator = value.separator === 'slash' ? '<span class="metric-separator">/</span>' : ' ';
+  return value.parts.map(part => `<span class="metric-part">${escape(part.value)}${part.unit ? `<small class="metric-unit"> ${escape(part.unit)}</small>` : ''}</span>`).join(separator);
+}
+
+// Every captioned block takes plain `caption` or safe `caption_md`; validation rejects both.
+function figcaption(block) {
+  const text = block.caption_md ? markdown(block.caption_md) : block.caption ? escape(block.caption) : '';
+  return text ? `<figcaption>${text}</figcaption>` : '';
+}
+
+function metrics(block, heading) {
+  const status = block.status
+    ? `<span class="metric-status ${block.status.tone}"><span class="status-dot" aria-hidden="true"></span>${escape(block.status.label)}</span>` : '';
+  // Metadata alone still needs the header bar, but not an empty heading box beside it.
+  const headingBox = heading || status ? `<div class="metric-heading">${heading}${status}</div>` : '';
+  const header = headingBox || block.metadata
+    ? `<header class="metric-header">${headingBox}${block.metadata ? `<p class="metric-metadata">${escape(block.metadata)}</p>` : ''}</header>` : '';
+  return `<figure class="metric-panel">${header}<dl class="metrics">${block.items.map(item => `<div><dt>${escape(item.label)}</dt><dd class="metric-value">${metricValue(item.value)}</dd>${item.source ? `<dd class="metric-source"><code>${escape(item.source)}</code></dd>` : ''}<dd class="metric-context">${escape(item.context)}</dd></div>`).join('')}</dl>${figcaption(block)}</figure>`;
+}
+
+// Two implementations of one ordered mechanism. A table is the honest structure: the
+// tracks are columns, the stages are rows, and each connector spans both tracks because
+// the step between stages is shared. Stage numbers are presentational, so the row header
+// carries the stage name for a screen reader and the numeral is hidden from it.
+function pairedPipeline(block, heading) {
+  const header = `<tr><td class="pipeline-row-label"></td>${block.tracks.map(track => `<th scope="col">${track.note ? `<span class="kicker">${escape(track.note)}</span>` : ''}${escape(track.label)}</th>`).join('')}</tr>`;
+  const rows = block.stages.map((stage, n) => {
+    const cells = stage.cells.map(cell => `<td><div class="pipeline-card"><strong class="pipeline-stage"><span class="pipeline-number" aria-hidden="true">${String(n + 1).padStart(2, '0')}</span>${escape(stage.label)}</strong><code>${escape(cell)}</code></div></td>`).join('');
+
+    const connector = stage.connector
+      ? `<tr class="pipeline-connector"><td colspan="3"><span class="pipeline-arrow" aria-hidden="true">↓</span><span class="pipeline-handoff">${escape(stage.connector)}</span><span class="pipeline-arrow" aria-hidden="true">↓</span></td></tr>` : '';
+    return `<tr><th class="pipeline-row-label" scope="row"><span>${escape(stage.label)}</span></th>${cells}</tr>${connector}`;
+  }).join('');
+  return `<figure>${heading}<div class="table-scroll pipeline-scroll" role="region" aria-label="${escape(block.title)}, scroll horizontally" tabindex="0"><table class="pipeline"><thead>${header}</thead><tbody>${rows}</tbody></table></div>${figcaption(block)}</figure>`;
+}
+
+function barChart(block, heading) {
+  const maximum = Math.max(...block.items.map(item => item.value));
+  let y = 28;
+  const bars = block.items.map(item => {
+    const reading = `${item.value} ${block.unit}`;
+    const label = svgText(item.label, 24, y, 40, 'chart-label');
+    y += wrap(item.label, 40).length * 18 + 4;
+    const labels = label + svgText(reading, 616, y, 40, 'chart-value');
+    y += (wrap(reading, 40).length - 1) * 18 + 14;
+    // Divide first: multiplication before division can overflow for valid finite values.
+    const width = maximum === 0 ? 0 : item.value / maximum * 592;
+    const bar = `<rect class="chart-track" x="24" y="${y}" width="592" height="14"/><rect class="chart-bar" x="24" y="${y}" width="${width}" height="14"/>`;
+    y += 48;
+    return labels + bar;
+  }).join('');
+  return `<figure>${heading}<p class="chart-context">${escape(block.context)}</p><p class="chart-scale">Scale: 0–${escape(maximum)} ${escape(block.unit)}. All bars start at zero.</p><div class="chart-scroll" role="region" tabindex="0" aria-label="${escape(block.title)}, chart scrolls horizontally; data table follows"><svg xmlns="http://www.w3.org/2000/svg" width="640" height="${y - 16}" viewBox="0 0 640 ${y - 16}" aria-hidden="true">${bars}</svg></div><table class="chart-data"><caption>${escape(block.title)} — supplied data (${escape(block.unit)})</caption><thead><tr><th scope="col">Category</th><th scope="col">Value (${escape(block.unit)})</th></tr></thead><tbody>${block.items.map(item => `<tr><th scope="row">${escape(item.label)}</th><td>${escape(item.value)}</td></tr>`).join('')}</tbody></table>${figcaption(block)}</figure>`;
+}
+
+function renderBlock(block, i, level, images) {
   const id = `block-${i + 1}`;
   const heading = block.title ? `<h${level}>${escape(block.title)}</h${level}>` : '';
-  const caption = block.caption ? `<figcaption>${escape(block.caption)}</figcaption>` : '';
+  const caption = figcaption(block);
   let body;
   switch (block.type) {
+    case 'math': body = `<figure>${heading}${equation(block.expression, 'block', block.title)}<p class="math-description">${escape(block.description)}</p>${caption}</figure>`; break;
+    case 'bar-chart': body = barChart(block, heading); break;
+    case 'image': body = `<figure class="image-figure">${heading}<img src="${images.get(i).src}" alt="${escape(block.alt)}">${caption}</figure>`; break;
     case 'prose': body = markdown(block.body_md); break;
     case 'callout': body = `<div class="callout ${block.tone}"><span class="kicker">${block.tone}</span>${heading}${markdown(block.body_md)}</div>`; break;
     case 'capability-grid': body = `${heading}<div class="card-grid">${block.cells.map(cell => `<div class="capability"><span class="status ${cell.status}">${escape(cell.status)}</span>${block.title ? `<h${level + 1}>${escape(cell.label)}</h${level + 1}>` : `<strong class="capability-label">${escape(cell.label)}</strong>`}<p>${escape(cell.detail)}</p></div>`).join('')}</div>`; break;
     case 'evidence': body = `<div class="evidence"><span class="kicker">Evidence · ${block.confidence}</span>${heading}${markdown(block.text_md)}${block.sources.length ? `<ul class="sources" role="list">${block.sources.map(s => `<li role="listitem"><strong>${escape(s.label)}</strong><code>${escape(s.location)}</code></li>`).join('')}</ul>` : '<p class="muted">No source locations supplied.</p>'}</div>`; break;
-    case 'comparison': body = `${heading}<div class="comparison-grid">${block.columns.map((c, n) => `<div class="comparison-column"><span class="kicker">${String(n + 1).padStart(2, '0')}</span><h${level + 1}>${escape(c.label)}</h${level + 1}>${markdown(c.body_md)}</div>`).join('')}</div>`; break;
+    case 'comparison': body = `${heading}<div class="comparison-grid">${block.columns.map(c => `<div class="comparison-column"><h${level + 1}>${escape(c.label)}</h${level + 1}>${markdown(c.body_md)}</div>`).join('')}</div>`; break;
     case 'table': body = `<figure>${heading}<div class="table-scroll" role="region" aria-label="${escape(block.title)}, scroll horizontally" tabindex="0"><table><thead><tr>${block.columns.map(c => `<th scope="col">${escape(c)}</th>`).join('')}</tr></thead><tbody>${block.rows.map(row => `<tr>${row.map((cell, c) => c === 0 ? `<th scope="row">${escape(cell)}</th>` : `<td>${escape(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${caption}</figure>`; break;
     case 'flow': case 'state-machine': body = `<figure>${heading}${graph(block, id)}${caption}</figure>`; break;
     case 'sequence': body = `<figure>${heading}${sequence(block, id)}${caption}</figure>`; break;
     case 'code': body = `<figure>${heading}<div class="code-header">${escape(block.language)}</div><pre class="code-block" tabindex="0"><code>${escape(block.code)}</code></pre>${caption}</figure>`; break;
+    case 'anatomy': body = `<figure>${heading}<ol class="anatomy" role="list">${block.parts.map(part => `<li class="${part.emphasis ?? 'normal'}"><code>${escape(part.value)}</code><div><strong>${escape(part.label)}</strong><p>${escape(part.detail)}</p></div></li>`).join('')}</ol>${caption}</figure>`; break;
+    // Annotation code wraps instead of scrolling, so these excerpts are neither scroll
+    // regions nor tab stops: a landmark and a focus stop per row would be noise.
+    case 'annotated-code': body = `<figure>${heading}<div class="code-header">${escape(block.language)}</div><div class="annotations">${block.rows.map(row => `<div class="annotation-row ${row.tone ?? 'note'}"><pre><code>${escape(row.code)}</code></pre><div class="annotation-text">${row.tone === 'warning' ? '<span class="status partial">Warning</span>' : ''}${markdown(row.explanation_md)}</div></div>`).join('')}</div>${caption}</figure>`; break;
+    case 'paired-pipeline': body = pairedPipeline(block, heading); break;
+    case 'requirements': body = `<figure>${heading}<dl class="requirements">${block.items.map(item => `<div><dt>${escape(item.label)}</dt><dd class="requirement-value">${escape(item.value)}</dd><dd class="requirement-detail">${markdown(item.detail_md)}</dd></div>`).join('')}</dl>${caption}</figure>`; break;
+    case 'questions': body = `<figure>${heading}<ul class="questions" role="list">${block.items.map(item => `<li><h${level + 1}>${escape(item.question)}</h${level + 1}>${markdown(item.context_md)}</li>`).join('')}</ul>${caption}</figure>`; break;
     case 'file-tree': body = heading + fileTree(block.entries); break;
-    case 'metrics': body = `${heading}<dl class="metrics">${block.items.map(item => `<div><dt>${escape(item.label)}</dt><dd>${escape(item.value)}</dd><dd class="metric-context">${escape(item.context)}</dd></div>`).join('')}</dl>`; break;
+    case 'metrics': body = metrics(block, heading); break;
     case 'checklist': body = `${heading}<ul class="checklist">${block.items.map(item => `<li><span class="status ${item.status}">${item.status}</span><div><strong>${escape(item.label)}</strong>${item.detail ? `<p>${escape(item.detail)}</p>` : ''}</div></li>`).join('')}</ul>`; break;
     case 'glossary': body = `${heading}<dl class="glossary">${block.terms.map(term => `<div><dt>${escape(term.term)}</dt><dd>${escape(term.definition)}</dd></div>`).join('')}</dl>`; break;
     default: throw new Error(`No renderer for ${block.type}`);
@@ -195,9 +310,10 @@ function tocTimelineCss(navigation, sectioned) {
     + `@supports not (animation-timeline:scroll()){${fallback}{color:var(--ink);border-left-color:var(--accent)}}`;
 }
 
-export function render(document) {
+export function render(document, { inputDirectory } = {}) {
   const errors = validate(document);
   if (errors.length) throw new Error(errors.slice(0, 30).join('\n'));
+  const images = loadImages(document, inputDirectory);
   const sections = document.blocks.filter(b => b.type === 'section');
   const navigation = document.blocks.map((b, i) => ({ b, i })).filter(({ b }) => sections.length ? b.type === 'section' : b.title);
   let body = '', sectionOpen = false, sectionNumber = 0;
@@ -206,10 +322,10 @@ export function render(document) {
       if (sectionOpen) body += '</section>';
       body += `<section class="chapter" aria-labelledby="heading-${i + 1}"><header id="block-${i + 1}" class="chapter-heading"><span class="chapter-number" aria-hidden="true">${String(++sectionNumber).padStart(2, '0')}</span><div><h2 id="heading-${i + 1}">${escape(block.title)}</h2>${block.summary ? `<p>${escape(block.summary)}</p>` : ''}</div></header>`;
       sectionOpen = true;
-    } else body += renderBlock(block, i, sectionOpen ? 3 : 2);
+    } else body += renderBlock(block, i, sectionOpen ? 3 : 2, images);
   });
   if (sectionOpen) body += '</section>';
   return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#151d1b" media="(prefers-color-scheme: dark)"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>${escape(document.title)}</title><style>${css}${tocTimelineCss(navigation, sections.length > 0)}</style></head>
-<body><a class="skip-link" href="#content">Skip to explanation</a><div class="page"><header class="masthead"><div class="masthead-meta"><span class="eyebrow">${escape(document.eyebrow ?? document.type.replaceAll('-', ' '))}</span><span class="edition">TEARDOWN / 1.0</span></div><h1>${escape(document.title)}</h1><p class="lede">${escape(document.lede)}</p></header><div class="reading-layout">${navigation.length ? `<aside class="contents"><nav aria-label="On this page"><p class="kicker">On this page</p><ol>${navigation.map(({ b, i }, n) => `<li><a href="#block-${i + 1}"><span aria-hidden="true">${String(n + 1).padStart(2, '0')}</span>${escape(b.title)}</a></li>`).join('')}</ol></nav></aside>` : ''}<main id="content">${body}</main></div><footer><span>Built with teardown</span><span>${escape(document.type.replaceAll('-', ' '))} · schema ${document.schema_version}</span></footer></div></body></html>\n`;
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#eef2f2" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#172125" media="(prefers-color-scheme: dark)"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>${escape(document.title)}</title><style>${css}${tocTimelineCss(navigation, sections.length > 0)}</style></head>
+<body><a class="skip-link" href="#content">Skip to explanation</a><div class="page"><header class="masthead"><div class="masthead-meta"><span class="eyebrow">${escape(document.eyebrow ?? document.type.replaceAll('-', ' '))}</span></div><h1>${escape(document.title)}</h1><p class="lede">${escape(document.lede)}</p></header><div class="reading-layout">${navigation.length ? `<aside class="contents"><nav aria-label="On this page"><p class="kicker">On this page</p><ol>${navigation.map(({ b, i }, n) => `<li><a href="#block-${i + 1}"><span aria-hidden="true">${String(n + 1).padStart(2, '0')}</span>${escape(b.title)}</a></li>`).join('')}</ol></nav></aside>` : ''}<main id="content">${body}</main></div><footer><span>Built with teardown</span><span>${escape(document.type.replaceAll('-', ' '))} · schema ${escape(document.schema_version)}</span></footer></div></body></html>\n`;
 }

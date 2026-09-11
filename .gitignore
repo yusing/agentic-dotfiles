@@ -220,12 +220,17 @@ __pycache__
 !/.skills-mgr/skills/teardown/assets/
 !/.skills-mgr/skills/teardown/assets/style.css
 !/.skills-mgr/skills/teardown/examples/
+!/.skills-mgr/skills/teardown/examples/reading-path.png
 !/.skills-mgr/skills/teardown/examples/showcase.json
 !/.skills-mgr/skills/teardown/references/
 !/.skills-mgr/skills/teardown/references/blocks.md
+!/.skills-mgr/skills/teardown/references/math.md
 !/.skills-mgr/skills/teardown/schema.json
 !/.skills-mgr/skills/teardown/scripts/
+!/.skills-mgr/skills/teardown/scripts/escape.mjs
 !/.skills-mgr/skills/teardown/scripts/html.mjs
+!/.skills-mgr/skills/teardown/scripts/images.mjs
+!/.skills-mgr/skills/teardown/scripts/math.mjs
 !/.skills-mgr/skills/teardown/scripts/render.mjs
 !/.skills-mgr/skills/teardown/scripts/validate.mjs
 !/.skills-mgr/skills/teardown/SKILL.md

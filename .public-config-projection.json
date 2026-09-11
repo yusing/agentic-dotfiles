@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "e144e55034871ae882dfe1c99af6bf79498f5c58",
+  "sourceCommit": "c154a03a530df7e17a268a366a75b1d50e2b1861",
   "outputs": [
     {
       "path": ".bashrc",
@@ -244,13 +244,13 @@
     {
       "path": ".codex/skills/session-usage/scripts/session_usage_test.py",
       "kind": "file",
-      "sha256": "398fc9c733c85e6e364a414ae8db79b3ec68b62df3b838b119500c281d648731",
+      "sha256": "d32a2a762d8b9b97bdb1370bf8801aa9394493368fdcbf5cefe8aa2c572f925d",
       "executable": false
     },
     {
       "path": ".codex/skills/session-usage/scripts/session_usage.py",
       "kind": "file",
-      "sha256": "4d22bba0b32c97583a97074be0ab469b630f73263df56349cb9015d34fd900ee",
+      "sha256": "5b5a82a546c4970e5b52c98bc5da2ab59fe1f76bce14c404ce9be7b3c45f4f08",
       "executable": false
     },
     {
@@ -412,13 +412,13 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "c52fb38c54432479367e9560565696fb2a26bb89860736e1d6d78a5955c189e0",
+      "sha256": "2c7293fe125b7827e53b7be54950e9e0687f5573f554acc4170479a5cb270fea",
       "executable": false
     },
     {
       "path": ".gitignore_global",
       "kind": "file",
-      "sha256": "7317ace20f8e5ff7e014d2fb77ad4b4c5b381264725860f0437e5745b7348ca1",
+      "sha256": "9269d5fb819c36ad33520b3ddac37ddadd6a3bd75956060c1e0501e993ce82fd",
       "executable": false
     },
     {
@@ -490,13 +490,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "f2a675a6d46c43234273fcce59c43e19c38b1ae04089a9320900893fdabf2400",
+      "sha256": "42ba65ce017b99da2eadee5925b255d09894663ea177503bf38965999f7ab751",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "b6c210411496bd6b886dbe2d60bfa497019eb758e5fde76bd16e1aaecda3a812",
+      "sha256": "31c967a691220d14e5989b94733ece6ca71ba12f5e52c8c73b7d9600785afe18",
       "executable": true
     },
     {
@@ -832,49 +832,79 @@
     {
       "path": ".skills-mgr/skills/teardown/assets/style.css",
       "kind": "file",
-      "sha256": "5e8843a015b4833cfb9625956990150fd41e2c723b2b74d2ff32299d2bf5a5c7",
+      "sha256": "1a58a5348fa3925e833b674d674ec4a0bafb37d5ba367be5309b1e255e1b3863",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/examples/reading-path.png",
+      "kind": "file",
+      "sha256": "9afa5a9a265013a9b3215dc3e1bad0dea4e6285a16e00100448d625b29a067f4",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/teardown/examples/showcase.json",
       "kind": "file",
-      "sha256": "ec6d3162ed00182e405ff25cf2abc8dd3c3afbccca7f2fdfd2b7f82e47921f77",
+      "sha256": "8313300ddce30a6e450d898926b2ceab671e44482e51093d8541316c78bea85a",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/teardown/references/blocks.md",
       "kind": "file",
-      "sha256": "72ac5f886af1b15be3b8a2c5d0cc0ec0adc2b0ef8a6e2424cd068c95e7635f50",
+      "sha256": "2af2a40743f45f512f88a752366971c6f2ed2547833c2116bd93d72645a83662",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/references/math.md",
+      "kind": "file",
+      "sha256": "686d40d1cc80541d5a4e6fefb5a76ef9429d0985364490334ea152a9b2a53569",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/teardown/schema.json",
       "kind": "file",
-      "sha256": "3064bf2597f94a0e24a137995e0de28450a4efc384861d638250d2fdd7b89572",
+      "sha256": "5b7341fe4819463993f7c38094f39c81385767c7a6ea070559b1ed15827d1f6f",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/scripts/escape.mjs",
+      "kind": "file",
+      "sha256": "14f5a194826e1149c859a66243f84a39ac9a2ac8bc7a784fd12c3ed1704d5baf",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/teardown/scripts/html.mjs",
       "kind": "file",
-      "sha256": "82a8b519e176d83ef6a735eddb15b10fc238819415f482417137be561a79176c",
+      "sha256": "9b8e9e7db809b8fc72326242ebba8327e74988967a3440416bf3aed8b9fa5d82",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/scripts/images.mjs",
+      "kind": "file",
+      "sha256": "b3f13ec0d9b4f9da46a2059cb998765535130a14561b32f4c930bc22bb9834ee",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/teardown/scripts/math.mjs",
+      "kind": "file",
+      "sha256": "73998ded338ec13181d32a45df680aba6fb658bbe40ad6876776789761564715",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/teardown/scripts/render.mjs",
       "kind": "file",
-      "sha256": "467b455a5521ce16201500a9ec1462a202fd799148ddd83dda7ad401da750fb7",
+      "sha256": "10d5a13904e5d5b45ca81d464c66860151043f88471d876af3c462e5aa75a395",
       "executable": true
     },
     {
       "path": ".skills-mgr/skills/teardown/scripts/validate.mjs",
       "kind": "file",
-      "sha256": "e531d96eaac578916026ac510be26e0e4b9229b92d43e02e8538b7051157e36c",
+      "sha256": "0d9b97ae47c1a33839e995389dd2c2f210ab02ac56c696d29c2ac5603233e04b",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/teardown/SKILL.md",
       "kind": "file",
-      "sha256": "40450e0036579eaaf71f87593dd45ea63e77c4564b42cd0637b1c4fb0cf91f22",
+      "sha256": "c4b5ceaf874eb69e83e4668461ffe470078d45e8cdb37585e57b62c4ba7ff330",
       "executable": false
     },
     {

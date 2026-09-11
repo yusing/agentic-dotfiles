@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.2.2";
+export const VERSION = "1.2.3";
 
 type TreeEntry = {
 	mode: string;
@@ -709,7 +709,8 @@ function publicContentFailure(path: string, text: string): string | undefined {
 	if (path === COMMAND_PATH) return undefined;
 	const checks: Array<[RegExp, string]> = [
 		[/\$HOME\/(?:projects|Projects)\//i, "private project path"],
-		[/\b(?:10\.|192\.168\.|172\.(?:1[6-9]|2\d|3[01])\.)\d{1,3}\.\d{1,3}/, "private IP address"],
+		// Match complete addresses, not dotted numeric identifiers such as SNMP OIDs.
+		[/(?<![\d.])\b(?:10\.\d{1,3}|192\.168|172\.(?:1[6-9]|2\d|3[01]))\.\d{1,3}\.\d{1,3}(?!\d|\.\d)/, "private IP address"],
 		[/\b[a-z0-9.-]+\.pve(?::\d+)?\b/i, "private hostname"],
 		[/ANTHROPIC_AUTH_TOKEN|OPENAI_EMBEDDING_|APPRISE_URL|masterpassword/i, "private credential configuration"],
 		[/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/, "private key"],

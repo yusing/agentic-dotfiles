@@ -1,63 +1,129 @@
 {
   "schema_version": "1.0",
   "type": "concept-guide",
-  "eyebrow": "TEARDOWN · A FIELD GUIDE TO STRUCTURED EXPLANATIONS",
+  "eyebrow": "A field guide to visual explanations",
   "title": "Make the idea visible.",
-  "lede": "A good visual explanation does more than look organized. It helps the reader see a boundary, follow a behavior, or make a decision. Here is a small language for doing that well.",
+  "lede": "Turn a source document into an explanation a reader can use. Start with the command, explore the visual forms, then check the evidence and the finished result.",
   "blocks": [
     {
-      "type": "callout",
-      "tone": "tip",
-      "title": "The agent explains. The renderer composes.",
-      "body_md": "Give the agent a vocabulary of ideas, not a blank HTML canvas. **JSON carries the argument; the renderer carries the visual system.** The result stays editable, inspectable, and consistent."
+      "type": "section",
+      "title": "Start with a document",
+      "summary": "Render the showcase, understand the command, and check the few rules every source document follows."
     },
     {
-      "type": "capability-grid",
-      "cells": [
+      "type": "code",
+      "title": "Render, then open the result",
+      "language": "shell",
+      "code": "node teardown/scripts/render.mjs \\\n  teardown/examples/showcase.json \\\n  -o output/showcase.html",
+      "caption": "Run from the package root after creating output/. Existing output is protected unless --force is supplied."
+    },
+    {
+      "type": "anatomy",
+      "title": "Read a command one part at a time",
+      "parts": [
         {
-          "label": "Compose explanations",
-          "status": "supported",
-          "detail": "Fifteen block types, selected for the idea rather than the decoration."
+          "value": "node",
+          "label": "Runtime",
+          "detail": "Runs the JavaScript program."
         },
         {
-          "label": "Open without a server",
-          "status": "supported",
-          "detail": "One HTML file, with embedded styling and no runtime requests."
+          "value": "render.mjs",
+          "label": "Entry point",
+          "detail": "Validates and renders the document.",
+          "emphasis": "accent"
         },
         {
-          "label": "Verify source claims",
-          "status": "unsupported",
-          "detail": "A renderer can check structure. The author still owns the evidence."
+          "value": "input.json",
+          "label": "Source",
+          "detail": "The explanation you can edit."
         },
         {
-          "label": "Understand any Markdown",
-          "status": "partial",
-          "detail": "A small, safe grammar. Use dedicated blocks for richer structures."
+          "value": "-o output.html",
+          "label": "Destination",
+          "detail": "A standalone reading artifact."
+        }
+      ],
+      "caption_md": "A simplified command anatomy. The highlighted `render.mjs` is the entry point; run the full path shown in the earlier code example."
+    },
+    {
+      "type": "annotated-code",
+      "title": "Check, create, or deliberately replace",
+      "language": "shell",
+      "rows": [
+        {
+          "code": "node teardown/scripts/render.mjs input.json --validate",
+          "explanation_md": "**Check only.** Report invalid fields without creating an HTML file.",
+          "tone": "note"
+        },
+        {
+          "code": "node teardown/scripts/render.mjs input.json -o output.html",
+          "explanation_md": "**Create a new artifact.** The default refuses to replace an existing file."
+        },
+        {
+          "code": "node teardown/scripts/render.mjs input.json -o output.html --force",
+          "explanation_md": "**Replace deliberately.** Use this only when replacing that output is intended. Validation still happens before writing.",
+          "tone": "warning"
+        }
+      ],
+      "caption_md": "Illustrative filenames. Keep the source `input.json` and the generated `output.html` at different paths."
+    },
+    {
+      "type": "requirements",
+      "title": "The authoring contract at a glance",
+      "items": [
+        {
+          "label": "Document version",
+          "value": "schema_version: 1.0",
+          "detail_md": "Required on every document so the allowed vocabulary is explicit. The only accepted value is `1.0`."
+        },
+        {
+          "label": "Input size",
+          "value": "Up to 2 MiB",
+          "detail_md": "Split larger reports into focused documents rather than compressing the explanation."
+        },
+        {
+          "label": "Output location",
+          "value": "An existing directory",
+          "detail_md": "The CLI creates the HTML file, not its parent directory."
+        },
+        {
+          "label": "Content format",
+          "value": "Text and limited Markdown",
+          "detail_md": "Markdown fields support:\n\n- paragraphs, lists, and inline code\n- emphasis and HTTP(S) links\n\nUse dedicated blocks for code and diagrams."
         }
       ]
     },
     {
       "type": "section",
-      "title": "Separate meaning from presentation",
-      "summary": "One stable boundary makes the rest of the workflow simpler."
+      "title": "Choose a visual model",
+      "summary": "The same workflow, seen three ways: connections, message order, and allowed transitions."
     },
     {
-      "type": "prose",
-      "body_md": "A useful explanation has two jobs: make a claim clear, then make it credible. Those jobs should survive a change in colors or typography. Here, the document is the durable source; HTML is a generated reading surface."
-    },
-    {
-      "type": "comparison",
-      "title": "Two ways to make a visual explanation",
+      "type": "table",
+      "title": "Three views, three questions",
       "columns": [
-        {
-          "label": "Free-form HTML",
-          "body_md": "A flexible canvas for a bespoke illustration.\n\n- Every document carries layout decisions.\n- Content and styling can become tangled.\n- Review includes executable markup."
-        },
-        {
-          "label": "Structured blocks",
-          "body_md": "A shared visual language for recurring explanatory work.\n\n- The author chooses the form of the idea.\n- The renderer owns consistent presentation.\n- Validation catches structural mistakes early."
-        }
-      ]
+        "Reader’s question",
+        "Block",
+        "What the shape preserves"
+      ],
+      "rows": [
+        [
+          "What connects to what?",
+          "flow",
+          "Nodes and directed relationships"
+        ],
+        [
+          "Who acts next?",
+          "sequence",
+          "Participants and message order"
+        ],
+        [
+          "What can happen from here?",
+          "state-machine",
+          "States and allowed transitions"
+        ]
+      ],
+      "caption": "Choose by the reader’s uncertainty, not by which diagram looks more sophisticated."
     },
     {
       "type": "flow",
@@ -102,53 +168,6 @@
         }
       ],
       "caption": "This is the actual package boundary. Source investigation happens before rendering, not inside it."
-    },
-    {
-      "type": "evidence",
-      "confidence": "observed",
-      "text_md": "The renderer imports the bundled schema validator before generating HTML. Its output embeds CSS and contains no browser script. Those are implementation properties, not claims about the source material being explained.",
-      "sources": [
-        {
-          "label": "Validation entry point",
-          "location": "teardown/scripts/validate.mjs · validate()"
-        },
-        {
-          "label": "HTML composition",
-          "location": "teardown/scripts/html.mjs · render()"
-        }
-      ]
-    },
-    {
-      "type": "section",
-      "title": "Pick the form that reveals the idea",
-      "summary": "A flow, a sequence, and a state machine answer different questions."
-    },
-    {
-      "type": "table",
-      "title": "Three views, three questions",
-      "columns": [
-        "Reader’s question",
-        "Block",
-        "What the shape preserves"
-      ],
-      "rows": [
-        [
-          "What connects to what?",
-          "flow",
-          "Nodes and directed relationships"
-        ],
-        [
-          "Who acts next?",
-          "sequence",
-          "Participants and message order"
-        ],
-        [
-          "What can happen from here?",
-          "state-machine",
-          "States and allowed transitions"
-        ]
-      ],
-      "caption": "Choose by the reader’s uncertainty, not by which diagram looks more sophisticated."
     },
     {
       "type": "sequence",
@@ -256,15 +275,251 @@
       "caption": "An illustrative authoring model, not persistent state maintained by the CLI. Valid JSON is not proof of a sound explanation."
     },
     {
+      "type": "section",
+      "title": "Compare alternatives",
+      "summary": "Use side-by-side prose for tradeoffs and paired stages when two paths share a mechanism."
+    },
+    {
+      "type": "comparison",
+      "title": "Two ways to make a visual explanation",
+      "columns": [
+        {
+          "label": "Free-form HTML",
+          "body_md": "A flexible canvas for a bespoke illustration.\n\n- Every document carries layout decisions.\n- Content and styling can become tangled.\n- Review includes executable markup."
+        },
+        {
+          "label": "Structured blocks",
+          "body_md": "A shared visual language for recurring explanatory work.\n\n- The author chooses the form of the idea.\n- The renderer owns consistent presentation.\n- Validation catches structural mistakes early."
+        }
+      ]
+    },
+    {
+      "type": "paired-pipeline",
+      "title": "Follow a path that already exists",
+      "tracks": [
+        {
+          "label": "Rendering a document",
+          "note": "Exists today"
+        },
+        {
+          "label": "Adding a block type",
+          "note": "What it takes"
+        }
+      ],
+      "stages": [
+        {
+          "label": "Describe",
+          "cells": [
+            "Author the JSON explanation",
+            "Add a closed object to schema.json"
+          ],
+          "connector": "the schema is the contract"
+        },
+        {
+          "label": "Check",
+          "cells": [
+            "validate.mjs reports field paths",
+            "Add any cross-field rule to validate.mjs"
+          ],
+          "connector": "nothing renders until it validates"
+        },
+        {
+          "label": "Render",
+          "cells": [
+            "html.mjs escapes and composes",
+            "Add a case to renderBlock"
+          ],
+          "connector": "markup needs a matching style"
+        },
+        {
+          "label": "Style",
+          "cells": [
+            "assets/style.css is embedded whole",
+            "Add screen, narrow, and print rules"
+          ],
+          "connector": "prove it with a document"
+        },
+        {
+          "label": "Show",
+          "cells": [
+            "Open the standalone HTML",
+            "Extend this showcase and the tests"
+          ]
+        }
+      ],
+      "caption_md": "The left track is the path a document already takes; the right track is the same five stages for a contributor. The labels between stages describe both."
+    },
+    {
+      "type": "section",
+      "title": "Support the conclusion",
+      "summary": "Distinguish inspected facts, illustrative readings, and questions that still need an answer."
+    },
+    {
+      "type": "evidence",
+      "confidence": "observed",
+      "text_md": "The renderer imports the bundled schema validator before generating HTML. Its output embeds CSS and contains no browser script. Those are implementation properties, not claims about the source material being explained.",
+      "sources": [
+        {
+          "label": "Validation entry point",
+          "location": "teardown/scripts/validate.mjs · validate()"
+        },
+        {
+          "label": "HTML composition",
+          "location": "teardown/scripts/html.mjs · render()"
+        }
+      ]
+    },
+    {
+      "type": "prose",
+      "body_md": "The evidence above describes the renderer itself. The SNMP panel below is a separate example of an observation block: it demonstrates units, sources, and context, but its readings are illustrative."
+    },
+    {
+      "type": "prose",
+      "body_md": "Use notation when it clarifies the explanation: a linear scan takes \\(O(n)\\), while repeated halving takes \\(O(\\log n)\\). Define unfamiliar symbols before relying on them."
+    },
+    {
+      "type": "prose",
+      "body_md": "Keep a short status beside its claim: :badge[Illustrative]{neutral} marks an example, :badge[Supported]{positive} names an established capability, :badge[Needs evidence]{warning} flags a gap, and :badge[Blocked]{danger} identifies a blocker. These labels are static annotations, not controls or live readings."
+    },
+    {
+      "type": "math",
+      "title": "Explain an equation, not just its symbols",
+      "expression": "\\mu = \\frac{1}{n}\\sum_{i=1}^{n} x_i",
+      "description": "The arithmetic mean mu is the sum of the n supplied values, divided by n. Here n must be greater than zero.",
+      "caption_md": "This is a **definition**, not a measured result. The explanation names both the operation and its constraint."
+    },
+    {
+      "type": "bar-chart",
+      "title": "Compare supplied quantities",
+      "unit": "requests",
+      "context": "Illustrative example only: a synthetic batch of 100 requests, not observed traffic.",
+      "items": [
+        {
+          "label": "Served from cache",
+          "value": 72
+        },
+        {
+          "label": "Fetched from origin",
+          "value": 28
+        },
+        {
+          "label": "Failed",
+          "value": 0
+        }
+      ],
+      "caption": "Each bar starts at zero. Values are counts, not percentages of the longest bar."
+    },
+    {
+      "type": "image",
+      "title": "Show the interface being explained",
+      "src": "reading-path.png",
+      "alt": "Illustrative teardown page titled A clear reading path, with a tip to lead with the answer and keep evidence beside its claim.",
+      "caption_md": "A screenshot of a **synthetic example**, embedded from a local PNG. The HTML needs no companion files."
+    },
+    {
+      "type": "metrics",
+      "title": "SNMP snapshot, illustrative readings",
+      "status": {
+        "label": "Running (example)",
+        "tone": "positive"
+      },
+      "metadata": "snmpd 5.9.4 · UDP/161 · example",
+      "items": [
+        {
+          "label": "CPU busy",
+          "value": {
+            "parts": [
+              {
+                "value": "3",
+                "unit": "%"
+              }
+            ]
+          },
+          "source": "1.3.6.1.4.1.2021.11.11.0",
+          "context": "Idle 97%; busy is 100 minus idle."
+        },
+        {
+          "label": "Load 1 / 5 / 15",
+          "value": {
+            "parts": [
+              {
+                "value": "0.46"
+              },
+              {
+                "value": "0.25"
+              },
+              {
+                "value": "0.18"
+              }
+            ],
+            "separator": "slash"
+          },
+          "source": "1.3.6.1.4.1.2021.10.1.3.1–3",
+          "context": "Average load over 1, 5, and 15 minutes."
+        },
+        {
+          "label": "Memory total",
+          "value": {
+            "parts": [
+              {
+                "value": "15.5",
+                "unit": "GiB"
+              }
+            ]
+          },
+          "source": "1.3.6.1.4.1.2021.4.5.0",
+          "context": "Converted from the source units."
+        },
+        {
+          "label": "Uptime",
+          "value": {
+            "parts": [
+              {
+                "value": "17",
+                "unit": "d"
+              },
+              {
+                "value": "14",
+                "unit": "h"
+              }
+            ]
+          },
+          "source": "1.3.6.1.2.1.1.3.0",
+          "context": "Since the management subsystem restarted."
+        },
+        {
+          "label": "Interfaces",
+          "value": "lo, eth0",
+          "source": "1.3.6.1.2.1.2.2.1.2",
+          "context": "Example interface descriptions."
+        }
+      ],
+      "caption_md": "**Illustrative readings, not live data.** For real observations, record the host and collection time. Source identifiers let the reader trace each value; the renderer never polls a server."
+    },
+    {
       "type": "callout",
       "tone": "warning",
       "title": "“Unsupported” is a conclusion, not a default.",
       "body_md": "If you have not checked whether a capability exists, label it **unknown**. A confident-looking card should not turn missing evidence into a negative finding."
     },
     {
+      "type": "questions",
+      "title": "Questions to settle before authoring",
+      "items": [
+        {
+          "question": "What does the reader need to decide?",
+          "context_md": "Choose the opening conclusion and the supporting blocks around that decision. A block inventory is not an argument."
+        },
+        {
+          "question": "Which claims still need evidence?",
+          "context_md": "Keep **unknown** separate from **unsupported**. To close a gap:\n\n- Name the missing source and why it matters.\n- Ask the owner or inspect the relevant contract."
+        }
+      ]
+    },
+    {
       "type": "section",
-      "title": "Keep the artifact easy to inspect",
-      "summary": "A small package boundary, a plain command, and a source file you can edit."
+      "title": "Inspect and share",
+      "summary": "Know what travels with the skill, what it can check, and what still needs your judgment."
     },
     {
       "type": "file-tree",
@@ -305,36 +560,29 @@
       ]
     },
     {
-      "type": "code",
-      "title": "Render, then open the result",
-      "language": "shell",
-      "code": "node teardown/scripts/render.mjs \\\n  teardown/examples/showcase.json \\\n  -o output/showcase.html",
-      "caption": "Run from the package root after creating output/. Existing output is protected unless --force is supplied."
-    },
-    {
-      "type": "metrics",
-      "items": [
+      "type": "capability-grid",
+      "cells": [
         {
-          "label": "Built-in block types",
-          "value": "15",
-          "context": "The closed block union in schema version 1.0."
+          "label": "Compose explanations",
+          "status": "supported",
+          "detail": "Reusable semantic blocks, selected for the idea rather than the decoration."
         },
         {
-          "label": "Runtime packages",
-          "value": "0",
-          "context": "Node.js 22+ standard modules only."
+          "label": "Open without a server",
+          "status": "supported",
+          "detail": "One HTML file, with embedded styling and no runtime requests."
         },
         {
-          "label": "Reading artifact",
-          "value": "1 HTML",
-          "context": "No accompanying assets needed after rendering."
+          "label": "Verify source claims",
+          "status": "unsupported",
+          "detail": "A renderer can check structure. The author still owns the evidence."
+        },
+        {
+          "label": "Understand any Markdown",
+          "status": "partial",
+          "detail": "A small, safe grammar. Use dedicated blocks for richer structures."
         }
       ]
-    },
-    {
-      "type": "section",
-      "title": "Finish with understanding, not just valid JSON",
-      "summary": "Structure can be checked automatically. The argument still needs judgment."
     },
     {
       "type": "checklist",

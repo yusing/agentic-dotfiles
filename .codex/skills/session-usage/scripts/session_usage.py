@@ -555,7 +555,8 @@ def rates_from_openrouter(item: dict[str, Any]) -> Rates:
 
 
 def model_slug(model: str) -> str:
-    return model.strip().lower().split("/")[-1]
+    slug = model.strip().lower().split("/")[-1]
+    return slug.removeprefix("grok:")
 
 
 def match_openrouter_model(model: str, catalog: list[dict[str, Any]]) -> dict[str, Any] | None:
@@ -606,7 +607,7 @@ def resolve_rates(
     rates: Rates | None = None
     if fetcher is not None:
         try:
-            catalog = fetcher(model)
+            catalog = fetcher(model_slug(model))
             match = match_openrouter_model(model, catalog)
             if match is None:
                 catalog = fetcher(None)
@@ -641,11 +642,12 @@ def select_tier(rates: Rates, input_tokens: int) -> tuple[float, float, float, f
 def cost_for_request(usage: dict[str, int], rates: Rates) -> float:
     prompt, completion, cache_read, cache_write = select_tier(rates, usage["input_tokens"])
     cached = usage["cached_input_tokens"]
-    uncached = uncached_input(usage)
     write = usage["cache_write_input_tokens"]
+    # Input includes cache reads and writes; charge each token category once.
+    ordinary = max(uncached_input(usage) - write, 0)
     output = usage["output_tokens"]
     return (
-        uncached * prompt
+        ordinary * prompt
         + cached * cache_read
         + write * cache_write
         + output * completion
@@ -783,7 +785,9 @@ def captions(agents: list[AgentMeter], notes: list[str]) -> list[str]:
     methods = ", ".join(dict.fromkeys(agent.method for agent in agents))
     lines = [
         f"Usage method: {methods}.",
-        "Input includes cached input. Output includes reasoning. Reasoning is not billed twice.",
+        "Input includes cache reads and writes. Uncached in includes cache writes; USD bills each category once. "
+        "Output includes reasoning. Reasoning is not billed twice.",
+        "Cache write is rollout-reported, not estimated. Zero may mean the provider did not report writes.",
         "USD is list API pricing, not a ChatGPT/Codex subscription rate.",
     ]
     if notes:

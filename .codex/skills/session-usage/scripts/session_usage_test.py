@@ -21,6 +21,7 @@ from session_usage import (
     meter_session,
     per_token,
     render,
+    resolve_rates,
     status_text,
     uncached_input,
 )
@@ -181,7 +182,7 @@ class SessionUsageTest(unittest.TestCase):
         cost = cost_for_request(usage, rates)
         table = FALLBACK_USD_PER_MILLION["gpt-6-astra"]
         expected = (
-            600 * per_token(table["prompt"])
+            550 * per_token(table["prompt"])
             + 400 * per_token(table["input_cache_read"])
             + 50 * per_token(table["input_cache_write"])
             + 100 * per_token(table["completion"])
@@ -237,7 +238,53 @@ class SessionUsageTest(unittest.TestCase):
 
         agents, _, notes = meter_session(root, self.home, fetcher=fetch)
         self.assertTrue(any("openrouter:openai/gpt-6-astra" in note for note in notes))
-        self.assertAlmostEqual(agents[0].usd or 0, 0.012025)
+        self.assertAlmostEqual(agents[0].usd or 0, 0.011525)
+
+    def test_grok_prefix_pricing(self) -> None:
+        item = {"id": "x-ai/grok-4.6", "pricing": {"prompt": "0.000002"}}
+        for model in ("grok:grok-4.6", "grok-4.6", "x-ai/grok-4.6", " GROK:GROK-4.6 "):
+            with self.subTest(model=model):
+                queries = []
+
+                def fetch(query):
+                    queries.append(query)
+                    return [item] if query == "grok-4.6" else []
+
+                rates = resolve_rates(model, fetch, {})
+                self.assertIsNotNone(rates)
+                self.assertEqual(rates.model_id, "x-ai/grok-4.6")
+                self.assertEqual(queries, ["grok-4.6"])
+        self.assertIsNone(match_openrouter_model("grok:grok-4.6:free", [item]))
+
+    def test_cache_writes_preserved_in_all_usage_sources(self) -> None:
+        usage = {
+            "input_tokens": 1000, "cached_input_tokens": 400,
+            "cache_write_input_tokens": 50, "output_tokens": 100,
+            "total_tokens": 1100,
+        }
+        sources = [
+            usage_event(usage, "root"),
+            {"type": "event_msg", "payload": {
+                "type": "token_count", "info": {
+                    "orchestrated_role_token_usage": [{"usage": usage}],
+                },
+            }},
+            {"type": "event_msg", "payload": {
+                "type": "token_count", "info": {"total_token_usage": usage},
+            }},
+        ]
+        root = self.day / "root.jsonl"
+        for source in sources:
+            with self.subTest(source=source):
+                write_jsonl(root, [
+                    {"type": "session_meta", "payload": {"id": "root"}},
+                    {"type": "turn_context", "payload": {"model": "gpt-6-astra"}},
+                    source,
+                ])
+                agents, commands, notes = meter_session(root, self.home, fetcher=None)
+                self.assertEqual(agents[0].usage["cache_write_input_tokens"], 50)
+                self.assertAlmostEqual(agents[0].usd, 0.011525)
+                self.assertIn("Zero may mean", render(agents, commands, notes))
 
     def test_missing_thread(self) -> None:
         from session_usage import find_session
