@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+Remove the retired Go-guidelines hook from the public projection.
+
 ## 1.2.1
 
 Include the conditional collaboration and GitHub text guidance referenced by shared instructions.

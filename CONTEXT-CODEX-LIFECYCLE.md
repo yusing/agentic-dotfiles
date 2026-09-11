@@ -24,8 +24,8 @@
    selecting implementation or validation work.
 3. **Tool loop.** Before matched tools run, guards may reject generated-Go edits or container
    mutations and unclassified commands from spawned agents. Recognized read-only container
-   inspection remains available. After a matched direct Go-skill read, `go_guidelines` supplies
-   module-specific guidance. The registrations and supported command forms bound this coverage.
+   inspection remains available. The registrations and supported command forms bound
+   this coverage.
    Guards are silent when their policies do not apply.
 4. **Turn end.** All matching hooks from active configuration sources run for their lifecycle
    event. The enabled Browser plugin currently contributes a `Stop` MCP hook independently of

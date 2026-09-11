@@ -2,11 +2,10 @@ import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import { responseFor as generatedCodeResponse } from "../../.codex/hooks/generated_code_guard.ts";
-import { responseFor as goGuidelinesResponse } from "../../.codex/hooks/go_guidelines.ts";
 import { responseFor as subagentExecResponse } from "../../.codex/hooks/subagent_exec_guard.ts";
 import { asString, handleVersion, isRecord, readEvent, runCommand } from "../../.codex/hooks/lib/hook_runtime.ts";
 
-export const VERSION = "1.1.1";
+export const VERSION = "1.1.2";
 
 type PolicyFn = (event: unknown) => Record<string, unknown> | undefined;
 
@@ -287,9 +286,6 @@ function resolveCommand(argv: string[]): string[] {
 function policyFor(id: string): PolicyFn | undefined {
   if (id === "generated_code_guard") {
     return generatedCodeResponse;
-  }
-  if (id === "go_guidelines") {
-    return goGuidelinesResponse;
   }
   if (id === "subagent_exec_guard") {
     return subagentExecResponse;

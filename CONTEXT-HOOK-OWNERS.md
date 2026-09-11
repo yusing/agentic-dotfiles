@@ -24,19 +24,6 @@
   `.codex/hooks/bin/skills_mgr_inventory` command adds the `--- skills-mgr injected ---` heading
   for Claude; it is not the command currently registered by Codex.
   `CONTEXT-GROK-HOOK-PORT.md` records Grok's missing subagent-start delivery.
-- Go skill delivery: `.codex/hooks/bin/go_guidelines` appends the installed CLI's complete,
-  module-version-specific list after a `skills-mgr get golang-best-practices` call,
-  standalone or in a straight-line newline/semicolon batch or successful `&&` chain.
-  PostToolUse registers it for Codex, Claude, and Grok. The read's working
-  directory selects the module; literal `cd <module> &&` within a success chain is
-  also supported. Pipelines, shell control flow, mixed conditional/unconditional
-  chains, and skill reads spanning multiple directories are excluded.
-  Codex's unified-exec PostToolUse envelope currently omits the tool's `workdir`;
-  outside the session directory, use explicit `cd <module> && skills-mgr get
-  golang-best-practices` so the hook can select the module. Other clients may
-  supply `tool_input.workdir` or `tool_input.cwd`, which the hook honors.
-  Startup and unrelated tools do not load guidelines. The `END_GO_GUIDELINES` marker
-  allows model-visible tail verification; missing tooling is reported without installation.
 - Tool guards: `.codex/hooks/bin/generated_code_guard` blocks direct generated-Go edits;
   `.codex/hooks/bin/subagent_exec_guard` owns the container and orchestration command boundary
   for spawned agents, keyed on the event's `agent_type`. Codex registers the former for

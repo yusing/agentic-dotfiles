@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.2.1";
+export const VERSION = "1.2.2";
 
 type TreeEntry = {
 	mode: string;
@@ -119,7 +119,6 @@ const EXACT_PATHS = new Set([
 	".codex/hooks.json",
 	".codex/hooks/check_project.ts",
 	".codex/hooks/generated_code_guard.ts",
-	".codex/hooks/go_guidelines.ts",
 	".codex/hooks/session_start_context.ts",
 	".codex/hooks/skills_mgr_inventory.ts",
 	".codex/hooks/subagent_exec_guard.ts",

@@ -1,12 +1,12 @@
 ---
 name: golang-best-practices
-description: Apply module-version-specific Go conventions during implementation or review, not exploration.
+description: Go best practices for implementation and review. Read together with `skills-mgr run use-modern-go/scripts/run-tool.sh list --go-version VERSION`, using the Go version reported by `check_project`.
 ---
 
 # Modern Go by Version
 
-Read this skill from the target module's working directory so the accompanying Modern Go
-Guidelines list matches that module and Go version. Read through `END_GO_GUIDELINES`; report missing or truncated guidance.
+Read the complete Modern Go Guidelines list and report missing or truncated guidance.
+
 Apply relevant rules even when nearby code uses older idioms. Before skipping a
 seemingly relevant rule or when examples are needed, request only its returned IDs
 with `skills-mgr run use-modern-go/scripts/run-tool.sh explain <ID> [<ID> ...]`.

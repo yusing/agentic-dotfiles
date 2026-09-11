@@ -16,7 +16,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.0";
+const VERSION = "1.0.1";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -239,7 +239,6 @@ function main(): void {
   for (const name of [
     "generated_code_guard",
     "subagent_exec_guard",
-    "go_guidelines",
     "skills_mgr_inventory",
     "check_project",
     "session_start_context",
@@ -248,7 +247,6 @@ function main(): void {
   }
   compileHook(join(grokHooks, "adapt_codex_hook.ts"), grokBin, [
     join(codexHooks, "generated_code_guard.ts"),
-    join(codexHooks, "go_guidelines.ts"),
     join(codexHooks, "subagent_exec_guard.ts"),
   ]);
   compileHook(join(grokHooks, "skills_path_guard.ts"), grokBin);

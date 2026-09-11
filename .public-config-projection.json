@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "cc55ffdaba766017a8d388b992be7e9e33a295a1",
+  "sourceCommit": "88eadd38336ac98dbeae40af9e6e7ebf3a2ebc4f",
   "outputs": [
     {
       "path": ".bashrc",
@@ -149,12 +149,6 @@
       "path": ".codex/hooks/generated_code_guard.ts",
       "kind": "file",
       "sha256": "4b792f1463d02c6fce529dab33d3cb95f2eeedf40da5bca24a04a58f7e680069",
-      "executable": false
-    },
-    {
-      "path": ".codex/hooks/go_guidelines.ts",
-      "kind": "file",
-      "sha256": "fd2c95126460670c1aeefb202597b9fbf175d5a40be6958b531ca8aa92fbbf61",
       "executable": false
     },
     {
@@ -418,7 +412,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "d70bb64f6b9c9bb5efc14ee3dd8c721f8a3a5dcef88ba60b211474dc9bc4c79b",
+      "sha256": "c52fb38c54432479367e9560565696fb2a26bb89860736e1d6d78a5955c189e0",
       "executable": false
     },
     {
@@ -442,7 +436,7 @@
     {
       "path": ".grok/hooks/adapt_codex_hook.ts",
       "kind": "file",
-      "sha256": "44841d938fa1e83cad7e805d0f9f1732a35d7605e745583cd4f031cb033bd111",
+      "sha256": "c438f26c31f28e76fd1aac48507db9a81ecddc978f5b850f20bf5ce85b0f0f96",
       "executable": false
     },
     {
@@ -484,25 +478,25 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "331db218c423503e563977529621567f486a19decf5d339a6aa8cb09174dcae5",
+      "sha256": "14b8ea83609c2541dfe4a766bd43a99553b558694dc2daae4c853175b6c498da",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "b15d7d729cc936ed62c2d967e8b7cccedb96d7d87227dcf6b9938abe2aeee64e",
+      "sha256": "c0236f189b4eaad3adaada901ca4dbf8688eee4d14ff09edc764bd003f60a6dc",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "330fc21dee37ee6bb19dbc62ea4aa5d9e4a6525258eef7dfdbc6b8f43a76860a",
+      "sha256": "f2a675a6d46c43234273fcce59c43e19c38b1ae04089a9320900893fdabf2400",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "775c2f97e53fd2ceea9c337779921ef73a01f6f7167c52c6290060bbc538a1ed",
+      "sha256": "b6c210411496bd6b886dbe2d60bfa497019eb758e5fde76bd16e1aaecda3a812",
       "executable": true
     },
     {
@@ -676,7 +670,7 @@
     {
       "path": ".skills-mgr/skills/golang-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "0ace4e1835fcfb5e06f7842e5db04ab983d93059e4fb4ed0221bc5b1b5670b34",
+      "sha256": "c497cb8159a69fc610a137e1dbd4e1529f9f0108bace312c0e709584b5d6d3f8",
       "executable": false
     },
     {
@@ -1005,7 +999,7 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "200d49ab587fedf5e84bf4edf3c57312c0a8c93cf9b59c4788af578e48309cf8",
+      "sha256": "72c95c7a336883811c8ec35ef1004e2dda4aad288ce98748e620e89d51b0ca86",
       "executable": false
     },
     {
@@ -1029,7 +1023,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "22a2bf49bffca9df1056da3e7a950ccd49dab946d8025c1152184a844ce0f829",
+      "sha256": "a44e4ffc1d0273e37dbfd1b74a7b2b297f2135ee4a98a3560b8b7141df12d5ab",
       "executable": false
     },
     {
