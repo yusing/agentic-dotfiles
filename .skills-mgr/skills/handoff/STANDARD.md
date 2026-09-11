@@ -80,10 +80,15 @@ the essential conclusion in the handoff when a temporary artifact would otherwis
 source. State known missing or unverified availability and any resulting dependency. A dead path
 must not masquerade as an available source or create an obligation to recreate irrelevant material.
 
-Reference maintained specifications when needed; do not copy their bodies or generic system,
-project, and agent instructions. Use relative paths within the workspace and absolute paths for
-external resources. Preserve secrets and sensitive data only as descriptive placeholders, with a
-safe source reference or a necessary reacquisition obligation.
+Carry task-specific requirements, not the active instruction set. Exclude system and developer
+instructions, injected `AGENTS.md` contents, standing repository and agent rules, and skill bodies,
+including paraphrased summaries of those instructions. When unfinished work needs a maintained
+instruction document or specification, reference its authoritative path rather than repeating its
+contents; preserve an `AGENTS.md` path when that file is itself an unfinished work target.
+
+Use relative paths within the workspace and absolute paths for external resources. Preserve
+secrets and sensitive data only as descriptive placeholders, with a safe source reference or a
+necessary reacquisition obligation.
 
 ## Actions without frozen recipes
 
