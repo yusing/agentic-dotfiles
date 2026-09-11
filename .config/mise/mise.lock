@@ -1030,7 +1030,7 @@ backend = "go:github.com/swaggo/swag/cmd/swag"
 specifiers = ["latest"]
 
 [[tools."go:github.com/yusing/git-agent/cmd/git-agent"]]
-version = "0.0.0-20260910091502-eb25e4f2d01e"
+version = "0.0.0-20260911061546-29a5e4a1d195"
 backend = "go:github.com/yusing/git-agent/cmd/git-agent"
 specifiers = ["latest"]
 
@@ -1040,7 +1040,7 @@ backend = "go:github.com/yusing/shadowtree/cmd/shadowtree"
 specifiers = ["latest"]
 
 [[tools."go:github.com/yusing/skills-mgr"]]
-version = "0.0.0-20260908072306-37a730da5ab5"
+version = "0.0.0-20260911063308-f16d629d7aca"
 backend = "go:github.com/yusing/skills-mgr"
 specifiers = ["latest"]
 
