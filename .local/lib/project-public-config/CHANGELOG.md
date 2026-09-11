@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.4
+
+Include the shared instruction-authoring task document and remove the redundant root context
+and its route.
+
 ## 1.2.3
 
 Match complete private IPv4 addresses without rejecting SNMP object identifiers

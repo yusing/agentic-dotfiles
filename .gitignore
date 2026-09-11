@@ -43,6 +43,7 @@ __pycache__
 !/.codex/hooks/skills_mgr_inventory.ts
 !/.codex/hooks/subagent_exec_guard.ts
 !/.codex/IMPLEMENTATION.md
+!/.codex/INSTRUCTION-AUTHORING.md
 !/.codex/LARGE-TASK.md
 !/.codex/overridden_base_instructions.md
 !/.codex/skills/
@@ -268,7 +269,6 @@ __pycache__
 !/CONTEXT-HELPER-HOOKS.md
 !/CONTEXT-HOOK-ARCHITECTURE.md
 !/CONTEXT-HOOK-OWNERS.md
-!/CONTEXT-INSTRUCTION-AUTHORING.md
 !/CONTEXT-INSTRUCTION-SURFACES.md
 !/CONTEXT-SHELL.md
 !/LICENSE

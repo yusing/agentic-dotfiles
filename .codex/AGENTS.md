@@ -57,6 +57,10 @@ call. Sequence reads only when earlier results determine the next read.
 
 These are task documents, not skills:
 
+- Read `$HOME/.codex/INSTRUCTION-AUTHORING.md` when authoring or auditing instructions,
+  including base prompts, AGENTS.md, native roles, skills, task documents, and
+  instruction-delivery hooks. It owns reusable instruction design and consumer checks.
+
 - Read `$HOME/.codex/LARGE-TASK.md` when diagnosis requires investigating multiple possible causes,
   work crosses ownership boundaries, or correctness depends on lifecycle, concurrency, or
   compatibility. It owns evidence delegation and synthesis.

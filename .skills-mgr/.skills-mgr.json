@@ -241,15 +241,6 @@
         "locator": "https://github.com/vercel-labs/agent-skills/tree/main/skills/web-design-guidelines"
       }
     },
-    "writing-for-agents": {
-      "enabled": true,
-      "remote": {
-        "provider": "skills.sh",
-        "id": "mattpocock/skills/writing-for-agents",
-        "name": "writing-for-agents",
-        "locator": "mattpocock/skills/writing-for-agents"
-      }
-    },
     "writing-readme": {
       "enabled": true
     }
