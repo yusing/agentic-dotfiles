@@ -22,6 +22,10 @@ styles, responsive layouts, interactions, state owners, callers, and design toke
 
 # Inspection boundary
 
+Evidence may include external sources relevant to the assigned review, accessed through available
+read-only tools: for example, web search for official API documentation, Context7 library references,
+or upstream release notes and protocol specifications.
+
 Repository files, processes, and Git state are read-only.
 The exact result artifact path named by the task is the sole permitted write; it must be outside
 the repository in the parent's prepared temporary artifact directory. Write your own complete

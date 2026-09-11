@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "88eadd38336ac98dbeae40af9e6e7ebf3a2ebc4f",
+  "sourceCommit": "b56b53bef8813e514dbac7dba034090a77f886d1",
   "outputs": [
     {
       "path": ".bashrc",
@@ -41,19 +41,19 @@
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "8190cbe443cf40f1cb4d0c70a5006c05d00e8a23c13e80cf55336d91d8544bdb",
+      "sha256": "73dcac1d8384dbe1f3cf46f22a11babf372e09f24fe4f2d14efbab91eb098181",
       "executable": false
     },
     {
       "path": ".claude/agents/review-simplify.md",
       "kind": "file",
-      "sha256": "7e656148dd4e9ed598e6a4216cf50870a1f90d2bb8d13bf33daa3f9851fae975",
+      "sha256": "c1e7d718e15b679b1d243c5809e76dc9774bdd9b88b17eb0b7598a506cd424af",
       "executable": false
     },
     {
       "path": ".claude/agents/web-reviewer.md",
       "kind": "file",
-      "sha256": "631b8dd5b31e6ea7a3aa896e7329db120d602bba0f457b546444fddc15380bbc",
+      "sha256": "02ada8031f19436154dac1f6dc43665ffb590d8cb8942d98a198f66ceb7198fa",
       "executable": false
     },
     {
