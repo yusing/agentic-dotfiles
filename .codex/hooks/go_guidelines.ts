@@ -6,7 +6,64 @@ import { additionalContext } from "./lib/hook_response.ts";
 import { asString, handleVersion, isRecord, readEvent, runCommand, runMain, writeJson } from "./lib/hook_runtime.ts";
 import { shellTokens } from "./lib/shell_command.ts";
 
-export const VERSION = "1.0.1";
+export const VERSION = "1.1.0";
+
+// Preserve quoting until after splitting: a quoted semicolon/newline is an
+// argument, not evidence that a separate skill command ran.
+function batchCommands(command: string): { text: string; separator: string }[] | undefined {
+  const commands: { text: string; separator: string }[] = [];
+  let text = "";
+  let quote = "";
+  let boundary = true;
+  for (let index = 0; index < command.length; index += 1) {
+    const character = command[index];
+    if (character === "\\" && quote !== "'") {
+      if (index + 1 >= command.length) return undefined;
+      if (command[index + 1] !== "\n") {
+        text += character + command[index + 1];
+        boundary = false;
+      }
+      index += 1;
+      continue;
+    }
+    if (quote) {
+      if (character === quote) quote = "";
+      // Expansions can execute commands and change the meaning of arguments.
+      else if (quote === '"' && (character === "$" || character === "`")) return undefined;
+      text += character;
+      continue;
+    }
+    if (character === "'" || character === '"') {
+      quote = character;
+      text += character;
+      boundary = false;
+      continue;
+    }
+    if (character === "#" && boundary) {
+      while (index < command.length && command[index] !== "\n") index += 1;
+      if (index === command.length) break;
+    } else if ("|()<>{}$`".includes(character)) {
+      return undefined;
+    }
+    let separator = command[index];
+    if (separator === "&") {
+      if (index + 1 >= command.length || command[index + 1] !== "&") return undefined;
+      separator = "&&";
+    }
+    if (separator === "\n" || separator === ";" || separator === "&&") {
+      commands.push({ text, separator });
+      text = "";
+      boundary = true;
+      if (separator === "&&") index += 1;
+    } else {
+      text += character;
+      boundary = /[ \t\r]/.test(character);
+    }
+  }
+  if (quote) return undefined;
+  commands.push({ text, separator: "" });
+  return commands;
+}
 
 function isRecordOrEmpty(value: unknown): value is Record<string, unknown> {
   return isRecord(value);
@@ -39,31 +96,40 @@ export function skillDirectory(event: Record<string, unknown>): string | undefin
   let cwd = asString(event.cwd) || process.cwd();
   const workdir = asString(tool.workdir) || asString(tool.cwd) || ".";
   cwd = path.resolve(cwd, workdir.startsWith("~/") ? path.join(os.homedir(), workdir.slice(2)) : workdir);
-  let tokens = shellTokens(command);
-  if (tokens.length === 0 && command.includes("'") && !command.includes("' ")) {
-    return undefined;
-  }
-  if (tokens.length >= 4 && tokens[0] === "cd" && tokens[2] === "&&") {
-    const target = tokens[1] ?? "";
-    if (target.startsWith("-") || /[$`*]/.test(target)) {
-      return undefined;
+  const parsed = batchCommands(command);
+  if (parsed === undefined) return undefined;
+  const commands = parsed.filter((part) => shellTokens(part.text).length > 0);
+  // A later unconditional command can hide a failed/skipped && chain.
+  // Accept a complete success chain or unconditional reads, not a mix.
+  if (commands.some((part) => part.separator === "&&") &&
+      commands.slice(0, -1).some((part) => part.separator !== "&&")) return undefined;
+  let directory: string | undefined;
+  for (const part of commands) {
+    let tokens = shellTokens(part.text);
+    if (tokens.length === 0) continue;
+    const first = tokens[0];
+    // Only straight-line batches: overall success cannot prove execution
+    // through branches, loops, shell replacement, or directory-stack changes.
+    if (/^[A-Za-z_][A-Za-z0-9_]*=/.test(first) || [
+      "if", "then", "else", "elif", "fi", "for", "while", "until", "do", "done",
+      "case", "esac", "function", "select", "repeat", "coproc", "!", "exit", "return",
+      "exec", "eval", "source", ".", "pushd", "popd", "set", "trap", "command", "builtin",
+    ].includes(first)) return undefined;
+    if (first === "cd") {
+      if (tokens.length !== 2 || part.separator !== "&&") return undefined;
+      const target = tokens[1];
+      if (!target || target.startsWith("-") || /[$`*?\[\]]/.test(target)) return undefined;
+      cwd = path.resolve(cwd, target.startsWith("~/") ? path.join(os.homedir(), target.slice(2)) : target);
+      continue;
     }
-    cwd = path.resolve(cwd, target.startsWith("~/") ? path.join(os.homedir(), target.slice(2)) : target);
-    tokens = tokens.slice(3);
+    if (path.basename(first) === "rtk") tokens = tokens.slice(1);
+    if (tokens.length < 3 || path.basename(tokens[0]) !== "skills-mgr" || tokens[1] !== "get") continue;
+    const args = tokens.slice(2).filter((token) => !["--codex", "--claude", "--grok"].includes(token));
+    if (args.length !== 1 || !["golang-best-practices", "golang-best-practices/SKILL.md"].includes(args[0])) continue;
+    if (directory !== undefined && directory !== cwd) return undefined;
+    directory = cwd;
   }
-  if (tokens.length > 0 && path.basename(tokens[0] ?? "") === "rtk") {
-    tokens = tokens.slice(1);
-  }
-  if (tokens.length < 3 || path.basename(tokens[0] ?? "") !== "skills-mgr" || tokens[1] !== "get") {
-    return undefined;
-  }
-  const args = tokens.slice(2).filter((token) => !["--codex", "--claude", "--grok"].includes(token));
-  if (
-    !(args.length === 1 && (args[0] === "golang-best-practices" || args[0] === "golang-best-practices/SKILL.md"))
-  ) {
-    return undefined;
-  }
-  return path.resolve(cwd);
+  return directory;
 }
 
 function findGoMod(directory: string): string | undefined {
