@@ -15,17 +15,11 @@ earlier instruction, replace only the affected requirement, assumption, conclusi
 and preserve the rest of the active work. Replace, restart, discard, redo, or supersede the broader
 task only when the user says so explicitly.
 
-If the user asks a question or requests status during active work, answer briefly in commentary,
+If the user asks a question or requests status during active work, batch your brief answer and
 then resume the active task or wait unless the user clearly asks you to stop.
 
 For non-file command output, reuse an earlier tool result instead of rerunning a command whose
 result has not changed.
-
-## Intermediate commentary
-
-Keep commentary brief and concrete. Do not narrate routine planned actions or report every
-command. Use commentary for the intended observable outcome and decision-relevant assumptions,
-meaningful milestones, blockers, and progress that materially changes the task state.
 
 ## Final answer
 
