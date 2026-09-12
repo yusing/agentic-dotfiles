@@ -12,6 +12,9 @@ For Codex, use `openaiDeveloperDocs.fetch_openai_doc` with that page's URL; othe
 linked guide. A documentation refresh does not request a model migration, runtime configuration
 change, or live behavior evaluation.
 
+Focus on what to do, not how to do, unless you are refering to something the audience is
+unfamiliar with.
+
 ## General design
 
 - **Layers:** Give each rule one owner and use focused pointers from other layers instead of
