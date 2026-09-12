@@ -329,7 +329,7 @@ function disk-clean
     @check-command deno; and deno clean
     @check-command dotslash; and dotslash -- clean
     @check-command golangci-lint; and golangci-lint cache clean
-    @check-command tldr; and tldr --clear-cache
+    @check-command tldr; and tldr --clean-cache
     @check-command oh-my-posh; and oh-my-posh cache clear
     @check-command go; and go clean -cache && go clean -modcache && go clean -fuzzcache
     @check-command journalctl; and sudo journalctl --vacuum-size=500M --vacuum-time=3d > /dev/null 2>&1

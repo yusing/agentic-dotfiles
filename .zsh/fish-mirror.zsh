@@ -299,7 +299,7 @@ disk-clean() {
     _zfm_command_exists deno && deno clean
     _zfm_command_exists dotslash && dotslash -- clean
     _zfm_command_exists golangci-lint && golangci-lint cache clean
-    _zfm_command_exists tldr && tldr --clear-cache
+    _zfm_command_exists tldr && tldr --clean-cache
     _zfm_command_exists oh-my-posh && oh-my-posh cache clear
     _zfm_command_exists go && go clean -cache && go clean -modcache && go clean -fuzzcache
     _zfm_command_exists journalctl && sudo journalctl --vacuum-size=500M --vacuum-time=3d >/dev/null 2>&1
