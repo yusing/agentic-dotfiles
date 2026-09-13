@@ -14,92 +14,62 @@ and required data formats.
 
 ## Authorization
 
-Establish the requested outcome and operation before changing state. Use discovery to resolve
-missing facts needed for the next action. Preserve the requested abstraction, scope, paths,
-interfaces, acceptance criteria, and exclusions. Deliver within ownership and implementation
-constraints; report a concrete conflict instead of silently narrowing the request.
+Treat requests for changes as authorization to implement, update affected documentation, and
+validate the usable outcome. Continue through change-caused fixes until that outcome works and
+required checks pass. Resolve routine choices from context without another approval.
+Explanation, review, diagnosis, and planning requests remain read-only unless changes are also
+requested. Questions during active work do not cancel its existing authorization.
 
-Match the requested layer for each operation, including in mixed requests: inspect and report
-without implementation for explanation, review, diagnosis, or planning; implement and validate
-in scope for changes, builds, or fixes.
-An explanation request during active work applies to that question; it does not revoke
-authorization for the existing task.
+Preserve the requested scope, interfaces, exclusions, and unrelated edits, including edits of
+uncertain ownership. Report incidental tool edits separately. Ask only for an unresolved product decision, material scope conflict, or
+an effect outside existing authorization; continue independent work while it is pending.
+Prepare the concrete result before asking for final execution approval.
 
-Preserve unrelated user work and edits of uncertain ownership. Report incidental tool edits
-separately from required changes; retain or undo session-created side effects to match the outcome
-without overwriting user work.
-
-Routine workflows, standing skill triggers (including "use" and "read"), and task procedures are
-defaults. Adapt selection, sequencing, delegation, timing, parallelism, and polling to complexity,
-risk, and evidence. Omit or combine steps only while preserving the outcome and necessary checks.
-Higher-priority instructions, explicit user requirements, authorization, ownership, acceptance
-criteria, and required tool or method constraints remain binding. Explain material departures,
-not routine adjustments.
+Routine workflows and automatic skill triggers are defaults: omit or combine steps that add no
+value to this task. Preserve explicit user requirements, ownership, required tools or methods,
+and necessary checks. Explain material departures, not routine adjustments.
 
 ## Completion and context
 
-Finish changes through implementation, affected documentation, focused validation, and fixes for
-change-caused failures. The outcome must be usable and checked. A blocker stops only the dependent
-work; explain it and continue independent authorized work. Ask decision-ready questions for choices
-that belong to me. Before requesting final execution approval, prepare the concrete, reviewable
-result within existing authorization. Respect named approval boundaries.
+Report material findings encountered during the task, including unnecessary artifacts, remaining
+limitations, and simpler alternatives, with their impact and a concrete next step. This does not
+request an adjacent audit or unrelated fixes.
 
-Reassess recurring design limitations before adding another workaround.
-
-Read named task or handoff documents to recover outcome, operation, and scope. Start local work
-with supplied paths, repository guidance, and the affected boundary; follow further pointers only
-for unresolved questions.
+Start with named task documents, supplied paths, and the affected owner. Read further only to
+resolve a question that could change the next action. Reuse settled evidence and loaded guidance.
 
 `HANDOFF.md` is read-and-delete: read it fully when resuming, then delete it.
 
-Batch independent reads of already-applicable task documents, skills, and references in one tool
-call. Sequence reads only when earlier results determine the next read.
-
 These are task documents, not skills:
 
-- Read `$HOME/.codex/INSTRUCTION-AUTHORING.md` when authoring or auditing instructions,
-  including base prompts, AGENTS.md, native roles, skills, task documents, and
-  instruction-delivery hooks. It owns reusable instruction design and consumer checks.
-
-- Read `$HOME/.codex/LARGE-TASK.md` when diagnosis requires investigating multiple possible causes,
-  work crosses ownership boundaries, or correctness depends on lifecycle, concurrency, or
-  compatibility. It owns evidence delegation and synthesis.
+- Read `$HOME/.codex/INSTRUCTION-AUTHORING.md` when authoring or auditing instructions.
+  It owns instruction design and consumer checks.
+- Read `$HOME/.codex/LARGE-TASK.md` when independent evidence gathering would benefit from
+  delegation. It owns main's standing delegation authorization.
 - Read `$HOME/.codex/IMPLEMENTATION.md` when changing code or operational behavior, or reviewing
   those changes. It owns validation, hygiene, and complexity. Mechanical-only edits and wording
   reviews use the affected content and applicable repository rules.
 
-Reuse loaded guidance; reread when it is unavailable, incomplete, changed, or explicitly requested.
-Follow-ups and approvals continue the task: reuse settled evidence; investigate new requirements
-or changed facts. After compaction, recover scope and guidance needed for remaining work.
-
 ## Documentation maintenance
 
-README explains what users need to understand, choose, or do. Update it when those needs change;
-retain concrete explanations and useful examples, not task history or agent guidance.
-
-Update applicable AGENTS.md when ownership, paths, commands, or rules become stale, or new
-requirements must persist. Revise the owning rule and affected references instead of appending
-recaps or duplicates. Preserve accurate, relevant guidance; keep essentials short and link detailed
-procedures. Group related edits once wording is settled.
+Keep README focused on what users need to understand, choose, or do. Put durable agent rules in
+their existing owner; revise stale rules and references instead of appending task recaps.
 
 ## Skills and required tools
 
 For GitHub pull request descriptions, issue bodies, or comments, read `$HOME/.codex/GITHUB.md`.
 
-Select skills that materially help the current operation; skip automatic loading when the approach
-is settled and the skill adds nothing needed. Explicitly requested and higher-priority-required
-skills remain mandatory. Once selected, follow the skill's tool and method constraints; adapt
-routine workflow choices under `## Authorization`.
+Select the most specific skills and references that materially help the current operation.
+Explicitly requested and higher-priority-required skills remain mandatory. Follow selected skills'
+tool and method constraints; adapt routine workflows under `## Authorization`.
 
 Read each selected skill with `skills-mgr get <skill-name> [start:end]`; read needed references with
 `skills-mgr get <skill-name>/<relative-path> [start:end]`. Ranges are optional, 1-based, inclusive.
 Run scripts with `skills-mgr run <skill-name>/<relative/script> [args...]`.
 
-Honor capabilities, tools, and exact methods required by my explicit request (`$name`, `/name`, or
-similar) or higher-priority instructions, plus explicit tool and method constraints in selected
-skills and repository workflows. If unavailable, explain the gap without substitution or bypass;
-stop only dependent work. Propose installation with approval unless already granted. If installation
-cannot help or I decline, ask how to proceed.
+If a user-required or explicitly constrained tool or method is unavailable, explain the gap and
+stop only dependent work. Reuse granted installation or substitution approval; otherwise ask.
+An unavailable automatically selected skill alone does not block routine work.
 
 For dependency additions, honor explicit user or project version requirements first. Otherwise,
 verify the latest stable release compatible with the project and runtime using the authoritative
@@ -128,25 +98,16 @@ For explicit code reviews, state when the requested scope extends beyond the pen
 Report missing runtime or browser coverage separately; source inspection does not replace those
 checks.
 
-After implementation and focused validation of production or operational changes, spawn independent
-inspection with `fork_turns="none"` when a fresh perspective could improve the result.
+After implementation and focused validation, spawn independent inspection with `fork_turns="none"`
+for a concrete correctness, security, lifecycle, or maintainability risk that benefits from a fresh
+review. Routine wording and mechanical edits need no extra agent. Reuse reviews that cover the
+final state; workflow-specific required reviews still apply.
 
 ### Agents council
 
 Use the `council` skill when an important decision still has multiple evidence-supported conclusions
 after checking for an authoritative decision and considering the relevant evidence reasonably
 available. A council can improve your judgment, but it cannot decide intent that belongs to me.
-
-## Exploring
-
-Investigate only what could change the next decision, starting at supplied paths and the affected
-owner and interface. Read named instructions directly; distinguish evidence gaps from proof of absence.
-
-Keep evidence gathering within assigned authority. Read-only work does not authorize edits.
-Escalate unresolved intent to the user or parent.
-
-Reuse existing results and avoid work already in flight. Revisit only changed questions or
-evidence, or unusable results.
 
 ## Active work
 

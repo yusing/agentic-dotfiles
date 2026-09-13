@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "4297670f3ae98a3d0becf496194df7f4bcfc17f5",
+  "sourceCommit": "96f32dab597f460e168f1c9139e69f50e1531630",
   "outputs": [
     {
       "path": ".bashrc",
@@ -70,7 +70,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "14d2706dd0a2c328fe5dac5c15b6743bcf75a6a1f0148ed2bf250898e49a86fa",
+      "sha256": "c4b1090025ed6a81df3fc8b075709f3cd1a6471229321d7861048c70e1092459",
       "executable": false
     },
     {
@@ -118,7 +118,7 @@
     {
       "path": ".codex/COLLABORATION.md",
       "kind": "file",
-      "sha256": "71eb3c96529f63da6eb139db82c0ce9a37150d10c7796deecee95e89feb42f1a",
+      "sha256": "60516c7aaaa2ff5c2d8f6c7160b2cd42ed24a0f620f3d50265366c59a175ac06",
       "executable": false
     },
     {
@@ -208,25 +208,25 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "ae2fde2a6966cec741a6964b08cb283f65c627a76084714dfed64dd3e165796d",
+      "sha256": "1c93af9221f51b59d7b530e42823fce9d73239cb1a4ce91fe028ed32fa92923f",
       "executable": false
     },
     {
       "path": ".codex/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "acaf6a45e729ede353904951ef2d835534a5dacb2b11290d24bf6c4a16f36deb",
+      "sha256": "fb5431b87fc7bdb910815ea382621919ca4f574d16b58dee48063c65a08f5635",
       "executable": false
     },
     {
       "path": ".codex/LARGE-TASK.md",
       "kind": "file",
-      "sha256": "56fe02452ad3c128c5ffc88d6fa49aadcd91d3039221b1c8f91c2efa1038ef1f",
+      "sha256": "bf433db334f8889d980c3b6b048de95e16b82b3dc288b0e667b089be987224b5",
       "executable": false
     },
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "6ebd68a2c55ce5f61b9b2ed1be24de09bb9f1fa105cd6b825b9034f930c8ebc0",
+      "sha256": "5aebe2045ed5f5085eafdc08a881e87ee12ee15f0842c55d7d1368950ea5dd9c",
       "executable": false
     },
     {
@@ -742,7 +742,7 @@
     {
       "path": ".skills-mgr/skills/new-project/SKILL.md",
       "kind": "file",
-      "sha256": "77782034e418764a3bf895e35b9b3c135bf750c17c878e9ca759fd14cec2b9d5",
+      "sha256": "a6ca4f36d6bff3d68766c1e2fb0d239611ecc0c095c1ee68d81fe86b9d8b31fa",
       "executable": false
     },
     {

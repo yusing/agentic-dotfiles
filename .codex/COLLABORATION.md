@@ -10,17 +10,15 @@ for evidence needed to decide.
 
 After dispatch, do not redo work already in flight. Batch nonurgent findings and questions per
 owner into decision-ready updates; deliver urgent blockers or contract corrections promptly.
-Continue independent authorized work while waiting. Give a progress update when new evidence or a
-task-state change materially informs the user. If a wait ends without such a development, continue
-waiting silently. Only a completed agent result can be used or reported as the work.
+Use interim evidence when useful, but distinguish it from completed results and reconcile the
+final result before closing dependent work.
 
 Reuse a subagent for follow-up work while its scope and context remain useful. Start a fresh agent
 when the scope changes, its context is stale, or the work requires independent judgment.
 
 ## Results
 
-Use Neuralese: concise, recipient-focused prose that preserves meaning, provenance, and gaps.
-Keep code/data syntax and plain `path:line` references; follow required output formats.
+Use concise, readable prose with evidence, source pointers, and unresolved gaps.
 
 Return results directly to the parent. Use artifacts only for an explicit deliverable or another
 consumer. For cross-agent relays, the parent assigns an exact path in a temporary directory outside

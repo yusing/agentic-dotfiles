@@ -14,10 +14,9 @@ Resolve material product decisions and fix the working directory, accepted outco
 constraints, non-goals, toolchain, complete item set, and required checks. Choose direct delivery
 or staged capability delivery from the accepted outcome, not the number of files or layers.
 
-Before unattended work, obtain missing authorization only for effects the selected approach needs.
-Staged delivery also needs a base revision and authorized commits, fixups, and autosquash.
-Reuse granted permissions.
-Begin only when the remaining workflow can run without further product or permission decisions.
+Before unattended delivery, settle material decisions and missing permissions; reuse granted
+authorization. Staged delivery also needs a base revision and authorized commits, fixups, and
+autosquash. Pending decisions block dependent work, not authorized preparation.
 
 ## Specification and contracts
 
