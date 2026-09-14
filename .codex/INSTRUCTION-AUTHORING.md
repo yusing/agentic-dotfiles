@@ -9,8 +9,9 @@ When changing model-specific prompting or assessing model behavior, read the app
 [prompting guidance](https://developers.openai.com/api/docs/guides/latest-model.md).
 [skills authoring](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra.md).
 
-Use official documentation available through the current tools. A documentation refresh does not
-request a model migration, runtime configuration change, or live behavior evaluation.
+Use official documentation available through the current tools like `fetch_openai_doc`.
+Use the exact path without prior searching.
+A documentation refresh does not request a model migration, runtime configuration change, or live behavior evaluation.
 
 Describe outcomes and constraints rather than fixed itineraries. Keep only useful local facts,
 preferences, and boundaries. Use short, operation-specific skill descriptions and conditional
