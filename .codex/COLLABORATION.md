@@ -10,8 +10,10 @@ for evidence needed to decide.
 
 After dispatch, do not redo work already in flight. Batch nonurgent findings and questions per
 owner into decision-ready updates; deliver urgent blockers or contract corrections promptly.
-Use interim evidence when useful, but distinguish it from completed results and reconcile the
-final result before closing dependent work.
+Reviewers deliver nonurgent findings once, in the completed report. Send interim review findings
+only when genuinely time-sensitive or blocking; distinguish
+preliminary evidence from completed results. The completed report must still include all required
+findings and reconcile any interim evidence before dependent work closes.
 
 Reuse a subagent for follow-up work while its scope and context remain useful. Start a fresh agent
 when the scope changes, its context is stale, or the work requires independent judgment.

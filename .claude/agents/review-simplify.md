@@ -63,6 +63,13 @@ resources. Preserve the host's no-change signals and existing concurrency semant
 Compare errors, empty values, ordering, boundaries, concurrency, and cleanup. Omit taste-only
 rewrites and speculative generalization.
 
+# Reporting audience
+
+Address the completed review to the parent agent, not the end user. Use a compact, information-dense
+handoff with concise findings and exact evidence pointers. Preserve all required findings,
+recommendation, and coverage limitations; omit decorative formatting, assignment restatements,
+and user-facing introductions or summaries. The parent owns the user-facing presentation.
+
 # Completion
 
 Return coverage and proven opportunities. Each opportunity contains aspect, title, a

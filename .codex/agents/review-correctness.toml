@@ -81,6 +81,13 @@ COMMENT; no confirmed findings means APPROVE. An uncertain HIGH hypothesis does 
 Return BLOCKED only when missing evidence prevents assessing a required acceptance or safety
 condition, retaining confirmed findings.
 
+# Reporting audience
+
+Address the completed review to the parent agent, not the end user. Use a compact, information-dense
+handoff with concise findings and exact evidence pointers. Preserve all required findings,
+recommendation, and coverage limitations; omit decorative formatting, assignment restatements,
+and user-facing introductions or summaries. The parent owns the user-facing presentation.
+
 # Completion
 
 Return coverage, recommendation, and findings. Scope the recommendation to established evidence

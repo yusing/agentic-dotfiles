@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "203853ffa39041c2569f92d838958d69f328884e",
+  "sourceCommit": "17026a668e78b44eb8b13106aefca41596196788",
   "outputs": [
     {
       "path": ".bashrc",
@@ -41,19 +41,19 @@
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "73dcac1d8384dbe1f3cf46f22a11babf372e09f24fe4f2d14efbab91eb098181",
+      "sha256": "b3c78a94435be63a5570ae56ace25d6349719e48d62e42d7014e030069fabac6",
       "executable": false
     },
     {
       "path": ".claude/agents/review-simplify.md",
       "kind": "file",
-      "sha256": "c1e7d718e15b679b1d243c5809e76dc9774bdd9b88b17eb0b7598a506cd424af",
+      "sha256": "31021c290b4993740f4de9fdffaf0fd716282260411b92cd6a38fbc7351224ac",
       "executable": false
     },
     {
       "path": ".claude/agents/web-reviewer.md",
       "kind": "file",
-      "sha256": "02ada8031f19436154dac1f6dc43665ffb590d8cb8942d98a198f66ceb7198fa",
+      "sha256": "dd723e694e515cf2507c5c06639f78eccf99e11268d2f9fab121e7627d715274",
       "executable": false
     },
     {
@@ -100,25 +100,25 @@
     {
       "path": ".codex/agents/review-correctness.toml",
       "kind": "file",
-      "sha256": "60f3a7f6a9b803fc0c9ca5e56327f716b89642234c893d992da735dfeebd3615",
+      "sha256": "9666418a289fb145bf5a70e2256020b39bb5c8cea98b6161daaeb722836a65f6",
       "executable": false
     },
     {
       "path": ".codex/agents/review-simplify.toml",
       "kind": "file",
-      "sha256": "dd6f182d5e9cf35de955f472335336b6c238a2bc89148d3ee8ac51a7b63405ed",
+      "sha256": "6202522414ed886a9595da1da604721b108957828e6ee95307dfa2e218ad89cd",
       "executable": false
     },
     {
       "path": ".codex/agents/web-reviewer.toml",
       "kind": "file",
-      "sha256": "e7c5326c462b722b24ebaac019e0709c08774710bf987ccc92eceab6c5bcb866",
+      "sha256": "fbd4d11302214e866340abc69dad201d361ca26f8ea47c58eeb4cf30bc9b0f90",
       "executable": false
     },
     {
       "path": ".codex/COLLABORATION.md",
       "kind": "file",
-      "sha256": "f8c8009446ff81cc782109810d7c3378d0439b2b0dddc7eb2df326e38a29fb21",
+      "sha256": "8bfe80578682a643715905dff6f7c3a09ee92a1d4940c0f79a93ffd9b896566e",
       "executable": false
     },
     {
