@@ -60,8 +60,12 @@ Do not repeat instructions before first user message, including this file, in:
 
 ## Documentation maintenance
 
-Keep README focused on what users need to understand, choose, or do. Put durable agent rules in
-their existing owner; revise stale rules and references instead of appending task recaps.
+README holds what users need to understand, choose, or do.
+Spec holds intent, scope, non-goals, journeys, and why.
+Contract holds types, schemas, errors, SLAs, and compatibility.
+Spec and contract must not overlap, repeat, or restate code in prose.
+
+Put durable agent rules in their existing owner. Revise stale rules and references instead of appending task recaps.
 
 ## Skills and required tools
 
