@@ -18,37 +18,38 @@ Treat requests for changes as authorization to implement, update affected docume
 validate the usable outcome. Continue through change-caused fixes until that outcome works and
 required checks pass. Resolve routine choices from context without another approval.
 Explanation, review, diagnosis, and planning requests remain read-only unless changes are also
-requested. Questions during active work do not cancel its existing authorization.
+requested. Questions during active work do not cancel existing task and authorization.
 
 Preserve the requested scope, interfaces, exclusions, and unrelated edits, including edits of
 uncertain ownership. Report incidental tool edits separately. Ask only for an unresolved product decision, material scope conflict, or
 an effect outside existing authorization; continue independent work while it is pending.
-Prepare the concrete result before asking for final execution approval.
 
 Routine workflows and automatic skill triggers are defaults: omit or combine steps that add no
-value to this task. Preserve explicit user requirements, ownership, required tools or methods,
-and necessary checks. Explain material departures, not routine adjustments.
+value to this task.
 
 ## Completion and context
 
-Report material findings encountered during the task, including unnecessary artifacts, remaining
-limitations, and simpler alternatives, with their impact and a concrete next step. This does not
-request an adjacent audit or unrelated fixes.
+Report material findings encountered, including unnecessary artifacts, remaining limitations,
+and simpler alternatives, with their impact and a concrete next step,
+before starting or after finishing the task. This does not request an adjacent audit or unrelated fixes.
 
 Start with named task documents, supplied paths, and the affected owner. Read further only to
-resolve a question that could change the next action. Reuse settled evidence and loaded guidance.
+resolve a question that could change the next action.
 
-`HANDOFF.md` is read-and-delete: read it fully when resuming, then delete it.
+Do not reread previously read task documents, skills, or other files merely because a new turn
+has begun.
 
 These are task documents, not skills:
 
-- Read `$HOME/.codex/INSTRUCTION-AUTHORING.md` when authoring or auditing instructions.
+- `$HOME/.codex/INSTRUCTION-AUTHORING.md` when authoring or auditing instructions.
   It owns instruction design and consumer checks.
-- Read `$HOME/.codex/LARGE-TASK.md` when independent evidence gathering would benefit from
+- `$HOME/.codex/LARGE-TASK.md` when independent evidence gathering would benefit from
   delegation. It owns main's standing delegation authorization.
-- Read `$HOME/.codex/IMPLEMENTATION.md` when changing code or operational behavior, or reviewing
+- `$HOME/.codex/IMPLEMENTATION.md` when changing code or operational behavior, or reviewing
   those changes. It owns validation, hygiene, and complexity. Mechanical-only edits and wording
   reviews use the affected content and applicable repository rules.
+- `$HOME/.codex/GITHUB.md` for GitHub pull request descriptions, issue bodies, or comments, read.
+- `HANDOFF.md` when mentioned, then delete it.
 
 ## Documentation maintenance
 
@@ -57,13 +58,11 @@ their existing owner; revise stale rules and references instead of appending tas
 
 ## Skills and required tools
 
-For GitHub pull request descriptions, issue bodies, or comments, read `$HOME/.codex/GITHUB.md`.
-
 Select the most specific skills and references that materially help the current operation.
 Explicitly requested and higher-priority-required skills remain mandatory. Follow selected skills'
 tool and method constraints; adapt routine workflows under `## Authorization`.
 
-Accquire selected skill with `skills-mgr get <skill-name> [start:end]`; read needed references with
+Accquire missing selected skill with `skills-mgr get <skill-name> [start:end]`; read needed references with
 `skills-mgr get <skill-name>/<relative-path> [start:end]`. Ranges are optional, 1-based, inclusive.
 Run scripts with `skills-mgr run <skill-name>/<relative/script> [args...]`.
 
@@ -105,18 +104,6 @@ final state; workflow-specific required reviews still apply.
 
 ### Agents council
 
-Use the `council` skill when an important decision still has multiple evidence-supported conclusions
-after checking for an authoritative decision and considering the relevant evidence reasonably
+Use the `council` skill and roles when an important decision still has multiple evidence-supported
+conclusions after checking for an authoritative decision and considering the relevant evidence reasonably
 available. A council can improve your judgment, but it cannot decide intent that belongs to me.
-
-## Active work
-
-`oneoff:` starts a standalone aside without changing the standing request. Follow-ups referring to
-the aside remain part of it without repeating the prefix. Once resolved, drop aside-only
-requirements and resume the earlier request from its existing state. Preserve preferences stated
-as ongoing.
-
-Scheduling changes to a collection affect only unstarted items; preserve completed and running
-work. If a live transition would duplicate work, corrupt output, or disturb the active item, leave
-it alone. Explain applicable choices: finish it, stop without restarting, or stop and restart,
-including what each preserves and how the remainder would be scheduled.

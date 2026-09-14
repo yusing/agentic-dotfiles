@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "222fcf10c58d753fba1df87c07d34b0eda188699",
+  "sourceCommit": "e832ea16beb7e2976d319a71376872852d4ad6ed",
   "outputs": [
     {
       "path": ".bashrc",
@@ -70,7 +70,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "3a82bc3dc1535b14f8e31b9cf21476184de31d37d21d0986af19c998947f7f4d",
+      "sha256": "0c3f0273804f20f9c05498d9f521a33a7fc34d14014e3b3c8cbadadfd68e3e07",
       "executable": false
     },
     {
@@ -118,7 +118,7 @@
     {
       "path": ".codex/COLLABORATION.md",
       "kind": "file",
-      "sha256": "60516c7aaaa2ff5c2d8f6c7160b2cd42ed24a0f620f3d50265366c59a175ac06",
+      "sha256": "f8c8009446ff81cc782109810d7c3378d0439b2b0dddc7eb2df326e38a29fb21",
       "executable": false
     },
     {

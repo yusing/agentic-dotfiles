@@ -16,6 +16,9 @@ final result before closing dependent work.
 Reuse a subagent for follow-up work while its scope and context remain useful. Start a fresh agent
 when the scope changes, its context is stale, or the work requires independent judgment.
 
+Let the owner, whether main or a delegated agent, spawns the dependent agents (e.g. reviewer).
+If nested agents are unavailable, ask the parent to arrange inspection without transferring ownership.
+
 ## Results
 
 Use concise, readable prose with evidence, source pointers, and unresolved gaps.
@@ -25,14 +28,3 @@ consumer. For cross-agent relays, the parent assigns an exact path in a temporar
 the repository; the producer writes and updates the complete result there. Relay the original
 artifact without rewriting it; report blocked writes instead of taking over authorship.
 Preserve council evidence isolation and result contracts.
-
-## Inspection follow-through
-
-The shared AGENTS.md owns when independent inspection is needed.
-
-The execution owner, whether main or a delegated agent, spawns the reviewer, receives its result,
-resolves in-scope findings, and reruns affected checks. If nested agents are unavailable, ask the
-parent to arrange inspection without transferring implementation ownership.
-
-Reuse applicable reviews and reviewers; repeat inspection only for changed behavior or a distinct
-uncovered risk.
