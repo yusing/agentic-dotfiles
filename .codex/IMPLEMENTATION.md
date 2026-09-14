@@ -24,6 +24,12 @@ completion through the owning interface, reusing host progress, logging, or job-
 Start/finish notices alone are insufficient. Progress must remain auxiliary and must not determine
 or interfere with successful core behavior.
 
+## No suprises
+
+Do not introduce safeguards that block intended behavior. When a required safeguard rejects an operation,
+explain why through the owning interface rather than failing silently.
+Skip safeguards for purely hypothetical concerns; raise any concrete unresolved tradeoff in the completion report.
+
 ## Hygiene
 
 Remove behavior and supporting artifacts superseded by the accepted change. Preserve compatibility
