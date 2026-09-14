@@ -30,7 +30,6 @@ shared standing guidance.
 - `.codex/skills/` (user-maintained content only)
 - `.skills-mgr/skills/`
 
-Read selected skills and their references through `skills-mgr`, as shared guidance requires.
 Confirm the active catalog and owning copy before changing a skill that also exists in a
 client-local directory. The configured compaction prompt points directly to the managed
 handoff standard, not a client-local handoff copy.

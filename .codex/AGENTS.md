@@ -63,7 +63,7 @@ Select the most specific skills and references that materially help the current 
 Explicitly requested and higher-priority-required skills remain mandatory. Follow selected skills'
 tool and method constraints; adapt routine workflows under `## Authorization`.
 
-Read each selected skill with `skills-mgr get <skill-name> [start:end]`; read needed references with
+Accquire selected skill with `skills-mgr get <skill-name> [start:end]`; read needed references with
 `skills-mgr get <skill-name>/<relative-path> [start:end]`. Ranges are optional, 1-based, inclusive.
 Run scripts with `skills-mgr run <skill-name>/<relative/script> [args...]`.
 

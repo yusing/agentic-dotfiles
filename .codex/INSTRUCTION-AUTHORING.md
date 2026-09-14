@@ -6,8 +6,8 @@ Start with supplied content and its owners. Consult product documentation when a
 on current client or model behavior, not merely because the instructions mention Codex.
 
 When changing model-specific prompting or assessing model behavior, read the applicable
-[prompting guidance](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices).
-[skills authoring](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra).
+[prompting guidance](https://developers.openai.com/api/docs/guides/latest-model.md).
+[skills authoring](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra.md).
 
 Use official documentation available through the current tools. A documentation refresh does not
 request a model migration, runtime configuration change, or live behavior evaluation.
@@ -28,6 +28,10 @@ document pointers; remove generic coaching and repetition.
 - **Renames:** Align names, paths, references, registration, metadata, tests, documentation, and
   allowlists. Align skill directories and frontmatter. Regenerate from the owner; preserve
   historical names in historical records.
+
+## Skill authoring
+
+Read and edit the target file directly.
 
 ## Conditional client and role checks
 
