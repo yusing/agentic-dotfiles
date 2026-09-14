@@ -3,49 +3,37 @@ name: deliver-vertical-slice
 description: Deliver accepted user-facing capabilities as usable end-to-end vertical slices; for new-project delivery or features needing staged capability delivery, not routine changes or fixes.
 ---
 
-# Deliver the complete accepted change
+# Deliver in vertical slices
 
-Use after a new-project skeleton or for an accepted feature that needs staged delivery of usable
-capabilities. Each slice delivers a user-facing capability through its required layers, not a set
-of files or implementation steps. Handle routine changes, instruction/configuration corrections,
+Deliver the complete accepted outcome as small, usable end-to-end capabilities, not layers or
+batches of files. Use after a new-project skeleton or for an accepted feature that needs staged
+delivery of usable capabilities. Handle routine changes, instruction/configuration corrections,
 refactors, fixes, and questions directly under standing task guidance.
 
-## Entry and recovery
+## Invocation
 
-Before unattended delivery, settle material decisions, the complete accepted item set, non-goals,
-base revision, and required checks. Confirm that final-review roles are available and obtain any
-missing authorization for edits, Conventional Commits, fixups, autosquash, and external or
-destructive effects. Reuse authorizations already granted.
+- **User invokes the skill:** proceed without asking permission. Invocation authorizes the
+  accepted workflow, including edits, slice commits, fixups, and autosquash.
+- **Agent chooses the skill:** ask the user for permission before starting this workflow.
+  Once approved, continue without repeated permission requests.
 
-On entering delivery, read [the recovery schema](references/recovery-artifact.md) and create its
-project-directory temporary artifact. Record every accepted item and decision, the complete slice
-order, and later commit hashes. Keep it out of commits and current across slices, compaction,
-review follow-ups, fixups, and autosquash. No separate planning artifact is needed.
+Honor explicit restrictions and keep effects within the accepted scope.
 
-## Each slice
+## Delivery
 
-Choose the smallest ordered end-to-end slices that cover all accepted items and dependencies.
-Assign each slice's execution owner using `IMPLEMENTATION.md`.
-Implement through the real entry point and authoritative owners, with only the enabling UI,
-services, integrations, and persistence needed. Remove replaced stubs and obsolete routes without
-narrowing the accepted outcome.
+Settle the accepted outcome and material decisions, then order slices by dependency. Implement,
+validate, and independently inspect each usable slice under standing task guidance. Create one
+Conventional Commit per slice and continue until every accepted item is delivered.
 
-Check acceptance behavior, applicable defect regressions, and reachable safety/error contracts.
-Run affected checks, the normal build or typecheck, and the real entry point. Then apply the
-standing independent-inspection policy to the complete slice diff, keeping that snapshot stable.
-Fix confirmed in-scope findings, reject unsupported scope expansion, and rerun affected checks.
-Request review follow-ups only where corrections or unresolved findings need inspection.
+Keep one current recovery record in the Mekugi journal when available; otherwise use a temporary
+project artifact outside commits. Capture the accepted items, decisions and non-goals, base and
+head revisions, slice order and commits, validation and review results, and next unfinished work.
+No fixed template or duplicate artifact is needed.
 
-Create one non-empty authorized Conventional Commit per slice with a concise subject and
-meaningful body. Record its hash and continue in order until every accepted item has implementation
-evidence, not just the first working path.
+Pass the recovery record and exact base-to-head range to `final-review`; a plaintext journal
+snapshot is enough when direct access is unavailable. Resolve in-scope blockers, fold fixups into
+their slice commits, and validate the final range. Stop only for a blocker that needs user input
+or cannot be resolved within scope.
 
-## Final review and completion
-
-Pass the current recovery artifact, completed inspection coverage, and exact base-to-head range
-to `final-review`. For confirmed blockers, correct slices in original order with the same checks
-and inspection rules; create `git commit --fixup=<slice-commit>` for each corresponding commit.
-
-Continue through final review and authorized autosquash. Delete the recovery artifact only after
-review passes and the rewritten range is validated. Finish with every accepted item and required
-checkpoint complete; stop only for a blocker that cannot be corrected within the authorized scope.
+After review and validation pass, mark the journal record complete or delete the fallback
+artifact. Report the delivered outcome, commit range, checks, and remaining limitations.

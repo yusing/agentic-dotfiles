@@ -10,9 +10,10 @@ inspection, not a bug-fix review, diagnosis, question, or routine per-slice insp
 
 ## Independent inspection
 
-Require committed accepted items, a current recovery artifact, and a stable, exact base-to-head
-range. Apply the standing inspection and reuse policy to the final outcome, including cross-slice
-integration. Record completed coverage and remaining gaps in the recovery artifact; dispatch only
+Require committed accepted items, a current recovery record (Mekugi journal or fallback artifact),
+and a stable, exact base-to-head range. A current plaintext journal snapshot supplied by the
+delivery owner is sufficient when direct journal access is unavailable. Apply the standing
+inspection and reuse policy to the final outcome, including cross-slice integration. Record completed coverage and remaining gaps in the recovery record; dispatch only
 needed inspections and keep the snapshot stable. When coverage is sufficient, close the range.
 
 Trace the delivered surfaces, accepted items, contracts, non-goals, tests, and validation across
@@ -23,7 +24,7 @@ When the main agent is the sole consumer, return results directly without a revi
 
 A blocker needs current code evidence of a violated accepted item, contract, safety invariant, or
 required check. Record unsupported, external-owner, unreachable, duplicate, uncertain, or
-scope-broadening findings and their dispositions in the recovery artifact.
+scope-broadening findings and their dispositions in the recovery record.
 
 Route confirmed blockers to `deliver-vertical-slice` in original slice order. Correct through the
 authoritative owner, validate, apply required pre-commit inspection, and create
@@ -37,7 +38,8 @@ blockers and report those that require a new decision or authorization.
 
 After review passes, use the preflight authorization to autosquash fixups into their slice commits.
 Verify that the reviewed tree is unchanged by autosquash and run the smallest affected checks.
-Delete the recovery artifact only after the rewritten range is validated.
+Only after the rewritten range is validated, have the delivery owner mark journal-backed recovery
+complete or delete the fallback artifact.
 
 Finish with the final base-to-head range, validation facts, skipped-finding dispositions, and no
-remaining blocker. Preserve the recovery artifact if required inspection or correction is blocked.
+remaining blocker. Preserve the recovery record if required inspection or correction is blocked.

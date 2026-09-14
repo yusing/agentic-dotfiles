@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "96f32dab597f460e168f1c9139e69f50e1531630",
+  "sourceCommit": "6e0379a985c8dbd83df2943002cb0bcde069b209",
   "outputs": [
     {
       "path": ".bashrc",
@@ -418,7 +418,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "796e03e0d84270301eb94662af6f9e278afe3b5d7c1f2eafa85952ec48b42afa",
+      "sha256": "2525cb445262630d78d40c45edbc0a6987749bb4eecabd42d608cd5319ce4f2f",
       "executable": false
     },
     {
@@ -596,15 +596,9 @@
       "executable": false
     },
     {
-      "path": ".skills-mgr/skills/deliver-vertical-slice/references/recovery-artifact.md",
-      "kind": "file",
-      "sha256": "6f2a355fd9a39c41c5840213109773ec92d55664d772ffe6087556495fbae5f0",
-      "executable": false
-    },
-    {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "d0b13cfc312ea58ef87db4aefda3ec305fad27596889594b26c661265bf3e1d2",
+      "sha256": "4ab9fc29a422563ac4f84834859f8bc1b0a92e758e244bfbc7bad28fc650284d",
       "executable": false
     },
     {
@@ -622,7 +616,7 @@
     {
       "path": ".skills-mgr/skills/final-review/SKILL.md",
       "kind": "file",
-      "sha256": "485955d8ccdd7b5e832df93eb5d4d67e0264b79df345ec1f32ccf74b45836f8e",
+      "sha256": "9cd262971997391cbe4320fb70f679342af3051d00c75eb050ad6fe53f09810a",
       "executable": false
     },
     {
