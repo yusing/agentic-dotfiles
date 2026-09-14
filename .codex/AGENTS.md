@@ -51,6 +51,13 @@ These are task documents, not skills:
 - `$HOME/.codex/GITHUB.md` for GitHub pull request descriptions, issue bodies, or comments, read.
 - `HANDOFF.md` when mentioned, then delete it.
 
+Do not repeat instructions before first user message, including this file, in:
+
+- Other instructions files
+- Artifacts
+- Skills
+- Agent spawn prompt
+
 ## Documentation maintenance
 
 Keep README focused on what users need to understand, choose, or do. Put durable agent rules in
