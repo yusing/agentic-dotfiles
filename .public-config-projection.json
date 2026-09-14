@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f0edfb3ed8f75c59b01cbeb7b792f5c2dcdcb244",
+  "sourceCommit": "8c730b438e358f7e68a9506f21f14808d5b8449f",
   "outputs": [
     {
       "path": ".bashrc",
@@ -556,13 +556,13 @@
     {
       "path": ".skills-mgr/skills/build-code-skeleton/agents/openai.yaml",
       "kind": "file",
-      "sha256": "26bb949476300ea28f0aaf841ce4b55504bb893df62fea872cfcea2fb1b8c2f3",
+      "sha256": "eba9dc681f41eecf5e89fe58567a97cb5497e913bc518933eb4c36de8a39698e",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/build-code-skeleton/SKILL.md",
       "kind": "file",
-      "sha256": "92bef478a153b306f313857ff5ca656f06469a69400ea5756aaafc254d16fb0b",
+      "sha256": "8b42529c6e13b7571cf7cf91c291e83dab65e88319f7af1b27530cf4cf200e63",
       "executable": false
     },
     {
@@ -598,25 +598,25 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "4ab9fc29a422563ac4f84834859f8bc1b0a92e758e244bfbc7bad28fc650284d",
+      "sha256": "cc4e620384b3c567a7e23acff1a52d1690be445a4c1d436c3327ef877bccb86d",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/deslop/SKILL.md",
       "kind": "file",
-      "sha256": "dfb01fdb924947d0a88cdfa3de3d1cc146f47c020e18b8094dc400041a01fad0",
+      "sha256": "e02739723395177dad6953b46dc6f71b9e69c0b66262cddb37baf9b7fb80d3e5",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/final-review/agents/openai.yaml",
       "kind": "file",
-      "sha256": "a522f979c2e2f60c29f9a4001c5248a33276dd3078ba2a5d5a238cb79e87b04f",
+      "sha256": "4e8004acf1e58b4b1e6a7376485c9c6dc29b00877a5099960c05a6e1a6b7e48d",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/final-review/SKILL.md",
       "kind": "file",
-      "sha256": "9cd262971997391cbe4320fb70f679342af3051d00c75eb050ad6fe53f09810a",
+      "sha256": "bb8d459d3156dc113a9169578dc2b1ecd2d28d2282b1f9191e7b554636758332",
       "executable": false
     },
     {
@@ -670,7 +670,7 @@
     {
       "path": ".skills-mgr/skills/golang-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "c497cb8159a69fc610a137e1dbd4e1529f9f0108bace312c0e709584b5d6d3f8",
+      "sha256": "85c29b51acec441a237dc6fe4e83924cdf494117f1fd120f95552b6c1699b5eb",
       "executable": false
     },
     {
@@ -736,7 +736,7 @@
     {
       "path": ".skills-mgr/skills/new-project/SKILL.md",
       "kind": "file",
-      "sha256": "a6ca4f36d6bff3d68766c1e2fb0d239611ecc0c095c1ee68d81fe86b9d8b31fa",
+      "sha256": "bf1a063bf54b6e18cb08e35a34feb2a8e4a565e92a74c5d63c50f737fcd89879",
       "executable": false
     },
     {
@@ -982,7 +982,7 @@
     {
       "path": ".skills-mgr/skills/writing-readme/SKILL.md",
       "kind": "file",
-      "sha256": "18b8c55691d465b1fac626fbc6e8141228efef5d2189aeeb9ee40c17d8dad9b4",
+      "sha256": "b900342a921e4de0db6f3fa43fb5b58080f5f6d4e30e3f815e17b859bbafadae",
       "executable": false
     },
     {

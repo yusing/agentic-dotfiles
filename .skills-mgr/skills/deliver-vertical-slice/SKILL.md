@@ -6,9 +6,10 @@ description: Deliver accepted user-facing capabilities as usable end-to-end vert
 # Deliver in vertical slices
 
 Deliver the complete accepted outcome as small, usable end-to-end capabilities, not layers or
-batches of files. Use after a new-project skeleton or for an accepted feature that needs staged
-delivery of usable capabilities. Handle routine changes, instruction/configuration corrections,
-refactors, fixes, and questions directly under standing task guidance.
+batches of files. Use for staged new-project delivery, with or without a separate skeleton,
+or for an accepted feature that needs staged delivery of usable capabilities. Handle routine
+changes, instruction/configuration corrections, refactors, fixes, and questions directly under
+standing task guidance.
 
 ## Invocation
 
@@ -19,21 +20,29 @@ refactors, fixes, and questions directly under standing task guidance.
 
 Honor explicit restrictions and keep effects within the accepted scope.
 
-## Delivery
+## Recovery
+
+The delivery owner maintains one recovery record from staged entry through completion.
+Reuse the record established by `new-project`, or create it on direct entry to this skill.
+Use the Mekugi journal when available; otherwise use a temporary project artifact outside
+commits. Capture accepted items, decisions and non-goals, the original base and current head,
+slice order, checkpoint and slice commits, validation and review results, and next unfinished work.
+No fixed template or duplicate artifact is needed.
+
+## Delivery and closure
 
 Settle the accepted outcome and material decisions, then order slices by dependency. Implement,
 validate, and independently inspect each usable slice under standing task guidance. Create one
 Conventional Commit per slice and continue until every accepted item is delivered.
 
-Keep one current recovery record in the Mekugi journal when available; otherwise use a temporary
-project artifact outside commits. Capture the accepted items, decisions and non-goals, base and
-head revisions, slice order and commits, validation and review results, and next unfinished work.
-No fixed template or duplicate artifact is needed.
+Request `final-review` on the complete original-base-to-head range and current recovery
+record; a plaintext journal snapshot is enough when direct access is unavailable. The delivery
+owner records its findings and coverage, resolves in-scope blockers, and obtains inspection
+of affected corrections until the range is cleared. Fixups belong to the checkpoint or slice
+commit they correct, including the skeleton when present.
 
-Pass the recovery record and exact base-to-head range to `final-review`; a plaintext journal
-snapshot is enough when direct access is unavailable. Resolve in-scope blockers, fold fixups into
-their slice commits, and validate the final range. Stop only for a blocker that needs user input
-or cannot be resolved within scope.
-
-After review and validation pass, mark the journal record complete or delete the fallback
-artifact. Report the delivered outcome, commit range, checks, and remaining limitations.
+The delivery owner folds fixups into their commits using the existing autosquash authorization,
+verifies that rewriting preserves the reviewed tree, and validates the final range. Only then
+mark the journal record complete or delete the fallback artifact. Report the delivered outcome,
+commit range, checks, and remaining limitations. If blocked on user input or work outside scope,
+retain the recovery record with the concrete gap and next unfinished work.

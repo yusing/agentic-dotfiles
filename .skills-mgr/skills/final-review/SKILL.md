@@ -5,41 +5,24 @@ description: Independently inspect the complete committed outcome after deliver-
 
 # Review the complete delivered outcome
 
-Use only after `deliver-vertical-slice` completes every accepted item. This is final workflow
-inspection, not a bug-fix review, diagnosis, question, or routine per-slice inspection.
+Use after `deliver-vertical-slice` has committed every accepted item. Inspect the complete
+base-to-head range against the accepted outcome, including cross-slice integration.
 
 ## Independent inspection
 
-Require committed accepted items, a current recovery record (Mekugi journal or fallback artifact),
-and a stable, exact base-to-head range. A current plaintext journal snapshot supplied by the
-delivery owner is sufficient when direct journal access is unavailable. Apply the standing
-inspection and reuse policy to the final outcome, including cross-slice integration. Record completed coverage and remaining gaps in the recovery record; dispatch only
-needed inspections and keep the snapshot stable. When coverage is sufficient, close the range.
+Use a stable range and the delivery owner's current recovery record. A plaintext journal
+snapshot is sufficient when direct journal access is unavailable. Apply standing inspection
+and reuse guidance. This skill is read-only, including the recovery record and Git state.
 
-Trace the delivered surfaces, accepted items, contracts, non-goals, tests, and validation across
-the full range. Missing or unrecoverable required inspection is a blocker, not a passing review.
-When the main agent is the sole consumer, return results directly without a review-report artifact.
+A blocker needs evidence of a violated accepted requirement, contract, safety invariant,
+or required check. Missing required inspection is a gap, not a passing review.
 
-## Findings and corrections
+## Result
 
-A blocker needs current code evidence of a violated accepted item, contract, safety invariant, or
-required check. Record unsupported, external-owner, unreachable, duplicate, uncertain, or
-scope-broadening findings and their dispositions in the recovery record.
+Return findings or clearance for the exact reviewed range, with inspection coverage,
+validation evidence, and unresolved gaps. Return results directly when the delivery owner
+is the only consumer. Review affected corrections when the delivery owner supplies an updated
+range and check results; reuse coverage that still applies.
 
-Route confirmed blockers to `deliver-vertical-slice` in original slice order. Correct through the
-authoritative owner, validate, apply required pre-commit inspection, and create
-`git commit --fixup=<corresponding-slice-commit>`. The independent reviewer never edits the tree.
-
-Return corrected ranges and focused check results to the reviewers. Reuse them while scope and
-context remain useful; otherwise use a fresh reviewer. Continue through resolvable in-scope
-blockers and report those that require a new decision or authorization.
-
-## Close the range
-
-After review passes, use the preflight authorization to autosquash fixups into their slice commits.
-Verify that the reviewed tree is unchanged by autosquash and run the smallest affected checks.
-Only after the rewritten range is validated, have the delivery owner mark journal-backed recovery
-complete or delete the fallback artifact.
-
-Finish with the final base-to-head range, validation facts, skipped-finding dispositions, and no
-remaining blocker. Preserve the recovery record if required inspection or correction is blocked.
+`deliver-vertical-slice` owns corrections, recording results, history changes, final validation,
+recovery cleanup, and completion reporting.

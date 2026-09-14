@@ -3,43 +3,31 @@ name: new-project
 description: Start a new software project with accepted requirements and a delivery approach proportional to its capabilities.
 ---
 
-# Start an automated project
+# Start a new project
 
-This workflow is for a new software project, not an existing-project feature, bug fix, diagnosis,
-or question.
+Turn the accepted requirements into a usable new software project. This skill is for
+new projects, not changes to an existing one.
 
-## Preflight
+## Define the outcome
 
-Resolve material product decisions and fix the working directory, accepted outcome, interfaces,
-constraints, non-goals, toolchain, complete item set, and required checks. Choose direct delivery
-or staged capability delivery from the accepted outcome, not the number of files or layers.
+Settle the working directory, material product decisions, constraints, and observable
+acceptance examples. Record shared interfaces and architectural decisions where they
+affect delivery. A bounded project can use the confirmed request as its specification;
+a larger project needs a durable account of its accepted capabilities and non-goals,
+without a prescribed document layout.
 
-Before unattended delivery, settle material decisions and missing permissions; reuse granted
-authorization. Staged delivery also needs a base revision and authorized commits, fixups, and
-autosquash. Pending decisions block dependent work, not authorized preparation.
+## Choose delivery
 
-## Specification and contracts
+- **Direct:** implement and validate the complete usable outcome under standing task guidance.
+- **Staged:** use `deliver-vertical-slice` when intermediate end-to-end capabilities help
+  delivery, not simply because the project has many files or layers. Use `build-code-skeleton`
+  first only when proving shared wiring separately materially helps; otherwise establish
+  the wiring in the first usable slice.
 
-Establish observable acceptance examples, user-visible surfaces, constraints, and non-goals.
-Use the confirmed request for a bounded project; staged delivery needs indexed item files with
-stable IDs. Keep facts with one authoritative owner and capabilities testable and consistent.
+Before staged work begins, establish the base revision and authorization for its commits,
+fixups, and autosquash under `deliver-vertical-slice`'s invocation rules. Establish the single
+recovery record defined there at staged entry, and carry it through every checkpoint,
+including the skeleton when used. The delivery owner maintains it through completion.
 
-Record necessary shared ownership, dependency direction, interfaces, data lifecycle, trust, and
-failure propagation where they affect delivery. Existing code or contracts may already settle
-an architectural decision; leave those artifacts unchanged rather than duplicating them. Resolve
-material ambiguity before implementation without inventing conventional features or dependencies.
-
-A user-confirmed specification with no remaining uncertainty needs no additional specification
-inspection. Otherwise apply the standing native-inspection policy, resolving confirmed in-scope
-issues without delegating user-owned decisions.
-
-## Delivery and completion
-
-For direct delivery, implement the complete usable outcome and validate under standing task
-guidance. For staged delivery of usable capabilities, use `build-code-skeleton` once, then
-`deliver-vertical-slice` and `final-review`. Carry accepted items, contracts, non-goals, and
-authorizations through the selected approach.
-
-Continue until the complete outcome and required checks pass, including inspection and cleanup
-required by the selected approach. Stop only for a conflict, required mechanism, or
-unauthorized effect that cannot be resolved within the accepted project.
+Complete the chosen approach, including required validation and inspection, so the result
+is usable rather than merely scaffolded.
