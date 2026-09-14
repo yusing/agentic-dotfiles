@@ -7,6 +7,8 @@ on current client or model behavior, not merely because the instructions mention
 
 When changing model-specific prompting or assessing model behavior, read the applicable
 [prompting guidance](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices).
+[skills authoring](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra).
+
 Use official documentation available through the current tools. A documentation refresh does not
 request a model migration, runtime configuration change, or live behavior evaluation.
 
