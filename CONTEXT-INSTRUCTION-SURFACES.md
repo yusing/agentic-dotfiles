@@ -20,6 +20,7 @@ shared standing guidance.
 - `.codex/LARGE-TASK.md`
 - `.codex/IMPLEMENTATION.md`
 - `.codex/INSTRUCTION-AUTHORING.md`
+- `.codex/SKILL-AUTHORING.md`
 - `.codex/overridden_base_instructions.md`
 - `.skills-mgr/.skills-mgr.json` (managed skill registry)
 - `.skills-mgr/skills/handoff/SKILL.md`

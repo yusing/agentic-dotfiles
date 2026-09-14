@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7ad815b919574ebe89da030db9650201c9831dfc",
+  "sourceCommit": "203853ffa39041c2569f92d838958d69f328884e",
   "outputs": [
     {
       "path": ".bashrc",
@@ -70,7 +70,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "9c2245cc543dbfe9dd5dfb6b0385eaa5512cfe3db4940d3d04d8d6e7033a8a5c",
+      "sha256": "1d6d41dda61ce3e7bad695ec42f4f6b0030042787bd606298aba4bb3706cde63",
       "executable": false
     },
     {
@@ -214,7 +214,7 @@
     {
       "path": ".codex/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "0e04318fb92be07410af3d061b0926544811ec18123a8cec7651063c724fedfb",
+      "sha256": "6ee7e3f1bfe951139bf1800a81e9da6f7e225ee82cc1f8be04cb95ba1e7e3ffd",
       "executable": false
     },
     {
@@ -1059,7 +1059,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "aaa09ff86abfdf34c74d7d15e8f1298c22d7a3b7da8ec25709dac07f5ad536fe",
+      "sha256": "8e2ef9021a89eb08b1a5287443473e9a24e3f80a38189ce369cadeee8cae53eb",
       "executable": false
     },
     {

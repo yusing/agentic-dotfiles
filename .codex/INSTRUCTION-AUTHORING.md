@@ -2,20 +2,21 @@
 
 Check the effective instructions at their consumers, not just the edited file.
 
-Start with supplied content and its owners. Consult product documentation when a conclusion depends
-on current client or model behavior, not merely because the instructions mention Codex.
+## Prompt design
 
-When changing model-specific prompting or assessing model behavior, read the applicable
-[prompting guidance](https://developers.openai.com/api/docs/guides/latest-model.md).
-[skills authoring](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra.md).
-
-Use official documentation available through the current tools like `fetch_openai_doc`.
-Use the exact path without prior searching.
-A documentation refresh does not request a model migration, runtime configuration change, or live behavior evaluation.
-
-Describe outcomes and constraints rather than fixed itineraries. Keep only useful local facts,
-preferences, and boundaries. Use short, operation-specific skill descriptions and conditional
-document pointers; remove generic coaching and repetition.
+- State the intended result, scope, constraints, and completion criteria. Include running and
+  inspecting the result when that is part of completion; avoid an unnecessary first-pass review gate.
+- Define which decisions need user input and which routine choices the agent can resolve. Make
+  permission boundaries specific enough that caution does not halt already authorized work.
+- Audit all applicable instruction surfaces for conflicting or stale rules. Strong instruction
+  following can amplify an accidental restriction; trace unexpected pauses to the exact rule.
+- Specify the audience, tone, and useful level of detail instead of relying on default formatting.
+- Set delegation expectations for the workflow explicitly, within the existing authority and role
+  boundaries. Calibrate verification to the change; require meaningful checks rather than repeated
+  broad testing after the relevant checks pass.
+- Prefer outcomes over fixed itineraries. Retain useful local facts and constraints, and make
+  document pointers conditional on the operation. Reconsider scaffolding inherited from older models
+  while accounting for other models and clients that still consume the same instructions.
 
 ## General design
 
@@ -29,10 +30,6 @@ document pointers; remove generic coaching and repetition.
 - **Renames:** Align names, paths, references, registration, metadata, tests, documentation, and
   allowlists. Align skill directories and frontmatter. Regenerate from the owner; preserve
   historical names in historical records.
-
-## Skill authoring
-
-Read and edit the target file directly.
 
 ## Conditional client and role checks
 

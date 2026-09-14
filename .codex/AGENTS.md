@@ -43,6 +43,8 @@ These are task documents, not skills:
 
 - `$HOME/.codex/INSTRUCTION-AUTHORING.md` when authoring or auditing instructions.
   It owns instruction design and consumer checks.
+- `$HOME/.codex/SKILL-AUTHORING.md` additionally when authoring or auditing skills.
+  It owns skill descriptions, progressive disclosure, and workflow design.
 - `$HOME/.codex/LARGE-TASK.md` when independent evidence gathering would benefit from
   delegation. It owns main's standing delegation authorization.
 - `$HOME/.codex/IMPLEMENTATION.md` when changing code or operational behavior, or reviewing
