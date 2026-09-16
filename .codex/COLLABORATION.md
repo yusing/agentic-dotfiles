@@ -21,10 +21,6 @@ when the scope changes, its context is stale, or the work requires independent j
 Let the owner, whether main or a delegated agent, spawns the dependent agents (e.g. reviewer).
 If nested agents are unavailable, ask the parent to arrange inspection without transferring ownership.
 
-## Results
-
-Use concise, readable prose with evidence, source pointers, and unresolved gaps.
-
 Return results directly to the parent. Use artifacts only for an explicit deliverable or another
 consumer. For cross-agent relays, the parent assigns an exact path in a temporary directory outside
 the repository; the producer writes and updates the complete result there. Relay the original

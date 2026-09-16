@@ -47,8 +47,9 @@ These are task documents, not skills:
   It owns skill descriptions, progressive disclosure, and workflow design.
 - `$HOME/.codex/LARGE-TASK.md` when independent evidence gathering would benefit from
   delegation. It owns main's standing delegation authorization.
-- `$HOME/.codex/IMPLEMENTATION.md` when changing code or operational behavior, or reviewing
-  those changes. It owns validation, hygiene, and complexity. Mechanical-only edits and wording
+- `$HOME/.codex/IMPLEMENTATION.md` when changing code or operational behavior, reviewing
+  those changes, or delivering subagent results. It owns validation, hygiene, complexity, and
+  result delivery. Mechanical-only edits and wording
   reviews use the affected content and applicable repository rules.
 - `$HOME/.codex/GITHUB.md` for GitHub pull request descriptions, issue bodies, or comments, read.
 - `HANDOFF.md` when mentioned, then delete it.
@@ -99,7 +100,7 @@ windows; line limits are insufficient. Reuse captured scans while state is uncha
 Select roles using the native catalog descriptions within authorized delegation boundaries.
 Assigned agents keep their role and scope; main owns integration and completion.
 Before dispatching, or when executing a subagent assignment, read `$HOME/.codex/COLLABORATION.md`
-for coordination, result delivery, and review follow-through. It does not authorize delegation.
+for coordination and review follow-through. It does not authorize delegation.
 
 Only main edits instructions, skills, workflow guidance, task documents, and instruction-delivery
 hooks. Delegates propose changes to these and own their findings and result artifacts.

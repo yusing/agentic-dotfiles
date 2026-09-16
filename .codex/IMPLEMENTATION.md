@@ -38,3 +38,7 @@ Report unrelated pre-existing obsolete paths for the user to decide.
 
 Edit authoritative sources, not generated, vendored, or minified outputs. Regenerate affected
 consumers through their owning workflow.
+
+## Results
+
+Use concise, readable prose with evidence, source pointers, and unresolved gaps.
