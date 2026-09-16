@@ -40,9 +40,7 @@
         ],
         "matcher": "^(startup|compact|clear)$"
       },
-      {
-        "matcher": "^(startup|compact|clear)$"
-      }
+      {}
     ],
     "SubagentStart": [
       {
@@ -51,17 +49,6 @@
             "command": "$HOME/.codex/hooks/bin/session_start_context skills-mgr list",
             "timeout": 5,
             "type": "command"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.codex/hooks/bin/go_guidelines",
-            "timeout": 10
           }
         ]
       }
