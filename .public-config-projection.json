@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8d33849054a205ad3bb23e7c8feac8e209a0f96e",
+  "sourceCommit": "347890e4c838f38fba339e8e71750d91fbe02dbe",
   "outputs": [
     {
       "path": ".bashrc",
@@ -184,7 +184,7 @@
     {
       "path": ".codex/hooks/lib/shell_command.ts",
       "kind": "file",
-      "sha256": "2381565136ce1447dc41d4921427e342403d3223bc29b017d5d086ce5a13e510",
+      "sha256": "39c09d50d073b0a32481e5053f3b52c0a4d3ffcc95ba629c6d1e9da94e896578",
       "executable": false
     },
     {
@@ -202,7 +202,7 @@
     {
       "path": ".codex/hooks/subagent_exec_guard.ts",
       "kind": "file",
-      "sha256": "8a07412348c9eb3962bc3b7cb8d72aaf94a9353480baad22a7c16f714c50c187",
+      "sha256": "de2bc0ecc675e7005ca0a22a11744a44baa18297c2dfc5a0a08c62383d017f0d",
       "executable": false
     },
     {

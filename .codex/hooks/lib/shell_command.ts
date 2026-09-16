@@ -1,4 +1,4 @@
-export const VERSION = "1.0.3";
+export const VERSION = "1.0.4";
 
 export const SHELLS = new Set(["bash", "dash", "sh", "zsh"]);
 const COMMAND_PREFIXES = new Set(["!", "do", "elif", "exec", "if", "then"]);
@@ -65,7 +65,7 @@ export function shellTokens(
         if (WHITESPACE.has(character) || punctuation.has(character)) {
           break;
         }
-        if (character === "'" || character === '"') {
+        if (character === "'" || character === '"' || character === "$" && command[index + 1] === "'") {
           const [quoted, next] = readQuoted(command, index);
           token += quoted;
           index = next;
@@ -93,17 +93,51 @@ export function shellTokens(
 }
 
 function readQuoted(command: string, start: number): [string, number] {
-  const quote = command[start];
+  const ansi = command[start] === "$" && command[start + 1] === "'";
+  const quote = ansi ? "'" : command[start];
   if (quote !== "'" && quote !== '"') {
     throw new Error("not a quote");
   }
-  let index = start + 1;
+  let index = start + (ansi ? 2 : 1);
   let value = "";
   if (quote === "'") {
     while (index < command.length) {
       const character = command[index] ?? "";
       if (character === "'") {
-        return [value, index + 1];
+        return [ansi ? value.split("\0", 1)[0] : value, index + 1];
+      }
+      if (ansi && character === "\\") {
+        const escape = command[index + 1] ?? "";
+        if (!escape) throw new Error("unterminated escape");
+        const escaped: Record<string, string> = {
+          a: "\x07", b: "\b", e: "\x1b", E: "\x1b", f: "\f", n: "\n",
+          r: "\r", t: "\t", v: "\v", "\\": "\\", "'": "'", '"': '"', "?": "?",
+        };
+        const numeric = command.slice(index + 1).match(/^(?:[0-7]{1,3}|x[0-9a-fA-F]{1,2}|u[0-9a-fA-F]{1,4}|U[0-9a-fA-F]{1,8})/);
+        if (numeric) {
+          const digits = numeric[0];
+          const octal = /^[0-7]/.test(digits);
+          let codePoint = parseInt(octal ? digits : digits.slice(1), octal ? 8 : 16);
+          if (octal) codePoint &= 255;
+          // Bash can emit non-Unicode bytes. Preserve their escape spelling
+          // rather than throwing and losing later executable segments.
+          if (codePoint > 0x10ffff) value += "\\" + digits;
+          else if (codePoint <= 0xffff) value += String.fromCharCode(codePoint);
+          else value += String.fromCharCode(
+            0xd800 + ((codePoint - 0x10000) >> 10),
+            0xdc00 + ((codePoint - 0x10000) & 1023),
+          );
+
+          index += digits.length + 1;
+        } else if (escape === "c" && index + 2 < command.length) {
+          const control = command[index + 2];
+          value += String.fromCharCode(control === "?" ? 127 : control.toUpperCase().charCodeAt(0) & 31);
+          index += 3;
+        } else {
+          value += escaped[escape] ?? "\\" + escape;
+          index += 2;
+        }
+        continue;
       }
       value += character;
       index += 1;
@@ -189,7 +223,11 @@ function parenthesizedSubstitution(
   let index = start;
   while (index < command.length) {
     const character = command[index] ?? "";
-    if (quote === "'") {
+    if (quote === "'" || quote === "$'") {
+      if (quote === "$'" && character === "\\") {
+        index += 2;
+        continue;
+      }
       if (character === "'") {
         quote = undefined;
       }
@@ -218,6 +256,11 @@ function parenthesizedSubstitution(
       continue;
     }
     if (character === "\\") {
+      index += 2;
+      continue;
+    }
+    if (character === "$" && command[index + 1] === "'") {
+      quote = "$'";
       index += 2;
       continue;
     }
@@ -259,7 +302,11 @@ export function commandSubstitutions(command: string): string[] {
       index = afterComment;
       continue;
     }
-    if (quote === "'") {
+    if (quote === "'" || quote === "$'") {
+      if (quote === "$'" && character === "\\") {
+        index += 2;
+        continue;
+      }
       if (character === "'") {
         quote = undefined;
       }
@@ -268,6 +315,12 @@ export function commandSubstitutions(command: string): string[] {
     }
     if (character === "\\") {
       if (index + 1 < command.length && command[index + 1] !== "\n") tokenBoundary = false;
+      index += 2;
+      continue;
+    }
+    if (quote === undefined && character === "$" && command[index + 1] === "'") {
+      quote = "$'";
+      tokenBoundary = false;
       index += 2;
       continue;
     }
