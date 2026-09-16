@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "10998a776a098c139f7c0f3ea638e68a1ec06713",
+  "sourceCommit": "76feba7873401283c5118ba6e5596dc3df140e6f",
   "outputs": [
     {
       "path": ".bashrc",
@@ -214,7 +214,7 @@
     {
       "path": ".codex/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "6ee7e3f1bfe951139bf1800a81e9da6f7e225ee82cc1f8be04cb95ba1e7e3ffd",
+      "sha256": "b90f97efb168937967a6a6d4f688ea34c09604a9078c66767bae38be228c2a77",
       "executable": false
     },
     {
