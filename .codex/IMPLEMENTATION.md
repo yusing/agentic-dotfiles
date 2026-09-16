@@ -12,10 +12,15 @@ repeat passing checks only for changed behavior, failures, or a concrete remaini
 Reversible wording and mechanical edits need no new tests. Do not add production seams solely
 for tests; keep test setup in test sources.
 
-Run new timing/concurrency tests separately first, with realistic timeouts plus headroom. Use
-controlled state or a test clock for long lifetimes. Diagnose timeouts rather
-than weaken assertions. Before rerunning superseded validation, resolve the old job's status
-within process-control authorization: file edits do not update a running test binary.
+Validation must cover the known effects of a change and establish the intended observable
+outcome, not merely agree with the implementation. Evidence must represent the actual workload,
+including cache behavior when it affects performance. Each validation pass should add evidence
+needed to resolve a question or establish completion, rather than repeat already-settled checks.
+
+Timing and concurrency results must be attributable, with realistic timeouts and headroom.
+Long-lifetime tests should be deterministic without long waits. Diagnose timeouts rather than
+weaken assertions. Before rerunning superseded validation, resolve the old job's status within
+process-control authorization: file edits do not update a running test binary.
 
 ## Runtime behavior
 
