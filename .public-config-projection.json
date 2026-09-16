@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "2cebd6d82ed61c4e54d5fe92324c03d2d1b0ca94",
+  "sourceCommit": "8d33849054a205ad3bb23e7c8feac8e209a0f96e",
   "outputs": [
     {
       "path": ".bashrc",
@@ -130,7 +130,7 @@
     {
       "path": ".codex/GITHUB.md",
       "kind": "file",
-      "sha256": "686f54262c7db6e0646461d218776f3243031e38f428e7a6c8628f734ac3b5a5",
+      "sha256": "2b228b9ce52873774e80e6ac390a8c631adb66445e5fe0afefa46a04b64775fc",
       "executable": false
     },
     {
@@ -214,7 +214,7 @@
     {
       "path": ".codex/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "b90f97efb168937967a6a6d4f688ea34c09604a9078c66767bae38be228c2a77",
+      "sha256": "d8a013e2a3c39d03c98c2e8fc401fec5d44906177a1fede4dd5825b2ee90e891",
       "executable": false
     },
     {

@@ -4,6 +4,6 @@ Read when preparing pull request descriptions, issue bodies, or comments. Prepar
 not authorize publishing it or changing Git state; preserve the requested operation and approval
 boundary.
 
-Prefer structured tool arguments for multiline text. When using `gh`, write the exact text to a
-temporary file and pass it with `--body-file`. Preserve actual newlines and intentional literal
-escapes; treat shell command text as code rather than interpolating the body into it.
+Preserve the exact body, including actual newlines and intentional literal escapes, without
+executing any of it as shell code. Structured tool arguments or a body file passed with
+`gh`'s `--body-file` option can carry multiline text.

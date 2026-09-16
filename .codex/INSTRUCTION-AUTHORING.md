@@ -19,8 +19,9 @@ Check the effective instructions at their consumers, not just the edited file.
 - Specify a procedure only where the agent needs unfamiliar context, such as a nonstandard tool,
   a third-party library's particular contract, or a local integration. Keep only the necessary
   mechanics and explain when they apply. Familiar tool use does not need a fixed recipe.
-- Give conditional obligations a clear trigger and intended result. State tool-use conditions
-  directly; a tool's general benefits alone do not establish when to use it.
+- Describe the desired state directly rather than turning it into a maintenance procedure.
+  For unfamiliar tools, explain their purpose and relevant constraints so the agent can judge
+  when they help. A usage condition without that context can encourage overuse.
 - Remove explanations of common knowledge and prohibitions already covered by a positive rule.
   Keep a prohibition when it adds a distinct boundary.
 - Retain useful local facts and constraints, and make document pointers conditional on the
@@ -33,11 +34,10 @@ Check the effective instructions at their consumers, not just the edited file.
   while the current runner may differ.
 - Prefer "Perform symbol lookup" to prescribing `gopls references`; ordinary tool selection
   belongs to the executing agent.
-- Prefer "Use rtk for commands expected to produce large output" to deriving a blanket obligation
-  from its benefits. Preserve exceptions where compression would discard needed evidence.
-- For documentation maintenance, identify the change that requires an update and the reader
-  outcome: "When setup or usage changes, keep the README accurate for readers." A description
-  of what a README contains alone does not establish that trigger.
+- Explain that rtk reduces noisy command output and when raw output matters, rather than giving
+  a bare "Use rtk when ..." trigger. The purpose helps the agent judge whether using it adds value.
+- Define a README by the understanding, choices, and actions it supports. An "Update README
+  when ..." rule replaces that stable purpose with a maintenance procedure.
 - Do not append a separate ban on changelogs or task journals when the existing rule already
   excludes them; add only a missing distinction.
 
