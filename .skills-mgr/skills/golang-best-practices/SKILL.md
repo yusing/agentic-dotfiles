@@ -12,10 +12,9 @@ for relevant returned IDs with
 ## Local conventions
 
 - Put emitted build artifacts in the project's output directory, defaulting to `bin/`.
-  Use `go build -o` when producing an executable.
-- Prefer `-ldflags '-s -w'` for size-focused production builds when symbols are not needed.
-- Use `gopls` for symbol references when the location is known:
-  `gopls references path/to/file.go:line:column`.
+  Specify `-o` when producing an executable.
+- Prefer symbol-stripped build for size-focused production builds when symbols are not needed.
+- Use symbol lookup when the location is known.
 - When porting logic, retain a `Source: rel/path:<start>:<end>@[<revision>] <symbol>` comment
   near the ported code.
 
