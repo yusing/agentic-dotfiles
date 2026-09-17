@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "67268f12282df8e351677bc4a83f44b92d010664",
+  "sourceCommit": "7a8c274efebad92341087b5700aae36aa5154c22",
   "outputs": [
     {
       "path": ".bashrc",
@@ -64,7 +64,7 @@
     {
       "path": ".claude/settings.json",
       "kind": "file",
-      "sha256": "412537b6b35e300dbf3c70a845aef14a37181a2db6853e074ea96fabf76be2d6",
+      "sha256": "64c500ccce0996e6ae75fd686033d10483ba9206c5fce2db06fce26244f351fa",
       "executable": false
     },
     {
@@ -88,7 +88,7 @@
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "2c1b52b0766a24a37288433de0992da2ee171c0fa7d773a6e82271f11052a052",
+      "sha256": "8133a3fc81ad555701cce02ff5a0410ebb6f05b6c530fc95641ef6befe5b548f",
       "executable": false
     },
     {
@@ -412,7 +412,7 @@
     {
       "path": ".gitconfig",
       "kind": "file",
-      "sha256": "d0652b7b1197099ff36a5a4e929b474e88b8144a57aebf4eb3e9bdfe360d93c4",
+      "sha256": "783cc860624dca4cee94bdc36962ca347214f88b37db1b203b96c56eebf8c378",
       "executable": false
     },
     {

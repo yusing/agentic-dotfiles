@@ -294,9 +294,6 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "*"
-      },
-      {
         "matcher": "*",
         "hooks": [
           {
@@ -310,6 +307,9 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$"
       },
       {
         "matcher": "^(startup|resume|clear|compact|fork)$"

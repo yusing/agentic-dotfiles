@@ -61,3 +61,7 @@
 		bold yellow => syntax "#6b635b"
 	# Should match the name of the bat theme
 	syntax-theme = Catppuccin Mocha
+
+# Machine-specific overrides stay untracked.
+[include]
+	path = ~/.gitconfig.local
