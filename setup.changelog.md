@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.8
+
+Pin scriptc to 0.0.36, the last release validated with the maintained hooks. Version 0.1.2 ships its Linux x64 LLVM helper without executable permission and, after that is corrected, rejects existing shell-parser code with SC1090 errors. Keep the pin during `--upgrade` until a newer release passes `compile-agent-tools`.
+
 ## 2.2.7
 
 Reuse validated setup configuration queries within each run instead of starting Python for every lookup. Read installed Go toolchains once during ownership cleanup, skip replacement probes for absent legacy files, and avoid duplicate mise command probes and unnecessary reshimming. Locked tool reconciliation, repair, and final verification remain enabled.

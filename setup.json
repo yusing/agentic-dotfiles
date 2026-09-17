@@ -48,7 +48,7 @@
       "npm:ctx7": "latest",
       "npm:markdownlint-cli": "latest",
       "npm:oxlint-tsgolint": "latest",
-      "npm:scriptc": "latest",
+      "npm:scriptc": "0.0.36",
       "npm:vite": "latest",
       "aqua:astral-sh/uv": "latest",
       "aqua:astral-sh/ruff": "latest",
