@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "5fe1507c2bbd657517b7c07acb4061bd15ed3162",
+  "sourceCommit": "e5f8032e42c4262102d0dca66510f41c681f4ae8",
   "outputs": [
     {
       "path": ".bashrc",
@@ -1089,7 +1089,7 @@
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "593271df039f1140dfc844d33c6d8c6944bae3f8da88d251ec28fd953b6dce0d",
+      "sha256": "b053e1575b03d6f538686eece3058a9d28dc5b999ae56ad31b33f0de7a3c496a",
       "executable": false
     },
     {
