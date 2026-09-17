@@ -88,10 +88,12 @@ For dependency additions, honor explicit user or project version requirements fi
 verify the latest stable release compatible with the project and runtime using the authoritative
 registry or package-manager metadata, not memory.
 
-`rtk` helps reduce command output, so use it for shell commands expected to produce large
-stdout/stderr, including user-supplied commands. Apply it to noisy producers, leaving quiet filters,
-control operators, and redirections outside. Use raw execution when complete unmodified output is
-needed or output goes to a file.
+<!-- mekugi:omit -->
+`rtk` helps reduce noise from command output. Apply it to noisy producers, including user-supplied commands,
+leaving quiet filters, control operators, and redirections outside.
+Use raw execution when complete unmodified output is needed or output goes to a file.
+<!-- /mekugi:omit -->
+
 For binary strings, minified files, and generated schemas, extract exact fields or bounded byte
 windows; line limits are insufficient. Reuse captured scans while state is unchanged.
 
