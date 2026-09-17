@@ -310,6 +310,9 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$"
       }
     ],
     "SubagentStart": [
@@ -332,17 +335,6 @@
             "type": "command",
             "command": "$HOME/.codex/hooks/bin/skills_mgr_inventory",
             "timeout": 5
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.codex/hooks/bin/go_guidelines",
-            "timeout": 10
           }
         ]
       }

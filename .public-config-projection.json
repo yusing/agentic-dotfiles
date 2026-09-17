@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ae61b1fcd64fa8bcbe8764c7d92feb1d5c195a59",
+  "sourceCommit": "5fe1507c2bbd657517b7c07acb4061bd15ed3162",
   "outputs": [
     {
       "path": ".bashrc",
@@ -64,7 +64,7 @@
     {
       "path": ".claude/settings.json",
       "kind": "file",
-      "sha256": "f31717b77ab8f992989a09036f005198b7b7e77619372591b415e545c1510590",
+      "sha256": "412537b6b35e300dbf3c70a845aef14a37181a2db6853e074ea96fabf76be2d6",
       "executable": false
     },
     {
@@ -448,7 +448,7 @@
     {
       "path": ".grok/hooks/codex-port.json",
       "kind": "file",
-      "sha256": "140423e08c82b5dbda4aa9e169f200b0bc652aee4225e14bfbafb8b254da652f",
+      "sha256": "f1e0efadfdea45f688958a97ec408af21831c2a23b13e89e901ddc170dd92d40",
       "executable": false
     },
     {

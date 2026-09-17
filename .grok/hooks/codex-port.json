@@ -23,17 +23,6 @@
           }
         ]
       }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook go_guidelines",
-            "timeout": 10
-          }
-        ]
-      }
     ]
   }
 }
