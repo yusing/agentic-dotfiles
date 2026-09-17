@@ -13,6 +13,7 @@
     "ca-certificates": {"packages": {"apt": ["ca-certificates"], "pacman": ["ca-certificates"], "brew": []}, "commands": []},
     "fish": {"packages": {"apt": ["fish"], "pacman": ["fish"], "brew": ["fish"]}, "commands": ["fish"]},
     "make": {"packages": {"apt": ["make"], "pacman": ["make"], "brew": ["make"]}, "commands": ["make"]},
+    "mosh": {"packages": {"apt": ["mosh"], "pacman": ["mosh"], "brew": ["mosh"]}, "commands": ["mosh","mosh-server"]},
     "gpg": {"packages": {"apt": ["gnupg"], "pacman": ["gnupg"], "brew": ["gnupg"]}, "commands": ["gpg"]},
     "ncurses": {"packages": {"apt": ["ncurses-bin"], "pacman": ["ncurses"], "brew": ["ncurses"]}, "commands": ["tput"]},
     "rsync": {"packages": {"apt": ["rsync"], "pacman": ["rsync"], "brew": ["rsync"]}, "commands": ["rsync"]},
