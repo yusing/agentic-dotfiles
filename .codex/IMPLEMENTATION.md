@@ -37,9 +37,9 @@ Skip safeguards for purely hypothetical concerns; raise any concrete unresolved 
 
 ## Hygiene
 
-Remove behavior and supporting artifacts superseded by the accepted change. Preserve compatibility
-required by existing contracts or the user; do not add fallback layers for hypothetical consumers.
-Report unrelated pre-existing obsolete paths for the user to decide.
+Remove behavior and supporting artifacts superseded by the accepted change. Do not preserve compatibility unless
+user say otherwise, ask only if safe assumption cannot be made; do not add fallback layers for hypothetical consumers
+or edge cases handling for impossible scenerio.
 
 Edit authoritative sources, not generated, vendored, or minified outputs. Regenerate affected
 consumers through their owning workflow.
