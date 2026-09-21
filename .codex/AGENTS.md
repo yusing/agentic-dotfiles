@@ -16,7 +16,8 @@ and required data formats.
 
 Treat requests for changes as authorization to implement, update affected documentation, and
 validate the usable outcome. Continue through change-caused fixes until that outcome works and
-required checks pass. Resolve routine choices from context without another approval.
+required checks pass. Prioritize a complete, correct solution over making the smallest
+change. Resolve routine choices from context without another approval.
 Explanation, review, diagnosis, and planning requests remain read-only unless changes are also
 requested. Questions during active work do not cancel existing task and authorization.
 
@@ -39,18 +40,21 @@ resolve a question that could change the next action.
 Do not reread previously read task documents, skills, or other files merely because a new turn
 has begun.
 
-These are task documents, not skills:
+These are task documents, not skills. Read those match your role and next operation directly:
 
 - `$HOME/.codex/INSTRUCTION-AUTHORING.md` when authoring or auditing instructions.
   It owns instruction design and consumer checks.
 - `$HOME/.codex/SKILL-AUTHORING.md` additionally when authoring or auditing skills.
   It owns skill descriptions, progressive disclosure, and workflow design.
-- `$HOME/.codex/LARGE-TASK.md` when independent evidence gathering would benefit from
-  delegation. It owns main's standing delegation authorization.
-- `$HOME/.codex/IMPLEMENTATION.md` when changing code or operational behavior, reviewing
-  those changes, or delivering subagent results. It owns validation, hygiene, complexity, and
-  result delivery. Mechanical-only edits and wording
-  reviews use the affected content and applicable repository rules.
+- `$HOME/.codex/MAIN.md` for main only, when planning a task, deciding how to divide substantial
+  exploration or repeatable support work before doing it locally, dispatching, coordinating, or
+  arranging a review. It owns main's cost-aware delegation rationale, authorization, and timing.
+- `$HOME/.codex/SUBAGENT.md` for a delegate only, when working inside an assignment or returning
+  results. Delegates execute their settled assignment and do not need dispatch guidance.
+- `$HOME/.codex/IMPLEMENTATION.md` when implementing code or operational changes, or inspecting
+  those changes. Load the relevant implementation, validation, or inspection guidance for that
+  operation, not merely to return a subagent result. Factual lookup does not trigger it.
+  Mechanical-only edits and wording reviews use the affected content and applicable repository rules.
 - `$HOME/.codex/GITHUB.md` for GitHub pull request descriptions, issue bodies, or comments, read.
 - `HANDOFF.md` when mentioned, then delete it.
 
@@ -62,6 +66,8 @@ Do not repeat instructions before first user message, including this file, in:
 - Agent spawn prompt
 
 ## Documentation maintenance
+
+You are responsible to maintain these after completing and verified assigned work.
 
 README holds what users need to understand, choose, or do.
 Spec holds intent, scope, non-goals, journeys, and why.
@@ -101,8 +107,7 @@ windows; line limits are insufficient. Reuse captured scans while state is uncha
 
 Select roles using the native catalog descriptions within authorized delegation boundaries.
 Assigned agents keep their role and scope; main owns integration and completion.
-Before dispatching, or when executing a subagent assignment, read `$HOME/.codex/COLLABORATION.md`
-for coordination and review follow-through. It does not authorize delegation.
+A delegate does not need dispatch guidance merely because it was spawned.
 
 Only main edits instructions, skills, workflow guidance, task documents, and instruction-delivery
 hooks. Delegates propose changes to these and own their findings and result artifacts.

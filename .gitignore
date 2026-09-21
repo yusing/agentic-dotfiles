@@ -9,10 +9,10 @@ __pycache__
 !/.claude/agents/council-investigator.md
 !/.claude/agents/council-member.md
 !/.claude/agents/explorer.md
-!/.claude/agents/implementer.md
 !/.claude/agents/review-correctness.md
 !/.claude/agents/review-simplify.md
 !/.claude/agents/web-reviewer.md
+!/.claude/agents/worker.md
 !/.claude/CLAUDE.md
 !/.claude/settings.json
 !/.codex/
@@ -21,11 +21,10 @@ __pycache__
 !/.codex/agents/council-investigator.toml
 !/.codex/agents/council-member.toml
 !/.codex/agents/explorer.toml
-!/.codex/agents/implementer.toml
 !/.codex/agents/review-correctness.toml
 !/.codex/agents/review-simplify.toml
 !/.codex/agents/web-reviewer.toml
-!/.codex/COLLABORATION.md
+!/.codex/agents/worker.toml
 !/.codex/config.toml
 !/.codex/GITHUB.md
 !/.codex/hooks.json
@@ -44,7 +43,7 @@ __pycache__
 !/.codex/hooks/subagent_exec_guard.ts
 !/.codex/IMPLEMENTATION.md
 !/.codex/INSTRUCTION-AUTHORING.md
-!/.codex/LARGE-TASK.md
+!/.codex/MAIN.md
 !/.codex/overridden_base_instructions.md
 !/.codex/skills/
 !/.codex/skills/dump-last-response/
@@ -58,6 +57,7 @@ __pycache__
 !/.codex/skills/session-usage/scripts/session_usage_test.py
 !/.codex/skills/session-usage/scripts/session_usage.py
 !/.codex/skills/session-usage/SKILL.md
+!/.codex/SUBAGENT.md
 !/.config/
 !/.config/atuin/
 !/.config/atuin/config.toml

@@ -29,8 +29,8 @@ registering a deletion guard would add a new hook rather than port an existing o
 `.codex/hooks/bin/subagent_exec_guard` is registered and ported, but it acts only on the
 running agent's own `agent_type`, which Codex populates from the spawned thread's role.
 Grok's `subagentType` names the agent a spawn tool call is about to create, not the caller,
-so the adapter must not alias it: doing so would deny a root turn that merely spawns an
-implementer. Under the port the guard therefore fails open. This gap is accepted, because
+so the adapter must not alias it: doing so would deny a root turn that merely spawns a
+worker. Under the port the guard therefore fails open. This gap is accepted, because
 closing it needs a caller-identity field from the client, not an adapter change.
 
 Native Grok-only hooks (not Codex ports) also live under `.grok/hooks/`.

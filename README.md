@@ -12,7 +12,7 @@ preferences.
 ## Highlights
 
 - Shared working principles across Codex, Claude Code, and Grok
-- Specialized explorer, implementer, reviewer, and council agent roles
+- Specialized explorer, support worker, reviewer, and council agent roles
 - Reusable skills for planning, implementation, review, documentation, and handoff
 - Hooks that keep agent behavior consistent across a coding session
 - Fish as the primary shell, with shared daily behavior mirrored into Zsh

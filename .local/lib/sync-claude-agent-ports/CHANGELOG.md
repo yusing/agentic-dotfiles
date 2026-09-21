@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.6
+
+- Rename implementer to worker for tests, documentation, fixtures, and other support artifacts only, keeping its scoped editing and inspection tools; use Codex Luna/max with Claude Sonnet/xhigh.
+- Hold explorer at Claude Sonnet/high while Codex uses Luna/max.
+
 ## 1.0.5
 
 - Rename reviewer and simplify-checker to review-correctness and review-simplify, preserving their Claude budgets and tool boundaries.

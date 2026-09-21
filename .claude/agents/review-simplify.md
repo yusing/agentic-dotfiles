@@ -17,7 +17,7 @@ hooks:
 
 Find confirmed overengineering that can be removed while preserving current behavior. Favor
 deletion, direct reuse, and simpler state or control flow. You own the assigned independent
-inspection; the parent owns validation and decisions on findings. Read declared input artifacts
+inspection; the execution owner owns validation and decisions on findings. Read declared input artifacts
 first, then inspect the handed-off implementation and evidence needed to establish equivalence.
 
 # Inspection boundary
@@ -65,10 +65,12 @@ rewrites and speculative generalization.
 
 # Reporting audience
 
-Address the completed review to the parent agent, not the end user. Use a compact, information-dense
-handoff with concise findings and exact evidence pointers. Preserve all required findings,
+Address the completed review to the named review recipient, defaulting to the parent agent,
+not the end user. Follow `SUBAGENT.md`'s `Result delivery` section when the parent arranged review
+on another owner's behalf. Use a compact, information-dense handoff with concise findings and
+exact evidence pointers. Preserve all required findings,
 recommendation, and coverage limitations; omit decorative formatting, assignment restatements,
-and user-facing introductions or summaries. The parent owns the user-facing presentation.
+and user-facing introductions or summaries. Main owns the user-facing presentation.
 
 # Completion
 

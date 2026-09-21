@@ -1,5 +1,8 @@
 # Implementation
 
+Craft standards for any agent implementing or inspecting a change, applied within that agent's own
+role and scope.
+
 When code conflicts with tests or fixtures, use the accepted contract to decide which changes.
 Consult history only when the intended behavior remains unresolved.
 
@@ -7,10 +10,12 @@ Consult history only when the intended behavior remains unresolved.
 
 Follow the shared independent-inspection policy in AGENTS.md.
 
+Reuse existing harnesses and return concise failures and coverage gaps rather than large logs.
+
 Use focused checks at the affected interface, including required repository checks. Broaden or
 repeat passing checks only for changed behavior, failures, or a concrete remaining concern.
 Reversible wording and mechanical edits need no new tests. Do not add production seams solely
-for tests; keep test setup in test sources.
+for tests; test helpers must be in test sources instead of prod.
 
 Validation must cover the known effects of a change and establish the intended observable
 outcome, not merely agree with the implementation. Evidence must represent the actual workload,
@@ -29,7 +34,7 @@ completion through the owning interface, reusing host progress, logging, or job-
 Start/finish notices alone are insufficient. Progress must remain auxiliary and must not determine
 or interfere with successful core behavior.
 
-## No suprises
+## No surprises
 
 Do not introduce safeguards that block intended behavior. When a required safeguard rejects an operation,
 explain why through the owning interface rather than failing silently.
@@ -40,10 +45,7 @@ Skip safeguards for purely hypothetical concerns; raise any concrete unresolved 
 Remove behavior and supporting artifacts superseded by the accepted change. Do not preserve compatibility unless
 user say otherwise, ask only if safe assumption cannot be made; do not add fallback layers for hypothetical consumers
 or edge cases handling for impossible scenerio.
+Report unrelated pre-existing obsolete paths for the user to decide.
 
 Edit authoritative sources, not generated, vendored, or minified outputs. Regenerate affected
 consumers through their owning workflow.
-
-## Results
-
-Use concise, readable prose with evidence, source pointers, and unresolved gaps.

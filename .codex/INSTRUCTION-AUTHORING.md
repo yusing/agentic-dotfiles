@@ -65,11 +65,13 @@ Check the effective instructions at their consumers, not just the edited file.
 
 ## Validation
 
-Check meaning, triggers, and owner pointers for wording changes. Across the affected instruction
-layers, distinguish stable outcomes and constraints from replaceable methods. For each prescribed
-step, identify the unfamiliar context that requires it; otherwise express the intended result.
-Check matching and nonmatching situations for conditional rules, and remove duplicate obligations
-or prohibitions that add no meaning.
+Audit instruction quality, not merely agreement between files and generated copies. Treat the
+change author's rationale as a claim to examine, not an approval checklist. Check meaning,
+triggers, and owner pointers. Across the affected layers, distinguish stable outcomes and
+constraints from replaceable methods. For each prescribed step, identify the unfamiliar context
+that requires it; otherwise express the intended result. Check matching and nonmatching
+situations for conditional rules, and remove duplicate obligations or prohibitions that add
+no meaning. Report consistency checks separately from conclusions about instruction quality.
 
 For workflow changes, trace affected main and delegated paths, including writers or read-only agents
 only when their contracts change.

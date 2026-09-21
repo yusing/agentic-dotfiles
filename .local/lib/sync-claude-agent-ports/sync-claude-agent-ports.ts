@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.5";
+export const VERSION = "1.0.6";
 const MODEL_MAP: Record<string, string> = {
   "gpt-5.6-luna": "sonnet",
   "gpt-5.6-sol": "opus",
@@ -12,8 +12,8 @@ const EDIT_TOOLS = "Read, Grep, Glob, Bash, Edit, Write, NotebookEdit, TodoWrite
 const METADATA: Record<string, { color: string; tools: string; model?: string; effort?: string }> = {
   "council-investigator": { model: "inherit", color: "yellow", tools: "Read, Grep, Glob, Bash, Write, TodoWrite" },
   "council-member": { model: "inherit", color: "orange", tools: "Read, Write, TodoWrite" },
-  explorer: { color: "pink", tools: READ_TOOLS },
-  implementer: { model: "opus", effort: "medium", color: "blue", tools: `${EDIT_TOOLS}, Agent` },
+  explorer: { effort: "high", color: "pink", tools: READ_TOOLS },
+  worker: { model: "sonnet", effort: "xhigh", color: "blue", tools: `${EDIT_TOOLS}, Agent` },
   "review-correctness": { color: "red", tools: READ_TOOLS },
   "review-simplify": { model: "sonnet", effort: "high", color: "green", tools: READ_TOOLS },
   "web-reviewer": { color: "purple", tools: READ_TOOLS },
