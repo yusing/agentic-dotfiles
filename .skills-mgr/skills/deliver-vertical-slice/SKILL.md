@@ -20,29 +20,47 @@ standing task guidance.
 
 Honor explicit restrictions and keep effects within the accepted scope.
 
-## Recovery
+## Prepare and recover
 
-The delivery owner maintains one recovery record from staged entry through completion.
-Reuse the record established by `new-project`, or create it on direct entry to this skill.
-Use the Mekugi journal when available; otherwise use a temporary project artifact outside
-commits. Capture accepted items, decisions and non-goals, the original base and current head,
-slice order, checkpoint and slice commits, validation and review results, and next unfinished work.
-No fixed template or duplicate artifact is needed.
+Before the first slice, settle the complete accepted item set, non-goals, material decisions,
+original base revision, and required checks. Order the smallest independently usable slices by
+dependency. Do not divide work by technical layer or stop after the first working path.
 
-## Delivery and closure
+The delivery owner maintains one recovery record from staged entry through completion. Reuse the
+record established by `new-project`, or create it on direct entry to this skill. Use the Mekugi
+journal when available; otherwise use a temporary project artifact outside commits. Capture the
+accepted items and decisions, original base and current head, slice order, checkpoint and slice
+commits, validation and review results, and next unfinished work. Keep it current after every
+completed slice, review, correction, and history rewrite. No fixed template or duplicate artifact
+is needed.
 
-Settle the accepted outcome and material decisions, then order slices by dependency. Implement,
-validate, and independently inspect each usable slice under standing task guidance. Create one
-Conventional Commit per slice and continue until every accepted item is delivered.
+## Deliver each slice
 
-Request `final-review` on the complete original-base-to-head range and current recovery
-record; a plaintext journal snapshot is enough when direct access is unavailable. The delivery
-owner records its findings and coverage, resolves in-scope blockers, and obtains inspection
-of affected corrections until the range is cleared. Fixups belong to the checkpoint or slice
-commit they correct, including the skeleton when present.
+Implement the slice's accepted behavior through the real entry point and authoritative owners,
+including only the UI, service, integration, and persistence work it needs. Remove superseded
+stubs and routes without narrowing the accepted outcome.
 
-The delivery owner folds fixups into their commits using the existing autosquash authorization,
-verifies that rewriting preserves the reviewed tree, and validates the final range. Only then
-mark the journal record complete or delete the fallback artifact. Report the delivered outcome,
-commit range, checks, and remaining limitations. If blocked on user input or work outside scope,
-retain the recovery record with the concrete gap and next unfinished work.
+Prove observable acceptance behavior, applicable defect regressions, and reachable safety or
+error contracts with focused checks. Exercise the real entry point and applicable build or
+typecheck. After focused validation, obtain independent inspection of the complete, stable slice
+diff under standing guidance. Resolve confirmed in-scope findings, revalidate affected behavior,
+and obtain follow-up inspection only for affected corrections or unresolved findings.
+
+Once the slice is validated and cleared, create one non-empty Conventional Commit with a concise
+subject and meaningful body, record its hash, and continue without another approval prompt.
+Continue until every accepted item has implementation and validation evidence.
+
+## Final review and closure
+
+Give a fresh independent reviewer the `final-review` skill, the exact original-base-to-current-head
+range, and the current recovery record; a plaintext journal snapshot is enough when direct access
+is unavailable. Record its findings and coverage. Correct confirmed blockers in original slice
+order, validate and inspect the affected corrections, and create
+`git commit --fixup=<slice-commit>` against the checkpoint or slice each correction belongs to.
+Repeat review as needed until the complete range is cleared.
+
+Fold fixups into their commits using the existing autosquash authorization. Verify that rewriting
+preserves the reviewed tree, then validate the final range. Only then mark the journal record
+complete or delete the fallback artifact. Report the delivered outcome, commit range, checks, and
+remaining limitations. If blocked on user input or work outside scope, retain the recovery record
+with the concrete gap and next unfinished work.

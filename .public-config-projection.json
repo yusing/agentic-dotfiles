@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3e33d1f56443dcd49496b0528466f3615b59030d",
+  "sourceCommit": "2c4385458d8a9ca584109719b9b981836e00a041",
   "outputs": [
     {
       "path": ".bashrc",
@@ -694,7 +694,7 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "cc4e620384b3c567a7e23acff1a52d1690be445a4c1d436c3327ef877bccb86d",
+      "sha256": "d1fd08cb722430b2b8d13c869983f82b7dd2470f479bd4331ec027168ccc3ba1",
       "executable": false
     },
     {
