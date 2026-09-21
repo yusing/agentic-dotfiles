@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.2.5";
+export const VERSION = "1.2.6";
 
 type TreeEntry = {
 	mode: string;
@@ -418,6 +418,14 @@ function projectZedSettings(text: string): string {
 	return encodeJson(source);
 }
 
+function tomlKeyPath(raw: string): string {
+	const keys: string[] = [];
+	for (const match of raw.matchAll(/"(?:\\.|[^"\\])*"|[A-Za-z0-9_-]+/g)) {
+		keys.push(match[0].startsWith("\"") ? (JSON.parse(match[0]) as string) : match[0]);
+	}
+	return keys.join(".");
+}
+
 function projectToml(
 	text: string,
 	topLevelKeys: Set<string>,
@@ -429,7 +437,7 @@ function projectToml(
 	for (const line of text.split(/\r?\n/)) {
 		const header = line.match(/^\s*\[\[?([^\]]+)\]\]?\s*(?:#.*)?$/);
 		if (header) {
-			keepSection = allowedSections(header[1]);
+			keepSection = allowedSections(tomlKeyPath(header[1]));
 			if (keepSection) output.push(line);
 			continue;
 		}
@@ -437,8 +445,8 @@ function projectToml(
 			output.push(line);
 			continue;
 		}
-		const assignment = line.match(/^\s*([A-Za-z0-9_-]+)\s*=/);
-		if (assignment && topLevelKeys.has(assignment[1])) output.push(line);
+		const assignment = line.match(/^\s*((?:"(?:\\.|[^"\\])*"|[A-Za-z0-9_-]+))\s*=/);
+		if (assignment && topLevelKeys.has(tomlKeyPath(assignment[1]))) output.push(line);
 	}
 	const projected = `${output.join("\n").trim()}\n`;
 	Bun.TOML.parse(projected);

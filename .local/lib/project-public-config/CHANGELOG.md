@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.6
+
+Keep public Codex settings when the source uses quoted TOML keys and dotted
+quoted table names.
+
 ## 1.2.5
 
 Include the Kilo agent-port context, renderer source, changelog, and generated

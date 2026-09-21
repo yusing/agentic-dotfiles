@@ -1,66 +1,64 @@
-model = "gpt-6-astra"
-network_access = "enabled"
-disable_response_storage = true
-model_reasoning_summary = "auto"
-model_context_window = 300000
-model_auto_compact_token_limit = 270000
-experimental_compact_prompt_file = "$HOME/.skills-mgr/skills/handoff/STANDARD.md"
-personality = "friendly"
-plan_mode_reasoning_effort = "high"
-hide_agent_reasoning = false
-service_tier = "default"
-supports_websockets = true
-approvals_reviewer = "user"
-model_instructions_file = "$HOME/.codex/overridden_base_instructions.md"
-model_reasoning_effort = "medium"
-approval_policy = "never"
-sandbox_mode = "danger-full-access"
-[skills]
-include_instructions = false
+"model" = "gpt-6-astra"
+"network_access" = "enabled"
+"disable_response_storage" = true
+"model_reasoning_summary" = "auto"
+"model_context_window" = 300000
+"model_auto_compact_token_limit" = 270000
+"experimental_compact_prompt_file" = "$HOME/.skills-mgr/skills/handoff/STANDARD.md"
+"personality" = "friendly"
+"plan_mode_reasoning_effort" = "high"
+"hide_agent_reasoning" = false
+"service_tier" = "default"
+"supports_websockets" = true
+"approvals_reviewer" = "user"
+"model_instructions_file" = "$HOME/.codex/overridden_base_instructions.md"
+"model_reasoning_effort" = "medium"
+"approval_policy" = "never"
+"sandbox_mode" = "danger-full-access"
+["skills"]
+"include_instructions" = false
+"config" = [{ "path" = "$HOME/.codex/skills/.system/slides/SKILL.md", "enabled" = false }, { "path" = "$HOME/.codex/skills/.system/spreadsheets/SKILL.md", "enabled" = false }, { "name" = "openai-templates:artifact-template-analytics-dashboard", "enabled" = false }, { "name" = "openai-templates:artifact-template-business-review", "enabled" = false }, { "name" = "openai-templates:artifact-template-design-report", "enabled" = false }, { "name" = "openai-templates:artifact-template-experiment-analysis", "enabled" = false }, { "name" = "openai-templates:artifact-template-financial-budget", "enabled" = false }, { "name" = "openai-templates:artifact-template-investment-committee-memo", "enabled" = false }, { "name" = "openai-templates:artifact-template-legal-memorandum", "enabled" = false }, { "name" = "openai-templates:artifact-template-market-trends-report", "enabled" = false }, { "name" = "openai-templates:artifact-template-minimal-letterhead", "enabled" = false }, { "name" = "openai-templates:artifact-template-operating-calendar", "enabled" = false }, { "name" = "openai-templates:artifact-template-operating-review", "enabled" = false }, { "name" = "openai-templates:artifact-template-project-kickoff", "enabled" = false }, { "name" = "openai-templates:artifact-template-project-tracker", "enabled" = false }, { "name" = "openai-templates:artifact-template-sales-pipeline", "enabled" = false }, { "name" = "openai-templates:artifact-template-simple-dark-mode", "enabled" = false }, { "name" = "openai-templates:artifact-template-simple-light-mode", "enabled" = false }, { "name" = "openai-templates:artifact-template-strategy-memorandum", "enabled" = false }, { "name" = "openai-templates:artifact-template-system-design", "enabled" = false }, { "name" = "openai-templates:artifact-template-team-alignment", "enabled" = false }, { "name" = "openai-templates:artifact-template-three-statement-forecast", "enabled" = false }]
 
-[analytics]
-enabled = false
+["analytics"]
+"enabled" = false
 
-[memories]
-use_memories = false
-generate_memories = false
+["memories"]
+"use_memories" = false
+"generate_memories" = false
 
-[tui]
-theme = "catppuccin-mocha"
-status_line_use_colors = true
-session_picker_view = "comfortable"
-status_line = ["model-with-reasoning", "git-branch", "context-used", "fast-mode", "task-progress", "thread-id", "branch-changes", "weekly-limit", "context-window-size"]
+["tui"]
+"theme" = "catppuccin-mocha"
+"status_line_use_colors" = true
+"session_picker_view" = "comfortable"
+"status_line" = ["model-with-reasoning", "git-branch", "context-used", "fast-mode", "task-progress", "thread-id", "branch-changes", "weekly-limit", "context-window-size"]
+"auto_recap" = false
 
-[features]
-responses_websockets_v2 = true
-terminal_resize_reflow = true
-memories = false
-plugin_hooks = true
-apps = false
-hooks = true
-js_repl = false
-multi_agent = true
-workspace_dependencies = false
+["features"]
+"responses_websockets_v2" = true
+"terminal_resize_reflow" = true
+"memories" = false
+"plugin_hooks" = true
+"apps" = false
+"hooks" = true
+"js_repl" = false
+"multi_agent" = true
+"workspace_dependencies" = false
 
-[features.multi_agent_v2]
-enabled = true
-default_wait_timeout_ms = 1500000
-max_wait_timeout_ms = 1500000
+["features"."multi_agent_v2"]
+"enabled" = true
+"default_wait_timeout_ms" = 1500000
+"max_wait_timeout_ms" = 1500000
 
-# [agents]
-# max_threads = 5
-# max_depth = 1
+["feedback"]
+"enabled" = false
 
-[feedback]
-enabled = false
+["mcp_servers"."openaiDeveloperDocs"]
+"url" = "https://developers.openai.com/mcp"
 
-[notice]
-hide_rate_limit_model_nudge = true
-hide_full_access_warning = true
-fast_default_opt_out = true
+["notice"]
+"hide_rate_limit_model_nudge" = true
+"hide_full_access_warning" = true
+"fast_default_opt_out" = true
 
-[notice.model_migrations]
+["notice"."model_migrations"]
 "gpt-5.4" = "gpt-5.5"
-
-[mcp_servers.openaiDeveloperDocs]
-url = "https://developers.openai.com/mcp"
