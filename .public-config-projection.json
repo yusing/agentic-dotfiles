@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "2c4385458d8a9ca584109719b9b981836e00a041",
+  "sourceCommit": "7ea68f80d155088cd45e9b61c24a6fcfb7a37a2f",
   "outputs": [
     {
       "path": ".bashrc",
@@ -508,7 +508,7 @@
     {
       "path": ".gitignore_global",
       "kind": "file",
-      "sha256": "9269d5fb819c36ad33520b3ddac37ddadd6a3bd75956060c1e0501e993ce82fd",
+      "sha256": "d2a93f6ccde72080f41778742bd67f17ebdd9a5bb290881992df2e905a32d6a0",
       "executable": false
     },
     {
