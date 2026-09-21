@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "821b48d2744a896f4d73bcc2b461a82e1eaced92",
+  "sourceCommit": "be57c57cbd65443de6f2ccdd808eb06a3bed5cb3",
   "outputs": [
     {
       "path": ".bashrc",
@@ -320,6 +320,90 @@
       "executable": false
     },
     {
+      "path": ".config/kilo/agent/ask.md",
+      "kind": "file",
+      "sha256": "dcd9478ccb7b04570a857bec0dd2defec2b1efc2f0994b78cb50eb6c7bf2bd03",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/code.md",
+      "kind": "file",
+      "sha256": "dcd9478ccb7b04570a857bec0dd2defec2b1efc2f0994b78cb50eb6c7bf2bd03",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/council-investigator.md",
+      "kind": "file",
+      "sha256": "79508fdbb51876c79ddedb3304408be49275f94b8faa9172ae3c028a4eb18d9a",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/council-member.md",
+      "kind": "file",
+      "sha256": "8fb3176fb5ab59c34524ad79cb30324185cde72c7fef24db6324c55ebc6d45f8",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/debug.md",
+      "kind": "file",
+      "sha256": "dcd9478ccb7b04570a857bec0dd2defec2b1efc2f0994b78cb50eb6c7bf2bd03",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/explore.md",
+      "kind": "file",
+      "sha256": "dcd9478ccb7b04570a857bec0dd2defec2b1efc2f0994b78cb50eb6c7bf2bd03",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/explorer.md",
+      "kind": "file",
+      "sha256": "cc822a806dfcc3246f895ddb7907e371e20dd026ab1d60c62dfbcc65e24ecb1d",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/general.md",
+      "kind": "file",
+      "sha256": "dcd9478ccb7b04570a857bec0dd2defec2b1efc2f0994b78cb50eb6c7bf2bd03",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/orchestrator.md",
+      "kind": "file",
+      "sha256": "dcd9478ccb7b04570a857bec0dd2defec2b1efc2f0994b78cb50eb6c7bf2bd03",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/plan.md",
+      "kind": "file",
+      "sha256": "dcd9478ccb7b04570a857bec0dd2defec2b1efc2f0994b78cb50eb6c7bf2bd03",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/review-correctness.md",
+      "kind": "file",
+      "sha256": "3c95629c7f1a943e0f0028e823c394672b2c3e90aab606b5c7fb100a802cbdea",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/review-simplify.md",
+      "kind": "file",
+      "sha256": "cd2dc171af0934b87c05311afb04affef70ff2cb56cc9b369c7e585cdc7e7f5f",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/web-reviewer.md",
+      "kind": "file",
+      "sha256": "dd05e976603477ffad25abae4baa72d9e7fdd571e0662600376da83786ffe443",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/worker.md",
+      "kind": "file",
+      "sha256": "f783bc73dea123aff9921a06a94ac183e94055c4afa54cc06c915387528b6eae",
+      "executable": false
+    },
+    {
       "path": ".config/lazygit/config.yml",
       "kind": "file",
       "sha256": "d01cc5c4aec560789f9a91b728362a998fcb35d27d814d3367aa935f77739b7c",
@@ -418,7 +502,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "79eebd79d0509242eebcf6d6bf0029d1060296e650052100ced7f8ab45f1368b",
+      "sha256": "d24fe46a6dad3fd6abfc21df2730ad6fda25bfe51fd84c354d836f14e0617d41",
       "executable": false
     },
     {
@@ -484,25 +568,25 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "14b8ea83609c2541dfe4a766bd43a99553b558694dc2daae4c853175b6c498da",
+      "sha256": "ecf58fe4fb503560d6ad33baccb723e42e484bdf20169283e8622d070cd16fcf",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "c0236f189b4eaad3adaada901ca4dbf8688eee4d14ff09edc764bd003f60a6dc",
+      "sha256": "527261af4b850ef23c858d884e0968d9c9b6908e469fa76917c5389ddddd6cb5",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "d96496cca3409554095ded1c45ac50998a81ad309afbb95eb62d3e1d8c884c21",
+      "sha256": "d0bec1406d99aaa7d124fefc0de763cebd57821e8c6064b375fc5f208de8db84",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "0f15d7828af11f537f8c2e2f6df77752a346e47b29f6bd14467cffd28c857593",
+      "sha256": "47643248772980b8d3313178ff33d457353724939c19a5e8723469376e6ca1d9",
       "executable": true
     },
     {
@@ -539,6 +623,18 @@
       "path": ".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
       "kind": "file",
       "sha256": "3e81f1491274b760b42c74a6dfbe2caa7b765412ad1743df743ca32122f6fbcd",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "3db31398e823211b16ad1af149a7311c01e371d75e713540d764634c83f3887e",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
+      "kind": "file",
+      "sha256": "e0c696944cda15f3c4829ff166b3be6cde93c1e19120a9948cc7595b4e4c6f74",
       "executable": false
     },
     {
@@ -1012,7 +1108,7 @@
     {
       "path": "AGENTS.md",
       "kind": "file",
-      "sha256": "e9c45108857fb440b5b00ad9a6cb14eab07e34755acaba459f89ec55cbdb2826",
+      "sha256": "d01aebc4f3ac814796db7d1eb111831f404882b9453f150c593b37a8c6e2c3b2",
       "executable": false
     },
     {
@@ -1059,7 +1155,13 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "ad2817dac97325a63b22ccc9853c37d64b2ee8d3c57ede4923887c889ec9cb0a",
+      "sha256": "0d75f2dc708da3bf6123dc9f670309e9af6ad8cb7e729b54b6d05cdce1531949",
+      "executable": false
+    },
+    {
+      "path": "CONTEXT-KILO-AGENT-PORT.md",
+      "kind": "file",
+      "sha256": "f06ff22897fb55b3ccb87d8b52acb4a3dee5059f3a5ce237c0b1764720763cb2",
       "executable": false
     },
     {

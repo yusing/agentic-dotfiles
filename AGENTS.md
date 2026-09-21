@@ -11,7 +11,7 @@ so do not treat edits made only in this repository as authoritative.
 ## Context index
 
 - Instruction surfaces: load `CONTEXT-INSTRUCTION-SURFACES.md` when locating static prompts,
-  skills, or native Codex, Claude, and Grok roles.
+  skills, or native Codex, Claude, Grok, and Kilo roles.
 - Hook architecture: load `CONTEXT-HOOK-ARCHITECTURE.md` when inspecting hook registration or
   event coverage.
 - Hook owners: load `CONTEXT-HOOK-OWNERS.md` when locating an included hook or shared hook
@@ -21,4 +21,5 @@ so do not treat edits made only in this repository as authoritative.
 - Codex lifecycle: load `CONTEXT-CODEX-LIFECYCLE.md` when work crosses Codex lifecycle events.
 - Grok port: load `CONTEXT-GROK-HOOK-PORT.md` for the Grok Codex-hook adapter.
 - Claude port: load `CONTEXT-CLAUDE-AGENT-PORT.md` for Claude roles also consumed by Grok.
+- Kilo port: load `CONTEXT-KILO-AGENT-PORT.md` for Kilo agent profiles.
 - Shell configuration: load `CONTEXT-SHELL.md` before changing Bash, Zsh, or Fish behavior.

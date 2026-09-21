@@ -16,7 +16,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.1";
+const VERSION = "1.0.2";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -257,6 +257,7 @@ function main(): void {
   for (const [directory, name] of [
     ["grok-explore", "grok-explore"],
     ["sync-claude-agent-ports", "sync-claude-agent-ports"],
+    ["sync-kilo-agent-ports", "sync-kilo-agent-ports"],
     ["claude-config-helper", "claude-config-helper"],
     ["patch-bitwarden-cli-fast-exit", "patch-bitwarden-cli-fast-exit"],
     ["svn-merge", "svn-merge"],

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.5
+
+Include the Kilo agent-port context, renderer source, changelog, and generated
+global agent profiles. Keep the compiled Kilo helper binary out of the projection.
+
 ## 1.2.4
 
 Include the shared instruction-authoring task document and remove the redundant root context

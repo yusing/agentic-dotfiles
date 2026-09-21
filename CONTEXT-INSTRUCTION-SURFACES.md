@@ -41,6 +41,9 @@ handoff standard, not a client-local handoff copy.
 - `.claude/agents/*.md` is generated from `.codex/agents/*.toml` by
   `.local/bin/sync-claude-agent-ports`; Grok also consumes these generated roles.
   `CONTEXT-CLAUDE-AGENT-PORT.md` owns the port map and drift check.
+- `.config/kilo/agent/*.md` is generated from `.codex/agents/*.toml` by
+  `.local/bin/sync-kilo-agent-ports`; `CONTEXT-KILO-AGENT-PORT.md` owns the
+  port map and drift check.
 - `.codex/skills/.system/` is imported Codex system content, excluded from the repository.
 - Hook-delivered instructions are mapped in `CONTEXT-HOOK-ARCHITECTURE.md` and
   `CONTEXT-HOOK-OWNERS.md`; this static index does not establish hook coverage.

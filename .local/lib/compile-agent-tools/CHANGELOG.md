@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+Compile the Kilo agent-port helper.
+
 ## 1.0.1
 
 Remove the retired Go-guidelines hook and its adapter build dependency.

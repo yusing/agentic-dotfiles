@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.2.4";
+export const VERSION = "1.2.5";
 
 type TreeEntry = {
 	mode: string;
@@ -90,6 +90,7 @@ const EXACT_PATHS = new Set([
 	"LICENSE",
 	"README.md",
 	"CONTEXT-CLAUDE-AGENT-PORT.md",
+	"CONTEXT-KILO-AGENT-PORT.md",
 	"CONTEXT-CODEX-LIFECYCLE.md",
 	"CONTEXT-GROK-HOOK-PORT.md",
 	"CONTEXT-HELPER-HOOKS.md",
@@ -169,6 +170,8 @@ const EXACT_PATHS = new Set([
 	".local/bin/grok-explore",
 	".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
 	".local/lib/sync-claude-agent-ports/CHANGELOG.md",
+	".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
+	".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
 	".local/lib/project-public-config/CHANGELOG.md",
 	COMMAND_PATH,
 ]);
@@ -203,6 +206,7 @@ const PROJECTED_SKILL_NAMES = [
 const TREE_PREFIXES = [
 	".claude/agents",
 	".codex/agents",
+	".config/kilo/agent",
 	".codex/skills/dump-last-response",
 	".codex/skills/read-codex-session",
 	".codex/skills/session-usage",
@@ -252,7 +256,7 @@ so do not treat edits made only in this repository as authoritative.
 ## Context index
 
 - Instruction surfaces: load \`CONTEXT-INSTRUCTION-SURFACES.md\` when locating static prompts,
-  skills, or native Codex, Claude, and Grok roles.
+  skills, or native Codex, Claude, Grok, and Kilo roles.
 - Hook architecture: load \`CONTEXT-HOOK-ARCHITECTURE.md\` when inspecting hook registration or
   event coverage.
 - Hook owners: load \`CONTEXT-HOOK-OWNERS.md\` when locating an included hook or shared hook
@@ -262,6 +266,7 @@ so do not treat edits made only in this repository as authoritative.
 - Codex lifecycle: load \`CONTEXT-CODEX-LIFECYCLE.md\` when work crosses Codex lifecycle events.
 - Grok port: load \`CONTEXT-GROK-HOOK-PORT.md\` for the Grok Codex-hook adapter.
 - Claude port: load \`CONTEXT-CLAUDE-AGENT-PORT.md\` for Claude roles also consumed by Grok.
+- Kilo port: load \`CONTEXT-KILO-AGENT-PORT.md\` for Kilo agent profiles.
 - Shell configuration: load \`CONTEXT-SHELL.md\` before changing Bash, Zsh, or Fish behavior.
 `;
 
