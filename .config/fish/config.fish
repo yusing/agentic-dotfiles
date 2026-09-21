@@ -315,6 +315,17 @@ if check-command git
     abbr --add --position command gca! 'git agent commit --amend'
 end
 
+if check-command scc
+    function scc
+        command scc \
+            -i c,h,cc,cpp,cxx,hpp,cs,go,java,js,mjs,cjs,jsx,ts,tsx,py,rb,php,rs,kt,kts,swift,scala,dart,vue,svelte,m,mm,sh,sql,lua,ex,exs,zig \
+            --exclude-dir vendor,node_modules,dist,build,out,target,coverage,.venv,venv,third_party,Pods,__pycache__,.gradle,bower_components \
+            -M '(^|/)(_?tests?|__tests__|spec|fixtures|mocks?|testdata|__mocks__)(/|$)|(_test|\.test|\.spec|_spec)\.' \
+            --no-min-gen \
+            $argv
+    end
+end
+
 function disk-usage
     # Output example: 55G/900G (6%)
     df -h / | tail -1 | awk '{print $3 "/" $2 " (" $5 ")"}'
