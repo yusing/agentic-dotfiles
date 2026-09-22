@@ -10,9 +10,14 @@
   `--version`, process spawning, and `runMain` so a hook binary can import another
   hook's policy without executing it. User-owned hook commands are the `scriptc` binaries under
   `.codex/hooks/bin/`.
-- Session and subagent start: `.codex/hooks/bin/check_project` detects VCS, task runner, languages,
-  and Go version, and its `--without-git` option omits the VCS report for a client that
-  already reports plain Git state itself; `.codex/hooks.json` injects root-session project
+- Session and subagent start: `.codex/hooks/bin/check_project` detects VCS, nested Git submodule
+  HEAD commits, task runner, languages, and Go version. When the repository has submodules, it
+  lists each path from the repository root, including nested checkouts, as `path` plus `@` and
+  the 8-character HEAD prefix when that checkout has a commit. The VCS line names the detected
+  kind and, when present, that worktree's Git HEAD and SVN revision as `git@<sha>`,
+  `svn@r<revision>`, or `git@<sha>+svn@r<revision>`. Its `--without-git` option omits
+  the plain Git or unversioned VCS line for a client that already reports that state, and still
+  lists those submodule commits; `.codex/hooks.json` injects root-session project
   context and direct `skills-mgr list` output at startup and after context
   compaction or clearing while excluding session resume. `.codex/hooks/bin/session_start_context`
   skips the project and skill context commands on fork startup when the transcript's first

@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { at, handleVersion, programArgs, runCommand } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.1";
+export const VERSION = "1.1.0";
 
 function languageFor(ext: string): string | undefined {
   switch (ext) {
@@ -136,31 +136,93 @@ function isFile(target: string): boolean {
   }
 }
 
-function detectVcs(directory: string): { vcs: string; ancestor: string } {
+const HEAD_PREFIX = 8;
+
+type VcsDetection = {
+  kind: string;
+  ancestor: string;
+  label: string;
+};
+
+function commitPrefix(text: string): string {
+  const sha = text.trim();
+  if (sha.length === 0) {
+    return "";
+  }
+  return sha.length > HEAD_PREFIX ? sha.slice(0, HEAD_PREFIX) : sha;
+}
+
+function svnRevision(directory: string): string {
+  const info = runCommand([
+    "svn",
+    "info",
+    "--non-interactive",
+    "--show-item",
+    "revision",
+    "--",
+    directory,
+  ]);
+  if (info.status !== 0) {
+    return "";
+  }
+  const lineEnd = info.stdout.indexOf("\n");
+  const revision = (lineEnd < 0 ? info.stdout : info.stdout.slice(0, lineEnd)).trim();
+  if (revision.length === 0) {
+    return "";
+  }
+  for (let index = 0; index < revision.length; index += 1) {
+    const code = revision.charCodeAt(index);
+    if (code <= 32) {
+      return "";
+    }
+  }
+  return revision;
+}
+
+function vcsLabel(kind: string, gitSha: string, svnRev: string): string {
+  const git = gitSha.length > 0 ? `git@${gitSha}` : "git";
+  const svn = svnRev.length > 0 ? `svn@r${svnRev}` : "svn";
+  if (kind === "git+svn") {
+    return `${git}+${svn}`;
+  }
+  if (kind === "git") {
+    return git;
+  }
+  if (kind === "svn") {
+    return svn;
+  }
+  return kind;
+}
+
+function detectVcs(directory: string): VcsDetection {
   let ancestor = directory;
   let gitWithoutCommitAncestor = "";
   while (true) {
     if (exists(path.join(ancestor, ".git"))) {
       const head = runCommand(["git", "-C", ancestor, "rev-parse", "--verify", "HEAD"]);
       if (head.status === 0) {
-        let vcs = "git";
+        const gitSha = commitPrefix(head.stdout);
+        let kind = "git";
+        let svnRev = "";
         if (isDir(path.join(ancestor, ".svn"))) {
-          vcs = "git+svn";
+          kind = "git+svn";
+          svnRev = svnRevision(ancestor);
         }
-        return { vcs, ancestor };
+        return { kind, ancestor, label: vcsLabel(kind, gitSha, svnRev) };
       }
       if (gitWithoutCommitAncestor.length === 0) {
         gitWithoutCommitAncestor = ancestor;
       }
     }
     if (isDir(path.join(ancestor, ".svn"))) {
-      return { vcs: "svn", ancestor };
+      const svnRev = svnRevision(ancestor);
+      return { kind: "svn", ancestor, label: vcsLabel("svn", "", svnRev) };
     }
     if (ancestor === "/") {
       if (gitWithoutCommitAncestor.length > 0) {
-        return { vcs: "git", ancestor: gitWithoutCommitAncestor };
+        return { kind: "git", ancestor: gitWithoutCommitAncestor, label: "git" };
       }
-      return { vcs: "none", ancestor };
+      return { kind: "none", ancestor, label: "none" };
     }
     const parent = path.dirname(ancestor);
     ancestor = parent.length > 0 ? parent : "/";
@@ -262,6 +324,98 @@ function detectLanguages(files: string[]): string {
   return ordered.length > 0 ? ordered.join(",") : "none";
 }
 
+type SubmoduleHead = {
+  path: string;
+  sha: string;
+};
+
+function gitlinkPath(record: string): string {
+  if (record.length === 0 || record.slice(0, 7) !== "160000 ") {
+    return "";
+  }
+  const tab = record.indexOf("\t");
+  if (tab < 0) {
+    return "";
+  }
+  return record.slice(tab + 1);
+}
+
+// Require this directory's .git. Otherwise git -C reports a parent HEAD.
+function submoduleHeadPrefix(directory: string): string {
+  if (!exists(path.join(directory, ".git"))) {
+    return "";
+  }
+  const head = runCommand(["git", "-C", directory, "rev-parse", "--verify", "HEAD"]);
+  if (head.status !== 0) {
+    return "";
+  }
+  return commitPrefix(head.stdout);
+}
+
+function compareSubmodulePath(left: SubmoduleHead, right: SubmoduleHead): number {
+  if (left.path < right.path) {
+    return -1;
+  }
+  if (left.path > right.path) {
+    return 1;
+  }
+  return 0;
+}
+
+function listSubmodules(repository: string): SubmoduleHead[] {
+  const entries: SubmoduleHead[] = [];
+  const seen = new Set<string>();
+  const visited = new Set<string>();
+  const visit = (repo: string, prefix: string): void => {
+    let real = "";
+    try {
+      real = fs.realpathSync(repo);
+    } catch {
+      return;
+    }
+    if (visited.has(real)) {
+      return;
+    }
+    visited.add(real);
+    const listed = runCommand(["git", "-C", repo, "ls-files", "-z", "--stage"]);
+    if (listed.status !== 0) {
+      return;
+    }
+    const records = listed.stdout.split("\0");
+    for (let index = 0; index < records.length; index += 1) {
+      const relative = gitlinkPath(at(records, index) ?? "");
+      if (relative.length === 0) {
+        continue;
+      }
+      const display = prefix.length > 0 ? `${prefix}/${relative}` : relative;
+      if (seen.has(display)) {
+        continue;
+      }
+      seen.add(display);
+      const full = path.join(repo, relative);
+      entries.push({ path: display, sha: submoduleHeadPrefix(full) });
+      if (exists(path.join(full, ".git"))) {
+        visit(full, display);
+      }
+    }
+  };
+  visit(repository, "");
+  entries.sort(compareSubmodulePath);
+  return entries;
+}
+
+function submoduleLines(entries: SubmoduleHead[]): string[] {
+  const lines = ["submodules:"];
+  for (const entry of entries) {
+    if (entry.sha.length > 0) {
+      lines.push(`  - ${entry.path}@${entry.sha}`);
+    } else {
+      lines.push(`  - ${entry.path}`);
+    }
+  }
+  return lines;
+}
+
 function goVersion(directory: string): string {
   const manifest = path.join(directory, "go.mod");
   if (!isFile(manifest)) {
@@ -304,17 +458,25 @@ function main(): number {
     return 2;
   }
   const directory = fs.realpathSync(directoryArg);
-  const { vcs, ancestor } = detectVcs(directory);
-  const taskRunner = detectTaskRunner(directory, vcs, ancestor);
-  const languages = detectLanguages(listFiles(directory, vcs));
+  const detected = detectVcs(directory);
+  const kind = detected.kind;
+  const ancestor = detected.ancestor;
+  const taskRunner = detectTaskRunner(directory, kind, ancestor);
+  const languages = detectLanguages(listFiles(directory, kind));
   const version = goVersion(directory);
   let reportVcs = true;
-  if (withoutGit && (vcs === "git" || vcs === "none")) {
+  if (withoutGit && (kind === "git" || kind === "none")) {
     reportVcs = false;
   }
   const lines: string[] = [];
   if (reportVcs) {
-    lines.push(`vcs: ${vcs}`);
+    lines.push(`vcs: ${detected.label}`);
+  }
+  if (kind === "git" || kind === "git+svn") {
+    const submodules = listSubmodules(ancestor);
+    if (submodules.length > 0) {
+      lines.push(...submoduleLines(submodules));
+    }
   }
   lines.push(
     `task_runner: ${taskRunner}`,
@@ -322,7 +484,7 @@ function main(): number {
     `go_version: ${version}`,
   );
   const instructions: string[] = [];
-  if (vcs !== "none" && reportVcs) {
+  if (kind !== "none" && reportVcs) {
     instructions.push(
       "  ## Version control",
       "  - Treat detected VCS as read-only unless user authorizes writes.",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7ea68f80d155088cd45e9b61c24a6fcfb7a37a2f",
+  "sourceCommit": "06da2f049c2c57dbff8b756de24dec2a12ca83ca",
   "outputs": [
     {
       "path": ".bashrc",
@@ -136,7 +136,7 @@
     {
       "path": ".codex/hooks/check_project.ts",
       "kind": "file",
-      "sha256": "b789bf520d623745a02a8105e031c32ccdaff1796f5b3435e7967dc29b188b7d",
+      "sha256": "779dd4c2483ad69c32534b17b3a79c29bd430b2482465654f4ef87d295bee068",
       "executable": false
     },
     {
@@ -1137,7 +1137,7 @@
     {
       "path": "CONTEXT-HELPER-HOOKS.md",
       "kind": "file",
-      "sha256": "a755f743845104f221f82c828ebaecedc5e64a3d8646f1b9c360fbca38ac0157",
+      "sha256": "db061eb0e6f68f239eb88ef7b53e98d4be460bd165a610ce902bb9059e4813ff",
       "executable": false
     },
     {
@@ -1149,7 +1149,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "a44e4ffc1d0273e37dbfd1b74a7b2b297f2135ee4a98a3560b8b7141df12d5ab",
+      "sha256": "21c111d646f515d56e3c3adf3d6001a1412f20e526edc170ab224eedd67a76a6",
       "executable": false
     },
     {

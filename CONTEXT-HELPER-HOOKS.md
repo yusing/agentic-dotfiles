@@ -33,6 +33,7 @@ would miss 10ms besides those required calls.
 Every user-owned helper and hook has a version and a changelog. Compiled
 programs print the version on `--version`. Shell scripts carry a `version:`
 comment at the top. The changelog records every version.
+Within one commit or dirty worktree, the version should be bumped at most ONCE.
 
 ## Compile
 
