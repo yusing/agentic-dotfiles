@@ -964,6 +964,24 @@ checksum = "sha256:902e2fe1cf0799198ef902c6b8c310a450fef629a6baba41d45641ef75c04
 url = "https://github.com/microsoft/TypeScript/releases/download/v7.0.2/typescript-darwin-arm64.tgz"
 url_api = "https://api.github.com/repos/microsoft/TypeScript/releases/assets/522602966"
 
+[[tools."github:tailscale/tailcat"]]
+version = "0.7.0"
+backend = "github:tailscale/tailcat"
+specifiers = ["latest"]
+
+[tools."github:tailscale/tailcat".options]
+matching_regex = '^tailcat_.*_linux_(amd64|arm64)\.tar\.gz$'
+
+[tools."github:tailscale/tailcat"."platforms.linux-arm64"]
+checksum = "sha256:bbb1ab50f24f00effe1e1fd86d0501803fb80793a90785a2a16ff3428f03d8ef"
+url = "https://github.com/tailscale/tailcat/releases/download/v0.7.0/tailcat_0.7.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/tailscale/tailcat/releases/assets/575324110"
+
+[tools."github:tailscale/tailcat"."platforms.linux-x64"]
+checksum = "sha256:23c0b1887a5ec422f0d18a9c52b4f5357815febdaae738a1eb54036d10bd9ee6"
+url = "https://github.com/tailscale/tailcat/releases/download/v0.7.0/tailcat_0.7.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/tailscale/tailcat/releases/assets/575324105"
+
 [[tools."github:tldr-pages/tlrc"]]
 version = "1.13.1"
 backend = "github:tldr-pages/tlrc"
