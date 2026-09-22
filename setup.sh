@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.2.8
+# version: 2.2.9
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -20,7 +20,6 @@ MISE_BIN="${LOCAL_BIN}/mise"
 MISE_SHIMS="${HOME}/.local/share/mise/shims"
 MISE_CONFIG="${MISE_CONFIG:-${HOME}/.config/mise/config.toml}"
 MISE_LOCK_PLATFORMS="linux-arm64,linux-x64,macos-arm64"
-LLVM_BREW_FORMULA_API="https://formulae.brew.sh/api/formula/llvm.json"
 UPGRADE=0
 SETUP_CONFIG_EXPLICIT="${SETUP_CONFIG:+1}"
 SETUP_CONFIG="${SETUP_CONFIG:-$(cd "$(dirname "${BASH_SOURCE[0]:-$HOME/setup.sh}")" && pwd)/setup.json}"
@@ -122,13 +121,20 @@ load_brew_env() {
   fi
 }
 
-load_brew_llvm_env() {
-  local prefix
+# Keg-only Homebrew formulae are not on PATH. Add each declared prefix.
+load_brew_prefix_env() {
+  local name prefix
   [ "$PM" = brew ] || return 0
   have brew || return 0
-  prefix="$(brew --prefix llvm 2>/dev/null || true)"
-  [ -n "$prefix" ] && [ -d "$prefix/bin" ] || return 0
-  export PATH="${prefix}/bin:${PATH}"
+  while IFS= read -r name; do
+    [ -n "$name" ] || continue
+    prefix="$(setup_config native-prefix "$name" 2>/dev/null || true)"
+    [ -n "$prefix" ] || continue
+    prefix="$(brew --prefix "$prefix" 2>/dev/null || true)"
+    [ -n "$prefix" ] && [ -d "$prefix/bin" ] || continue
+    PATH="${prefix}/bin:${PATH}"
+  done < <(setup_config native-required; setup_config native-optional)
+  export PATH
 }
 
 ensure_brew() {
@@ -194,6 +200,39 @@ ensure_sudo() {
 mapped_pkgs() { setup_config native-packages "$1"; }
 pkg_cmd() { setup_config native-command "$1"; }
 
+# A mise shim for a tool this operating system does not install is not the
+# native package. Homebrew must still be installed, then the shim is removed.
+inactive_mise_command() {
+  local cmd="$1" tool name align version_command pkg native_cmd
+  while IFS='|' read -r tool name align version_command pkg; do
+    [ -n "$tool" ] || continue
+    mise_tool_applies "$tool" && continue
+    setup_config native-enabled "$name" || continue
+    native_cmd="$(setup_config native-command "$name")" || continue
+    if [ "$native_cmd" = "$cmd" ] || [ "$name" = "$cmd" ]; then
+      return 0
+    fi
+  done < <(setup_config mise-native)
+  return 1
+}
+
+native_command_present() {
+  local cmd="$1" dir path
+  local IFS=:
+  for dir in $PATH; do
+    [ -n "$dir" ] || continue
+    path="${dir%/}/$cmd"
+    [ -x "$path" ] || [ -L "$path" ] || continue
+    case "$path" in
+      "$MISE_SHIMS/$cmd")
+        inactive_mise_command "$cmd" && continue
+        ;;
+    esac
+    return 0
+  done
+  return 1
+}
+
 have_logical() {
   local name="$1" cmd prefix commands
   setup_config native-enabled "$name" || return 1
@@ -218,7 +257,7 @@ have_logical() {
     return 1
   fi
   while IFS= read -r cmd; do
-    have "$cmd" && return 0
+    native_command_present "$cmd" && return 0
   done <<<"$commands"
   return 1
 }
@@ -360,11 +399,55 @@ try:
     obj(config.get("mise"), ("settings", "tools"), "mise")
     require(isinstance(config["mise"].get("settings", {}), dict), "mise.settings must be an object")
     require(isinstance(config["mise"].get("tools"), dict), "mise.tools must be an object")
+    # A mise tool may declare the package-manager source used where that tool
+    # does not apply. The field stays in JSON; generated mise TOML never sees it.
+    mise_native = {}
+    mise_native_records = []
     for tool, declaration in config["mise"]["tools"].items():
         string(tool)
         require(not tool.startswith("-"), "invalid mise tool name")
         require(isinstance(declaration, (str, dict)), "mise tool must be a version string or options object")
         string(declaration if isinstance(declaration, str) else declaration.get("version"))
+        if not isinstance(declaration, dict) or "native" not in declaration:
+            continue
+        entry = declaration["native"]
+        obj(entry, ("name", "packages", "commands", "optional", "brew_prefix", "align_brew_version", "version_command"), "mise native source")
+        packages(entry.get("packages"))
+        strings(entry.get("commands", []))
+        require(type(entry.get("optional", False)) is bool, "optional must be boolean")
+        if "brew_prefix" in entry:
+            string(entry["brew_prefix"])
+        if "align_brew_version" in entry:
+            require(type(entry["align_brew_version"]) is bool, "align_brew_version must be boolean")
+        version_command = entry.get("version_command", "")
+        if "version_command" in entry:
+            string(version_command)
+            require("/" not in version_command and not version_command.startswith("-"), f"invalid version command for {tool}")
+        require(any(entry["packages"].values()), "mise native source needs a package")
+        covered = declaration.get("os", ["linux", "macos"])
+        require(isinstance(covered, list) and covered, f"{tool} native source needs an os list")
+        require(all(item in ("linux", "macos") for item in covered), f"unsupported os for {tool}")
+        if entry["packages"].get("apt") or entry["packages"].get("pacman"):
+            require("linux" not in covered, f"{tool} declares Linux packages and a Linux mise install")
+        brew_pkgs = entry["packages"].get("brew") or []
+        if brew_pkgs:
+            require("macos" not in covered, f"{tool} declares Homebrew packages and a macOS mise install")
+        align = entry.get("align_brew_version", False)
+        if align:
+            require(len(brew_pkgs) == 1, f"{tool} version alignment needs one Homebrew package")
+            require(version_command, f"{tool} version alignment needs version_command")
+            require(entry.get("brew_prefix"), f"{tool} version alignment needs brew_prefix")
+        name = entry.get("name") or config["mise_commands"].get(tool, tool.rsplit(":", 1)[-1].rsplit("/", 1)[-1])
+        string(name)
+        require(not name.startswith("-"), "names must not start with -")
+        require(name not in config["native"] and name not in mise_native, f"native package duplicates mise source: {name}")
+        mise_native[name] = entry
+        mise_native_records.append((tool, name, "1" if align else "0", version_command, brew_pkgs[0] if brew_pkgs else ""))
+
+    def native_map():
+        merged = dict(config["native"])
+        merged.update(mise_native)
+        return merged
 
     def toml(value):
         if isinstance(value, str):
@@ -382,11 +465,18 @@ try:
             return "{ " + ", ".join(json.dumps(key) + " = " + toml(item) for key, item in value.items()) + " }"
         raise ValueError("mise values must be TOML-compatible: null is not supported")
 
+    def mise_declaration(value):
+        if isinstance(value, dict) and "native" in value:
+            return {key: item for key, item in value.items() if key != "native"}
+        return value
+
     def render_mise(data):
         result = "# Generated by setup.sh from setup.json. Edit setup.json, not this file.\n"
         for section in ("settings", "tools"):
             result += f"\n[{section}]\n"
             for key, value in data.get(section, {}).items():
+                if section == "tools":
+                    value = mise_declaration(value)
                 result += json.dumps(key) + " = " + toml(value) + "\n"
         return result
 
@@ -454,13 +544,14 @@ try:
         if query_action == "validate":
             pass
         elif query_action.startswith("native-"):
+            native = native_map()
             if query_action in ("native-required", "native-optional"):
-                output = [key for key, entry in config["native"].items()
+                output = [key for key, entry in native.items()
                           if entry["packages"].get(pm, []) and entry.get("optional", False) == (query_action == "native-optional")]
             elif query_action == "native-enabled":
-                status = 0 if config["native"].get(name, {}).get("packages", {}).get(pm) else 1
+                status = 0 if native.get(name, {}).get("packages", {}).get(pm) else 1
             else:
-                entry = config["native"][name]
+                entry = native[name]
                 if query_action == "native-packages":
                     output = entry["packages"].get(pm, [])
                 elif query_action == "native-command":
@@ -487,6 +578,8 @@ try:
                 status = 0 if name in tools and platform in platforms(tools[name]) else 1
             elif query_action == "mise-has":
                 status = 0 if name in tools else 1
+            elif query_action == "mise-native":
+                output = ["|".join(record) for record in mise_native_records]
             else:
                 raise ValueError(f"unknown action: {query_action}")
         elif query_action == "vendors":
@@ -583,18 +676,14 @@ try:
         cache = Path(arguments[0])
         require(not cache.exists(), "setup config cache already exists")
         cache.mkdir(mode=0o700)
-        queries = [("native-required",), ("native-optional",), ("mise-render",), ("mise-records",), ("vendors",)]
-        for name in config["native"]:
+        queries = [("native-required",), ("native-optional",), ("mise-render",), ("mise-records",), ("mise-native",), ("vendors",)]
+        native = native_map()
+        for name in native:
             queries.extend((query_action, name) for query_action in
                            ("native-enabled", "native-packages", "native-command", "native-commands", "native-prefix"))
-        for name in ("llvm", "eza"):
-            if name not in config["native"]:
-                queries.append(("native-enabled", name))
         tools = config["mise"]["tools"]
         for tool in tools:
             queries.extend((("mise-applies", tool), ("mise-has", tool)))
-        if "github:llvm/llvm-project" not in tools:
-            queries.append(("mise-has", "github:llvm/llvm-project"))
         for name in config["vendors"]:
             queries.append(("vendor-env", name))
             queries.extend(("vendor-field", name, field) for field in
@@ -1164,9 +1253,13 @@ refresh_mise_lock() (
   fi
   validate_mise_lock "$tmp/desired.toml" "$tmp/.config/mise/mise.lock" || return 1
   setup_config mise-verify-lock "$tmp" || return 1
-  if grep -Fxq 'github:llvm/llvm-project' "$tmp/changed-tools"; then
-    assert_llvm_version_alignment "$tmp/.config/mise/mise.lock" || return 1
-  fi
+  while IFS='|' read -r tool name align version_command pkg; do
+    [ "$align" = 1 ] || continue
+    if grep -Fxq "$tool" "$tmp/changed-tools"; then
+      assert_aligned_brew_versions "$tmp/.config/mise/mise.lock" || return 1
+      break
+    fi
+  done < <(setup_config mise-native)
   # Do not overwrite a lock or configuration changed by another setup/user while
   # this candidate was resolving. No running upgrade is stopped or restarted.
   if [ -f "$tmp/previous.toml" ]; then
@@ -1192,22 +1285,31 @@ refresh_mise_lock() (
 
 
 sync_mise_config() {
-  local before after
-  MISE_LLVM_CHANGED=0
-  before="$(locked_llvm_version 2>/dev/null || true)"
+  local before after lock_path
+  MISE_ALIGNED_CHANGED=0
+  lock_path="${MISE_CONFIG%/*}/mise.lock"
+  before="$(aligned_lock_versions "$lock_path" 2>/dev/null || true)"
   (
     tmp="$(mktemp -d "${TMPDIR:-/tmp}/setup-mise-config.XXXXXX")"
     trap 'rm -rf "$tmp"' EXIT HUP INT TERM
     setup_config mise-render >"$tmp/config.toml" || exit 1
     refresh_mise_lock "$tmp/config.toml" "$UPGRADE"
   ) || return 1
-  after="$(locked_llvm_version 2>/dev/null || true)"
-  if [ -n "$after" ] && [ "$before" != "$after" ]; then MISE_LLVM_CHANGED=1; fi
+  after="$(aligned_lock_versions "$lock_path" 2>/dev/null || true)"
+  if [ -n "$after" ] && [ "$before" != "$after" ]; then MISE_ALIGNED_CHANGED=1; fi
 }
 
-locked_llvm_version() {
-  local lock_path="${1:-${MISE_CONFIG%/*}/mise.lock}"
-  MISE_LOCK_PATH="$lock_path" py <<'PY'
+aligned_lock_versions() {
+  local lock_path="$1" tool name align version_command pkg
+  while IFS='|' read -r tool name align version_command pkg; do
+    [ "$align" = 1 ] || continue
+    printf '%s=%s\n' "$tool" "$(locked_tool_version "$lock_path" "$tool" 2>/dev/null || printf missing)"
+  done < <(setup_config mise-native)
+}
+
+locked_tool_version() {
+  local lock_path="$1" tool="$2"
+  MISE_LOCK_PATH="$lock_path" MISE_LOCK_TOOL="$tool" py <<'PY'
 import os
 from pathlib import Path
 
@@ -1217,31 +1319,42 @@ except ImportError:
     import tomli as tomllib
 
 lock = tomllib.loads(Path(os.environ["MISE_LOCK_PATH"]).read_text())
-entries = lock["tools"]["github:llvm/llvm-project"]
+tool = os.environ["MISE_LOCK_TOOL"]
+entries = lock.get("tools", {}).get(tool)
+if not entries:
+    raise SystemExit(f"locked tool is missing: {tool}")
 print(entries[0]["version"])
 PY
 }
 
-brew_llvm_formula_version() {
-  curl -fsSL "$LLVM_BREW_FORMULA_API" | py -c 'import json,sys; print(json.load(sys.stdin)["versions"]["stable"])'
+brew_formula_version() {
+  local pkg="$1"
+  curl -fsSL "https://formulae.brew.sh/api/formula/${pkg}.json" \
+    | py -c 'import json,sys; print(json.load(sys.stdin)["versions"]["stable"])'
 }
 
-assert_llvm_version_alignment() {
-  local lock_path="${1:-${MISE_CONFIG%/*}/mise.lock}" brew_ver lock_ver
-  PM=brew setup_config native-enabled llvm || return 0
-  setup_config mise-has github:llvm/llvm-project || return 0
-  brew_ver="$(brew_llvm_formula_version)" \
-    || die "could not read the Homebrew llvm formula version"
-  lock_ver="$(locked_llvm_version "$lock_path")" \
-    || die "could not read the locked LLVM version"
-  [ "$brew_ver" = "$lock_ver" ] \
-    || die "LLVM versions differ: Homebrew $brew_ver, mise $lock_ver"
+assert_aligned_brew_versions() {
+  local lock_path="$1" tool name align version_command pkg brew_ver lock_ver
+  while IFS='|' read -r tool name align version_command pkg; do
+    [ "$align" = 1 ] || continue
+    brew_ver="$(brew_formula_version "$pkg")" \
+      || die "could not read the Homebrew $pkg formula version"
+    lock_ver="$(locked_tool_version "$lock_path" "$tool")" \
+      || die "could not read the locked $tool version"
+    [ "$brew_ver" = "$lock_ver" ] \
+      || die "Homebrew $pkg $brew_ver differs from locked $tool $lock_ver"
+  done < <(setup_config mise-native)
 }
 
 upgrade_mise_tools() {
-  if [ "$UPGRADE" -eq 0 ] && [ "$PM" = brew ] && setup_config native-enabled llvm; then
-    info "upgrading Homebrew llvm to the locked version"
-    brew upgrade llvm || brew install --no-ask llvm
+  local tool name align version_command pkg
+  if [ "$UPGRADE" -eq 0 ] && [ "$PM" = brew ] && [ "${MISE_ALIGNED_CHANGED:-0}" -eq 1 ]; then
+    while IFS='|' read -r tool name align version_command pkg; do
+      [ "$align" = 1 ] || continue
+      setup_config native-enabled "$name" || continue
+      info "upgrading Homebrew $pkg to the locked version"
+      brew upgrade "$pkg" || brew install --no-ask "$pkg"
+    done < <(setup_config mise-native)
   fi
   install_locked_mise_tools
 }
@@ -1536,19 +1649,40 @@ for tool in json.load(sys.stdin):
     validate_mise_tool "$tool" "$cmd"
   done < <(mise_tool_records)
   if [ "$OS" = Darwin ]; then
-    local brew_clang="" eza_install
-    brew_clang="$(brew --prefix llvm 2>/dev/null || true)"
-    if setup_config native-enabled llvm && [ -n "$brew_clang" ] && [ -x "$brew_clang/bin/clang" ]; then
-      remove_legacy_file "${LOCAL_BIN}/clang" "$brew_clang/bin/clang"
+    local removed_mise=0 tool name align version_command pkg cmd prefix install_id install_dir
+    # A keg-only formula owns its command here. Drop a copy under ~/.local/bin
+    # and a mise install left from another operating system's archive.
+    if [ "$PM" = brew ]; then
+      while IFS= read -r name; do
+        [ -n "$name" ] || continue
+        setup_config native-enabled "$name" || continue
+        prefix="$(setup_config native-prefix "$name")" || continue
+        [ -n "$prefix" ] || continue
+        cmd="$(setup_config native-command "$name")" || continue
+        [ -n "$cmd" ] || continue
+        prefix="$(brew --prefix "$prefix" 2>/dev/null || true)"
+        [ -n "$prefix" ] && [ -x "$prefix/bin/$cmd" ] || continue
+        remove_legacy_file "${LOCAL_BIN}/$cmd" "$prefix/bin/$cmd"
+      done < <(setup_config native-required)
     fi
-    eza_install="${HOME}/.local/share/mise/installs/github-eza-community-eza"
-    if setup_config native-enabled eza && [ -d "$eza_install" ]; then
-      info "removing leftover mise eza on macOS"
-      rm -rf "$eza_install"
-      if [ -x "$MISE_BIN" ]; then
-        mise_cmd reshim >/dev/null 2>&1 \
-          || warn "could not refresh mise shims after removing leftover eza"
+    while IFS='|' read -r tool name align version_command pkg; do
+      [ -n "$tool" ] || continue
+      mise_tool_applies "$tool" && continue
+      setup_config native-enabled "$name" || continue
+      install_id="${tool//[:\/]/-}"
+      case "$install_id" in
+        ""|*/*|*..*) die "unsafe mise install id: $tool" ;;
+      esac
+      install_dir="${HOME}/.local/share/mise/installs/${install_id}"
+      if [ -d "$install_dir" ] || [ -L "$install_dir" ]; then
+        info "removing leftover mise install $tool"
+        rm -rf -- "$install_dir"
+        removed_mise=1
       fi
+    done < <(setup_config mise-native)
+    if [ "$removed_mise" -eq 1 ] && [ -x "$MISE_BIN" ]; then
+      mise_cmd reshim >/dev/null 2>&1 \
+        || warn "could not refresh mise shims after removing leftover mise installs"
     fi
   fi
   hash -r 2>/dev/null || true
@@ -1671,20 +1805,25 @@ check_cmds() {
   return "$missing"
 }
 
-verify_brew_llvm() {
-  local prefix ver lock_ver
-  prefix="$(brew --prefix llvm 2>/dev/null || true)"
-  if [ -z "$prefix" ] || [ ! -x "$prefix/bin/clang" ]; then
-    log "  MISS clang (brew llvm)"
-    return 1
-  fi
-  ver="$("$prefix/bin/llvm-config" --version 2>/dev/null || true)"
-  lock_ver="$(locked_llvm_version)" || return 1
-  if [ "$ver" != "$lock_ver" ]; then
-    log "  MISS llvm version brew=$ver lock=$lock_ver"
-    return 1
-  fi
-  log "  ok  clang ($prefix/bin/clang) $ver"
+verify_aligned_brew() {
+  local tool name align version_command pkg prefix ver lock_ver
+  while IFS='|' read -r tool name align version_command pkg; do
+    [ "$align" = 1 ] || continue
+    setup_config native-enabled "$name" || continue
+    prefix="$(setup_config native-prefix "$name")" || return 1
+    prefix="$(brew --prefix "$prefix" 2>/dev/null || true)"
+    if [ -z "$prefix" ] || [ ! -x "$prefix/bin/$version_command" ]; then
+      log "  MISS $version_command (brew $pkg)"
+      return 1
+    fi
+    ver="$("$prefix/bin/$version_command" --version 2>/dev/null || true)"
+    lock_ver="$(locked_tool_version "${MISE_CONFIG%/*}/mise.lock" "$tool")" || return 1
+    if [ "$ver" != "$lock_ver" ]; then
+      log "  MISS $name version brew=$ver lock=$lock_ver"
+      return 1
+    fi
+    log "  ok  $version_command ($prefix/bin/$version_command) $ver"
+  done < <(setup_config mise-native)
 }
 
 verify_setup() {
@@ -1709,10 +1848,19 @@ verify_setup() {
       required_failed=1
     fi
   done < <(mise_tool_records)
-  if [ "$OS" = Darwin ] && setup_config native-enabled llvm && setup_config mise-has github:llvm/llvm-project; then
-    info "Homebrew llvm"
-    load_brew_llvm_env
-    if ! verify_brew_llvm; then required_failed=1; fi
+  if [ "$OS" = Darwin ] && [ "$PM" = brew ]; then
+    local align_any=0 align_tool align_name align_flag align_command align_pkg
+    while IFS='|' read -r align_tool align_name align_flag align_command align_pkg; do
+      [ "$align_flag" = 1 ] || continue
+      setup_config native-enabled "$align_name" || continue
+      align_any=1
+      break
+    done < <(setup_config mise-native)
+    if [ "$align_any" -eq 1 ]; then
+      info "Homebrew version alignment"
+      load_brew_prefix_env
+      if ! verify_aligned_brew; then required_failed=1; fi
+    fi
   fi
   info "additional commands"
   records="$(setup_config vendors)" || return 1
@@ -1748,9 +1896,9 @@ packages declared in setup.json (including optional packages). Package managers
 may also update required dependencies. On Arch, --upgrade performs a full system
 upgrade with yay, including AUR packages. Run setup as a regular user on Arch;
 yay uses sudo when required.
-Homebrew llvm on macOS and the locked Linux mise
-toolchain stay on the same version. GitHub eza has no macOS archives; macOS
-installs Homebrew eza instead.
+A mise tool may declare a native package for the operating systems outside its
+os list. When that declaration aligns a Homebrew formula, the formula stays on
+the locked mise version.
 EOF
 }
 
@@ -1844,7 +1992,7 @@ main() {
   install_configured_packages
   have git || die "git is required"
   have curl || die "curl is required"
-  load_brew_llvm_env
+  load_brew_prefix_env
 
   STEP="ensure TOML parser"
   ensure_toml_parser
@@ -1867,7 +2015,7 @@ main() {
   if [ "$PM" != pacman ]; then upgrade_configured_packages; fi
 
   STEP="install cross-platform tools"
-  if [ "$UPGRADE" -eq 1 ] || [ "$MISE_LLVM_CHANGED" -eq 1 ]; then
+  if [ "$UPGRADE" -eq 1 ] || [ "${MISE_ALIGNED_CHANGED:-0}" -eq 1 ]; then
     upgrade_mise_tools
   else
     install_locked_mise_tools

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "06da2f049c2c57dbff8b756de24dec2a12ca83ca",
+  "sourceCommit": "2713c0a38e303aac1b2aeba787d88c03ea1f345b",
   "outputs": [
     {
       "path": ".bashrc",
@@ -454,7 +454,7 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "c7e4aae0f23589f9ad3d26351d4082bd0428d103f863165ab2ac0a8989771c5a",
+      "sha256": "560c3ba1fec7f6f34ff2984608d1496c9aa7a83b3f0dddc5c0f0b19c5c7b1a51",
       "executable": false
     },
     {
@@ -1185,19 +1185,19 @@
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "37af2bb45b0db6cc32bb4091bfc08c731706dbed40715761f0dba710341af07d",
+      "sha256": "35b21d4301b2894ebb0e66b15e7b2f98609131f5e9ed002c08da5560a956f920",
       "executable": false
     },
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "b053e1575b03d6f538686eece3058a9d28dc5b999ae56ad31b33f0de7a3c496a",
+      "sha256": "afdd7e28409e056c22effecde494c1b85078822ea238ba5742ffc1e592eff507",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "053fad0442cd776b9a121e72bad36a4a0d210028f0335f0ce66156ebe6940356",
+      "sha256": "d9d1b2ad166a34ae3eece18f82345443beec94e08c8d53666a479cac4bd8e0e8",
       "executable": true
     }
   ]

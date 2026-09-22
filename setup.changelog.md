@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.9
+
+Install tailcat from Homebrew on macOS and from the tailscale/tailcat Linux release archive. A mise tool can declare that native package inline for the operating systems outside its `os` list. Setup keeps the field out of generated mise configuration, rejects a declaration that would install both sources on the same operating system, and removes a leftover mise install on macOS when the native package owns the command. eza and llvm use the same declaration. A native block can set its package name, a keg-only Homebrew prefix, and version alignment so the formula stays on the locked mise version. A mise shim for a tool that does not apply on the current operating system does not count as that Homebrew install.
+
 ## 2.2.8
 
 Pin scriptc to 0.0.36, the last release validated with the maintained hooks. Version 0.1.2 ships its Linux x64 LLVM helper without executable permission and, after that is corrected, rejects existing shell-parser code with SC1090 errors. Keep the pin during `--upgrade` until a newer release passes `compile-agent-tools`.

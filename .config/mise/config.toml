@@ -32,6 +32,7 @@
 "aqua:crate-ci/typos" = "latest"
 "aqua:dandavison/delta" = "latest"
 "github:eza-community/eza" = { "version" = "latest", "os" = ["linux"], "matching_regex" = "^eza_.*-unknown-linux-" }
+"github:tailscale/tailcat" = { "version" = "latest", "os" = ["linux"], "matching_regex" = "^tailcat_.*_linux_(amd64|arm64)\\.tar\\.gz$" }
 "aqua:fastfetch-cli/fastfetch" = "latest"
 "aqua:junegunn/fzf" = "latest"
 "aqua:cli/cli" = "latest"
