@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "75cd22246a7e735e1fa5b41272519768e4fedc48",
+  "sourceCommit": "b6015df1fc158f10b4ea975744b7830861797bc8",
   "outputs": [
     {
       "path": ".bashrc",
@@ -514,13 +514,13 @@
     {
       "path": ".grok/AGENTS.md",
       "kind": "file",
-      "sha256": "f69966255d1934f383c306d1dfcc796176ec1645a332ef4fc4b23911e4960d3f",
+      "sha256": "fd15a66529426fd7ade4ceb422d6a586fb646fb1869d0e99f6cef66bcde938bb",
       "executable": false
     },
     {
       "path": ".grok/config.toml",
       "kind": "file",
-      "sha256": "898ef52c4ae50c675533d8300b6349461ac3f3eee2665c96c526402521231c98",
+      "sha256": "daf55e3805f3d0b956f6af92f0d0ef87997fafa17b4772d881517d83c4592948",
       "executable": false
     },
     {
