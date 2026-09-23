@@ -1,6 +1,4 @@
 "model" = "gpt-6-astra"
-"network_access" = "enabled"
-"disable_response_storage" = true
 "model_reasoning_summary" = "auto"
 "model_context_window" = 300000
 "model_auto_compact_token_limit" = 270000
@@ -9,7 +7,6 @@
 "plan_mode_reasoning_effort" = "high"
 "hide_agent_reasoning" = false
 "service_tier" = "default"
-"supports_websockets" = true
 "approvals_reviewer" = "user"
 "model_instructions_file" = "$HOME/.codex/overridden_base_instructions.md"
 "model_reasoning_effort" = "medium"
@@ -32,6 +29,8 @@
 "session_picker_view" = "comfortable"
 "status_line" = ["model-with-reasoning", "git-branch", "context-used", "fast-mode", "task-progress", "thread-id", "branch-changes", "weekly-limit", "context-window-size"]
 "auto_recap" = false
+screen_reader_detection_done = true
+fullscreen_transcript = true
 
 ["features"]
 "responses_websockets_v2" = true
@@ -43,6 +42,13 @@
 "js_repl" = false
 "multi_agent" = true
 "workspace_dependencies" = false
+
+# [features.rollout_budget]
+# enabled = true
+# limit_tokens = 300000
+# sampling_token_weight = 1.0
+# prefill_token_weight = 0.2
+# reminder_at_remaining_tokens = [50000, 25000, 10000, 5000]
 
 ["features"."multi_agent_v2"]
 "enabled" = true
