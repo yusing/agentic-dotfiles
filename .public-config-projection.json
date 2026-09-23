@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b6015df1fc158f10b4ea975744b7830861797bc8",
+  "sourceCommit": "8f1d24b0a488d4676bb333c18f1efd88ad5589d7",
   "outputs": [
     {
       "path": ".bashrc",
@@ -58,8 +58,9 @@
     },
     {
       "path": ".claude/CLAUDE.md",
-      "kind": "symlink",
-      "target": "../.codex/AGENTS.md"
+      "kind": "file",
+      "sha256": "248bdcb70950da223e31c33f0e7a2b22ff8e6caad019c3d605e35fd9f6d27b0f",
+      "executable": false
     },
     {
       "path": ".claude/settings.json",
@@ -70,7 +71,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "250993ac69f242fd85e281c01e7c1e3ae08a3e4ef740fa998bb48615cce09e61",
+      "sha256": "be57f7592cf468d8e1fac0169b13f464729117ac42a8b2fef1b312c54a7f06ab",
       "executable": false
     },
     {
@@ -202,7 +203,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "ab9ba58bbace20016808fdd7f356cf0e7eb9d2241081668471a1855613ae9711",
+      "sha256": "953b85dbe926edf58064f9397001b2fd41e2919d59106dfc7eb5b04c242426ef",
       "executable": false
     },
     {
@@ -220,7 +221,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "513643f789e091c232cf859e7c476ddcccff6996f625acc0c476211fcda10308",
+      "sha256": "1b9b0ddbe198452a8e764ceff23c295e373f09f6a331c30284d58ca36298e396",
       "executable": false
     },
     {
@@ -514,7 +515,7 @@
     {
       "path": ".grok/AGENTS.md",
       "kind": "file",
-      "sha256": "fd15a66529426fd7ade4ceb422d6a586fb646fb1869d0e99f6cef66bcde938bb",
+      "sha256": "e23dbd3c9ab9dbb04c9f3169a7284868db25f10c54ed5f0d21ddc9811ab6a956",
       "executable": false
     },
     {
@@ -1131,7 +1132,7 @@
     {
       "path": "CONTEXT-GROK-HOOK-PORT.md",
       "kind": "file",
-      "sha256": "e43d0e43e68a61aebe8082625024939520e15bdbd8dac6e6a6e63190facd68ce",
+      "sha256": "b98e292bfb6eb0eeb45696d8e1ba6705c28ef13e5aea562a4bbdf38c89de3e6a",
       "executable": false
     },
     {
@@ -1155,7 +1156,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "8b66236b8c6fa0e15bc1415d95b626b52eda047e1789eeaae0d82fa2dbcf4eff",
+      "sha256": "9cdfdd416e1351ddbff26d6bfbae10e48c9094ef6f0488ffc7ca9b87d3671676",
       "executable": false
     },
     {

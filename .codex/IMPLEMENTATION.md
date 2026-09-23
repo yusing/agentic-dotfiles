@@ -38,6 +38,7 @@ or interfere with successful core behavior.
 
 Do not introduce safeguards that block intended behavior. When a required safeguard rejects an operation,
 explain why through the owning interface rather than failing silently.
+Failures in unrelated or nonessential work must not cause the intended behavior to fail.
 Skip safeguards for purely hypothetical concerns; raise any concrete unresolved tradeoff in the completion report.
 
 ## Hygiene

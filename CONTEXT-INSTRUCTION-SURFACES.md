@@ -4,10 +4,9 @@ This is the path index for static instruction files. The user manages every file
 under `Paths`. That list does not describe their contents. Configuration selects
 the active surfaces; installed copies and reference dumps are not interchangeable owners.
 
-`.claude/CLAUDE.md` is a symlink to `.codex/AGENTS.md`, so Codex and Claude Code
-share one static instruction surface. Edit that owner once. `.grok/AGENTS.md` is
-a Grok-only extra instruction file that `@`-references `.codex/AGENTS.md` for the
-shared standing guidance.
+`.claude/CLAUDE.md` and `.grok/AGENTS.md` are standalone client instruction files.
+Both `@`-reference `.codex/AGENTS.md` for shared standing guidance and own their
+client-specific additions.
 
 ## Paths
 
@@ -26,8 +25,8 @@ shared standing guidance.
 - `.skills-mgr/skills/handoff/SKILL.md`
 - `.skills-mgr/skills/handoff/STANDARD.md`
 - `.codex/agents/*.toml`
-- `.grok/AGENTS.md` (Grok-only extra instruction; `@` references `.codex/AGENTS.md`)
-- `.claude/CLAUDE.md` (symlink to `.codex/AGENTS.md`)
+- `.grok/AGENTS.md` (standalone; `@` references `.codex/AGENTS.md`)
+- `.claude/CLAUDE.md` (standalone; `@` references `.codex/AGENTS.md`)
 - `.codex/skills/` (user-maintained content only)
 - `.skills-mgr/skills/`
 

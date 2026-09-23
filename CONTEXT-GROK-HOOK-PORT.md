@@ -43,14 +43,15 @@ Agent-client directories such as `.codex` are not broad roots; a `skills`
 child still matches `/home/$USER/*/skills`. A named skill file may be read
 or edited directly. Listing and fetching unknown skills still belong to
 `skills-mgr`.
-`.grok/AGENTS.md` owns the Grok-only extra instruction: at root-session start and
-after compaction the agent runs `$HOME/.codex/hooks/bin/check_project --without-git`
-and `skills-mgr list`. It has no separate subagent-start instruction, and the Grok port
+`.grok/AGENTS.md` owns Grok-only extra instructions: at root-session start and
+after compaction the agent runs `$HOME/.codex/hooks/bin/check_project` and
+`skills-mgr list`. It has no separate subagent-start instruction, and the Grok port
 does not register `SubagentStart`; this port does not establish inventory delivery to children.
 That file `@`-references `.codex/AGENTS.md` for shared standing guidance. Do not
 copy the shared file into the Grok extra file. Codex registers direct inventory through
 `session_start_context`; Claude registers `.codex/hooks/bin/skills_mgr_inventory`.
 Both use `.codex/hooks/bin/check_project` for project reporting.
+Its skill-access section makes the shared `skills-mgr` commands explicit for Grok.
 
 When an instruction changes, edit only its owner. Supporting the same policy in
 multiple clients means sharing or porting the owner, not copying its text into
