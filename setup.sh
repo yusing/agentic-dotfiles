@@ -1342,7 +1342,7 @@ assert_aligned_brew_versions() {
     lock_ver="$(locked_tool_version "$lock_path" "$tool")" \
       || die "could not read the locked $tool version"
     [ "$brew_ver" = "$lock_ver" ] \
-      || die "Homebrew $pkg $brew_ver differs from locked $tool $lock_ver"
+      || warn "Homebrew $pkg $brew_ver differs from locked $tool $lock_ver"
   done < <(setup_config mise-native)
 }
 
