@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "04ad6dfb1bf26f306e73689ff2698cb9bca6fda8",
+  "sourceCommit": "d9a0868639db2109f4e3dc454f449ba5fa8a9473",
   "outputs": [
     {
       "path": ".bashrc",
@@ -460,7 +460,7 @@
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "704eb3f2b68413a1c780a99d80c1d79ac7de623b839afebec9007f8bd25c608a",
+      "sha256": "af4765f89e21ff9b83f5b29a698bfcd7c4eef5de0e7b95ade898dd7d175c5c40",
       "executable": false
     },
     {
@@ -1191,7 +1191,7 @@
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "afdd7e28409e056c22effecde494c1b85078822ea238ba5742ffc1e592eff507",
+      "sha256": "95ee4d87b3dc06d22d1fe96062c3d61874039dbb01cad533f879d0e1b450a5c0",
       "executable": false
     },
     {
