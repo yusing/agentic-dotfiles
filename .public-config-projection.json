@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "cc7b76c5a4ac108cf661d610ebb2e604cb0fd98c",
+  "sourceCommit": "55be8c5a816f09e062a980e24ccd5facd0e0cb68",
   "outputs": [
     {
       "path": ".bashrc",
@@ -1168,7 +1168,7 @@
     {
       "path": "CONTEXT-SHELL.md",
       "kind": "file",
-      "sha256": "e7e3ee6ef8bc2c8c3a1c505f7d2e24b69cc62408ca9145232fc089eb5808d3d4",
+      "sha256": "be6abf85e736028adf97eb1ac0deafe9c2775a54efefd107f7679bd65933238b",
       "executable": false
     },
     {

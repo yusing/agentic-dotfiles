@@ -9,4 +9,6 @@
   shell.
 - `.zshrc` owns Zsh-only completion, plugin, widget, key-binding, and mirror-loading
   setup.
-- `.bashrc` is independent Bash-specific setup and is not a complete Fish mirror.
+- `.bash_profile` makes local binaries and Mise shims available to login Bash,
+  including Codex commands. `.bashrc` is independent Bash-specific interactive
+  setup and is not a complete Fish mirror.
