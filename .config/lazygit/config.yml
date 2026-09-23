@@ -10,6 +10,12 @@ gui:
   nerdFontsVersion: "3"
   showDivergenceFromBaseBranch: arrowAndNumber
   switchTabsWithPanelJumpKeys: true
+  sidePanels:
+    - [status]
+    - [files, worktrees, submodules]
+    - [branches, remotes, tags]
+    - [commits]
+    - [stash]
   theme:
     activeBorderColor:
       - '#cba6f7'
@@ -41,7 +47,7 @@ gui:
 
 git:
   log:
-    showWholeGraph: true
+    showWholeGraph: false
   diffRenderers:
     - name: delta
       colorArg: always
