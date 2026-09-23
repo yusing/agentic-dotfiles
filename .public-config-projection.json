@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6a8aaa06228cbfba665a7294108fe8592c5b8e32",
+  "sourceCommit": "75cd22246a7e735e1fa5b41272519768e4fedc48",
   "outputs": [
     {
       "path": ".bashrc",
@@ -274,7 +274,7 @@
     {
       "path": ".config/ccstatusline/settings.json",
       "kind": "file",
-      "sha256": "21104a1c814ff0be3b3c01703477dadd1406f102f11ea446ba5029826862dee1",
+      "sha256": "ce214169a83e019b8898a3e571a6382807a0cffa3e63fce76836db9287c54fa5",
       "executable": false
     },
     {
