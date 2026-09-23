@@ -1,7 +1,13 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "55be8c5a816f09e062a980e24ccd5facd0e0cb68",
+  "sourceCommit": "fba0c136769685116aebc5f51b2b8f12bec035f9",
   "outputs": [
+    {
+      "path": ".bash_profile",
+      "kind": "file",
+      "sha256": "b440bb9204ea5c0a3ec0ff47a0427ca67c446e4a34dc9e858de99edac40ad17d",
+      "executable": false
+    },
     {
       "path": ".bashrc",
       "kind": "file",
@@ -503,7 +509,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "d24fe46a6dad3fd6abfc21df2730ad6fda25bfe51fd84c354d836f14e0617d41",
+      "sha256": "b8ef98f2d6784cfd6bcc9ff64821c5ae43e389fb4e737878340f489bad362f75",
       "executable": false
     },
     {
@@ -581,13 +587,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "b96b51596d24403c289bfc2972c6693b14e204fa1ac7054e9dcf5d0106b38564",
+      "sha256": "8ae1c034cd2d9095b177c17020d19d8e3f2660e01e0cf392a98e19bcb023c888",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "df553c4cd08f3cdc64e9d6fa8567745219b67f27777f54dbec059489515912e2",
+      "sha256": "1218cb3528829b39189bd6485c9076dd89f80c21d2631ae427df8d390350131a",
       "executable": true
     },
     {

@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.2.6";
+export const VERSION = "1.2.7";
 
 type TreeEntry = {
 	mode: string;
@@ -69,6 +69,7 @@ const TEXT_EXTENSIONS = new Set([
 ]);
 const TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS = new Set([
 	"LICENSE",
+	".bash_profile",
 	".bashrc",
 	".gitconfig",
 	".gitignore",
@@ -98,6 +99,7 @@ const EXACT_PATHS = new Set([
 	"CONTEXT-HOOK-OWNERS.md",
 	"CONTEXT-INSTRUCTION-SURFACES.md",
 	"CONTEXT-SHELL.md",
+	".bash_profile",
 	".bashrc",
 	".bunfig.toml",
 	".gitconfig",

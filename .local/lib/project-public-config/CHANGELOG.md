@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.7
+
+Include the login Bash profile so the public projection retains the Mise shim
+PATH setup used by Codex commands.
+
 ## 1.2.6
 
 Keep public Codex settings when the source uses quoted TOML keys and dotted

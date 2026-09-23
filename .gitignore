@@ -2,6 +2,7 @@
 *
 __pycache__
 
+!/.bash_profile
 !/.bashrc
 !/.bunfig.toml
 !/.claude/
