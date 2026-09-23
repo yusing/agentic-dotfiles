@@ -17,6 +17,8 @@ for relevant returned IDs with
 - Use symbol lookup when the location is known.
 - When porting logic, retain a `Source: rel/path:<start>:<end>@[<revision>] <symbol>` comment
   near the ported code.
+- After Go implementation or refactoring, use `staticcheck` and `deadcode` to look for
+  stale or dead code when the tools are available. Inspect findings before removing code.
 
 ## Filesystem work
 

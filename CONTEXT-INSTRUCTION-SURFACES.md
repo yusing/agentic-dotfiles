@@ -31,9 +31,13 @@ shared standing guidance.
 - `.codex/skills/` (user-maintained content only)
 - `.skills-mgr/skills/`
 
-Confirm the active catalog and owning copy before changing a skill that also exists in a
-client-local directory. The configured compaction prompt points directly to the managed
-handoff standard, not a client-local handoff copy.
+For a managed skill, check `.skills-mgr/.skills-mgr.json` for its activation rule and edit
+`.skills-mgr/skills/<name>/SKILL.md`, not a client-local installed copy or placeholder.
+For example, `golang-best-practices` is owned by
+`.skills-mgr/skills/golang-best-practices/SKILL.md`; its `lang go` activation can make
+`skills-mgr get` report it disabled from this home-directory repository. Skill authoring
+can read that owning file directly without searching other skill stores. The configured
+compaction prompt likewise points to the managed handoff standard, not a client-local copy.
 
 
 ## Generated and imported surfaces
