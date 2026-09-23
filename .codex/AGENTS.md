@@ -57,6 +57,7 @@ These are task documents, not skills. Read those match your role and next operat
   Mechanical-only edits and wording reviews use the affected content and applicable repository rules.
 - `$HOME/.codex/GITHUB.md` for GitHub pull request descriptions, issue bodies, or comments, read.
 - `HANDOFF.md` when mentioned, then delete it.
+- `RECOVERY.md` when created/mentioned; retain it until staged delivery is complete, then delete it.
 
 Do not repeat instructions before first user message, including this file, in:
 

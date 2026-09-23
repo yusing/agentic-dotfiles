@@ -28,7 +28,7 @@ dependency. Do not divide work by technical layer or stop after the first workin
 
 The delivery owner maintains one recovery record from staged entry through completion. Reuse the
 record established by `new-project`, or create it on direct entry to this skill. Use the Mekugi
-journal when available; otherwise use a temporary project artifact outside commits. Capture the
+journal when available; otherwise use project-root `RECOVERY.md` outside commits. Capture the
 accepted items and decisions, original base and current head, slice order, checkpoint and slice
 commits, validation and review results, and next unfinished work. Keep it current after every
 completed slice, review, correction, and history rewrite. No fixed template or duplicate artifact
@@ -61,6 +61,6 @@ Repeat review as needed until the complete range is cleared.
 
 Fold fixups into their commits using the existing autosquash authorization. Verify that rewriting
 preserves the reviewed tree, then validate the final range. Only then mark the journal record
-complete or delete the fallback artifact. Report the delivered outcome, commit range, checks, and
+complete or delete `RECOVERY.md`. Report the delivered outcome, commit range, checks, and
 remaining limitations. If blocked on user input or work outside scope, retain the recovery record
 with the concrete gap and next unfinished work.
