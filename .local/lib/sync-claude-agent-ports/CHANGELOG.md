@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7
+
+- Map Codex GPT-6 Sol and Luna roles to their existing Claude model budgets and adapt their model identity text.
+
 ## 1.0.6
 
 - Rename implementer to worker for tests, documentation, fixtures, and other support artifacts only, keeping its scoped editing and inspection tools; use Codex Luna/max with Claude Sonnet/xhigh.

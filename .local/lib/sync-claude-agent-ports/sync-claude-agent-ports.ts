@@ -1,10 +1,10 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.6";
+export const VERSION = "1.0.7";
 const MODEL_MAP: Record<string, string> = {
-  "gpt-5.6-luna": "sonnet",
-  "gpt-5.6-sol": "opus",
+  "gpt-6-luna": "sonnet",
+  "gpt-6-sol": "opus",
   "gpt-6-astra": "opus",
 };
 const READ_TOOLS = "Read, Grep, Glob, Bash, Write, TodoWrite, Skill";
@@ -21,7 +21,7 @@ const METADATA: Record<string, { color: string; tools: string; model?: string; e
 
 export function adaptText(text: string, hasBash: boolean): string {
   text = text
-    .replace(/You are Codex, a GPT-(?:5\.6 (?:Luna|Sol)|6 Astra) subagent/, "You are a subagent")
+    .replace(/You are Codex, a GPT-6 (?:Astra|Sol|Luna) subagent/, "You are a subagent")
     .replaceAll("The handoff provides", "The task provides")
     .replaceAll("When the handoff includes `result_artifact`", "When the task names a result artifact path")
     .replaceAll("`input_artifacts`", "input artifact paths")

@@ -1,7 +1,7 @@
 ---
 description: "Independent, read-only reviewer of repository web interfaces and frontend behavior."
 mode: subagent
-model: kilo/openai/gpt-5.6-sol
+model: kilo/openai/gpt-6-sol
 variant: medium
 color: "#A855F7"
 permission:

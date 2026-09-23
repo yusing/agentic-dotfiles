@@ -58,6 +58,12 @@ def command_event(command: str, secs: int, nanos: int = 0) -> dict:
 
 
 class SessionUsageTest(unittest.TestCase):
+    def test_gpt_6_sol_and_luna_fallback_prices(self) -> None:
+        self.assertEqual(FALLBACK_USD_PER_MILLION["gpt-6-sol"]["prompt"], 2.0)
+        self.assertEqual(FALLBACK_USD_PER_MILLION["gpt-6-sol"]["long_completion"], 15.0)
+        self.assertEqual(FALLBACK_USD_PER_MILLION["gpt-6-luna"]["prompt"], 0.1)
+        self.assertEqual(FALLBACK_USD_PER_MILLION["gpt-6-luna"]["long_completion"], 0.75)
+
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory()
         self.home = Path(self.temp.name)

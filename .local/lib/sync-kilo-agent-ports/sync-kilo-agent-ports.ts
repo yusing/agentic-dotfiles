@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.1";
+export const VERSION = "1.0.2";
 export const BUILTIN_ROLES = [
   "ask",
   "code",
@@ -12,8 +12,8 @@ export const BUILTIN_ROLES = [
   "plan",
 ] as const;
 const MODEL_MAP: Record<string, string> = {
-  "gpt-5.6-luna": "kilo/deepseek/deepseek-v4.1-flash",
-  "gpt-5.6-sol": "kilo/openai/gpt-5.6-sol",
+  "gpt-6-luna": "kilo/deepseek/deepseek-v4.1-flash",
+  "gpt-6-sol": "kilo/openai/gpt-6-sol",
   "gpt-6-astra": "kilo/openai/gpt-6-astra",
 };
 const MODEL_VARIANTS: Record<string, readonly string[]> = {
@@ -33,7 +33,7 @@ const METADATA: Record<string, { color: string; model?: string; variant?: string
 
 export function adaptText(text: string): string {
   return text
-    .replace(/You are Codex, a GPT-(?:5\.6 (?:Luna|Sol)|6 Astra) subagent/, "You are a subagent")
+    .replace(/You are Codex, a GPT-6 (?:Astra|Sol|Luna) subagent/, "You are a subagent")
     .replaceAll("The handoff provides", "The task provides")
     .replaceAll("When the handoff includes `result_artifact`", "When the task names a result artifact path")
     .replaceAll("`input_artifacts`", "input artifact paths")

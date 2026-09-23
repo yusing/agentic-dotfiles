@@ -1,6 +1,6 @@
 name = "web-reviewer"
 description = "Independent, read-only reviewer of repository web interfaces and frontend behavior."
-model = "gpt-5.6-sol"
+model = "gpt-6-sol"
 model_reasoning_effort = "medium"
 developer_instructions = '''
 # Role
