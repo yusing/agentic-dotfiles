@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "71dfb4ddff122eafd57bca8ad28eb1f80b619cc9",
+  "sourceCommit": "6a8aaa06228cbfba665a7294108fe8592c5b8e32",
   "outputs": [
     {
       "path": ".bashrc",
@@ -484,7 +484,7 @@
     {
       "path": ".config/zed/settings.json",
       "kind": "file",
-      "sha256": "15f2d44b68a3354cc038751ef52d6979cef9d823ecc274adf073f72a363b7d4b",
+      "sha256": "3daf289f869d0f5fc04c4e32a11875452531acf211e82d775d2455b5d16bbc3f",
       "executable": false
     },
     {

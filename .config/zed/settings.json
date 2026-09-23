@@ -110,14 +110,14 @@
     },
     "inline_assistant_model": {
       "provider": "openai-subscribed",
-      "model": "gpt-5.6-sol",
+      "model": "gpt-6-sol",
       "enable_thinking": false
     },
     "show_turn_stats": true,
     "default_model": {
       "effort": "high",
       "provider": "openai-subscribed",
-      "model": "gpt-5.6-sol",
+      "model": "gpt-6-sol",
       "enable_thinking": true
     },
     "model_parameters": []
