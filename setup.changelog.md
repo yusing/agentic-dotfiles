@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.0
+
+Set the Tailscale operator on the sending host too. It was applied only on the receiver, so `clip-watch` on a Wayland desktop failed every push with `Access denied: file access denied`; `tailscale file cp` needs the operator just as `tailscale file get` does.
+
+Also enable `clip-watch` whenever `wl-paste` is installed rather than only when `$WAYLAND_DISPLAY` is set, and start it separately. The unit is `PartOf=graphical-session.target`, so a setup run over ssh or from a tty now leaves it enabled for the next graphical session instead of skipping it.
+
 ## 2.5.0
 
 Run the clip-watch pasteboard watcher on macOS as the `local.clip-watch` LaunchAgent. Setup writes its plist under `~/Library/LaunchAgents` and restarts it on each run so a rebuilt watcher takes over. It replaces the skhd Ctrl+V binding, whose re-sent key typed a bare `v`; setup still reloads a running skhd so the removed binding goes away. A missing watcher warns instead of stopping setup.

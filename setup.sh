@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.5.0
+# version: 2.6.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1994,20 +1994,31 @@ configure_image_paste() {
   systemctl --user daemon-reload || warn "could not reload systemd user units"
   user="$(id -un)"
   target="$("$clip_push" --target)"
-  if have tailscale && tailscale ip 2>/dev/null | grep -qxF "$target"; then
-    info "configuring this host as the clip-recv image paste receiver"
+
+  # Both ends need the operator: `tailscale file cp` on the sender and
+  # `tailscale file get` on the receiver are root-only until it is set, and a
+  # sender without it fails every push with "Access denied: file access denied".
+  if have tailscale; then
     tailscale debug prefs 2>/dev/null | grep -qF "\"OperatorUser\": \"$user\"" \
       || run_root tailscale set --operator="$user" \
-      || warn "could not make $user the Tailscale operator; clip-recv cannot read Taildrop"
+      || warn "could not make $user the Tailscale operator; Taildrop needs root without it"
+  fi
+
+  if have tailscale && tailscale ip 2>/dev/null | grep -qxF "$target"; then
+    info "configuring this host as the clip-recv image paste receiver"
     # Linger keeps the clipboard alive between mosh sessions.
     [ "$(loginctl show-user "$user" -p Linger --value 2>/dev/null)" = yes ] \
       || run_root loginctl enable-linger "$user" \
       || warn "could not enable linger; image paste stops when you log out"
     systemctl --user enable --now clip-xvfb.service clip-recv.service \
       || warn "could not start clip-xvfb and clip-recv"
-  fi
-  if [ -n "${WAYLAND_DISPLAY:-}" ] && have wl-paste; then
-    systemctl --user enable --now clip-watch.service || warn "could not start clip-watch"
+  elif have wl-paste; then
+    # clip-watch is PartOf graphical-session.target, so enabling it is what makes
+    # it run for a setup done over ssh; only a live session can start it now.
+    systemctl --user enable clip-watch.service || warn "could not enable clip-watch"
+    if [ -n "${WAYLAND_DISPLAY:-}" ]; then
+      systemctl --user start clip-watch.service || warn "could not start clip-watch"
+    fi
   fi
 }
 
