@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.3.1
+# version: 2.4.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1924,6 +1924,47 @@ ensure_fish_login_shell() {
 }
 
 # ---------------------------------------------------------------------------
+# Image paste over mosh
+# ---------------------------------------------------------------------------
+
+# The Linux host whose tailnet address is clip-push's target runs the headless
+# X clipboard and the Taildrop receiver. A Wayland session sends each copied
+# image there. macOS reloads skhd, whose Ctrl+V binding runs clip-push.
+configure_image_paste() {
+  local clip_push="${LOCAL_BIN}/clip-push" user target
+  [ -x "$clip_push" ] || return 0
+  if [ "$OS" = Darwin ]; then
+    if have skhd && pgrep -x skhd >/dev/null 2>&1; then
+      skhd --reload || warn "could not reload skhd; run: skhd --reload"
+    fi
+    return 0
+  fi
+  [ "$OS" = Linux ] && [ "$(id -u)" -ne 0 ] && have systemctl || return 0
+  if ! systemctl --user show-environment >/dev/null 2>&1; then
+    warn "no systemd user manager; skipping image paste services"
+    return 0
+  fi
+  systemctl --user daemon-reload || warn "could not reload systemd user units"
+  user="$(id -un)"
+  target="$("$clip_push" --target)"
+  if have tailscale && tailscale ip 2>/dev/null | grep -qxF "$target"; then
+    info "configuring this host as the clip-recv image paste receiver"
+    tailscale debug prefs 2>/dev/null | grep -qF "\"OperatorUser\": \"$user\"" \
+      || run_root tailscale set --operator="$user" \
+      || warn "could not make $user the Tailscale operator; clip-recv cannot read Taildrop"
+    # Linger keeps the clipboard alive between mosh sessions.
+    [ "$(loginctl show-user "$user" -p Linger --value 2>/dev/null)" = yes ] \
+      || run_root loginctl enable-linger "$user" \
+      || warn "could not enable linger; image paste stops when you log out"
+    systemctl --user enable --now clip-xvfb.service clip-recv.service \
+      || warn "could not start clip-xvfb and clip-recv"
+  fi
+  if [ -n "${WAYLAND_DISPLAY:-}" ] && have wl-paste; then
+    systemctl --user enable --now clip-watch.service || warn "could not start clip-watch"
+  fi
+}
+
+# ---------------------------------------------------------------------------
 # Verification
 # ---------------------------------------------------------------------------
 
@@ -2034,6 +2075,9 @@ yay uses sudo when required.
 --upgrade TOOL... re-resolves only the named mise tools (identifier or command
 name, such as git-agent) and installs the lock after a completed setup. It skips
 native packages, vendors, checkout, helper compilation, and verification.
+Image paste over mosh: the Linux host at clip-push's tailnet target gets the
+Taildrop operator, linger, and the clip-xvfb and clip-recv user services; a
+Wayland session gets clip-watch; macOS reloads skhd for its Ctrl+V binding.
 A mise tool may declare a native package for the operating systems outside its
 os list. When that declaration aligns a Homebrew formula, the formula stays on
 the locked mise version.
@@ -2188,6 +2232,9 @@ main() {
 
   STEP="set login shell"
   ensure_fish_login_shell
+
+  STEP="configure image paste"
+  configure_image_paste
 
   STEP="verify"
   hash -r 2>/dev/null || true

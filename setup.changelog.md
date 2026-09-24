@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0
+
+Configure image paste at the end of setup. The Linux host whose tailnet address matches `clip-push --target` becomes the receiver: setup makes the user the Tailscale operator and enables linger when either is missing, then enables `clip-xvfb` and `clip-recv`. A Wayland session enables `clip-watch`. macOS reloads a running skhd. A failed service step warns instead of stopping setup, and root runs or hosts without a systemd user manager skip it.
+
 ## 2.3.1
 
 Install the packages that let agents paste images over mosh: xclip and Xvfb on Linux, where clip-recv loads images into a headless X clipboard; wl-clipboard (optional) for Wayland hosts; and pngpaste on macOS for clip-push. Tailscale is not declared, because apt needs Tailscale's own repository and macOS normally uses the app.
