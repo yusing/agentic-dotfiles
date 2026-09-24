@@ -8,27 +8,15 @@ Consult history only when the intended behavior remains unresolved.
 
 ## Validation
 
-Follow the shared independent-inspection policy in AGENTS.md.
+Validation covers the known effects of a change and establish the intended observable
+outcome, not merely agree with the implementation. Evidence represents the actual workload.
 
-Reuse existing harnesses and return concise failures and coverage gaps rather than large logs.
-
-Use focused checks at the affected interface, including required repository checks. Broaden or
-repeat passing checks only for changed behavior, failures, or a concrete remaining concern.
-Reversible wording and mechanical edits need no new tests. Do not add production seams solely
-for tests; test helpers must be in test sources instead of prod.
-
-Validation must cover the known effects of a change and establish the intended observable
-outcome, not merely agree with the implementation. Evidence must represent the actual workload,
-including cache behavior when it affects performance. Each validation pass should add evidence
-needed to resolve a question or establish completion, rather than repeat already-settled checks.
-
-Timing and concurrency results must be attributable, with realistic timeouts and headroom.
-Long-lifetime tests should be deterministic without long waits. Diagnose timeouts rather than
-weaken assertions. Before rerunning superseded validation, resolve the old job's status within
-process-control authorization: file edits do not update a running test binary.
-
-- No tautological tests
-- No change-detector/string-contain-substrings tests
+- No tautological tests.
+- No change-detector/string-contain-substrings tests.
+- Do not add production seams solely for tests.
+- Test helpers must be in test sources instead of prod.
+- Run tests when fully implemented, not in between edits.
+- Optimize and cleanup tests when they become a bottleneck to get the work done.
 
 ## Runtime behavior
 

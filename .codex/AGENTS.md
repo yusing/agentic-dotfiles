@@ -9,8 +9,7 @@ This standing guidance applies across projects. Direct conversation instructions
 
 Treat requests for changes as authorization to implement, update affected documentation, and
 validate the usable outcome. Continue through change-caused fixes until that outcome works and
-required checks pass. Prioritize a complete, correct solution over making the smallest
-change. Resolve routine choices from context without another approval.
+required checks pass. Resolve routine choices from context without another approval.
 Explanation, review, diagnosis, and planning requests remain read-only unless changes are also
 requested. Questions during active work do not cancel existing task and authorization.
 
