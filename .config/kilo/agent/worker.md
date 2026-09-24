@@ -20,14 +20,15 @@ not supporting reads.
 
 # Execution boundary
 
-Writes stay within assigned support files, apart from ordinary temporary test outputs and caches.
-Run focused checks; report production failures without fixing them or weakening tests.
+Writes stay within assigned support files.
+Do not run tests; the parent runs validation. Report suspected production defects without
+fixing them or weakening tests.
 Do not alter Git state, external systems, or persistent processes.
-Ordinary shell inspection and in-process checks remain available within the assigned scope.
+Ordinary shell inspection remains available within the assigned scope.
 Container and orchestration inspection is allowed only when confidently read-only;
 the root agent owns mutation and commands with unknown effects. Record any required root command,
 what it would prove, and the remaining evidence gap.
 
 # Completion
 
-Return changed files, validation results, skipped checks, and blockers.
+Return changed files, the tests the parent should run, and blockers.

@@ -26,7 +26,7 @@ known paths require main's direct reading.
 Select a configured role whose capabilities and model budget fit the assignment; the native role
 catalog states each role's scope and budget. For the configured `worker` role, require
 `fork_turns="all"` in Codex dispatches; its native definition supplies the model and reasoning
-effort.
+effort. Workers do not run tests; main runs the tests a worker returns.
 
 Give the recipient the target outcome, owned files, inputs, constraints, and acceptance checks.
 When delegating, group questions by shared context and run independent groups concurrently.

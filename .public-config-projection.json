@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "fca8cd68b471067d72203b89ffeb1c562502f5ad",
+  "sourceCommit": "9574ab0e34b7cf63e7c19fedda0ce45ee53aef3a",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -59,7 +59,7 @@
     {
       "path": ".claude/agents/worker.md",
       "kind": "file",
-      "sha256": "59d318fdbc3c6a5c69f6405a912d43cd89bdd7266b2c3b6130152ae96913c418",
+      "sha256": "505d43edfd42335f30fc6f1b0dc86759c6835193aa725808a6a5433ffcd12861",
       "executable": false
     },
     {
@@ -119,7 +119,7 @@
     {
       "path": ".codex/agents/worker.toml",
       "kind": "file",
-      "sha256": "b568c559f43677de4d3da88320cfe203c3239d8241fc7490b111bd80b272a855",
+      "sha256": "224f4e30f1da5d38ebb52bcd5f4b84697db58bf43f78a23d6f32ecd951df9e6f",
       "executable": false
     },
     {
@@ -221,7 +221,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "6e894c9dbd29de916d9a50ce2f5fa63561a9dfe63fbc06e53bb46ddb68f63b71",
+      "sha256": "bcaa14ce0d99bba7cdab97d43b2005664a4b317b795a890f4b112e5579260c13",
       "executable": false
     },
     {
@@ -269,7 +269,7 @@
     {
       "path": ".codex/SUBAGENT.md",
       "kind": "file",
-      "sha256": "debe40327a8f9ee93b15596aa4c72fe3a1e41aece7733c9188f333eb803f86d2",
+      "sha256": "e984cab4ede7497fcc2b2af1746d9d1f38622950fa0400c985c9a8d8f2342647",
       "executable": false
     },
     {
@@ -407,7 +407,7 @@
     {
       "path": ".config/kilo/agent/worker.md",
       "kind": "file",
-      "sha256": "f783bc73dea123aff9921a06a94ac183e94055c4afa54cc06c915387528b6eae",
+      "sha256": "bf76c3cedc17662cb0815fea60b892c7b20ff2c2b20505f058f80b5233013099",
       "executable": false
     },
     {
