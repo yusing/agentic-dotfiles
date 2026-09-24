@@ -187,6 +187,15 @@
         "locator": "cursor/plugins/thermo-nuclear-code-quality-review"
       }
     },
+    "typesafe-ai": {
+      "enabled": true,
+      "remote": {
+        "provider": "skills.sh",
+        "id": "typesafe-ai/skills/typesafe-ai",
+        "name": "typesafe-ai",
+        "locator": "typesafe-ai/skills/typesafe-ai"
+      }
+    },
     "ui-ux-pro-max": {
       "enabled": "lang tsx || lang jsx || lang html || lang css",
       "remote": {
@@ -209,7 +218,7 @@
       "enabled": true
     },
     "using-pjdoc": {
-      "enabled": true
+      "enabled": false
     },
     "vercel-react-best-practices": {
       "enabled": "lang node && has_dependency react",
