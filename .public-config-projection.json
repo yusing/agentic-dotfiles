@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "1b4c795c7bf44793c06a2ee7fa27acc238a2a129",
+  "sourceCommit": "ab3068fec774f920e23d38e3c7a95f597e1ceea4",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -465,6 +465,42 @@
       "executable": false
     },
     {
+      "path": ".config/mise/locks/pipx-rich-cli/1.8.1~73c63f16/pyproject.toml",
+      "kind": "file",
+      "sha256": "ba23a0169375209e2c0cf5e1a81f3a9c735c5ebb478efcfa61e4b46f4c3a9a5a",
+      "executable": false
+    },
+    {
+      "path": ".config/mise/locks/pipx-rich-cli/1.8.1~73c63f16/uv.lock",
+      "kind": "file",
+      "sha256": "ee269a99c88a2e30848e43b012f01dc8f86f84ef71e7b21465827571c0686cbd",
+      "executable": false
+    },
+    {
+      "path": ".config/mise/locks/pipx-semgrep/1.177.0~2131a6f0/pyproject.toml",
+      "kind": "file",
+      "sha256": "4527d57045b1738fdeea9e7c9703248494e71cfb2928cbd6e253646ddb723f3e",
+      "executable": false
+    },
+    {
+      "path": ".config/mise/locks/pipx-semgrep/1.177.0~2131a6f0/uv.lock",
+      "kind": "file",
+      "sha256": "7689e6255bd860b94b343949816d51176dedd43b576533a3258183ddf509982e",
+      "executable": false
+    },
+    {
+      "path": ".config/mise/locks/pipx-yamllint/1.38.0~4f6a58c7/pyproject.toml",
+      "kind": "file",
+      "sha256": "013b5cf3be1ca02796a6a01de7a65df7ecc0569a2207df275985edeeab381b20",
+      "executable": false
+    },
+    {
+      "path": ".config/mise/locks/pipx-yamllint/1.38.0~4f6a58c7/uv.lock",
+      "kind": "file",
+      "sha256": "8754230cc61028560d8a2248ccdf5faec1343840168c0b1fa1d80cd9c69c93a9",
+      "executable": false
+    },
+    {
       "path": ".config/mise/mise.lock",
       "kind": "file",
       "sha256": "065635bfe51547004e23b770a5ab2dcc943579f8a46dc3b58126418bc4e143f6",
@@ -509,7 +545,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "b8ef98f2d6784cfd6bcc9ff64821c5ae43e389fb4e737878340f489bad362f75",
+      "sha256": "112d8d08d98c5bbfce94e4c9f7753ea9f991f3d4bd23f4f728c278dff46b7313",
       "executable": false
     },
     {
@@ -587,13 +623,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "8ae1c034cd2d9095b177c17020d19d8e3f2660e01e0cf392a98e19bcb023c888",
+      "sha256": "511b7d93065912957a54781300f12d89881f622a67fd85c56979e50f35aeb5a6",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "1218cb3528829b39189bd6485c9076dd89f80c21d2631ae427df8d390350131a",
+      "sha256": "fb56ab6861b87ad8634b673dc6102cf2a91a7f9bfc16617d8d8f86a6d256209e",
       "executable": true
     },
     {
@@ -1192,7 +1228,7 @@
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "35b21d4301b2894ebb0e66b15e7b2f98609131f5e9ed002c08da5560a956f920",
+      "sha256": "42d658d6f8e31648bc2d788ac9ae36658851ce8f0fe0f7983b0310d78c909e8b",
       "executable": false
     },
     {
@@ -1204,7 +1240,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "fed2992b66fde20c748dc4b1c6227a64a4738eeee695910e9643c9b9d51aad71",
+      "sha256": "d0905ae44989af6d50c1f40e341a376b1a0a1d77e6d1fc739c998175a38c9692",
       "executable": true
     }
   ]

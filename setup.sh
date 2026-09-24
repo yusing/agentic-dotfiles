@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.2.9
+# version: 2.2.10
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1112,6 +1112,7 @@ validate_mise_lock() {
   local config_path="$1" lock_path="$2"
   MISE_CONFIG_PATH="$config_path" MISE_LOCK_PATH="$lock_path" \
     MISE_LOCK_PLATFORMS="$MISE_LOCK_PLATFORMS" py <<'PY'
+import hashlib
 import os
 import re
 from pathlib import Path
@@ -1187,6 +1188,52 @@ for tool in locked:
             raise SystemExit(f"mise lock has an invalid {tool} URL for {platform}")
         if not re.fullmatch(r'(?:sha256:)?[0-9a-fA-F]{64}', checksum):
             raise SystemExit(f"mise lock has an invalid {tool} checksum for {platform}")
+
+# Python tools lock their dependency graph in a uv.lock sidecar beside the lock.
+lock_root = Path(os.environ["MISE_LOCK_PATH"]).parent
+for tool, entries in tomllib.loads(lock_text).get("tools", {}).items():
+    for entry in entries:
+        sidecar = entry.get("uv")
+        if sidecar is None:
+            continue
+        graph = lock_root / sidecar["path"] / "uv.lock"
+        if not graph.is_file():
+            raise SystemExit(f"mise lock sidecar is missing for {tool}: {sidecar['path']}")
+        actual = "sha256:" + hashlib.sha256(graph.read_bytes()).hexdigest()
+        if actual != sidecar["digest"]:
+            raise SystemExit(f"mise lock sidecar digest mismatch for {tool}: {sidecar['path']}")
+PY
+}
+
+# Keep only sidecars the lock references so removed or bumped versions do not linger.
+prune_mise_sidecars() {
+  MISE_LOCK_PATH="$1" py <<'PY'
+import os
+import shutil
+from pathlib import Path
+
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
+
+lock_path = Path(os.environ["MISE_LOCK_PATH"])
+locks = lock_path.parent / "locks"
+referenced = {
+    (lock_path.parent / entry["uv"]["path"]).resolve()
+    for entries in tomllib.loads(lock_path.read_text()).get("tools", {}).values()
+    for entry in entries
+    if "uv" in entry
+}
+if locks.is_dir():
+    for tool_dir in locks.iterdir():
+        for version_dir in tool_dir.iterdir() if tool_dir.is_dir() else ():
+            if version_dir.resolve() not in referenced:
+                shutil.rmtree(version_dir)
+        if tool_dir.is_dir() and not any(tool_dir.iterdir()):
+            tool_dir.rmdir()
+    if not any(locks.iterdir()):
+        locks.rmdir()
 PY
 }
 
@@ -1194,16 +1241,24 @@ PY
 # Both the generated config and the lock stay untouched until validation passes.
 refresh_mise_lock() (
   local desired_config="${1:-$MISE_CONFIG}" upgrade="${2:-1}"
-  local tmp lock_path staged staged_config token="" os platforms tool mode
+  local tmp lock_path locks_dir staged staged_config staged_locks token="" os platforms tool mode
   local platform_tools=()
   tmp="$(mktemp -d "${TMPDIR:-/tmp}/setup-mise-lock.XXXXXX")"
   lock_path="${MISE_CONFIG%/*}/mise.lock"
+  locks_dir="${MISE_CONFIG%/*}/locks"
   staged="${lock_path}.setup.$$"
   staged_config="${MISE_CONFIG}.setup.$$"
-  trap 'rm -rf "$tmp"; rm -f "$staged" "$staged_config"' EXIT HUP INT TERM
-  mkdir -p "$tmp/.config/mise"
+  staged_locks="${locks_dir}.setup.$$"
+  trap 'rm -rf "$tmp" "$staged_locks" "$staged_locks.old"; rm -f "$staged" "$staged_config"' EXIT HUP INT TERM
+  mkdir -p "$tmp/.config/mise" "$tmp/previous-locks"
   [ ! -f "$MISE_CONFIG" ] || cp "$MISE_CONFIG" "$tmp/previous.toml"
   [ ! -f "$lock_path" ] || cp "$lock_path" "$tmp/previous.lock"
+  # Retained Python tools keep their tracked dependency graphs; mise re-resolves
+  # a missing sidecar against today's index, which changes its digest.
+  if [ -d "$locks_dir" ]; then
+    cp -R "$locks_dir/." "$tmp/previous-locks/"
+    cp -R "$locks_dir" "$tmp/.config/mise/locks"
+  fi
   cp "$desired_config" "$tmp/desired.toml"
   setup_config mise-plan "$tmp" "$upgrade" || return 1
   : >"$tmp/mise-lock.log"
@@ -1251,6 +1306,7 @@ refresh_mise_lock() (
     warn "mise could not resolve every requested tool version; existing config and lock were preserved"
     return 1
   fi
+  prune_mise_sidecars "$tmp/.config/mise/mise.lock" || return 1
   validate_mise_lock "$tmp/desired.toml" "$tmp/.config/mise/mise.lock" || return 1
   setup_config mise-verify-lock "$tmp" || return 1
   while IFS='|' read -r tool name align version_command pkg; do
@@ -1272,7 +1328,22 @@ refresh_mise_lock() (
   else
     [ ! -e "$lock_path" ] || die "mise lock appeared during resolution; retry setup"
   fi
+  if [ -d "$locks_dir" ]; then
+    diff -r "$tmp/previous-locks" "$locks_dir" >/dev/null || die "mise lock sidecars changed during resolution; retry setup"
+  elif [ -n "$(ls -A "$tmp/previous-locks")" ]; then
+    die "mise lock sidecars disappeared during resolution; retry setup"
+  fi
   mkdir -p "${MISE_CONFIG%/*}"
+  # Install sidecars before the lock that references them.
+  if [ -d "$tmp/.config/mise/locks" ]; then
+    if ! { [ -d "$locks_dir" ] && diff -r "$tmp/.config/mise/locks" "$locks_dir" >/dev/null; }; then
+      cp -R "$tmp/.config/mise/locks" "$staged_locks"
+      [ ! -d "$locks_dir" ] || mv "$locks_dir" "$staged_locks.old"
+      mv "$staged_locks" "$locks_dir"
+    fi
+  elif [ -d "$locks_dir" ]; then
+    mv "$locks_dir" "$staged_locks.old"
+  fi
   if ! cmp -s "$tmp/.config/mise/mise.lock" "$lock_path"; then
     cp "$tmp/.config/mise/mise.lock" "$staged"
     mv "$staged" "$lock_path"

@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.2.7";
+export const VERSION = "1.2.8";
 
 type TreeEntry = {
 	mode: string;
@@ -209,6 +209,7 @@ const TREE_PREFIXES = [
 	".claude/agents",
 	".codex/agents",
 	".config/kilo/agent",
+	".config/mise/locks",
 	".codex/skills/dump-last-response",
 	".codex/skills/read-codex-session",
 	".codex/skills/session-usage",

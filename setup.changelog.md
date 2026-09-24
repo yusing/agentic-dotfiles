@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.10
+
+Carry the tracked Python tool dependency graphs in `.config/mise/locks/` through lock resolution. Before this, setup resolved in a temporary tree and copied back only `mise.lock`, and mise re-resolved each missing graph against the current package index. Machines then locked different digests for the same tool version. Setup now seeds the existing graphs, keeps only the graphs the lock references, and rejects a lock whose sidecar is missing or has a different digest.
+
 ## 2.2.9
 
 Install tailcat from Homebrew on macOS and from the tailscale/tailcat Linux release archive. A mise tool can declare that native package inline for the operating systems outside its `os` list. Setup keeps the field out of generated mise configuration, rejects a declaration that would install both sources on the same operating system, and removes a leftover mise install on macOS when the native package owns the command. eza and llvm use the same declaration. A native block can set its package name, a keg-only Homebrew prefix, and version alignment so the formula stays on the locked mise version. A mise shim for a tool that does not apply on the current operating system does not count as that Homebrew install.

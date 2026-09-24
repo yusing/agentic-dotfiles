@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.8
+
+Include the Mise lock sidecars that hold Python tool dependency graphs, so the
+public lock installs with matching digests.
+
 ## 1.2.7
 
 Include the login Bash profile so the public projection retains the Mise shim
