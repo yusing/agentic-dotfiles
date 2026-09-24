@@ -2058,7 +2058,7 @@ backend = "go:github.com/yusing/git-agent/cmd/git-agent"
 specifiers = ["latest"]
 
 [[tools."go:github.com/yusing/shadowtree/cmd/shadowtree"]]
-version = "0.0.0-20260822061659-0f328200ac05"
+version = "0.0.0-20260924082508-e01df716cd53"
 backend = "go:github.com/yusing/shadowtree/cmd/shadowtree"
 specifiers = ["latest"]
 
