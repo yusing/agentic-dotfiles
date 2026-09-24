@@ -1,8 +1,10 @@
 # Changelog
 
-## 2.2.10
+## 2.3.0
 
-Carry the tracked Python tool dependency graphs in `.config/mise/locks/` through lock resolution. Before this, setup resolved in a temporary tree and copied back only `mise.lock`, and mise re-resolved each missing graph against the current package index. Machines then locked different digests for the same tool version. Setup now seeds the existing graphs, keeps only the graphs the lock references, and rejects a lock whose sidecar is missing or has a different digest.
+Accept tool names after `--upgrade`, such as `setup.sh --upgrade git-agent`. A name is a mise tool identifier from `setup.json` or its command. Setup re-resolves only those lock entries (and declarations changed in JSON), installs the lock, and confirms each named command. It skips native packages, vendors, the checkout, helper compilation, and final verification. Unknown, ambiguous, or inapplicable names stop before any lock change.
+
+Also carry the tracked Python tool dependency graphs in `.config/mise/locks/` through lock resolution. Before this, setup resolved in a temporary tree and copied back only `mise.lock`, and mise re-resolved each missing graph against the current package index. Machines then locked different digests for the same tool version. Setup now seeds the existing graphs, keeps only the graphs the lock references, and rejects a lock whose sidecar is missing or has a different digest.
 
 ## 2.2.9
 

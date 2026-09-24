@@ -58,7 +58,14 @@ From an existing checkout:
 ```sh
 bash setup.sh             # install or reconcile the locked tool set
 bash setup.sh --upgrade   # upgrade setup-managed packages and tools
+bash setup.sh --upgrade git-agent   # upgrade only the named mise tools
 ```
+
+Naming tools after `--upgrade` re-resolves only their lock entries, plus any
+declarations changed in `setup.json`, then installs the lock. Use the tool
+identifier from `setup.json` or its command name. It skips native packages,
+vendors, the Git checkout, helper compilation, and verification, so it needs a
+completed setup. Upstream proxies may still serve a newly pushed Go commit late.
 
 When the home Git repository has a commit at `HEAD` (including worktrees), Git
 setup is skipped: no identity, hooks, remote, branch, fetch, or checkout changes.

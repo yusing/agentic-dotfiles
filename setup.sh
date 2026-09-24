@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.2.10
+# version: 2.3.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -21,6 +21,9 @@ MISE_SHIMS="${HOME}/.local/share/mise/shims"
 MISE_CONFIG="${MISE_CONFIG:-${HOME}/.config/mise/config.toml}"
 MISE_LOCK_PLATFORMS="linux-arm64,linux-x64,macos-arm64"
 UPGRADE=0
+# Tool names given to --upgrade; resolved to mise tool identifiers.
+UPGRADE_NAMES=()
+UPGRADE_TOOLS=()
 SETUP_CONFIG_EXPLICIT="${SETUP_CONFIG:+1}"
 SETUP_CONFIG="${SETUP_CONFIG:-$(cd "$(dirname "${BASH_SOURCE[0]:-$HOME/setup.sh}")" && pwd)/setup.json}"
 
@@ -629,9 +632,12 @@ try:
         else:
             desired = read_toml(root / "desired.toml")
             tools = desired.get("tools", {})
+            forced_path = root / "upgrade-tools"
+            forced = set(forced_path.read_text().split()) if forced_path.exists() else set()
+            require(forced <= set(tools), f"upgrade tools are not declared: {sorted(forced - set(tools))}")
             changed = {
                 tool for tool, value in tools.items()
-                if arguments[1] == "1" or previous.get("tools", {}).get(tool) != value
+                if arguments[1] == "1" or tool in forced or previous.get("tools", {}).get(tool) != value
                 or len(old_tools.get(tool, [])) != 1
                 or not lock_matches(tool, value, old_tools[tool][0])
             }
@@ -1260,6 +1266,7 @@ refresh_mise_lock() (
     cp -R "$locks_dir" "$tmp/.config/mise/locks"
   fi
   cp "$desired_config" "$tmp/desired.toml"
+  [ "${#UPGRADE_TOOLS[@]}" -eq 0 ] || printf '%s\n' "${UPGRADE_TOOLS[@]}" >"$tmp/upgrade-tools"
   setup_config mise-plan "$tmp" "$upgrade" || return 1
   : >"$tmp/mise-lock.log"
 
@@ -1417,17 +1424,74 @@ assert_aligned_brew_versions() {
   done < <(setup_config mise-native)
 }
 
-upgrade_mise_tools() {
+upgrade_aligned_brew() {
   local tool name align version_command pkg
-  if [ "$UPGRADE" -eq 0 ] && [ "$PM" = brew ] && [ "${MISE_ALIGNED_CHANGED:-0}" -eq 1 ]; then
-    while IFS='|' read -r tool name align version_command pkg; do
-      [ "$align" = 1 ] || continue
-      setup_config native-enabled "$name" || continue
-      info "upgrading Homebrew $pkg to the locked version"
-      brew upgrade "$pkg" || brew install --no-ask "$pkg"
-    done < <(setup_config mise-native)
-  fi
+  [ "$PM" = brew ] && [ "${MISE_ALIGNED_CHANGED:-0}" -eq 1 ] || return 0
+  while IFS='|' read -r tool name align version_command pkg; do
+    [ "$align" = 1 ] || continue
+    setup_config native-enabled "$name" || continue
+    info "upgrading Homebrew $pkg to the locked version"
+    brew upgrade "$pkg" || brew install --no-ask "$pkg"
+  done < <(setup_config mise-native)
+}
+
+upgrade_mise_tools() {
+  [ "$UPGRADE" -eq 1 ] || upgrade_aligned_brew
   install_locked_mise_tools
+}
+
+# Accept a mise tool identifier or its command name, for example git-agent.
+resolve_upgrade_tools() {
+  local name tool cmd matches
+  UPGRADE_TOOLS=()
+  for name in "${UPGRADE_NAMES[@]}"; do
+    matches=()
+    while IFS='|' read -r tool cmd; do
+      [ "$name" = "$tool" ] || [ "$name" = "$cmd" ] || continue
+      matches+=("$tool")
+    done < <(mise_tool_records)
+    case "${#matches[@]}" in
+      0) die "--upgrade: $name is not a mise tool declared in setup.json" ;;
+      1) ;;
+      *) die "--upgrade: $name matches several tools (${matches[*]}); use the full tool identifier" ;;
+    esac
+    mise_tool_applies "${matches[0]}" || die "--upgrade: ${matches[0]} does not apply to $OS"
+    in_list "${matches[0]}" ${UPGRADE_TOOLS[@]+"${UPGRADE_TOOLS[@]}"} || UPGRADE_TOOLS+=("${matches[0]}")
+  done
+}
+
+# Install the refreshed lock, then confirm each named tool exposes its command.
+install_named_mise_tools() {
+  local tool cmd path
+  upgrade_aligned_brew
+  info "installing the locked tool set"
+  mise_cmd install --locked
+  while IFS='|' read -r tool cmd; do
+    in_list "$tool" "${UPGRADE_TOOLS[@]}" || continue
+    path="$(mise_tool_path "$tool" "$cmd" 2>/dev/null || true)"
+    if [ -z "$path" ] || [ ! -x "$path" ]; then
+      info "reinstalling $tool so $cmd is available"
+      mise_cmd install --force --locked "$tool"
+      validate_mise_tool "$tool" "$cmd"
+    fi
+  done < <(mise_tool_records)
+  mise_cmd reshim
+}
+
+# Named upgrades assume a completed setup and touch only the mise lock and installs.
+upgrade_named_tools() {
+  [ -x "$MISE_BIN" ] || die "mise is not installed at $MISE_BIN; run setup.sh without tool names first"
+  STEP="ensure TOML parser"
+  ensure_toml_parser
+  STEP="resolve upgrade tools"
+  resolve_upgrade_tools
+  STEP="select Go proxy"
+  STEP="sync mise configuration and lock"
+  sync_mise_config
+  STEP="install upgraded tools"
+  install_named_mise_tools
+  info "upgraded tool versions"
+  mise_cmd ls --global "${UPGRADE_TOOLS[@]}"
 }
 
 # ---------------------------------------------------------------------------
@@ -1947,7 +2011,7 @@ verify_setup() {
 
 usage() {
   cat <<'EOF'
-Usage: setup.sh [--upgrade] [--config PATH] [--check-config]
+Usage: setup.sh [--upgrade [TOOL...]] [--config PATH] [--check-config]
 
 Package choices and vendor installers live in setup.json beside this script.
 Mise declarations also live in setup.json; .config/mise/config.toml is generated.
@@ -1967,6 +2031,9 @@ packages declared in setup.json (including optional packages). Package managers
 may also update required dependencies. On Arch, --upgrade performs a full system
 upgrade with yay, including AUR packages. Run setup as a regular user on Arch;
 yay uses sudo when required.
+--upgrade TOOL... re-resolves only the named mise tools (identifier or command
+name, such as git-agent) and installs the lock after a completed setup. It skips
+native packages, vendors, checkout, helper compilation, and verification.
 A mise tool may declare a native package for the operating systems outside its
 os list. When that declaration aligns a Homebrew formula, the formula stays on
 the locked mise version.
@@ -1987,6 +2054,10 @@ main() {
         ;;
       --upgrade)
         UPGRADE=1
+        while [ "$#" -gt 1 ] && [ "${2#-}" = "$2" ]; do
+          UPGRADE_NAMES+=("$2")
+          shift
+        done
         ;;
       --config)
         [ "$#" -ge 2 ] || die "--config needs a path"
@@ -2004,6 +2075,8 @@ main() {
     shift
   done
   case "$SETUP_CONFIG" in /*) ;; *) SETUP_CONFIG="$PWD/$SETUP_CONFIG" ;; esac
+  # Named tools narrow --upgrade to their mise locks; native packages stay put.
+  [ "${#UPGRADE_NAMES[@]}" -eq 0 ] || UPGRADE=0
   if [ "$check_config" -eq 1 ]; then
     setup_config validate
     info "setup config is valid: $SETUP_CONFIG"
@@ -2029,11 +2102,13 @@ main() {
   STEP="ensure brew"
   ensure_brew
 
-  STEP="ensure sudo"
-  ensure_sudo
+  if [ "${#UPGRADE_NAMES[@]}" -eq 0 ]; then
+    STEP="ensure sudo"
+    ensure_sudo
 
-  STEP="ensure yay"
-  ensure_yay
+    STEP="ensure yay"
+    ensure_yay
+  fi
 
   STEP="load setup config"
   # The parser is a bootstrap dependency, not a configurable managed package.
@@ -2052,6 +2127,11 @@ main() {
   fi
   SETUP_CONFIG="$SETUP_RUN_DIR/setup.json"
   prepare_setup_config_cache "$SETUP_RUN_DIR/cache"
+
+  if [ "${#UPGRADE_NAMES[@]}" -gt 0 ]; then
+    upgrade_named_tools
+    return
+  fi
 
   # Bring Arch's system and repository databases forward together before installs.
   if [ "$PM" = pacman ]; then

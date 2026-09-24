@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ab3068fec774f920e23d38e3c7a95f597e1ceea4",
+  "sourceCommit": "f4b9608ca2d98332e9a97c786c1a287fa00f222c",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -503,7 +503,7 @@
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "065635bfe51547004e23b770a5ab2dcc943579f8a46dc3b58126418bc4e143f6",
+      "sha256": "8a8a93d88809900af7f051553aac8bbb49a225d32b16cce8d1b13dd63da20775",
       "executable": false
     },
     {
@@ -1222,13 +1222,13 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "e9344ffaede367cbc2c0b91b6d33e521a505d12c3d6a1e214038195b0294007f",
+      "sha256": "66db828ead544c0f412d5a8da064193a1f525b469bc3943b64766a1735cf4b9b",
       "executable": false
     },
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "42d658d6f8e31648bc2d788ac9ae36658851ce8f0fe0f7983b0310d78c909e8b",
+      "sha256": "c4b3935ae10b84e73e4e26fc499b54b7c80ec9424906ca9ddb4f877cf7384c36",
       "executable": false
     },
     {
@@ -1240,7 +1240,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "d0905ae44989af6d50c1f40e341a376b1a0a1d77e6d1fc739c998175a38c9692",
+      "sha256": "15a409ceb7abeb89dc716bb650b780b377f1c9aaebef8b25026e61ede5f618af",
       "executable": true
     }
   ]
