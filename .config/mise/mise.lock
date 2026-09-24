@@ -1828,6 +1828,24 @@ url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.2/LLV
 url_api = "https://api.github.com/repos/llvm/llvm-project/releases/assets/581041719"
 provenance = "github-attestations"
 
+[tools."github:llvm/llvm-project"."platforms.linux-x64-baseline"]
+checksum = "sha256:b5ed9675149cc837c282e9b6962c276c9fa62863d5b2f91537b60848552995b7"
+url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.2/LLVM-23.1.2-Linux-X64.tar.xz"
+url_api = "https://api.github.com/repos/llvm/llvm-project/releases/assets/581041719"
+provenance = "github-attestations"
+
+[tools."github:llvm/llvm-project"."platforms.linux-x64-musl"]
+checksum = "sha256:b5ed9675149cc837c282e9b6962c276c9fa62863d5b2f91537b60848552995b7"
+url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.2/LLVM-23.1.2-Linux-X64.tar.xz"
+url_api = "https://api.github.com/repos/llvm/llvm-project/releases/assets/581041719"
+provenance = "github-attestations"
+
+[tools."github:llvm/llvm-project"."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:b5ed9675149cc837c282e9b6962c276c9fa62863d5b2f91537b60848552995b7"
+url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.2/LLVM-23.1.2-Linux-X64.tar.xz"
+url_api = "https://api.github.com/repos/llvm/llvm-project/releases/assets/581041719"
+provenance = "github-attestations"
+
 [[tools."github:microsoft/TypeScript"]]
 version = "7.0.2"
 backend = "github:microsoft/TypeScript"
@@ -2160,7 +2178,7 @@ uvx = "true"
 version = "1.177.0"
 backend = "pipx:semgrep"
 specifiers = ["latest"]
-uv = { path = "locks/pipx-semgrep/1.177.0~2131a6f0", digest = "sha256:89b875509bc93d973822e6d9a266bdd1b707693faff08e6a63184b4f912cb8fb" }
+uv = { path = "locks/pipx-semgrep/1.177.0~2131a6f0", digest = "sha256:7689e6255bd860b94b343949816d51176dedd43b576533a3258183ddf509982e" }
 
 [tools."pipx:semgrep".options]
 uvx = "true"
