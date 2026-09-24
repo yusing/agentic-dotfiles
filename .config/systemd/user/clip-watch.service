@@ -1,0 +1,12 @@
+[Unit]
+Description=Send each copied image to the remote clip-recv (Wayland host)
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/wl-paste --type image/png --watch %h/.local/bin/clip-push --stdin
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8e75c0eb05e70dd98d66c7e5544b26215ae8549f",
+  "sourceCommit": "716c89163db6c37477f87092de2b8511f8659db4",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -519,6 +519,24 @@
       "executable": false
     },
     {
+      "path": ".config/systemd/user/clip-recv.service",
+      "kind": "file",
+      "sha256": "4e53c63fd27fac6cfe506b7a857e1ebcad16833d85fab5e4fe1fbb22168327cc",
+      "executable": false
+    },
+    {
+      "path": ".config/systemd/user/clip-watch.service",
+      "kind": "file",
+      "sha256": "157b50c213d67b3d7c40cdfab08c1a2276296404c2bf06ab7f7463b75ad981f8",
+      "executable": false
+    },
+    {
+      "path": ".config/systemd/user/clip-xvfb.service",
+      "kind": "file",
+      "sha256": "97231cf748d8e654b4af8a58f2af33db75b56af076abb75e9621c691e28891cc",
+      "executable": false
+    },
+    {
       "path": ".config/zed/keymap.json",
       "kind": "file",
       "sha256": "eea1ba3e7b1fe33449a8ac2279b12e307e2bf8407f089fc254caa80724417f09",
@@ -545,7 +563,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "112d8d08d98c5bbfce94e4c9f7753ea9f991f3d4bd23f4f728c278dff46b7313",
+      "sha256": "b29f59b047118488ba6ecece3b850d688d8d35c0c272d0bd8b63ff807537f7c6",
       "executable": false
     },
     {
@@ -597,6 +615,30 @@
       "executable": true
     },
     {
+      "path": ".local/bin/clip-push",
+      "kind": "file",
+      "sha256": "b6cba77c62c30e9f2f5019ab11eb77b1a640efc7c36fec5e7fc18a664d073c2d",
+      "executable": true
+    },
+    {
+      "path": ".local/bin/clip-push.changelog.md",
+      "kind": "file",
+      "sha256": "5f979d1a5640cb3e11582ee984d90aa6481fdc01baa95729a3924ea93cc3b0f2",
+      "executable": false
+    },
+    {
+      "path": ".local/bin/clip-recv",
+      "kind": "file",
+      "sha256": "73aaa3bc718d7a25af2a91821e565be289c2c504edc05de158847805b2fbe30c",
+      "executable": true
+    },
+    {
+      "path": ".local/bin/clip-recv.changelog.md",
+      "kind": "file",
+      "sha256": "604d5a47e33281fe122ee878a5e73b1ef8639681cbbff964c0a1a9e559a81e17",
+      "executable": false
+    },
+    {
       "path": ".local/bin/compile-agent-tools",
       "kind": "file",
       "sha256": "84fc2cd4c94da816c20c533585db7686ec055ddd08a91085fb1776697b00c130",
@@ -607,6 +649,18 @@
       "kind": "file",
       "sha256": "3d70e20b904f16f39469e81bd69df279804ea02e566eec547b023f1b53fa5ded",
       "executable": true
+    },
+    {
+      "path": ".local/lib/clip-watch/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "6f3c8309ba15b299d01996672904631069e11658ec5ed3084fc253b7cb030ea6",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/clip-watch/clip-watch.ts",
+      "kind": "file",
+      "sha256": "1da800d73471b935add927796932d820cf6e146ec6e58d3e5d355e9236419e2b",
+      "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
@@ -623,13 +677,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "511b7d93065912957a54781300f12d89881f622a67fd85c56979e50f35aeb5a6",
+      "sha256": "a155bd9455ebd5faa6acf1cfc8ebb136969e4a41c7664aa4a5a705fc74a2317e",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "fb56ab6861b87ad8634b673dc6102cf2a91a7f9bfc16617d8d8f86a6d256209e",
+      "sha256": "83742d44796de170a5e7b2f5fd3cff00bb9745b93e8b7250bdd0e9023b9d4ab2",
       "executable": true
     },
     {

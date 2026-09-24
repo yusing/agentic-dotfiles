@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0
+
+Include the image-paste helpers the projected `setup.sh` already drives: `clip-push`,
+`clip-recv`, the `clip-watch` macOS watcher, their changelogs, and the three
+`clip-*.service` user units. Before this, `configure_image_paste` ran in the public
+projection against helpers and units that were not published with it.
+
+Replace Tailscale CGNAT addresses (100.64.0.1/10) with the `100.64.0.1` placeholder,
+since `clip-push`'s default target names one of the author's own hosts. Also treat
+`.service` as text, so the units are rewritten and validated rather than copied as
+opaque bytes.
+
 ## 1.2.8
 
 Include the Mise lock sidecars that hold Python tool dependency graphs, so the

@@ -59,6 +59,7 @@ const TEXT_EXTENSIONS = new Set([
 	".micro",
 	".patch",
 	".py",
+	".service",
 	".sh",
 	".swift",
 	".toml",
@@ -150,6 +151,9 @@ const EXACT_PATHS = new Set([
 	".config/micro/settings.json",
 	".config/mise/config.toml",
 	".config/mise/mise.lock",
+	".config/systemd/user/clip-recv.service",
+	".config/systemd/user/clip-watch.service",
+	".config/systemd/user/clip-xvfb.service",
 	".config/skhd/move-window.sh",
 	".config/skhd/skhdrc",
 	".config/zed/keymap.json",
@@ -162,6 +166,12 @@ const EXACT_PATHS = new Set([
 	".grok/hooks/skills-path-guard.json",
 	".grok/hooks/skills_path_guard.ts",
 	".local/bin/check_project",
+	".local/bin/clip-push",
+	".local/bin/clip-push.changelog.md",
+	".local/bin/clip-recv",
+	".local/bin/clip-recv.changelog.md",
+	".local/lib/clip-watch/clip-watch.ts",
+	".local/lib/clip-watch/CHANGELOG.md",
 	".local/lib/compile-agent-tools/compile-agent-tools.ts",
 	".local/lib/compile-agent-tools/CHANGELOG.md",
 	".local/bin/compile-agent-tools",
@@ -231,6 +241,12 @@ const EXCLUDED_PATH_PARTS = new Set([
 	"testdata",
 	"tests",
 ]);
+
+// Tailscale hands out CGNAT addresses (100.64.0.0/10), so clip-push's default
+// receiver is one of the author's hosts. The placeholder keeps the projected
+// helper readable and is the one address in that range allowed through.
+const TAILNET_PLACEHOLDER = "100.64.0.1";
+const TAILNET_ADDRESS = /(?<![\d.])100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.\d{1,3}\.\d{1,3}(?!\d|\.\d)/g;
 
 const PRIVATE_LINE_TOKENS = [
 	"APPRISE_URL",
@@ -709,6 +725,9 @@ function transformText(path: string, text: string, privateHomes: string[]): stri
 	// Committed content can retain home paths from a different host than the
 	// machine running the projection.
 	projected = projected.replaceAll(/(?<![A-Za-z0-9._~\/-])(?:\/home|\/Users)\/[A-Za-z0-9._-]+/g, "$HOME");
+	// A tailnet address names one of the author's own machines, so replace it with
+	// the documentation placeholder rather than publishing the host it points at.
+	projected = projected.replaceAll(TAILNET_ADDRESS, TAILNET_PLACEHOLDER);
 	return projected;
 }
 

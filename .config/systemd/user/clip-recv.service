@@ -1,0 +1,13 @@
+[Unit]
+Description=Load images sent by clip-push into the :99 clipboard
+Requires=clip-xvfb.service
+After=clip-xvfb.service
+
+[Service]
+Environment=DISPLAY=:99
+ExecStart=%h/.local/bin/clip-recv
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
