@@ -27,6 +27,9 @@ Long-lifetime tests should be deterministic without long waits. Diagnose timeout
 weaken assertions. Before rerunning superseded validation, resolve the old job's status within
 process-control authorization: file edits do not update a running test binary.
 
+- No tautological tests
+- No change-detector/string-contain-substrings tests
+
 ## Runtime behavior
 
 For operations whose silence would obscure progress, expose meaningful milestones or measurable

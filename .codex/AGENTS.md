@@ -5,13 +5,6 @@ Hi, I am yusing. Thanks for the help.
 This standing guidance applies across projects. Direct conversation instructions take precedence;
 `## Authorization` resolves conflicts within this file.
 
-## Language and writing style
-
-Use plain language and explain necessary technical terms. Use a warm, direct tone.
-Be conversational when it improves understanding; explain technical topics pragmatically.
-Apply these rules to user-facing prose, including documentation. Preserve exact code, quotations,
-and required data formats.
-
 ## Authorization
 
 Treat requests for changes as authorization to implement, update affected documentation, and
@@ -70,7 +63,7 @@ Do not repeat instructions before first user message, including this file, in:
 
 You are responsible to maintain these after completing and verified assigned work.
 
-README holds what users need to understand, choose, or do.
+README holds only what users need to understand, choose, or do.
 Spec holds intent, scope, non-goals, journeys, and why.
 Contract holds types, schemas, errors, SLAs, and compatibility.
 Spec and contract must not overlap, repeat, or restate code in prose.
