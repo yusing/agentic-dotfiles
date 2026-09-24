@@ -54,6 +54,11 @@ export DISABLE_TELEMETRY=1
 export OMO_DISABLE_POSTHOG=1
 export NODE_OPTIONS='--max-old-space-size=8192'
 
+# Agents over mosh paste images from the clip-recv Xvfb clipboard.
+if [[ -z ${DISPLAY-} && -S /tmp/.X11-unix/X99 ]]; then
+    export DISPLAY=:99
+fi
+
 export HOMEBREW_AUTO_UPDATE_SECS=86400
 export CLAUDE_PACKAGE_MANAGER=bun
 

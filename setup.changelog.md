@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.1
+
+Install the packages that let agents paste images over mosh: xclip and Xvfb on Linux, where clip-recv loads images into a headless X clipboard; wl-clipboard (optional) for Wayland hosts; and pngpaste on macOS for clip-push. Tailscale is not declared, because apt needs Tailscale's own repository and macOS normally uses the app.
+
 ## 2.3.0
 
 Accept tool names after `--upgrade`, such as `setup.sh --upgrade git-agent`. A name is a mise tool identifier from `setup.json` or its command. Setup re-resolves only those lock entries (and declarations changed in JSON), installs the lock, and confirms each named command. It skips native packages, vendors, the checkout, helper compilation, and final verification. Unknown, ambiguous, or inapplicable names stop before any lock change.
