@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.0
+
+Run the clip-watch pasteboard watcher on macOS as the `local.clip-watch` LaunchAgent. Setup writes its plist under `~/Library/LaunchAgents` and restarts it on each run so a rebuilt watcher takes over. It replaces the skhd Ctrl+V binding, whose re-sent key typed a bare `v`; setup still reloads a running skhd so the removed binding goes away. A missing watcher warns instead of stopping setup.
+
 ## 2.4.0
 
 Configure image paste at the end of setup. The Linux host whose tailnet address matches `clip-push --target` becomes the receiver: setup makes the user the Tailscale operator and enables linger when either is missing, then enables `clip-xvfb` and `clip-recv`. A Wayland session enables `clip-watch`. macOS reloads a running skhd. A failed service step warns instead of stopping setup, and root runs or hosts without a systemd user manager skip it.

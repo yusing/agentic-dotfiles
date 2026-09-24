@@ -22,10 +22,3 @@ ctrl + alt + shift - down  : yabai -m window --swap south
 
 # Let a window escape tiling when a fixed size is wanted.
 ctrl + alt - f : yabai -m window --toggle float
-
-# Ctrl+V in Ghostty or Kaku: send the clipboard image to clip-recv, then paste.
-# clip-push re-sends the paste as right Ctrl+V, which this left-Ctrl binding ignores.
-lctrl - v [
-    "ghostty" : ~/.local/bin/clip-push --paste
-    "kaku"    : ~/.local/bin/clip-push --paste
-]

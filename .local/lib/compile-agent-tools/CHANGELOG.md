@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+Compile the clip-watch pasteboard watcher on macOS.
+
 ## 1.0.2
 
 Compile the Kilo agent-port helper.

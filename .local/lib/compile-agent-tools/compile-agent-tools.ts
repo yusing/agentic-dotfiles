@@ -16,7 +16,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.2";
+const VERSION = "1.0.3";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -266,6 +266,8 @@ function main(): void {
   ]) {
     compileHelper(join(localLib, directory, `${name}.ts`));
   }
+  // The pasteboard watcher binds AppKit through the Objective-C runtime.
+  if (platform() === "darwin") compileHelper(join(localLib, "clip-watch", "clip-watch.ts"));
   compileHelper(join(localLib, "project-public-config", "project-public-config.ts"), true);
 }
 

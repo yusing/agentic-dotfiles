@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d4d1e4bed7cefdfe71a7568965578faf0e1dda8f",
+  "sourceCommit": "fca8cd68b471067d72203b89ffeb1c562502f5ad",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -515,7 +515,7 @@
     {
       "path": ".config/skhd/skhdrc",
       "kind": "file",
-      "sha256": "caca440f796f2d256a6be0a27dff754e875d88d3e0f22a6de6fce0fc717902a7",
+      "sha256": "87ada998d5b39188ea2d17ebae4b03eb90bcdfc6641955a71077e97c2c2f5030",
       "executable": false
     },
     {
@@ -611,13 +611,13 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "ecf58fe4fb503560d6ad33baccb723e42e484bdf20169283e8622d070cd16fcf",
+      "sha256": "60bf11b5c2ffcb64a5bb139f799ef697b5e39d39fe33dc7f69ca210588d169fb",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "527261af4b850ef23c858d884e0968d9c9b6908e469fa76917c5389ddddd6cb5",
+      "sha256": "8e7fa35b6a663033b689b920ef55af75a459f2e543ee0f55dcb4fd9f0a8593ce",
       "executable": false
     },
     {
@@ -1228,7 +1228,7 @@
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "cdda08e59d7ab42bc84d7c76d4a73553be03de2fcb3e9f0a3edd12497653de68",
+      "sha256": "e97e795bf131535b59fa3a5504c35736e5c71a14d12fad84e508bb5f2d51418b",
       "executable": false
     },
     {
@@ -1240,7 +1240,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "bd06bcb15ba7d972a2cbeb738c263f97fb3c2a5f6e11b373eacf804f30b7bc4c",
+      "sha256": "e5b940d730441e0f9685d080a61d5ec686b9ab55f82dbf4303a385e477fa304c",
       "executable": true
     }
   ]

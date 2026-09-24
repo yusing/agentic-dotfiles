@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.4.0
+# version: 2.5.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1927,16 +1927,63 @@ ensure_fish_login_shell() {
 # Image paste over mosh
 # ---------------------------------------------------------------------------
 
+# macOS runs clip-watch as a LaunchAgent, which pushes each copied image before
+# the paste key. A rebuilt watcher is restarted so the new binary takes over.
+configure_image_paste_macos() {
+  local watcher="${LOCAL_BIN}/clip-watch" label=local.clip-watch domain plist content
+  if have skhd && pgrep -x skhd >/dev/null 2>&1; then
+    skhd --reload || warn "could not reload skhd; run: skhd --reload"
+  fi
+  if [ ! -x "$watcher" ]; then
+    warn "clip-watch is not built; images copied on this Mac are not sent to clip-recv"
+    return 0
+  fi
+  domain="gui/$(id -u)"
+  plist="$HOME/Library/LaunchAgents/$label.plist"
+  mkdir -p "$HOME/Library/LaunchAgents" "$HOME/Library/Logs"
+  content="$(cat <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>$label</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>$watcher</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ProcessType</key>
+  <string>Interactive</string>
+  <key>StandardErrorPath</key>
+  <string>$HOME/Library/Logs/clip-watch.log</string>
+</dict>
+</plist>
+PLIST
+)"
+  if [ -f "$plist" ] && [ "$(cat "$plist")" = "$content" ] \
+    && launchctl print "$domain/$label" >/dev/null 2>&1; then
+    launchctl kickstart -k "$domain/$label" || warn "could not restart clip-watch"
+    return 0
+  fi
+  info "starting the clip-watch LaunchAgent"
+  printf '%s\n' "$content" >"$plist"
+  launchctl bootout "$domain/$label" >/dev/null 2>&1 || true
+  launchctl bootstrap "$domain" "$plist" \
+    || warn "could not start clip-watch; run: launchctl bootstrap $domain $plist"
+}
+
 # The Linux host whose tailnet address is clip-push's target runs the headless
 # X clipboard and the Taildrop receiver. A Wayland session sends each copied
-# image there. macOS reloads skhd, whose Ctrl+V binding runs clip-push.
+# image there.
 configure_image_paste() {
   local clip_push="${LOCAL_BIN}/clip-push" user target
   [ -x "$clip_push" ] || return 0
   if [ "$OS" = Darwin ]; then
-    if have skhd && pgrep -x skhd >/dev/null 2>&1; then
-      skhd --reload || warn "could not reload skhd; run: skhd --reload"
-    fi
+    configure_image_paste_macos
     return 0
   fi
   [ "$OS" = Linux ] && [ "$(id -u)" -ne 0 ] && have systemctl || return 0
@@ -2077,7 +2124,7 @@ name, such as git-agent) and installs the lock after a completed setup. It skips
 native packages, vendors, checkout, helper compilation, and verification.
 Image paste over mosh: the Linux host at clip-push's tailnet target gets the
 Taildrop operator, linger, and the clip-xvfb and clip-recv user services; a
-Wayland session gets clip-watch; macOS reloads skhd for its Ctrl+V binding.
+Wayland session gets clip-watch.service; macOS gets the clip-watch LaunchAgent.
 A mise tool may declare a native package for the operating systems outside its
 os list. When that declaration aligns a Homebrew formula, the formula stays on
 the locked mise version.
