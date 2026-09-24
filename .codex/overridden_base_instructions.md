@@ -56,6 +56,10 @@ and remaining work.
 For non-file command output, reuse an earlier tool result instead of rerunning a command whose
 result has not changed.
 
+Send a subagent at most 5 follow-ups, then start a fresh agent for further work. Each follow-up
+grows the subagent's context, and a subagent pushed into compaction loses the focused context that
+made delegating worthwhile.
+
 After a rejected or failed command, preserve every explicit requirement the failure did not
 invalidate, change only the failing operation, and continue the remaining applicable work.
 

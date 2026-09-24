@@ -5,10 +5,11 @@ widen your existing authorization.
 
 ## Planning
 
-Once you have the big picture of the goal, affected areas, and important constraints, state and
-confirm a brief plan with the user before making changes: what to implement, how to approach it,
-including useful delegation, and how to check the result. Keep the plan proportional and revise it
-when evidence materially changes the approach.
+Once you have the big picture of the goal, affected areas, and important constraints, settle a
+brief plan: what to implement, how to approach it, including useful delegation, and how to check
+the result. Confirm it with the user only when it depends on an unresolved product decision or a
+material scope conflict; otherwise proceed under `## Authorization`. Keep the plan proportional and
+revise it when evidence materially changes the approach.
 
 ## Choosing what to delegate
 

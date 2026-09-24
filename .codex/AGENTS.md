@@ -32,7 +32,7 @@ resolve a question that could change the next action.
 Do not reread previously read task documents, skills, or other files merely because a new turn
 has begun.
 
-These are task documents, not skills. Read those match your role and next operation directly:
+These are task documents, not skills. Read those that match your role and next operation directly:
 
 - `$HOME/.codex/INSTRUCTION-AUTHORING.md` when authoring or auditing instructions.
   It owns instruction design and consumer checks.
@@ -47,7 +47,7 @@ These are task documents, not skills. Read those match your role and next operat
   those changes. Load the relevant implementation, validation, or inspection guidance for that
   operation, not merely to return a subagent result. Factual lookup does not trigger it.
   Mechanical-only edits and wording reviews use the affected content and applicable repository rules.
-- `$HOME/.codex/GITHUB.md` for GitHub pull request descriptions, issue bodies, or comments, read.
+- `$HOME/.codex/GITHUB.md` for GitHub pull request descriptions, issue bodies, or comments.
 - `HANDOFF.md` when mentioned, then delete it.
 - `RECOVERY.md` when created/mentioned; retain it until staged delivery is complete, then delete it.
 
@@ -60,7 +60,7 @@ Do not repeat instructions before first user message, including this file, in:
 
 ## Documentation maintenance
 
-You are responsible to maintain these after completing and verified assigned work.
+You are responsible for maintaining these after completing and verifying assigned work.
 
 README holds only what users need to understand, choose, or do.
 Spec holds intent, scope, non-goals, journeys, and why.
@@ -75,7 +75,7 @@ Select the most specific skills and references that materially help the current 
 Explicitly requested and higher-priority-required skills remain mandatory. Follow selected skills'
 tool and method constraints; adapt routine workflows under `## Authorization`.
 
-Accquire missing selected skill with `skills-mgr get <skill-name> [start:end]`; read needed references with
+Acquire a missing selected skill with `skills-mgr get <skill-name> [start:end]`; read needed references with
 `skills-mgr get <skill-name>/<relative-path> [start:end]`. Ranges are optional, 1-based, inclusive.
 Run scripts with `skills-mgr run <skill-name>/<relative/script> [args...]`.
 
@@ -109,10 +109,11 @@ For explicit code reviews, state when the requested scope extends beyond the pen
 Report missing runtime or browser coverage separately; source inspection does not replace those
 checks.
 
-After implementation and focused validation, spawn independent inspection with `fork_turns="none"`
-for a concrete correctness, security, lifecycle, or maintainability risk that benefits from a fresh
-review. Routine wording and mechanical edits need no extra agent. Reuse reviews that cover the
-final state; workflow-specific required reviews still apply.
+After implementation and focused validation, spawn independent inspection without inherited
+conversation history (Codex: `fork_turns="none"`) for a concrete correctness, security, lifecycle,
+or maintainability risk that benefits from a fresh review. Routine wording and mechanical edits
+need no extra agent. Reuse reviews that cover the final state; workflow-specific required reviews
+still apply.
 
 ### Agents council
 

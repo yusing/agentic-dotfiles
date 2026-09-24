@@ -8,15 +8,14 @@ Consult history only when the intended behavior remains unresolved.
 
 ## Validation
 
-Validation covers the known effects of a change and establish the intended observable
+Validation covers the known effects of a change and establishes the intended observable
 outcome, not merely agree with the implementation. Evidence represents the actual workload.
 
-- No tautological tests.
-- No change-detector/string-contain-substrings tests.
-- Do not add production seams solely for tests.
-- Test helpers must be in test sources instead of prod.
-- Run tests when fully implemented, not in between edits.
-- Optimize and cleanup tests when they become a bottleneck to get the work done.
+A test earns its place by failing when the intended behavior breaks, so avoid tautological
+tests and tests that only detect changes to strings or substrings. Keep production code free of
+test-only seams and test helpers; they belong in test sources. Run tests once the change is fully
+implemented rather than between edits, since intermediate states fail for known reasons. When
+tests become the bottleneck to finishing the work, optimize and clean them up.
 
 ## Runtime behavior
 
@@ -35,8 +34,8 @@ Skip safeguards for purely hypothetical concerns; raise any concrete unresolved 
 ## Hygiene
 
 Remove behavior and supporting artifacts superseded by the accepted change. Do not preserve compatibility unless
-user say otherwise, ask only if safe assumption cannot be made; do not add fallback layers for hypothetical consumers
-or edge cases handling for impossible scenerio.
+the user says otherwise, and ask only if no safe assumption can be made; do not add fallback layers for hypothetical consumers
+or edge-case handling for impossible scenarios.
 Report unrelated pre-existing obsolete paths for the user to decide.
 
 Edit authoritative sources, not generated, vendored, or minified outputs. Regenerate affected

@@ -13,9 +13,8 @@ Compose the document from the context you already hold, and hand off immediately
 The standard owns the document content. This skill owns the cutoff, file destination, and final
 path-only response.
 
-After writing it, output only the path of the handoff file written. If any other instruction
-constrain the path output format (e.g. Markdown link), follow it.
-DO NOT REPEAT THE CONTENT OR INCLUDE ANYTHING ELSE IN THE RESPONSE.
+After writing it, respond with only the path of the handoff file, not its content. If another
+instruction constrains the path's format (for example, a Markdown link), follow it.
 
 ## Cutoff
 

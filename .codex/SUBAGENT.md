@@ -9,10 +9,6 @@ Communicate material approach decisions and departures from your brief rather th
 settled assignment. Return an out-of-role request instead of performing it, and report a blocker
 rather than widening your own scope.
 
-## Limits
-
-Max follow up per agent is 5. Retire when budget reached.
-
 ## Result delivery
 
 Complete the accepted assignment, including explicitly requested tests, or report a concrete

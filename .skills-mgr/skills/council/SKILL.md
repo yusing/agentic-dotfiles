@@ -38,9 +38,9 @@ evidence itself, so a blind member's first pass never sees it.
 
 ## Configure members
 
-Spawn every member with its chosen `agent_type`, a unique task name, `fork_turns: "none"`, and a
-self-contained handoff. Omit `model` on every spawn; model selection belongs to the selected role
-and client.
+Spawn every member with its chosen role, a unique task name, no inherited conversation history
+(Codex: `fork_turns: "none"`), and a self-contained handoff. Omit `model` on every spawn; model
+selection belongs to the selected role and client.
 
 Omit `reasoning_effort` by default to use the role's configured effort or the client's inherited
 default. When the client permits an effort override and the discussion target needs more reasoning,
