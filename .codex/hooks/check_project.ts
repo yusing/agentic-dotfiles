@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { at, handleVersion, programArgs, runCommand } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.1.0";
+export const VERSION = "1.2.0";
 
 function languageFor(ext: string): string | undefined {
   switch (ext) {
@@ -152,6 +152,21 @@ function commitPrefix(text: string): string {
   return sha.length > HEAD_PREFIX ? sha.slice(0, HEAD_PREFIX) : sha;
 }
 
+function gitBranch(directory: string): string {
+  const branch = runCommand(["git", "-C", directory, "symbolic-ref", "--quiet", "--short", "HEAD"]);
+  return branch.status === 0 ? branch.stdout.trim() : "";
+}
+
+function gitSuffix(branch: string, sha: string): string {
+  const name = branch.length > 0 ? `@${branch}` : "";
+  const commit = sha.length > 0 ? `@${sha}` : "";
+  return `${name}${commit}`;
+}
+
+function gitLabel(branch: string, sha: string): string {
+  return `git${gitSuffix(branch, sha)}`;
+}
+
 function svnRevision(directory: string): string {
   const info = runCommand([
     "svn",
@@ -179,14 +194,13 @@ function svnRevision(directory: string): string {
   return revision;
 }
 
-function vcsLabel(kind: string, gitSha: string, svnRev: string): string {
-  const git = gitSha.length > 0 ? `git@${gitSha}` : "git";
+function vcsLabel(kind: string, gitName: string, svnRev: string): string {
   const svn = svnRev.length > 0 ? `svn@r${svnRev}` : "svn";
   if (kind === "git+svn") {
-    return `${git}+${svn}`;
+    return `${gitName}+${svn}`;
   }
   if (kind === "git") {
-    return git;
+    return gitName;
   }
   if (kind === "svn") {
     return svn;
@@ -208,7 +222,7 @@ function detectVcs(directory: string): VcsDetection {
           kind = "git+svn";
           svnRev = svnRevision(ancestor);
         }
-        return { kind, ancestor, label: vcsLabel(kind, gitSha, svnRev) };
+        return { kind, ancestor, label: vcsLabel(kind, gitLabel(gitBranch(ancestor), gitSha), svnRev) };
       }
       if (gitWithoutCommitAncestor.length === 0) {
         gitWithoutCommitAncestor = ancestor;
@@ -220,7 +234,7 @@ function detectVcs(directory: string): VcsDetection {
     }
     if (ancestor === "/") {
       if (gitWithoutCommitAncestor.length > 0) {
-        return { kind: "git", ancestor: gitWithoutCommitAncestor, label: "git" };
+        return { kind: "git", ancestor: gitWithoutCommitAncestor, label: gitLabel(gitBranch(gitWithoutCommitAncestor), "") };
       }
       return { kind: "none", ancestor, label: "none" };
     }
@@ -326,7 +340,7 @@ function detectLanguages(files: string[]): string {
 
 type SubmoduleHead = {
   path: string;
-  sha: string;
+  label: string;
 };
 
 function gitlinkPath(record: string): string {
@@ -341,15 +355,12 @@ function gitlinkPath(record: string): string {
 }
 
 // Require this directory's .git. Otherwise git -C reports a parent HEAD.
-function submoduleHeadPrefix(directory: string): string {
+function submoduleHeadLabel(directory: string): string {
   if (!exists(path.join(directory, ".git"))) {
     return "";
   }
   const head = runCommand(["git", "-C", directory, "rev-parse", "--verify", "HEAD"]);
-  if (head.status !== 0) {
-    return "";
-  }
-  return commitPrefix(head.stdout);
+  return gitSuffix(gitBranch(directory), head.status === 0 ? commitPrefix(head.stdout) : "");
 }
 
 function compareSubmodulePath(left: SubmoduleHead, right: SubmoduleHead): number {
@@ -393,7 +404,7 @@ function listSubmodules(repository: string): SubmoduleHead[] {
       }
       seen.add(display);
       const full = path.join(repo, relative);
-      entries.push({ path: display, sha: submoduleHeadPrefix(full) });
+      entries.push({ path: display, label: submoduleHeadLabel(full) });
       if (exists(path.join(full, ".git"))) {
         visit(full, display);
       }
@@ -407,8 +418,8 @@ function listSubmodules(repository: string): SubmoduleHead[] {
 function submoduleLines(entries: SubmoduleHead[]): string[] {
   const lines = ["submodules:"];
   for (const entry of entries) {
-    if (entry.sha.length > 0) {
-      lines.push(`  - ${entry.path}@${entry.sha}`);
+    if (entry.label.length > 0) {
+      lines.push(`  - ${entry.path}${entry.label}`);
     } else {
       lines.push(`  - ${entry.path}`);
     }
