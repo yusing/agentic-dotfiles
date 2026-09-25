@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1
+
+Include the Go quality hook source and changelog alongside its published hook
+registration and compilation inputs.
+
 ## 1.3.0
 
 Include the image-paste helpers the projected `setup.sh` already drives: `clip-push`,

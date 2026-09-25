@@ -32,6 +32,8 @@ __pycache__
 !/.codex/hooks/
 !/.codex/hooks/check_project.ts
 !/.codex/hooks/generated_code_guard.ts
+!/.codex/hooks/go_quality.changelog.md
+!/.codex/hooks/go_quality.ts
 !/.codex/hooks/lib/
 !/.codex/hooks/lib/flock.ffi.json
 !/.codex/hooks/lib/hook_response.ts

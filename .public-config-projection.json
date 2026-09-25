@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a78240677041942d35574468b6ee1615c87ad287",
+  "sourceCommit": "2af61fa86fde1e6deebc4d52bfcffba2666e685f",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -150,6 +150,18 @@
       "path": ".codex/hooks/generated_code_guard.ts",
       "kind": "file",
       "sha256": "4b792f1463d02c6fce529dab33d3cb95f2eeedf40da5bca24a04a58f7e680069",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/go_quality.changelog.md",
+      "kind": "file",
+      "sha256": "1ef803733081249d27681e77fdec8cf47ea62ad13189b76f8fc1b84e69072459",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/go_quality.ts",
+      "kind": "file",
+      "sha256": "cbdac1dad90d1e76144d42674c5bcc270a598c15e55686fe39c539a2943ecb94",
       "executable": false
     },
     {
@@ -563,7 +575,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "b29f59b047118488ba6ecece3b850d688d8d35c0c272d0bd8b63ff807537f7c6",
+      "sha256": "1c6dfa9b8278f009bff78e78b78c04af7f5af720ff10006576976a9924039096",
       "executable": false
     },
     {
@@ -677,13 +689,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "a155bd9455ebd5faa6acf1cfc8ebb136969e4a41c7664aa4a5a705fc74a2317e",
+      "sha256": "240572b286b18dcad912d47ca29bab5a11e8f58e83ef586ad4f10a1329f752d0",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "83742d44796de170a5e7b2f5fd3cff00bb9745b93e8b7250bdd0e9023b9d4ab2",
+      "sha256": "06a05a4991099b241936fa1e55231131de4b31364fcf6588da1922d5cea186fe",
       "executable": true
     },
     {
