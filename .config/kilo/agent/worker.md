@@ -1,8 +1,8 @@
 ---
 description: "Write tests, documentation, fixtures, and other non-production support artifacts for settled requirements. Not an implementation agent."
 mode: subagent
-model: kilo/deepseek/deepseek-v4.1-flash
-variant: max
+model: kilo/openai/gpt-6-sol
+variant: medium
 color: "#3B82F6"
 permission:
   bash: allow

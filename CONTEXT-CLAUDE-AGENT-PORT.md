@@ -10,8 +10,8 @@ Its `--check` mode reports drift without writing.
 Field mapping is the helper's concern. `model` and `model_reasoning_effort` become Claude's
 `model` and `effort`, unless the role's Claude metadata specifies its own model or effort.
 The simplification role keeps its Claude Sonnet/high budget independently of Codex routing.
-Explorer maps Codex Luna/max to Sonnet/high. Worker uses Codex Luna/max and retains
-Claude Sonnet/xhigh independently.
+Explorer maps Codex Luna/max to Sonnet/high. Worker retains Claude Sonnet/xhigh
+independently of its Codex routing.
 Explicit Claude metadata still applies when a Codex role omits its model and effort for dispatch.
 Council roles use `model: inherit` in the helper's metadata, omitting both generated fields so
 Claude continues to inherit its parent settings.

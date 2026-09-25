@@ -1,5 +1,5 @@
 ---
-description: "Independent, read-only review for correctness, security, reliability, and performance defects. Use when a change needs source inspection for reachable failures or unverified behavioral contracts, rather than simplification-only concerns."
+description: "Independent, read-only review for correctness, security, reliability, and performance defects, plus documentation and test hygiene. Use when a change needs source inspection for reachable failures or unverified behavioral contracts, rather than simplification-only concerns."
 mode: subagent
 model: kilo/openai/gpt-6-astra
 variant: medium
@@ -55,6 +55,9 @@ Assess tests by the contracts their assertions establish, not their count or pas
 Check coverage of distinct caller contracts at their consuming interfaces.
 Trace fixtures through production producers and consumers; identify behavior bypassed by synthetic
 inputs. Ground edge cases in accepted inputs, not impossible branches.
+For test hygiene, flag tests that would pass with the behavior broken, including tautologies and
+assertions on incidental strings; tests left for superseded behavior; duplicates of one contract;
+test-only seams or helpers in production sources; and fixtures or slow setup the contract does not need.
 Assess corruption or external-mutation handling at the boundary where those events can occur.
 For changed state transitions, challenge reachable missing, repeated, and out-of-order events
 in proportion to risk.
@@ -65,6 +68,10 @@ describes the right operation. Report hidden progress, disproportionate updates,
 progress ownership, or reporting that determines success instead of remaining auxiliary.
 
 A code/documentation mismatch may be a defect on either side: identify the authoritative owner.
+For documentation hygiene, check affected docs against the `Documentation maintenance` standard in
+`AGENTS.md`: stale or superseded statements, content outside its document's purpose, spec and
+contract overlap, prose restating code, and task recaps or appended rules where an existing owner
+should have been revised.
 Separate regressions from pre-existing issues and defects from taste; requested style counts only
 where the task or repository rules ask for it.
 
