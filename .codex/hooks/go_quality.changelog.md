@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.2
+
+Stay silent when `go fix` or `gofmt` stops on the edited sources' own compile or
+parse diagnostics, such as an edit sequence that has not built yet. Those files
+are retried by the next Go edit, so repairing the build also fixes and formats
+them, and Stop still reports anything left. Other auto-fix failures name the
+first diagnostic line instead of the `# package` header.
+
 ## 1.0.1
 
 Omit the changed-file list from Stop findings. The findings themselves still

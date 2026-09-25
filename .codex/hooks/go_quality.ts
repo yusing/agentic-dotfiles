@@ -10,7 +10,7 @@ import { responseFor as generatedGuardResponse } from "./generated_code_guard.ts
 import { responseFor as subagentGuardResponse } from "./subagent_exec_guard.ts";
 import { asString, at, handleVersion, isRecord, readEvent, runCommand, runMain, writeJson } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.1";
+export const VERSION = "1.0.2";
 
 type Snapshot = Record<string, string>;
 type Baseline = { files: Snapshot; findings: Record<string, string[]> };
@@ -538,7 +538,7 @@ function runChecks(root: string, modules: string[] = moduleRoots(root)): Record<
   return result;
 }
 
-function writeBaseline(file: string, value: Baseline): void {
+function writeBaseline(file: string, value: Baseline | string[]): void {
   const temporary = `${file}.${process.pid}`;
   fs.writeFileSync(temporary, JSON.stringify(value), { mode: 0o600 });
   fs.renameSync(temporary, file);
@@ -662,8 +662,12 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
     const report: string[] = [`# tool_use_id: ${toolUseId}\n`];
     report.push(diffStage(root, directory, before, afterTool, sourceCommand));
     let current = afterTool;
-    const targets = edited.filter((relative) => current[relative] !== undefined)
+    // Earlier edits whose fixes waited for their package to build join this
+    // tool's files, so repairing the build also fixes them.
+    const pendingBefore = readPending(directory);
+    const targets = [...new Set([...edited, ...pendingBefore])].filter((relative) => current[relative] !== undefined)
       .map((relative) => path.join(root, relative)).filter((target) => !isGeneratedGoFile(target));
+    const pending = new Set<string>();
     // The model's view of each file is what its tool wrote.
     const toolOutput = new Map<string, string>();
     for (const target of targets) {
@@ -703,7 +707,15 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
         }
       }
       const result = runCommand(command, { cwd: module });
-      if (result.status !== 0) errors.push(`go fix ${packageArg}: ${result.stderr.trim().split("\n")[0] ?? "failed"}`);
+      if (result.status !== 0) {
+        // A package that does not build yet is retried after a later edit;
+        // Stop reports whatever is still unfixed.
+        if (result.stderr.split("\n").some(sourceDiagnostic)) {
+          for (const target of targets) if (path.dirname(target) === packageDir) pending.add(path.relative(root, target));
+        } else {
+          errors.push(`go fix ${packageArg}: ${failureLine(result.stderr)}`);
+        }
+      }
       for (const [relative, original] of siblings) {
         const source = path.join(root, relative);
         if (fs.existsSync(source) && fs.readFileSync(source, "utf8") === original) continue;
@@ -714,15 +726,26 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
       report.push(diffStage(root, directory, current, afterFix, `go fix ${packageArg}`));
       current = afterFix;
     }
-    const formatTargets = changed(before, current).filter((relative) => current[relative] !== undefined)
+    const formatTargets = [...new Set([...changed(before, current), ...pendingBefore])]
+      .filter((relative) => current[relative] !== undefined)
       .map((relative) => path.join(root, relative)).filter((target) => !isGeneratedGoFile(target));
     if (formatTargets.length > 0) {
       const formatted = runCommand(["gofmt", "-w", ...formatTargets], { cwd: root });
-      if (formatted.status !== 0) errors.push(`gofmt: ${formatted.stderr.trim().split("\n")[0] ?? "failed"}`);
+      if (formatted.status !== 0) {
+        // gofmt formats every file it can parse; one mid-edit is retried later.
+        const lines = formatted.stderr.split("\n").map((line) => line.trim()).filter(Boolean);
+        for (const target of formatTargets) {
+          const relative = path.relative(root, target);
+          if (lines.some((line) => line.startsWith(`${target}:`) || line.startsWith(`${relative}:`))) pending.add(relative);
+        }
+        const other = lines.filter((line) => !sourceDiagnostic(line));
+        if (other.length > 0 || lines.length === 0) errors.push(`gofmt: ${other[0] ?? "failed"}`);
+      }
       const afterFormat = capture();
       report.push(diffStage(root, directory, current, afterFormat, `gofmt -w ${formatTargets.map((target) => path.relative(root, target)).join(" ")}`));
       current = afterFormat;
     }
+    writePending(directory, pending);
     const reportsDir = path.join(directory, "reports");
     fs.mkdirSync(reportsDir, { recursive: true, mode: 0o700 });
     const artifact = path.join(reportsDir, `${digest(toolUseId)}.diff`);
@@ -736,6 +759,36 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
     if (notes.length === 0) return undefined;
     return { hookSpecificOutput: { hookEventName: resultEvent(event), additionalContext: notes.join(" ") } } as Record<string, unknown>;
   });
+}
+
+// Diagnostics about the sources themselves, such as an edit sequence that has
+// not compiled yet. They are the agent's intermediate state, not hook failures.
+function sourceDiagnostic(line: string): boolean {
+  return /\.go:\d+(?::\d+)?:/.test(line) || /^go: updates to go\.mod needed|missing go\.sum entry/.test(line);
+}
+
+// The first line that says why a tool failed; `# package` headers do not.
+function failureLine(stderr: string): string {
+  return stderr.split("\n").map((line) => line.trim()).find((line) => line && !line.startsWith("# ")) ?? "failed";
+}
+
+// Files whose go fix or gofmt waited for their sources to build or parse.
+function readPending(directory: string): string[] {
+  try {
+    const value = JSON.parse(fs.readFileSync(path.join(directory, "pending-fix.json"), "utf8")) as unknown;
+    return Array.isArray(value) ? value.filter((entry): entry is string => typeof entry === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+function writePending(directory: string, pending: Set<string>): void {
+  const file = path.join(directory, "pending-fix.json");
+  if (pending.size === 0) {
+    if (fs.existsSync(file)) fs.unlinkSync(file);
+    return;
+  }
+  writeBaseline(file, [...pending].sort());
 }
 
 const INLINE_DIFF_LINES = 40;
@@ -757,7 +810,7 @@ function rewriteNotice(root: string, directory: string, rewritten: string[], too
     if (fs.existsSync(scratch)) fs.unlinkSync(scratch);
   }
   const text = diffs.join("").trimEnd();
-  if (text.split("\n").length <= INLINE_DIFF_LINES) return `go fix/gofmt rewrote files this tool changed:\n${text}`;
+  if (text.split("\n").length <= INLINE_DIFF_LINES) return `go fix/gofmt rewrote Go files you edited:\n${text}`;
   const ranges = new Map<string, string[]>();
   let file = "";
   for (const line of text.split("\n")) {
