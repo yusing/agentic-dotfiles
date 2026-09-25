@@ -4,6 +4,16 @@
       {
         "hooks": [
           {
+            "command": "$HOME/.codex/hooks/bin/go_quality fence",
+            "statusMessage": "Waiting for Go quality baseline before edits",
+            "timeout": 600,
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
             "command": "$HOME/.codex/hooks/bin/generated_code_guard",
             "statusMessage": "Checking for generated Go files",
             "timeout": 5,
@@ -24,7 +34,42 @@
         "matcher": "^Bash$"
       }
     ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "$HOME/.codex/hooks/bin/go_quality edit",
+            "statusMessage": "Formatting and fixing changed Go files",
+            "timeout": 600,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "$HOME/.codex/hooks/bin/go_quality check",
+            "statusMessage": "Checking new Go quality findings",
+            "timeout": 120,
+            "type": "command"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "$HOME/.codex/hooks/bin/go_quality baseline",
+            "timeout": 120,
+            "type": "command"
+          }
+        ],
+        "matcher": "^(startup|resume)$"
+      },
       {
         "hooks": [
           {

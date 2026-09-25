@@ -294,6 +294,17 @@
   "hooks": {
     "SessionStart": [
       {
+        "matcher": "^(startup|resume)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/go_quality baseline",
+            "async": true,
+            "timeout": 120
+          }
+        ]
+      },
+      {
         "matcher": "*",
         "hooks": [
           {
@@ -346,6 +357,66 @@
           {
             "type": "command",
             "command": "rtk hook claude"
+          }
+        ]
+      },
+      {
+        "matcher": "^(Bash|Edit|Write|MultiEdit|NotebookEdit)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/go_quality fence",
+            "timeout": 600,
+            "statusMessage": "Waiting for Go quality baseline before edits"
+          }
+        ]
+      },
+      {
+        "matcher": "^(Edit|Write|MultiEdit|NotebookEdit)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/generated_code_guard",
+            "timeout": 5,
+            "statusMessage": "Checking for generated Go files"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^(Bash|Edit|Write|MultiEdit|NotebookEdit)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/go_quality edit",
+            "timeout": 600,
+            "statusMessage": "Formatting and fixing changed Go files"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "^(Bash|Edit|Write|MultiEdit|NotebookEdit)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/go_quality edit",
+            "timeout": 600,
+            "statusMessage": "Formatting and fixing changed Go files"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/go_quality check",
+            "timeout": 120,
+            "statusMessage": "Checking new Go quality findings"
           }
         ]
       }

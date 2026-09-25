@@ -17,9 +17,8 @@ for relevant returned IDs with
 - Use symbol lookup when the location is known.
 - When porting logic, retain a `Source: rel/path:<start>:<end>@[<revision>] <symbol>` comment
   near the ported code.
-- After Go implementation or refactoring:
-  * use `go fix` to modernize the code (go >= 1.26).
-  * run `golangcilint` and `deadcode` when the tools are available. Inspect findings before removing code.
+- The Go quality hook applies `gofmt` and `go fix` (go >= 1.26) automatically after Go edits;
+  do not run them manually, investigate their changes, or revert them.
 
 ## Filesystem work
 

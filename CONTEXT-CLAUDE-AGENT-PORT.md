@@ -65,11 +65,22 @@ guard fails open there for the reason `CONTEXT-GROK-HOOK-PORT.md` records, so un
 command boundary rests on the role body alone.
 
 
+## Settings hooks
+
+`.claude/settings.json` registers its own hooks. Grok does not load any of them:
+`[compat.claude] hooks = false` in `.grok/config.toml`, and Grok's copies live in
+`.grok/hooks/codex-port.json`.
+
+The Codex Go hooks, `go_quality` and `generated_code_guard`, run directly: Claude's envelope
+already uses Codex's snake_case fields and `Bash` tool name, and `go_quality`'s baseline uses
+Claude's `async` option. Claude runs `PreToolUse` hooks in parallel, so the fence calls the
+generated-code guard itself rather than relying on order. Subagents share the parent's session
+id, so concurrent subagent writers can blur per-tool diff attribution; the `Stop` check still
+compares the whole project with its baseline.
+
 ## Session start
 
-`.claude/settings.json` registers two `SessionStart` hooks of its own.
-Grok does not load them: `[compat.claude] hooks = false` in
-`.grok/config.toml`, and Grok's copies live in `.grok/hooks/codex-port.json`.
+Two static session-start hooks inject context.
 
 `.codex/hooks/bin/check_project` runs with `--without-git`, and with no adapter, because its
 plain-text report needs none. Claude's own session context already states the working

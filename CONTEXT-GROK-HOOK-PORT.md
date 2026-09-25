@@ -7,15 +7,23 @@ hooks. `.grok/hooks/bin/adapt_codex_hook` owns envelope, event-name, field-name,
 client-identity, and decision adaptation. TypeScript Codex policy runs in-process;
 policy remains in the reused `.codex/hooks/` implementation. `.grok/hooks/codex-port.json` owns Grok tool
 matchers and event placement, extending the Claude matchers (`Bash`, `Edit`, `Write`) with
-`run_terminal_command`, `search_replace`, and `MultiEdit`. The Bash PreToolUse group
+`run_terminal_command`, `search_replace`, `write_file`, and `MultiEdit`. The Bash PreToolUse group
 runs `subagent_exec_guard` in-process. Grok uses camelCase event fields
-and `{"decision":"deny","reason":...}` denials. The adapter maps failed result events. Herdr
+and `{"decision":"deny","reason":...}` denials. The adapter maps failed result events, and
+aliases the `run_terminal_command` tool name to `Bash` because Codex policy branches on it. Herdr
 session reporting remains
 client-managed and is not part of the port.
 
 
 SessionStart project report and skill inventory are not ported: Grok does
 not attach that event output to the model.
+
+`go_quality` also runs in-process, registered for Grok's write-capable tools at
+`PreToolUse`, `PostToolUse`, and `PostToolUseFailure`, and at `Stop`. Grok hooks
+have no `async` option, so its `SessionStart` baseline goes through
+`.grok/hooks/background_hook.sh`, which hands the event to the adapter in a detached
+process. Grok also fires an observe-only `Stop` at session end; the check runs
+there too, and Grok ignores its decision.
 
 Port coverage is limited to what a registered hook owns. Deletion policy has no registered
 hook, so no event-scoped owner exists to carry it. Grok receives general authorization and

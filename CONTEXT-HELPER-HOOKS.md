@@ -51,6 +51,13 @@ the Grok envelope and runs TypeScript Codex policy in-process so startup
 stays inside the 10ms budget. Spawn remains for commands that have no
 imported policy.
 
+A hook's build inputs are its own source, the shared `.codex/hooks/lib/` files, and
+the extra inputs passed to its `compileHook` call. Every Codex policy the adapter
+imports must be one of those extra inputs. The list decides both the rebuild digest
+and whether the `flock` FFI is linked, so an omitted policy leaves a stale adapter
+or one that fails at runtime with `flock is not defined`. `.grok/hooks/smoke_test.py`
+checks the imports against the list.
+
 
 Tests are not helpers or hooks.
 

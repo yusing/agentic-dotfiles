@@ -2,7 +2,18 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "^(apply_patch|Edit|Write|search_replace|MultiEdit)$",
+        "matcher": "^(Bash|run_terminal_command|apply_patch|Edit|Write|MultiEdit|search_replace|write_file)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook go_quality fence",
+            "timeout": 600,
+            "statusMessage": "Waiting for Go quality baseline before edits"
+          }
+        ]
+      },
+      {
+        "matcher": "^(apply_patch|Edit|Write|search_replace|MultiEdit|write_file)$",
         "hooks": [
           {
             "type": "command",
@@ -20,6 +31,56 @@
             "command": "$HOME/.grok/hooks/bin/adapt_codex_hook subagent_exec_guard",
             "timeout": 5,
             "statusMessage": "Checking Bash command policy"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^(Bash|run_terminal_command|apply_patch|Edit|Write|MultiEdit|search_replace|write_file)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook go_quality edit",
+            "timeout": 600,
+            "statusMessage": "Formatting and fixing changed Go files"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "^(Bash|run_terminal_command|apply_patch|Edit|Write|MultiEdit|search_replace|write_file)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook go_quality edit",
+            "timeout": 600,
+            "statusMessage": "Formatting and fixing changed Go files"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook go_quality check",
+            "timeout": 120,
+            "statusMessage": "Checking new Go quality findings"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh '$HOME/.grok/hooks/background_hook.sh' go_quality baseline",
+            "timeout": 5
           }
         ]
       }

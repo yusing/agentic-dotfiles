@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.4
+
+Compile the Go quality lifecycle hook alongside the other Codex hooks, and
+rebuild the Grok adapter, with the lock FFI, when that hook changes.
+
 ## 1.0.3
 
 Compile the clip-watch pasteboard watcher on macOS.

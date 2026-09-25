@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-export const VERSION = "1.0.1";
+export const VERSION = "1.0.2";
 
 const LOCK_EX = 2;
 const LOCK_UN = 8;
@@ -11,19 +11,20 @@ declare function flock(fd: number, operation: number): number;
 function applyLock(fd: number, operation: number): void {
   const result = flock(fd, operation);
   if (result !== 0) {
-    throw Object.assign(new Error(`EIO: flock ${operation} failed`), { code: "EIO" });
+    throw new Error(`EIO: flock ${operation} failed`);
   }
 }
 
 function isAcquireFailure(error: unknown): boolean {
-  return error instanceof Error && typeof (error as { code?: string }).code === "string";
+  return error instanceof Error &&
+    (error.message.startsWith("EIO:") || error.message.startsWith("ENOENT:"));
 }
 
 function acquireDirLock(dirPath: string, create: boolean): { dir: string; fd: number } {
   if (create) {
     ensurePrivateDir(dirPath);
   } else if (!fs.existsSync(dirPath)) {
-    throw Object.assign(new Error(`ENOENT: ${dirPath}`), { code: "ENOENT" });
+    throw new Error(`ENOENT: ${dirPath}`);
   }
   const lockPath = path.join(dirPath, ".lock");
   const descriptor = fs.openSync(lockPath, "a+");

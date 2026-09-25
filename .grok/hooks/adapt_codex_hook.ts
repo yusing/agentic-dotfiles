@@ -2,12 +2,13 @@ import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import { responseFor as generatedCodeResponse } from "../../.codex/hooks/generated_code_guard.ts";
+import { responseFor as goQualityResponse } from "../../.codex/hooks/go_quality.ts";
 import { responseFor as subagentExecResponse } from "../../.codex/hooks/subagent_exec_guard.ts";
 import { asString, handleVersion, isRecord, readEvent, runCommand } from "../../.codex/hooks/lib/hook_runtime.ts";
 
-export const VERSION = "1.1.2";
+export const VERSION = "1.2.0";
 
-type PolicyFn = (event: unknown) => Record<string, unknown> | undefined;
+type PolicyFn = (event: unknown, args: string[]) => Record<string, unknown> | undefined;
 
 const CODEX_HOOKS = path.join(os.homedir(), ".codex", "hooks");
 
@@ -60,6 +61,11 @@ const EVENT_ALIASES: Record<string, string> = {
   PreCompact: "PreCompact",
   PostCompact: "PostCompact",
   SessionEnd: "SessionEnd",
+};
+
+// Codex policy branches on Codex tool names.
+const TOOL_ALIASES: Record<string, string> = {
+  run_terminal_command: "Bash",
 };
 
 const COMPACT_EVENTS = new Set([
@@ -115,6 +121,10 @@ export function normalizeEvent(event: Record<string, unknown>): Record<string, u
       process.cwd();
   }
   out.cwd = cwd;
+  const toolName = firstStr(out.tool_name);
+  if (toolName !== undefined && toolName in TOOL_ALIASES) {
+    out.tool_name = TOOL_ALIASES[toolName];
+  }
   const rawEvent = out.hook_event_name || event.hookEventName || process.env.GROK_HOOK_EVENT;
   const eventName = normalizeEventName(rawEvent);
   if (eventName !== undefined) {
@@ -285,38 +295,22 @@ function resolveCommand(argv: string[]): string[] {
 
 function policyFor(id: string): PolicyFn | undefined {
   if (id === "generated_code_guard") {
-    return generatedCodeResponse;
+    return (event, _args) => generatedCodeResponse(event);
   }
   if (id === "subagent_exec_guard") {
-    return subagentExecResponse;
+    return (event, _args) => subagentExecResponse(event);
   }
-  return undefined;
-}
-
-function inProcessIds(argv: string[]): string[] | undefined {
-  const first = path.basename(argv[0] ?? "");
-  if (first.length === 0) {
-    return undefined;
-  }
-  if (policyFor(first) !== undefined) {
-    return [first];
-  }
-  return undefined;
-}
-
-function runInProcess(
-  ids: string[],
-  event: Record<string, unknown>,
-): Record<string, unknown> | undefined {
-  for (const id of ids) {
-    const policy = policyFor(id);
-    if (policy === undefined) {
-      continue;
-    }
-    const response = policy(event);
-    if (response !== undefined) {
-      return response;
-    }
+  if (id === "go_quality") {
+    return (event, args) => {
+      const action = args[0] ?? "";
+      try {
+        return goQualityResponse(event, action);
+      } catch (error) {
+        // A hook failure must not block or break the tool it observes.
+        process.stderr.write(`go_quality ${action}: ${error instanceof Error ? error.message : String(error)}\n`);
+        return undefined;
+      }
+    };
   }
   return undefined;
 }
@@ -354,9 +348,9 @@ function main(): number {
       "file-reads",
     );
   }
-  const ids = inProcessIds(args);
-  if (ids !== undefined) {
-    const response = runInProcess(ids, normalized);
+  const policy = policyFor(path.basename(args[0] ?? ""));
+  if (policy !== undefined) {
+    const response = policy(normalized, args.slice(1));
     if (response !== undefined) {
       writeAdapted(JSON.stringify(response), eventName);
     }
