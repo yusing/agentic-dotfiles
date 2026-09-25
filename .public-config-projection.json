@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "1418433c9a4eb6afbc89659021cb14a32c3ae50b",
+  "sourceCommit": "29b94d541abbb505ca9fe2a2d103d614fde67150",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -119,7 +119,7 @@
     {
       "path": ".codex/agents/worker.toml",
       "kind": "file",
-      "sha256": "224f4e30f1da5d38ebb52bcd5f4b84697db58bf43f78a23d6f32ecd951df9e6f",
+      "sha256": "29b31b5aa6088cfbaa293fa87f7a8ed150197308f19cb9bfbcc152da2c97405f",
       "executable": false
     },
     {

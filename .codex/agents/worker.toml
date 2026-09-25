@@ -1,7 +1,7 @@
 name = "worker"
 description = "Write tests, documentation, fixtures, and other non-production support artifacts for settled requirements. Not an implementation agent."
-model = "gpt-6-luna"
-model_reasoning_effort = "max"
+model = "gpt-6-sol"
+model_reasoning_effort = "medium"
 developer_instructions = '''
 # Role
 
