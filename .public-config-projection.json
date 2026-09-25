@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a48dd019689899ce2f739de996b9b859889813db",
+  "sourceCommit": "1418433c9a4eb6afbc89659021cb14a32c3ae50b",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -155,13 +155,13 @@
     {
       "path": ".codex/hooks/go_quality.changelog.md",
       "kind": "file",
-      "sha256": "fa25180b9673c4b82581bd1b7c85850a4bdaa92cf799110d3a320ccc270815b1",
+      "sha256": "5d30db6a481c8e779923106786c4a5bd2c9465d9ccc789eeb184437431b023e7",
       "executable": false
     },
     {
       "path": ".codex/hooks/go_quality.ts",
       "kind": "file",
-      "sha256": "2f9e64af5ce0323cd8c3e272ea76dc72b62ab791a881fe435109e5c0ba592436",
+      "sha256": "88f9df34b2b029da27e6d9c753b1935d7995f93e340c8d7246f6eed9b3a8d3f7",
       "executable": false
     },
     {
@@ -875,7 +875,7 @@
     {
       "path": ".skills-mgr/skills/golang-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "b8dfcb451f242f1daaff6e1accc4427bd7e103440a74551a45fd1273c911e506",
+      "sha256": "a07a30509ea19a910d74ca1c9201f823acf2f6da1ebc848c04db4b6d895d8a9f",
       "executable": false
     },
     {
@@ -1258,7 +1258,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "067a57fc36a1a68db487e9e5283f6af23b77bc399db8784d42fa6e40036f7423",
+      "sha256": "a3bb7d480723271eff41e793e9e80ad62492bf6f6f7412a2706e2270de74c1dd",
       "executable": false
     },
     {

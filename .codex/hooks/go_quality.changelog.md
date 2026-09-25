@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.3
+
+Summarize `go fix` rewrites and `gofmt` formatting separately in one line with
+the retained per-command diff path. Formatting-only changes no longer print an
+inline diff or line ranges. Keep `go fix` rewrites, unexpected sibling restores,
+and auto-fix failures visible inline; a report path accompanies all notices.
+
 ## 1.0.2
 
 Stay silent when `go fix` or `gofmt` stops on the edited sources' own compile or

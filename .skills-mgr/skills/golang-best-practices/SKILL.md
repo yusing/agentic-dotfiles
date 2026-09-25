@@ -18,7 +18,8 @@ for relevant returned IDs with
 - When porting logic, retain a `Source: rel/path:<start>:<end>@[<revision>] <symbol>` comment
   near the ported code.
 - The Go quality hook applies `gofmt` and `go fix` (go >= 1.26) automatically after Go edits;
-  do not run them manually, investigate their changes, or revert them.
+  do not run them manually, investigate their changes, or revert them. It will include the diff
+  of changes if any.
 
 ## Filesystem work
 

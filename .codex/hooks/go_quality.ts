@@ -10,7 +10,7 @@ import { responseFor as generatedGuardResponse } from "./generated_code_guard.ts
 import { responseFor as subagentGuardResponse } from "./subagent_exec_guard.ts";
 import { asString, at, handleVersion, isRecord, readEvent, runCommand, runMain, writeJson } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.2";
+export const VERSION = "1.0.3";
 
 type Snapshot = Record<string, string>;
 type Baseline = { files: Snapshot; findings: Record<string, string[]> };
@@ -688,6 +688,10 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
       }
     }
     const errors: string[] = [];
+    const unexpected: string[] = [];
+    const fixed = new Set<string>();
+    const fixOutput = new Map<string, string | null>();
+    const formatted = new Set<string>();
     for (const entry of packages) {
       const separator = entry.indexOf("\0");
       const module = entry.slice(0, separator);
@@ -720,9 +724,21 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
         const source = path.join(root, relative);
         if (fs.existsSync(source) && fs.readFileSync(source, "utf8") === original) continue;
         fs.writeFileSync(source, original);
-        if (isGeneratedGoFile(source)) errors.push(`Restored generated file after go fix: ${relative}`);
+        unexpected.push(`${isGeneratedGoFile(source) ? "Restored generated file" : "Restored untouched file"} after go fix: ${relative}`);
       }
       const afterFix = capture();
+      for (const relative of changed(current, afterFix)) {
+        fixed.add(relative);
+        if (afterFix[relative] === undefined) {
+          fixOutput.set(relative, null);
+          continue;
+        }
+        try {
+          fixOutput.set(relative, fs.readFileSync(path.join(root, relative), "utf8"));
+        } catch {
+          errors.push(`Could not capture go fix rewrite: ${relative}`);
+        }
+      }
       report.push(diffStage(root, directory, current, afterFix, `go fix ${packageArg}`));
       current = afterFix;
     }
@@ -730,10 +746,10 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
       .filter((relative) => current[relative] !== undefined)
       .map((relative) => path.join(root, relative)).filter((target) => !isGeneratedGoFile(target));
     if (formatTargets.length > 0) {
-      const formatted = runCommand(["gofmt", "-w", ...formatTargets], { cwd: root });
-      if (formatted.status !== 0) {
+      const formatResult = runCommand(["gofmt", "-w", ...formatTargets], { cwd: root });
+      if (formatResult.status !== 0) {
         // gofmt formats every file it can parse; one mid-edit is retried later.
-        const lines = formatted.stderr.split("\n").map((line) => line.trim()).filter(Boolean);
+        const lines = formatResult.stderr.split("\n").map((line) => line.trim()).filter(Boolean);
         for (const target of formatTargets) {
           const relative = path.relative(root, target);
           if (lines.some((line) => line.startsWith(`${target}:`) || line.startsWith(`${relative}:`))) pending.add(relative);
@@ -742,6 +758,7 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
         if (other.length > 0 || lines.length === 0) errors.push(`gofmt: ${other[0] ?? "failed"}`);
       }
       const afterFormat = capture();
+      for (const relative of changed(current, afterFormat)) formatted.add(relative);
       report.push(diffStage(root, directory, current, afterFormat, `gofmt -w ${formatTargets.map((target) => path.relative(root, target)).join(" ")}`));
       current = afterFormat;
     }
@@ -752,12 +769,21 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
     fs.writeFileSync(artifact, report.join(""), { mode: 0o600 });
     // The model already knows what its tool changed. It needs to hear only
     // that the hook changed those files again, or failed to.
-    const rewritten = changed(afterTool, current);
     const notes: string[] = [];
-    if (rewritten.length > 0) notes.push(rewriteNotice(root, directory, rewritten, toolOutput, artifact));
+    const parts: string[] = [];
+    if (fixed.size > 0) parts.push(`go fix rewrote ${fixed.size} ${fixed.size === 1 ? "file" : "files"}`);
+    if (formatted.size > 0) parts.push(`gofmt formatted ${formatted.size} ${formatted.size === 1 ? "file" : "files"}`);
+    if (parts.length > 0 || unexpected.length > 0 || errors.length > 0) {
+      notes.push(`Go auto-fix: ${parts.join("; ") || "no retained rewrites"}. Diff: ${artifact}.`);
+    }
+    if (fixed.size > 0) {
+      const detail = rewriteNotice(root, directory, [...fixed], toolOutput, fixOutput);
+      if (detail) notes.push(detail);
+    }
+    if (unexpected.length > 0) notes.push(`Unexpected file changes: ${unexpected.join("; ")}.`);
     if (errors.length > 0) notes.push(`Go auto-fix errors: ${errors.join("; ")}.`);
     if (notes.length === 0) return undefined;
-    return { hookSpecificOutput: { hookEventName: resultEvent(event), additionalContext: notes.join(" ") } } as Record<string, unknown>;
+    return { hookSpecificOutput: { hookEventName: resultEvent(event), additionalContext: notes.join("\n") } } as Record<string, unknown>;
   });
 }
 
@@ -793,24 +819,27 @@ function writePending(directory: string, pending: Set<string>): void {
 
 const INLINE_DIFF_LINES = 40;
 
-// Tells the model exactly what the hook changed after its tool: the diff when
-// short, otherwise the changed line ranges of each file.
-function rewriteNotice(root: string, directory: string, rewritten: string[], toolOutput: Map<string, string>, artifact: string): string {
+// Show go fix rewrites inline; formatting-only changes stay in the report.
+function rewriteNotice(root: string, directory: string, rewritten: string[], toolOutput: Map<string, string>, fixOutput: Map<string, string | null>): string {
   const scratch = path.join(directory, "rewrite-before");
+  const scratchAfter = path.join(directory, "rewrite-after");
   const diffs: string[] = [];
   try {
     for (const relative of rewritten) {
       const original = toolOutput.get(relative);
-      const source = path.join(root, relative);
-      if (original === undefined || !fs.existsSync(source)) continue;
+      const fixed = fixOutput.get(relative);
+      if (original === undefined || fixed === undefined) continue;
       fs.writeFileSync(scratch, original, { mode: 0o600 });
-      diffs.push(runCommand(["diff", "-U0", "--label", `a/${relative}`, "--label", `b/${relative}`, scratch, source], { cwd: root }).stdout);
+      if (fixed !== null) fs.writeFileSync(scratchAfter, fixed, { mode: 0o600 });
+      diffs.push(runCommand(["diff", "-U0", "--label", `a/${relative}`, "--label", `b/${relative}`, scratch, fixed === null ? "/dev/null" : scratchAfter], { cwd: root }).stdout);
     }
   } finally {
     if (fs.existsSync(scratch)) fs.unlinkSync(scratch);
+    if (fs.existsSync(scratchAfter)) fs.unlinkSync(scratchAfter);
   }
   const text = diffs.join("").trimEnd();
-  if (text.split("\n").length <= INLINE_DIFF_LINES) return `go fix/gofmt rewrote Go files you edited:\n${text}`;
+  if (!text) return "";
+  if (text.split("\n").length <= INLINE_DIFF_LINES) return `go fix rewrites:\n${text}`;
   const ranges = new Map<string, string[]>();
   let file = "";
   for (const line of text.split("\n")) {
@@ -828,7 +857,7 @@ function rewriteNotice(root: string, directory: string, rewritten: string[], too
   }
   const listed: string[] = [];
   for (const [name, spans] of ranges) listed.push(`${name} lines ${spans.join(", ")}`);
-  return `go fix/gofmt rewrote ${listed.join("; ")}. Diff: ${artifact}.`;
+  return `go fix rewrites: ${listed.join("; ")}.`;
 }
 
 function check(root: string, directory: string): Record<string, unknown> | undefined {

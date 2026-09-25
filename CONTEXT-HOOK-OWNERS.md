@@ -59,9 +59,10 @@
   loose Go sources before the tool runs. It records source
   edits and applies `go fix` (Go 1.26+) and `gofmt` at `PostToolUse` to the
   files each tool changed, saving private per-command diff reports. Model context
-  carries only the hook's own rewrites, as a diff or line ranges, and auto-fix
-  errors. A file that does not build or parse yet is silently retried by later
-  Go edits; `Stop`
+  summarizes `go fix` and `gofmt` separately with a report path, and includes
+  inline `go fix` rewrites, unexpected sibling restores, and auto-fix errors.
+  Formatting-only rewrites do not print inline diffs. A file that does not
+  build or parse yet is silently retried by later Go edits; `Stop`
   requires fixes for new `go fix`, `golangci-lint`, or `deadcode` findings after
   Go files change. Project discovery follows the session cwd and its ancestors;
   for a Go module nested under a non-Go cwd, start the agent inside that module.
