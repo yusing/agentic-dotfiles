@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.6.0
+# version: 2.7.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1924,101 +1924,36 @@ ensure_fish_login_shell() {
 }
 
 # ---------------------------------------------------------------------------
-# Image paste over mosh
+# Image paste over SSH or mosh
 # ---------------------------------------------------------------------------
 
-# macOS runs clip-watch as a LaunchAgent, which pushes each copied image before
-# the paste key. A rebuilt watcher is restarted so the new binary takes over.
-configure_image_paste_macos() {
-  local watcher="${LOCAL_BIN}/clip-watch" label=local.clip-watch domain plist content
-  if have skhd && pgrep -x skhd >/dev/null 2>&1; then
-    skhd --reload || warn "could not reload skhd; run: skhd --reload"
-  fi
-  if [ ! -x "$watcher" ]; then
-    warn "clip-watch is not built; images copied on this Mac are not sent to clip-recv"
-    return 0
-  fi
-  domain="gui/$(id -u)"
-  plist="$HOME/Library/LaunchAgents/$label.plist"
-  mkdir -p "$HOME/Library/LaunchAgents" "$HOME/Library/Logs"
-  content="$(cat <<PLIST
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>Label</key>
-  <string>$label</string>
-  <key>ProgramArguments</key>
-  <array>
-    <string>$watcher</string>
-  </array>
-  <key>RunAtLoad</key>
-  <true/>
-  <key>KeepAlive</key>
-  <true/>
-  <key>ProcessType</key>
-  <string>Interactive</string>
-  <key>StandardErrorPath</key>
-  <string>$HOME/Library/Logs/clip-watch.log</string>
-</dict>
-</plist>
-PLIST
-)"
-  if [ -f "$plist" ] && [ "$(cat "$plist")" = "$content" ] \
-    && launchctl print "$domain/$label" >/dev/null 2>&1; then
-    launchctl kickstart -k "$domain/$label" || warn "could not restart clip-watch"
-    return 0
-  fi
-  info "starting the clip-watch LaunchAgent"
-  printf '%s\n' "$content" >"$plist"
-  launchctl bootout "$domain/$label" >/dev/null 2>&1 || true
-  launchctl bootstrap "$domain" "$plist" \
-    || warn "could not start clip-watch; run: launchctl bootstrap $domain $plist"
-}
-
-# The Linux host whose tailnet address is clip-push's target runs the headless
-# X clipboard and the Taildrop receiver. A Wayland session sends each copied
-# image there.
+# Retire the push implementation on both source and receiver machines. Keep
+# recoverable copies, and do not revoke shared Tailscale operator/linger settings.
 configure_image_paste() {
-  local clip_push="${LOCAL_BIN}/clip-push" user target
-  [ -x "$clip_push" ] || return 0
+  local path backup= service
   if [ "$OS" = Darwin ]; then
-    configure_image_paste_macos
-    return 0
+    launchctl bootout "gui/$(id -u)/local.clip-watch" >/dev/null 2>&1 || true
+  elif [ "$OS" = Linux ] && have systemctl; then
+    for service in clip-watch clip-recv clip-xvfb; do
+      systemctl --user disable --now "$service.service" >/dev/null 2>&1 || true
+    done
   fi
-  [ "$OS" = Linux ] && [ "$(id -u)" -ne 0 ] && have systemctl || return 0
-  if ! systemctl --user show-environment >/dev/null 2>&1; then
-    warn "no systemd user manager; skipping image paste services"
-    return 0
-  fi
-  systemctl --user daemon-reload || warn "could not reload systemd user units"
-  user="$(id -un)"
-  target="$("$clip_push" --target)"
-
-  # Both ends need the operator: `tailscale file cp` on the sender and
-  # `tailscale file get` on the receiver are root-only until it is set, and a
-  # sender without it fails every push with "Access denied: file access denied".
-  if have tailscale; then
-    tailscale debug prefs 2>/dev/null | grep -qF "\"OperatorUser\": \"$user\"" \
-      || run_root tailscale set --operator="$user" \
-      || warn "could not make $user the Tailscale operator; Taildrop needs root without it"
-  fi
-
-  if have tailscale && tailscale ip 2>/dev/null | grep -qxF "$target"; then
-    info "configuring this host as the clip-recv image paste receiver"
-    # Linger keeps the clipboard alive between mosh sessions.
-    [ "$(loginctl show-user "$user" -p Linger --value 2>/dev/null)" = yes ] \
-      || run_root loginctl enable-linger "$user" \
-      || warn "could not enable linger; image paste stops when you log out"
-    systemctl --user enable --now clip-xvfb.service clip-recv.service \
-      || warn "could not start clip-xvfb and clip-recv"
-  elif have wl-paste; then
-    # clip-watch is PartOf graphical-session.target, so enabling it is what makes
-    # it run for a setup done over ssh; only a live session can start it now.
-    systemctl --user enable clip-watch.service || warn "could not enable clip-watch"
-    if [ -n "${WAYLAND_DISPLAY:-}" ]; then
-      systemctl --user start clip-watch.service || warn "could not start clip-watch"
+  for path in \
+    "$LOCAL_BIN/clip-watch" "$LOCAL_BIN/clip-push" "$LOCAL_BIN/clip-recv" \
+    "$HOME/Library/LaunchAgents/local.clip-watch.plist" \
+    "$HOME/.config/systemd/user/clip-watch.service" \
+    "$HOME/.config/systemd/user/clip-recv.service" \
+    "$HOME/.config/systemd/user/clip-xvfb.service"; do
+    [ -e "$path" ] || [ -L "$path" ] || continue
+    if [ -z "$backup" ]; then
+      mkdir -p "$HOME/.local/share/dotfiles-setup/retired-clipboard"
+      backup=$(mktemp -d "$HOME/.local/share/dotfiles-setup/retired-clipboard/backup.XXXXXX")
     fi
+    mv "$path" "$backup/$(basename "$path")"
+  done
+  [ -z "$backup" ] || info "retired clipboard push files backed up to $backup"
+  if [ "$OS" = Linux ] && have systemctl; then
+    systemctl --user daemon-reload || warn "could not reload user units; rerun setup in your login session"
   fi
 }
 
@@ -2133,9 +2068,9 @@ yay uses sudo when required.
 --upgrade TOOL... re-resolves only the named mise tools (identifier or command
 name, such as git-agent) and installs the lock after a completed setup. It skips
 native packages, vendors, checkout, helper compilation, and verification.
-Image paste over mosh: the Linux host at clip-push's tailnet target gets the
-Taildrop operator, linger, and the clip-xvfb and clip-recv user services; a
-Wayland session gets clip-watch.service; macOS gets the clip-watch LaunchAgent.
+Image paste: use clip-session ssh HOST or clip-session mosh HOST after setup on
+both ends. Images are pulled over SSH only when pasted. The remote host needs
+Linux/Xvfb. Setup retires old push services and backs up their remaining files.
 A mise tool may declare a native package for the operating systems outside its
 os list. When that declaration aligns a Homebrew formula, the formula stays on
 the locked mise version.

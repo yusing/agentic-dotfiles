@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2
+
+Publish clip-session sources and locked build inputs instead of retired push helpers, watcher sources, and service units.
+
 ## 1.3.1
 
 Include the Go quality hook source and changelog alongside its published hook

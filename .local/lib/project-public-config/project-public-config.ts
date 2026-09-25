@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.1";
+export const VERSION = "1.3.2";
 
 type TreeEntry = {
 	mode: string;
@@ -153,9 +153,6 @@ const EXACT_PATHS = new Set([
 	".config/micro/settings.json",
 	".config/mise/config.toml",
 	".config/mise/mise.lock",
-	".config/systemd/user/clip-recv.service",
-	".config/systemd/user/clip-watch.service",
-	".config/systemd/user/clip-xvfb.service",
 	".config/skhd/move-window.sh",
 	".config/skhd/skhdrc",
 	".config/zed/keymap.json",
@@ -168,12 +165,12 @@ const EXACT_PATHS = new Set([
 	".grok/hooks/skills-path-guard.json",
 	".grok/hooks/skills_path_guard.ts",
 	".local/bin/check_project",
-	".local/bin/clip-push",
-	".local/bin/clip-push.changelog.md",
-	".local/bin/clip-recv",
-	".local/bin/clip-recv.changelog.md",
-	".local/lib/clip-watch/clip-watch.ts",
-	".local/lib/clip-watch/CHANGELOG.md",
+	".local/lib/clip-session/clip-session.ts",
+	".local/lib/clip-session/clipboard.ts",
+	".local/lib/clip-session/selection.ts",
+	".local/lib/clip-session/package.json",
+	".local/lib/clip-session/bun.lock",
+	".local/lib/clip-session/CHANGELOG.md",
 	".local/lib/compile-agent-tools/compile-agent-tools.ts",
 	".local/lib/compile-agent-tools/CHANGELOG.md",
 	".local/bin/compile-agent-tools",
@@ -244,9 +241,8 @@ const EXCLUDED_PATH_PARTS = new Set([
 	"tests",
 ]);
 
-// Tailscale hands out CGNAT addresses (100.64.0.0/10), so clip-push's default
-// receiver is one of the author's hosts. The placeholder keeps the projected
-// helper readable and is the one address in that range allowed through.
+// Tailnet addresses (100.64.0.0/10) can identify private hosts. Replace them
+// with the one placeholder in that range allowed in published configuration.
 const TAILNET_PLACEHOLDER = "100.64.0.1";
 const TAILNET_ADDRESS = /(?<![\d.])100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.\d{1,3}\.\d{1,3}(?!\d|\.\d)/g;
 

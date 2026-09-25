@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+Build clip-session with its locked X11 dependency on both platforms instead of the retired macOS clip-watch helper.
+
 ## 1.0.4
 
 Compile the Go quality lifecycle hook alongside the other Codex hooks, and

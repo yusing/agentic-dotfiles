@@ -1,0 +1,14 @@
+{
+  "lockfileVersion": 2,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "dependencies": {
+        "x11": "4.2.2",
+      },
+    },
+  },
+  "packages": {
+    "x11": ["x11@4.2.2", "", {}, "sha512-iRmtTDtc8HP6fCUAziS3ajxxtGRdRn71+A1lSWzGQO3ENqanoXzSRHNn9ZSfrOqTEG4l2FyDMgLWI5wMdwIV0A=="],
+  }
+}

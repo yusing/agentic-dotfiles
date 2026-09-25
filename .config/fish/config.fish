@@ -20,11 +20,6 @@ set -x OMO_DISABLE_POSTHOG 1
 set -x NODE_OPTIONS "--max-old-space-size=8192"
 
 
-# Agents over mosh paste images from the clip-recv Xvfb clipboard.
-if not set -q DISPLAY; and test -S /tmp/.X11-unix/X99
-    set -x DISPLAY :99
-end
-
 function check-command -a command
     if not type -q $command
         echo-error "$command is not installed or not in PATH"

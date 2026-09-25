@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.0
+
+Replace clipboard push setup with recoverable retirement of old services, LaunchAgent, and helpers. Use session-scoped SSH clipboard pull via clip-session; leave shared Tailscale and linger settings unchanged.
+
 ## 2.6.0
 
 Set the Tailscale operator on the sending host too. It was applied only on the receiver, so `clip-watch` on a Wayland desktop failed every push with `Access denied: file access denied`; `tailscale file cp` needs the operator just as `tailscale file get` does.

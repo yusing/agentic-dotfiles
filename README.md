@@ -38,6 +38,42 @@ The `CONTEXT-*.md` files are maps for the less obvious parts of the setup. They
 explain which files own agent instructions, hooks, lifecycle behavior, and shared
 shell behavior.
 
+## Image paste in remote sessions
+
+Run setup on both computers, then connect from the computer holding the image:
+
+```sh
+clip-session ssh user@host
+clip-session mosh user@host
+# Or launch an application directly:
+clip-session ssh user@host codex
+```
+
+The remote host must run Linux with Xvfb. The source needs `pngpaste` on macOS,
+`wl-paste` on Wayland, or `xclip` on X11. SSH host aliases, ports, and identities
+come from your SSH config. The server must allow remote Unix-socket forwarding
+(`AllowStreamLocalForwarding`); no SSH server or reverse-login key is needed on
+the source computer.
+
+Paste normally inside the remote application. Each connection gets its own
+clipboard, and reads the source's current PNG image only when the application
+requests it. Copying alone transfers nothing. Text paste still uses the terminal.
+A missing image or a failed pull does not reuse an older image. Pulls time out
+after five seconds; images up to 32 MiB are supported.
+The dedicated clipboard stays tied to the source; remote clipboard writes do
+not replace it.
+
+Use these commands rather than plain `ssh`/`mosh` for image paste. The additional
+SSH connection must remain alive even for mosh: reconnect with `clip-session`
+if network roaming drops it. Existing tmux panes retain their original clipboard
+connection; start a new session/application through the new connection when
+switching source computers. This does not retarget already-running applications.
+
+Setup stops the old `clip-watch`, `clip-recv`, and `clip-xvfb` services and the
+macOS watcher, and moves remaining legacy launch files and helpers into
+`~/.local/share/dotfiles-setup/retired-clipboard/`. It leaves Tailscale operator and
+linger settings unchanged because other tools may use them.
+
 ## Bootstrap
 
 Setup supports macOS, Debian/Ubuntu, and Arch-based Linux. Running it may use
