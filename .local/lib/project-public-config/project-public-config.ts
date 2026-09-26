@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.2";
+export const VERSION = "1.3.3";
 
 type TreeEntry = {
 	mode: string;
@@ -167,9 +167,7 @@ const EXACT_PATHS = new Set([
 	".local/bin/check_project",
 	".local/lib/clip-session/clip-session.ts",
 	".local/lib/clip-session/clipboard.ts",
-	".local/lib/clip-session/selection.ts",
-	".local/lib/clip-session/package.json",
-	".local/lib/clip-session/bun.lock",
+	".local/lib/clip-session/terminal.ts",
 	".local/lib/clip-session/CHANGELOG.md",
 	".local/lib/compile-agent-tools/compile-agent-tools.ts",
 	".local/lib/compile-agent-tools/CHANGELOG.md",

@@ -148,12 +148,10 @@ __pycache__
 !/.local/bin/grok-explore
 !/.local/lib/
 !/.local/lib/clip-session/
-!/.local/lib/clip-session/bun.lock
 !/.local/lib/clip-session/CHANGELOG.md
 !/.local/lib/clip-session/clip-session.ts
 !/.local/lib/clip-session/clipboard.ts
-!/.local/lib/clip-session/package.json
-!/.local/lib/clip-session/selection.ts
+!/.local/lib/clip-session/terminal.ts
 !/.local/lib/compile-agent-tools/
 !/.local/lib/compile-agent-tools/CHANGELOG.md
 !/.local/lib/compile-agent-tools/compile-agent-tools.ts

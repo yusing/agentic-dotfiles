@@ -20,7 +20,6 @@
     "build-essential": {"packages": {"apt": ["build-essential"], "pacman": ["base-devel"], "brew": []}, "commands": ["gcc"]},
     "wget": {"packages": {"apt": ["wget"], "pacman": ["wget"], "brew": ["wget"]}, "commands": ["wget"], "optional": true},
     "xclip": {"packages": {"apt": ["xclip"], "pacman": ["xclip"], "brew": []}, "commands": ["xclip"]},
-    "xvfb": {"packages": {"apt": ["xvfb"], "pacman": ["xorg-server-xvfb"], "brew": []}, "commands": ["Xvfb"]},
     "wl-clipboard": {"packages": {"apt": ["wl-clipboard"], "pacman": ["wl-clipboard"], "brew": []}, "commands": ["wl-paste"], "optional": true},
     "pngpaste": {"packages": {"brew": ["pngpaste"]}, "commands": ["pngpaste"]},
     "imagemagick": {"packages": {"apt": ["imagemagick"], "pacman": ["imagemagick"], "brew": ["imagemagick"]}, "commands": ["magick", "convert"], "optional": true},

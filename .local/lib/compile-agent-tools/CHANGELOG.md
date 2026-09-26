@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.6
+
+Build the dependency-free clip-session without installing the retired X11 package.
+
 ## 1.0.5
 
 Build clip-session with its locked X11 dependency on both platforms instead of the retired macOS clip-watch helper.

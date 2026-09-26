@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.7.0
+# version: 2.7.1
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -2069,8 +2069,9 @@ yay uses sudo when required.
 name, such as git-agent) and installs the lock after a completed setup. It skips
 native packages, vendors, checkout, helper compilation, and verification.
 Image paste: use clip-session ssh HOST or clip-session mosh HOST after setup on
-both ends. Images are pulled over SSH only when pasted. The remote host needs
-Linux/Xvfb. Setup retires old push services and backs up their remaining files.
+both ends. Ctrl+V pulls images over a fresh SSH connection into Codex image
+attachments, including in existing panes. No remote DISPLAY or Xvfb is needed.
+Setup retires old push services and backs up their remaining files.
 A mise tool may declare a native package for the operating systems outside its
 os list. When that declaration aligns a Homebrew formula, the formula stays on
 the locked mise version.

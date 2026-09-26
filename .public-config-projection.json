@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "25d83539f104be8dbaa7d4e154770bd0a5c02751",
+  "sourceCommit": "acc693d477577711303ec460b42008316976a809",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -557,7 +557,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "cfe3c4bd640dc2fc4ee96972df1434e20048a4283a42ce3642b6e129f7ca1493",
+      "sha256": "ab42bcb786fdc130f3d266c66d34b7e2041d194259e108aebf6811b4ef32faff",
       "executable": false
     },
     {
@@ -621,21 +621,15 @@
       "executable": true
     },
     {
-      "path": ".local/lib/clip-session/bun.lock",
-      "kind": "file",
-      "sha256": "188cfbfbd6376e60a46170e10e705e681ae95c5511f81acd97d59e9a468fe10c",
-      "executable": false
-    },
-    {
       "path": ".local/lib/clip-session/CHANGELOG.md",
       "kind": "file",
-      "sha256": "f9fb34779873fe6a972425552dfa71786fbb6f2f3ca89d9bfbbac24e93adddb1",
+      "sha256": "61298393a48fd85247e7d3279bfdf1e808da7bd1e4c8bc79c475ac9d44375563",
       "executable": false
     },
     {
       "path": ".local/lib/clip-session/clip-session.ts",
       "kind": "file",
-      "sha256": "80745b99e948167d7c57e1b06c0ba8563b32b4d0c8d7ed6db05715bb9b550f86",
+      "sha256": "f5037c196450d9098545d8c34b80e6a932eb65bfe86316527537d0422d12215b",
       "executable": false
     },
     {
@@ -645,39 +639,33 @@
       "executable": false
     },
     {
-      "path": ".local/lib/clip-session/package.json",
+      "path": ".local/lib/clip-session/terminal.ts",
       "kind": "file",
-      "sha256": "889fba75db580954460e44734a7639d587194636e06d54e914cef5d8124bc50a",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/clip-session/selection.ts",
-      "kind": "file",
-      "sha256": "7d64b4f7fda94b15e904918d557501ad5f1d9e2e31b523f36ebe2cbf3783c6c0",
+      "sha256": "8052d2b6bf8af2a75c6b7ef245a60210138dca98d1404509937131717a64ab94",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "7064a262d0a5aa34821dbdf97d94a94d6f803365f30c25096bf045fc643e704f",
+      "sha256": "56abde1a0e2b29274df78587a0c24236213988239ac91934fef5932e60f4810a",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "851987b9e914dcd458c32cbf548d264208393b79e484394ec5d602db23b5b133",
+      "sha256": "4a18a798d566c887d0a5598a8fc32ec36133a06d41da74c92ae1dc0100fec3ec",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "94bf2a7e0dabc3747b5f91e69cefe4d41bb1f537c9e5eb97c33ec10a48b702c2",
+      "sha256": "54947a4e6181a10d1c1bbd8e10b57aae2344ef0177595a91993a5058efe4f188",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "7fc7341f0991c69f7b111f270ba6cf1f70c058e71a8706e990f14f499e246a32",
+      "sha256": "5da53cb56d85363e763f23456537b0dd1523da05d8f07d58e7cd979a7ae20bd3",
       "executable": true
     },
     {
@@ -1270,25 +1258,25 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "0e16911002828ab411ee8efc5986c8ed0c0a1b163d8b4d52d1704a6faca9487f",
+      "sha256": "442d7ca1c7ded0d3a7c02e0720e68c33098191a6289d110bb9ddd3ee9dd7fc03",
       "executable": false
     },
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "ddb67fe972dd38d770450e16db17245ae23d53e80e5ddf1f1a74dcabe91c5e2c",
+      "sha256": "f28a44f2c3f4109adca75049e1da60d2ef7878f59589749501267263dc80326e",
       "executable": false
     },
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "58547c52bbf2d89161c0bdc5fd1862808fa6810a53593f247d96852f441a85bb",
+      "sha256": "0d01a53862b3f67e92316a4917bf23d0114dff75b971c9d32e27455e5402a617",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "d6ce4d83ff336e2c155f041b6ffd66c28c6226150c7fb36d82b3ddacf0278906",
+      "sha256": "c1c5f812e51ab2e475180c564cad446099b34f3deec7bc592afc09e67696e691",
       "executable": true
     }
   ]

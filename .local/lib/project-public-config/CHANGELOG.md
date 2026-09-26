@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.3
+
+Publish the source-bound terminal paste implementation instead of the retired X selection and dependency lock.
+
 ## 1.3.2
 
 Publish clip-session sources and locked build inputs instead of retired push helpers, watcher sources, and service units.

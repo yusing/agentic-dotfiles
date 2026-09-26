@@ -49,25 +49,31 @@ clip-session mosh user@host
 clip-session ssh user@host codex
 ```
 
-The remote host must run Linux with Xvfb. The source needs `pngpaste` on macOS,
-`wl-paste` on Wayland, or `xclip` on X11. SSH host aliases, ports, and identities
-come from your SSH config. The server must allow remote Unix-socket forwarding
-(`AllowStreamLocalForwarding`); no SSH server or reverse-login key is needed on
-the source computer.
+The source needs `pngpaste` on macOS, `wl-paste` on Wayland, or `xclip` on X11.
+Both computers need the updated `clip-session`. SSH host aliases, ports, and
+identities come from your SSH config. Paste connections use noninteractive SSH
+key authentication, including your SSH agent, and the server must allow remote
+Unix-socket forwarding (`AllowStreamLocalForwarding`). No reverse-login key,
+source SSH server, remote `DISPLAY`, or Xvfb is required.
 
-Paste normally inside the remote application. Each connection gets its own
-clipboard, and reads the source's current PNG image only when the application
-requests it. Copying alone transfers nothing. Text paste still uses the terminal.
-A missing image or a failed pull does not reuse an older image. Pulls time out
-after five seconds; images up to 32 MiB are supported.
-The dedicated clipboard stays tied to the source; remote clipboard writes do
-not replace it.
+In Codex, press **Ctrl+V** to attach the image from the computer where you pressed
+Paste. Copying alone transfers nothing. Each paste pulls over a new SSH connection
+and becomes an image attachment, not filename text. Text paste through the terminal
+is unchanged. Other applications must support attaching images from bracketed-pasted
+image paths; this is not a general remote desktop clipboard.
 
-Use these commands rather than plain `ssh`/`mosh` for image paste. The additional
-SSH connection must remain alive even for mosh: reconnect with `clip-session`
-if network roaming drops it. Existing tmux panes retain their original clipboard
-connection; start a new session/application through the new connection when
-switching source computers. This does not retarget already-running applications.
+Use the launcher rather than plain `ssh`/`mosh`. Each client's input carries its
+own immutable image reference, so existing applications and simultaneous clients
+do not depend on an old pane's environment or a shared clipboard. There is no
+multiplexer-specific configuration. A failed paste never falls back to an old
+remote image. Mosh keeps running if the auxiliary SSH connection drops; paste
+again after connectivity returns and it opens a fresh connection. Ctrl+C and
+Mosh's escape key remain responsive while a pull waits. Images up to 32 MiB are
+supported; a paste attempt times out after 15 seconds.
+
+Private image files remain in remote temporary storage after disconnection,
+so queued input and drafts can still use them. They follow the host's normal
+`/tmp` cleanup policy; do not clear them before submitting an attached draft.
 
 Setup stops the old `clip-watch`, `clip-recv`, and `clip-xvfb` services and the
 macOS watcher, and moves remaining legacy launch files and helpers into

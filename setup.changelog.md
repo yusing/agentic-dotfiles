@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.1
+
+Use per-paste SSH image attachments without remote Xvfb. Stop installing Xvfb for clipboard forwarding; retain recoverable retirement of legacy push services and helpers.
+
 ## 2.7.0
 
 Replace clipboard push setup with recoverable retirement of old services, LaunchAgent, and helpers. Use session-scoped SSH clipboard pull via clip-session; leave shared Tailscale and linger settings unchanged.

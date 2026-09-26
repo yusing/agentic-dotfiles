@@ -16,7 +16,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.5";
+const VERSION = "1.0.6";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -227,7 +227,6 @@ function main(): void {
     if (isExecutable(output) && storedDigest(state) === digest) return;
 
     if (name === "rewrite-home-paths") ensureRewriteDependencies(dirname(source));
-    if (name === "clip-session") run(bun, ["install", "--frozen-lockfile", "--ignore-scripts"], dirname(source));
     buildAtomically(output, bun, (temporary) => [
       "build",
       "--compile",
