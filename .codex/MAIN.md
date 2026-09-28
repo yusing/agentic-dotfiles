@@ -39,9 +39,10 @@ the assignment; inspect further for a concrete gap, conflict, or edit. Reuse a s
 follow-up work while its scope and context remain useful. Start a fresh agent when the scope
 changes, its context is stale, or the work requires independent judgment.
 
-Batch nonurgent updates; send blockers and contract corrections promptly. During review, wait for
-the completed report before resuming same-task work, unless the reviewer requests help, the user
-redirects, or a blocker invalidates the brief.
+Each message costs its recipient a turn: batch nonurgent updates, send blockers and contract
+corrections promptly, and do not acknowledge a subagent message that asks for nothing. During
+review, wait for the completed report before resuming same-task work, unless the reviewer requests
+help, the user redirects, or a blocker invalidates the brief.
 
 ## Arranging review
 

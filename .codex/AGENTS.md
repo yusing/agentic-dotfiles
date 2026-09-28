@@ -41,8 +41,9 @@ These are task documents, not skills. Read those that match your role and next o
 - `$HOME/.codex/MAIN.md` for main only, when planning a task, deciding how to divide substantial
   exploration or repeatable support work before doing it locally, dispatching, coordinating, or
   arranging a review. It owns main's cost-aware delegation rationale, authorization, and timing.
-- `$HOME/.codex/SUBAGENT.md` for a delegate only, when working inside an assignment or returning
-  results. Delegates execute their settled assignment and do not need dispatch guidance.
+- `$HOME/.codex/SUBAGENT.md` for a delegate only, when working inside an assignment, messaging
+  another agent, or returning results. Delegates execute their settled assignment and do not need
+  dispatch guidance.
 - `$HOME/.codex/IMPLEMENTATION.md` when implementing code or operational changes, or inspecting
   those changes. Load the relevant implementation, validation, or inspection guidance for that
   operation, not merely to return a subagent result. Factual lookup does not trigger it.
