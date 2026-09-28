@@ -18,12 +18,8 @@ client-managed and is not part of the port.
 SessionStart project report and skill inventory are not ported: Grok does
 not attach that event output to the model.
 
-`go_quality` also runs in-process, registered for Grok's write-capable tools at
-`PreToolUse`, `PostToolUse`, and `PostToolUseFailure`, and at `Stop`. Grok hooks
-have no `async` option, so its `SessionStart` baseline goes through
-`.grok/hooks/background_hook.sh`, which hands the event to the adapter in a detached
-process. Grok also fires an observe-only `Stop` at session end; the check runs
-there too, and Grok ignores its decision.
+`go_quality` is disabled in the port configuration, matching Codex and Claude.
+The adapter and detached baseline wrapper remain available for re-enabling.
 
 Port coverage is limited to what a registered hook owns. Deletion policy has no registered
 hook, so no event-scoped owner exists to carry it. Grok receives general authorization and

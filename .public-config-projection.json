@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "80e1715c03b1faa1657d4a62e4ddaab6b75ed824",
+  "sourceCommit": "35a8c66b2ea49e82ed03edaa4d300c703f3ce3a2",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -71,7 +71,7 @@
     {
       "path": ".claude/settings.json",
       "kind": "file",
-      "sha256": "f90277a4afee0f4cd90d0949e52c9252e8a6e8953ba9ca435781facd707da8af",
+      "sha256": "dcd3e04e0f5698673c7adafc59130b5f44a14b640effb7d758769e9a7b810a2e",
       "executable": false
     },
     {
@@ -137,7 +137,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "0e6dd8164262938bb13e91c380363315c5b61d9b49309bff1f0bd2ee8f357e05",
+      "sha256": "e3ad4f9f269f1fc52d2bc0d54877b3e2fd006b34cdc08f0c629005e62d50401c",
       "executable": false
     },
     {
@@ -587,7 +587,7 @@
     {
       "path": ".grok/hooks/codex-port.json",
       "kind": "file",
-      "sha256": "401daea11177f094f9e11fe333b32a0c6dc8c90164c63794e75fdf78665307f8",
+      "sha256": "c111d9c18ca658288de5b2dc4c1f0d7bab140a25c7e937e1b3b1645883cd8f1b",
       "executable": false
     },
     {
@@ -845,7 +845,7 @@
     {
       "path": ".skills-mgr/skills/golang-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "a07a30509ea19a910d74ca1c9201f823acf2f6da1ebc848c04db4b6d895d8a9f",
+      "sha256": "68f4c8495ff61e23e358d2fb0909b2eff66b4e5e109cb4d82ee21c86eb95c2f1",
       "executable": false
     },
     {
@@ -1210,7 +1210,7 @@
     {
       "path": "CONTEXT-GROK-HOOK-PORT.md",
       "kind": "file",
-      "sha256": "4d55e859b083f1d12485c81081e4f8edf1a96132bb9b75448416f25c4f099649",
+      "sha256": "23dc4634b66780cacec27f0d24843085e37c4c0a0c76623d26c60543d9ccca35",
       "executable": false
     },
     {
@@ -1228,7 +1228,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "c3eb186f9afad3fd0d8d46814f8de226cd4849ec4910b1887f8a69cdf4d39694",
+      "sha256": "202b91dc08248a51e33d343fc7fc0ea5685ca2d0eaf77590f3dc21039211ef3e",
       "executable": false
     },
     {

@@ -49,27 +49,7 @@
   `.codex/IMPLEMENTATION.md` owns validation requirements.
 - User experience: `.skills-mgr/skills/user-experience/SKILL.md` owns proportional UX and
   operability guidance when a user-facing workflow or interface changes.
-- Go quality: `.codex/hooks/bin/go_quality` records a background baseline for Go
-  projects at `SessionStart`, fences potential Go writes at `PreToolUse` until
-  the baseline is ready, and refreshes the command preimage under a best-effort
-  writer gate that never denies a tool. Read-only shell commands skip the gate. A
-  failed non-shell tool is reconciled by the same session's next tool, and `Stop`
-  reconciles any writer the session still holds. First project creation, a
-  `go.mod` or `go.work` written at the cwd or an ancestor, snapshots pre-existing
-  loose Go sources before the tool runs. It records source
-  edits and applies `go fix` (Go 1.26+) and `gofmt` at `PostToolUse` to the
-  files each tool changed, saving private per-command diff reports. Git commands
-  that write checked-out content, such as `rebase` or `reset`, and edits during a
-  stopped git sequence are recorded without auto-fixes. Model context
-  summarizes `go fix` and `gofmt` separately with a report path, and includes
-  inline `go fix` rewrites, unexpected sibling restores, and auto-fix errors.
-  Formatting-only rewrites do not print inline diffs. A file that does not
-  build or parse yet is silently retried by later Go edits; `Stop`
-  requires fixes for new `go fix`, `golangci-lint`, or `deadcode` findings after
-  Go files change; `golangci-lint` runs uncapped and keys `exhaustruct` findings
-  on the struct type. Project discovery follows the session cwd and its ancestors;
-  for a Go module nested under a non-Go cwd, start the agent inside that module.
-  The managed Go skill no longer owns these checks. `.claude/settings.json` registers the
-  same actions directly, and `CONTEXT-GROK-HOOK-PORT.md` records the Grok port. Both clients
-  also run `edit` on `PostToolUseFailure`, so a failed writer is reconciled at once, and
-  match only write-capable tools so file reads skip the gate.
+- Go quality is disabled: no registrations remain in `.codex/hooks.json`,
+  `.claude/settings.json`, or `.grok/hooks/codex-port.json`; OMP inherits the
+  Codex registrations. The `.codex/hooks/bin/go_quality` implementation and
+  Grok adapter support remain available for re-enabling.
