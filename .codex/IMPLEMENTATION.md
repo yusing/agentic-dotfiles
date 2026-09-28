@@ -4,7 +4,7 @@ Craft standards for any agent implementing or inspecting a change, applied withi
 role and scope.
 
 When code conflicts with tests or fixtures, use the accepted contract to decide which changes.
-Consult history only when the intended behavior remains unresolved.
+Consult history when the intended behavior remains unresolved.
 
 ## Validation
 
@@ -33,9 +33,9 @@ Skip safeguards for purely hypothetical concerns; raise any concrete unresolved 
 
 ## Hygiene
 
-Remove behavior and supporting artifacts superseded by the accepted change. Do not preserve compatibility unless
-the user says otherwise, and ask only if no safe assumption can be made; do not add fallback layers for hypothetical consumers
-or edge-case handling for impossible scenarios.
+Remove behavior, tests, and supporting artifacts superseded by the accepted change. Do not preserve compatibility unless
+the user says otherwise, and ask only if no safe assumption can be made; do not keep the test with opposite assertion
+for something no longer exists; do not add fallback layers for hypothetical consumers or edge-case handling for impossible scenarios.
 Report unrelated pre-existing obsolete paths for the user to decide.
 
 Edit authoritative sources, not generated, vendored, or minified outputs. Regenerate affected

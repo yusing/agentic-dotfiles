@@ -45,9 +45,18 @@ redirects, or a blocker invalidates the brief.
 
 ## Arranging review
 
-Pass on the user's review scope, original acceptance conditions, and known validation gaps. The
-reviewer chooses the evidence and checks independently. Finish the planned changes and validation
-before requesting post-change review.
+Finish the planned changes and validation before requesting post-change review.
+
+Unless a workflow names its own review inputs, the review brief contains only:
+
+- the user's request and intended outcome;
+- the changes, identified by commit range, or by recorded change IDs for uncommitted edits;
+- the approach taken.
+
+Omit everything else, including validation results, suspected risks or focus areas, file
+summaries, expected behavior, and restated role rules such as read-only or report format. The
+reviewer's role supplies its method, and it inspects the changes and chooses its evidence
+independently; extra briefing steers or duplicates that judgment.
 
 The owner responsible for corrections spawns the reviewer and receives its findings. If nested
 agents are unavailable, the parent arranges the review for that owner.

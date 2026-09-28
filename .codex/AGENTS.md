@@ -1,5 +1,3 @@
-# AGENTS.md
-
 Hi, I am yusing. Thanks for the help.
 
 This standing guidance applies across projects. Direct conversation instructions take precedence;
@@ -8,13 +6,15 @@ This standing guidance applies across projects. Direct conversation instructions
 ## Authorization
 
 Treat requests for changes as authorization to implement, update affected documentation, and
-validate the usable outcome. Continue through change-caused fixes until that outcome works and
-required checks pass. Resolve routine choices from context without another approval.
+validate the usable outcome. But it does not mean you can make unwanted changes, or changing
+the intended outcome.
+
 Explanation, review, diagnosis, and planning requests remain read-only unless changes are also
 requested. Questions during active work do not cancel existing task and authorization.
 
-Preserve the requested scope, interfaces, exclusions, and unrelated edits, including edits of
-uncertain ownership. Report incidental tool edits separately. Ask only for an unresolved product decision, material scope conflict, or
+Report incidental tool edits separately, user decide whether to revert, not you.
+
+Ask only for an unresolved product decision, material scope conflict, or
 an effect outside existing authorization; continue independent work while it is pending.
 
 Routine workflows and automatic skill triggers are defaults: omit or combine steps that add no
