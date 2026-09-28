@@ -1,6 +1,6 @@
 ---
 name: golang-best-practices
-description: Apply version-aware Go guidance and local conventions during implementation or review. Read together with `skills-mgr run use-modern-go/scripts/run-tool.sh list --go-version VERSION`, using the Go version reported.
+description: Apply version-aware Go guidance and local conventions during implementation or review. Read together with `skills-mgr run use-modern-go/scripts/run-tool.sh list --go-version VERSION`, using the go_version already reported.
 ---
 
 # Modern Go by Version
