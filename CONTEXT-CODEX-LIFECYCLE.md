@@ -17,7 +17,7 @@
    `.codex/hooks.json` runs `.codex/hooks/bin/check_project` and `skills-mgr list`.
    Resuming an existing session does not run these root-session hooks.
    The project and inventory commands run through `.codex/hooks/bin/session_start_context`.
-   Thread-spawn startup runs SubagentStart instead of root SessionStart and delivers inventory
+   Thread-spawn startup runs SubagentStart instead of root SessionStart and delivers project context and inventory
    through the same wrapper. `CONTEXT-HOOK-OWNERS.md` owns the fork and retained-context
    suppression rules. Hook refresh is separate from the cached static `AGENTS.md` discovery.
    Matched events receive project context and current skill metadata without

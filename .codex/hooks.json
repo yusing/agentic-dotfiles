@@ -46,6 +46,11 @@
       {
         "hooks": [
           {
+            "command": "$HOME/.codex/hooks/bin/session_start_context $HOME/.codex/hooks/bin/check_project",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
             "command": "$HOME/.codex/hooks/bin/session_start_context skills-mgr list",
             "timeout": 5,
             "type": "command"

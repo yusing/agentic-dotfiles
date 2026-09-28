@@ -24,8 +24,9 @@
   skips the project and skill context commands on fork startup when the transcript's first
   `session_meta` record has `forked_from_id`; unavailable metadata keeps the commands enabled.
   Compaction and clearing still refresh root context. SubagentStart uses the same wrapper to
-  compare the current inventory with retained hook context in the child transcript. It suppresses
-  only proven identical inventory from a complete transcript of at most 256 KiB. Missing, oversized,
+  deliver project context and skill inventory, comparing each command's output with retained hook
+  context in the child transcript. It suppresses only proven identical output from a complete
+  transcript of at most 256 KiB. Missing, oversized,
   malformed, rolled-back, or unsupported history keeps delivery. The separate
   `.codex/hooks/bin/skills_mgr_inventory` command adds the `--- skills-mgr injected ---` heading
   for Claude; it is not the command currently registered by Codex.
