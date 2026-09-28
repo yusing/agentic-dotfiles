@@ -2,7 +2,7 @@
 description: "Lower-cost read-only explorer that summarizes relevant source facts and caller traces so the parent need not repeat broad exploration; not an auditor or design reviewer."
 mode: subagent
 model: kilo/deepseek/deepseek-v4.1-flash
-variant: max
+variant: high
 color: "#EC4899"
 permission:
   bash: allow

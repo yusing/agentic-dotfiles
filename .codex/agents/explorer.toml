@@ -1,7 +1,7 @@
 name = "explorer"
 description = "Lower-cost read-only explorer that summarizes relevant source facts and caller traces so the parent need not repeat broad exploration; not an auditor or design reviewer."
 model = "gpt-6-luna"
-model_reasoning_effort = "max"
+model_reasoning_effort = "high"
 developer_instructions = '''
 # Role
 
