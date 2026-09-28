@@ -285,25 +285,9 @@
       "Bash(rtk fish -n *)"
     ]
   },
-  "skillOverrides": {
-    "build-code-skeleton": "user-invocable-only",
-    "deliver-vertical-slice": "user-invocable-only",
-    "new-project": "user-invocable-only",
-    "using-pjdoc": "user-invocable-only"
-  },
+  "skillOverrides": {},
   "hooks": {
     "SessionStart": [
-      {
-        "matcher": "^(startup|resume)$",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.codex/hooks/bin/go_quality baseline",
-            "async": true,
-            "timeout": 120
-          }
-        ]
-      },
       {
         "matcher": "*",
         "hooks": [
