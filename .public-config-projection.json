@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "acc693d477577711303ec460b42008316976a809",
+  "sourceCommit": "7b99c740cc5ce0a993a04f1b0afe1a1c452fe78d",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -155,13 +155,13 @@
     {
       "path": ".codex/hooks/go_quality.changelog.md",
       "kind": "file",
-      "sha256": "5d30db6a481c8e779923106786c4a5bd2c9465d9ccc789eeb184437431b023e7",
+      "sha256": "1aa9d4d82cc6e426e8ebfca758f4a34f7b86e1865ab0cd84dc6f0ecf62f69365",
       "executable": false
     },
     {
       "path": ".codex/hooks/go_quality.ts",
       "kind": "file",
-      "sha256": "88f9df34b2b029da27e6d9c753b1935d7995f93e340c8d7246f6eed9b3a8d3f7",
+      "sha256": "a85d7cd23e440214bc69506cbda8ae6ebe6b6e5a660b3e5abc5714288a8ffaf0",
       "executable": false
     },
     {
@@ -1228,7 +1228,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "a3bb7d480723271eff41e793e9e80ad62492bf6f6f7412a2706e2270de74c1dd",
+      "sha256": "c3eb186f9afad3fd0d8d46814f8de226cd4849ec4910b1887f8a69cdf4d39694",
       "executable": false
     },
     {

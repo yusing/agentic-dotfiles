@@ -10,7 +10,7 @@ import { responseFor as generatedGuardResponse } from "./generated_code_guard.ts
 import { responseFor as subagentGuardResponse } from "./subagent_exec_guard.ts";
 import { asString, at, handleVersion, isRecord, readEvent, runCommand, runMain, writeJson } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.3";
+export const VERSION = "1.0.4";
 
 type Snapshot = Record<string, string>;
 type Baseline = { files: Snapshot; findings: Record<string, string[]> };
@@ -79,6 +79,13 @@ const READ_ONLY_GIT = new Set([
   "blame", "cat-file", "describe", "diff", "grep", "log", "ls-files", "ls-tree", "rev-parse",
   "shortlog", "show", "status",
 ]);
+// Git commands that write checked-out content. The files they change are
+// history, not edits to fix: rewriting them dirties a sequence between steps
+// and leaves reformatted commits behind.
+const CHECKOUT_GIT = new Set([
+  "am", "bisect", "checkout", "cherry-pick", "merge", "pull", "rebase", "reset", "restore",
+  "revert", "stash", "switch",
+]);
 const READ_ONLY_GO = new Set(["doc", "help", "list", "version"]);
 const FIND_WRITES = new Set(["-delete", "-exec", "-execdir", "-fls", "-fprint", "-fprint0", "-fprintf", "-ok", "-okdir"]);
 
@@ -90,6 +97,53 @@ function unwrapped(segment: string[]): string[] {
     tokens = stripLeadingShellPrefix(tokens.slice(1));
   }
   return tokens;
+}
+
+function gitSubcommand(args: string[]): string | undefined {
+  let index = 0;
+  while (index < args.length && args[index].startsWith("-")) index += args[index] === "-C" || args[index] === "-c" ? 2 : 1;
+  return at(args, index);
+}
+
+function isGitCheckout(event: Record<string, unknown>): boolean {
+  const input = event.tool_input;
+  const command = event.tool_name === "Bash" && isRecord(input) ? asString(input.command) : undefined;
+  if (!command) return false;
+  try {
+    return shellSegments(command).some((segment) => {
+      const tokens = unwrapped(segment);
+      const executable = at(tokens, 0);
+      const subcommand = executable && path.basename(executable) === "git" ? gitSubcommand(tokens.slice(1)) : undefined;
+      return subcommand !== undefined && CHECKOUT_GIT.has(subcommand);
+    });
+  } catch {
+    return false;
+  }
+}
+
+const GIT_SEQUENCES = ["rebase-merge", "rebase-apply", "MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "BISECT_LOG"];
+
+// A stopped rebase, merge, cherry-pick, revert, am, or bisect in the worktree
+// containing `root`, including linked worktrees whose `.git` is a file.
+function gitSequenceInProgress(root: string): boolean {
+  let current = path.resolve(root);
+  while (true) {
+    const dotGit = path.join(current, ".git");
+    let gitDir: string | undefined;
+    try {
+      if (fs.statSync(dotGit).isDirectory()) gitDir = dotGit;
+      else {
+        const pointer = /^gitdir: (.+)$/m.exec(fs.readFileSync(dotGit, "utf8"))?.[1]?.trim();
+        if (pointer) gitDir = path.resolve(current, pointer);
+      }
+    } catch {
+      // No `.git` here.
+    }
+    if (gitDir) return GIT_SEQUENCES.some((name) => fs.existsSync(path.join(gitDir, name)));
+    const parent = path.dirname(current);
+    if (parent === current) return false;
+    current = parent;
+  }
 }
 
 function isReadOnlySegment(segment: string[]): boolean {
@@ -105,9 +159,8 @@ function isReadOnlySegment(segment: string[]): boolean {
       scripts.length > 0 && /^[\d,$;\s]*p[\d,$;p\s]*$/.test(scripts[0]);
   }
   if (executable === "git") {
-    let index = 0;
-    while (index < args.length && args[index].startsWith("-")) index += args[index] === "-C" || args[index] === "-c" ? 2 : 1;
-    return index < args.length && READ_ONLY_GIT.has(args[index]) &&
+    const subcommand = gitSubcommand(args);
+    return subcommand !== undefined && READ_ONLY_GIT.has(subcommand) &&
       !args.some((arg) => arg.startsWith("--output") || arg === "-o");
   }
   if (executable === "go") {
@@ -486,8 +539,12 @@ function findings(tool: string, output: string): Finding[] {
         const line = typeof issue.Pos.Line === "number" ? issue.Pos.Line : 0;
         const linter = asString(issue.FromLinter) ?? "lint";
         const message = asString(issue.Text) ?? "unknown issue";
+        // exhaustruct lists every missing field, so adding one struct field
+        // would rename every existing literal's finding; key on the type and
+        // let the per-signature count catch new literals.
+        const stable = linter.startsWith("exhaustruct") ? message.replace(/^(\S+) is missing fields? .*$/, "$1 is missing fields") : message;
         issues.push({
-          signature: `${file}: ${linter}: ${message}`,
+          signature: `${file}: ${linter}: ${stable}`,
           display: `${file}:${line}: ${message} (${linter})`,
         });
       }
@@ -517,9 +574,12 @@ function runChecks(root: string, modules: string[] = moduleRoots(root)): Record<
     const lintVersion = runCommand(["golangci-lint", "version"], { cwd: module });
     if (!lintVersion.error) {
       const major = /version (\d+)/.exec(lintVersion.stdout)?.[1];
+      // Default caps print a subset that differs between runs, so old
+      // findings would look new; baseline and check both need every issue.
+      const uncapped = ["--max-issues-per-linter=0", "--max-same-issues=0"];
       const lint = major === "1"
-        ? ["golangci-lint", "run", "--out-format=json", "./..."]
-        : ["golangci-lint", "run", "--show-stats=false", "--output.text.path", "stderr", "--output.json.path", "stdout", "./..."];
+        ? ["golangci-lint", "run", "--out-format=json", ...uncapped, "./..."]
+        : ["golangci-lint", "run", "--show-stats=false", "--output.text.path", "stderr", "--output.json.path", "stdout", ...uncapped, "./..."];
       checks.push(["golangci-lint", lint]);
     }
     checks.push(["deadcode", ["deadcode", "./..."]]);
@@ -660,6 +720,17 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
     const commandInput = isRecord(event.tool_input) ? asString(event.tool_input.command) : undefined;
     const sourceCommand = commandInput && toolName === "Bash" ? JSON.stringify(commandInput) : toolName;
     const report: string[] = [`# tool_use_id: ${toolUseId}\n`];
+    const reportsDir = path.join(directory, "reports");
+    fs.mkdirSync(reportsDir, { recursive: true, mode: 0o700 });
+    const artifact = path.join(reportsDir, `${digest(toolUseId)}.diff`);
+    if (isGitCheckout(event) || gitSequenceInProgress(root)) {
+      // Record the new tree without diffing or rewriting it; Stop still
+      // checks it, and pending fixes wait for the next ordinary edit.
+      report.push(`# command: ${sourceCommand}\n# git checkout; not auto-fixed:\n${edited.map((relative) => `# ${relative}\n`).join("")}`);
+      saveWorking(root, directory, afterTool, before);
+      fs.writeFileSync(artifact, report.join(""), { mode: 0o600 });
+      return undefined;
+    }
     report.push(diffStage(root, directory, before, afterTool, sourceCommand));
     let current = afterTool;
     // Earlier edits whose fixes waited for their package to build join this
@@ -763,9 +834,6 @@ function postEdit(event: Record<string, unknown>, root: string, directory: strin
       current = afterFormat;
     }
     writePending(directory, pending);
-    const reportsDir = path.join(directory, "reports");
-    fs.mkdirSync(reportsDir, { recursive: true, mode: 0o700 });
-    const artifact = path.join(reportsDir, `${digest(toolUseId)}.diff`);
     fs.writeFileSync(artifact, report.join(""), { mode: 0o600 });
     // The model already knows what its tool changed. It needs to hear only
     // that the hook changed those files again, or failed to.

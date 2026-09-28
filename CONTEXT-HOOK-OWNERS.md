@@ -58,13 +58,16 @@
   `go.mod` or `go.work` written at the cwd or an ancestor, snapshots pre-existing
   loose Go sources before the tool runs. It records source
   edits and applies `go fix` (Go 1.26+) and `gofmt` at `PostToolUse` to the
-  files each tool changed, saving private per-command diff reports. Model context
+  files each tool changed, saving private per-command diff reports. Git commands
+  that write checked-out content, such as `rebase` or `reset`, and edits during a
+  stopped git sequence are recorded without auto-fixes. Model context
   summarizes `go fix` and `gofmt` separately with a report path, and includes
   inline `go fix` rewrites, unexpected sibling restores, and auto-fix errors.
   Formatting-only rewrites do not print inline diffs. A file that does not
   build or parse yet is silently retried by later Go edits; `Stop`
   requires fixes for new `go fix`, `golangci-lint`, or `deadcode` findings after
-  Go files change. Project discovery follows the session cwd and its ancestors;
+  Go files change; `golangci-lint` runs uncapped and keys `exhaustruct` findings
+  on the struct type. Project discovery follows the session cwd and its ancestors;
   for a Go module nested under a non-Go cwd, start the agent inside that module.
   The managed Go skill no longer owns these checks. `.claude/settings.json` registers the
   same actions directly, and `CONTEXT-GROK-HOOK-PORT.md` records the Grok port. Both clients

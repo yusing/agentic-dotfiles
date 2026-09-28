@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.4
+
+Run `golangci-lint` with `--max-issues-per-linter=0 --max-same-issues=0` for
+baselines and Stop checks, so default output caps no longer show a different
+subset each run and make old findings look new. Key `exhaustruct` findings on
+the struct type instead of the missing-field list: adding one field to a struct
+no longer reports every existing literal as new, and each additional literal of
+that type in a file is still reported.
+
+Record files changed by git commands that write checked-out content (`rebase`,
+including `--autosquash`, `merge`, `pull`, `checkout`, `switch`, `reset`,
+`restore`, `stash`, `cherry-pick`, `revert`, `am`, `bisect`) and by any edit
+while a rebase, merge, cherry-pick, revert, am, or bisect is stopped, without
+running `go fix` or `gofmt` on them. The auto-fix no longer dirties the tree
+between sequence steps or rewrites commits. Their report lists the changed paths
+instead of spawning a diff per file. Stop still checks the resulting tree.
+
 ## 1.0.3
 
 Summarize `go fix` rewrites and `gofmt` formatting separately in one line with
