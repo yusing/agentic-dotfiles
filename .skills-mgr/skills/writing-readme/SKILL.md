@@ -1,6 +1,6 @@
 ---
 name: writing-readme
-description: Write, rewrite, improve, or review README.md files for the repository's actual audience and use case.
+description: Write, rewrite, update, or review README.md files for the repository's actual audience and use case, including README edits that accompany a code change.
 ---
 
 # Writing README
@@ -17,6 +17,8 @@ side effects beside the claims or commands they qualify. Link deeper technical a
 maintainer detail when it serves a separate audience.
 
 For maintenance, update the affected explanations, examples, and links together.
+Sections follow the reader's task: everyday use belongs with usage even when it
+arrived with development work, and development sections serve contributors only.
 Internal changes with no reader-visible effect may need no README edit. Keep agent
 rules and implementation contracts with their existing owners.
 

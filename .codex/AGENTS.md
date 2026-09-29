@@ -60,12 +60,19 @@ Do not repeat instructions before first user message, including this file, in:
 
 ## Documentation maintenance
 
-You are responsible for maintaining these after completing and verifying assigned work.
+After completing and verifying assigned work, you are responsible for keeping affected documents
+true for a reader without session history:
 
-README holds only what users need to understand, choose, or do.
-Spec holds intent, scope, non-goals, journeys, and why.
-Contract holds types, schemas, errors, SLAs, and compatibility.
-Spec and contract must not overlap, repeat, or restate code in prose.
+- README holds only what users need to understand, choose, or do: the behavior, limits, and side
+  effects they encounter, not the mechanisms behind them.
+- Spec holds intent, scope, non-goals, journeys, and why.
+- Contract holds types, schemas, errors, SLAs, and compatibility.
+- Spec and contract must not overlap, repeat, or restate code in prose.
+
+Each document reads as one current description, not a sequence of appended changes. A fact sits
+where its reader looks for that topic, merged into the passage it extends or corrects. Summaries,
+feature lists, indexes, and navigation stay consistent with the sections they describe, and a
+section outgrown by additions is restructured rather than extended.
 
 Put durable agent rules in their existing owner. Revise stale rules and references instead of appending task recaps.
 
