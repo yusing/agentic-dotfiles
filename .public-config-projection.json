@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "628e1a16388e595ecab4c570c9d46ae6780837cb",
+  "sourceCommit": "281516aebcdabf65dc159f8ee8cfcb93945230b5",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -311,7 +311,7 @@
     {
       "path": ".config/ghostty/config",
       "kind": "file",
-      "sha256": "f172aa9266233e7eb6a3eb44eed6ca0782cc2892b106fc1b29687e0d495775e1",
+      "sha256": "937d68544393306955cdff643a305919d217be93c4a7b5be6e5b190602d2d6de",
       "executable": false
     },
     {
