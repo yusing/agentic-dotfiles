@@ -10,6 +10,9 @@
         "locator": "tt-a1i/archify/archify"
       }
     },
+    "batch-agent-sessions": {
+      "enabled": true
+    },
     "build-code-skeleton": {
       "enabled": true
     },
