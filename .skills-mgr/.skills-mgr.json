@@ -19,11 +19,17 @@
     "codebase-review": {
       "enabled": true
     },
+    "commit": {
+      "enabled": true
+    },
     "context7-mcp": {
       "enabled": true
     },
     "council": {
       "enabled": true
+    },
+    "create-skill": {
+      "enabled": "[ \"$PWD\" == \"$HOME\" ]"
     },
     "deliver-vertical-slice": {
       "enabled": true
@@ -158,7 +164,7 @@
       "enabled": true
     },
     "skill-creator": {
-      "enabled": true
+      "enabled": false
     },
     "supabase-postgres-best-practices": {
       "enabled": "lang postgres",

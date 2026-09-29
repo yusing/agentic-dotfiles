@@ -182,8 +182,10 @@ determine when it applies.
 | --- | --- | --- | --- | --- |
 | `build-code-skeleton` | Shared | Create an initial compile-safe project skeleton | Yes | Always |
 | `codebase-review` | Shared | Review the whole working tree | No | Always |
+| `commit` | Shared | Write commits and fold follow-up fixes into them | Yes | Always |
 | `context7-mcp` | Codex | Fetch current library documentation from Context7 | Yes | Always |
 | `council` | Shared | Gather independent agent judgments | Yes | Always |
+| `create-skill` | Shared | Create and register a skill in this repository | Yes | Home directory |
 | `deliver-vertical-slice` | Shared | Deliver an approved change end to end | Yes | Always |
 | `deslop` | Shared | Reduce production code while preserving behavior | No | Always |
 | `dump-last-response` | Codex | Save the preceding assistant response | No | Always |
@@ -211,7 +213,6 @@ determine when it applies.
 | `shadcn` | Remote | Work with shadcn/ui components | Yes | Node project with `components.json` |
 | `shadowtree` | Shared | Run and author Shadowtree recipes | Yes | Always |
 | `show-me` | Remote | Explain a topic with concise diagrams | Yes | Always |
-| `skill-creator` | Codex | Create or update a Codex skill | Yes | Always |
 | `supabase-postgres-best-practices` | Remote | Apply Supabase PostgreSQL practices | Yes | PostgreSQL project |
 | `tauri-v2` | Remote | Build with Tauri v2 | Yes | Tauri v2 project |
 | `teardown` | Shared | Render structured visual explanations to HTML | Yes | Always |
