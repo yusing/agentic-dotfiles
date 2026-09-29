@@ -202,6 +202,7 @@ determine when it applies.
 | `js-ts-best-practices` | Shared | Apply JavaScript and TypeScript practices | Yes | JavaScript or TypeScript project |
 | `juststore-rendering-optimizer` | Shared | Design, review, or optimize juststore React state | Yes | JavaScript or TypeScript project with `juststore` |
 | `minimalist-ui` | Remote | Design clean editorial-style interfaces | Yes | TSX, JSX, HTML, or CSS project |
+| `new-agent-session` | Shared | Start an agent session in a new worktree and Herdr subspace | No | Always |
 | `new-project` | Shared | Run the new-project workflow | Yes | Always |
 | `openai-docs` | Codex | Look up Codex and OpenAI product documentation | Yes | Always |
 | `postgres-17-18-features` | Shared | Apply PostgreSQL 17 and 18 features | Yes | PostgreSQL project |
