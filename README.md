@@ -180,6 +180,7 @@ determine when it applies.
 
 | Name | Source | Purpose | Model visible | Condition |
 | --- | --- | --- | --- | --- |
+| `batch-agent-sessions` | Shared | Fix batched issues in parallel agent sessions and integrate them | No | Always |
 | `build-code-skeleton` | Shared | Create an initial compile-safe project skeleton | Yes | Always |
 | `codebase-review` | Shared | Review the whole working tree | No | Always |
 | `commit` | Shared | Write commits and fold follow-up fixes into them | Yes | Always |
