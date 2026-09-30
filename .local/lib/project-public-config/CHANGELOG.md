@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.5
+
+Publish authoring-skill under its renamed path in place of create-skill.
+
 ## 1.3.4
 
 Restore the public file list: publish skill-authoring guidance, the batch-agent-sessions,

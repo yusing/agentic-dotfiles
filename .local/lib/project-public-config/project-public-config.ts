@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.4";
+export const VERSION = "1.3.5";
 
 type TreeEntry = {
 	mode: string;
@@ -199,12 +199,12 @@ const EXACT_PATHS = new Set([
 ]);
 
 const PROJECTED_SKILL_NAMES = [
+	"authoring-skill",
 	"batch-agent-sessions",
 	"build-code-skeleton",
 	"codebase-review",
 	"commit",
 	"council",
-	"create-skill",
 	"deliver-vertical-slice",
 	"deslop",
 	"final-review",

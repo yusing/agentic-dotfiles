@@ -180,13 +180,13 @@ determine when it applies.
 
 | Name | Source | Purpose | Model visible | Condition |
 | --- | --- | --- | --- | --- |
+| `authoring-skill` | Shared | Author, update, review, or rename skills and maintain registration and projection | Yes | Always |
 | `batch-agent-sessions` | Shared | Fix batched issues in parallel agent sessions and integrate them | No | Always |
 | `build-code-skeleton` | Shared | Create an initial compile-safe project skeleton | Yes | Always |
 | `codebase-review` | Shared | Review the whole working tree | No | Always |
 | `commit` | Shared | Write commits and fold follow-up fixes into them | Yes | Always |
 | `context7-mcp` | Codex | Fetch current library documentation from Context7 | Yes | Always |
 | `council` | Shared | Gather independent agent judgments | Yes | Always |
-| `create-skill` | Shared | Create and register a skill in this repository | Yes | Home directory |
 | `deliver-vertical-slice` | Shared | Deliver an approved change end to end | Yes | Always |
 | `deslop` | Shared | Reduce production code while preserving behavior | No | Always |
 | `dump-last-response` | Codex | Save the preceding assistant response | No | Always |

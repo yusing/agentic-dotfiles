@@ -10,6 +10,9 @@
         "locator": "tt-a1i/archify/archify"
       }
     },
+    "authoring-skill": {
+      "enabled": true
+    },
     "batch-agent-sessions": {
       "enabled": true
     },
@@ -30,9 +33,6 @@
     },
     "council": {
       "enabled": true
-    },
-    "create-skill": {
-      "enabled": "[ \"$PWD\" == \"$HOME\" ]"
     },
     "deliver-vertical-slice": {
       "enabled": true

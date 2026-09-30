@@ -7,8 +7,9 @@ disable-model-invocation: true
 # Batch agent sessions
 
 Turn one list of issues into parallel, visible agent sessions, one per batch, and deliver a
-single integrated result. The `new-agent-session` skill owns launching each session: its agent
-choice, worktree, launch, prompt, and verification rules apply to every batch. This skill owns
+single integrated result. Before launching any batch, load `new-agent-session` with
+`skills-mgr get new-agent-session`. It owns agent choice (including the Mekugi default for
+Codex), worktree, launch, prompt, and verification for every batch. This skill owns
 batching, fan-out, the collective wait, and integration.
 
 ## Batch

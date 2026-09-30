@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6c91829058bda8b8c4e6a2bbd12a27bc37731aa4",
+  "sourceCommit": "7916ba53dab652873609dcafa076cf05d68f65ba",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -623,7 +623,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "826e0fff1eed81b579daabf17ec3ad081c5ab9ba2887fb6d58cd15c0238921f9",
+      "sha256": "47f5a743e1824c0d5f4ef9027589f65f1a74b2fe8a92fdd1dc266711aff1b975",
       "executable": false
     },
     {
@@ -749,13 +749,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "d34fe29ddb0682eda7ac291219716b7e21fcc99ab8fe29bb15b8d3d6e5391126",
+      "sha256": "10935c13acf531de9e354d83304c6c47f37e64f5b91da5cd34f6dd7295bc71eb",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "9e07b08b6d9304135b8e412aceb5aa8fbfe835653dd1510e67f2742bfa9cb25a",
+      "sha256": "857af7f27b2239cf6bb66b07bba0da5f0a0b54a3b4483c4f237291fb61d68a75",
       "executable": true
     },
     {
@@ -809,7 +809,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "08669d27214c343305e316cd6dbb8a03f4914c207fc2a17f104e90c3405b5b26",
+      "sha256": "c4bc6ea7679c85461b3598bb4bcf46177d7a57362a74f5163a3e38ba468396f1",
       "executable": false
     },
     {
@@ -819,9 +819,15 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/authoring-skill/SKILL.md",
+      "kind": "file",
+      "sha256": "5886adc8daf60fee206c9e761ae30df51d047984a2c348b60bd3f21a14862749",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/batch-agent-sessions/SKILL.md",
       "kind": "file",
-      "sha256": "367a8d3672957580cd79830eb2a40afc35d8d83a4bdbf4b37a7ebc36059bd42d",
+      "sha256": "7fd34c330759011d4d95c63544b6488bfa68b9affe34de220e78527eb4c73dd3",
       "executable": false
     },
     {
@@ -864,12 +870,6 @@
       "path": ".skills-mgr/skills/council/SKILL.md",
       "kind": "file",
       "sha256": "dcee994f4b3ea5241146e30ab5f288061d3766d993e76e5e9a48d921016e6e4b",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/create-skill/SKILL.md",
-      "kind": "file",
-      "sha256": "e895f5079b4b3b5f5989f32132d7e3b49f71c818526f6db0bc78ec56ce0cd7a0",
       "executable": false
     },
     {
@@ -1372,7 +1372,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "a583a5c3926f915675027943ecb147a9eb470d2025fa7f949457e4a786c3a3da",
+      "sha256": "8b3523fbe4aff472f293bc883a66caa3e32c8036bfd199ea9ebab824f768ff4b",
       "executable": false
     },
     {
