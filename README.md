@@ -234,7 +234,7 @@ determine when it applies.
 | `go-json-v2` | Shared | Apply Go's `encoding/json/v2` APIs | Yes | Go project |
 | `go-microoptimizations` | Shared | Optimize measured Go hot paths | No | Go project |
 | `golang-best-practices` | Shared | Apply modern Go practices | Yes | Go project |
-| `handoff` | Shared | Prepare a compact handoff for another agent | No | Always |
+| `handoff` | Shared | Prepare a handoff for another agent | No | Always |
 | `herdr` | Remote | Control Herdr panes, tabs, and agent sessions | Yes | Home directory with `herdr` |
 | `high-end-visual-design` | Remote | Apply high-end visual design details | Yes | TSX, JSX, HTML, or CSS project |
 | `human-flavoured-writing` | Shared | Write natural, human-sounding project copy | No | Always |

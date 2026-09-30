@@ -1,6 +1,6 @@
 # Continuation content standard
 
-Write the smallest self-contained account that lets a fresh session resume the unfinished task.
+Write a self-contained account that lets a fresh session resume the unfinished task.
 Preserve what determines the next action, not the history of how the previous session got there.
 
 ## Caller boundary
@@ -32,10 +32,9 @@ Preserve still-valid approvals within their scope; neither a routine nor an inhe
 additional permission. Record genuinely unresolved authorization as a decision needed, not an action
 to execute.
 
-Use plain language rather than a verbatim message ledger or mandatory status tags. Keep exact user
-wording when it defines a distinction that paraphrasing would lose. Distinguish a user-approved
-interpretation from an agent's assumption; an assumption does not become user intent through
-repetition.
+Keep exact user wording when it defines a distinction that paraphrasing would lose. Distinguish
+a user-approved interpretation from an agent's assumption; an assumption does not become user
+intent through repetition.
 
 Include an aside only while it has unfinished obligations. If an answered question yielded a fact
 needed for the standing task, carry that fact in its relevant section without mentioning the
@@ -54,7 +53,7 @@ for continuity.
 - Keep the latest relevant measurement, its acceptance metric, and the remaining gap. Distinguish
   reported results from checks actually verified for the represented state. Record which behavior
   remains unchecked; old suite counts and fixed failures do not validate later changes.
-- Keep concise findings and their evidential limits when they prevent repeating expensive work or
+- Keep findings and their evidential limits when they prevent repeating expensive work or
   making an unsupported claim. An unproven limit is not an impossibility result. Leave genuinely
   unchosen approaches open.
 - Preserve outstanding failures, approvals, reporting, and external obligations. Carry recovery
@@ -108,7 +107,7 @@ skill selection when work resumes.
 
 ## Shape and continuation
 
-Use short topical headings suited to the live content, such as Task, Current state, Validation,
+Use topical headings suited to the live content, such as Task, Current state, Validation,
 Findings, or Remaining decisions. State each fact once. Include no preamble, change history,
 mandatory last-action section, or empty template sections.
 

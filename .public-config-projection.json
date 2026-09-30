@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "19fb2190f2622cd7ee7768edaddcc65c052bbf28",
+  "sourceCommit": "ff38a97efdd950ff07006f276715168e94fc25d8",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -35,25 +35,25 @@
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "ec1e9ff3b07d3bff0706c9b84e8f52c75403bdb1ce6d7ececc2cb077c9c738ca",
+      "sha256": "62d9221349a4057fe3c5f6da12a7518d5e492b69c72870d10386b2a862b8c80d",
       "executable": false
     },
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "581aaea96ea83d7ee4b9389fc90f923186adda2069bef01d74fb7d1cbcd6a2c1",
+      "sha256": "569807613bc2ccdfafd27bf922e5a6d5d299d0372f20a387897e45f5fba309b6",
       "executable": false
     },
     {
       "path": ".claude/agents/review-simplify.md",
       "kind": "file",
-      "sha256": "639145cefe43cff6ebad22a29f7ba58f882219c1beebdc685dd140482545aff6",
+      "sha256": "9cd18dd0eb463453dd4932d243ab63b72633637b484fb1bb66106e936bc9779d",
       "executable": false
     },
     {
       "path": ".claude/agents/web-reviewer.md",
       "kind": "file",
-      "sha256": "c21ab23c36f2a767d3a04d4d0645300af35ec6a86b51d8ec57dd7a6b8a91c1e8",
+      "sha256": "ea63cee1615262eeb50cec939cf9a12f1ec5bf7d7e6e3a228c01223f7c886769",
       "executable": false
     },
     {
@@ -95,25 +95,25 @@
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "142aea8180732be2482ea3f8b15feddcf1b829ed5f5690145a2aee437587e961",
+      "sha256": "02bb8a96b18373dc05bbe330be260910232e2a273e5e9f28f7f875671191f0a7",
       "executable": false
     },
     {
       "path": ".codex/agents/review-correctness.toml",
       "kind": "file",
-      "sha256": "d0be3d869f5300f673e7eab84aff9f961e03d5d27091028864ad7ce15af061fe",
+      "sha256": "6a5e4fefae64917faea29442087956e258fd338ff07343943d72d2930468164a",
       "executable": false
     },
     {
       "path": ".codex/agents/review-simplify.toml",
       "kind": "file",
-      "sha256": "914d1f2103865e62b24fcd87ef22e8d51471286ef6a4ed0de426d0b793f6f802",
+      "sha256": "128f2dc8b76b2d8cb16e38a2eb3e48336aeb67a627783cd9aaa5d9ffae096a87",
       "executable": false
     },
     {
       "path": ".codex/agents/web-reviewer.toml",
       "kind": "file",
-      "sha256": "e5ba4eb6303292c56358b8d89467567d569c99c694deb8750cbdc9ac5dd8ee37",
+      "sha256": "e2a885bc5685478f6ed19dbe56752b9d56a337dd3eec5b293ae62b8099d419cc",
       "executable": false
     },
     {
@@ -293,13 +293,13 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "2f7f980637cad62fcb4363f74cd014619eb3d673c1172fb55ed690aa4e682e77",
+      "sha256": "248e9949df2ce464e4be3c55b1756193c5b8e2cdc8654f9485c5be31d8622f60",
       "executable": false
     },
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "c63e2edcdce9c29b217297241de0f53a8141bff3b6176f634ebe143d68f062fe",
+      "sha256": "876daebd91a0fb6df4b6f6b5454ed4043eb9aeb34070ef737016c18085cc0ebc",
       "executable": false
     },
     {
@@ -347,7 +347,7 @@
     {
       "path": ".codex/SUBAGENT.md",
       "kind": "file",
-      "sha256": "ab69ae2800d5feab227a4e8c4a7a3e366d97a2c9ab3ab1f8d86e5c993b6db71f",
+      "sha256": "f403ba0be49e18ada53bc33da7f138402d8fb8e057c6736e1804e50013dac6ef",
       "executable": false
     },
     {
@@ -443,7 +443,7 @@
     {
       "path": ".config/kilo/agent/explorer.md",
       "kind": "file",
-      "sha256": "a89bdbaf7eeb97d7e91d605fadbbb31fd3cbeccef0918c4f90718106473e5feb",
+      "sha256": "c2756a6f8c15090c593245ab7c09e72cfa400a697ca547ff4cb43b04e7e142ec",
       "executable": false
     },
     {
@@ -467,19 +467,19 @@
     {
       "path": ".config/kilo/agent/review-correctness.md",
       "kind": "file",
-      "sha256": "0ff4134931a6073bd1685b9dad173d947de5279e6e6a6b3a98e2d54d8989cace",
+      "sha256": "fa4e5f24c4c6b2c1bff62ad532ecc6429841d6f1d9d3d7f669f96023f7443991",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/review-simplify.md",
       "kind": "file",
-      "sha256": "dcdcc79a0452660872a0fa56300052b89bb6f33663cb1a58f4630461bd2b2c58",
+      "sha256": "747020c662c32b21a7c489dcff758d8e96313fc86b05650eb61f2c407f5813ba",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/web-reviewer.md",
       "kind": "file",
-      "sha256": "c25096e49d68ac9b44dfe39f39513b417da15b2a66260ee4b51d04f748cf2e0f",
+      "sha256": "b51a1bdf25009026d240bb8c6af9ce321e1048e068ce481473b897787c825efb",
       "executable": false
     },
     {
@@ -965,13 +965,13 @@
     {
       "path": ".skills-mgr/skills/handoff/SKILL.md",
       "kind": "file",
-      "sha256": "92a782da321538cfb5ae380cda6f40b7f19218cb8119900c4d732cf6f86bc1c3",
+      "sha256": "071416d9296a026631b4bf39cb57bb5d46ca31fd0a4211e865d77195ef4888c2",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/handoff/STANDARD.md",
       "kind": "file",
-      "sha256": "b357eba105259ed95be3fc173a2dc5ef96099a0dd5f933d9589850b150f85f9f",
+      "sha256": "686aa694de8e6f199415332d7d49428771b4628b99c478ab0140c830ba7fa22a",
       "executable": false
     },
     {
@@ -1372,7 +1372,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "c2943e62b7e20b5d49240cf9fea6a758d116b5937d1227c9a8525891c67abb9b",
+      "sha256": "d989f81255c8e4c93e3053a0acdd0327881b523e5cc04a1b3028dddd19fdf014",
       "executable": false
     },
     {

@@ -102,10 +102,8 @@ condition, retaining confirmed findings.
 
 Address the completed review to the named review recipient, defaulting to the parent agent,
 not the end user. Follow `SUBAGENT.md`'s `Result delivery` section when the parent arranged review
-on another owner's behalf. Use a compact, information-dense handoff with concise findings and
-exact evidence pointers. Preserve all required findings,
-recommendation, and coverage limitations; omit decorative formatting, assignment restatements,
-and user-facing introductions or summaries. Main owns the user-facing presentation.
+on another owner's behalf. Include exact evidence pointers and preserve all required findings,
+recommendation, and coverage limitations. Main owns the user-facing presentation.
 
 # Completion
 

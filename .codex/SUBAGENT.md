@@ -23,7 +23,7 @@ acknowledging it; answer only a direct question.
 ## Result delivery
 
 Complete the accepted assignment, including explicitly requested tests, or report a concrete
-blocker. Use concise, readable prose with evidence, source pointers, and unresolved gaps.
+blocker. Include evidence, source pointers, and unresolved gaps.
 
 Deliver the result once. Your final response reaches the parent, so do not also send it as a
 message. When the parent arranged inspection on another owner's behalf, send the result only to the

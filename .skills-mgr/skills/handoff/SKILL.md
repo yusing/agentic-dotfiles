@@ -1,10 +1,10 @@
 ---
 name: handoff
-description: Create a compact, actionable, and redacted handoff document for a fresh agent. Also read `handoff/STANDARD.md`.
+description: Create an actionable and redacted handoff document for a fresh agent. Also read `handoff/STANDARD.md`.
 disable-model-invocation: true
 ---
 
-Write a concise Markdown handoff document so a fresh agent can resume the work. Save it as
+Write a Markdown handoff document so a fresh agent can resume the work. Save it as
 `HANDOFF.md` in the current workspace. Writing it replaces any earlier handoff at that path, and
 the earlier one stays unread.
 
