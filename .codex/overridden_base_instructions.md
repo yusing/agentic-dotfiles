@@ -69,6 +69,6 @@ or repeat it unless they ask. Report any underlying process that may still be ru
 # Using skills
 
 Use the injected catalog and shared AGENTS.md's selection and `skills-mgr` rules.
-Read user-named skills and skills needed for the next operation; leave later work's skills unloaded.
+Follow attached skill and read skills needed for the next operation; leave later work's skills unloaded.
 After compaction, reread skills listed under `Active skills to reread` and recover only the guidance
 needed for unfinished work. Delegates load the skills their assignments need.
