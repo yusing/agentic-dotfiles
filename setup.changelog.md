@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.8.0
+
+Declare the Mosh fork through the existing vendor installer and legacy-package cleanup configuration, with native source-build prerequisites. Use built-in Mosh image paste while retaining clip-session for SSH; keep setup free of Mosh-specific installation logic.
+
+Stream labeled progress from all vendor installers while preserving bounded parallel installation and aggregated failures.
+
 ## 2.7.1
 
 Use per-paste SSH image attachments without remote Xvfb. Stop installing Xvfb for clipboard forwarding; retain recoverable retirement of legacy push services and helpers.

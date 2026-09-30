@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.7.1
+# version: 2.8.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1859,30 +1859,31 @@ install_vendor() {
 }
 
 run_additional_installs() (
-  local log_root index log status failed=0 name label records offset end
-  local names=() labels=() pids=() logs=()
+  local index status failed=0 name label records offset end line
+  local names=() labels=() pids=()
   records="$(setup_config vendors)" || return 1
   while IFS='|' read -r name label; do
     [ -n "$name" ] || continue
     names+=("$name"); labels+=("$label")
   done <<<"$records"
-  log_root="$(mktemp -d "${TMPDIR:-/tmp}/setup-vendor.XXXXXX")"
-  trap 'rm -rf "$log_root"' EXIT HUP INT TERM
   # Bound concurrency even when the config grows. Report all jobs before failing.
   for ((offset = 0; offset < ${#names[@]}; offset += 4)); do
     end=$((offset + 4))
     [ "$end" -le "${#names[@]}" ] || end=${#names[@]}
     for ((index = offset; index < end; index++)); do
-      log="${log_root}/${index}.log"
-      logs[index]="$log"
       info "starting ${labels[$index]}"
-      (STEP="install ${labels[$index]}"; install_vendor "${names[$index]}") >"$log" 2>&1 &
+      (
+        STEP="install ${labels[$index]}"
+        install_vendor "${names[$index]}" 2>&1 |
+          while IFS= read -r line || [ -n "$line" ]; do
+            log "  [${labels[$index]}] $line"
+          done
+      ) &
       pids[index]=$!
     done
     for ((index = offset; index < end; index++)); do
       if wait "${pids[$index]}"; then status=0; else status=$?; failed=1; fi
-      info "install log: ${labels[$index]}"
-      if [ -s "${logs[$index]}" ]; then cat "${logs[$index]}"; else log "  completed with no output"; fi
+      info "finished ${labels[$index]}"
       [ "$status" -eq 0 ] || warn "${labels[$index]} install failed with status $status"
     done
   done

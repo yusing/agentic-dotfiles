@@ -40,6 +40,32 @@ shell behavior.
 
 ## Image paste in remote sessions
 
+### Mosh
+
+Run setup on both computers to install the [yusing/mosh fork](https://github.com/yusing/mosh),
+then connect from the computer holding the image:
+
+```sh
+mosh user@host
+```
+
+In Mekugi, press **Ctrl+^ followed by i** to attach a clipboard PNG over the
+existing encrypted Mosh connection. **Ctrl+^ followed by c** cancels capture or
+upload. Ordinary paste keys are unchanged; no `clip-session` or additional SSH
+connection is needed. The client needs `wl-paste` on Wayland or `xclip` on X11;
+macOS uses its built-in `osascript`. Both ends must run the fork.
+
+Images can be up to 64 MiB. Mosh shows progress, keeps typing and screen updates
+responsive, and delivers one bracketed image-path paste after upload succeeds.
+Mekugi recognizes that path as an attachment; other applications need equivalent
+image-path attachment support. An interrupted upload resumes while the same
+client and server remain alive, but does not survive restarting either process.
+Incomplete files are removed on cancellation, failure, or server exit. Completed
+private image files remain in remote temporary storage for pending drafts and
+follow the host's normal temporary-file cleanup policy.
+
+### SSH and older Mosh installations
+
 Run setup on both computers, then connect from the computer holding the image:
 
 ```sh
@@ -113,6 +139,19 @@ When the home Git repository has a commit at `HEAD` (including worktrees), Git
 setup is skipped: no identity, hooks, remote, branch, fetch, or checkout changes.
 An empty repository is force-checked out to `origin/main`; an existing unrelated
 origin is rejected. Tool installation and configuration still run.
+
+Mosh uses the same vendor and legacy-package declarations as other tools in
+`setup.json`. Setup installs the fork through its own installer into
+`~/.local/opt/mosh`, with command links in `~/.local/bin`, then reconciles old
+APT, Pacman, or Homebrew Mosh packages through the usual legacy cleanup. Packages
+still needed by another installed package may be retained with a warning.
+Normal reruns keep the installed fork; `--upgrade` rebuilds the current fork.
+Native build prerequisites are declared in `setup.json`; macOS also needs Xcode
+or its Command Line Tools. The fork installer validates its build and staged
+executables before replacement, backing up previous local files under
+`~/.local/share/mosh/backups/`. After a filesystem write failure, restore those
+backups before retrying; replacement does not automatically roll back. Named
+`--upgrade TOOL...` and `--check-config` runs do not install or update vendors.
 
 Helper compilation is incremental: unchanged sources and build inputs reuse the
 existing executable. With this repository's `.githooks` enabled, a successful
