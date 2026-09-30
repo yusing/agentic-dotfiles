@@ -1,10 +1,10 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.7";
+export const VERSION = "1.0.8";
 const MODEL_MAP: Record<string, string> = {
   "gpt-6-luna": "sonnet",
-  "gpt-6-sol": "opus",
+  "gpt-6.1-sol": "opus",
   "gpt-6-astra": "opus",
 };
 const READ_TOOLS = "Read, Grep, Glob, Bash, Write, TodoWrite, Skill";

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "281516aebcdabf65dc159f8ee8cfcb93945230b5",
+  "sourceCommit": "f3a840910e53799101145daf29a6e5c212ce9e3e",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -113,13 +113,13 @@
     {
       "path": ".codex/agents/web-reviewer.toml",
       "kind": "file",
-      "sha256": "dba08d2bc6774f5fec13fca14c901f495ef7bccdaff708be08d45b30728be0eb",
+      "sha256": "8710af879e4290274308844f4324c285b43904725d5a25a36a53880f13f54f1c",
       "executable": false
     },
     {
       "path": ".codex/agents/worker.toml",
       "kind": "file",
-      "sha256": "29b31b5aa6088cfbaa293fa87f7a8ed150197308f19cb9bfbcc152da2c97405f",
+      "sha256": "cb9e26f924ff73b803a5010a7705841253f4559a8590aee53b4013a07fc1c9df",
       "executable": false
     },
     {
@@ -413,13 +413,13 @@
     {
       "path": ".config/kilo/agent/web-reviewer.md",
       "kind": "file",
-      "sha256": "95a9e6188b57dfa0d3e2e52f85f6881852bdb9a69a9d5d6c5d728ef3175c47d2",
+      "sha256": "60a88657877cfc2207c83654bb84ed1cd226420f3ab4a0e3029612672f7bd287",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/worker.md",
       "kind": "file",
-      "sha256": "739c45075b16ba9bc7dbe5205319b2ccf9b4156461285cf3690652f44ee68d7c",
+      "sha256": "b95e2b69863464d775f2c5346fa336deba9058a37176423c2f40c2c86e80ac26",
       "executable": false
     },
     {
@@ -539,7 +539,7 @@
     {
       "path": ".config/zed/settings.json",
       "kind": "file",
-      "sha256": "3daf289f869d0f5fc04c4e32a11875452531acf211e82d775d2455b5d16bbc3f",
+      "sha256": "8ad84ac3f3746d8c06a164fb9de3cd77cd137dc337d93ed9bbf9ed36d77a414e",
       "executable": false
     },
     {
@@ -695,25 +695,25 @@
     {
       "path": ".local/lib/sync-claude-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "772b035d4ae9f43f0e26078e0d2ef3bd5d243d9588c0339fc5c9173358ccd96a",
+      "sha256": "8db658904e001ac9226ba2495093b149b4d04a8b7e91217fbaf8d77229724d71",
       "executable": false
     },
     {
       "path": ".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
       "kind": "file",
-      "sha256": "d70ad7d661c10013a08c8de83b463776f1f851782813405e4f8b456c2272d513",
+      "sha256": "02179edbbf7a14f36906bf76c2425641d2eef0ffecf9233b0c14792732b929d9",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "599ace0815d982578456c9c4d44c59c234be7278601a5c8d5dbc44039d4f12a2",
+      "sha256": "0380663b5d9c5420ff9be65be38e4bd8412f4c44716a3c222f7d2a23b84aa0a7",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
       "kind": "file",
-      "sha256": "4dca76fc1c9f3f7b99549023afb38a02a9d2fec977ba7b52e18365b52fd8c2c9",
+      "sha256": "4565d4f83fb988886fbc6f0a488870dae9abf361abb6e343cb4ec617e92361f8",
       "executable": false
     },
     {

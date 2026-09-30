@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.8
+
+- Map Codex GPT-6.1 Sol roles to their existing Claude model budgets.
+
 ## 1.0.7
 
 - Map Codex GPT-6 Sol and Luna roles to their existing Claude model budgets and adapt their model identity text.

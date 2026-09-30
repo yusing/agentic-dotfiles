@@ -1,7 +1,7 @@
 ---
 description: "Write tests, documentation, fixtures, and other non-production support artifacts for settled requirements. Not an implementation agent."
 mode: subagent
-model: kilo/openai/gpt-6-sol
+model: kilo/openai/gpt-6.1-sol
 variant: medium
 color: "#3B82F6"
 permission:

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- Map Codex GPT-6.1 Sol roles to Kilo's matching OpenAI model id.
+
 ## 1.0.2
 
 - Map Codex GPT-6 Sol to Kilo's OpenAI model and GPT-6 Luna to DeepSeek Flash, and adapt their model identity text.
