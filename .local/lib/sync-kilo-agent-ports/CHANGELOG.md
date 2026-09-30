@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- Port the investigator role and rename web-reviewer to ui-reviewer.
+
 ## 1.0.3
 
 - Map Codex GPT-6.1 Sol roles to Kilo's matching OpenAI model id.

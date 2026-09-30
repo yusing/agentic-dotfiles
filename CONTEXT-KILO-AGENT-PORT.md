@@ -26,9 +26,11 @@ agent. Colors and permission allowlists live in the helper. Only the worker
 role allows `task`, so it can dispatch independent inspections under shared
 AGENTS.md. Read-only roles deny `edit` and `task`. `write` stays unspecified
 on every role for a relayed result artifact, and evidence-gathering roles also
-allow `bash`. These permission lists are not a filesystem sandbox: native TOML
-role bodies prohibit repository writes and own the exact-path artifact
-exception. The generator does not add artifact permissions.
+allow `bash`. These permission lists are not a filesystem sandbox. Native TOML
+role bodies bound authored changes and result-artifact paths; validation-capable
+roles also permit ordinary test caches and temporary artifacts, with authored
+reproduction fixtures outside the repository. The generator does not add write
+permissions.
 
 Kilo has no Codex-hook adapter and no agent-frontmatter PreToolUse command
 hook, so the shared `subagent_exec_guard` is not registered. Under this port

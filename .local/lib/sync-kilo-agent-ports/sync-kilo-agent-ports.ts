@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.3";
+export const VERSION = "1.0.4";
 export const BUILTIN_ROLES = [
   "ask",
   "code",
@@ -25,10 +25,11 @@ const METADATA: Record<string, { color: string; model?: string; variant?: string
   "council-investigator": { model: "inherit", color: "#EAB308", permission: READ_PERMISSION },
   "council-member": { model: "inherit", color: "#F97316", permission: { bash: "deny", edit: "deny", task: "deny" } },
   explorer: { color: "#EC4899", permission: READ_PERMISSION },
+  investigator: { color: "#06B6D4", permission: READ_PERMISSION },
   worker: { color: "#3B82F6", permission: { bash: "allow", edit: "allow", task: "allow" } },
   "review-correctness": { color: "#EF4444", permission: READ_PERMISSION },
   "review-simplify": { color: "#22C55E", permission: READ_PERMISSION },
-  "web-reviewer": { color: "#A855F7", permission: READ_PERMISSION },
+  "ui-reviewer": { color: "#A855F7", permission: READ_PERMISSION },
 };
 
 export function adaptText(text: string): string {

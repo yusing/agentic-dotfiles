@@ -42,8 +42,9 @@
   approval policy after a role layer, so `sandbox_mode` and `approval_policy` in
   `.codex/agents/*.toml` have no runtime effect and must not be declared there.
   `.codex/hooks/bin/subagent_exec_guard` enforces its matched command boundary when the event
-  identifies the running role. The guard exempts root/default agents; they remain subject to
-  task authorization and runtime permissions. Every role prompt
+  identifies the running role. Events without a spawned-role identity are exempt; a spawned
+  `default` role is still restricted. Task authorization and runtime permissions remain applicable.
+  Every role prompt
   states the boundary: recognized read-only container and orchestration inspection is allowed;
   mutations, process control, and unclassified commands stay root-owned. Blocked commands
   are reported with their purpose and passing evidence in the assigned result format.

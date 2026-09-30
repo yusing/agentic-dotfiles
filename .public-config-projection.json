@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ff38a97efdd950ff07006f276715168e94fc25d8",
+  "sourceCommit": "5c9b6727ce460fbbbfcb840be072fa62c88fac05",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -35,13 +35,19 @@
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "62d9221349a4057fe3c5f6da12a7518d5e492b69c72870d10386b2a862b8c80d",
+      "sha256": "dddddf78db8d1c8324ef09441c077dea968da0de66d30e8604f95122b47451f0",
+      "executable": false
+    },
+    {
+      "path": ".claude/agents/investigator.md",
+      "kind": "file",
+      "sha256": "71a0edd5f053647d2fb5a059acf8a4e21afc3d40112cb1f907ea9376d13b6978",
       "executable": false
     },
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "569807613bc2ccdfafd27bf922e5a6d5d299d0372f20a387897e45f5fba309b6",
+      "sha256": "9aed70d9758da6a70a28dfe8d1321f2bb67c28231ad072dff194d5c936cac7e0",
       "executable": false
     },
     {
@@ -51,15 +57,15 @@
       "executable": false
     },
     {
-      "path": ".claude/agents/web-reviewer.md",
+      "path": ".claude/agents/ui-reviewer.md",
       "kind": "file",
-      "sha256": "ea63cee1615262eeb50cec939cf9a12f1ec5bf7d7e6e3a228c01223f7c886769",
+      "sha256": "00351f53488fd1d4d194c40b5397817bfbd2d7f79bd970f815f51a6fed537c45",
       "executable": false
     },
     {
       "path": ".claude/agents/worker.md",
       "kind": "file",
-      "sha256": "505d43edfd42335f30fc6f1b0dc86759c6835193aa725808a6a5433ffcd12861",
+      "sha256": "ac3884e970c6ed58f2c7757bb664e2831ceb4727c4511338e08a0064f6846f68",
       "executable": false
     },
     {
@@ -95,13 +101,19 @@
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "02bb8a96b18373dc05bbe330be260910232e2a273e5e9f28f7f875671191f0a7",
+      "sha256": "aed0fb5cb58d4abf2b9db0d079b15046dbe0cadbf4542d24f3d0ac86e670f8ed",
+      "executable": false
+    },
+    {
+      "path": ".codex/agents/investigator.toml",
+      "kind": "file",
+      "sha256": "667e5d2bdd0483213dfa28d40b78bb6a466571c60dce746ca621a1c64b83d4c4",
       "executable": false
     },
     {
       "path": ".codex/agents/review-correctness.toml",
       "kind": "file",
-      "sha256": "6a5e4fefae64917faea29442087956e258fd338ff07343943d72d2930468164a",
+      "sha256": "0c634489989655a92cca163a2188769dd3aad23a108425a0680866a8612657ff",
       "executable": false
     },
     {
@@ -111,15 +123,15 @@
       "executable": false
     },
     {
-      "path": ".codex/agents/web-reviewer.toml",
+      "path": ".codex/agents/ui-reviewer.toml",
       "kind": "file",
-      "sha256": "e2a885bc5685478f6ed19dbe56752b9d56a337dd3eec5b293ae62b8099d419cc",
+      "sha256": "7cf1304d6137a558f41a15c406290c0d018838b98e3f8f71c127b16b97f23c78",
       "executable": false
     },
     {
       "path": ".codex/agents/worker.toml",
       "kind": "file",
-      "sha256": "cb9e26f924ff73b803a5010a7705841253f4559a8590aee53b4013a07fc1c9df",
+      "sha256": "3b4aa7fe67a454e932380d231c588b0addb0684fffe5d946e23493c9d49b52b5",
       "executable": false
     },
     {
@@ -293,7 +305,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "248e9949df2ce464e4be3c55b1756193c5b8e2cdc8654f9485c5be31d8622f60",
+      "sha256": "41c23140962d9e130e2c11f3cb068a352bf7e94e50e8d42fdfcf1b8ff0493362",
       "executable": false
     },
     {
@@ -443,13 +455,19 @@
     {
       "path": ".config/kilo/agent/explorer.md",
       "kind": "file",
-      "sha256": "c2756a6f8c15090c593245ab7c09e72cfa400a697ca547ff4cb43b04e7e142ec",
+      "sha256": "4b4c8ff5dde3e88bba02b6a45ab04543982395bd4828e2ba88f2324fb4c10b22",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/general.md",
       "kind": "file",
       "sha256": "dcd9478ccb7b04570a857bec0dd2defec2b1efc2f0994b78cb50eb6c7bf2bd03",
+      "executable": false
+    },
+    {
+      "path": ".config/kilo/agent/investigator.md",
+      "kind": "file",
+      "sha256": "2a6b15f5b6ec8aad5d9cb3955d57f58d29f41c493c4ca56e02f8002f9ad1c898",
       "executable": false
     },
     {
@@ -467,7 +485,7 @@
     {
       "path": ".config/kilo/agent/review-correctness.md",
       "kind": "file",
-      "sha256": "fa4e5f24c4c6b2c1bff62ad532ecc6429841d6f1d9d3d7f669f96023f7443991",
+      "sha256": "e3256677c57c59d0bd304c00f351293aeb29a924af62921bc75819a40e57044d",
       "executable": false
     },
     {
@@ -477,15 +495,15 @@
       "executable": false
     },
     {
-      "path": ".config/kilo/agent/web-reviewer.md",
+      "path": ".config/kilo/agent/ui-reviewer.md",
       "kind": "file",
-      "sha256": "b51a1bdf25009026d240bb8c6af9ce321e1048e068ce481473b897787c825efb",
+      "sha256": "12df2a566ce7b41df8239ea0dbb0e839e55e442a526b7d67c6b2613eeba34a79",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/worker.md",
       "kind": "file",
-      "sha256": "b95e2b69863464d775f2c5346fa336deba9058a37176423c2f40c2c86e80ac26",
+      "sha256": "9a03cda5ddcfa78e4bc47ac8b3b1c0e86979887c830973fde77ac2e6bcfd5e47",
       "executable": false
     },
     {
@@ -623,7 +641,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "47f5a743e1824c0d5f4ef9027589f65f1a74b2fe8a92fdd1dc266711aff1b975",
+      "sha256": "5465771c31769228329f9f2eefeebaf635f8130be333803a020faf3c56232364",
       "executable": false
     },
     {
@@ -785,25 +803,25 @@
     {
       "path": ".local/lib/sync-claude-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "8db658904e001ac9226ba2495093b149b4d04a8b7e91217fbaf8d77229724d71",
+      "sha256": "87cd16d8ef3414a80cdc762cca302e80e0f867e1624f763414f50a28228f5f5c",
       "executable": false
     },
     {
       "path": ".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
       "kind": "file",
-      "sha256": "02179edbbf7a14f36906bf76c2425641d2eef0ffecf9233b0c14792732b929d9",
+      "sha256": "6ef6d8bc2eb3bd9d58c621bacb5dd6d6d1347b75ae5f10c668ace9a852528e1b",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "0380663b5d9c5420ff9be65be38e4bd8412f4c44716a3c222f7d2a23b84aa0a7",
+      "sha256": "be6552ed92b20913986f19b0e069b5afb09d626bcca5ffdd9159c626dd94c945",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
       "kind": "file",
-      "sha256": "4565d4f83fb988886fbc6f0a488870dae9abf361abb6e343cb4ec617e92361f8",
+      "sha256": "86094c8fd88460be40d9f714ec2250142e4a69ca7a5b3b2e8eac56778c5626a2",
       "executable": false
     },
     {
@@ -1312,7 +1330,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "c13fd32f5196f9b930cec25743ac95820151f446618514fd1173bd60180a60c7",
+      "sha256": "74c7ccfbfe22ea3adcd15809f4bc187866aff75af787a13003435b541e009163",
       "executable": false
     },
     {
@@ -1342,7 +1360,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "47a94469ddefb70767fc1217590a9d31a8593fe4afc0c13121f2ac9939caaa2c",
+      "sha256": "15ac2af403171df14ba01bdd37534cd918e354f3f6eb87f06857e96adbd442b5",
       "executable": false
     },
     {
@@ -1354,7 +1372,7 @@
     {
       "path": "CONTEXT-KILO-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "f06ff22897fb55b3ccb87d8b52acb4a3dee5059f3a5ce237c0b1764720763cb2",
+      "sha256": "6f260b069215cf72fc8440cd78f8459913778f818a4511eaab3f9fc084608caa",
       "executable": false
     },
     {

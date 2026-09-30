@@ -10,7 +10,8 @@ Its `--check` mode reports drift without writing.
 Field mapping is the helper's concern. `model` and `model_reasoning_effort` become Claude's
 `model` and `effort`, unless the role's Claude metadata specifies its own model or effort.
 The simplification role keeps its Claude Sonnet/high budget independently of Codex routing.
-Explorer maps Codex Luna/max to Sonnet/high. Worker retains Claude Sonnet/xhigh
+Explorer retains Claude Sonnet/high independently of its Codex Sol/low configuration.
+Investigator maps Codex Sol/medium to Claude Opus/medium. Worker retains Claude Sonnet/xhigh
 independently of its Codex routing.
 Explicit Claude metadata still applies when a Codex role omits its model and effort for dispatch.
 Council roles use `model: inherit` in the helper's metadata, omitting both generated fields so
@@ -31,9 +32,10 @@ independent inspections under shared AGENTS.md. This requires a Claude runtime a
 that permit nested agents; the generator does not configure runtime limits.
 The allowlist omits `Edit` and `NotebookEdit` for the review and council roles. `Write` stays
 on every role for a relayed result artifact, and evidence-gathering roles also have `Bash`.
-These tool lists are not a filesystem sandbox: native TOML role bodies prohibit repository
-writes and own the exact-path artifact exception for both clients. The generator does not
-add artifact permissions.
+These tool lists are not a filesystem sandbox. Native TOML role bodies bound authored changes
+and result-artifact paths; validation-capable roles also permit ordinary test caches and temporary
+artifacts, with authored reproduction fixtures outside the repository. The generator does not
+add write permissions.
 
 `.codex/hooks/bin/subagent_exec_guard` is registered directly as a frontmatter `PreToolUse` hook
 on each role that has `Bash`, with no adapter. The guard emits Claude's

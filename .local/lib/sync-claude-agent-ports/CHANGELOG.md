@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.9
+
+- Port the investigator role and rename web-reviewer to ui-reviewer.
+- Preserve Explorer's Claude Sonnet/high budget independently of its Codex Sol/low configuration.
+
 ## 1.0.8
 
 - Map Codex GPT-6.1 Sol roles to their existing Claude model budgets.

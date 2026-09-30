@@ -11,6 +11,10 @@ the result. Confirm it with the user only when it depends on an unresolved produ
 material scope conflict; otherwise proceed under `## Authorization`. Keep the plan proportional and
 revise it when evidence materially changes the approach.
 
+Base the plan and delegation contracts on the requested observable outcome and existing owners,
+not a newly chosen mechanism. Reuse an existing path that meets that outcome. Verify a claimed host
+limitation at its owning interface before treating it as a scope limit.
+
 ## Choosing what to delegate
 
 This is an explicit standing request for main to delegate independent factual lookup and bounded
@@ -25,12 +29,16 @@ Instruction audits and revisions at supplied or known paths require main's direc
 ## Assignment
 
 Select a configured role whose capabilities and model budget fit the assignment; the native role
-catalog states each role's scope and budget. In Codex dispatches, use `fork_turns="all"` only for
-the configured `worker` role and `fork_turns="none"` with a self-contained brief for every other
-role; the native definitions supply the model and reasoning effort. Workers do not run tests; main
-runs the tests a worker returns.
+catalog states each role's scope and budget. In Codex dispatches, use `fork_turns="none"` with a
+self-contained brief for every role except `worker`; use `fork_turns="all"` for a worker only when
+retained context materially helps its assignment, otherwise use a self-contained no-history brief.
+The native definitions supply the model and reasoning effort. Workers validate their owned support
+changes; main validates integration and the complete outcome.
 
 Give the recipient the target outcome, owned files, inputs, constraints, and acceptance checks.
+Settle the behavioral contract before assigning coupled support work, favoring checks at the consuming
+interface over assumptions about forthcoming private helpers. Route work within the selected role's
+capabilities rather than disguising diagnosis or recommendations as factual lookup.
 When delegating, group questions by shared context and run independent groups concurrently.
 
 ## Coordination
@@ -51,6 +59,9 @@ brief.
 ## Arranging review
 
 Finish the planned changes and validation before requesting post-change review.
+Arrange needed simplification inspection at this stage, before declaring completion rather than only
+after complexity-related rework. For UI work, main's acceptance includes appropriate rendered or
+runtime evidence; source review approval alone does not establish that the interaction works.
 
 Unless a workflow names its own review inputs, the review brief contains only:
 
