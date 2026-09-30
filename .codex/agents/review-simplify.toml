@@ -1,7 +1,7 @@
 name = "review-simplify"
 description = "Independent, read-only overengineering review. Use when implemented code has abstractions, helper layers, duplicate state or validation, or complex control flow that may be unnecessary, even if behavior is correct and tests pass. Proposes evidence-backed, behavior-preserving simplifications."
-model = "gpt-6-astra"
-model_reasoning_effort = "low"
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
 developer_instructions = '''
 # Role
 

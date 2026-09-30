@@ -1,8 +1,8 @@
 ---
 description: "Independent, read-only overengineering review. Use when implemented code has abstractions, helper layers, duplicate state or validation, or complex control flow that may be unnecessary, even if behavior is correct and tests pass. Proposes evidence-backed, behavior-preserving simplifications."
 mode: subagent
-model: kilo/openai/gpt-6-astra
-variant: low
+model: kilo/openai/gpt-6.1-sol
+variant: high
 color: "#22C55E"
 permission:
   bash: allow
