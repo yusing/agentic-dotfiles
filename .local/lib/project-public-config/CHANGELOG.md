@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.4
+
+Restore the public file list: publish skill-authoring guidance, the batch-agent-sessions,
+commit, create-skill, and new-agent-session skills, and changelogs for published hooks
+and shell launchers. Remove retired tracked completion and read-codex-session paths.
+
 ## 1.3.3
 
 Publish the source-bound terminal paste implementation instead of the retired X selection and dependency lock.

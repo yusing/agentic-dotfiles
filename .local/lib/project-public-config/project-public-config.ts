@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.3";
+export const VERSION = "1.3.4";
 
 type TreeEntry = {
 	mode: string;
@@ -117,30 +117,39 @@ const EXACT_PATHS = new Set([
 	".codex/GITHUB.md",
 	".codex/IMPLEMENTATION.md",
 	".codex/INSTRUCTION-AUTHORING.md",
+	".codex/SKILL-AUTHORING.md",
 	".codex/MAIN.md",
 	".codex/SUBAGENT.md",
 	".codex/config.toml",
 	".codex/hooks.json",
 	".codex/hooks/check_project.ts",
+	".codex/hooks/check_project.changelog.md",
 	".codex/hooks/generated_code_guard.ts",
+	".codex/hooks/generated_code_guard.changelog.md",
 	".codex/hooks/go_quality.ts",
 	".codex/hooks/go_quality.changelog.md",
 	".codex/hooks/session_start_context.ts",
+	".codex/hooks/session_start_context.changelog.md",
 	".codex/hooks/skills_mgr_inventory.ts",
+	".codex/hooks/skills_mgr_inventory.changelog.md",
 	".codex/hooks/subagent_exec_guard.ts",
+	".codex/hooks/subagent_exec_guard.changelog.md",
 	".codex/hooks/lib/hook_response.ts",
+	".codex/hooks/lib/hook_response.changelog.md",
 	".codex/hooks/lib/hook_runtime.ts",
+	".codex/hooks/lib/hook_runtime.changelog.md",
 	".codex/hooks/lib/flock.ffi.json",
 	".codex/hooks/lib/locked_state.ts",
+	".codex/hooks/lib/locked_state.changelog.md",
 	".codex/hooks/lib/session_scope.ts",
+	".codex/hooks/lib/session_scope.changelog.md",
 	".codex/hooks/lib/shell_command.ts",
+	".codex/hooks/lib/shell_command.changelog.md",
 	".codex/overridden_base_instructions.md",
 	".config/atuin/config.toml",
 	".config/ccstatusline/settings.json",
 	// ".config/fish/completions/bun.fish", // bun installed
-	".config/fish/completions/codex.fish",
 	// ".config/fish/completions/grok.fish", // grok installed
-	".config/fish/completions/shadowtree.fish",
 	".config/fish/config.fish",
 	".config/gh/config.yml",
 	".config/ghostty/config",
@@ -161,10 +170,13 @@ const EXACT_PATHS = new Set([
 	".grok/AGENTS.md",
 	".grok/config.toml",
 	".grok/hooks/adapt_codex_hook.ts",
+	".grok/hooks/adapt_codex_hook.changelog.md",
 	".grok/hooks/codex-port.json",
 	".grok/hooks/skills-path-guard.json",
 	".grok/hooks/skills_path_guard.ts",
+	".grok/hooks/skills_path_guard.changelog.md",
 	".local/bin/check_project",
+	".local/bin/check_project.changelog.md",
 	".local/lib/clip-session/clip-session.ts",
 	".local/lib/clip-session/clipboard.ts",
 	".local/lib/clip-session/terminal.ts",
@@ -172,6 +184,7 @@ const EXACT_PATHS = new Set([
 	".local/lib/compile-agent-tools/compile-agent-tools.ts",
 	".local/lib/compile-agent-tools/CHANGELOG.md",
 	".local/bin/compile-agent-tools",
+	".local/bin/compile-agent-tools.changelog.md",
 	".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
 	".local/lib/rewrite-home-paths/package.json",
 	".local/lib/rewrite-home-paths/bun.lock",
@@ -186,9 +199,12 @@ const EXACT_PATHS = new Set([
 ]);
 
 const PROJECTED_SKILL_NAMES = [
+	"batch-agent-sessions",
 	"build-code-skeleton",
 	"codebase-review",
+	"commit",
 	"council",
+	"create-skill",
 	"deliver-vertical-slice",
 	"deslop",
 	"final-review",
@@ -199,6 +215,7 @@ const PROJECTED_SKILL_NAMES = [
 	"human-flavoured-writing",
 	"js-ts-best-practices",
 	"juststore-rendering-optimizer",
+	"new-agent-session",
 	"new-project",
 	"postgres-17-18-features",
 	"scriptc-compiler",
@@ -218,7 +235,6 @@ const TREE_PREFIXES = [
 	".config/kilo/agent",
 	".config/mise/locks",
 	".codex/skills/dump-last-response",
-	".codex/skills/read-codex-session",
 	".codex/skills/session-usage",
 	".config/micro/colorschemes",
 	".skills-mgr/skills/.remote-patches",

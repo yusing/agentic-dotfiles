@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d591616655214497e5859d97df7a344704150fda",
+  "sourceCommit": "6c91829058bda8b8c4e6a2bbd12a27bc37731aa4",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -141,9 +141,21 @@
       "executable": false
     },
     {
+      "path": ".codex/hooks/check_project.changelog.md",
+      "kind": "file",
+      "sha256": "2d0a65d54e534fedc7553bbc566b083ff40a09603079e6531238de9fdc128aac",
+      "executable": false
+    },
+    {
       "path": ".codex/hooks/check_project.ts",
       "kind": "file",
       "sha256": "2e84c7fb6dbf2fef7dcdb835ce48abc4780c8e924e54240a12270312edbe02cc",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/generated_code_guard.changelog.md",
+      "kind": "file",
+      "sha256": "fe8e9bbfb572019e48c35eb297c7ec6dcae0f6d673a118a78f0ca63865718641",
       "executable": false
     },
     {
@@ -171,9 +183,21 @@
       "executable": false
     },
     {
+      "path": ".codex/hooks/lib/hook_response.changelog.md",
+      "kind": "file",
+      "sha256": "c12462138ec2cb02a2753ebf0f86a76592b05c07c2214a474f6df71a6c60b41f",
+      "executable": false
+    },
+    {
       "path": ".codex/hooks/lib/hook_response.ts",
       "kind": "file",
       "sha256": "af2b7b858bfa1bb3a3064f527fcd03216bf327d62f3877c6a2075901d595db9a",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/lib/hook_runtime.changelog.md",
+      "kind": "file",
+      "sha256": "a9d790ab2af39d7406b0f3b1bb6d936458f399cf93a7a643aaa6e40cfff2c7ac",
       "executable": false
     },
     {
@@ -183,9 +207,21 @@
       "executable": false
     },
     {
+      "path": ".codex/hooks/lib/locked_state.changelog.md",
+      "kind": "file",
+      "sha256": "008b679e2cef6eb584e48e032eadfed1a0f3dc589e34c0f831d088e9e83e2404",
+      "executable": false
+    },
+    {
       "path": ".codex/hooks/lib/locked_state.ts",
       "kind": "file",
       "sha256": "9c9171ea934ddc36b6c4ccf68cbaa9b843097489c0f3a80b3d6d44e3378dcc6d",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/lib/session_scope.changelog.md",
+      "kind": "file",
+      "sha256": "12a1b3b09c3f711aaf9efb12b5348e5ee1e0fcb4edf24ddae4e82c70ed9bf3ea",
       "executable": false
     },
     {
@@ -195,9 +231,21 @@
       "executable": false
     },
     {
+      "path": ".codex/hooks/lib/shell_command.changelog.md",
+      "kind": "file",
+      "sha256": "678c596b45e493d1732d30aa518c3cfc8b2167d71ba9d526b50ab5be742c8931",
+      "executable": false
+    },
+    {
       "path": ".codex/hooks/lib/shell_command.ts",
       "kind": "file",
       "sha256": "39c09d50d073b0a32481e5053f3b52c0a4d3ffcc95ba629c6d1e9da94e896578",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/session_start_context.changelog.md",
+      "kind": "file",
+      "sha256": "e674b70c042820103628a51fb732920227364a1355864182539a07f5b3676eab",
       "executable": false
     },
     {
@@ -207,9 +255,21 @@
       "executable": false
     },
     {
+      "path": ".codex/hooks/skills_mgr_inventory.changelog.md",
+      "kind": "file",
+      "sha256": "8d8ac49bcebed4d8f663f70a61aca245afbdab75595b4e1e9277ac349398e236",
+      "executable": false
+    },
+    {
       "path": ".codex/hooks/skills_mgr_inventory.ts",
       "kind": "file",
       "sha256": "3c49cc4fd252e1fdec7d06434303e96c58e4d5b0423a27abe5ae1b149346ac04",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/subagent_exec_guard.changelog.md",
+      "kind": "file",
+      "sha256": "b6997ea23a3317516daaa7fe05660a3931e6ec00ea985f675c070e03ab08a0d6",
       "executable": false
     },
     {
@@ -240,6 +300,12 @@
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
       "sha256": "9b36b5d893a2827f437dad1c88ec7d48f9a451551b1a07769b6e1cea3340403a",
+      "executable": false
+    },
+    {
+      "path": ".codex/SKILL-AUTHORING.md",
+      "kind": "file",
+      "sha256": "5b7ce5eb6d8f7f8f3640faf1e081195ad345d6d340322264b92f5a3748448f78",
       "executable": false
     },
     {
@@ -557,7 +623,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "ab42bcb786fdc130f3d266c66d34b7e2041d194259e108aebf6811b4ef32faff",
+      "sha256": "826e0fff1eed81b579daabf17ec3ad081c5ab9ba2887fb6d58cd15c0238921f9",
       "executable": false
     },
     {
@@ -579,6 +645,12 @@
       "executable": false
     },
     {
+      "path": ".grok/hooks/adapt_codex_hook.changelog.md",
+      "kind": "file",
+      "sha256": "d9b78565bdb9e60d06926d0a4c9512ceeea04bc5d490bcef223b81a5c5287263",
+      "executable": false
+    },
+    {
       "path": ".grok/hooks/adapt_codex_hook.ts",
       "kind": "file",
       "sha256": "5df61a25c56faa3cd92f8d3a6a8bdc48809d4dfdcc28a3fe55b0f2c7c5781362",
@@ -588,6 +660,12 @@
       "path": ".grok/hooks/codex-port.json",
       "kind": "file",
       "sha256": "c111d9c18ca658288de5b2dc4c1f0d7bab140a25c7e937e1b3b1645883cd8f1b",
+      "executable": false
+    },
+    {
+      "path": ".grok/hooks/skills_path_guard.changelog.md",
+      "kind": "file",
+      "sha256": "4f46f327709e2426e8e8d909c0872cfa154320d0967f88b7ca9e1e9545908a68",
       "executable": false
     },
     {
@@ -609,10 +687,22 @@
       "executable": true
     },
     {
+      "path": ".local/bin/check_project.changelog.md",
+      "kind": "file",
+      "sha256": "e466721d380eb50bebdd7589d6de98a8c4f339ce2f1129c155c7bfe444b74184",
+      "executable": false
+    },
+    {
       "path": ".local/bin/compile-agent-tools",
       "kind": "file",
       "sha256": "84fc2cd4c94da816c20c533585db7686ec055ddd08a91085fb1776697b00c130",
       "executable": true
+    },
+    {
+      "path": ".local/bin/compile-agent-tools.changelog.md",
+      "kind": "file",
+      "sha256": "00dc4be631741336d95f95f20279f24f1c665d2fff00a19656af1cd397d8822e",
+      "executable": false
     },
     {
       "path": ".local/bin/grok-explore",
@@ -659,13 +749,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "54947a4e6181a10d1c1bbd8e10b57aae2344ef0177595a91993a5058efe4f188",
+      "sha256": "d34fe29ddb0682eda7ac291219716b7e21fcc99ab8fe29bb15b8d3d6e5391126",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "5da53cb56d85363e763f23456537b0dd1523da05d8f07d58e7cd979a7ae20bd3",
+      "sha256": "9e07b08b6d9304135b8e412aceb5aa8fbfe835653dd1510e67f2742bfa9cb25a",
       "executable": true
     },
     {
@@ -729,6 +819,12 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/batch-agent-sessions/SKILL.md",
+      "kind": "file",
+      "sha256": "367a8d3672957580cd79830eb2a40afc35d8d83a4bdbf4b37a7ebc36059bd42d",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/build-code-skeleton/agents/openai.yaml",
       "kind": "file",
       "sha256": "eba9dc681f41eecf5e89fe58567a97cb5497e913bc518933eb4c36de8a39698e",
@@ -753,6 +849,12 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/commit/SKILL.md",
+      "kind": "file",
+      "sha256": "d49ff92911a6f30e2c94644721729d6bc161e5dff236b1fa782ff8bc5903188a",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/council/agents/openai.yaml",
       "kind": "file",
       "sha256": "25a263b247cfd004d33a26f350bda790e57bbbc6889d17e94717a0785d25fa4c",
@@ -762,6 +864,12 @@
       "path": ".skills-mgr/skills/council/SKILL.md",
       "kind": "file",
       "sha256": "dcee994f4b3ea5241146e30ab5f288061d3766d993e76e5e9a48d921016e6e4b",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/create-skill/SKILL.md",
+      "kind": "file",
+      "sha256": "e895f5079b4b3b5f5989f32132d7e3b49f71c818526f6db0bc78ec56ce0cd7a0",
       "executable": false
     },
     {
@@ -900,6 +1008,12 @@
       "path": ".skills-mgr/skills/juststore-rendering-optimizer/SKILL.md",
       "kind": "file",
       "sha256": "97953bd845fffba5404aa143b30e61d4da1ae1385a27fb5207d16ac6bbfb36ed",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/new-agent-session/SKILL.md",
+      "kind": "file",
+      "sha256": "4ebaf519a4c6f5ad43ad4258fa659bdfaa2734f001cc88907c9c4ca49ad9db60",
       "executable": false
     },
     {
