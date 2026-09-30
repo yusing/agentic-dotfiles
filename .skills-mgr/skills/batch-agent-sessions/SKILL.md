@@ -17,24 +17,33 @@ batching, fan-out, the collective wait, and integration.
 - Group issues of the same kind: the same subsystem or owner, failure mode, or user-facing
   surface, so that one agent can fix them coherently and batches rarely edit the same code.
   Keep an issue alone when it fits no group. Honor any grouping or batch count the user gives.
+- A batch is a unit of assignment, not necessarily one commit. Keep distinct work in separate
+  coherent commits, even when it belongs to the same batch.
 - Keep each issue's text verbatim in its batch, including IDs such as session or thread IDs.
-  Copy attached images or files to a durable path that the new agents can read and cite that
-  path; a spawned agent cannot see attachments from this conversation.
+  Use issue text already supplied in the conversation. For an independent session, include
+  needed attached text in its prompt; give images and other required evidence durable paths
+  it can read. Conversation attachments are not inherited by the new session.
 - Resolve ambiguity in grouping yourself; ask only when an issue's meaning cannot be recovered
   from the list or the code.
 
 ## Fan out
 
 - Resolve one base commit and use it for every batch, so integration compares like with like.
+  Verify each worktree's actual Git `HEAD` matches it before delivering the assignment;
+  a creation receipt alone does not establish the checkout's base.
 - Launch every session before waiting on any of them. Use a distinct branch and worktree label per
   batch, derived from the batch's kind.
 - Each prompt carries only its batch: the user's verbatim issue text for that batch, followed by
   the `new-agent-session` handoff. In that handoff:
+  - state that the supplied batch is its complete, authoritative assignment; the original
+    issue-list file need not exist in its worktree, and its absence does not reopen scope;
+  - carry settled behavior and authorization, so the agent asks only about a genuinely
+    unresolved decision rather than reconfirming the assigned outcome;
   - name the other batches with their branches and panes as exclusions, so the agent leaves
     neighbouring issues alone and identifies the owning batch when an overlap needs coordination;
   - specify the communication route below for questions, overlap coordination, and final reports;
-  - ask it to commit its finished work on its own branch and report what changed, what was
-    validated, and what remains.
+  - ask it to commit its finished work on its own branch, separating distinct work as above,
+    and report what changed, what was validated, and what remains.
 
   Those branch commits are part of the requested workflow; merging, pushing, and installing
   stay with this skill or the user.
@@ -93,9 +102,11 @@ After every batch is finished or explicitly abandoned:
 1. Review each branch's commits against its batch: every issue addressed or reported as
    remaining, and no work leaking outside the batch.
 2. Integrate the branches into the source checkout's branch, one at a time, in an order that
-   minimizes conflicts, squashing each batch into one commit written by the `commit` skill.
-   The batch's own commit messages are that commit's source; do not replace them with a bare
-   subject. A dirty source checkout must not absorb unrelated edits; commit around them
+   minimizes conflicts, preserving separate commits for distinct work rather than squashing
+   by batch. Use the `commit` skill for any commits written or revised during integration;
+   squash follow-up fixes only into the work they belong to. Use the batch's own commit messages
+   as the source for rewritten messages; do not replace them with bare subjects.
+   A dirty source checkout must not absorb unrelated edits; commit around them
    without staging them, and stop to ask only when they overlap a batch's files.
 3. Resolve conflicts by preserving both batches' intended behavior, not by picking a side.
    Where two batches solved an overlapping problem differently, keep one coherent design and
@@ -108,7 +119,7 @@ After every batch is finished or explicitly abandoned:
 
 Once the integrated result validates, close each batch's agent and remove its worktree
 through Herdr (`herdr worktree remove --workspace <batch-workspace-id>`), which also closes its
-subspace. Keep the batch branches, which still hold the unsquashed history. Leave a batch's
+subspace. Keep the batch branches, which still hold the original history. Leave a batch's
 session in place instead when its work is unfinished or failed to integrate, and say so.
 
 ## Report
