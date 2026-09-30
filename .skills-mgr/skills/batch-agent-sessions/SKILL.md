@@ -10,7 +10,7 @@ Turn one list of issues into parallel, visible agent sessions, one per batch, an
 single integrated result. Before launching any batch, load `new-agent-session` with
 `skills-mgr get new-agent-session`. It owns agent choice (including the Mekugi default for
 Codex), worktree, launch, prompt, and verification for every batch. This skill owns
-batching, fan-out, the collective wait, and integration.
+batching, per-batch model routing, fan-out, the collective wait, and integration.
 
 ## Batch
 
@@ -25,6 +25,43 @@ batching, fan-out, the collective wait, and integration.
   it can read. Conversation attachments are not inherited by the new session.
 - Resolve ambiguity in grouping yourself; ask only when an issue's meaning cannot be recovered
   from the list or the code.
+
+## Route each batch
+
+Honor user-selected models, reasoning efforts, and profiles, whether for the whole list or a
+particular batch. Assess any choices left open by those selections separately from the complete
+assignment, not the coordinator's budget or the number of issues.
+
+For Codex/Mekugi, use `gpt-6.1-sol` for bounded lookup, mechanical or support work, and implementation
+with a settled outcome and localized behavior. Prefer `gpt-6-astra` when success depends on ambiguous
+diagnosis, cross-cutting design, or coupled persistence, recovery, concurrency, or lifecycle reasoning.
+Then select effort for the actual reasoning burden, independently of the model:
+
+| Effort | Assignment evidence |
+| --- | --- |
+| `low` | Deterministic lookup or mechanical/support work with settled inputs and little consequential inference. |
+| `medium` | A clear contract with limited design choices or short causal traces; focused checks can establish the outcome. |
+| `high` | Competing causal explanations, nonlocal state transitions, interacting invariants, or consequential migration/recovery decisions requiring substantial reasoning. |
+| `xhigh` | Long-horizon, tightly coupled reasoning that remains difficult after useful decomposition and evidence gathering; justify the extra latency/cost with concrete task difficulty or representative results. |
+| `max` | An explicit user choice or representative evidence that lower effort misses a consequential requirement and the gain warrants its extra cost. |
+
+Assess the unresolved questions, coupling, failure consequences, and strength of available validation.
+High stakes alone do not require maximum effort, and a missing fact is often better resolved by a
+targeted lookup or reproduction than more thinking. Do not make `medium` universal or reserve
+`high` only for a failed attempt. For snapshot codecs/storage plus dependency-safe background pruning
+and replay/restart/fork correctness, Astra is the stronger model candidate and `high` is a reasonable
+starting effort when those interacting invariants need to be designed; `medium` can fit a settled,
+narrow change with decisive regression coverage. Route a mixed batch by its hardest inseparable
+requirement, or split at a coherent ownership boundary. For other agent kinds, retain their requested
+or configured budgets rather than translating OpenAI names or unsupported effort levels.
+
+Select the route before launch and pass it to `new-agent-session` as explicit native model and
+reasoning arguments. Record the route and separate model/effort rationales in the launched roster, and
+verify the effective model and effort before delivering the assignment. These are workload defaults,
+not a claim that Astra is always faster or better; change them when representative evidence warrants
+it. Reconsider model fit rather than automatically compensating with higher effort; do not restart a
+running batch merely because these defaults changed. Reassess its route if an additive request
+materially changes the workload, preserving the accepted assignment and existing recovery state.
 
 ## Fan out
 
@@ -47,7 +84,8 @@ batching, fan-out, the collective wait, and integration.
 
   Those branch commits are part of the requested workflow; merging, pushing, and installing
   stay with this skill or the user.
-- Report the launched roster (batch, branch, worktree, workspace, pane, agent name) once, then
+- Report the launched roster (batch, branch, worktree, workspace, pane, agent name, model/effort
+  and routing rationale) once, then
   wait.
 
 ## Communication

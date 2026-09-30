@@ -13,7 +13,10 @@ relying on the syntax below.
 
 ## Choose the agent
 
-- Use the requested agent kind, model, and profile; add no overrides of your own.
+- Use the requested agent kind, model, reasoning effort, and profile. A coordinating workflow
+  such as `batch-agent-sessions` may supply a workload-selected budget when the user left it open;
+  apply that selection without overriding explicit user choices. Otherwise retain the configured
+  model and effort.
 - Otherwise keep the current agent kind when known, or ask.
 - For Codex, use Mekugi unless the user asks for plain Codex. Resolve its executable
   as an absolute path: when `herdr pane process-info --pane "$HERDR_PANE_ID"` shows the
@@ -64,7 +67,11 @@ relying on the syntax below.
    any wait that targets its old name.
 
    Pass native agent arguments only through the launcher's own interface. Never start a
-   detached process and wrap a pane around it later.
+   detached process and wrap a pane around it later. For a selected Codex budget, add
+   `-m <model> -c 'model_reasoning_effort="<effort>"'` to its native arguments, after Mekugi's
+   `codex` subcommand when using that wrapper. Verify the effective model and effort before
+   sending the task; process arguments establish what was requested, not what configuration
+   the client actually loaded.
 6. **Send the prompt.** Run `herdr agent prompt <name> "<text>" --wait --until working`
    with one text argument: the user's original prompt verbatim, followed by a separate
    handoff section with:
@@ -92,6 +99,6 @@ succeeds, report what exists.
 
 ## Report
 
-Return the worktree path, branch, workspace and pane IDs, agent name, and a session ID
-when available. State "launched and working", not "done". Do not wait for the
+Return the worktree path, branch, workspace and pane IDs, agent name, effective model/effort,
+and a session ID when available. State "launched and working", not "done". Do not wait for the
 implementation to finish unless asked.
