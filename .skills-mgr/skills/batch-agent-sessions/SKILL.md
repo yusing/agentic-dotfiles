@@ -9,10 +9,8 @@ disable-model-invocation: true
 Turn one list of issues into parallel, visible agent sessions, one per batch, and deliver a
 single integrated result. Task grouping, budgets, prompts, and integration remain agent
 decisions; preparation and cleanup use the installed commands below, not agent-authored
-shell orchestration or temporary scripts. `new-agent-session` remains the owner of discovery,
-agent choice (including the Mekugi default for Codex), launch, prompt, and verification.
-Load it before launching; its preflight is already run once by preparation, so reuse the
-manifest's evidence instead of repeating discovery for every batch.
+shell orchestration or temporary scripts. `new-agent-session` owns agent choice (including the
+Mekugi default for Codex), launch, prompt, and verification; load it before launching.
 
 ## Batch
 
@@ -31,8 +29,9 @@ manifest's evidence instead of repeating discovery for every batch.
 ## Route each batch
 
 Honor user-selected models, reasoning efforts, and profiles, whether for the whole list or a
-particular batch. Assess any choices left open by those selections separately from the complete
-assignment, not the coordinator's budget or the number of issues.
+particular batch. Choose what they leave open from each batch's complete assignment, not the
+coordinator's budget or the number of issues. For other agent kinds, retain their requested or
+configured budgets rather than translating OpenAI names or unsupported effort levels.
 
 For Codex/Mekugi, use `gpt-6.1-sol` for bounded lookup, mechanical or support work, and implementation
 with a settled outcome and localized behavior. Prefer `gpt-6-astra` when success depends on ambiguous
@@ -47,48 +46,41 @@ Then select effort for the actual reasoning burden, independently of the model:
 | `xhigh` | Long-horizon, tightly coupled reasoning that remains difficult after useful decomposition and evidence gathering; justify the extra latency/cost with concrete task difficulty or representative results. |
 | `max` | An explicit user choice or representative evidence that lower effort misses a consequential requirement and the gain warrants its extra cost. |
 
-Assess the unresolved questions, coupling, failure consequences, and strength of available validation.
-High stakes alone do not require maximum effort, and a missing fact is often better resolved by a
-targeted lookup or reproduction than more thinking. Do not make `medium` universal or reserve
-`high` only for a failed attempt. For snapshot codecs/storage plus dependency-safe background pruning
-and replay/restart/fork correctness, Astra is the stronger model candidate and `high` is a reasonable
-starting effort when those interacting invariants need to be designed; `medium` can fit a settled,
-narrow change with decisive regression coverage. Route a mixed batch by its hardest inseparable
-requirement, or split at a coherent ownership boundary. For other agent kinds, retain their requested
-or configured budgets rather than translating OpenAI names or unsupported effort levels.
+Weigh unresolved questions, coupling, failure consequences, and the strength of available
+validation. High stakes alone do not require more effort, and a missing fact is often better
+resolved by a targeted lookup or reproduction. Do not default every batch to `medium`. Route a
+mixed batch by its hardest inseparable requirement, or split it at a coherent ownership boundary.
+These are workload defaults: change them when representative evidence warrants it, and reconsider
+model fit before compensating with higher effort.
 
-Select the route before launch and pass it to `new-agent-session` as explicit native model and
-reasoning arguments. Record the route and separate model/effort rationales in the launched roster, and
-verify the effective model and effort before delivering the assignment. These are workload defaults,
-not a claim that Astra is always faster or better; change them when representative evidence warrants
-it. Reconsider model fit rather than automatically compensating with higher effort; do not restart a
-running batch merely because these defaults changed. Reassess its route if an additive request
-materially changes the workload, preserving the accepted assignment and existing recovery state.
+Pass the route to `new-agent-session` as explicit native model and reasoning arguments, and record
+it with separate model and effort rationales in the launched roster. Do not restart a running batch
+merely because these defaults changed; reassess its route only when an additive request materially
+changes its workload, preserving the accepted assignment and existing recovery state.
 
 ## Prepare
 
-Read [references/preparation.md](references/preparation.md) when building the resource plan
-or recovering a partial preparation. Supply batch names, required evidence, and any project
-setup commands as JSON data, then run:
+Name each batch by its kind; the helper derives its branch and worktree from that name. Supply
+batch names, required evidence, and any project setup commands as a JSON plan, described with
+recovery and receipts in [references/preparation.md](references/preparation.md), then run:
 
 ```bash
 skills-mgr run batch-agent-sessions/scripts/sessions.sh prepare --cwd "$PWD" --plan "$PWD/plan.json"
 ```
 
-The command owns temporary-directory creation, image/file copying and retained-image
-recovery, shared-base linked worktree creation and verification, and explicit project setup.
-It prints one JSON roster with the persistent manifest, preserved evidence paths, and each
-batch's branch, checkout, workspace, and pane. Missing evidence is reported as unrecoverable
-unless the supplied rollout contains its exact embedded image; do not pass nonexistent paths
-to an agent. Partial failures keep receipts and successful results, report target-qualified
-errors, and return nonzero without rolling back or resetting worktrees.
+The command creates the temporary directory, copies or recovers evidence, creates and verifies
+linked worktrees on one shared base, and runs the supplied setup. It prints one JSON roster with
+the persistent manifest, evidence paths, and each batch's branch, checkout, workspace, and pane.
+Give agents only evidence paths it reports as present. After a nonzero exit, read the reference
+before retrying; rerunning creates a new run rather than repairing this one.
 
 ## Fan out
 
-- Use the prepared roster's verified common base and exact returned identifiers. Do not
-  recreate worktrees, predict IDs, or repeat setup commands that already succeeded.
-- Launch every session before waiting on any of them. Use a distinct branch and worktree label per
-  batch, derived from the batch's kind.
+- Preparation has already run `new-agent-session`'s preflight and steps 2–4. For each prepared
+  pane, apply its agent choice and steps 1 and 5–7, using the roster's base and exact returned
+  identifiers. Do not rerun discovery, recreate worktrees, predict IDs, or repeat setup commands
+  that already succeeded.
+- Launch every session before waiting on any of them.
 - Each prompt's task text is its batch's verbatim issue text, supplied to `new-agent-session`
   in place of the user's prompt. The user's request to the coordinator, with its routing,
   other batches, and skill invocation, is not forwarded; carry only decisions from it that
@@ -99,35 +91,23 @@ errors, and return nonzero without rolling back or resetting worktrees.
   Those branch commits are part of the requested workflow; the coordinator owns integration.
   Pushing or installing requires separate user authorization.
 - Report the launched roster (batch, branch, worktree, workspace, pane, agent name, model/effort
-  and routing rationale) once, then
-  wait.
+  and routing rationale) once, then wait.
 
 ## Communication
 
-Keep agent reports out of the user's composer. `herdr agent prompt` injects terminal input;
-it is not an agent mailbox and can combine a report with the user's draft and submit both.
-Do not use it, or other terminal input, to report into the coordinating user's pane.
+Each session reports in its own pane. When it has a journal, that is its work-result channel:
+it records commit IDs, changed behavior, checks/results and limitations there as established,
+and its journal guidance owns the completion reply. Read the journal instead of requiring a
+second final recap. Without a journal, use the session's ordinary result channel. Questions
+also stay in the session's pane. Use visible reads while an agent is blocked or working if
+history capture requires idle.
 
-For Codex, prefer native `send_message` or `followup_task` when the recipient is addressable
-in the same agent tree. Separate Codex sessions launched in Herdr worktrees have independent
-roots and processes: native cross-thread tools do not thereby become cross-session tools.
-The native message board is also tree-scoped; configuring a remote board alone does not
-establish delivery between unrelated roots. Neither route directly addresses Claude sessions.
-
-For independent sessions, agents leave questions and completion evidence in their own panes.
-When a session has a journal, that is its work-result channel: record commit IDs, changed
-behavior, checks/results and limitations there as established, and let its journal guidance
-own the completion reply. Main reads the journal instead of requiring a second final recap.
-Without a journal, use the session's ordinary result channel. Main waits for state changes,
-reads the batch's pane, and relays decisions or overlap coordination into it. Use visible
-reads while an agent is blocked or working if history capture requires idle. Initial prompts
-and follow-ups still use the `new-agent-session` delivery rules; do not assume any pane
-containing an agent is safe to type into when the user is also composing there.
-
-Use a non-terminal cross-session transport only after verifying its supported addressing and
-delivery semantics. Codex app-server `turn/start` and `turn/steer` bypass the composer, but
-require access to the owning running server; a thread ID alone is not that connection. Do not
-resume the same live thread in another process as a substitute for messaging its owner.
+Relay decisions or overlap coordination into a batch's pane by `new-agent-session`'s delivery
+rules; do not assume a pane is safe to type into while the user is composing there. Never route
+reports into the coordinating user's pane: `herdr agent prompt` and other terminal input type
+into the user's composer and can submit a report together with their draft. Codex native
+cross-thread tools and message boards are scoped to one agent tree, so they cannot reach these
+independently rooted sessions.
 
 ## Wait
 
@@ -161,8 +141,10 @@ After every batch is finished or explicitly abandoned:
    by batch. Use the `commit` skill for any commits written or revised during integration;
    squash follow-up fixes only into the work they belong to. Use the batch's own commit messages
    as the source for rewritten messages; do not replace them with bare subjects.
-   A dirty source checkout must not absorb unrelated edits; commit around them
-   without staging them, and stop to ask only when they overlap a batch's files.
+   If the source branch moved past the prepared base, replay batch commits onto its current
+   tip rather than resetting it. A dirty source checkout must not absorb unrelated edits;
+   commit around them without staging them, and stop to ask only when they overlap a batch's
+   files.
 3. Resolve conflicts by preserving both batches' intended behavior, not by picking a side.
    Where two batches solved an overlapping problem differently, keep one coherent design and
    say which one.
@@ -179,16 +161,12 @@ manifest and run:
 skills-mgr run batch-agent-sessions/scripts/sessions.sh cleanup --manifest MANIFEST --completed composer --completed labels
 ```
 
-The command verifies live workspace/checkout/pane ownership, clean Git state, and settled
-agents or idle shells before non-forced Herdr removal. If a completed Mekugi session still
-reports `unknown`, inspect its visible pane and add `--ready-unknown NAME` only when it is
-ready for input, not working or blocked. Herdr closes the owned subspaces;
-do not synthesize Ctrl-C sequences or kill processes yourself. Branches and the persistent
-manifest remain for recovery. Once every batch is removed, recorded image copies and empty
-owned temporary directories are removed too. Altered evidence, unknown temporary files,
-changed layouts, dirty checkouts, and unfinished agents are preserved with actionable errors.
-An unsuccessful target does not suppress successful targets, and completed cleanup is
-repeatable. Leave unfinished or unintegrated batches and their evidence intact.
+The command removes only this run's verified, clean, settled resources through non-forced Herdr
+removal and keeps branches and the manifest; the reference describes refusals and repeat runs.
+If a completed Mekugi session still reports `unknown`, inspect its visible pane and add
+`--ready-unknown NAME` only when it is ready for input, not working or blocked. Herdr closes the
+owned subspaces; do not synthesize Ctrl-C sequences or kill processes yourself. Leave unfinished
+or unintegrated batches and their evidence intact.
 
 ## Delivery evidence
 

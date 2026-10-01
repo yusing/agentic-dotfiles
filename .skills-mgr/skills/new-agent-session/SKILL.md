@@ -7,7 +7,8 @@ disable-model-invocation: true
 # New agent session
 
 Deliver a visible, interactive agent in its own worktree and Herdr subspace, not a
-background process or an in-thread subagent. Start with one read-only preflight call:
+background process or an in-thread subagent. Start with one read-only preflight call, unless a
+coordinating workflow has already run it and supplies its evidence:
 
 ```bash
 skills-mgr run new-agent-session/scripts/preflight.py --cwd "$PWD"
@@ -16,7 +17,7 @@ skills-mgr run new-agent-session/scripts/preflight.py --cwd "$PWD"
 It returns caller agent kind and reusable Mekugi executable, one base commit, dirty status,
 source workspace, existing worktrees, and taken agent names. It also checks the installed
 Herdr CLI for the syntax used below, printing `cli: ok` or the usage of a mismatched command
-group. Reuse this evidence across every batch instead of repeating discovery per launch.
+group. Reuse this evidence across launches instead of repeating discovery.
 Add `--with-skill` to also print this skill when it is not yet loaded.
 Pass the caller's checkout explicitly because `skills-mgr run` executes in the skill directory.
 It requires `HERDR_ENV=1`, preserves focus, and creates or launches nothing. A failed probe
@@ -48,7 +49,7 @@ Load the `herdr` skill only for recovery or a Herdr operation these steps do not
 2. **Resolve the base.** Use the preflight's current checkout `base_commit`, resolved to a commit
    ID. Uncommitted changes do not follow; if the task depends on them, resolve that with
    the user instead of dropping them or copying unrelated edits.
-3. **Find the source workspace.** Use the preflight's `source.source_workspace_id` and
+3. **Find the source workspace.** Use the preflight's `source_workspace_id` and
    worktree inventory. Use the caller's context, not the
    UI-focused workspace. Choose a branch name and absolute path that do not collide with
    the listed worktrees.
@@ -88,20 +89,17 @@ Load the `herdr` skill only for recovery or a Herdr operation these steps do not
    with one text argument: the captured task text verbatim. Append a handoff only for
    task-specific information missing from that text: preservation/acceptance conditions,
    relevant evidence, repository-edit boundary, delivery authorization and communication
-   route. Include another owner only for a concrete overlap. Do not add empty evidence
-   sections, hypothetical missing-file defenses, launch provenance, sibling inventories
-   or unrelated coordinator work.
-
-   Point to applicable project guidance rather than restating its documentation, testing
-   or review rules. Carry settled decisions and authorization without reconfirming them.
+   route. Include another owner only for a concrete overlap. Point to applicable project
+   guidance rather than restating its documentation, testing or review rules. Carry settled decisions and authorization without reconfirming them.
    Launching does not by itself authorize a commit, merge or install. Required completion
    evidence uses the session's existing result channel; when that is a journal, its guidance
    owns completion rather than a handoff demanding a duplicate final report.
+
+   The prompt counts as delivered only once the agent reaches `working`; startup readiness
+   or a submitted prompt is not enough.
 7. **Verify.** Confirm the agent's name and that its cwd is the worktree. For Mekugi,
    confirm with `herdr pane process-info` that both Mekugi and its Codex child are
-   running; detecting Codex alone does not prove the wrapper. The prompt counts as
-   delivered only after the agent reaches `working`. Startup readiness or a submitted
-   prompt is not enough.
+   running; detecting Codex alone does not prove the wrapper.
 
 ## Failure and recovery
 
