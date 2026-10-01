@@ -7,9 +7,18 @@ disable-model-invocation: true
 # Batch agent sessions
 
 Turn one list of issues into parallel, visible agent sessions, one per batch, and deliver a
-single integrated result. Before launching any batch, load `new-agent-session` with
-`skills-mgr get new-agent-session`. It owns agent choice (including the Mekugi default for
-Codex), worktree, launch, prompt, and verification for every batch. This skill owns
+single integrated result. Before launching any batch, run one shared preflight:
+
+```bash
+skills-mgr run new-agent-session/scripts/preflight.py --cwd "$PWD"
+```
+
+This loads `new-agent-session` and `herdr` guidance and gathers caller, source checkout,
+base commit, worktree/name inventory, launcher, and installed CLI evidence in one call.
+Reuse it for all batches; do not repeat unchanged skill reads or discovery commands.
+If both skills are already loaded, pass `--context-only`. `new-agent-session` owns agent
+choice (including the Mekugi default for Codex), worktree, launch, prompt, and verification
+for every batch. This skill owns
 batching, per-batch model routing, fan-out, the collective wait, and integration.
 
 ## Batch
@@ -70,20 +79,11 @@ materially changes the workload, preserving the accepted assignment and existing
   a creation receipt alone does not establish the checkout's base.
 - Launch every session before waiting on any of them. Use a distinct branch and worktree label per
   batch, derived from the batch's kind.
-- Each prompt carries only its batch: the user's verbatim issue text for that batch, followed by
-  the `new-agent-session` handoff. In that handoff:
-  - state that the supplied batch is its complete, authoritative assignment; the original
-    issue-list file need not exist in its worktree, and its absence does not reopen scope;
-  - carry settled behavior and authorization, so the agent asks only about a genuinely
-    unresolved decision rather than reconfirming the assigned outcome;
-  - name the other batches with their branches and panes as exclusions, so the agent leaves
-    neighbouring issues alone and identifies the owning batch when an overlap needs coordination;
-  - specify the communication route below for questions, overlap coordination, and final reports;
-  - ask it to commit its finished work on its own branch, separating distinct work as above,
-    and report what changed, what was validated, and what remains.
+- Each prompt carries its batch's verbatim issue text. Use `new-agent-session`'s handoff
+  rules to add missing branch-commit authorization and the communication route below.
 
-  Those branch commits are part of the requested workflow; merging, pushing, and installing
-  stay with this skill or the user.
+  Those branch commits are part of the requested workflow; the coordinator owns integration.
+  Pushing or installing requires separate user authorization.
 - Report the launched roster (batch, branch, worktree, workspace, pane, agent name, model/effort
   and routing rationale) once, then
   wait.
@@ -100,12 +100,15 @@ roots and processes: native cross-thread tools do not thereby become cross-sessi
 The native message board is also tree-scoped; configuring a remote board alone does not
 establish delivery between unrelated roots. Neither route directly addresses Claude sessions.
 
-For independent sessions, agents leave questions and final reports in their own panes. Main
-waits for state changes, reads those panes, and relays decisions or overlap coordination into
-the batch-owned panes. Use visible reads while an agent is blocked or working if history
-capture requires idle. Initial prompts and follow-ups to batch-owned panes still use the
-`new-agent-session` delivery rules; do not assume any pane containing an agent is safe to type
-into when the user is also composing there.
+For independent sessions, agents leave questions and completion evidence in their own panes.
+When a session has a journal, that is its work-result channel: record commit IDs, changed
+behavior, checks/results and limitations there as established, and let its journal guidance
+own the completion reply. Main reads the journal instead of requiring a second final recap.
+Without a journal, use the session's ordinary result channel. Main waits for state changes,
+reads the batch's pane, and relays decisions or overlap coordination into it. Use visible
+reads while an agent is blocked or working if history capture requires idle. Initial prompts
+and follow-ups still use the `new-agent-session` delivery rules; do not assume any pane
+containing an agent is safe to type into when the user is also composing there.
 
 Use a non-terminal cross-session transport only after verifying its supported addressing and
 delivery semantics. Codex app-server `turn/start` and `turn/steer` bypass the composer, but
@@ -160,8 +163,9 @@ through Herdr (`herdr worktree remove --workspace <batch-workspace-id>`), which 
 subspace. Keep the batch branches, which still hold the original history. Leave a batch's
 session in place instead when its work is unfinished or failed to integrate, and say so.
 
-## Report
+## Delivery evidence
 
 Per batch: its issues, branch, and outcome (fixed, partial, or remaining, with reasons). Then
 the integration: conflicts and how each was resolved, validation run and results, and the
-integrated commit range. State plainly anything that did not complete.
+integrated commit range. State plainly anything that did not complete. These are required
+facts for the existing work-result channel, not a request for an additional final summary.

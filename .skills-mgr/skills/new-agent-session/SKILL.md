@@ -7,9 +7,19 @@ disable-model-invocation: true
 # New agent session
 
 Deliver a visible, interactive agent in its own worktree and Herdr subspace, not a
-background process or an in-thread subagent. Requires `HERDR_ENV=1`; load the `herdr`
-skill (or run `herdr --skill`) for CLI details and recovery, and check `--help` before
-relying on the syntax below.
+background process or an in-thread subagent. Start with one read-only preflight call:
+
+```bash
+skills-mgr run new-agent-session/scripts/preflight.py --cwd "$PWD"
+```
+
+It returns this skill and `herdr` guidance, installed launch/wait CLI help, caller agent
+kind and reusable Mekugi executable, one base commit, dirty status, source workspace,
+existing worktrees, and live agent names. Reuse this evidence across every batch instead
+of repeating discovery per launch. Use `--context-only` when both skills are already loaded.
+Pass the caller's checkout explicitly because `skills-mgr run` executes in the skill directory.
+It requires `HERDR_ENV=1`, preserves focus, and creates or launches nothing. A failed probe
+retains successful evidence and reports errors separately; resolve only the dependent gap.
 
 ## Choose the agent
 
@@ -18,10 +28,9 @@ relying on the syntax below.
   apply that selection without overriding explicit user choices. Otherwise retain the configured
   model and effort.
 - Otherwise keep the current agent kind when known, or ask.
-- For Codex, use Mekugi unless the user asks for plain Codex. Resolve its executable
-  as an absolute path: when `herdr pane process-info --pane "$HERDR_PANE_ID"` shows the
-  caller running under Mekugi, read that PID's `/proc/<pid>/exe`; otherwise use
-  `command -v mekugi`. The new pane's PATH may lack it, so always launch the absolute
+- For Codex, use Mekugi unless the user asks for plain Codex. Use the preflight's absolute
+  `mekugi_executable`: it resolves the caller's `/proc/<pid>/exe` when running under
+  Mekugi, otherwise PATH lookup. The new pane's PATH may lack it, so always launch the absolute
   path. If the caller runs Mekugi but its executable cannot be reused, report the
   failure instead of falling back to plain Codex.
 - Interactive Mekugi refuses to start without `--yolo` (no approvals or sandbox). A caller
@@ -33,11 +42,11 @@ relying on the syntax below.
 
 1. **Capture the task.** Record the user's exact task prompt now; the new agent does not
    inherit this conversation. Skip only if the user asked for an empty session.
-2. **Resolve the base.** Default to the current checkout's `HEAD`, resolved to a commit
+2. **Resolve the base.** Use the preflight's current checkout `base_commit`, resolved to a commit
    ID. Uncommitted changes do not follow; if the task depends on them, resolve that with
    the user instead of dropping them or copying unrelated edits.
-3. **Find the source workspace.** Run `herdr worktree list --workspace "$HERDR_WORKSPACE_ID"`
-   and use `result.source.source_workspace_id`. Use the caller's context, not the
+3. **Find the source workspace.** Use the preflight's `source.source_workspace_id` and
+   worktree inventory. Use the caller's context, not the
    UI-focused workspace. Choose a branch name and absolute path that do not collide with
    the listed worktrees.
 4. **Create the worktree** so Herdr links it as a subspace:
@@ -73,16 +82,18 @@ relying on the syntax below.
    sending the task; process arguments establish what was requested, not what configuration
    the client actually loaded.
 6. **Send the prompt.** Run `herdr agent prompt <name> "<text>" --wait --until working`
-   with one text argument: the user's original prompt verbatim, followed by a separate
-   handoff section with:
-   - outcome, scope, and exclusions;
-   - relevant findings with exact source locations, marking evidence and guesses;
-   - acceptance checks and validation still missing;
-   - the worktree boundary and any integration or delivery instructions.
+   with one text argument: the user's original prompt verbatim. Append a handoff only for
+   task-specific information missing from that prompt: preservation/acceptance conditions,
+   relevant evidence, repository-edit boundary, delivery authorization and communication
+   route. Include another owner only for a concrete overlap. Do not add empty evidence
+   sections, hypothetical missing-file defenses, launch provenance, sibling inventories
+   or unrelated coordinator work.
 
-   Point to project guidance instead of copying it. Carry forward settled decisions
-   and authorization, so the agent does not reconfirm accepted work. Launching does not
-   by itself authorize a commit, merge, or install.
+   Point to applicable project guidance rather than restating its documentation, testing
+   or review rules. Carry settled decisions and authorization without reconfirming them.
+   Launching does not by itself authorize a commit, merge or install. Required completion
+   evidence uses the session's existing result channel; when that is a journal, its guidance
+   owns completion rather than a handoff demanding a duplicate final report.
 7. **Verify.** Confirm the agent's name and that its cwd is the worktree. For Mekugi,
    confirm with `herdr pane process-info` that both Mekugi and its Codex child are
    running; detecting Codex alone does not prove the wrapper. The prompt counts as
@@ -97,8 +108,9 @@ second agent or resend the prompt blindly. On retry, reuse the worktree and work
 already created for this launch without resetting them. If setup only partly
 succeeds, report what exists.
 
-## Report
+## Launch evidence
 
 Return the worktree path, branch, workspace and pane IDs, agent name, effective model/effort,
 and a session ID when available. State "launched and working", not "done". Do not wait for the
-implementation to finish unless asked.
+implementation to finish unless asked. Record these facts on the existing work-update
+surface; they are not required final-answer text when that surface is a journal.

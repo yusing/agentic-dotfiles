@@ -253,6 +253,9 @@ __pycache__
 !/.skills-mgr/skills/juststore-rendering-optimizer/references/juststore-rendering-patterns.md
 !/.skills-mgr/skills/juststore-rendering-optimizer/SKILL.md
 !/.skills-mgr/skills/new-agent-session/
+!/.skills-mgr/skills/new-agent-session/scripts/
+!/.skills-mgr/skills/new-agent-session/scripts/preflight.py
+!/.skills-mgr/skills/new-agent-session/scripts/test_preflight.py
 !/.skills-mgr/skills/new-agent-session/SKILL.md
 !/.skills-mgr/skills/new-project/
 !/.skills-mgr/skills/new-project/agents/
