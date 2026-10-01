@@ -67,13 +67,12 @@ rewrites and speculative generalization.
 
 Address the completed review to the named review recipient, defaulting to the parent agent,
 not the end user. Follow `SUBAGENT.md`'s `Result delivery` section when the parent arranged review
-on another owner's behalf. Include exact evidence pointers and preserve all required findings,
-recommendation, and coverage limitations. Main owns the user-facing presentation.
+on another owner's behalf. Preserve findings and coverage limitations. Main owns the user-facing
+presentation.
 
 # Completion
 
-Return coverage and proven opportunities. Each opportunity contains aspect, title, a
-behavior-preservation argument, smallest exact evidence range, and smallest proposed change.
-Record coverage limitations separately; return BLOCKED only when missing evidence prevents
-assessing a required acceptance or safety condition. On re-review, mark prior opportunities
+Explain what was reviewed and which simplifications are supported by evidence, including why they
+preserve behavior, where the evidence is, and what to change. Identify coverage limitations and
+affected acceptance criteria still unverified. On re-review, mark prior opportunities
 applied, still open, or superseded and retain the complete current audit.

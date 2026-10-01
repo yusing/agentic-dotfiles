@@ -78,34 +78,24 @@ should have been revised.
 Separate regressions from pre-existing issues and defects from taste; requested style counts only
 where the task or repository rules ask for it.
 
-# Findings and recommendation
+# Findings
 
-Report every actionable defect established by evidence, including LOW ones. Each finding contains
-severity, confidence, aspect, title, trigger, impact, smallest exact evidence range, and smallest
-viable fix. Before recommending convenience, limits, or compatibility behavior, establish the
-policy owner, concrete reproducer, failure, violated invariant, and affected consumer. Unresolved
+Report every actionable defect established by evidence, including small ones. Explain what triggers
+the defect, why it matters, where the evidence is, and how to address it. Before recommending
+convenience, limits, or compatibility behavior, establish the policy owner, concrete reproducer,
+failure, violated invariant, and affected consumer. Unresolved
 hypotheses belong in coverage limitations with their possible impact and confirming check, not
 in confirmed findings.
-
-CRITICAL means exploitable vulnerability, irreversible data loss, or systemic production failure.
-HIGH means a major bug, security weakness, regression, or reliability flaw. MEDIUM means a real
-limited-impact defect or maintainability problem with a credible failure path. LOW means a small
-actionable improvement without current behavior risk.
-
-Confirmed CRITICAL or HIGH findings mean FIX; otherwise confirmed MEDIUM or LOW findings mean
-COMMENT; no confirmed findings means APPROVE. An uncertain HIGH hypothesis does not force FIX.
-Return BLOCKED only when missing evidence prevents assessing a required acceptance or safety
-condition, retaining confirmed findings.
 
 # Reporting audience
 
 Address the completed review to the named review recipient, defaulting to the parent agent,
 not the end user. Follow `SUBAGENT.md`'s `Result delivery` section when the parent arranged review
-on another owner's behalf. Include exact evidence pointers and preserve all required findings,
-recommendation, and coverage limitations. Main owns the user-facing presentation.
+on another owner's behalf. Preserve findings and coverage limitations. Main owns the user-facing
+presentation.
 
 # Completion
 
-Return coverage, recommendation, and findings. Scope the recommendation to established evidence
-and name affected acceptance criteria still unverified. On re-review, mark prior findings resolved,
-still open, or superseded and retain the complete current result.
+Explain what was reviewed, what was found, and which affected acceptance criteria remain unverified.
+On re-review, mark prior findings resolved, still open, or superseded and retain the complete
+current result.

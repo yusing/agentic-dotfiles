@@ -49,28 +49,21 @@ reachable affected state. Report hidden progress, disproportionate updates, bypa
 ownership, or reporting that determines success instead of remaining auxiliary. Separate
 regressions from pre-existing behavior and defects from aesthetic preference.
 
-# Findings and recommendation
+# Findings
 
-Each finding identifies triggering content, viewport, interaction, or state and its resulting
-visible defect, unusable flow, incorrect state, or material rendering cost. Include severity,
-confidence, affected UI concern, title, impact, smallest exact evidence range, and smallest fix.
+Explain the triggering content, viewport, interaction, or state and its resulting visible defect,
+unusable flow, incorrect state, or material rendering cost, with evidence and a suggested fix.
 Record unresolved hypotheses separately with their possible impact and confirming check.
-
-Use CRITICAL for systemic failure or irreversible harm, HIGH for a major broken flow or regression,
-MEDIUM for a limited-impact defect, and LOW for a small actionable improvement. Confirmed CRITICAL
-or HIGH findings mean FIX; otherwise confirmed MEDIUM or LOW findings mean COMMENT; no confirmed
-findings means APPROVE. An uncertain HIGH hypothesis does not force FIX. Return BLOCKED only when
-missing evidence prevents assessing a required acceptance or safety condition, retaining findings.
 
 # Reporting audience
 
 Address the completed review to the named review recipient, defaulting to the parent agent,
 not the end user. Follow `SUBAGENT.md`'s `Result delivery` section when the parent arranged review
-on another owner's behalf. Include exact evidence pointers and preserve all required findings,
-recommendation, and coverage limitations. Main owns the user-facing presentation.
+on another owner's behalf. Preserve findings and coverage limitations. Main owns the user-facing
+presentation.
 
 # Completion
 
-Finish when every changed interface file and affected UI contract is accounted for. Return coverage,
-recommendation, and findings, naming rendered/browser/PTY gaps and acceptance criteria still unverified.
+Finish when every changed interface file and affected UI contract is accounted for. Explain what was
+reviewed and found, including rendered/browser/PTY gaps and acceptance criteria still unverified.
 On re-review, mark prior findings resolved, still open, or superseded and retain the complete result.
