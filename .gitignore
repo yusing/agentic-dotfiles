@@ -165,6 +165,9 @@ __pycache__
 !/.local/bin/compile-agent-tools.changelog.md
 !/.local/bin/grok-explore
 !/.local/lib/
+!/.local/lib/batch-agent-sessions/
+!/.local/lib/batch-agent-sessions/batch-agent-sessions.ts
+!/.local/lib/batch-agent-sessions/CHANGELOG.md
 !/.local/lib/clip-session/
 !/.local/lib/clip-session/CHANGELOG.md
 !/.local/lib/clip-session/clip-session.ts
@@ -195,6 +198,10 @@ __pycache__
 !/.skills-mgr/skills/authoring-skill/
 !/.skills-mgr/skills/authoring-skill/SKILL.md
 !/.skills-mgr/skills/batch-agent-sessions/
+!/.skills-mgr/skills/batch-agent-sessions/references/
+!/.skills-mgr/skills/batch-agent-sessions/references/preparation.md
+!/.skills-mgr/skills/batch-agent-sessions/scripts/
+!/.skills-mgr/skills/batch-agent-sessions/scripts/sessions.sh
 !/.skills-mgr/skills/batch-agent-sessions/SKILL.md
 !/.skills-mgr/skills/build-code-skeleton/
 !/.skills-mgr/skills/build-code-skeleton/agents/

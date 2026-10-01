@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.6
+
+Publish the compiled batch-session lifecycle helper's source and changelog with its skill.
+
 ## 1.3.5
 
 Publish authoring-skill under its renamed path in place of create-skill.

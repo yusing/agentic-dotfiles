@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "beb89cf8523c70e34e561d8f88dbc15cc129cb30",
+  "sourceCommit": "b833e1f1c83a2c25206ea6fddca1781b43a37bae",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -641,7 +641,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "9c8931eae293df7ee3a91809a74822fd6d191fa0f0139f2c8a653c3e73ca07d4",
+      "sha256": "49efde3573a7873742d86f944ac8eee71b1cf30ea892d723efd0c2ff67c1c33e",
       "executable": false
     },
     {
@@ -729,6 +729,18 @@
       "executable": true
     },
     {
+      "path": ".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
+      "kind": "file",
+      "sha256": "1d959216fbc8f077111af825f8db5eff80b94561a77a66ad32f52c9e2b18585d",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/batch-agent-sessions/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "826c4eb796b23ef2dd0f4310545eff704dae47be75ac8e16a6c6486bfbf2d82a",
+      "executable": false
+    },
+    {
       "path": ".local/lib/clip-session/CHANGELOG.md",
       "kind": "file",
       "sha256": "61298393a48fd85247e7d3279bfdf1e808da7bd1e4c8bc79c475ac9d44375563",
@@ -755,25 +767,25 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "56abde1a0e2b29274df78587a0c24236213988239ac91934fef5932e60f4810a",
+      "sha256": "6937c64915c237d883de44e1f5f830c6933902aa551c3980a667f986a2b3654b",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "4a18a798d566c887d0a5598a8fc32ec36133a06d41da74c92ae1dc0100fec3ec",
+      "sha256": "55a79a639da86088e4520f84cca1b9ae9419d21c39e86f3bb3bc44bba0ba7433",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "10935c13acf531de9e354d83304c6c47f37e64f5b91da5cd34f6dd7295bc71eb",
+      "sha256": "9e150ef9eea783cfdde0d1167f20d3d709acbe73b90abf9786abf3039ff7e923",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "857af7f27b2239cf6bb66b07bba0da5f0a0b54a3b4483c4f237291fb61d68a75",
+      "sha256": "b5ed3b726eb4298309da5e7917e8d9ff4a0392f7ce6ed307eb13e32515e1ee95",
       "executable": true
     },
     {
@@ -843,9 +855,21 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/batch-agent-sessions/references/preparation.md",
+      "kind": "file",
+      "sha256": "b8beb6d1ac811682dd7fa10516002f4968035bec52b8fee03e31e51cb9b47b27",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/batch-agent-sessions/scripts/sessions.sh",
+      "kind": "file",
+      "sha256": "5b6e0003cfc6744b4b3fda31b8cd2832587d841e12be6286a360a9937ba5ce17",
+      "executable": true
+    },
+    {
       "path": ".skills-mgr/skills/batch-agent-sessions/SKILL.md",
       "kind": "file",
-      "sha256": "74c4f2904f6183eef651f90a3314de42c8cbb8b5467ea1c54297cb5365a8bf05",
+      "sha256": "ed4a4d1b03ca1b5d7b3be57a96f6fe26997498de1ec4a26e6622ae46c83721b9",
       "executable": false
     },
     {
@@ -1402,7 +1426,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "972387866867c2990c5526ab10dac3a0680cac538c03fd259c7196a2a8b7337e",
+      "sha256": "33d688fa58f3e0bdc2f02717f36fb312230e7d63fd34b5effa68b58edb8e60c4",
       "executable": false
     },
     {

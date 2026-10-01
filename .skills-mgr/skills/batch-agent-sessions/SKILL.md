@@ -7,18 +7,12 @@ disable-model-invocation: true
 # Batch agent sessions
 
 Turn one list of issues into parallel, visible agent sessions, one per batch, and deliver a
-single integrated result. Before launching any batch, run one shared preflight:
-
-```bash
-skills-mgr run new-agent-session/scripts/preflight.py --cwd "$PWD" --with-skill
-```
-
-This loads `new-agent-session` guidance and its launch evidence in one call; omit
-`--with-skill` if that skill is already loaded. Reuse the evidence for all batches; do not
-repeat unchanged skill reads or discovery commands. `new-agent-session` owns agent
-choice (including the Mekugi default for Codex), worktree, launch, prompt, and verification
-for every batch. This skill owns
-batching, per-batch model routing, fan-out, the collective wait, and integration.
+single integrated result. Task grouping, budgets, prompts, and integration remain agent
+decisions; preparation and cleanup use the installed commands below, not agent-authored
+shell orchestration or temporary scripts. `new-agent-session` remains the owner of discovery,
+agent choice (including the Mekugi default for Codex), launch, prompt, and verification.
+Load it before launching; its preflight is already run once by preparation, so reuse the
+manifest's evidence instead of repeating discovery for every batch.
 
 ## Batch
 
@@ -71,11 +65,28 @@ it. Reconsider model fit rather than automatically compensating with higher effo
 running batch merely because these defaults changed. Reassess its route if an additive request
 materially changes the workload, preserving the accepted assignment and existing recovery state.
 
+## Prepare
+
+Read [references/preparation.md](references/preparation.md) when building the resource plan
+or recovering a partial preparation. Supply batch names, required evidence, and any project
+setup commands as JSON data, then run:
+
+```bash
+skills-mgr run batch-agent-sessions/scripts/sessions.sh prepare --cwd "$PWD" --plan "$PWD/plan.json"
+```
+
+The command owns temporary-directory creation, image/file copying and retained-image
+recovery, shared-base linked worktree creation and verification, and explicit project setup.
+It prints one JSON roster with the persistent manifest, preserved evidence paths, and each
+batch's branch, checkout, workspace, and pane. Missing evidence is reported as unrecoverable
+unless the supplied rollout contains its exact embedded image; do not pass nonexistent paths
+to an agent. Partial failures keep receipts and successful results, report target-qualified
+errors, and return nonzero without rolling back or resetting worktrees.
+
 ## Fan out
 
-- Resolve one base commit and use it for every batch, so integration compares like with like.
-  Verify each worktree's actual Git `HEAD` matches it before delivering the assignment;
-  a creation receipt alone does not establish the checkout's base.
+- Use the prepared roster's verified common base and exact returned identifiers. Do not
+  recreate worktrees, predict IDs, or repeat setup commands that already succeeded.
 - Launch every session before waiting on any of them. Use a distinct branch and worktree label per
   batch, derived from the batch's kind.
 - Each prompt carries its batch's verbatim issue text. Use `new-agent-session`'s handoff
@@ -157,10 +168,23 @@ After every batch is finished or explicitly abandoned:
 
 ## Clean up
 
-Once the integrated result validates, close each batch's agent and remove its worktree
-through Herdr (`herdr worktree remove --workspace <batch-workspace-id>`), which also closes its
-subspace. Keep the batch branches, which still hold the original history. Leave a batch's
-session in place instead when its work is unfinished or failed to integrate, and say so.
+Once integration and validation are complete, select only finished batches from the retained
+manifest and run:
+
+```bash
+skills-mgr run batch-agent-sessions/scripts/sessions.sh cleanup --manifest MANIFEST --completed composer --completed labels
+```
+
+The command verifies live workspace/checkout/pane ownership, clean Git state, and settled
+agents or idle shells before non-forced Herdr removal. If a completed Mekugi session still
+reports `unknown`, inspect its visible pane and add `--ready-unknown NAME` only when it is
+ready for input, not working or blocked. Herdr closes the owned subspaces;
+do not synthesize Ctrl-C sequences or kill processes yourself. Branches and the persistent
+manifest remain for recovery. Once every batch is removed, recorded image copies and empty
+owned temporary directories are removed too. Altered evidence, unknown temporary files,
+changed layouts, dirty checkouts, and unfinished agents are preserved with actionable errors.
+An unsuccessful target does not suppress successful targets, and completed cleanup is
+repeatable. Leave unfinished or unintegrated batches and their evidence intact.
 
 ## Delivery evidence
 

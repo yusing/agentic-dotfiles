@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7
+
+Compile the manifest-owned batch-agent-sessions preparation and cleanup helper.
+
 ## 1.0.6
 
 Build the dependency-free clip-session without installing the retired X11 package.
