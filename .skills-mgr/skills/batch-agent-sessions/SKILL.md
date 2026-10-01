@@ -89,8 +89,12 @@ errors, and return nonzero without rolling back or resetting worktrees.
   recreate worktrees, predict IDs, or repeat setup commands that already succeeded.
 - Launch every session before waiting on any of them. Use a distinct branch and worktree label per
   batch, derived from the batch's kind.
-- Each prompt carries its batch's verbatim issue text. Use `new-agent-session`'s handoff
-  rules to add missing branch-commit authorization and the communication route below.
+- Each prompt's task text is its batch's verbatim issue text, supplied to `new-agent-session`
+  in place of the user's prompt. The user's request to the coordinator, with its routing,
+  other batches, and skill invocation, is not forwarded; carry only decisions from it that
+  apply to the batch, such as its baseline or excluded issues, as handoff. Use
+  `new-agent-session`'s handoff rules to add those, missing branch-commit authorization, and
+  the communication route below.
 
   Those branch commits are part of the requested workflow; the coordinator owns integration.
   Pushing or installing requires separate user authorization.

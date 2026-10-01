@@ -42,8 +42,9 @@ Load the `herdr` skill only for recovery or a Herdr operation these steps do not
 
 ## Steps
 
-1. **Capture the task.** Record the user's exact task prompt now; the new agent does not
-   inherit this conversation. Skip only if the user asked for an empty session.
+1. **Capture the task.** Record the exact task text now: the user's task prompt, or the
+   assignment a coordinating workflow supplies in its place. The new agent does not inherit
+   this conversation. Skip only if the user asked for an empty session.
 2. **Resolve the base.** Use the preflight's current checkout `base_commit`, resolved to a commit
    ID. Uncommitted changes do not follow; if the task depends on them, resolve that with
    the user instead of dropping them or copying unrelated edits.
@@ -84,8 +85,8 @@ Load the `herdr` skill only for recovery or a Herdr operation these steps do not
    sending the task; process arguments establish what was requested, not what configuration
    the client actually loaded.
 6. **Send the prompt.** Run `herdr agent prompt <name> "<text>" --wait --until working`
-   with one text argument: the user's original prompt verbatim. Append a handoff only for
-   task-specific information missing from that prompt: preservation/acceptance conditions,
+   with one text argument: the captured task text verbatim. Append a handoff only for
+   task-specific information missing from that text: preservation/acceptance conditions,
    relevant evidence, repository-edit boundary, delivery authorization and communication
    route. Include another owner only for a concrete overlap. Do not add empty evidence
    sections, hypothetical missing-file defenses, launch provenance, sibling inventories
