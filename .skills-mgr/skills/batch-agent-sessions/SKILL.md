@@ -10,13 +10,12 @@ Turn one list of issues into parallel, visible agent sessions, one per batch, an
 single integrated result. Before launching any batch, run one shared preflight:
 
 ```bash
-skills-mgr run new-agent-session/scripts/preflight.py --cwd "$PWD"
+skills-mgr run new-agent-session/scripts/preflight.py --cwd "$PWD" --with-skill
 ```
 
-This loads `new-agent-session` and `herdr` guidance and gathers caller, source checkout,
-base commit, worktree/name inventory, launcher, and installed CLI evidence in one call.
-Reuse it for all batches; do not repeat unchanged skill reads or discovery commands.
-If both skills are already loaded, pass `--context-only`. `new-agent-session` owns agent
+This loads `new-agent-session` guidance and its launch evidence in one call; omit
+`--with-skill` if that skill is already loaded. Reuse the evidence for all batches; do not
+repeat unchanged skill reads or discovery commands. `new-agent-session` owns agent
 choice (including the Mekugi default for Codex), worktree, launch, prompt, and verification
 for every batch. This skill owns
 batching, per-batch model routing, fan-out, the collective wait, and integration.

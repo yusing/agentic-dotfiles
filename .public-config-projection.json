@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "9d4f0ba5032efc97754dabf43f2d7ee8fda51f5f",
+  "sourceCommit": "ffe15c768e8f3d01c2b4ec161e7c57904123a8c3",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -845,7 +845,7 @@
     {
       "path": ".skills-mgr/skills/batch-agent-sessions/SKILL.md",
       "kind": "file",
-      "sha256": "e27d9249ad862abec3f0aef5f4c840f9cba03a4eb2dc7d60a75ab4530d24f03b",
+      "sha256": "74c4f2904f6183eef651f90a3314de42c8cbb8b5467ea1c54297cb5365a8bf05",
       "executable": false
     },
     {
@@ -1031,19 +1031,19 @@
     {
       "path": ".skills-mgr/skills/new-agent-session/scripts/preflight.py",
       "kind": "file",
-      "sha256": "f346fb142b6321f741e06d5ff20fb3c8d8cd8ba4e7dbc6b3aaf737f132535bf2",
+      "sha256": "9751f69be3f6092c841eba3e36ae0170ee13826dcaa1e3074695a5e990d42e69",
       "executable": true
     },
     {
       "path": ".skills-mgr/skills/new-agent-session/scripts/test_preflight.py",
       "kind": "file",
-      "sha256": "74ab22cdae7bafa255367dad6bbfaa5b134a22e03c25d909e2b705b14a332297",
+      "sha256": "eded6d7e2c5e5633c587d68a9b75b103d4b1b46b0867908c456bcd6535c97dc7",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/new-agent-session/SKILL.md",
       "kind": "file",
-      "sha256": "7924a7b9f0618546d3b58cb0076e641bfacc2d029eee535907fd4527cf9b2ba2",
+      "sha256": "2ffc58ea1f2c83b109d738c546d178896eeeb3da24f7dcec5957ff4a46a10372",
       "executable": false
     },
     {

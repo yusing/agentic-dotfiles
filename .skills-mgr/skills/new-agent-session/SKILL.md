@@ -13,13 +13,15 @@ background process or an in-thread subagent. Start with one read-only preflight 
 skills-mgr run new-agent-session/scripts/preflight.py --cwd "$PWD"
 ```
 
-It returns this skill and `herdr` guidance, installed launch/wait CLI help, caller agent
-kind and reusable Mekugi executable, one base commit, dirty status, source workspace,
-existing worktrees, and live agent names. Reuse this evidence across every batch instead
-of repeating discovery per launch. Use `--context-only` when both skills are already loaded.
+It returns caller agent kind and reusable Mekugi executable, one base commit, dirty status,
+source workspace, existing worktrees, and taken agent names. It also checks the installed
+Herdr CLI for the syntax used below, printing `cli: ok` or the usage of a mismatched command
+group. Reuse this evidence across every batch instead of repeating discovery per launch.
+Add `--with-skill` to also print this skill when it is not yet loaded.
 Pass the caller's checkout explicitly because `skills-mgr run` executes in the skill directory.
 It requires `HERDR_ENV=1`, preserves focus, and creates or launches nothing. A failed probe
 retains successful evidence and reports errors separately; resolve only the dependent gap.
+Load the `herdr` skill only for recovery or a Herdr operation these steps do not cover.
 
 ## Choose the agent
 

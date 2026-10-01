@@ -6,9 +6,26 @@ from concurrent.futures import ThreadPoolExecutor
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
+
+# Installed syntax the launch steps rely on; a group's usage is printed only on mismatch.
+REQUIRED_CLI = {
+    "worktree": {"create": ["--workspace", "--branch", "--base", "--path", "--label", "--no-focus"], "remove": ["--workspace"]},
+    "pane": {"run": [], "read": ["--source", "--lines"], "process-info": ["--pane"]},
+    "agent": {
+        "start": ["--kind", "--pane"],
+        "rename": [],
+        "prompt": ["--wait", "--until", "--timeout"],
+        "wait": ["--until", "--timeout"],
+        "get": [],
+        "read": ["--source", "--lines"],
+        "explain": [],
+    },
+}
+DIRTY_LIMIT = 40
 
 
 def run(argv, cwd):
@@ -28,7 +45,22 @@ def run(argv, cwd):
             except (ValueError, AttributeError):
                 pass
         raise RuntimeError(f"{argv[0]} {' '.join(argv[1:3])}: exit {result.returncode}" + (f": {detail[:1200]}" if detail else ""))
-    return result.stdout.strip()
+    return result.stdout.rstrip()
+
+
+def cli_mismatches(group, usage):
+    lines = {}
+    for line in usage.splitlines():
+        words = line.split()
+        if words[:2] == ["herdr", group] and len(words) > 2:
+            lines[words[2]] = lines.get(words[2], "") + " " + line
+    missing = []
+    for sub, flags in REQUIRED_CLI[group].items():
+        if sub not in lines:
+            missing.append(f"herdr {group} {sub}")
+            continue
+        missing += [f"herdr {group} {sub} {flag}" for flag in flags if not re.search(rf"{flag}(?![\w-])", lines[sub])]
+    return missing
 
 
 def discover(cwd, env, runner=run):
@@ -44,16 +76,10 @@ def discover(cwd, env, runner=run):
         "worktrees": ["herdr", "worktree", "list", "--workspace", workspace],
         "processes": ["herdr", "pane", "process-info", "--pane", pane],
         "agents": ["herdr", "agent", "list"],
-        "help": ["herdr", "--help"],
-        "worktree_help": ["herdr", "worktree"],
-        "pane_help": ["herdr", "pane"],
-        "agent_help": ["herdr", "agent"],
-        "create_help": ["herdr", "worktree", "create", "--help"],
-        "prompt_help": ["herdr", "agent", "prompt", "--help"],
-        "wait_help": ["herdr", "agent", "wait", "--help"],
+        **{f"{group}_usage": ["herdr", group] for group in REQUIRED_CLI},
     }
     values, errors = {}, []
-    with ThreadPoolExecutor(max_workers=8) as pool:
+    with ThreadPoolExecutor(max_workers=len(queries)) as pool:
         jobs = {key: pool.submit(runner, argv, cwd) for key, argv in queries.items()}
         for key, job in jobs.items():
             try:
@@ -61,25 +87,31 @@ def discover(cwd, env, runner=run):
             except (OSError, RuntimeError, subprocess.TimeoutExpired) as exc:
                 errors.append(f"{key}: {exc}")
     context = {"cwd": str(cwd), "caller_pane": pane, "caller_workspace": workspace}
-    for key in ("base_commit", "dirty_status"):
-        if key in values:
-            context[key] = values[key]
+    if "base_commit" in values:
+        context["base_commit"] = values["base_commit"]
+    if "dirty_status" in values:
+        dirty = values["dirty_status"].splitlines()
+        context["dirty_status"] = dirty[:DIRTY_LIMIT] + ([f"... {len(dirty) - DIRTY_LIMIT} more"] if len(dirty) > DIRTY_LIMIT else [])
     for key in ("worktrees", "processes", "agents"):
         if key not in values:
             continue
         try:
             payload = json.loads(values[key])["result"]
             if key == "worktrees":
-                context["source"] = payload["source"]
-                context["worktrees"] = payload["worktrees"]
+                context["source_workspace_id"] = payload["source"]["source_workspace_id"]
+                context["source_checkout_path"] = payload["source"].get("source_checkout_path")
+                context["worktrees"] = [
+                    {
+                        **{k: w[k] for k in ("path", "branch", "label", "open_workspace_id") if w.get(k) is not None},
+                        **{k: True for k in ("is_detached", "is_prunable", "is_bare") if w.get(k)},
+                    }
+                    for w in payload["worktrees"]
+                ]
             elif key == "agents":
                 agents = payload["agents"]
                 caller = next((a for a in agents if a.get("pane_id") == context["caller_pane"]), {})
                 context["caller_kind"] = caller.get("agent")
-                context["live_agents"] = [
-                    {k: a[k] for k in ("name", "pane_id", "workspace_id", "agent", "agent_status") if k in a}
-                    for a in agents
-                ]
+                context["taken_agent_names"] = sorted(a["name"] for a in agents if a.get("name"))
             else:
                 context["caller_pane"] = payload["process_info"].get("pane_id", pane)
                 processes = payload["process_info"]["foreground_processes"]
@@ -89,37 +121,38 @@ def discover(cwd, env, runner=run):
                 if executable and (executable.endswith(" (deleted)") or not os.access(executable, os.X_OK)):
                     raise ValueError("Caller Mekugi executable cannot be reused.")
                 context["mekugi_executable"] = executable
-                context["mekugi_yolo_inherited"] = mekugi is not None
         except (KeyError, TypeError, ValueError, OSError) as exc:
             errors.append(f"{key}: {exc}")
-    context["preflight_ok"] = not errors
-    return context, {k: v for k, v in values.items() if k.endswith("help")}, errors
+    mismatched = {}
+    for group in REQUIRED_CLI:
+        if f"{group}_usage" in values:
+            missing = cli_mismatches(group, values[f"{group}_usage"])
+            if missing:
+                mismatched[group] = values[f"{group}_usage"]
+                errors.append(f"cli: installed herdr lacks {', '.join(missing)}")
+    return context, mismatched, errors
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cwd", required=True, type=Path, help="Caller checkout, passed before skills-mgr changes directory.")
-    parser.add_argument("--context-only", action="store_true", help="Omit guidance already loaded in this context.")
+    parser.add_argument("--with-skill", action="store_true", help="Also print new-agent-session guidance, for callers that have not loaded it.")
     args = parser.parse_args()
     try:
-        context, help_text, errors = discover(args.cwd.resolve(strict=True), os.environ)
+        context, mismatched, errors = discover(args.cwd.resolve(strict=True), os.environ)
     except (ValueError, OSError) as exc:
         print(str(exc), file=sys.stderr)
         return 1
-    if not args.context_only:
+    if args.with_skill:
         print("## new-agent-session guidance")
         print(Path(__file__).resolve().parents[1].joinpath("SKILL.md").read_text())
-        try:
-            print("## herdr guidance")
-            print(run(["skills-mgr", "get", "herdr"], args.cwd))
-        except (OSError, RuntimeError, subprocess.TimeoutExpired) as exc:
-            errors.append(f"herdr guidance: {exc}")
-    context["preflight_ok"] = not errors
     print("## Session preflight")
-    print(json.dumps(context, indent=2))
-    for key, value in help_text.items():
-        print(f"## Installed CLI: {key}")
-        print(value)
+    for key, value in context.items():
+        print(f"{key}: {json.dumps(value)}")
+    print(f"cli: {'mismatch' if mismatched else 'ok'}")
+    for group, usage in mismatched.items():
+        print(f"## Installed CLI: herdr {group}")
+        print(usage)
     for error in errors:
         print(error, file=sys.stderr)
     return int(bool(errors))
