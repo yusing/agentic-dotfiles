@@ -153,8 +153,11 @@ executables before replacement, backing up previous local files under
 backups before retrying; replacement does not automatically roll back. Named
 `--upgrade TOOL...` and `--check-config` runs do not install or update vendors.
 
-Helper compilation is incremental: unchanged sources and build inputs reuse the
-existing executable. With this repository's `.githooks` enabled, a successful
+Normal reruns skip tool installation when the locked versions are already installed,
+while still repairing missing commands and shims and checking the final setup.
+Helper compilation is incremental on both normal runs and full `--upgrade` runs:
+unchanged sources and build inputs reuse the existing executable. Named upgrades
+skip helpers entirely. With this repository's `.githooks` enabled, a successful
 merge or rebase (including `git pull`) runs the same incremental build, so helper
 updates do not require a full setup run. Commit amendments do not trigger it.
 You can also run `.local/bin/compile-agent-tools` directly after editing a helper.

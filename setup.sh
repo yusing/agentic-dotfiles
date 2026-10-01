@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.8.0
+# version: 2.8.1
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1091,16 +1091,37 @@ validate_mise_tool() {
 }
 
 install_locked_mise_tools() {
-  local tool cmd path repaired=0
-  info "installing the locked Go toolchain"
-  mise_cmd install --locked go
-  validate_mise_tool go go
-  info "installing bun so npm packages use bun"
-  mise_cmd install --locked bun
-  validate_mise_tool bun bun
-  info "reconciling the locked tool set in parallel"
-  mise_cmd install --locked
-  mise_cmd reshim
+  local tool cmd path missing records remaining=0 changed=0 proxy_selected=0
+  # Use mise's locked version inventory, not command presence: a working older
+  # version must not hide a newly locked version that still needs installation.
+  records="$(mise_cmd ls --current --missing --json --locked)" || return 1
+  missing="$(printf '%s' "$records" | py -c '
+import json, sys
+for tool, versions in json.load(sys.stdin).items():
+    if versions:
+        print(tool)
+')" || return 1
+  if [ -n "$missing" ]; then
+    proxy_selected=1
+    for tool in go bun; do
+      if grep -Fxq "$tool" <<<"$missing"; then
+        info "installing the locked $tool runtime"
+        mise_cmd install --locked "$tool"
+        validate_mise_tool "$tool" "$tool"
+        changed=1
+      fi
+    done
+    while IFS= read -r tool; do
+      case "$tool" in go|bun|'') ;; *) remaining=1 ;; esac
+    done <<<"$missing"
+    if [ "$remaining" -eq 1 ]; then
+      info "installing missing locked tools in parallel"
+      mise_cmd install --locked
+      changed=1
+    fi
+  else
+    info "locked tool versions already installed"
+  fi
   while IFS='|' read -r tool cmd; do
     mise_tool_applies "$tool" || continue
     path="$(mise_tool_path "$tool" "$cmd" 2>/dev/null || true)"
@@ -1108,10 +1129,11 @@ install_locked_mise_tools() {
       info "reinstalling $tool so $cmd is available"
       mise_cmd install --force --locked "$tool"
       validate_mise_tool "$tool" "$cmd"
-      repaired=1
+      changed=1
     fi
+    [ -x "$MISE_SHIMS/$cmd" ] || changed=1
   done < <(mise_tool_records)
-  [ "$repaired" -eq 0 ] || mise_cmd reshim
+  [ "$changed" -eq 0 ] || mise_cmd reshim
 }
 
 validate_mise_lock() {
@@ -1828,7 +1850,7 @@ for tool in json.load(sys.stdin):
 # ---------------------------------------------------------------------------
 
 install_vendor() {
-  local name="$1" path url shell label item records
+  local name="$1" path url shell label item records installed
   local updates=() environment=() obsolete=() packages=()
   path="${HOME}/$(setup_config vendor-field "$name" path)"
   url="$(setup_config vendor-field "$name" url)"
@@ -1847,7 +1869,14 @@ install_vendor() {
   fi
   [ -x "$path" ] || die "$label is unavailable at $path"
   records="$(setup_config vendor-field "$name" legacy_mise)"
-  while IFS= read -r item; do [ -z "$item" ] || obsolete+=("$item"); done <<<"$records"
+  while IFS= read -r item; do
+    [ -n "$item" ] || continue
+    installed="$(mise_cmd ls --installed --json "$item")" || return 1
+    installed="$(printf '%s' "$installed" | py -c 'import json,sys; print(1 if json.load(sys.stdin) else 0)')" || return 1
+    if [ "$installed" = 1 ]; then
+      obsolete+=("$item")
+    fi
+  done <<<"$records"
   if [ "${#obsolete[@]}" -gt 0 ]; then
     mise_cmd uninstall --all "${obsolete[@]}" >/dev/null 2>&1 \
       || warn "could not remove legacy mise-managed $label"
@@ -1931,11 +1960,15 @@ ensure_fish_login_shell() {
 # Retire the push implementation on both source and receiver machines. Keep
 # recoverable copies, and do not revoke shared Tailscale operator/linger settings.
 configure_image_paste() {
-  local path backup= service
+  local path backup= service state units_changed=0
   if [ "$OS" = Darwin ]; then
-    launchctl bootout "gui/$(id -u)/local.clip-watch" >/dev/null 2>&1 || true
+    if launchctl print "gui/$(id -u)/local.clip-watch" >/dev/null 2>&1; then
+      launchctl bootout "gui/$(id -u)/local.clip-watch" >/dev/null 2>&1 || true
+    fi
   elif [ "$OS" = Linux ] && have systemctl; then
     for service in clip-watch clip-recv clip-xvfb; do
+      state="$(systemctl --user show "$service.service" --property=LoadState --value 2>/dev/null || true)"
+      [ -n "$state" ] && [ "$state" != not-found ] || continue
       systemctl --user disable --now "$service.service" >/dev/null 2>&1 || true
     done
   fi
@@ -1951,10 +1984,11 @@ configure_image_paste() {
       backup=$(mktemp -d "$HOME/.local/share/dotfiles-setup/retired-clipboard/backup.XXXXXX")
     fi
     mv "$path" "$backup/$(basename "$path")"
+    case "$path" in "$HOME/.config/systemd/user/"*.service) units_changed=1 ;; esac
   done
   [ -z "$backup" ] || info "retired clipboard push files backed up to $backup"
-  if [ "$OS" = Linux ] && have systemctl; then
-    systemctl --user daemon-reload || warn "could not reload user units; rerun setup in your login session"
+  if [ "$OS" = Linux ] && [ "$units_changed" -eq 1 ] && have systemctl; then
+    systemctl --user daemon-reload || warn "could not reload user units; run systemctl --user daemon-reload in your login session"
   fi
 }
 
@@ -2186,8 +2220,6 @@ main() {
 
   STEP="ensure TOML parser"
   ensure_toml_parser
-
-  STEP="select Go proxy"
 
   STEP="setup home git repository"
   setup_home_repo

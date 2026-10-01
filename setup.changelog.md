@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.8.1
+
+Skip locked mise installation when the requested versions are already installed,
+bootstrap only missing Go/Bun runtimes, and regenerate shims only after an install,
+command repair, or missing shim. Probe the Go proxy when resolving Go changes or
+installing tools, rather than on every normal rerun, and share the selection across
+lock resolution and installation. Keep helper compilation
+content-based so unchanged binaries are reused while source and compiler changes
+still rebuild them.
+
+Skip vendor legacy mise uninstalls when no old version remains. Retire clipboard
+services only when present and reload user units only after moving legacy units.
+
 ## 2.8.0
 
 Declare the Mosh fork through the existing vendor installer and legacy-package cleanup configuration, with native source-build prerequisites. Use built-in Mosh image paste while retaining clip-session for SSH; keep setup free of Mosh-specific installation logic.
