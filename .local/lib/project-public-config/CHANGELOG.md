@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.7
+
+Publish the tmp_clean helper's source and changelog alongside its build registration
+and usage documentation, keeping the compiled binary out of the projection.
+
 ## 1.3.6
 
 Publish the compiled batch-session lifecycle helper's source and changelog with its skill.

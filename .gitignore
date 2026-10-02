@@ -190,6 +190,9 @@ __pycache__
 !/.local/lib/sync-kilo-agent-ports/
 !/.local/lib/sync-kilo-agent-ports/CHANGELOG.md
 !/.local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts
+!/.local/lib/tmp-clean/
+!/.local/lib/tmp-clean/CHANGELOG.md
+!/.local/lib/tmp-clean/tmp_clean.ts
 !/.skills-mgr/
 !/.skills-mgr/.skills-mgr.json
 !/.skills-mgr/skills/

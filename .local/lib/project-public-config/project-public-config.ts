@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.6";
+export const VERSION = "1.3.7";
 
 type TreeEntry = {
 	mode: string;
@@ -185,6 +185,8 @@ const EXACT_PATHS = new Set([
 	".local/lib/compile-agent-tools/CHANGELOG.md",
 	".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
 	".local/lib/batch-agent-sessions/CHANGELOG.md",
+	".local/lib/tmp-clean/tmp_clean.ts",
+	".local/lib/tmp-clean/CHANGELOG.md",
 	".local/bin/compile-agent-tools",
 	".local/bin/compile-agent-tools.changelog.md",
 	".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
