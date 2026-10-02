@@ -1,15 +1,26 @@
-# Deterministic preparation and cleanup
+# Deterministic session lifecycle
 
-The installed lifecycle helper creates resources; it does not group issues, select models,
-write prompts, launch agents, infer completion, integrate branches, or run acceptance checks.
-Those decisions stay with the workflow and `new-agent-session`. A task's original issue text
-and selected model/effort still go to its session through that launch owner.
+The installed helper owns preparation, launch and naming, verification and prompt delivery,
+concurrent waiting, additive batches, queued follow-ups, and cleanup. The coordinator owns task
+understanding, grouping, model/effort selection, task text, interpretation of results, integration,
+and acceptance checks. The helper does not infer task completion from lifecycle state.
 
 ## Resource plan
 
 ```json
 {
-  "batches": [{"name": "composer"}, {"name": "labels"}],
+  "batches": [{
+    "name": "composer",
+    "task": "Exact issue text, including its IDs.",
+    "handoff": "Evidence: {{evidence:queued.png}}. Branch commits are authorized; the coordinator owns integration. Report in your own pane's journal when available.",
+    "agent": {
+      "kind": "mekugi",
+      "model": "gpt-6.1-sol",
+      "effort": "medium",
+      "model_reason": "Settled behavior in one owner.",
+      "effort_reason": "Short causal trace with focused checks."
+    }
+  }],
   "evidence": [{"name": "queued.png", "source": "/absolute/clipboard/image.png"}],
   "setup": []
 }
@@ -17,6 +28,18 @@ and selected model/effort still go to its session through that launch owner.
 
 - `batches` is a nonempty list of unique lower-case kebab-case names, at most 40 characters.
   The helper generates unique branches and isolated worktree paths for this run.
+- `task` is the verbatim assignment, never the coordinator's full workflow prompt.
+  `handoff` is optional, task-specific missing context. Only handoff text expands
+  `{{evidence:NAME}}` to the corresponding present copied evidence path; task text is unchanged.
+- `agent.kind` is `mekugi` for the Codex default, `codex` for explicitly requested plain Codex,
+  or an installed Herdr agent kind. Codex/Mekugi accept `model`, `effort`, and `profile`.
+  Other kinds receive their budgets and profiles in `args`, an optional list of native argv
+  strings. No shell interpretation or OpenAI budget translation applies to `args`.
+- `model_reason` and `effort_reason` belong in the agent object for workload-selected budgets.
+  The coordinator makes those decisions; the helper retains them alongside loaded-budget receipts.
+  Mekugi uses the absolute executable discovered by preflight and native `codex --yolo` arguments.
+  A caller already running Mekugi has this mode. Other callers need user authorization,
+  recorded as `agent.allow_yolo: true`, before Mekugi launch.
 - `evidence` is optional. Each entry has a unique single filename and an absolute source
   path. Copies live outside the repository and are shared by the batches; use the returned
   paths in their handoffs. Include ignored task documents here when Git will not carry them.
@@ -33,6 +56,64 @@ checkout and Herdr source workspace belong to the same Git repository, pins the 
 committed HEAD, creates linked subspaces with `--no-focus`, and checks every actual checkout
 HEAD. Uncommitted source edits do not follow. Project setup can create required generated
 assets, dependencies, or other effects only through the supplied argv commands.
+
+## Launch and wait
+
+`launch --manifest PATH [--batch NAME ...]` launches prepared batches using retained task and
+route fields. With no selection, it includes every retained batch and skips already-delivered
+initial tasks after checking session identity. `launch --plan FILE|-` supplies assignments for
+prepared, not-yet-launched batches, including manifests created by the earlier prepare-only helper.
+It does not overwrite launched assignments.
+
+The helper preserves focus and uses only each batch's returned pane. It renames the pane by task
+kind, picks a unique harness name, and runs the native launcher. Mekugi readiness allows unknown
+state rather than waiting indefinitely for idle. Before task delivery, it verifies the worktree
+cwd and expected foreground processes, both Mekugi and Codex for that wrapper. For selected Codex
+budgets, the loaded client's detection UI must confirm `MODEL (EFFORT)`; requested arguments alone
+are not effective-setting evidence. A missing or mismatched UI budget stops dependent delivery
+and retains the session for inspection. Native non-Codex arguments retain their own semantics.
+
+`agent prompt --wait --until working` runs inside the helper; only observed working activity marks
+initial delivery. The roster includes names, requested routes/rationales, effective Codex budgets,
+process/session identities, and each task's delivery state. Launch is not implementation completion.
+
+`wait --manifest PATH [--batch NAME ...] [--timeout MS]` starts a Herdr CLI wait for each selected
+launched batch concurrently, returning the first idle, done, blocked, or unknown event. The timeout
+defaults to 120000ms. Losing CLI waits are cancelled without sending keys or stopping agent processes.
+Select only outstanding batches on subsequent waits; an already-settled session otherwise wakes
+immediately. Timeout and unknown are attention states, not completion evidence. Waiting does not
+hold the manifest mutation lock, so new work can be added while a wait is outstanding.
+
+## Add batches and follow-ups
+
+`add --manifest PATH --plan FILE|- [--rollout PATH]` uses the preparation plan format and appends
+fresh batch and evidence names to a retained run. Existing batches, evidence, and launch receipts
+are untouched. New batches share the source checkout's current committed HEAD by default; an
+optional resolved `base_commit` selects another accepted baseline for that cohort. Initial
+preparation uses its preflight HEAD. Uncommitted edits never follow implicitly. Launch the added
+names separately. Duplicate batch names are rejected rather than re-created; use follow-ups for
+additional work in an existing batch. A fully cleaned run needs a new preparation.
+
+For `follow-up --manifest PATH --plan FILE|-`, use:
+
+```json
+{
+  "tasks": [{
+    "id": "composer-addendum-1",
+    "batch": "composer",
+    "task": "Exact additional user task text.",
+    "handoff": "Only new context needed for this task."
+  }]
+}
+```
+
+IDs are unique per run, 1–80 letters, digits, dots, underscores or hyphens, starting with a
+letter or digit. Reusing an ID with identical batch/text/handoff is idempotent; different content
+is rejected. Follow-ups require a verified session whose initial task was delivered. The helper
+records them before delivery, queues them while working or blocked, and submits at most one queued
+task per ready batch per call. `follow-up --manifest PATH` flushes the queue without adding tasks.
+Only idle/done sessions receive automatic delivery; inspected-ready unknown sessions need
+`--ready-unknown NAME`, just as cleanup does. It never types ordinary task text into a question UI.
 
 ## Images missing from disk
 
@@ -51,13 +132,25 @@ and each batch's branch, checkout, workspace, pane and preparation state. Progre
 target-qualified errors go to stderr; any failure returns nonzero. The manifest is stored
 under `${XDG_STATE_HOME:-$HOME/.local/state}/batch-agent-sessions/runs/`, separately from
 the temporary directory, and updated before dependent effects. No credentials or image
-contents are included in its receipts.
+contents are included in its receipts. Task and handoff text are retained privately in the manifest;
+do not put credentials in them. Mutating commands use a manifest-scoped `flock` advisory lock,
+released automatically when the helper exits. Concurrent mutation attempts fail without effects;
+retry after the other command returns. A small lock file remains beside the retained manifest.
 
 Keep that path in the existing work record. Do not rerun preparation blindly: it creates a
 new run, not a replacement for surviving resources. Use retained receipts with the launch
 owner's recovery flow. A failed/timed-out creation without a returned resource identity
 remains uncertain; inspect the exact recorded branch/path through Herdr before proceeding.
 The helper never resets or adopts an unrelated preexisting worktree.
+
+Launch intent and prompt submission are saved before their effects. Repeating launch can verify
+the already-started matching process but cannot silently launch another process after an uncertain
+attempt. A `submitting` task means delivery is uncertain, not absent: further delivery and cleanup
+for that batch are blocked. Inspect its pane/journal first. If that exact task visibly arrived,
+`acknowledge --manifest PATH --task ID` records the coordinator's attestation after verifying the
+same live session. Initial task IDs are `initial:BATCH`. This acknowledges delivery only, not task
+completion. If arrival cannot be established, retain the receipt and resolve the existing pane;
+do not blindly resubmit. A changed process/session identity also stops delivery.
 
 ## Cleanup selection
 
@@ -74,7 +167,7 @@ states still refuse removal, even with this option.
 
 The manifest restricts removal to this run's recorded workspaces and checkouts. Cleanup
 checks the live linked checkout, repository and branch, retained tip, clean worktree,
-unchanged pane layout, and settled agent or idle shell. It then uses Herdr's non-forced
+unchanged pane layout, no queued/uncertain tasks, and settled agent or idle shell. It then uses Herdr's non-forced
 worktree removal and verifies branch retention. Unknown names and rejected targets do
 not prevent independent valid targets from completing.
 

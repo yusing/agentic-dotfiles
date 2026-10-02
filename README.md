@@ -223,7 +223,7 @@ determine when it applies.
 | Name | Source | Purpose | Model visible | Condition |
 | --- | --- | --- | --- | --- |
 | `authoring-skill` | Shared | Author, update, review, or rename skills and maintain registration and projection | Yes | Always |
-| `batch-agent-sessions` | Shared | Prepare and clean up batches deterministically, run parallel sessions, and integrate them | No | Always |
+| `batch-agent-sessions` | Shared | Run parallel batch sessions with deterministic lifecycle, additive tasks, follow-ups, and integration | No | Always |
 | `build-code-skeleton` | Shared | Create an initial compile-safe project skeleton | Yes | Always |
 | `codebase-review` | Shared | Review the whole working tree | No | Always |
 | `commit` | Shared | Write commits and fold follow-up fixes into them | Yes | Always |

@@ -7,10 +7,25 @@ disable-model-invocation: true
 # Batch agent sessions
 
 Turn one list of issues into parallel, visible agent sessions, one per batch, and deliver a
-single integrated result. Task grouping, budgets, prompts, and integration remain agent
-decisions; preparation and cleanup use the installed commands below, not agent-authored
-shell orchestration or temporary scripts. `new-agent-session` owns agent choice (including the
-Mekugi default for Codex), launch, prompt, and verification; load it before launching.
+single integrated result. Task understanding, grouping, budgets, task text, completion
+inspection, and integration remain agent decisions. The installed helper owns deterministic
+preparation, launch, naming, verification, prompt delivery, concurrent waiting, additive
+batches, follow-ups, and cleanup, not agent-authored shell orchestration or temporary scripts.
+Use `new-agent-session`'s agent-choice defaults, including Mekugi for Codex unless plain Codex
+was requested; its manual launch steps belong to standalone sessions, not this workflow.
+
+## Understand the assignment
+
+Before grouping issues or classifying difficulty and risks, understand each problem and the
+requested task: the observed and intended behavior, affected owner, scope and constraints,
+and what would establish completion. Use the supplied issues and evidence, with targeted
+source inspection or reproduction where needed to resolve facts that could change grouping
+or routing. Distinguish established facts from assumptions and unresolved questions; an
+issue's wording, length, or apparent category is not enough to judge its reasoning burden.
+
+Gather enough evidence to make a grounded assignment, not to solve every issue before dispatch.
+When diagnosis is itself the task, identify what remains unknown and what the agent must
+establish. Base the difficulty, risks, model, and effort on that understood assignment.
 
 ## Batch
 
@@ -53,19 +68,19 @@ mixed batch by its hardest inseparable requirement, or split it at a coherent ow
 These are workload defaults: change them when representative evidence warrants it, and reconsider
 model fit before compensating with higher effort.
 
-Pass the route to `new-agent-session` as explicit native model and reasoning arguments, and record
-it with separate model and effort rationales in the launched roster. Do not restart a running batch
+Put the route and separate model and effort rationales in the helper plan. It passes native
+arguments to the launcher and records the effective budget in the launched roster. Do not restart a running batch
 merely because these defaults changed; reassess its route only when an additive request materially
 changes its workload, preserving the accepted assignment and existing recovery state.
 
 ## Prepare
 
 Name each batch by its kind; the helper derives its branch and worktree from that name. Supply
-batch names, required evidence, and any project setup commands as a JSON plan, described with
+batch names, verbatim task text, agent routes, handoffs, required evidence, and any project setup commands as a JSON plan, described with
 recovery and receipts in [references/preparation.md](references/preparation.md), then run:
 
 ```bash
-skills-mgr run batch-agent-sessions/scripts/sessions.sh prepare --cwd "$PWD" --plan "$PWD/plan.json"
+skills-mgr run batch-agent-sessions/scripts/sessions.sh prepare --cwd "$PWD" --plan /absolute/plan.json
 ```
 
 The command creates the temporary directory, copies or recovers evidence, creates and verifies
@@ -76,22 +91,27 @@ before retrying; rerunning creates a new run rather than repairing this one.
 
 ## Fan out
 
-- Preparation has already run `new-agent-session`'s preflight and steps 2–4. For each prepared
-  pane, apply its agent choice and steps 1 and 5–7, using the roster's base and exact returned
-  identifiers. Do not rerun discovery, recreate worktrees, predict IDs, or repeat setup commands
-  that already succeeded.
-- Launch every session before waiting on any of them.
-- Each prompt's task text is its batch's verbatim issue text, supplied to `new-agent-session`
-  in place of the user's prompt. The user's request to the coordinator, with its routing,
-  other batches, and skill invocation, is not forwarded; carry only decisions from it that
-  apply to the batch, such as its baseline or excluded issues, as handoff. Use
-  `new-agent-session`'s handoff rules to add those, missing branch-commit authorization, and
-  the communication route below.
+Run one helper command with the retained manifest, before waiting on any session:
 
-  Those branch commits are part of the requested workflow; the coordinator owns integration.
-  Pushing or installing requires separate user authorization.
-- Report the launched roster (batch, branch, worktree, workspace, pane, agent name, model/effort
-  and routing rationale) once, then wait.
+```bash
+skills-mgr run batch-agent-sessions/scripts/sessions.sh launch --manifest MANIFEST
+```
+
+The helper uses the prepared panes, selects unique harness names, launches and verifies the
+expected processes, checks selected Codex budgets against the loaded client UI, and delivers
+each task until `working` is observed. It records effects before attempting them and does not
+blindly repeat uncertain launch or prompt delivery. Reuse its receipts and recovery instructions
+instead of manually renaming panes, launching processes, or typing prompts.
+
+Each task is its batch's verbatim issue text, not the coordinator's whole request, other batches,
+or skill invocation. Add only missing batch-specific decisions and evidence in `handoff`, including
+branch-commit authorization and the communication route below. Those branch commits are part of
+this workflow; the coordinator owns integration. Pushing or installing requires separate user
+authorization. Handoff evidence placeholders resolve only to copies the helper reports as present.
+
+Report the launched roster (batch, branch, worktree, workspace, pane, agent name, effective
+model/effort and routing rationale) once, then wait. Existing prepared manifests without assignment
+fields can receive them through `launch --plan`; it cannot rewrite an already-launched assignment.
 
 ## Communication
 
@@ -102,8 +122,8 @@ second final recap. Without a journal, use the session's ordinary result channel
 also stay in the session's pane. Use visible reads while an agent is blocked or working if
 history capture requires idle.
 
-Relay decisions or overlap coordination into a batch's pane by `new-agent-session`'s delivery
-rules; do not assume a pane is safe to type into while the user is composing there. Never route
+Relay task additions, decisions, or overlap coordination through the helper's follow-up queue;
+do not assume a pane is safe to type into while the user is composing there. Never route
 reports into the coordinating user's pane: `herdr agent prompt` and other terminal input type
 into the user's composer and can submit a report together with their draft. Codex native
 cross-thread tools and message boards are scoped to one agent tree, so they cannot reach these
@@ -111,11 +131,17 @@ independently rooted sessions.
 
 ## Wait
 
-Wait on every agent at once and wake for the first one that needs attention: finished, idle, or
-blocked, which `herdr agent wait` matches by default. Waiting only for idle misses an agent
-blocked on a question, since it never becomes idle. Prefer a background wait where the client
-supports one. Read that agent's latest output, act on it, then resume waiting on the rest. A
-settled agent is not necessarily finished.
+Use the helper to wait on all outstanding batches concurrently:
+
+```bash
+skills-mgr run batch-agent-sessions/scripts/sessions.sh wait --manifest MANIFEST --batch composer --batch labels
+```
+
+It returns the first idle, done, blocked, or unknown event and cancels only the other wait
+clients, not their agents. Prefer a background command where the client supports one. Read the
+reported session's journal or pane, act on it, then wait on the remaining outstanding batches.
+Select those batches explicitly so a previously inspected settled session does not wake the
+next wait immediately. A settled agent is not necessarily finished; timeout is not completion.
 
 Mekugi can report `unknown` after a completed turn. For these sessions, also wake on `unknown`
 and inspect the visible pane plus the reported commits; do not treat `unknown` as completion
@@ -129,6 +155,34 @@ or wait indefinitely for an idle transition that the integration does not emit.
   retrying.
 - Do not resend a batch prompt or start a replacement agent without first inspecting the
   existing session.
+
+## Add tasks and follow up
+
+An additive user request preserves accepted assignments and their recovery state. Understand
+the new work before routing it. A new coherent batch uses the same plan format with a fresh name:
+
+```bash
+skills-mgr run batch-agent-sessions/scripts/sessions.sh add --manifest MANIFEST --plan /absolute/additions.json
+skills-mgr run batch-agent-sessions/scripts/sessions.sh launch --manifest MANIFEST --batch new-batch
+```
+
+The helper adds resources to the retained run without changing existing sessions. Each new cohort
+defaults to the source checkout's current committed HEAD; supply a resolved `base_commit` when it
+must use another accepted baseline. After the whole run is cleaned up, prepare a new run instead.
+
+For more work in an existing batch, submit a follow-up plan with a stable task ID, target batch,
+verbatim task text, and any missing handoff:
+
+```bash
+skills-mgr run batch-agent-sessions/scripts/sessions.sh follow-up --manifest MANIFEST --plan /absolute/follow-up.json
+```
+
+Busy or blocked sessions retain queued follow-ups without terminal input. Once ready, run
+`follow-up --manifest MANIFEST` to deliver the next queued task per ready session. For Mekugi's
+unknown state, inspect the visible pane and add `--ready-unknown NAME` only when it is ready for
+input with no ongoing turn or question UI. Stable IDs make retries idempotent; uncertain delivery
+stays recorded and blocks further delivery and cleanup until inspected and resolved as described
+in the reference. Do not replace the original assignment or restart its session for an addendum.
 
 ## Integrate
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "bfe3cd6ce47f079b652bdfb7fabc553a18a2caaa",
+  "sourceCommit": "8d32b011f9f8f446bd9b46a1a1cebee607af69e4",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -731,13 +731,13 @@
     {
       "path": ".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
       "kind": "file",
-      "sha256": "1d959216fbc8f077111af825f8db5eff80b94561a77a66ad32f52c9e2b18585d",
+      "sha256": "a867a1eed32e32f19e38ea200e92cbc58013bb0473429cc66dd92d42bf79d169",
       "executable": false
     },
     {
       "path": ".local/lib/batch-agent-sessions/CHANGELOG.md",
       "kind": "file",
-      "sha256": "826c4eb796b23ef2dd0f4310545eff704dae47be75ac8e16a6c6486bfbf2d82a",
+      "sha256": "2630681eac62944aa307792938f8df78f955bce1874b38db2ee634f3b9ff6420",
       "executable": false
     },
     {
@@ -857,19 +857,19 @@
     {
       "path": ".skills-mgr/skills/batch-agent-sessions/references/preparation.md",
       "kind": "file",
-      "sha256": "b8beb6d1ac811682dd7fa10516002f4968035bec52b8fee03e31e51cb9b47b27",
+      "sha256": "18947c1d4334a9163f6a56b7d48d8f8b6b4bd9c219b18728025dab4e570c5b19",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/batch-agent-sessions/scripts/sessions.sh",
       "kind": "file",
-      "sha256": "5b6e0003cfc6744b4b3fda31b8cd2832587d841e12be6286a360a9937ba5ce17",
+      "sha256": "c901979f5da84a6d8ca1c3b63aae1c6fa7a8fe253b01a81758fd5a32a5f6e723",
       "executable": true
     },
     {
       "path": ".skills-mgr/skills/batch-agent-sessions/SKILL.md",
       "kind": "file",
-      "sha256": "3088d114bb1103a2424319f37cd1569010c7db3221b8f0785586a06f07b2d866",
+      "sha256": "fd8ebb9e66d1ba901825d6aaec831e45bb0fdbafed33f1a5f1ab29ff8d055714",
       "executable": false
     },
     {
@@ -1426,7 +1426,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "33d688fa58f3e0bdc2f02717f36fb312230e7d63fd34b5effa68b58edb8e60c4",
+      "sha256": "e04560dcf71322aaab6e96162faefab63fad86eba5bd5cde5187728052e514f8",
       "executable": false
     },
     {
