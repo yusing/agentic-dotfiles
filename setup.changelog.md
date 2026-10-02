@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.8.2
+
+Show package-labeled Python dependency lock progress with elapsed updates every
+30 seconds. Limit each Python tool's lock resolution to 600 seconds, configurable
+with SETUP_PYTHON_LOCK_TIMEOUT, and stop mise and its descendants on timeout or
+cancellation without publishing the candidate config, lock or dependency graphs.
+Resolve portable Python graphs once across the selected platforms rather than
+repeating the dependency resolution for Linux and macOS.
+
 ## 2.8.1
 
 Skip locked mise installation when the requested versions are already installed,

@@ -135,6 +135,12 @@ identifier from `setup.json` or its command name. It skips native packages,
 vendors, the Git checkout, helper compilation, and verification, so it needs a
 completed setup. Upstream proxies may still serve a newly pushed Go commit late.
 
+Python dependency locking reports the package being resolved and elapsed time every
+30 seconds. Each Python tool has a 10-minute lock-resolution limit; a timeout stops
+that resolution without replacing the existing mise configuration, lock or dependency
+graphs. For a slow package index, allow more time with
+`SETUP_PYTHON_LOCK_TIMEOUT=1200 bash setup.sh --upgrade` (seconds per Python tool).
+
 When the home Git repository has a commit at `HEAD` (including worktrees), Git
 setup is skipped: no identity, hooks, remote, branch, fetch, or checkout changes.
 An empty repository is force-checked out to `origin/main`; an existing unrelated

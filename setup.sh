@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.8.1
+# version: 2.8.2
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1265,11 +1265,99 @@ if locks.is_dir():
 PY
 }
 
+# Mise finishes its platform progress before resolving Python dependency graphs.
+# Supervise the whole per-tool invocation so that phase cannot wait indefinitely.
+lock_python_mise_tool() {
+  py - "$MISE_BIN" "$1" "$2" "${SETUP_PYTHON_LOCK_TIMEOUT:-600}" "$$" <<'PY'
+import os
+import signal
+import subprocess
+import sys
+import time
+
+binary, tool, platforms, limit, driver = sys.argv[1:]
+if not limit.isascii() or not limit.isdecimal() or int(limit) <= 0:
+    raise SystemExit("SETUP_PYTHON_LOCK_TIMEOUT must be a positive integer (seconds)")
+timeout = int(limit)
+interrupted = 0
+
+def interrupt(signum, _frame):
+    global interrupted
+    interrupted = signum
+
+for signum in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP):
+    signal.signal(signum, interrupt)
+
+print(f"==> locking Python dependencies for {tool} on {platforms} ({timeout}s limit)",
+      file=sys.stderr, flush=True)
+# This session owns the process group. Tell mise not to detach its children.
+env = dict(os.environ, MISE_TASK_PGID_MANAGED="1")
+started = time.monotonic()
+child = subprocess.Popen(
+    [binary, "lock", "--global", "--bump", "--platform", platforms, tool],
+    env=env, start_new_session=True,
+)
+next_report = started + 30
+try:
+    while True:
+        if interrupted:
+            exit_code = 128 + interrupted
+            break
+        # $$ identifies the original Bash driver across intervening subshells.
+        # ps also detects an exited driver awaiting reaping, unlike kill(pid, 0).
+        driver_state = subprocess.run(
+            ["ps", "-o", "stat=", "-p", driver],
+            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True,
+        ).stdout.strip()
+        if not driver_state or driver_state.startswith("Z"):
+            exit_code = 128 + signal.SIGTERM
+            break
+        status = child.poll()
+        if status is not None:
+            exit_code = status if status >= 0 else 128 - status
+            break
+        now = time.monotonic()
+        elapsed = int(now - started)
+        if now - started >= timeout:
+            print(f"error: Python dependency lock for {tool} timed out after {timeout}s; "
+                  "existing config and lock were preserved. "
+                  "Increase SETUP_PYTHON_LOCK_TIMEOUT to allow more time.",
+                  file=sys.stderr, flush=True)
+            exit_code = 124
+            break
+        if now >= next_report:
+            print(f"==> still locking Python dependencies for {tool}: "
+                  f"{elapsed}s elapsed / {timeout}s limit", file=sys.stderr, flush=True)
+            next_report = now + 30
+        try:
+            child.wait(timeout=min(1, timeout - (now - started)))
+        except subprocess.TimeoutExpired:
+            pass
+finally:
+    # A lock operation has no background work to retain, even on success.
+    # Close orphan-held output pipes so tee cannot outlive the bounded operation.
+    try:
+        os.killpg(child.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+    try:
+        child.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        pass
+    try:
+        os.killpg(child.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    child.wait()
+raise SystemExit(exit_code)
+PY
+}
+
 # Resolve only changed declarations on normal setup; --upgrade selects all tools.
 # Both the generated config and the lock stay untouched until validation passes.
 refresh_mise_lock() (
   local desired_config="${1:-$MISE_CONFIG}" upgrade="${2:-1}"
-  local tmp lock_path locks_dir staged staged_config staged_locks token="" os platforms tool mode
+  local tmp lock_path locks_dir staged staged_config staged_locks token="" os platform platforms tool mode
   local platform_tools=()
   tmp="$(mktemp -d "${TMPDIR:-/tmp}/setup-mise-lock.XXXXXX")"
   lock_path="${MISE_CONFIG%/*}/mise.lock"
@@ -1313,7 +1401,7 @@ refresh_mise_lock() (
       [ -n "$platforms" ] || continue
       platform_tools=()
       while IFS= read -r tool; do
-        [ -z "$tool" ] || platform_tools+=("$tool")
+        case "$tool" in pipx:*|'') ;; *) platform_tools+=("$tool") ;; esac
       done <"$tmp/$os-tools"
       [ "${#platform_tools[@]}" -gt 0 ] || continue
       info "locking ${#platform_tools[@]} tool(s) for $platforms"
@@ -1329,6 +1417,26 @@ refresh_mise_lock() (
         return 1
       fi
     done
+    # Python graphs are portable: resolve each selected tool once, not once per OS.
+    while IFS= read -r tool; do
+      case "$tool" in pipx:*) ;; *) continue ;; esac
+      platforms=""
+      while IFS= read -r platform; do
+        os="${platform%%-*}"
+        grep -Fxq "$tool" "$tmp/$os-tools" || continue
+        platforms="${platforms:+$platforms,}$platform"
+      done < <(printf '%s\n' "${MISE_LOCK_PLATFORMS//,/$'\n'}")
+      [ -n "$platforms" ] || continue
+      if ! (
+        cd "$tmp"
+        MISE_GLOBAL_CONFIG_FILE="$tmp/.config/mise/config.toml" \
+          MISE_HTTP_TIMEOUT=120 MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=120 \
+          MISE_FETCH_REMOTE_VERSIONS_CACHE=0s \
+          lock_python_mise_tool "$tool" "$platforms"
+      ) 2>&1 | tee -a "$tmp/mise-lock.log"; then
+        return 1
+      fi
+    done <"$tmp/changed-tools"
   fi
   if grep -Eq '^mise WARN[[:space:]]+(Failed to resolve tool version list|Remote versions cannot be fetched|Error getting latest version)' \
     "$tmp/mise-lock.log"; then
