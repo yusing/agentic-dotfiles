@@ -117,8 +117,13 @@ def discover(cwd, env, runner=run):
                 processes = payload["process_info"]["foreground_processes"]
                 mekugi = next((p for p in processes if p.get("name") == "mekugi"), None)
                 context["caller_uses_mekugi"] = mekugi is not None
-                executable = str(Path(f"/proc/{mekugi['pid']}/exe").resolve(strict=True)) if mekugi else shutil.which("mekugi")
-                if executable and (executable.endswith(" (deleted)") or not os.access(executable, os.X_OK)):
+                if mekugi:
+                    process_executable = Path(f"/proc/{mekugi['pid']}/exe")
+                    target = os.readlink(process_executable)
+                    executable = str(process_executable) if target.endswith(" (deleted)") else str(process_executable.resolve(strict=True))
+                else:
+                    executable = shutil.which("mekugi")
+                if executable and not os.access(executable, os.X_OK):
                     raise ValueError("Caller Mekugi executable cannot be reused.")
                 context["mekugi_executable"] = executable
         except (KeyError, TypeError, ValueError, OSError) as exc:

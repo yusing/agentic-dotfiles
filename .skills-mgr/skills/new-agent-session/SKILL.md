@@ -33,7 +33,9 @@ Load the `herdr` skill only for recovery or a Herdr operation these steps do not
 - Otherwise keep the current agent kind when known, or ask.
 - For Codex, use Mekugi unless the user asks for plain Codex. Use the preflight's absolute
   `mekugi_executable`: it resolves the caller's `/proc/<pid>/exe` when running under
-  Mekugi, otherwise PATH lookup. The new pane's PATH may lack it, so always launch the absolute
+  Mekugi, retaining that live process path if an upgrade replaced the binary. The
+  process path remains reusable only while the caller is running. Otherwise it uses
+  PATH lookup. The new pane's PATH may lack it, so always launch the absolute
   path. If the caller runs Mekugi but its executable cannot be reused, report the
   failure instead of falling back to plain Codex.
 - Interactive Mekugi refuses to start without `--yolo` (no approvals or sandbox). A caller

@@ -5,7 +5,7 @@ import { homedir, tmpdir } from "node:os";
 import { isAbsolute, join } from "node:path";
 import { parseArgs } from "node:util";
 
-export const VERSION = "1.1.0";
+export const VERSION = "1.1.1";
 export type Runner = (argv: string[], cwd: string) => string;
 export type Context = {
   base_commit: string; source_workspace_id: string; source_checkout_path: string;
@@ -350,7 +350,7 @@ export function launch(manifestPath: string, selected: string[] = [], runner: Ru
         batch.launch = { name, state: "starting" };
         save(manifest, manifestPath);
         console.error(`${batch.name}: launching ${name}`);
-        if (command) response(runner, ["pane", "run", batch.pane, command.map(quote).join(" ")], manifest.source);
+        if (command) runner(["herdr", "pane", "run", batch.pane, command.map(quote).join(" ")], manifest.source);
         else response(runner, ["agent", "start", name, "--kind", route.kind, "--pane", batch.pane, "--", ...args], manifest.source);
         batch.launch.state = "started";
         save(manifest, manifestPath);
@@ -365,6 +365,11 @@ export function launch(manifestPath: string, selected: string[] = [], runner: Ru
       if (!info) throw new Error(`launch unresolved: ${last}; inspect the retained pane instead of launching again`);
       batch.launch!.pid = info.process.pid;
       batch.launch!.session = info.agent.agent_session?.value;
+      save(manifest, manifestPath);
+      const { agents } = response<{ agents: Agent[] }>(runner, ["agent", "list"], manifest.source);
+      let name = batch.launch!.name, suffix = 2;
+      while (agents.some(agent => agent.pane_id !== batch.pane && agent.name === name)) name = `${route.kind}-${suffix++}`;
+      batch.launch!.name = name;
       save(manifest, manifestPath);
       response(runner, ["agent", "rename", batch.pane, batch.launch!.name], manifest.source);
       if (!["idle", "done", "unknown"].includes(info.agent.agent_status)) throw new Error("agent is not ready for its initial task");

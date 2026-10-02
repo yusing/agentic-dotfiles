@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1
+
+Accept Herdr's silent successful pane-run response and recover unique agent names
+when an earlier launch succeeded without its acknowledgement. Retain existing
+processes and prompt receipts rather than launching replacement sessions.
+
 ## 1.1.0
 
 Own the complete deterministic prepare, launch, wait, and cleanup lifecycle.

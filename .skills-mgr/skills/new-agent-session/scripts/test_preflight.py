@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 import importlib.util
 import json
+import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -85,6 +88,35 @@ class PreflightTests(unittest.TestCase):
         self.assertEqual(list(mismatched), ["agent"])
         self.assertEqual(errors, ["cli: installed herdr lacks herdr agent prompt --until, herdr agent prompt --timeout"])
         self.assertEqual(context["base_commit"], "base")
+
+    def test_live_replaced_mekugi_binary_is_reusable_through_proc(self):
+        with tempfile.TemporaryDirectory(prefix="session-preflight-") as directory:
+            executable = Path(directory) / "mekugi"
+            shutil.copy2(shutil.which("sleep"), executable)
+            process = subprocess.Popen([str(executable), "30"])
+            try:
+                executable.unlink()
+                def replaced(argv, cwd):
+                    if argv[:3] == ["herdr", "pane", "process-info"]:
+                        return json.dumps({"result": {"process_info": {"foreground_processes": [{"name": "mekugi", "pid": process.pid}]}}})
+                    return self.runner(argv, cwd)
+                context, _, errors = preflight.discover(Path("/caller"), self.env, replaced)
+                self.assertEqual(errors, [])
+                self.assertTrue(context["caller_uses_mekugi"])
+                self.assertEqual(context["mekugi_executable"], f"/proc/{process.pid}/exe")
+                subprocess.run([context["mekugi_executable"], "0"], check=True, timeout=5)
+            finally:
+                process.terminate()
+                process.wait(timeout=5)
+
+    def test_live_unreplaced_mekugi_keeps_resolved_executable(self):
+        def live(argv, cwd):
+            if argv[:3] == ["herdr", "pane", "process-info"]:
+                return json.dumps({"result": {"process_info": {"foreground_processes": [{"name": "mekugi", "pid": os.getpid()}]}}})
+            return self.runner(argv, cwd)
+        context, _, errors = preflight.discover(Path("/caller"), self.env, live)
+        self.assertEqual(errors, [])
+        self.assertEqual(context["mekugi_executable"], str(Path(f"/proc/{os.getpid()}/exe").resolve(strict=True)))
 
     def test_flag_prefix_does_not_satisfy_requirement(self):
         usage = USAGE["worktree"].replace("[--no-focus]", "[--no-focus-ring]")
