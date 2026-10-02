@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b19e9e2122ed09134032418ee736362335e364d1",
+  "sourceCommit": "80e3447c1c753d3c0bead2b7cef3ffd76e4ea42c",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -47,7 +47,7 @@
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "4ff0b17785428385aa919da5ae17af79465e19863b17f5948e253846581fa765",
+      "sha256": "1e92ba3aeb9a8d9ff555336a4232fff9e6cfd70204304935eb31e70a1db1f810",
       "executable": false
     },
     {
@@ -113,7 +113,7 @@
     {
       "path": ".codex/agents/review-correctness.toml",
       "kind": "file",
-      "sha256": "55e6fe89a64cd2fea3dbe8a84cb485e30a8d0f92acba68e2caf2121b7d746b03",
+      "sha256": "7892ebf8f22f72428709fb19381a54a74f640bfdece043a617324d69cdfbfd78",
       "executable": false
     },
     {
@@ -137,7 +137,7 @@
     {
       "path": ".codex/config.toml",
       "kind": "file",
-      "sha256": "ec2de43c67022db18d9180413ad1a0f8d210150ba48ffb78a0e4bd1b92613137",
+      "sha256": "d1d38a168379036743859c2b992e71191c91c88145c5ef1a40542e52c72c13d9",
       "executable": false
     },
     {
@@ -293,7 +293,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "0141efe8df4e8ed1df0b5566498af3061339d90dbb86985689e4465669fa6045",
+      "sha256": "90bf1527f8426cc75535dd471493c900d22c88954ce7055b78c0f9fef18ac2c3",
       "executable": false
     },
     {
@@ -305,7 +305,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "432a264734c8ca21591110e65f411be333b8c4881f2f26603257964af3d1c286",
+      "sha256": "9da24c2ba7ba7604732079a9a6f990b796bf4ec8573fb90840bf7a023a9578b1",
       "executable": false
     },
     {
@@ -485,7 +485,7 @@
     {
       "path": ".config/kilo/agent/review-correctness.md",
       "kind": "file",
-      "sha256": "862b712df06655739e609db64b63eb12360bbff49ec127467b5823bef361f8fb",
+      "sha256": "032825dd3114b91f07c6637123918e8a9421c2e49fe1932c9d21074b50c355a3",
       "executable": false
     },
     {

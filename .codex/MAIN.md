@@ -68,10 +68,12 @@ Unless a workflow names its own review inputs, the review brief contains only:
 - the user's request and intended outcome;
 - the changes, identified by commit range, or by recorded change IDs for uncommitted edits; for
   re-review, only the corrections since the reviewer's previous report;
-- the approach taken.
+- the approach taken;
+- the validation run against the reviewed state: the checks and their results, including for
+  re-review the regression test covering each corrected finding.
 
-Omit everything else, including validation results, suspected risks or focus areas, file
-summaries, expected behavior, and restated role rules such as read-only or report format. The
+Omit everything else, including suspected risks or focus areas, coverage claims, file summaries,
+expected behavior, and restated role rules such as read-only or report format. The
 reviewer's role supplies its method, and it inspects the changes and chooses its evidence
 independently; extra briefing steers or duplicates that judgment.
 
@@ -85,6 +87,10 @@ regressions the change introduced. When a finding concerns only a supporting mec
 one added to address an earlier finding or one that reproduces an owner's internals, narrow or
 remove that mechanism rather than extending it. If narrowing changes requested behavior, report the
 trade-off and the simpler alternative for the user to decide.
+
+Before requesting re-review, cover each corrected finding with a regression test at its consuming
+interface, including the sibling inputs and states the correction changes, and run the affected
+tests. A reviewer's reproduction is input to that test; adopting and running it is main's work.
 
 Review converges when the remaining findings are corrected, accepted, or reported. When a second
 correction round still surfaces new findings, or the user asks for speed, stop requesting review

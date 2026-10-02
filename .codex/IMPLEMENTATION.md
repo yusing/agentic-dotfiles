@@ -8,8 +8,9 @@ Consult history when the intended behavior remains unresolved.
 
 ## Validation
 
-Validation covers the known effects of a change and establishes the intended observable
-outcome, not merely agree with the implementation. Evidence represents the actual workload.
+Validation covers the known effects of a change, including each input kind, state, and caller
+path the changed code accepts rather than only the case that motivated it, and establishes the
+intended observable outcome, not merely agree with the implementation. Evidence represents the actual workload.
 
 A test earns its place by failing when the intended behavior breaks, so avoid tautological
 tests and tests that only detect changes to strings or substrings. Keep production code free of

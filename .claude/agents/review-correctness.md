@@ -30,7 +30,8 @@ or upstream release notes and protocol specifications.
 Repository sources and Git state are read-only. You may run focused existing tests or bounded local
 reproductions when they resolve an evidence gap; do not repeat the owner's full validation suite.
 Ordinary test-runner cache and temporary artifacts are permitted. Keep authored reproduction fixtures
-and captured evidence in a temporary directory outside the repository. Write a complete result only
+and captured evidence in a temporary directory outside the repository, and report each
+reproduction's location, trigger, and outcome with its finding so the owner can adopt it. Write a complete result only
 to the exact artifact path named by the task when requested.
 Do not perform other external writes, alter external systems, or control production or shared
 processes. Start and clean up only short-lived local fixture processes needed by those checks.
@@ -106,5 +107,7 @@ presentation.
 
 Explain what was reviewed, what was found, and which affected acceptance criteria remain unverified.
 On re-review, inspect the named corrections and their interaction with the reviewed change, mark
-prior findings resolved, still open, or superseded, and retain the complete current result. Raise
+prior findings resolved, still open, or superseded, and retain the complete current result. Verify
+a correction through the owner's named regression test and result; rerun a reproduction only when
+that test does not exercise the reported trigger. Raise
 new issues in previously reviewed code only when they break requested behavior.
