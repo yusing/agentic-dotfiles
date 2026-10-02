@@ -83,8 +83,11 @@ recovery and receipts in [references/preparation.md](references/preparation.md),
 skills-mgr run batch-agent-sessions/scripts/sessions.sh prepare --cwd "$PWD" --plan /absolute/plan.json
 ```
 
-The command creates the temporary directory, copies or recovers evidence, creates and verifies
-linked worktrees on one shared base, and runs the supplied setup. It prints one JSON roster with
+The command creates the run directory under the helper's state directory, copies or recovers
+evidence, creates and verifies linked worktrees on one shared base, initializes in each checkout the
+submodules the source checkout has initialized, and runs the supplied setup. Submodules use the base's
+recorded commits on batch-local named branches, cloned from the source's local submodule repositories, so agents need no
+initialization instructions and unpublished pinned commits still resolve. It prints one JSON roster with
 the persistent manifest, evidence paths, and each batch's branch, checkout, workspace, and pane.
 Give agents only evidence paths it reports as present. After a nonzero exit, read the reference
 before retrying; rerunning creates a new run rather than repairing this one.
@@ -105,7 +108,8 @@ instead of manually renaming panes, launching processes, or typing prompts.
 
 Each task is its batch's verbatim issue text, not the coordinator's whole request, other batches,
 or skill invocation. Add only missing batch-specific decisions and evidence in `handoff`, including
-branch-commit authorization and the communication route below. Those branch commits are part of
+branch-commit authorization and the communication route below. Work inside a submodule is
+committed on its prepared named branch and recorded by a gitlink commit on the batch branch. Those branch commits are part of
 this workflow; the coordinator owns integration. Pushing or installing requires separate user
 authorization. Handoff evidence placeholders resolve only to copies the helper reports as present.
 
@@ -196,13 +200,22 @@ After every batch is finished or explicitly abandoned:
    squash follow-up fixes only into the work they belong to. Use the batch's own commit messages
    as the source for rewritten messages; do not replace them with bare subjects.
    If the source branch moved past the prepared base, replay batch commits onto its current
-   tip rather than resetting it. A dirty source checkout must not absorb unrelated edits;
+   tip rather than resetting it. Nested commits exist only in the batch checkout's submodule
+   repositories: fetch them from `<checkout>/<submodule path>` into the matching source
+   submodule, innermost first, before the parent commits that record them. Integrate onto each
+   source submodule's original named branch, recorded as `source_branch` when preparation found
+   it attached. If already detached, identify its original branch from local refs and reflog;
+   ask only when that remains ambiguous. Preserve detached commits with a named ref before
+   switching, then fast-forward or integrate onto the original branch without resetting away
+   either history. Leave each integrated source submodule on that branch, with its changes
+   intact, and resolve gitlink conflicts to the integrated nested commit. A dirty source checkout must not absorb unrelated edits;
    commit around them without staging them, and stop to ask only when they overlap a batch's
    files.
 3. Resolve conflicts by preserving both batches' intended behavior, not by picking a side.
    Where two batches solved an overlapping problem differently, keep one coherent design and
    say which one.
-4. Run the project's relevant validation on the integrated result, and fix integration
+4. Verify recursively that integrated source submodules are on their intended named branches,
+   their changes are retained, and parent gitlinks record the integrated tips. Run the project's relevant validation on the integrated result, and fix integration
    breakage directly. Send a fix back to its batch's agent only when it needs that agent's
    context.
 
@@ -215,8 +228,12 @@ manifest and run:
 skills-mgr run batch-agent-sessions/scripts/sessions.sh cleanup --manifest MANIFEST --completed composer --completed labels
 ```
 
-The command removes only this run's verified, clean, settled resources through non-forced Herdr
-removal and keeps branches and the manifest; the reference describes refusals and repeat runs.
+The command removes only this run's verified, clean, settled resources and keeps branches and the
+manifest. For checkouts with submodules, it refuses unretainable nested work and uninspected
+repository storage left by removed or deinitialized submodules, retains changed
+nested commits as the batch branch in the source submodule repositories, then forces the removal
+that Git otherwise refuses.
+The reference describes refusals and repeat runs.
 If a completed Mekugi session still reports `unknown`, inspect its visible pane and add
 `--ready-unknown NAME` only when it is ready for input, not working or blocked. Herdr closes the
 owned subspaces; do not synthesize Ctrl-C sequences or kill processes yourself. Leave unfinished

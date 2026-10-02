@@ -54,8 +54,21 @@ and acceptance checks. The helper does not infer task completion from lifecycle 
 Preparation calls the existing single-session preflight once. It verifies that the caller
 checkout and Herdr source workspace belong to the same Git repository, pins the caller's
 committed HEAD, creates linked subspaces with `--no-focus`, and checks every actual checkout
-HEAD. Uncommitted source edits do not follow. Project setup can create required generated
-assets, dependencies, or other effects only through the supplied argv commands.
+HEAD. Uncommitted source edits do not follow, including uncommitted submodule pointer changes.
+Project setup can create required generated assets, dependencies, or other effects only through
+the supplied argv commands.
+
+Each checkout then initializes, recursively, every submodule that is initialized in the source
+checkout, at the commit its parent records. It clones from the source's local submodule
+repository, so commits never published upstream resolve, then restores `origin` to the configured
+URL. When the local repository lacks a recorded commit, it fetches that submodule from upstream.
+A stderr note marks each source submodule checked out at a different commit than the one recorded.
+Submodules the source has not initialized, or whose update setting is `none`, stay uninitialized. Each batch receipt lists
+its initialized `submodules` with their paths, commits, batch-local `branch`, and `source_branch`
+when the source was attached. Each initialized batch submodule is checked out on the batch's
+named branch at its recorded commit, never left detached. Preparation does not switch or modify
+source submodules; integration restores their original named branches while retaining changes.
+Setup runs afterward.
 
 ## Launch and wait
 
@@ -127,11 +140,12 @@ unrecoverable-image diagnostic.
 
 ## Receipts and partial failure
 
-One JSON result on stdout identifies the persistent manifest, temporary root, evidence,
+One JSON result on stdout identifies the persistent manifest, run directory (`temporary_root`), evidence,
 and each batch's branch, checkout, workspace, pane and preparation state. Progress and
 target-qualified errors go to stderr; any failure returns nonzero. The manifest is stored
 under `${XDG_STATE_HOME:-$HOME/.local/state}/batch-agent-sessions/runs/`, separately from
-the temporary directory, and updated before dependent effects. No credentials or image
+the run directory under `batch-agent-sessions/work/` in the same state root, and updated before
+dependent effects. Checkouts live under that state root, not the system temporary directory. No credentials or image
 contents are included in its receipts. Task and handoff text are retained privately in the manifest;
 do not put credentials in them. Mutating commands use a manifest-scoped `flock` advisory lock,
 released automatically when the helper exits. Concurrent mutation attempts fail without effects;
@@ -167,9 +181,22 @@ states still refuse removal, even with this option.
 
 The manifest restricts removal to this run's recorded workspaces and checkouts. Cleanup
 checks the live linked checkout, repository and branch, retained tip, clean worktree,
-unchanged pane layout, no queued/uncertain tasks, and settled agent or idle shell. It then uses Herdr's non-forced
-worktree removal and verifies branch retention. Unknown names and rejected targets do
-not prevent independent valid targets from completing.
+unchanged pane layout, no queued/uncertain tasks, and settled agent or idle shell. It then
+removes the checkout through Herdr, non-forced unless the checkout holds submodule repositories,
+and verifies branch retention. Unknown names and rejected targets do not prevent independent
+valid targets from completing.
+
+Git refuses non-forced removal of a checkout with submodule repositories, and forced removal
+deletes everything only they hold. Cleanup refuses stored repositories of removed or deinitialized
+submodules because their contents are outside the live checkout checks; recover their work and
+explicitly remove that storage before retrying. It checks every populated submodule, recursively:
+each must map to a `.gitmodules` entry, sit at its recorded commit, have no uncommitted files or
+stash, and have no branch or tag commit outside its recorded commit's history, its base commit, and
+its remote-tracking branches (the source's branches when cloned, or upstream's after a fallback). For each submodule whose recorded commit changed from the batch
+base, a commit no source ref reaches is fetched into the source submodule as the batch branch and
+listed in the batch receipt's `retained_submodules`. A changed submodule the source checkout has not
+initialized has nowhere to be retained. Any failed check preserves the checkout. Nested commits reachable only from a reflog, such
+as those replaced by an amend, are deleted with the submodule repository.
 
 If a removal succeeded but its response was lost, repeating cleanup reconciles the saved
 `removing` receipt only when the checkout, registered Git worktree and live Herdr workspace
@@ -177,7 +204,7 @@ are all absent and the branch still retains its recorded tip. Uncertain resource
 preserved without repeating the removal effect.
 
 When every recorded worktree is removed, unchanged copied evidence and empty owned
-temporary directories are removed. The manifest and branches remain, so final receipts
+run directories are removed. The manifest and branches remain, so final receipts
 are still available without retaining temporary images or dependency trees. Altered
 evidence, unknown files, and changed directory identities are preserved, not recursively
 discarded. Repeating completed cleanup is a no-op.

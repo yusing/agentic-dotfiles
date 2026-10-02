@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.0
+
+Keep run directories, checkouts, and evidence under the state directory instead of `/tmp`.
+Initialize each checkout's submodules recursively wherever the source checkout has them, at
+the recorded commits, cloning from the local source repositories so unpublished pinned commits
+resolve, and fall back to upstream when a commit is missing locally. Before cleanup, refuse
+submodule work that forced removal would lose (uncommitted files, stashes, unmapped gitlinks,
+and branch or tag commits outside recorded and remote history), retain changed nested commits as
+the batch branch in the source submodule repositories, then force removal of checkouts that
+Git refuses to remove because they contain submodules. Refuse cleanup when removed or
+deinitialized submodules leave repository storage outside the live checkout checks. Prepare
+submodules on batch-local named branches and record attached source branch names for integration
+back onto those branches without losing changes.
+
 ## 1.1.1
 
 Accept Herdr's silent successful pane-run response and recover unique agent names

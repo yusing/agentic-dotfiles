@@ -1,11 +1,11 @@
 import { spawn, spawnSync } from "node:child_process";
 import { createHash, randomUUID } from "node:crypto";
-import { closeSync, existsSync, fsyncSync, lstatSync, mkdirSync, mkdtempSync, openSync, readFileSync, realpathSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
-import { homedir, tmpdir } from "node:os";
+import { closeSync, existsSync, fsyncSync, lstatSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, realpathSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
+import { homedir } from "node:os";
 import { isAbsolute, join } from "node:path";
 import { parseArgs } from "node:util";
 
-export const VERSION = "1.1.1";
+export const VERSION = "1.2.0";
 export type Runner = (argv: string[], cwd: string) => string;
 export type Context = {
   base_commit: string; source_workspace_id: string; source_checkout_path: string;
@@ -20,6 +20,7 @@ type Plan = { batches: Assignment[]; base_commit?: string; setup?: string[][]; e
 type Batch = { name: string; branch: string; path: string; state: "pending" | "creating" | "created" | "prepared" | "removing" | "removed";
   workspace?: string; pane?: string; error?: string; retained_tip?: string; ready_unknown?: boolean;
   base_commit?: string; task?: string; handoff?: string; agent?: Route;
+  submodules?: { path: string; commit: string; branch: string; source_branch?: string }[]; retained_submodules?: { path: string; commit: string; ref: string }[];
   launch?: { state: "starting" | "started" | "verified"; name: string; pid?: number; session?: string; model?: string; effort?: string } };
 type Task = { id: string; batch: string; task: string; handoff?: string;
   state: "queued" | "submitting" | "working"; error?: string };
@@ -146,6 +147,109 @@ function commonDirectory(runner: Runner, cwd: string): string {
   return runner(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"], cwd);
 }
 
+const populated = (path: string): boolean => existsSync(join(path, ".git"));
+
+// Every gitlink in the tree, named by the .gitmodules entry that maps its path, when one does.
+function gitlinks(runner: Runner, repo: string, revision: string): { name?: string; path: string; commit: string }[] {
+  const names = new Map<string, string>();
+  let declared = true;
+  try { runner(["git", "cat-file", "-e", `${revision}:.gitmodules`], repo); } catch { declared = false; }
+  if (declared) for (const entry of runner(["git", "config", "--blob", `${revision}:.gitmodules`, "-z", "--list"], repo).split("\0")) {
+    const match = /^submodule\.([\s\S]+)\.path\n([\s\S]*)$/.exec(entry);
+    if (match) names.set(match[2], match[1]);
+  }
+  const links = [];
+  for (const entry of runner(["git", "ls-tree", "-r", "-z", revision], repo).split("\0")) {
+    const match = /^160000 commit ([0-9a-f]{40,64})\t([\s\S]+)$/.exec(entry);
+    if (match) links.push({ name: names.get(match[2]), path: match[2], commit: match[1] });
+  }
+  return links;
+}
+
+function contains(runner: Runner, repo: string, commit: string): boolean {
+  try { return Boolean(runner(["git", "for-each-ref", "--contains", commit, "--count=1", "--format=%(refname)"], repo)); }
+  catch { return false; } // The commit is absent from this repository.
+}
+
+// Mirror the source checkout's initialized submodules at the recorded commits. Clone them from the
+// local source repositories, which can hold pinned commits that were never published upstream.
+function initSubmodules(runner: Runner, batch: Batch, checkout: string, source: string, prefix = ""): void {
+  for (const link of gitlinks(runner, checkout, "HEAD")) {
+    const local = join(source, link.path), nested = join(checkout, link.path), path = prefix + link.path;
+    if (!link.name || !populated(local)) continue;
+    const current = runner(["git", "rev-parse", "HEAD"], local);
+    let sourceBranch: string | undefined;
+    try { sourceBranch = runner(["git", "symbolic-ref", "--quiet", "--short", "HEAD"], local); } catch { /* Source was already detached; integration must resolve its original branch. */ }
+    if (current !== link.commit) console.error(`${batch.name}: submodule ${path} uses recorded ${link.commit.slice(0, 12)}, not the source checkout's ${current.slice(0, 12)}`);
+    console.error(`${batch.name}: initializing submodule ${path}`);
+    runner(["git", "submodule", "init", "--", link.path], checkout);
+    const url = runner(["git", "config", "--get", `submodule.${link.name}.url`], checkout);
+    let cloned = true;
+    try { runner(["git", "-c", "protocol.file.allow=always", "-c", `submodule.${link.name}.url=${local}`, "submodule", "update", "--", link.path], checkout); }
+    catch { cloned = false; }
+    if (populated(nested)) runner(["git", "remote", "set-url", "origin", url], nested);
+    if (!cloned) {
+      console.error(`${batch.name}: submodule ${path} lacks ${link.commit.slice(0, 12)} locally; fetching from ${url}`);
+      runner(["git", "submodule", "update", "--", link.path], checkout);
+    }
+    if (!populated(nested)) { console.error(`${batch.name}: submodule ${path} stays uninitialized by its update setting`); continue; }
+    runner(["git", "switch", "--no-track", "-c", batch.branch, link.commit], nested);
+    (batch.submodules ??= []).push({ path, commit: link.commit, branch: batch.branch, ...(sourceBranch ? { source_branch: sourceBranch } : {}) });
+    initSubmodules(runner, batch, nested, local, `${path}/`);
+  }
+}
+
+// Forced removal discards the checkout's submodule repositories and everything only they hold.
+// Each populated one must be clean, at its recorded commit, without a stash, and without branch or
+// tag commits outside its recorded and remote-tracking history. A changed recorded commit is kept in the matching source
+// submodule under the batch branch name.
+function retainSubmodules(runner: Runner, batch: Batch, checkout: string, source: string, base: string | undefined, prefix = ""): { path: string; commit: string; ref: string }[] {
+  const links = gitlinks(runner, checkout, "HEAD");
+  const inspected = new Set(links.filter(link => populated(join(checkout, link.path))).map(link =>
+    realpathSync(runner(["git", "rev-parse", "--absolute-git-dir"], join(checkout, link.path)))));
+  // Removed or deinitialized modules still have repositories under modules/. They are not
+  // covered by the live-gitlink checks below, so preserve them rather than force-delete them.
+  const modules = runner(["git", "rev-parse", "--path-format=absolute", "--git-path", "modules"], checkout);
+  const checkStored = (path: string): void => {
+    const info = lstatSync(path, { throwIfNoEntry: false });
+    if (!info) return;
+    if (!info.isDirectory()) throw new Error(`uninspected submodule storage ${path}; preserve the checkout and recover or remove this storage explicitly`);
+    if (inspected.has(realpathSync(path))) return;
+    for (const entry of readdirSync(path)) checkStored(join(path, entry));
+  };
+  checkStored(modules);
+  let before = new Map<string, string>();
+  if (base) try { before = new Map(gitlinks(runner, checkout, base).map(link => [link.path, link.commit])); } catch { /* unknown base: every gitlink counts as changed */ }
+  const retained = [], ref = `refs/heads/${batch.branch}`;
+  for (const link of links) {
+    const local = join(source, link.path), nested = join(checkout, link.path), path = prefix + link.path;
+    const changed = before.get(link.path) !== link.commit;
+    if (!populated(nested)) {
+      if (changed) throw new Error(`changed submodule ${path} is not populated; preserve it`);
+      continue;
+    }
+    if (!link.name) throw new Error(`gitlink ${path} has no .gitmodules entry; preserve it`);
+    if (runner(["git", "rev-parse", "HEAD"], nested) !== link.commit) throw new Error(`submodule ${path} is not at its recorded commit; preserve it`);
+    if (runner(["git", "status", "--porcelain", "--ignore-submodules=none"], nested)) throw new Error(`submodule ${path} has uncommitted files; preserve it`);
+    if (changed) {
+      if (!populated(local)) throw new Error(`changed submodule ${path} is not initialized in the source checkout; integrate its commits or preserve it`);
+      if (!contains(runner, local, link.commit)) runner(["git", "fetch", "--no-tags", "--no-recurse-submodules", "--no-write-fetch-head", nested, `HEAD:${ref}`], local);
+      let tip = "";
+      try { tip = runner(["git", "rev-parse", "--verify", "--quiet", ref], local); } catch { /* reachable from other refs */ }
+      if (tip === link.commit) retained.push({ path, commit: link.commit, ref });
+    }
+    let stash = false;
+    try { runner(["git", "rev-parse", "--verify", "--quiet", "refs/stash"], nested); stash = true; } catch { /* no stash */ }
+    if (stash) throw new Error(`submodule ${path} has a stash; preserve it`);
+    // Remote-tracking refs are the source's branches at clone time, or upstream's after a fallback fetch.
+    const known = [link.commit, ...(before.has(link.path) ? [before.get(link.path)!] : [])];
+    const unrecorded = runner(["git", "rev-list", "-n1", "--branches", "--tags", "--not", "--remotes", ...known], nested);
+    if (unrecorded) throw new Error(`submodule ${path} has branch or tag commit ${unrecorded.slice(0, 12)} outside its recorded and remote history; integrate or delete it`);
+    retained.push(...retainSubmodules(runner, batch, nested, local, before.get(link.path), `${path}/`));
+  }
+  return retained;
+}
+
 export function prepare(value: unknown, cwd: string, runner: Runner = run, discovery: Discovery = discover, rollout?: string): { manifestPath: string; manifest: Manifest; errors: string[] } {
   if (process.env.HERDR_ENV !== "1") throw new Error("Not inside a Herdr-managed pane (HERDR_ENV must be 1).");
   const plan = validatePlan(value);
@@ -155,9 +259,11 @@ export function prepare(value: unknown, cwd: string, runner: Runner = run, disco
   if (!context.source_checkout_path || commonDirectory(runner, cwd) !== commonDirectory(runner, context.source_checkout_path)) throw new Error("caller checkout and Herdr source workspace belong to different repositories");
   const state = process.env.XDG_STATE_HOME ?? join(homedir(), ".local/state");
   if (!isAbsolute(state)) throw new Error("XDG_STATE_HOME must be absolute");
-  const manifests = join(state, "batch-agent-sessions/runs");
+  const manifests = join(state, "batch-agent-sessions/runs"), work = join(state, "batch-agent-sessions/work");
   mkdirSync(manifests, { recursive: true, mode: 0o700 });
-  const root = realpathSync(mkdtempSync(join(tmpdir(), "agent-batches-")));
+  mkdirSync(work, { recursive: true, mode: 0o700 });
+  // Checkouts and dependency trees can be large; keep them off a RAM-backed /tmp.
+  const root = realpathSync(mkdtempSync(join(work, "run-")));
   const runId = randomUUID().replaceAll("-", "");
   const identity = statSync(root);
   const manifestPath = join(manifests, `${runId}.json`);
@@ -175,6 +281,7 @@ export function prepare(value: unknown, cwd: string, runner: Runner = run, disco
 
 function prepareBatches(manifest: Manifest, manifestPath: string, plan: Plan, batches: Batch[], runner: Runner, rollout: string | undefined, errors: string[]): void {
   const root = manifest.temporary_root;
+  const source = runner(["git", "rev-parse", "--show-toplevel"], manifest.source);
   const missing = new Set((plan.evidence ?? []).filter(item => !existsSync(item.source)).map(item => item.source));
   let images = new Map<string, Buffer>();
   try { images = recoverImages(rollout, missing); } catch (error) { errors.push(`rollout recovery: ${message(error)}`); }
@@ -205,6 +312,7 @@ function prepareBatches(manifest: Manifest, manifestPath: string, plan: Plan, ba
         save(manifest, manifestPath);
         if (realpathSync(created.worktree.path) !== batch.path) throw new Error("creation returned a different checkout path");
         if (runner(["git", "rev-parse", "HEAD"], batch.path) !== (batch.base_commit ?? manifest.base_commit)) throw new Error("checkout HEAD differs from shared base");
+        initSubmodules(runner, batch, batch.path, source);
         for (const command of plan.setup ?? []) {
           console.error(`${batch.name}: project setup (${command[0]})`);
           runner(command, batch.path);
@@ -523,7 +631,7 @@ export function cleanup(manifestPath: string, completed: string[], runner: Runne
       if (!workspace.worktree?.is_linked_worktree || workspace.worktree.checkout_path !== expected) throw new Error("live workspace is not the recorded linked checkout");
       if (commonDirectory(runner, expected) !== commonDirectory(runner, manifest.source)) throw new Error("checkout belongs to a different source repository");
       if (runner(["git", "symbolic-ref", "--short", "HEAD"], expected) !== batch.branch) throw new Error("checkout branch changed; preserve it");
-      if (runner(["git", "status", "--porcelain"], expected)) throw new Error("worktree has uncommitted files; preserve it");
+      if (runner(["git", "status", "--porcelain", "--ignore-submodules=none"], expected)) throw new Error("worktree has uncommitted files; preserve it");
       const tip = runner(["git", "rev-parse", "HEAD"], expected);
       if (runner(["git", "rev-parse", `refs/heads/${batch.branch}`], manifest.source) !== tip) throw new Error("branch does not retain checkout tip");
       const { panes } = response<{ panes: Pane[] }>(runner, ["pane", "list", "--workspace", batch.workspace], manifest.source);
@@ -536,13 +644,19 @@ export function cleanup(manifestPath: string, completed: string[], runner: Runne
         const { process_info: process } = response<{ process_info: { shell_pid: number; foreground_process_group_id: number } }>(runner, ["pane", "process-info", "--pane", batch.pane], manifest.source);
         if (!process.shell_pid || process.foreground_process_group_id !== process.shell_pid) throw new Error("pane has a foreground command; preserve unfinished work");
       }
-      console.error(`${name}: removing completed worktree; retaining branch ${batch.branch}`);
+      const retained = retainSubmodules(runner, batch, expected, runner(["git", "rev-parse", "--show-toplevel"], manifest.source), batch.base_commit ?? manifest.base_commit);
+      if (retained.length) batch.retained_submodules = retained;
+      // Git refuses to remove any checkout with submodule repositories unless forced; the checks above
+      // established that it is clean and that changed nested commits are retained.
+      const force = existsSync(runner(["git", "rev-parse", "--path-format=absolute", "--git-path", "modules"], expected))
+        || gitlinks(runner, expected, "HEAD").some(link => populated(join(expected, link.path)));
+      console.error(`${name}: removing completed worktree${force ? " with its submodules" : ""}; retaining branch ${batch.branch}`);
       batch.retained_tip = tip;
       if (readyUnknown) batch.ready_unknown = true;
       batch.state = "removing";
       save(manifest, manifestPath);
-      const removed = response<{ path: string; forced: boolean }>(runner, ["worktree", "remove", "--workspace", batch.workspace], manifest.source);
-      if (removed.path !== expected || removed.forced !== false) throw new Error("unexpected removal receipt; inspect actual outcome");
+      const removed = response<{ path: string; forced: boolean }>(runner, ["worktree", "remove", "--workspace", batch.workspace, ...(force ? ["--force"] : [])], manifest.source);
+      if (removed.path !== expected || (!force && removed.forced !== false)) throw new Error("unexpected removal receipt; inspect actual outcome");
       if (runner(["git", "rev-parse", `refs/heads/${batch.branch}`], manifest.source) !== tip) throw new Error("retained branch changed during removal");
       batch.state = "removed";
       delete batch.error;
