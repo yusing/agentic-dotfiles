@@ -119,8 +119,8 @@ checks.
 After implementation and focused validation, spawn independent inspection without inherited
 conversation history (Codex: `fork_turns="none"`) for a concrete correctness, security, lifecycle,
 or maintainability risk that benefits from a fresh review. Routine wording and mechanical edits
-need no extra agent. Reuse reviews that cover the final state; workflow-specific required reviews
-still apply.
+need no extra agent. Reuse reviews that cover the final state; a re-review of later corrections needs to
+cover only those corrections. Workflow-specific required reviews still apply.
 
 ### Agents council
 

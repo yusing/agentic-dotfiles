@@ -66,7 +66,8 @@ runtime evidence; source review approval alone does not establish that the inter
 Unless a workflow names its own review inputs, the review brief contains only:
 
 - the user's request and intended outcome;
-- the changes, identified by commit range, or by recorded change IDs for uncommitted edits;
+- the changes, identified by commit range, or by recorded change IDs for uncommitted edits; for
+  re-review, only the corrections since the reviewer's previous report;
 - the approach taken.
 
 Omit everything else, including validation results, suspected risks or focus areas, file
@@ -76,3 +77,15 @@ independently; extra briefing steers or duplicates that judgment.
 
 The owner responsible for corrections spawns the reviewer and receives its findings. If nested
 agents are unavailable, the parent arranges the review for that owner.
+
+## Acting on findings
+
+Weigh each finding against the requested outcome. Correct defects in requested behavior and
+regressions the change introduced. When a finding concerns only a supporting mechanism, especially
+one added to address an earlier finding or one that reproduces an owner's internals, narrow or
+remove that mechanism rather than extending it. If narrowing changes requested behavior, report the
+trade-off and the simpler alternative for the user to decide.
+
+Review converges when the remaining findings are corrected, accepted, or reported. When a second
+correction round still surfaces new findings, or the user asks for speed, stop requesting review
+and report the remaining findings with their impact and options.

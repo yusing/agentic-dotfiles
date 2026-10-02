@@ -51,7 +51,9 @@ complexity limits are clues, not findings by themselves.
 
 Check that policy remains with its caller, provider, runtime, or protocol owner. Flag forwarders
 that redefine external contracts, fields, limits, or retries; distinguish local resource guards
-from external protocol limits.
+from external protocol limits. When a change reimplements an owner's behavior, report the
+reimplementation as one finding, with delegating to or narrowing it as the remedy, rather than
+reporting each divergence from the owner separately.
 
 For shared changes, group affected callers by contract and compare observable outcomes, including
 defaults when a return value, callback, field, or component is absent. Trace the remaining control
@@ -89,7 +91,9 @@ the defect, why it matters, where the evidence is, and how to address it. Before
 convenience, limits, or compatibility behavior, establish the policy owner, concrete reproducer,
 failure, violated invariant, and affected consumer. Unresolved
 hypotheses belong in coverage limitations with their possible impact and confirming check, not
-in confirmed findings.
+in confirmed findings. State whether each finding breaks requested behavior, is a regression the
+change introduced, or affects only a supporting mechanism; for the last, name the narrower
+alternative alongside the fix.
 
 # Reporting audience
 
@@ -101,5 +105,6 @@ presentation.
 # Completion
 
 Explain what was reviewed, what was found, and which affected acceptance criteria remain unverified.
-On re-review, mark prior findings resolved, still open, or superseded and retain the complete
-current result.
+On re-review, inspect the named corrections and their interaction with the reviewed change, mark
+prior findings resolved, still open, or superseded, and retain the complete current result. Raise
+new issues in previously reviewed code only when they break requested behavior.

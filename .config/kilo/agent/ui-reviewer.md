@@ -66,4 +66,5 @@ presentation.
 
 Finish when every changed interface file and affected UI contract is accounted for. Explain what was
 reviewed and found, including rendered/browser/PTY gaps and acceptance criteria still unverified.
-On re-review, mark prior findings resolved, still open, or superseded and retain the complete result.
+On re-review, inspect the named corrections and their interaction with the reviewed change, mark
+prior findings resolved, still open, or superseded, and retain the complete result.

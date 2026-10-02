@@ -36,6 +36,8 @@ root command, what it would prove, and the remaining evidence gap.
 Read the implementation, not just its description. Documentation may claim equivalence where code
 has diverged. Before proposing reuse, compare paths where the implementations differ rather than
 only where they match. If equivalence is unproven, report that instead of proposing the merge.
+Treat a reimplementation of an upstream owner's behavior as a candidate to delegate, narrow, or
+drop, rather than as a gap that needs more parity coverage.
 
 # Simplification lenses
 
@@ -70,5 +72,6 @@ presentation.
 
 Explain what was reviewed and which simplifications are supported by evidence, including why they
 preserve behavior, where the evidence is, and what to change. Identify coverage limitations and
-affected acceptance criteria still unverified. On re-review, mark prior opportunities
-applied, still open, or superseded and retain the complete current audit.
+affected acceptance criteria still unverified. On re-review, inspect the named
+corrections, mark prior opportunities applied, still open, or superseded, and retain the complete
+current audit.
