@@ -43,7 +43,7 @@
       "go": "latest",
       "bun": "latest",
       "node": "latest",
-      "github:aristocratos/btop": {"version": "latest", "os": ["linux"], "asset_pattern": "btop-{{ arch(x64=\"x86_64\", arm64=\"aarch64\") }}-unknown-linux-musl.tar.gz", "strip_components": 1, "bin_path": "bin", "postinstall": "mkdir -p \"$MISE_TOOL_INSTALL_PATH/share/btop\" && ln -s ../../themes \"$MISE_TOOL_INSTALL_PATH/share/btop/themes\"", "native": {"packages": {"apt": [], "pacman": [], "brew": ["btop"]}, "commands": ["btop"]}},
+      "github:aristocratos/btop": {"version": "latest", "os": ["linux"], "matching_regex": "^btop-(x86_64|aarch64)-unknown-linux-musl\\.tar\\.gz$", "strip_components": 1, "bin_path": "bin", "postinstall": "mkdir -p \"$MISE_TOOL_INSTALL_PATH/share/btop\" && ln -s ../../themes \"$MISE_TOOL_INSTALL_PATH/share/btop/themes\"", "native": {"packages": {"apt": [], "pacman": [], "brew": ["btop"]}, "commands": ["btop"]}},
       "python": "latest",
       "github:microsoft/TypeScript": {"version": "latest", "matching_regex": "^typescript-(linux|darwin|win32)-", "strip_components": 1, "bin_path": "lib"},
       "github:llvm/llvm-project": {"version": "latest", "os": ["linux"], "version_prefix": "llvmorg-", "matching_regex": "^LLVM-.*-Linux-(X64|ARM64)\\.tar\\.xz$", "strip_components": 1, "bin_path": "bin", "native": {"name": "llvm", "packages": {"apt": [], "pacman": [], "brew": ["llvm"]}, "commands": ["clang"], "brew_prefix": "llvm", "align_brew_version": true, "version_command": "llvm-config"}},
