@@ -283,6 +283,14 @@ determine when it applies.
 Fish is the main shell configuration. Zsh loads a native port of the daily Fish
 behavior, while Bash has a smaller independent setup.
 
+On Linux, `tmp_clean --dry-run` previews stale generated Go and agent/test
+artifacts in `/tmp`; `tmp_clean` permanently deletes them. Only owned recognized
+directories whose contents are at least two hours old are eligible. Repositories,
+recent artifacts, and paths referenced by your processes are preserved. Stop build
+jobs first: process checks are a snapshot, not a lock against new activity.
+Inaccessible processes are reported but cannot be checked.
+The command requires the compiled helper installed by `compile-agent-tools`.
+
 Do not replace your existing dotfiles wholesale. Compare each file with your
 current configuration and merge the parts you want. In particular, check:
 

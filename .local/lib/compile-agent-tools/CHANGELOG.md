@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.8
+
+Compile the standalone tmp_clean helper.
+
 ## 1.0.7
 
 Compile the manifest-owned batch-agent-sessions preparation and cleanup helper.
