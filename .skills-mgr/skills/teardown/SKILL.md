@@ -6,75 +6,49 @@ disable-model-invocation: true
 
 # Teardown
 
-Make the idea understandable before making it decorative. Author content as JSON; let the
-bundled renderer own the HTML, layout, and visual language. This is a standalone fork of
-`show-me`; it does not require that skill.
+Explain the requested idea as schema-validated JSON; the bundled renderer owns HTML and layout.
+This standalone fork of `show-me` does not need that skill. A small explanation may need two blocks.
 
 ## Compose
 
-Read [the block guide](references/blocks.md) to select the form that explains the current
-question, then [the schema](schema.json) for the exact allowed fields. For a complete runnable
-composition, consult [the showcase](examples/showcase.json) when an example would help.
+Read [blocks.md](references/blocks.md) for block selection and Markdown rules, then [schema.json](schema.json)
+for exact fields. Consult [showcase.json](examples/showcase.json) only when a runnable example helps.
 
-Lead with the answer or the distinction the reader needs. Follow with only the structure,
-behavior, comparisons, and evidence needed to understand it. Choose document `type` by purpose;
-block types are reusable across all document kinds. A small explanation may need only two blocks.
+Lead with the answer or needed distinction. Include only explanatory structure, comparisons, and
+evidence. Document `type` describes purpose, not a fixed template. Ground claims in supplied or
+inspected sources; distinguish observation, inference, unknowns, and illustrative examples.
+Evidence locations are labels: the renderer neither verifies nor resolves them. Keep secrets out.
 
-Use a narrow prose measure for the argument and dedicated blocks for dense detail: `anatomy`
-unpacks structured values, `annotated-code` pairs snippets with explanations, `requirements`
-collects known constraints, `paired-pipeline` aligns two paths stage by stage, and `questions`
-exposes unresolved decisions. For observation panels, use the metric snapshot fields in the block
-guide: labeled status, header metadata, structured values with units, source identifiers, and a
-shared explanatory footer. Record collection time for real observations; label illustrative
-readings explicitly. Figures take a footer as plain `caption` or Markdown `caption_md`, never both.
+Write UTF-8 JSON with `schema_version: "1.0"`. Fields are plain text unless named `_md`. Use nodes
+and edges for diagrams, not raw HTML/SVG/Mermaid/CSS/executable code. Explanatory code stays literal
+in a `code` block. Titles should explain the content, not inventory the investigation.
 
-Ground claims in the supplied material or inspected sources. Separate observation, inference,
-and unresolved questions. Keep hypothetical examples visibly labeled. Capability status means
-what the evidence establishes, not what the agent assumes. Record precise evidence locations;
-the renderer neither verifies them nor resolves evidence paths. Use concise, conversational phrasing
-and meaningful titles rather than an obligatory template or an inventory of everything inspected.
+Consult the relevant contract before adding these forms:
 
-Write a UTF-8 `.json` file satisfying `schema_version: "1.0"`. Content fields contain plain text
-unless named `_md`; their limited Markdown grammar is in the block guide. Express diagrams through
-nodes and edges, not HTML, SVG, Mermaid, CSS, or executable code. Code shown for explanation belongs
-in a `code` block. Keep secret values out of both the document and its source labels.
+- [Math](references/math.md): bounded notation, defined symbols, meaningful descriptions.
+- [Charts](references/blocks.md#horizontal-bar-charts): supplied nonnegative values, shared units,
+  source/period or illustrative context; missing measurements are not invented data.
+- [Images](references/blocks.md#images): explicit relative local assets and meaningful alt text;
+  only selected `src` paths are embedded. Cite real sources and label synthetic images.
+- [Badges](references/blocks.md#inline-badges): sparse meaningful labels, not implied live status.
 
-Use inline `:badge[label]{tone}` sparingly in Markdown when a short status belongs beside a claim.
-Follow the [badge rules](references/blocks.md#inline-badges): a meaningful plain label, one of four
-tones, and no implied live state. Color reinforces the label; it does not replace evidence.
-
-For algorithm notation, read [math notation](references/math.md) before writing inline `\(...\)`
-or an equation `math` block. Use only the supported subset, define symbols, and give each block a
-meaningful description. Keep unsupported syntax in literal code rather than implying it typesets.
-
-For quantities, use `bar-chart` with supplied nonnegative values, a shared unit, and source/period
-or illustrative scope in `context`. Read the [chart contract](references/blocks.md#horizontal-bar-charts).
-Never invent data to fill a chart; use unknown evidence when measurements are missing. The renderer
-supplies a zero baseline and a labeled data table for accessible reading and print.
-
-For screenshots or photographs, use an `image` block with a relative local `src` and meaningful
-`alt`. Read the [image contract](references/blocks.md#images) before selecting source files;
-only those explicit image paths are read and embedded. Label illustrative images and cite real
-image sources in captions. Markdown image syntax remains literal.
+Metric snapshots, captions, composition patterns, accessibility, and field limits belong to the
+block guide; use only those needed for the explanation.
 
 ## Render and check
 
-Use Node.js 22 or newer. Run the bundled helper through the available skill manager, or directly
-from the skill folder if using a copied package:
+Use Node.js 22+ through the skill manager, or from a copied skill folder:
 
 ```sh
 skills-mgr run teardown/scripts/render.mjs /absolute/path/explanation.json -o /absolute/path/explanation.html
-# Direct equivalent, with the installed skill folder as the working directory:
+# Direct equivalent from the skill folder:
 node scripts/render.mjs /absolute/path/explanation.json -o /absolute/path/explanation.html
 ```
 
-The output directory must already exist. The renderer validates before writing; fix reported
-field errors rather than relaxing the schema. `--validate` checks JSON and image assets without rendering.
-Existing output is protected; use a new filename, or `--force` only when replacing that artifact
-is within the user's request. Input JSON is never a valid output target.
+The output directory must exist. Validation precedes writing; fix field errors, not the schema.
+`--validate` checks JSON and image assets without rendering. Input JSON cannot be the output.
+Use a new filename or `--force` only for authorized replacement.
 
-Inspect the generated HTML for the actual content: reading order, crowded labels, evidence
-placement, and narrow-screen readability. Split overloaded diagrams or tables by the idea they
-explain. Finish with links to the HTML and its source JSON and a brief description, not a second
-full prose rendition. If the user requests JSON only, return just the valid document and omit the
-rendering step. Preserve their requested output location and opening behavior.
+Inspect HTML reading order, labels, evidence placement, and narrow-screen readability. Split
+crowded figures by idea. Deliver HTML and source-JSON links with a short description, not another
+full prose rendition. For JSON-only requests omit rendering. Honor output location/opening choices.

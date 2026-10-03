@@ -94,7 +94,7 @@ This is preferable to subscribing a parent and manually rewriting the configurat
 - Writes map `false` to `undefined`, removing the deprecated field instead of serializing stale compatibility configuration.
 - `reset()` continues to operate on the source field.
 
-For every derived adapter, verify `from`, `to`, and reset/omission behavior. Use `useCompute` instead when consumers never write through the derived value.
+For an affected derived adapter, verify `from`, `to`, and reset/omission behavior. Use `useCompute` instead when consumers never write through the derived value.
 
 ## Key-Only and Whole-Collection Boundaries
 

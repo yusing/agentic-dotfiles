@@ -4,79 +4,44 @@ description: Measure and optimize a bounded Go hot path on amd64 without changin
 disable-model-invocation: true
 ---
 
-# Go Microoptimizations
+# Go microoptimizations
 
-Keep the work bounded to a production hot path with a concrete performance question. Identify its
-callers and realistic input shape: size, hit/miss mix, encoding, allocations, and profile evidence.
-Correctness and caller relevance outrank a smaller instruction count.
+Optimize one production hot path with a concrete performance question. Establish its callers,
+realistic sizes/hit-miss mix/encoding, and available profile evidence. Correctness and production
+relevance outrank instruction count.
 
-## Measurement loop
+## Measurement
 
-Capture focused correctness checks and a baseline for the claimed runtime or allocation effect.
-Use the same symbol, Go version, GOOS, GOARCH, and workload before and after. For example:
+Capture focused correctness and runtime/allocation baselines for the same symbol, Go version,
+GOOS, GOARCH, and workload before and after:
 
 ```sh
 rtk go test ./pkg -run '^$' -bench '^BenchmarkFunc$' -benchmem -count=8
 ```
 
-Read [references/assembly.md](references/assembly.md) when assembly shape is part of the hypothesis
-or requested result. Apply a coherent change, check behavior, and compare the relevant evidence.
-Prefer `benchstat` when available. Keep improvements only without material regression; restore
-only this task's rejected edits, preserving unrelated work.
+For sub-20ns paths use at least eight runs and compare ranges; prefer `benchstat` when available.
+Include relevant common, hit/miss, and affected-edge cases, with `-benchmem` for allocation claims.
+Read [assembly.md](references/assembly.md) only for an assembly hypothesis or requested metric.
 
-## Decision order
+Keep changes only without material relevant regressions. Runtime evidence can justify larger
+assembly; an assembly win cannot justify a runtime loss. Restore only this task's rejected edits.
 
-Correctness > caller relevance > benchmark/allocation evidence > assembly shape
-> readability cost.
+## Candidates and traps
 
-- Assembly win loses when relevant benchmark regresses.
-- Benchmark win may justify larger assembly when benchmark matches production.
-- Allocation claim needs `-benchmem` or clear escape/allocation evidence.
-- Capacity change affects append behavior; treat as API risk unless proven
-  private.
+Consider proven hot helpers, repeated ASCII classification, loop allocation, no-change fast paths,
+known output bounds for `strings.Builder.Grow`, and `math/bits` intrinsics. A helper needs shared
+hot logic or a clearer unsafe/bit invariant. Avoid broad parser rewrites, unsupported stdlib
+replacements, and instruction-count wins without a production caller and benchmark benefit.
 
-## Benchmark bar
+Preserve:
 
-- Sub-20ns path: at least `-count=8`; compare ranges, not single run.
-- Include hit, miss, common caller, and affected edges.
-- Use `-benchmem` where allocation possible.
-- Relevant cases improve; unrelated cases avoid material regression.
+- Invalid UTF-8 semantics: string range emits `utf8.RuneError`; byte loops preserve bytes.
+- Rune versus byte search: `strings.IndexAny` and `strings.IndexByte` differ.
+- Nil/empty, order, duplicates, externally visible capacity, and backing-string retention.
+- Ownership/lifetimes for read-only unsafe views; hidden goroutines need a real contract.
 
-## Candidates
+Validate affected behavior with existing checks or a focused test in a test file. Byte/string
+rewrites need relevant ASCII, Unicode, and invalid-UTF-8 cases, not an unrelated matrix.
 
-Good: proven hot tiny helper, repeated ASCII classification, loop allocation,
-string/rune conversion, builder missing no-change path or `Grow`, known one-byte
-separator, bit primitive mapping to `math/bits`.
-
-Poor: no production caller/profile, broad parser rewrite, generic replacement for
-optimized stdlib, parity-sensitive behavior, neutral/worse benchmark with only
-instruction-count win.
-
-## Behavior traps
-
-- Invalid UTF-8: string range emits `utf8.RuneError`; byte loop preserves bytes.
-- `strings.IndexAny` uses runes; `IndexByte` uses byte.
-- Substring may retain large backing string.
-- Preserve nil versus empty, order, duplicates, and externally visible capacity.
-- Unsafe no-copy view: read-only, immutable source, obvious lifetime.
-- Hidden goroutine or changed ownership needs explicit contract.
-
-## Useful patterns
-
-- Prefer `math/bits` intrinsics over hand-rolled scans/counts.
-- Proven ASCII one-byte separator: `strings.IndexByte`.
-- No-change fast path before allocation when behavior stays exact.
-- Known output bound: `strings.Builder.Grow`.
-- High expected uniqueness: consider preallocated map/set.
-- Add helper only for real duplicate hot logic or clearer unsafe/bit invariant.
-
-## Correctness coverage
-
-No existing test: add focused test in test file. Cover affected edges. Byte/string
-rewrite needs relevant ASCII boundary, Unicode, and invalid-UTF-8 cases.
-
-## Report
-
-For kept change: file/function, preserved behavior, before/after environment and
-any requested assembly metrics, benchmark ranges, tests, tradeoff/risk. For rejected attempt:
-reason; source remains restored.
+Report the function, preserved contract, environment, benchmark ranges, requested assembly metrics,
+checks, and tradeoffs. For rejected attempts, give the reason and confirm task edits were restored.

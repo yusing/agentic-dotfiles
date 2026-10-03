@@ -6,94 +6,58 @@ disable-model-invocation: false
 
 # Council
 
-Convene a council when an important decision retains multiple evidence-supported
-conclusions that available evidence and authoritative owners cannot settle. Preserve independent
-first passes; ordinary inspection follows the standing review policy.
+Use for an important question that still has multiple evidence-supported answers after ordinary
+investigation. State the target, output, evidence boundary, assumptions, exclusions, and authority.
+Ordinary inspection follows the standing review policy.
 
-## Establish the target
+## Composition
 
-State the question, requested output, authoritative evidence, assumptions, exclusions, and the
-authorization layer. Keep every member at that layer. Deliberation does not authorize repository
-edits, external writes, process control, or any other operation the user did not request.
+Use the smallest useful council: 2 members for two supported approaches, 3 for interacting concerns,
+4 only for exceptional difficulty that benefits from additional viewpoints. With fewer slots,
+batch members without exposing peers' first passes.
 
-Choose the smallest useful council:
+Every council keeps at least one member within the target's implementation-evidence boundary.
+Investigators replace blind seats and occupy at most half the seats; evidence does not add seats.
+Keep `brief.md` implementation-neutral. Investigators gather implementation evidence themselves.
 
-- Use 2 members for two evidence-supported interpretations or approaches.
-- Use 3 members for a complex target spanning several interacting concerns.
-- Use 4 members only for an exceptionally difficult, ambiguous, cross-domain, or high-stakes
-  target that benefits from maximum viewpoint diversity.
+Verify blindness from assembled client context, including inherited instructions/hooks. No-history
+alone is not isolation. If exposed implementation cannot be suppressed through a verified neutral
+path, report strict blindness unavailable and return the target to main for an authorized alternative;
+asking a member to ignore received evidence does not restore independence.
 
-Do not inflate the council. If fewer concurrency slots are available, run members in batches while
-preserving first-pass independence.
+## Member configuration
 
-## Choose the composition
+Select native council roles with unique names and self-contained, no-history briefs
+(Codex: `fork_turns: "none"`). Omit `model`; the role/client owns it. Omit `reasoning_effort`
+by default. An allowed override may use `high` for complex questions or `xhigh`/`max` for exceptional
+ones supported by the model; fixed role settings remain authoritative.
 
-Select roles under the shared role-selection policy. Evidence never buys an extra seat.
+## Artifacts and phases
 
-Every council keeps at least one member whose first-pass context meets the target's implementation
-evidence boundary. Fill at most half the seats with investigators: an investigator replaces a blind
-seat rather than adding one.
-
-Verify that boundary at the client's assembled context before claiming implementation blindness.
-No-history forks still inherit project/user instructions and can receive hook context. If those
-inputs expose implementation details and the client provides no verified suppression or neutral
-session path, report strict blindness unavailable and return the target to main for an authorized
-alternative. Do not tell a member to ignore material it already received.
-
-Keep `brief.md` implementation-neutral for every member. The investigator gathers implementation
-evidence itself, so a blind member's first pass never sees it.
-
-## Configure members
-
-Spawn every member with its chosen role, a unique task name, no inherited conversation history
-(Codex: `fork_turns: "none"`), and a self-contained handoff. Omit `model` on every spawn; model
-selection belongs to the selected role and client.
-
-Omit `reasoning_effort` by default to use the role's configured effort or the client's inherited
-default. When the client permits an effort override and the discussion target needs more reasoning,
-use `high` for complex targets and `xhigh` or `max` for exceptionally difficult targets when the
-selected model supports it. A fixed role setting remains authoritative.
-
-## Create the artifact handoff
-
-Create one task-scoped root with `mktemp -d`, then create these paths beneath it as needed:
+Create a task-scoped root with `mktemp -d` outside the repository. Write the target/evidence manifest
+to `brief.md`; prepare absolute result paths as needed:
 
 ```text
-brief.md
 answers/member-N.md
 reviews/member-N.md
 replies/member-N.md
 final.md
 ```
 
-Write the complete target and evidence manifest to `brief.md`. Give every member absolute artifact
-paths. Keep repository files read-only; each member may write only its assigned result artifact.
+Repository files stay read-only. Each member writes only its assigned result. Every handoff names
+`phase`, `brief_artifact`, `input_artifacts`, and `result_artifact`.
 
-## Run the deliberation
+1. **Answer:** spawn all members with the brief and separate answer artifacts. No member seeks
+   peer artifacts; relay no investigator finding during first passes. Wait for all answers.
+2. **Review:** choose one existing member as finalizer by target fit. Give it every answer and
+   a review artifact. Its comparison identifies material disputes/gaps and whether replies are
+   needed. Wait for its review.
+3. **Reply, only if needed:** give non-finalizers the answers and review, with separate reply
+   artifacts. Wait for their responses to unresolved points.
+4. **Final:** give the finalizer the brief and every answer/review/reply, assigning `final.md`.
+   Require one user-ready answer, not concatenated outputs or votes, preserving uncertainty/dissent.
 
-1. Spawn all members for the `answer` phase. Give each the brief and a unique answer artifact. Tell
-   each member not to read or seek another member's artifacts. An investigator gathers its own
-   evidence here, so relay no finding of its to any member. Wait for every answer.
-2. Choose one existing member as finalizer based on fit for the target. Either role may finalize.
-   Give it all answers for the `review` phase and a unique review artifact. Require comparison of
-   claims and evidence, identifying material disagreements or gaps that need a peer response.
-   Its routing status indicates whether replies are needed. Wait for that review.
-3. Only when replies are needed, give the non-finalizers all answers and the review for the `reply`
-   phase. Require responses to the unresolved points in unique reply artifacts, then wait for them.
-4. Send the finalizer its second follow-up for the `final` phase. Give it the brief plus every
-   answer, review, and reply artifact, and assign `final.md`. Require one user-ready response that
-   resolves disagreements where the evidence permits, preserves material uncertainty or dissent,
-   and does not merely concatenate member outputs.
-
-Each handoff must name `phase`, `brief_artifact`, `input_artifacts`, and `result_artifact`. Do not
-reuse a member for more than these two follow-ups.
-
-## Return the result
-
-Read `final.md` and use it as the substantive response to the main thread. Do not add a competing
-parent synthesis. Add only an operational limitation that the finalizer could not represent, if
-one exists.
-
-Remove the temporary artifact root after its contents have been consumed and the response has been
-delivered. If a required member is blocked, report the missing coverage instead of inventing a
-consensus.
+Use at most two follow-ups per member. Main relays phase artifacts without reading or reproducing
+member deliberations; read only `final.md` for the substantive response. Add no competing synthesis,
+only an operational limit the finalizer could not represent. Report blocked coverage instead of
+inventing consensus. Remove the owned temporary root after consumption and delivery.

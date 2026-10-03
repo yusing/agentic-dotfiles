@@ -5,7 +5,8 @@ description: Use encoding/json/v2 for new or migrated JSON in Go 1.27+.
 
 # Go JSON v2
 
-Use `encoding/json/v2` for new and migrated JSON on Go 1.27+.
+Use `encoding/json/v2` for requested new or migrated JSON on Go 1.27+; this is not a request
+to migrate unrelated call sites or change permissive decoding contracts.
 
 Read [references/api.md](references/api.md) for functions and options.
 Read [references/behavior.md](references/behavior.md) before changing JSON bytes a caller or test can see.
@@ -26,6 +27,7 @@ Import v2 as `json`. Import `jsontext` for indent, streaming, and validity. Impo
 - Call `json.Marshal` / `json.Unmarshal` on `[]byte`. Turn a string with `string(data)` or `[]byte(text)`.
 - Pass a pointer to `Marshal` when the value is already addressable.
 - Keep a trailing newline only where `Encoder.Encode` used to write one: `json.MarshalEncode(jsontext.NewEncoder(w), v)`.
-- Reject unknown object members with `json.RejectUnknownMembers(true)` and `errors.Is(err, json.ErrUnknownName)`.
+- When the consumer requires rejection of unknown members, use `json.RejectUnknownMembers(true)`
+  and `errors.Is(err, json.ErrUnknownName)`.
 - Opt into one named difference (`json.Deterministic(true)`, `json.MatchCaseInsensitiveNames(true)`, `jsonv1.FormatDurationAsNano(true)`) instead of `jsonv1.DefaultOptionsV1()`, unless a named contract needs full v1 semantics.
 - Preserve JSON numbers in `any` with `json.WithUnmarshalers` over `*any` as in [references/api.md](references/api.md#numbers-in-any).

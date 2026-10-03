@@ -89,9 +89,10 @@ Load the `herdr` skill only for recovery or a Herdr operation these steps do not
    the client actually loaded.
 6. **Send the prompt.** Run `herdr agent prompt <name> "<text>" --wait --until working`
    with one text argument: the captured task text verbatim. Append a handoff only for
-   task-specific information missing from that text: preservation/acceptance conditions,
-   relevant evidence, repository-edit boundary, delivery authorization and communication
-   route. Include another owner only for a concrete overlap. Point to applicable project
+   missing evidence, user-set preservation/acceptance conditions, repository-edit boundary,
+   delivery authorization and communication route. Distinguish an unverified cause from the
+   assignment; owner pointers are not requests for extra features or surface coverage.
+   Include another owner only for a concrete overlap. Point to applicable project
    guidance rather than restating its documentation, testing or review rules. Carry settled decisions and authorization without reconfirming them.
    Launching does not by itself authorize a commit, merge or install. Required completion
    evidence uses the session's existing result channel; when that is a journal, its guidance

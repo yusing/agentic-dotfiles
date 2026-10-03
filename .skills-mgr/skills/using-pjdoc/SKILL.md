@@ -42,7 +42,9 @@ pjdoc validate --scope all
 Expect one newline-terminated JSON object. Read `status`, `scopes`, and `errors`; successful validation has `status: "ok"`, exit `0`, and empty `results` and `errors`.
 
 - `invalid_request` / exit `2`: correct the command, scope, or list kind.
-- `invalid_docs` / exit `3`: fix every structured documentation error at its reported `path`, `line`, and `id`, then validate again.
+- `invalid_docs` / exit `3`: fix in-scope errors at the reported `path`, `line`, and `id`, then
+  validate again. Report unrelated errors as limits on a project-wide integrity claim.
 - `failed` / exit `4`: diagnose root discovery, I/O, parsing, or internal failure rather than treating the documents as valid.
 
-A validation invocation is read-only. Completion requires the affected scope to pass during iteration and `--scope all` to pass before a project-wide claim.
+Validation is read-only. For document edits, require the affected scope to pass; use `--scope all`
+before a project-wide integrity claim. A table-of-contents lookup alone needs no validation run.

@@ -6,26 +6,19 @@ disable-model-invocation: true
 
 # Batch agent sessions
 
-Turn one list of issues into parallel, visible agent sessions, one per batch, and deliver a
-single integrated result. Task understanding, grouping, budgets, task text, completion
-inspection, and integration remain agent decisions. The installed helper owns deterministic
-preparation, launch, naming, verification, prompt delivery, concurrent waiting, additive
-batches, follow-ups, and cleanup, not agent-authored shell orchestration or temporary scripts.
-Use `new-agent-session`'s agent-choice defaults, including Mekugi for Codex unless plain Codex
-was requested; its manual launch steps belong to standalone sessions, not this workflow.
+Deliver one integrated outcome through visible, isolated batch sessions. The coordinator owns
+assignments, budgets, acceptance, and integration; the installed helper owns preparation, launch,
+verification, prompt delivery, waits, follow-ups, and cleanup. Use it rather than temporary shell
+orchestration. Agent-kind defaults come from `new-agent-session`, including Mekugi for Codex;
+that skill's manual launch steps are for standalone sessions.
 
 ## Understand the assignment
 
-Before grouping issues or classifying difficulty and risks, understand each problem and the
-requested task: the observed and intended behavior, affected owner, scope and constraints,
-and what would establish completion. Use the supplied issues and evidence, with targeted
-source inspection or reproduction where needed to resolve facts that could change grouping
-or routing. Distinguish established facts from assumptions and unresolved questions; an
-issue's wording, length, or apparent category is not enough to judge its reasoning burden.
-
-Gather enough evidence to make a grounded assignment, not to solve every issue before dispatch.
-When diagnosis is itself the task, identify what remains unknown and what the agent must
-establish. Base the difficulty, risks, model, and effort on that understood assignment.
+Identify each issue's observed failure, intended behavior, constraints, likely owner, and
+completion evidence. Inspect or reproduce only facts that can change grouping or routing;
+leave unresolved diagnosis to the assigned session rather than solving it before dispatch.
+Label source facts, hypotheses, and unsettled user decisions separately. Choose budgets from
+that assignment's reasoning burden, not its wording, length, or apparent category.
 
 ## Batch
 
@@ -80,14 +73,11 @@ recovery and receipts in [references/preparation.md](references/preparation.md),
 skills-mgr run batch-agent-sessions/scripts/sessions.sh prepare --cwd "$PWD" --plan /absolute/plan.json
 ```
 
-The command creates the run directory under the helper's state directory, copies or recovers
-evidence, creates and verifies linked worktrees on one shared base, initializes in each checkout the
-submodules the source checkout has initialized, and runs the supplied setup. Submodules use the base's
-recorded commits on batch-local named branches, cloned from the source's local submodule repositories, so agents need no
-initialization instructions and unpublished pinned commits still resolve. It prints one JSON roster with
-the persistent manifest, evidence paths, and each batch's branch, checkout, workspace, and pane.
-Give agents only evidence paths it reports as present. After a nonzero exit, read the reference
-before retrying; rerunning creates a new run rather than repairing this one.
+Preparation returns the persistent manifest, copied evidence, and linked worktree/pane roster.
+It pins the committed base; uncommitted source changes do not follow. It initializes the source's
+populated submodules at recorded commits on batch-local branches, including unpublished local
+commits, then runs supplied setup. Give agents only reported-present evidence. For partial failure,
+use the reference's recovery flow: repeating prepare creates another run, not a repair.
 
 ## Fan out
 
@@ -97,22 +87,26 @@ Run one helper command with the retained manifest, before waiting on any session
 skills-mgr run batch-agent-sessions/scripts/sessions.sh launch --manifest MANIFEST
 ```
 
-The helper uses the prepared panes, selects unique harness names, launches and verifies the
-expected processes, checks selected Codex budgets against the loaded client UI, and delivers
-each task until `working` is observed. It records effects before attempting them and does not
-blindly repeat uncertain launch or prompt delivery. Reuse its receipts and recovery instructions
-instead of manually renaming panes, launching processes, or typing prompts.
+The helper verifies the panes/processes and effective loaded Codex budget, then confirms task
+delivery by observed `working` activity. Reuse its recorded effects/receipts; do not manually
+rename, launch, or resend after uncertain delivery.
 
 Each task is its batch's verbatim issue text, not the coordinator's whole request, other batches,
-or skill invocation. Add only missing batch-specific decisions and evidence in `handoff`, including
-branch-commit authorization and the communication route below. Work inside a submodule is
-committed on its prepared named branch and recorded by a gitlink commit on the batch branch. Those branch commits are part of
-this workflow; the coordinator owns integration. Pushing or installing requires separate user
+or skill invocation. `handoff` supplies missing evidence, owner pointers, settled user decisions,
+branch-commit authorization, and the communication route below. Mark causal/design guesses as
+hypotheses, not requirements. Owner pointers do not require changes on every named surface;
+continuity concerns do not request new persistence or switching/resume features. Derive additional
+acceptance cases from the reported failure or a demonstrated affected contract, not an idealized
+feature/test matrix. Leave implementation choices to the batch session within that boundary.
+
+Each batch session is an independent main, not a native worker. Applicable main/project guidance
+owns test delegation, review, and final document timing; this workflow adds no automatic subagents.
+Submodule work is committed on its prepared named branch and recorded by a gitlink commit on the
+batch branch. Those commits are part of this workflow; the coordinator owns integration. Pushing or installing requires separate user
 authorization. Handoff evidence placeholders resolve only to copies the helper reports as present.
 
-Report the launched roster (batch, branch, worktree, workspace, pane, agent name, effective
-model/effort and routing rationale) once, then wait. Existing prepared manifests without assignment
-fields can receive them through `launch --plan`; it cannot rewrite an already-launched assignment.
+Report the roster once: batch, branch, checkout, workspace/pane, agent name, effective budget,
+and rationale. `launch --plan` supplies missing prepared assignments, not launched replacements.
 
 ## Communication
 
@@ -138,15 +132,11 @@ Use the helper to wait on all outstanding batches concurrently:
 skills-mgr run batch-agent-sessions/scripts/sessions.sh wait --manifest MANIFEST --batch composer --batch labels
 ```
 
-It returns the first idle, done, blocked, or unknown event and cancels only the other wait
-clients, not their agents. Prefer a background command where the client supports one. Read the
-reported session's journal or pane, act on it, then wait on the remaining outstanding batches.
-Select those batches explicitly so a previously inspected settled session does not wake the
-next wait immediately. A settled agent is not necessarily finished; timeout is not completion.
-
-Mekugi can report `unknown` after a completed turn. For these sessions, also wake on `unknown`
-and inspect the visible pane plus the reported commits; do not treat `unknown` as completion
-or wait indefinitely for an idle transition that the integration does not emit.
+On the first idle/done/blocked/unknown event, the helper cancels other wait clients, not agents.
+Read that session's journal/pane and act, then explicitly select remaining outstanding batches.
+Use a background wait where supported. Lifecycle state and timeout do not prove completion.
+Mekugi may remain `unknown` after a turn: inspect its pane/commits rather than infer completion
+or wait indefinitely for `idle`.
 
 - Answer a question that falls within the authority already granted; otherwise relay it to the
   user. `herdr agent prompt` rejects a blocked agent, so answer in its pane's question input.
@@ -178,19 +168,20 @@ verbatim task text, and any missing handoff:
 skills-mgr run batch-agent-sessions/scripts/sessions.sh follow-up --manifest MANIFEST --plan /absolute/follow-up.json
 ```
 
-Busy or blocked sessions retain queued follow-ups without terminal input. Once ready, run
-`follow-up --manifest MANIFEST` to deliver the next queued task per ready session. For Mekugi's
-unknown state, inspect the visible pane and add `--ready-unknown NAME` only when it is ready for
-input with no ongoing turn or question UI. Stable IDs make retries idempotent; uncertain delivery
-stays recorded and blocks further delivery and cleanup until inspected and resolved as described
-in the reference. Do not replace the original assignment or restart its session for an addendum.
+Busy/blocked sessions queue tasks without terminal input. `follow-up --manifest MANIFEST` sends
+one queued task per ready session. For unknown Mekugi state, use `--ready-unknown NAME` only after
+visibly confirming no ongoing turn/question UI. Stable IDs are idempotent; uncertain delivery
+blocks further sends/cleanup until resolved under the reference. Addenda preserve the assignment
+and session, not replace or restart them.
 
 ## Integrate
 
 After every batch is finished or explicitly abandoned:
 
-1. Review each branch's commits against its batch: every issue addressed or reported as
-   remaining, and no work leaking outside the batch.
+1. Review each branch against the original issues and settled decisions, not coordinator-invented
+   requirements: every issue addressed or reported as remaining, with affected retained behavior
+   preserved. Remove unjustified implementation/test scaffolding instead of demanding more machinery
+   to support it. Keep unrelated findings as reported follow-up work.
 2. Integrate the branches into the source checkout's branch, one at a time, in an order that
    minimizes conflicts, preserving separate commits for distinct work rather than squashing
    by batch. Use the `commit` skill for any commits written or revised during integration;
@@ -214,7 +205,8 @@ After every batch is finished or explicitly abandoned:
 4. Verify recursively that integrated source submodules are on their intended named branches,
    their changes are retained, and parent gitlinks record the integrated tips. Run the project's relevant validation on the integrated result, and fix integration
    breakage directly. Send a fix back to its batch's agent only when it needs that agent's
-   context.
+   context. Check affected documents against the validated integrated behavior; request another
+   document pass only for a concrete integration mismatch, not a blanket repeat of settled work.
 
 ## Clean up
 
@@ -225,16 +217,11 @@ manifest and run:
 skills-mgr run batch-agent-sessions/scripts/sessions.sh cleanup --manifest MANIFEST --completed composer --completed labels
 ```
 
-The command removes only this run's verified, clean, settled resources and keeps branches and the
-manifest. For checkouts with submodules, it refuses unretainable nested work and uninspected
-repository storage left by removed or deinitialized submodules, retains changed
-nested commits as the batch branch in the source submodule repositories, then forces the removal
-that Git otherwise refuses.
-The reference describes refusals and repeat runs.
-If a completed Mekugi session still reports `unknown`, inspect its visible pane and add
-`--ready-unknown NAME` only when it is ready for input, not working or blocked. Herdr closes the
-owned subspaces; do not synthesize Ctrl-C sequences or kill processes yourself. Leave unfinished
-or unintegrated batches and their evidence intact.
+Cleanup verifies owned, clean, settled resources and retains branches/manifest and nested commits.
+Use the reference's cleanup checks for submodule storage, refusals, and retries; do not bypass them.
+For completed-but-unknown Mekugi, attest `--ready-unknown NAME` only after inspecting input readiness,
+never while working/blocked. Let Herdr close owned spaces, not synthesized Ctrl-C or process kills.
+Preserve unfinished/unintegrated batches and evidence.
 
 ## Delivery evidence
 

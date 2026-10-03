@@ -27,8 +27,9 @@ The result should be both accurate and usable, not merely pass a link checker.
 
 ## Audience references
 
-Consult the relevant reference when choosing a structure or covering an unfamiliar
-repository type. These are starting points, not required section lists:
+Consult a reference when choosing a structure or covering an unfamiliar repository type.
+Its outline and evidence list are options for the affected claims, not a whole-repository
+audit or required section list:
 
 - [Application or service](references/application.md)
 - [Library, SDK, or package](references/library.md)

@@ -12,8 +12,9 @@ history, or pushing; those follow the existing request and authorization.
 
 ## Shape commits
 
-- Make each commit one coherent change that builds and passes its tests on its own. Split
-  unrelated edits; keep a refactor separate from the behavior change it enables.
+- Make each commit one coherent, independently valid change. Reuse checks for its unchanged
+  tree/scope, not unrelated suites. Split unrelated edits; keep an enabling refactor separate
+  from its behavior change.
 - Stage explicitly (`git add <paths>` or `git add -p`), then review `git diff --staged` before
   committing. Leave unrelated working-tree changes unstaged.
 - Commit with the configured signing. A signing failure or timeout usually means the user must
