@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.5
+
+Mask stdin only for literal quoted identifier delimiters with a proven terminator.
+Preserve the previous scanner for complex headers and unquoted, unsupported, or
+unmatched heredocs, so substitutions, locale quoting, and backslash-newline forms
+cannot hide executable header or following commands.
+
 ## 1.0.4
 
 Recognize ANSI-C quoted tokens and their escapes, and keep their contents inert during

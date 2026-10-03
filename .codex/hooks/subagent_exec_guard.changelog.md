@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.3
+
+Allow harmless quoted Python heredocs without mistaking their variable names or
+literal container text for executable commands. Keep real header/following commands
+inside the container boundary. Unsupported heredoc forms retain the previous scan;
+do not mask through an unproven terminator.
+
 ## 1.1.2
 
 Fix a false denial of in-process Bun checks carried in ANSI-C quoted Mekugi shell commands.

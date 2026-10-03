@@ -1,4 +1,4 @@
-export const VERSION = "1.0.4";
+export const VERSION = "1.0.5";
 
 export const SHELLS = new Set(["bash", "dash", "sh", "zsh"]);
 const COMMAND_PREFIXES = new Set(["!", "do", "elif", "exec", "if", "then"]);
@@ -19,10 +19,88 @@ export function isSeparatorToken(token: string): boolean {
   return token.length > 0 && [...token].every((character) => SEPARATORS.has(character));
 }
 
+// Mask only literal quoted identifier delimiters with a complete terminator.
+// Complex headers and other heredoc forms keep the previous scanner.
+function heredocSource(command: string): string {
+  if (!command.includes("<<")) return command;
+  let pending: { delimiter: string; stripTabs: boolean }[] = [];
+  const parts: string[] = [];
+  let index = 0;
+  let retained = 0;
+  let tokenBoundary = true;
+  try {
+    while (index < command.length) {
+      const character = command[index];
+      const afterComment = commentEnd(command, index, tokenBoundary);
+      if (afterComment !== index) {
+        index = afterComment;
+        continue;
+      }
+      // Do not assign newline ownership in substitutions, groups, or continuations.
+      if ("$`\\(){}".includes(character)) return command;
+      if (character === "'" || character === '"') {
+        const quoted = readQuoted(command, index);
+        const spelling = command.slice(index, quoted[1]);
+        if (spelling.includes("\n") || character === '"' && /[$`\\]/.test(spelling)) return command;
+        index = quoted[1];
+        tokenBoundary = false;
+        continue;
+      }
+      if (character === "<" && command[index + 1] === "<" && command[index + 2] === "<") {
+        index += 3;
+        continue;
+      }
+      if (character === "<" && command[index + 1] === "<") {
+        index += 2;
+        const stripTabs = command[index] === "-";
+        if (stripTabs) index += 1;
+        while (WHITESPACE.has(command[index] ?? "")) index += 1;
+        const delimiter = command.slice(index).match(/^(['"])([A-Za-z0-9_]+)\1(?=[ \t\r\n;&|(){}<>]|$)/);
+        if (!delimiter) return command;
+        index += delimiter[0].length;
+        pending.push({ delimiter: delimiter[2], stripTabs });
+        tokenBoundary = false;
+        continue;
+      }
+      if (character === "\n" && pending.length > 0) {
+        parts.push(command.slice(retained, ++index));
+        for (const document of pending) {
+          let terminated = false;
+          while (index < command.length) {
+            const newline = command.indexOf("\n", index);
+            const end = newline < 0 ? command.length : newline;
+            let line = command.slice(index, end);
+            if (document.stripTabs) line = line.replace(/^\t+/, "");
+            index = newline < 0 ? command.length : newline + 1;
+            if (line === document.delimiter) {
+              terminated = true;
+              break;
+            }
+          }
+          if (!terminated) return command;
+        }
+        pending = [];
+        parts.push("\n");
+        retained = index;
+        tokenBoundary = true;
+        continue;
+      }
+      tokenBoundary = WHITESPACE.has(character) || PUNCTUATION.has(character);
+      index += 1;
+    }
+  } catch {
+    return command;
+  }
+  if (pending.length > 0) return command;
+  parts.push(command.slice(retained));
+  return parts.join("");
+}
+
 export function shellTokens(
   command: string,
   punctuation: ReadonlySet<string> = PUNCTUATION,
 ): string[] {
+  command = heredocSource(command);
   const tokens: string[] = [];
   let index = 0;
 
@@ -291,6 +369,10 @@ function parenthesizedSubstitution(
 }
 
 export function commandSubstitutions(command: string): string[] {
+  return substitutionsIn(heredocSource(command));
+}
+
+function substitutionsIn(command: string): string[] {
   const substitutions: string[] = [];
   let quote: string | undefined;
   let index = 0;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7c465027b098c3a67f4633948d1b481340741407",
+  "sourceCommit": "bc3a2d4589a8c01eb72f535dfe27222905342424",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -245,13 +245,13 @@
     {
       "path": ".codex/hooks/lib/shell_command.changelog.md",
       "kind": "file",
-      "sha256": "678c596b45e493d1732d30aa518c3cfc8b2167d71ba9d526b50ab5be742c8931",
+      "sha256": "72c6f33fd2c75a691d7dffe2889f9ee469fe17ad4cee8b7479b6e15b812ed2e7",
       "executable": false
     },
     {
       "path": ".codex/hooks/lib/shell_command.ts",
       "kind": "file",
-      "sha256": "39c09d50d073b0a32481e5053f3b52c0a4d3ffcc95ba629c6d1e9da94e896578",
+      "sha256": "e1a3f5e7c4385a70537b0bbb6d5bb583436ce6636d82ee5345b4fdb9fea02ba4",
       "executable": false
     },
     {
@@ -281,13 +281,13 @@
     {
       "path": ".codex/hooks/subagent_exec_guard.changelog.md",
       "kind": "file",
-      "sha256": "b6997ea23a3317516daaa7fe05660a3931e6ec00ea985f675c070e03ab08a0d6",
+      "sha256": "1cf9eb2d5385fb72565928d03c20652c8ae9a442d9aabe375694d8d17eaae215",
       "executable": false
     },
     {
       "path": ".codex/hooks/subagent_exec_guard.ts",
       "kind": "file",
-      "sha256": "de2bc0ecc675e7005ca0a22a11744a44baa18297c2dfc5a0a08c62383d017f0d",
+      "sha256": "fe6d04b503a8c9db7103a7f7820f3c2cd8eb35d924e40c1e4dc316422e6866d7",
       "executable": false
     },
     {
