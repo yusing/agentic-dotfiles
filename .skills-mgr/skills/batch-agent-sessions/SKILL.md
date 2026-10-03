@@ -48,14 +48,11 @@ particular batch. Choose what they leave open from each batch's complete assignm
 coordinator's budget or the number of issues. For other agent kinds, retain their requested or
 configured budgets rather than translating OpenAI names or unsupported effort levels.
 
-For Codex/Mekugi, use `gpt-6.1-sol` for bounded lookup, mechanical or support work, and implementation
-with a settled outcome and localized behavior. Prefer `gpt-6-astra` when success depends on ambiguous
-diagnosis, cross-cutting design, or coupled persistence, recovery, concurrency, or lifecycle reasoning.
+For Codex/Mekugi, use `gpt-6.1-sol`.
 Then select effort for the actual reasoning burden, independently of the model:
 
 | Effort | Assignment evidence |
 | --- | --- |
-| `low` | Deterministic lookup or mechanical/support work with settled inputs and little consequential inference. |
 | `medium` | A clear contract with limited design choices or short causal traces; focused checks can establish the outcome. |
 | `high` | Competing causal explanations, nonlocal state transitions, interacting invariants, or consequential migration/recovery decisions requiring substantial reasoning. |
 | `xhigh` | Long-horizon, tightly coupled reasoning that remains difficult after useful decomposition and evidence gathering; justify the extra latency/cost with concrete task difficulty or representative results. |

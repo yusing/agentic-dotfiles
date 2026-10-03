@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.8
+
+Stop publishing the removed writing-for-agents skill path; its guidance now lives in the
+instruction- and skill-authoring task documents.
+
 ## 1.3.7
 
 Publish the tmp_clean helper's source and changelog alongside its build registration

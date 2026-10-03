@@ -19,6 +19,7 @@ skill is globally available.
 | Scope | Content owner | Selection |
 | --- | --- | --- |
 | Global/shared | `$HOME/.skills-mgr/skills/<name>/SKILL.md` | `$HOME/.skills-mgr/.skills-mgr.json` |
+| Remote/shared | `$HOME/.skills-mgr/skills/.remote-patches/<reference-key>.patch` over the fetched body | The registry's remote reference |
 | Repo-local | `<repo>/.agents/skills/<name>/SKILL.md`, or the repo's established skill owner | `<repo>/.skills-mgr.json` when an override is needed |
 
 Repo-local `.agents/skills` content is enabled by default without a selection entry. Project
@@ -36,6 +37,10 @@ Start at the named owner for the requested operation. These locations and the pr
 replace tool/source discovery; investigate further only when an owner is missing or the observed
 behavior contradicts them. Compare neighboring skills only when choosing a new purpose or
 resolving actual overlap. Repo-only changes do not need home inventory or projection edits.
+
+`skills-mgr inspect <name>` reports the actual owner, effective selection, native alternatives,
+remote patch path, complete-manifest SHA256, and body health as JSON. A disabled owner can still
+be inspected; `resolved` identifies what `get` would serve, not necessarily the managed copy.
 
 ## Content
 
@@ -60,6 +65,16 @@ the builtins `lang <language>`, `has_dependency <name> ['<range>']`, and `toolin
 example `"lang go"`, `"lang js || lang ts"`, or `"[ \"$PWD\" == \"$HOME\" ]"` for home only.
 The skills-mgr README's `Conditional Expressions` section, in its Go module source, lists the
 supported languages and range syntax.
+
+For an existing managed or local skill, `skills-mgr set <name> true` or
+`skills-mgr set <name> 'lang go'` writes the selection and updates its managed placeholders.
+Use `-g` after `set` for shared selection; running from home also selects the global layer.
+`skills-mgr set <name> inherit` removes the override rather than disabling inherited content.
+
+For a full-manifest replacement, use `skills-mgr edit <name> --file <path|->`; `-` reads stdin.
+Include `--expect-sha256 <digest>` from `inspect` to reject stale edits. Local edits retain their
+directory and update selection keys and placeholders when the frontmatter name changes. Remote
+edits write the local patch, not the fetched cache; retain remote name and invocation metadata.
 
 For managed shared content, skills-mgr writes frontmatter-only placeholders under
 `.agents/skills/<name>/` and `.claude/skills/<name>/`. These generated placeholders are not
@@ -89,6 +104,11 @@ separate from publishing the changed content.
 
 ## Validation
 
+- `skills-mgr check <name> [<required-skill> ...] [<name>/<reference-or-script> ...]` checks
+  served bodies and all listed Markdown references of a skill. Supply mandatory dependencies and
+  scripts explicitly; scripts are read, not run. A failed lookup, stale patch, or frontmatter-only
+  body is a failure. Use the project directory where the condition should hold. Home validation
+  ownership and other mapped checks are in `$HOME/CONTEXT-VALIDATION.md`.
 - From a directory where the condition should hold, `skills-mgr list --claude` shows the skill
   with the intended description (unless the model cannot invoke it), and `skills-mgr get <name>`
   prints its content.

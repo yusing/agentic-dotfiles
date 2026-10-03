@@ -248,7 +248,7 @@ determine when it applies.
 | `frontend-design` | Remote | Shape distinctive visual design for UI work | Yes | Always |
 | `go-json-v2` | Shared | Apply Go's `encoding/json/v2` APIs | Yes | Go project |
 | `go-microoptimizations` | Shared | Optimize measured Go hot paths | No | Go project |
-| `golang-best-practices` | Shared | Apply modern Go practices | Yes | Go project |
+| `golang-best-practices` | Shared | Apply version-aware Go guidance and local conventions | Yes | Go project |
 | `handoff` | Shared | Prepare a handoff for another agent | No | Always |
 | `herdr` | Remote | Control Herdr panes, tabs, and agent sessions | Yes | Home directory with `herdr` |
 | `high-end-visual-design` | Remote | Apply high-end visual design details | Yes | TSX, JSX, HTML, or CSS project |
@@ -275,14 +275,13 @@ determine when it applies.
 | `teardown` | Shared | Render structured visual explanations to HTML | Yes | Always |
 | `thermo-nuclear-code-quality-review` | Remote | Run a strict maintainability review | No | Always |
 | `ui-ux-pro-max` | Remote | Design or review UI and UX | Yes | TSX, JSX, HTML, or CSS project |
-| `use-modern-go` | Remote | Apply modern Go guidelines | Yes | Go project |
+| `use-modern-go` | Remote | Look up version-specific Go guidelines and explain individual rules | Yes | Go project |
 | `user-experience` | Shared | Improve user-facing workflow behavior | Yes | Always |
 | `using-pjdoc` | Shared | Validate indexed project documentation | Yes | Always |
 | `vercel-react-best-practices` | Remote | Apply Vercel React practices | Yes | Node project with React |
 | `vercel-react-native-skills` | Remote | Apply Vercel React Native practices | Yes | Node project with React Native |
 | `visualize` | Codex | Create in-conversation visual explanations | Yes | Always |
 | `web-design-guidelines` | Remote | Review UI against web interface guidelines | Yes | TSX, JSX, HTML, or CSS project |
-| `writing-for-agents` | Remote | Write skills and agent instruction documents | Yes | Always |
 | `writing-readme` | Shared | Write or improve repository READMEs | Yes | Always |
 
 ## Adapting the Shell Setup

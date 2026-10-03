@@ -198,6 +198,7 @@ __pycache__
 !/.skills-mgr/skills/
 !/.skills-mgr/skills/.remote-patches/
 !/.skills-mgr/skills/.remote-patches/1873c3293f7904f3536872679118a319035d4f4080c13f49620628211cd619c1.patch
+!/.skills-mgr/skills/.remote-patches/72af4d9e0d00c4e4a9e66bbe2525a6b029fc1bedc63ea0eceb54d4d8e29888de.patch
 !/.skills-mgr/skills/authoring-skill/
 !/.skills-mgr/skills/authoring-skill/SKILL.md
 !/.skills-mgr/skills/batch-agent-sessions/

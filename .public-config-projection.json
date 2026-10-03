@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b70e88aa492cc9946b2481eb6ac1f83b2a97b0f2",
+  "sourceCommit": "cd9f2e4bed1070424e9cdf3397b1ca50232f334c",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -641,7 +641,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "50970a25d9e3df1104b982fdff2ab2044ef19debfcd5cd8ffaa83d251434dad2",
+      "sha256": "1463a002905a9a0806dc5f0a08c1ee60da8ccba7f9e121fd37d81248b8d0b43a",
       "executable": false
     },
     {
@@ -779,13 +779,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "4dcc85ceb661b2cb2b2710b71aa2e7ec10ff463ca16b87c93e92a4c291fd2694",
+      "sha256": "5bf7de55a1ee615b9257e7b7a874679a5a8adf39638420657b2445295cb15c0a",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "e3e6307eef57c8d6f82352b3af28f99f1d99147c4ad557ae587f8963cea01e53",
+      "sha256": "adb7bd96e9bbd5c4efc7f71887470dc8f3c48ce555ca1866cc34b106c009d119",
       "executable": true
     },
     {
@@ -861,9 +861,15 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/.remote-patches/72af4d9e0d00c4e4a9e66bbe2525a6b029fc1bedc63ea0eceb54d4d8e29888de.patch",
+      "kind": "file",
+      "sha256": "8f83b6a3caeec195fdc2f6f6dcef79f6594b5b9fd8eac1202a05ebe0eb869791",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/authoring-skill/SKILL.md",
       "kind": "file",
-      "sha256": "5886adc8daf60fee206c9e761ae30df51d047984a2c348b60bd3f21a14862749",
+      "sha256": "79ca47adfe8a886e8fd5ba7e358dab871df77b0727754779e56556a1fe9cbad4",
       "executable": false
     },
     {
@@ -881,7 +887,7 @@
     {
       "path": ".skills-mgr/skills/batch-agent-sessions/SKILL.md",
       "kind": "file",
-      "sha256": "1cb7aa8e433765b976055c72bd30d47dbb8e57f059f5a9e5a6b3fddfc58627d3",
+      "sha256": "ddf36cadc652ec25c106c1327f0538070c5a459673805ab21c94c473ee9a5119",
       "executable": false
     },
     {
@@ -1007,7 +1013,7 @@
     {
       "path": ".skills-mgr/skills/golang-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "554aa58b188ec785334c03322d39d288a33b35c44a7db26345ec12ee1f9e0272",
+      "sha256": "a21cf07e2a8ee44b2dc39eac6fe4745d34599558f93607a090b09f4388a1c605",
       "executable": false
     },
     {
@@ -1438,7 +1444,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "12bb4be9a720e4d7e73110d0989e1c850128966cd34e165724c281236b272c55",
+      "sha256": "5194b034fa74c42273e473435a4c037a564bc9740ea96c88c7f2e5133e7202b3",
       "executable": false
     },
     {

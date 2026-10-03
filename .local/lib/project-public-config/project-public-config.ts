@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.7";
+export const VERSION = "1.3.8";
 
 type TreeEntry = {
 	mode: string;
@@ -229,7 +229,6 @@ const PROJECTED_SKILL_NAMES = [
 	"teardown",
 	"user-experience",
 	"using-pjdoc",
-	"writing-for-agents",
 	"writing-readme",
 ];
 
