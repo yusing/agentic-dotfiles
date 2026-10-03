@@ -12,6 +12,10 @@ Use this document for skill-specific design. Instruction ownership and consumer 
   trigger a migration skill on creating or reviewing migrations, not all database work.
 - For multiple workflows, make the root document a small router to references and scripts. State
   when each reference matters so the agent loads only what the current operation needs.
+- Choose model invocation only when the agent or another skill must reach the skill; its
+  description stays in every context. A user-invoked skill (`disable-model-invocation: true`)
+  costs no context, but only a person typing its name reaches it, so no skill can depend on it.
+  Reference that several user-invoked skills share belongs in a plain file they point to.
 
 ## Content and boundaries
 
@@ -31,3 +35,7 @@ Use this document for skill-specific design. Instruction ownership and consumer 
 Check descriptions against matching and adjacent nonmatching tasks, including overlap with other
 skills. Trace reference loading for each changed route and verify that required resources resolve.
 Check that the skill supports completion without redundant reading, testing, or permission requests.
+Resolve each mandatory skill dependency and reference through its actual served owner, including
+remote patches and native/plugin fallbacks. Missing bodies and frontmatter-only placeholders are
+resource-health failures, not successful resolution. Run the mapped skill-resource check during
+skill maintenance; ordinary skill reads do not need a refresh or a background health daemon.

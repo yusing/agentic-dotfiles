@@ -30,8 +30,15 @@ preserving first-pass independence.
 
 Select roles under the shared role-selection policy. Evidence never buys an extra seat.
 
-Every council keeps at least one blind member. Fill at most half the seats with investigators:
-an investigator replaces a blind seat rather than adding one.
+Every council keeps at least one member whose first-pass context meets the target's implementation
+evidence boundary. Fill at most half the seats with investigators: an investigator replaces a blind
+seat rather than adding one.
+
+Verify that boundary at the client's assembled context before claiming implementation blindness.
+No-history forks still inherit project/user instructions and can receive hook context. If those
+inputs expose implementation details and the client provides no verified suppression or neutral
+session path, report strict blindness unavailable and return the target to main for an authorized
+alternative. Do not tell a member to ignore material it already received.
 
 Keep `brief.md` implementation-neutral for every member. The investigator gathers implementation
 evidence itself, so a blind member's first pass never sees it.

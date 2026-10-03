@@ -55,6 +55,9 @@ the local implementation with the official
 - **Inheritance:** Codex children inherit base and host/user instruction context independently of
   conversation history; project AGENTS.md is discovered for the child's environment and cwd.
   `fork_turns="none"` is not policy isolation. Give no-history agents a self-contained task brief.
+  The native spawn interface here exposes no instruction-suppression option. Strictly blind council
+  design work remains unavailable when inherited context exposes implementation; use only a verified
+  neutral boundary, or report the limitation rather than claim blindness.
   Forks can filter tool results and rebuild developer context; carry required evidence explicitly
   rather than assuming a complete transcript survives.
 - **Tool contract:** Available roles, model overrides, history controls, and nesting limits come

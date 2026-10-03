@@ -194,6 +194,10 @@ Start with the instruction stack before copying client settings:
   by Codex, Claude Code, and Grok.
 - [`AGENTS.md`](AGENTS.md) is this checkout's repository-level agent file, not the
   shared client workflow.
+- [`.codex/MAIN.md`](.codex/MAIN.md) covers coordination and delegation;
+  [`.codex/IMPLEMENTATION.md`](.codex/IMPLEMENTATION.md) covers implementation craft,
+  [`.codex/TESTING.md`](.codex/TESTING.md) covers validation and regression evidence,
+  and [`.codex/DOCS.md`](.codex/DOCS.md) covers reader-document purpose and consistency.
 - [`.codex/hooks.json`](.codex/hooks.json) activates lifecycle-specific policies
   implemented under [`.codex/hooks/`](.codex/hooks/).
 
@@ -201,7 +205,9 @@ The agent definitions divide work by responsibility:
 
 - **Explorers** gather source-backed facts and caller traces; they do not audit,
   recommend, or decide what should change.
-- **Implementers** make focused changes after the scope is settled.
+- **Support workers** author bounded test suites against a settled contract and a
+  compiling, stable interface, plus reader documentation, fixtures, and other support
+  artifacts. Production, configuration, and dependency changes stay with main.
 - **Reviewers** inspect correctness without owning the implementation.
 - **Council members** provide independent judgment for genuinely ambiguous
   decisions.
@@ -255,6 +261,7 @@ determine when it applies.
 | `openai-docs` | Codex | Look up Codex and OpenAI product documentation | Yes | Always |
 | `postgres-17-18-features` | Shared | Apply PostgreSQL 17 and 18 features | Yes | PostgreSQL project |
 | `read-codex-session` | Codex | Inspect local Codex session transcripts | No | Always |
+| `retro` | Remote | Identify workflow improvements from an agent session | No | Always |
 | `rust-async-patterns` | Remote | Apply Tokio async Rust patterns | Yes | Rust project |
 | `rust-best-practices` | Remote | Apply idiomatic Rust coding standards | Yes | Rust project |
 | `rust-patterns` | Remote | Apply idiomatic Rust patterns | Yes | Rust project |

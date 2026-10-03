@@ -48,7 +48,8 @@
   states the boundary: recognized read-only container and orchestration inspection is allowed;
   mutations, process control, and unclassified commands stay root-owned. Blocked commands
   are reported with their purpose and passing evidence in the assigned result format.
-  `.codex/IMPLEMENTATION.md` owns validation requirements.
+  `.codex/TESTING.md` owns validation requirements; `.codex/IMPLEMENTATION.md` owns
+  implementation craft.
 - User experience: `.skills-mgr/skills/user-experience/SKILL.md` owns proportional UX and
   operability guidance when a user-facing workflow or interface changes.
 - Go quality is disabled: no registrations remain in `.codex/hooks.json`,

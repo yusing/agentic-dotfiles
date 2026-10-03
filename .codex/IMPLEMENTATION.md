@@ -6,18 +6,6 @@ role and scope.
 When code conflicts with tests or fixtures, use the accepted contract to decide which changes.
 Consult history when the intended behavior remains unresolved.
 
-## Validation
-
-Validation covers the known effects of a change, including each input kind, state, and caller
-path the changed code accepts rather than only the case that motivated it, and establishes the
-intended observable outcome, not merely agree with the implementation. Evidence represents the actual workload.
-
-A test earns its place by failing when the intended behavior breaks, so avoid tautological
-tests and tests that only detect changes to strings or substrings. Keep production code free of
-test-only seams and test helpers; they belong in test sources. Run tests once the change is fully
-implemented rather than between edits, since intermediate states fail for known reasons. When
-tests become the bottleneck to finishing the work, optimize and clean them up.
-
 ## Runtime behavior
 
 For operations whose silence would obscure progress, expose meaningful milestones or measurable

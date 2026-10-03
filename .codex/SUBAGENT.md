@@ -22,7 +22,7 @@ acknowledging it; answer only a direct question.
 
 ## Result delivery
 
-Complete the accepted assignment, including explicitly requested tests, or report a concrete
+Complete the accepted assignment, including assigned validation, or report a concrete
 blocker. Include evidence, source pointers, and unresolved gaps.
 
 Deliver the result once. Your final response reaches the parent, so do not also send it as a

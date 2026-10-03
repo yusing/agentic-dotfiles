@@ -60,7 +60,9 @@ assertions on incidental strings; tests left for superseded behavior; duplicates
 test-only seams or helpers in production sources; and fixtures or slow setup the contract does not need.
 Assess corruption or external-mutation handling at the boundary where those events can occur.
 For changed state transitions, challenge reachable missing, repeated, and out-of-order events
-in proportion to risk.
+in proportion to risk. Examine supplied regression/fault receipts against the assertion and consumer
+path; use TESTING.md when its evidence contract is needed. Rerun baseline and current states only
+for a concrete evidence gap, not as a routine duplicate of the author's validation.
 
 Assess user-facing output together with the host's existing display, not only added messages.
 Check useful production content, semantic duplication, result preservation, and whether progress
@@ -68,10 +70,11 @@ describes the right operation. Report hidden progress, disproportionate updates,
 progress ownership, or reporting that determines success instead of remaining auxiliary.
 
 A code/documentation mismatch may be a defect on either side: identify the authoritative owner.
-For documentation hygiene, check affected docs against the `Documentation maintenance` standard in
-`AGENTS.md`: stale or superseded statements, content outside its document's purpose, spec and
-contract overlap, prose restating code, and task recaps or appended rules where an existing owner
-should have been revised.
+For documentation hygiene, use DOCS.md when reader-facing docs or contracts are affected. Check
+stale or superseded statements, duplicate facts, bloat, audience/purpose pollution, spec and contract
+overlap, prose restating code, and task recaps or appended rules where an existing owner should have
+been revised. Compare summaries, Features, and navigation with the full topic, including cleanup
+that over-compresses an accepted capability.
 Separate regressions from pre-existing issues and defects from taste; requested style counts only
 where the task or repository rules ask for it.
 

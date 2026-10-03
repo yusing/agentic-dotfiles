@@ -44,9 +44,13 @@ These are task documents, not skills. Read those that match your role and next o
   another agent, or returning results. Delegates execute their settled assignment and do not need
   dispatch guidance.
 - `$HOME/.codex/IMPLEMENTATION.md` when implementing code or operational changes, or inspecting
-  those changes. Load the relevant implementation, validation, or inspection guidance for that
-  operation, not merely to return a subagent result. Factual lookup does not trigger it.
-  Mechanical-only edits and wording reviews use the affected content and applicable repository rules.
+  their implementation. Pure factual lookup, diagnosis, and settled support test authoring do not
+  trigger implementation craft. Explicit audits can read it as evidence. Mechanical-only edits and
+  wording reviews use the affected content and applicable repository rules.
+- `$HOME/.codex/TESTING.md` when authoring or reviewing tests and fixtures, or selecting validation.
+  Project testing owners supply runner, fixture, and environment details.
+- `$HOME/.codex/DOCS.md` when writing, integrating, or reviewing reader-facing documentation.
+  Load it for the document operation, not merely because of the agent's role.
 - `$HOME/.codex/GITHUB.md` for GitHub pull request descriptions, issue bodies, or comments.
 - `HANDOFF.md` when mentioned, then delete it.
 - `RECOVERY.md` when created/mentioned; retain it until staged delivery is complete, then delete it.
@@ -57,24 +61,6 @@ Do not repeat instructions before first user message, including this file, in:
 - Artifacts
 - Skills
 - Agent spawn prompt
-
-## Documentation maintenance
-
-After completing and verifying assigned work, you are responsible for keeping affected documents
-true for a reader without session history:
-
-- README holds only what users need to understand, choose, or do: the behavior, limits, and side
-  effects they encounter, not the mechanisms behind them.
-- Spec holds intent, scope, non-goals, journeys, and why.
-- Contract holds types, schemas, errors, SLAs, and compatibility.
-- Spec and contract must not overlap, repeat, or restate code in prose.
-
-Each document reads as one current description, not a sequence of appended changes. A fact sits
-where its reader looks for that topic, merged into the passage it extends or corrects. Summaries,
-feature lists, indexes, and navigation stay consistent with the sections they describe, and a
-section outgrown by additions is restructured rather than extended.
-
-Put durable agent rules in their existing owner. Revise stale rules and references instead of appending task recaps.
 
 ## Skills and required tools
 
@@ -96,7 +82,8 @@ registry or package-manager metadata, not memory.
 
 `rtk` helps reduce noise from command output. Apply it to noisy producers, including user-supplied commands,
 leaving quiet filters, control operators, and redirections outside.
-Use raw execution when complete unmodified output is needed or output goes to a file.
+Use raw execution when complete unmodified output is needed, output goes to a file, or wrapping
+changes argument semantics.
 
 For binary strings, minified files, and generated schemas, extract exact fields or bounded byte
 windows; line limits are insufficient. Reuse captured scans while state is unchanged.
@@ -109,21 +96,9 @@ A delegate does not need dispatch guidance merely because it was spawned.
 
 Only main edits instructions, skills, workflow guidance, task documents, and instruction-delivery
 hooks. Delegates propose changes to these and own their findings and result artifacts.
-
-### Independent inspection
+Put durable agent rules in their existing owner. Revise stale rules and references instead of
+appending task recaps.
 
 For explicit code reviews, state when the requested scope extends beyond the pending diff.
 Report missing runtime or browser coverage separately; source inspection does not replace those
 checks.
-
-After implementation and focused validation, spawn independent inspection without inherited
-conversation history (Codex: `fork_turns="none"`) for a concrete correctness, security, lifecycle,
-or maintainability risk that benefits from a fresh review. Routine wording and mechanical edits
-need no extra agent. Reuse reviews that cover the final state; a re-review of later corrections needs to
-cover only those corrections. Workflow-specific required reviews still apply.
-
-### Agents council
-
-Use the `council` skill and roles when an important decision still has multiple evidence-supported
-conclusions after checking for an authoritative decision and considering the relevant evidence reasonably
-available. A council can improve your judgment, but it cannot decide intent that belongs to me.
