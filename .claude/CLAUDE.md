@@ -2,21 +2,12 @@
 
 ## Skill access
 
-The shared `## Skills and required tools` section defines the `skills-mgr` commands.
-For acquisition, use `skills-mgr get` as the only way to read skills and references, even when a path
-is provided or another instruction suggests otherwise; exposed skill files are placeholders without
-actual content. For editing a skill, follow its relevant instructions.
+Acquire skills/references through `skills-mgr get`, not exposed placeholder files. Edit the
+maintained owner under the authoring guidance. User-invoked names may be absent from the catalog;
+acquire their body and required references, loading optional references only for the current operation.
 
-The injected `<skills>` catalog and `skills-mgr list` omit user-invoked skills
-(`disable-model-invocation: true`), and `skills-mgr get` prints only a skill's body. When I name a
-skill that is not in the catalog, such as `/name` inside a message, its description is still part of
-the skill and can require references. Acquire the body and every reference it names before
-following the skill.
+## Complete evidence
 
-## Complete reads
-
-`head`, `tail`, and similar line cuts silently drop whatever falls past the cut, such as later
-sections of an instruction file, a skill, or a diff. Read instruction documents, skills, and other
-content whose completeness matters in full, or with ranged reads that continue until the needed
-content is covered. To reduce noisy output, use `rtk` or a filter that selects the needed fields.
-A line window suits only exploratory listings where missing entries cannot change the next action.
+Do not treat a truncated read as complete evidence. Continue ranged reads until needed instruction,
+skill, or diff content is covered. Use `rtk` or exact-field filters for noise; line windows are for
+bounded exploration where omitted rows cannot change the next action.
