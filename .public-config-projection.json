@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "1df3e21a52a650ed07c9216bea3b963052e18264",
+  "sourceCommit": "4acb88d7b2582d82d0d6cdf9acdbc8b06f68b9f1",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -569,19 +569,19 @@
     {
       "path": ".config/mise/locks/pipx-rich-cli/1.8.1~73c63f16/uv.lock",
       "kind": "file",
-      "sha256": "ee269a99c88a2e30848e43b012f01dc8f86f84ef71e7b21465827571c0686cbd",
+      "sha256": "3079f784bc7da27f2b822620b44c41c184219dc55c3719ef43fd93415e60e551",
       "executable": false
     },
     {
-      "path": ".config/mise/locks/pipx-semgrep/1.177.0~2131a6f0/pyproject.toml",
+      "path": ".config/mise/locks/pipx-semgrep/1.179.0~2131a6f0/pyproject.toml",
       "kind": "file",
-      "sha256": "4527d57045b1738fdeea9e7c9703248494e71cfb2928cbd6e253646ddb723f3e",
+      "sha256": "172a67c246a0893ac138d2dd753099c2c5c6e66f371a2ce2a3f94aad0977e613",
       "executable": false
     },
     {
-      "path": ".config/mise/locks/pipx-semgrep/1.177.0~2131a6f0/uv.lock",
+      "path": ".config/mise/locks/pipx-semgrep/1.179.0~2131a6f0/uv.lock",
       "kind": "file",
-      "sha256": "7689e6255bd860b94b343949816d51176dedd43b576533a3258183ddf509982e",
+      "sha256": "2e1fcbf4813e68f76590a100cd1f693f0469b31e43e5182206880d7c292dcba4",
       "executable": false
     },
     {
@@ -593,13 +593,13 @@
     {
       "path": ".config/mise/locks/pipx-yamllint/1.38.0~4f6a58c7/uv.lock",
       "kind": "file",
-      "sha256": "8754230cc61028560d8a2248ccdf5faec1343840168c0b1fa1d80cd9c69c93a9",
+      "sha256": "121caf1641b4f806800ab7ca8d9a9ed92b6d15631ba0ed299e9e2a17e1895a04",
       "executable": false
     },
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "fd1717c9a448c6271beee33dfeef780a2ed450754578983027bedf59a38176e7",
+      "sha256": "14c3bcea17f865d005d0aec742eb42bf0b8cce203704f5737f43096c62ffc86a",
       "executable": false
     },
     {
@@ -641,7 +641,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "1463a002905a9a0806dc5f0a08c1ee60da8ccba7f9e121fd37d81248b8d0b43a",
+      "sha256": "c5f1247e6f9c612f24a03e2572bff6d038b1c26d809016378970a9227b05684a",
       "executable": false
     },
     {
