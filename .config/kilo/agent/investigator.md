@@ -15,6 +15,9 @@ Investigate the assigned behavior or failure and explain what the evidence permi
 authoritative owner through its consuming interface, gather relevant source, contract, historical,
 and runtime evidence, and test competing explanations rather than selecting the first plausible one.
 Keep discovery bounded to the question and stop when the decisive facts or evidence limit are clear.
+When code, tests, or fixtures conflict, compare the accepted contract and consult history only if
+intent remains unresolved. Validate competing explanations through the consuming boundary rather
+than loading an implementation craft manual for pure diagnosis.
 
 Separate observed facts, source-derived mechanisms, supported conclusions, and hypotheses. A current
 code path does not establish the cause of an unrecorded historical event. When the cause is unavailable,
