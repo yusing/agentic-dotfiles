@@ -22,6 +22,15 @@
     "code-review": {
       "enabled": false
     },
+    "codebase-design": {
+      "enabled": true,
+      "remote": {
+        "provider": "skills.sh",
+        "id": "mattpocock/skills/codebase-design",
+        "name": "codebase-design",
+        "locator": "mattpocock/skills/codebase-design"
+      }
+    },
     "codebase-review": {
       "enabled": true
     },
@@ -69,6 +78,15 @@
     },
     "golang-best-practices": {
       "enabled": "lang go"
+    },
+    "goutils": {
+      "enabled": "lang go",
+      "remote": {
+        "provider": "repository",
+        "id": "https://github.com/yusing/goutils#goutils",
+        "name": "goutils",
+        "locator": "https://github.com/yusing/goutils"
+      }
     },
     "handoff": {
       "enabled": true
@@ -121,6 +139,15 @@
     "postgres-17-18-features": {
       "enabled": "lang postgres"
     },
+    "retro": {
+      "enabled": true,
+      "remote": {
+        "provider": "skills.sh",
+        "id": "mattpocock/skills/retro",
+        "name": "retro",
+        "locator": "mattpocock/skills/retro"
+      }
+    },
     "rust-async-patterns": {
       "enabled": "lang rust",
       "remote": {
@@ -149,7 +176,7 @@
       }
     },
     "scriptc-compiler": {
-      "enabled": true
+      "enabled": "lang ts"
     },
     "session-usage": {
       "enabled": true
@@ -164,7 +191,7 @@
       }
     },
     "shadowtree": {
-      "enabled": true
+      "enabled": "tooling shadowtree"
     },
     "skill-creator": {
       "enabled": false

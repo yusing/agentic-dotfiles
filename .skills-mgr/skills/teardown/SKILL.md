@@ -1,6 +1,7 @@
 ---
 name: teardown
 description: Create structured visual explanations, module teardowns, comparisons, and walkthroughs as schema-validated JSON rendered to a standalone HTML file. Use when a topic benefits from a composed visual document rather than a brief inline sketch.
+disable-model-invocation: true
 ---
 
 # Teardown
