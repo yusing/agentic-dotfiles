@@ -10,7 +10,7 @@ import { responseFor as generatedGuardResponse } from "./generated_code_guard.ts
 import { responseFor as subagentGuardResponse } from "./subagent_exec_guard.ts";
 import { asString, at, handleVersion, isRecord, readEvent, runCommand, runMain, writeJson } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.4";
+export const VERSION = "1.0.5";
 
 type Snapshot = Record<string, string>;
 type Baseline = { files: Snapshot; findings: Record<string, string[]> };

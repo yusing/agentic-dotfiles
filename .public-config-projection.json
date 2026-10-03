@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "88cef34d869f21509041fa8fce12b50c71d84fa1",
+  "sourceCommit": "b70e88aa492cc9946b2481eb6ac1f83b2a97b0f2",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -179,13 +179,13 @@
     {
       "path": ".codex/hooks/go_quality.changelog.md",
       "kind": "file",
-      "sha256": "1aa9d4d82cc6e426e8ebfca758f4a34f7b86e1865ab0cd84dc6f0ecf62f69365",
+      "sha256": "63da972058e5ec7c57d873c1a71a1577b4034bf177769a65cfa5d395e8d153af",
       "executable": false
     },
     {
       "path": ".codex/hooks/go_quality.ts",
       "kind": "file",
-      "sha256": "a85d7cd23e440214bc69506cbda8ae6ebe6b6e5a660b3e5abc5714288a8ffaf0",
+      "sha256": "f70fc1b0ce320f1f80a1bfc3b2c024c46a30566f680c20622c57a919464b39d0",
       "executable": false
     },
     {
@@ -245,13 +245,13 @@
     {
       "path": ".codex/hooks/lib/shell_command.changelog.md",
       "kind": "file",
-      "sha256": "72c6f33fd2c75a691d7dffe2889f9ee469fe17ad4cee8b7479b6e15b812ed2e7",
+      "sha256": "189b5c7b9ab99fa7edbcd0a0868dee2a6f821611da7bbfd2bd823fe9ffa3facd",
       "executable": false
     },
     {
       "path": ".codex/hooks/lib/shell_command.ts",
       "kind": "file",
-      "sha256": "e1a3f5e7c4385a70537b0bbb6d5bb583436ce6636d82ee5345b4fdb9fea02ba4",
+      "sha256": "77a61eaaf4d41ad8effc2c6f6a816b05a2a27144a628700af9e478509595b9c6",
       "executable": false
     },
     {
@@ -281,13 +281,13 @@
     {
       "path": ".codex/hooks/subagent_exec_guard.changelog.md",
       "kind": "file",
-      "sha256": "1cf9eb2d5385fb72565928d03c20652c8ae9a442d9aabe375694d8d17eaae215",
+      "sha256": "896adab4bf8e0fd033d82c2d937b8309ca364eaea9358856fe28d216869f3e1d",
       "executable": false
     },
     {
       "path": ".codex/hooks/subagent_exec_guard.ts",
       "kind": "file",
-      "sha256": "fe6d04b503a8c9db7103a7f7820f3c2cd8eb35d924e40c1e4dc316422e6866d7",
+      "sha256": "61f6b8c9b9073a050c2676f196413ee97ebd08089099222bed1d3d1bb932bc4e",
       "executable": false
     },
     {
@@ -665,13 +665,13 @@
     {
       "path": ".grok/hooks/adapt_codex_hook.changelog.md",
       "kind": "file",
-      "sha256": "d9b78565bdb9e60d06926d0a4c9512ceeea04bc5d490bcef223b81a5c5287263",
+      "sha256": "624063baf55cb745a7c20faa04aaba4891772e8a7b8d5195ed0528cbb83b91a4",
       "executable": false
     },
     {
       "path": ".grok/hooks/adapt_codex_hook.ts",
       "kind": "file",
-      "sha256": "5df61a25c56faa3cd92f8d3a6a8bdc48809d4dfdcc28a3fe55b0f2c7c5781362",
+      "sha256": "3170d931785ecb1212dbf393ed53b5d3b1700a143fdaeba6f43325917ca6cf84",
       "executable": false
     },
     {
@@ -683,13 +683,13 @@
     {
       "path": ".grok/hooks/skills_path_guard.changelog.md",
       "kind": "file",
-      "sha256": "4f46f327709e2426e8e8d909c0872cfa154320d0967f88b7ca9e1e9545908a68",
+      "sha256": "efff6056ed43ebcc8cd90f1a16c50ff3f61b08678251c87e9d2f0da7d5495610",
       "executable": false
     },
     {
       "path": ".grok/hooks/skills_path_guard.ts",
       "kind": "file",
-      "sha256": "c9dcfbf9d0a377556b6bf5131caf55712f05cb5be930d81705da70c96f226ee0",
+      "sha256": "dc951141f8988ff48e8bc3100624167df91dc78d07a09d0333bcb9e531cdee35",
       "executable": false
     },
     {

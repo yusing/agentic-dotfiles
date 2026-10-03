@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.6
+
+Keep heredoc bodies visible when the command names a shell, `source`, `xargs`, or
+another input executor, since it may run the body directly, through a pipe, or as a
+written script.
+
 ## 1.0.5
 
 Mask stdin only for literal quoted identifier delimiters with a proven terminator.

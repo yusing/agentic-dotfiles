@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+
+Use shell scanner 1.0.6: search commands inside quoted heredoc data no longer count
+unless the command also names a shell or another input executor.
+
 ## 1.1.0
 
 Deny only search and listing of `/home/$USER/*/skills` and searches rooted

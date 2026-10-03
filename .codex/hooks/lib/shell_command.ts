@@ -1,4 +1,4 @@
-export const VERSION = "1.0.5";
+export const VERSION = "1.0.6";
 
 export const SHELLS = new Set(["bash", "dash", "sh", "zsh"]);
 const COMMAND_PREFIXES = new Set(["!", "do", "elif", "exec", "if", "then"]);
@@ -6,6 +6,11 @@ const ASSIGNMENT = /^[A-Za-z_][A-Za-z0-9_]*=/;
 const SEPARATORS = new Set([";", "&", "|", "(", ")", "{", "}", "\n"]);
 const PUNCTUATION = new Set([";", "&", "|", "(", ")", "{", "}", "\n"]);
 const WHITESPACE = new Set([" ", "\t", "\r"]);
+// Programs that can run their input, or a script written from it, as commands.
+const INPUT_EXECUTORS = new Set([
+  ...SHELLS, ".", "ash", "at", "batch", "busybox", "csh", "eval", "fish", "ksh", "mksh",
+  "parallel", "source", "su", "tcsh", "xargs",
+]);
 
 // All shell scans use the same comment boundary and preserve the newline,
 // which still separates any real command that follows the comment.
@@ -20,7 +25,8 @@ export function isSeparatorToken(token: string): boolean {
 }
 
 // Mask only literal quoted identifier delimiters with a complete terminator.
-// Complex headers and other heredoc forms keep the previous scanner.
+// Complex headers, other heredoc forms, and commands naming an input executor
+// keep the previous scanner, since a shell may run the body as commands.
 function heredocSource(command: string): string {
   if (!command.includes("<<")) return command;
   let pending: { delimiter: string; stripTabs: boolean }[] = [];
@@ -93,14 +99,24 @@ function heredocSource(command: string): string {
   }
   if (pending.length > 0) return command;
   parts.push(command.slice(retained));
-  return parts.join("");
+  const masked = parts.join("");
+  try {
+    const executes = scanTokens(masked, PUNCTUATION)
+      .some((token) => INPUT_EXECUTORS.has(token.slice(token.lastIndexOf("/") + 1)));
+    return executes ? command : masked;
+  } catch {
+    return command;
+  }
 }
 
 export function shellTokens(
   command: string,
   punctuation: ReadonlySet<string> = PUNCTUATION,
 ): string[] {
-  command = heredocSource(command);
+  return scanTokens(heredocSource(command), punctuation);
+}
+
+function scanTokens(command: string, punctuation: ReadonlySet<string>): string[] {
   const tokens: string[] = [];
   let index = 0;
 

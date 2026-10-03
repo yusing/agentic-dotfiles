@@ -10,7 +10,7 @@ import {
   stripLeadingShellPrefix,
 } from "./lib/shell_command.ts";
 
-export const VERSION = "1.1.3";
+export const VERSION = "1.1.4";
 
 const CONTAINER_EXECUTABLES = new Set([
   "docker",

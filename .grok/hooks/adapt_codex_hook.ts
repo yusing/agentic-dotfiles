@@ -6,7 +6,7 @@ import { responseFor as goQualityResponse } from "../../.codex/hooks/go_quality.
 import { responseFor as subagentExecResponse } from "../../.codex/hooks/subagent_exec_guard.ts";
 import { asString, handleVersion, isRecord, readEvent, runCommand } from "../../.codex/hooks/lib/hook_runtime.ts";
 
-export const VERSION = "1.2.0";
+export const VERSION = "1.2.1";
 
 type PolicyFn = (event: unknown, args: string[]) => Record<string, unknown> | undefined;
 

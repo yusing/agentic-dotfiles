@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.5
+
+Use shell scanner 1.0.6 and subagent guard 1.1.4: quoted heredoc bodies are data unless
+the command also names a shell or another input executor.
+
 ## 1.0.4
 
 Run `golangci-lint` with `--max-issues-per-linter=0 --max-same-issues=0` for

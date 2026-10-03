@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.4
+
+Deny container mutations in quoted heredocs that a shell, `source`, or another input
+executor in the same command can run, including piped bodies and written scripts.
+
 ## 1.1.3
 
 Allow harmless quoted Python heredocs without mistaking their variable names or

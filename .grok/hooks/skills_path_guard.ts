@@ -3,7 +3,7 @@ import * as path from "path";
 import { handleVersion, isRecord, readEvent, writeJson } from "../../.codex/hooks/lib/hook_runtime.ts";
 import { shellTokens } from "../../.codex/hooks/lib/shell_command.ts";
 
-export const VERSION = "1.1.0";
+export const VERSION = "1.1.1";
 
 export const DENIAL_REASON =
   "Blocked search of /home/$USER/*/skills or a broad search rooted at " +
