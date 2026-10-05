@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "000659ad926cb47dc6c53cfb82cf304444b8d072",
+  "sourceCommit": "751db45eb33c5356c5959707f5ec9d9b7f181b7e",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -53,7 +53,7 @@
     {
       "path": ".claude/agents/review-simplify.md",
       "kind": "file",
-      "sha256": "43a6081107a9262561a4b9dd4acbdbff5b215d013b12b935c97a716f5ad54dbd",
+      "sha256": "66ede430c01abadfc88007e687ba4a7650c7a115c4956897538c7d683af0454f",
       "executable": false
     },
     {
@@ -119,7 +119,7 @@
     {
       "path": ".codex/agents/review-simplify.toml",
       "kind": "file",
-      "sha256": "8459cdcfe80a5001794021b15d871c8b804f61d3d0e7a784c80b49e8eca6eb9b",
+      "sha256": "4424c49704d09a3a018ad4b3211e4ef9cf55e9ef63952be08a96f887d10fbf6a",
       "executable": false
     },
     {
@@ -305,7 +305,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "b894f4a928d6b07675e6f3eac99d974b43462dd69773e815ca620043ca233569",
+      "sha256": "09e67b1938424099e0cbf9603b741b071c981272f178d1a087b0e5fd3a2f7307",
       "executable": false
     },
     {
@@ -491,7 +491,7 @@
     {
       "path": ".config/kilo/agent/review-simplify.md",
       "kind": "file",
-      "sha256": "12874ddff1aaa9dd057dad1af927cf0b23ba612b461184ee4435749dfec4561e",
+      "sha256": "c236e337aa29b5afa510256b9a67c1f8bef706ff815eddb758a53d5e3443e11a",
       "executable": false
     },
     {
