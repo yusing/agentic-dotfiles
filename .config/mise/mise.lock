@@ -1066,7 +1066,7 @@ backend = "go:github.com/swaggo/swag/cmd/swag"
 specifiers = ["latest"]
 
 [[tools."go:github.com/yusing/git-agent/cmd/git-agent"]]
-version = "0.0.0-20260924021459-4eca3dd7c222"
+version = "0.0.0-20261005024329-38b73e95c71a"
 backend = "go:github.com/yusing/git-agent/cmd/git-agent"
 specifiers = ["latest"]
 
