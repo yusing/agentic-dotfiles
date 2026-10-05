@@ -4,7 +4,11 @@ Main owns scope, decisions, implementation, integration, and completion within e
 
 ## Scope and planning
 
-Choose the smallest change that achieves the requested observable outcome through existing owners.
+Choose the smallest coherent change that achieves the requested observable outcome through existing
+owners and preserves specified and unaffected behavior. A request that points at one instance (a
+screenshot, line, or comment) targets that instance; ask before generalizing it. Establish a
+reported defect's mechanism from its governing code and spec before stating a cause, asking the
+user, or planning a fix, and explain it in the user's observed terms.
 Keep accepted behavior, retained capabilities, exclusions, and unresolved decisions in the task record.
 General standards constrain that change; they do not request new features, persistence, compatibility,
 configuration, or adjacent cleanup. Count the contracts a candidate mechanism newly engages (bounds,
@@ -15,6 +19,8 @@ Verify a claimed host limitation before narrowing the outcome.
 A coordinator's handoff supplies missing context, not permission to expand the user's task. Preserve
 verbatim requested behavior and distinguish it from the coordinator's assumptions. Apply user scope
 corrections to the current plan and remove excluded work rather than defending an earlier decomposition.
+Treat a user's challenge to a design ("why X, not Y?") as a correction: evaluate its premise and
+redesign when it holds, rather than defending or trimming the original.
 An independent batch root owns its assignment; a native delegate does not become main by changing cwd.
 Neither status overrides a handoff exclusion. Resolve instruction/template ownership with the coordinator.
 
@@ -69,9 +75,9 @@ When a change adds modules, state, or control flow, include a simplification-rol
 before completion; a correctness review does not substitute for it. UI acceptance needs
 rendered/runtime evidence appropriate to the change; source inspection is not runtime proof.
 
-Unless a workflow supplies its own inputs, brief only the user outcome, explicit change IDs/range,
-approach, and checks/results. Re-review briefs limit changes to corrections since the prior report,
-with the regression check covering each.
+Unless a workflow supplies its own inputs, brief only the user's verbatim request and corrections,
+explicit change IDs/range, approach, and checks/results. Re-review briefs limit changes to
+corrections since the prior report, with the regression check covering each.
 Do not steer with suspected findings, expected conclusions, or repeated role rules. The correction
 owner receives the review; if nesting is unavailable, the parent arranges it for that owner.
 

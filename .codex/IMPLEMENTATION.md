@@ -5,10 +5,11 @@ conflicts; consult history only when intent remains unclear.
 
 ## Behavior
 
-Reuse existing owners and mechanisms for the smallest requested change. Add an abstraction only
-for a current shared responsibility, invariant, or necessary algorithm, not possible future use.
-Avoid duplicating host/provider policy or adding persistence, fallbacks, or compatibility the task
-and supported contracts do not need.
+Reuse existing owners and mechanisms for the smallest requested change. Fix a defect at its
+established cause; suppressing specified behavior that exposes it is not a fix. Add an abstraction
+only for a current shared responsibility, invariant, or necessary algorithm, not possible future
+use. Avoid duplicating host/provider policy or adding persistence, fallbacks, or compatibility the
+task and supported contracts do not need.
 
 For work whose silence hides progress, reuse host milestones or measurable progress. Start/finish
 notices alone are insufficient; progress must remain auxiliary to successful core behavior.

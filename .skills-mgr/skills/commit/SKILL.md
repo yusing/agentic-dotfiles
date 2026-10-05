@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Plan, write, or revise git commits, including folding follow-up fixes into earlier commits.
+description: Plan, write, revise, or push git commits, including folding follow-up fixes into earlier commits.
 disable-model-invocation: false
 ---
 
@@ -8,7 +8,8 @@ disable-model-invocation: false
 
 A documented project convention (contributing guide, commitlint or similar config) takes
 precedence over the message format below. This skill does not authorize committing, rewriting
-history, or pushing; those follow the existing request and authorization.
+history, or pushing; those follow the existing request and authorization. A commit or push request
+covers the work of that request, not later ones.
 
 ## Shape commits
 
@@ -16,13 +17,20 @@ history, or pushing; those follow the existing request and authorization.
   tree/scope, not unrelated suites. Split unrelated edits; keep an enabling refactor separate
   from its behavior change.
 - Stage explicitly (`git add <paths>` or `git add -p`), then review `git diff --staged` before
-  committing. Leave unrelated working-tree changes unstaged.
+  committing. Leave unrelated working-tree changes unstaged, and ask before tracking a file that
+  was untracked before the task.
 - Commit with the configured signing. A signing failure or timeout usually means the user must
   unlock the key: report it as a blocker and retry after they respond. Commit unsigned or change
   signing configuration only when the user authorizes it.
 - When squashing several commits into one, as in a squash merge, derive the message from
   theirs. Keep their reasons and consequences, and drop steps that the combined change no
   longer shows.
+
+## Push
+
+A push request publishes the current branch to its existing upstream. Tags, new remote branches,
+force pushes, and a branch that is not the default or has diverged from its upstream each need the
+user's explicit request. A local-only restriction on a ref stays until the user lifts it.
 
 ## Message format
 
