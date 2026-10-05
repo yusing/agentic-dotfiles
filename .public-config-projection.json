@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "1971ac24e6994ae56e3c27f2b031d37c9f2f625c",
+  "sourceCommit": "c96a13efe6ac950531b6f80289ec8ea7299dd94c",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -83,7 +83,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "672283a6c5f284251f25efa466a56d220b4e55865d48c48b1c07585da1927fd8",
+      "sha256": "0c7d53b088865d2c8c2e0f0aa670ab8eec1987cd5f8c88915736bad22d960109",
       "executable": false
     },
     {
