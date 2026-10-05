@@ -80,11 +80,10 @@ review, await the complete report before same-task work unless blocked, asked fo
 After implementation, focused validation, and any pending user decision that could change the
 design, arrange fresh independent inspection for a concrete correctness, security, lifecycle, or
 complexity risk. A simplification-role inspection, which a correctness review does not replace, is
-required before completion when a change adds modules, state, or control flow, remains test-heavy
-under TESTING.md, or nets more than 300 production lines or 500 lines in total (added minus deleted,
-excluding generated or vendored output). Other routine wording/mechanical work needs none. UI
-acceptance needs rendered/runtime evidence appropriate to the change; source inspection is not
-runtime proof.
+required before completion when a change remains test-heavy under TESTING.md or nets more than 300
+production lines or 500 lines in total (added minus deleted, excluding generated or vendored output).
+Routine wording/mechanical work needs none. UI acceptance needs rendered/runtime evidence
+appropriate to the change; source inspection is not runtime proof.
 
 Unless a workflow supplies its own inputs, brief only the user's verbatim request and corrections,
 explicit change IDs/range, approach, and checks/results. Re-review briefs limit changes to
