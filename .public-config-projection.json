@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "85d1298275a1e50e4f2ecd9902a9d40f4bef8345",
+  "sourceCommit": "ddae261e30890c0b90dd991f9793b45fd380529c",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -731,13 +731,13 @@
     {
       "path": ".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
       "kind": "file",
-      "sha256": "4a08407c26e4d04a636bb40388e3f504471de074df6c11d99f23f4f37a80ab8a",
+      "sha256": "2d7c6fd8a7b8d3341441520d372e7cdc07fc5693ccdf6d2ade59990b851069a2",
       "executable": false
     },
     {
       "path": ".local/lib/batch-agent-sessions/CHANGELOG.md",
       "kind": "file",
-      "sha256": "b8c4c705cf855ed3e96155c744d0bb6d59ed4f5b8bb4b31a29eacfb8273d2277",
+      "sha256": "53ebf39deac7e1d623c6d874198a0245350a0cf17c0a7ba0700c6dd3551eeba2",
       "executable": false
     },
     {

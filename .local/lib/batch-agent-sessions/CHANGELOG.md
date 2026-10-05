@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+
+Confirm an empty, ready Mekugi composer before task delivery and return focus
+from navigation panes to Main. Leave drafts and dialogs untouched, with the task
+queued instead of recording an uncertain prompt that the agent never received.
+
 ## 1.2.0
 
 Keep run directories, checkouts, and evidence under the state directory instead of `/tmp`.

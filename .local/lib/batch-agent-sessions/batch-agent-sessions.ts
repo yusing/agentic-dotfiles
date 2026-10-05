@@ -5,7 +5,7 @@ import { homedir } from "node:os";
 import { isAbsolute, join } from "node:path";
 import { parseArgs } from "node:util";
 
-export const VERSION = "1.2.0";
+export const VERSION = "1.2.1";
 export type Runner = (argv: string[], cwd: string) => string;
 export type Context = {
   base_commit: string; source_workspace_id: string; source_checkout_path: string;
@@ -401,6 +401,28 @@ function promptText(task: string, handoff: string | undefined, manifest: Manifes
 
 function deliver(manifest: Manifest, manifestPath: string, batch: Batch, task: Task, runner: Runner): void {
   const text = promptText(task.task, task.handoff, manifest);
+  if (batch.agent?.kind === "mekugi") {
+    const read = () => runner(["herdr", "agent", "read", batch.pane!, "--source", "detection", "--lines", "80"], manifest.source);
+    const emptyComposer = (screen: string) => /^(│?)╭─ (?:Ready\b|Completed\b|Interrupted\b)[^\n]*\n\1│ ❯ *│\1[^\n]*\n\1╰─/m.test(screen);
+    const dialog = (screen: string) => /[╭╰][^\n]*(?:\[×\]|↑↓[^\n]*\besc\b|Esc close)/u.test(screen);
+    const mainFocused = (screen: string) => /^│?╭─ (?:Ready\b|Completed\b|Interrupted\b)/m.test(screen)
+      && !/\bj\/k\b|\bs files\b|\bctrl\+b 1-5 focus\b/.test(screen.trim().split("\n").at(-1) ?? "");
+    let screen = read();
+    // Never paste over a draft or into a dialog. Keep the receipt queued until
+    // the existing pane is ready; no prompt effect has happened yet.
+    if (dialog(screen)) throw new Error("Mekugi has an open dialog; task remains queued, inspect the pane before retrying");
+    if (!mainFocused(screen)) {
+      response(runner, ["agent", "send-keys", batch.pane!, "ctrl+b", "1"], manifest.source);
+      const deadline = Date.now() + 2_000;
+      do {
+        screen = read();
+        if (mainFocused(screen)) break;
+        pause(100);
+      } while (Date.now() < deadline);
+      if (!mainFocused(screen)) throw new Error("Mekugi composer focus was not confirmed; task remains queued");
+    }
+    if (dialog(screen) || !emptyComposer(screen)) throw new Error("Mekugi needs an empty ready composer; task remains queued, inspect the pane before retrying");
+  }
   task.state = "submitting";
   save(manifest, manifestPath);
   console.error(`${batch.name}: delivering task ${task.id}`);
