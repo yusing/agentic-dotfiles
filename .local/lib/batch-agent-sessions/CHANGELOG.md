@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.2
+
+Withdraw queued follow-ups without stopping agents or losing task receipts. Refuse
+initial, delivered, or uncertain tasks; cancelled tasks stay cancelled on plan replay
+and no longer block cleanup.
+
 ## 1.2.1
 
 Confirm an empty, ready Mekugi composer before task delivery and return focus

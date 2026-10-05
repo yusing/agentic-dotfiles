@@ -5,7 +5,7 @@ import { homedir } from "node:os";
 import { isAbsolute, join } from "node:path";
 import { parseArgs } from "node:util";
 
-export const VERSION = "1.2.1";
+export const VERSION = "1.2.2";
 export type Runner = (argv: string[], cwd: string) => string;
 export type Context = {
   base_commit: string; source_workspace_id: string; source_checkout_path: string;
@@ -23,7 +23,7 @@ type Batch = { name: string; branch: string; path: string; state: "pending" | "c
   submodules?: { path: string; commit: string; branch: string; source_branch?: string }[]; retained_submodules?: { path: string; commit: string; ref: string }[];
   launch?: { state: "starting" | "started" | "verified"; name: string; pid?: number; session?: string; model?: string; effort?: string } };
 type Task = { id: string; batch: string; task: string; handoff?: string;
-  state: "queued" | "submitting" | "working"; error?: string };
+  state: "queued" | "submitting" | "working" | "cancelled"; error?: string };
 type Evidence = { name: string; source: string; path: string; sha256: string };
 export type Manifest = { version: 1; run_id: string; source: string; base_commit: string;
   source_workspace: string; caller_pane: string; preflight: Context; temporary_root: string;
@@ -560,6 +560,19 @@ export function followUp(manifestPath: string, value: unknown = undefined, runne
   return { manifest, errors };
 }
 
+export function cancel(manifestPath: string, id: string): { manifest: Manifest; errors: string[] } {
+  const manifest = load(manifestPath);
+  const task = manifest.tasks?.find(task => task.id === id);
+  if (!task || id.startsWith("initial:") || !["queued", "cancelled"].includes(task.state)) {
+    throw new Error("cancellation requires an undelivered queued follow-up ID");
+  }
+  if (task.state !== "cancelled") {
+    task.state = "cancelled";
+    save(manifest, manifestPath);
+  }
+  return { manifest, errors: [] };
+}
+
 export function acknowledge(manifestPath: string, id: string, runner: Runner = run): { manifest: Manifest; errors: string[] } {
   const manifest = load(manifestPath);
   const task = manifest.tasks?.find(task => task.id === id);
@@ -635,7 +648,7 @@ export function cleanup(manifestPath: string, completed: string[], runner: Runne
     if (!batch) { errors.push(`${name}: unknown batch`); continue; }
     if (batch.state === "removed") continue;
     try {
-      if (manifest.tasks?.some(task => task.batch === name && task.state !== "working")) throw new Error("queued or uncertain tasks remain; inspect and finish them before cleanup");
+      if (manifest.tasks?.some(task => task.batch === name && task.state !== "working" && task.state !== "cancelled")) throw new Error("queued or uncertain tasks remain; inspect and finish them before cleanup");
       const expected = join(manifest.temporary_root, "worktrees", name);
       if (!batchName.test(name) || batch.path !== expected || !batch.workspace || !batch.pane) throw new Error("missing or mismatched creation receipt; inspect preparation outcome");
       if (batch.state === "removing" && !lstatSync(expected, { throwIfNoEntry: false })) {
@@ -701,7 +714,7 @@ async function main(): Promise<number> {
   } });
   if (values.version) { console.log(VERSION); return 0; }
   if (values.help) {
-    console.log("batch-agent-sessions prepare --cwd DIR --plan FILE|- [--rollout PATH]\nbatch-agent-sessions add --manifest PATH --plan FILE|- [--rollout PATH]\nbatch-agent-sessions launch --manifest PATH [--batch NAME ...] [--plan FILE|-]\nbatch-agent-sessions wait --manifest PATH [--batch NAME ...] [--timeout MS]\nbatch-agent-sessions follow-up --manifest PATH [--plan FILE|-] [--ready-unknown NAME ...]\nbatch-agent-sessions acknowledge --manifest PATH --task ID\nbatch-agent-sessions cleanup --manifest PATH --completed NAME [--completed NAME ...] [--ready-unknown NAME ...]");
+    console.log("batch-agent-sessions prepare --cwd DIR --plan FILE|- [--rollout PATH]\nbatch-agent-sessions add --manifest PATH --plan FILE|- [--rollout PATH]\nbatch-agent-sessions launch --manifest PATH [--batch NAME ...] [--plan FILE|-]\nbatch-agent-sessions wait --manifest PATH [--batch NAME ...] [--timeout MS]\nbatch-agent-sessions follow-up --manifest PATH [--plan FILE|-] [--ready-unknown NAME ...]\nbatch-agent-sessions cancel --manifest PATH --task ID\nbatch-agent-sessions acknowledge --manifest PATH --task ID\nbatch-agent-sessions cleanup --manifest PATH --completed NAME [--completed NAME ...] [--ready-unknown NAME ...]");
     return 0;
   }
   if (positionals.length !== 1) throw new Error("use --help for lifecycle arguments");
@@ -722,6 +735,7 @@ async function main(): Promise<number> {
     else if (manifestPath && command === "add" && values.plan) result = add(manifestPath, plan(), run, values.rollout);
     else if (manifestPath && command === "launch") result = launch(manifestPath, values.batch, run, values.plan ? plan() : undefined);
     else if (manifestPath && command === "follow-up") result = followUp(manifestPath, values.plan ? plan() : undefined, run, values["ready-unknown"]);
+    else if (manifestPath && command === "cancel" && values.task) result = cancel(manifestPath, values.task);
     else if (manifestPath && command === "acknowledge" && values.task) result = acknowledge(manifestPath, values.task, run);
     else if (manifestPath && command === "wait") result = await wait(manifestPath, values.batch, runAsync, values.timeout === undefined ? 120_000 : Number(values.timeout));
     else if (manifestPath && command === "cleanup" && values.completed?.length) result = cleanup(manifestPath, values.completed, run, values["ready-unknown"]);

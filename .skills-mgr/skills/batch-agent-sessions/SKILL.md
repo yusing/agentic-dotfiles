@@ -117,7 +117,8 @@ second final recap. Without a journal, use the session's ordinary result channel
 also stay in the session's pane. Use visible reads while an agent is blocked or working if
 history capture requires idle.
 
-Relay task additions, decisions, or overlap coordination through the helper's follow-up queue;
+Route added work using the capacity check below. Relay decisions or overlap coordination
+through the helper's follow-up queue;
 do not assume a pane is safe to type into while the user is composing there. Never route
 reports into the coordinating user's pane: `herdr agent prompt` and other terminal input type
 into the user's composer and can submit a report together with their draft. Codex native
@@ -149,8 +150,12 @@ or wait indefinitely for `idle`.
 
 ## Add tasks and follow up
 
-An additive user request preserves accepted assignments and their recovery state. Understand
-the new work before routing it. A new coherent batch uses the same plan format with a fresh name:
+An additive user request preserves accepted assignments and their recovery state. Inspect the
+candidate session's elapsed work, remaining assignment, and context use before routing added work.
+Start a fresh batch when that session is already long-running or its context is nearly full,
+even when the new issue shares an owner. Unknown capacity favors a fresh batch. Let the original
+session finish its accepted scope; pass only the new issue, needed evidence, and overlap boundaries
+to the fresh session. A new coherent batch uses the same plan format with a fresh name:
 
 ```bash
 skills-mgr run batch-agent-sessions/scripts/sessions.sh add --manifest MANIFEST --plan /absolute/additions.json
@@ -161,8 +166,10 @@ The helper adds resources to the retained run without changing existing sessions
 defaults to the source checkout's current committed HEAD; supply a resolved `base_commit` when it
 must use another accepted baseline. After the whole run is cleaned up, prepare a new run instead.
 
-For more work in an existing batch, submit a follow-up plan with a stable task ID, target batch,
-verbatim task text, and any missing handoff:
+Use an existing batch for added work only when its remaining scope is bounded and it has enough
+context headroom. Short decisions or corrections needed to finish its current assignment can
+still use follow-ups. Submit a plan with a stable task ID, target batch, verbatim task text,
+and any missing handoff:
 
 ```bash
 skills-mgr run batch-agent-sessions/scripts/sessions.sh follow-up --manifest MANIFEST --plan /absolute/follow-up.json
@@ -173,6 +180,11 @@ one queued task per ready session. For unknown Mekugi state, use `--ready-unknow
 visibly confirming no ongoing turn/question UI. Stable IDs are idempotent; uncertain delivery
 blocks further sends/cleanup until resolved under the reference. Addenda preserve the assignment
 and session, not replace or restart them.
+
+If added work was queued to the wrong session, withdraw the undelivered task with
+`cancel --manifest MANIFEST --task ID` before routing it to a fresh batch. This retains the
+cancellation receipt and leaves the agent's current work running. Delivered or uncertain tasks
+require inspection and coordination; cancellation cannot retract them.
 
 ## Integrate
 

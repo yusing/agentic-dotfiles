@@ -104,8 +104,9 @@ fresh batch and evidence names to a retained run. Existing batches, evidence, an
 are untouched. New batches share the source checkout's current committed HEAD by default; an
 optional resolved `base_commit` selects another accepted baseline for that cohort. Initial
 preparation uses its preflight HEAD. Uncommitted edits never follow implicitly. Launch the added
-names separately. Duplicate batch names are rejected rather than re-created; use follow-ups for
-additional work in an existing batch. A fully cleaned run needs a new preparation.
+names separately. Duplicate batch names are rejected rather than re-created. Select a fresh
+batch or a follow-up using the session-capacity rule in the skill. A fully cleaned run needs a
+new preparation.
 
 For `follow-up --manifest PATH --plan FILE|-`, use:
 
@@ -127,6 +128,12 @@ records them before delivery, queues them while working or blocked, and submits 
 task per ready batch per call. `follow-up --manifest PATH` flushes the queue without adding tasks.
 Only idle/done sessions receive automatic delivery; inspected-ready unknown sessions need
 `--ready-unknown NAME`, just as cleanup does. It never types ordinary task text into a question UI.
+
+`cancel --manifest PATH --task ID` marks one queued follow-up as cancelled under the manifest
+lock. Repeating it is a no-op. It retains the original task and ID, sends no terminal input,
+and does not stop the agent. Initial, delivered, and uncertain tasks are rejected. Cancelled
+tasks cannot be resent by replaying their plan and do not block cleanup. Use a fresh task or
+batch ID when rerouting the work.
 
 ## Images missing from disk
 
