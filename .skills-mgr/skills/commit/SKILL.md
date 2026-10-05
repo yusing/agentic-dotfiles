@@ -49,8 +49,11 @@ history, or pushing; those follow the existing request and authorization.
 
 ## Follow-up fixes
 
-A correction to a commit that is not yet on a shared or protected branch goes into that commit,
-not into a new standalone commit such as `fix typo` or `address review`.
+A correction to an unpublished commit goes into that commit, not into a new standalone commit
+such as `fix typo` or `address review`. A commit is unpublished when no remote-tracking branch
+contains it (`git branch -r --contains <sha>` prints nothing) and no one else builds on it, even
+when it sits on the local default branch. Replacing the target's approach, including at the
+user's request, is a correction to it.
 
 1. Find the commit that introduced the code being corrected: `git log --oneline <base>..HEAD`,
    `git blame`, or `git log -L <range>:<file>`.
@@ -74,6 +77,5 @@ not into a new standalone commit such as `fix typo` or `address review`.
    history; force-pushing the result needs `--force-with-lease` and authorization to rewrite
    the remote branch.
 
-Make a regular commit (usually `fix`) instead when the target is already on the default branch,
-a release branch, or another branch others build on, or when the correction is a distinct change
-worth its own history entry.
+Make a regular commit (usually `fix`) instead when the target is published, or when the change
+is a distinct change worth its own history entry rather than a revision of the target.
