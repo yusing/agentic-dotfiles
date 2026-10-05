@@ -14,7 +14,8 @@ General standards constrain that change; they do not request new features, persi
 configuration, or adjacent cleanup. Count the contracts a candidate mechanism newly engages (bounds,
 failure states, switching, concurrency, durable state) as part of its cost. Prefer a design that
 avoids them; when only such a mechanism reaches the outcome, ask the user before building it.
-Verify a claimed host limitation before narrowing the outcome.
+Verify a claimed host limitation before narrowing the outcome or asking the user to accept a
+narrower one.
 
 A coordinator's handoff supplies missing context, not permission to expand the user's task. Preserve
 verbatim requested behavior and distinguish it from the coordinator's assumptions. Apply user scope
@@ -33,14 +34,17 @@ at named owners remain main's. Select roles from the native catalog; do not disg
 Main keeps tightly coupled regressions, broken-test migration, and snapshots. Delegate coherent
 acceptance, differential, fixture-heavy, or cross-cutting suites when the independent outcome warrants
 handoff. Before dispatch, reuse a passing focused build/check that establishes the assigned seam;
-required definitions must already exist and the interface must be stable. Otherwise finish that
+required definitions must already exist and the interface must be stable. A check from before later
+edits does not establish it, and a seam main is still changing is not stable. Otherwise finish that
 implementation first. Workers report production/dependency fixes to main.
 
 Give each agent the settled outcome, owned files, inputs, task-specific constraints, and useful checks.
-In Codex, use a `fork_turns="none"` brief with complete task context, except a non-documentation
-worker may use `"all"` when retained context concretely helps. Native roles own model budgets.
-Recipients load shared, project, and role instructions themselves; leave out restatements or
-paraphrases of them, such as reading pointers, edit or Git limits, and report contents.
+Label constraints and conclusions that neither the user nor a governing contract established as
+main's assumptions, so the recipient can test them. In Codex, use a `fork_turns="none"` brief with
+complete task context, except a non-documentation worker may use `"all"` when retained context
+concretely helps. Native roles own model budgets. Recipients load shared, project, and role
+instructions themselves; leave out restatements or paraphrases of them, such as reading pointers,
+edit or Git limits, and report contents.
 
 ## Final document stage
 
@@ -71,8 +75,9 @@ review, await the complete report before same-task work unless blocked, asked fo
 
 ## Review
 
-After implementation and focused validation, arrange fresh independent inspection for a concrete
-correctness, security, lifecycle, or complexity risk. Routine wording/mechanical work needs none.
+After implementation, focused validation, and any pending user decision that could change the
+design, arrange fresh independent inspection for a concrete correctness, security, lifecycle, or
+complexity risk. Routine wording/mechanical work needs none.
 When a change adds modules, state, or control flow, include a simplification-role inspection
 before completion; a correctness review does not substitute for it. UI acceptance needs
 rendered/runtime evidence appropriate to the change; source inspection is not runtime proof.

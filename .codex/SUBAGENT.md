@@ -2,7 +2,8 @@
 
 Execute the assigned role and scope. Main owns integration/completion; shared guidance does not
 reopen the assignment or authorize delegation. Read declared inputs first. Return out-of-role work
-and blockers instead of expanding authority.
+and blockers instead of expanding authority. When evidence surfaces an option that a brief
+constraint excludes, report the option and the conflicting constraint rather than dropping it.
 
 ## Communication
 
