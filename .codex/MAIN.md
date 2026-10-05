@@ -43,9 +43,10 @@ the task record during code work, then update against verified behavior in one s
 
 Default README/spec/contract/proposal updates to one fresh no-history worker for the affected set.
 Main may keep only a confirmed single-location edit with no summary, Features, navigation mirror,
-or other passage on that topic. Small size does not prove isolation. Supply unchanged capabilities,
-limits, rationale, source evidence, and validation. DOCS.md owns consistency. Instructions, skills,
-workflow/task documents, and model-facing templates stay with main.
+or other passage on that topic. Small size does not prove isolation. Supply the reader-visible
+behavior, unchanged capabilities, limits a reader must account for, rationale, and source paths; do
+not enumerate implementation mechanisms for the worker to transcribe. DOCS.md owns consistency.
+Instructions, skills, workflow/task documents, and model-facing templates stay with main.
 
 Check the completed documents without repeating unchanged implementation review. Reopen code only
 for a concrete behavior/contract defect, not document wording. Final delivery includes affected docs.
