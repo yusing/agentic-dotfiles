@@ -60,8 +60,10 @@ behavior, unchanged capabilities, limits a reader must account for, rationale, a
 not enumerate implementation mechanisms for the worker to transcribe. DOCS.md owns consistency.
 Instructions, skills, workflow/task documents, and model-facing templates stay with main.
 
-Check the completed documents without repeating unchanged implementation review. Reopen code only
-for a concrete behavior/contract defect, not document wording. Final delivery includes affected docs.
+Check the completed documents without repeating unchanged implementation review. When the task's
+total net added lines, now including these documents, exceed 500, that check includes a
+simplification-role inspection of the document changes. Reopen code only for a concrete
+behavior/contract defect, not document wording. Final delivery includes affected docs.
 
 ## Coordination
 
@@ -80,8 +82,8 @@ design, arrange fresh independent inspection for a concrete correctness, securit
 complexity risk. Routine wording/mechanical work needs none unless it crosses a size threshold below.
 Include a simplification-role inspection before completion when a change adds modules, state, or
 control flow, or when its net added lines (added minus deleted, excluding generated or vendored
-output) exceed 300 in production code or 500 in total, including tests and documents. A correctness
-review does not substitute for it. UI acceptance needs rendered/runtime evidence appropriate to the
+output) exceed 300 in production code or 500 in total so far. A correctness review does not
+substitute for it. UI acceptance needs rendered/runtime evidence appropriate to the
 change; source inspection is not runtime proof.
 
 Unless a workflow supplies its own inputs, brief only the user's verbatim request and corrections,
