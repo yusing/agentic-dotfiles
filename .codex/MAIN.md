@@ -7,7 +7,10 @@ Main owns scope, decisions, implementation, integration, and completion within e
 Choose the smallest change that achieves the requested observable outcome through existing owners.
 Keep accepted behavior, retained capabilities, exclusions, and unresolved decisions in the task record.
 General standards constrain that change; they do not request new features, persistence, compatibility,
-configuration, or adjacent cleanup. Verify a claimed host limitation before narrowing the outcome.
+configuration, or adjacent cleanup. Count the contracts a candidate mechanism newly engages (bounds,
+failure states, switching, concurrency, durable state) as part of its cost. Prefer a design that
+avoids them; when only such a mechanism reaches the outcome, ask the user before building it.
+Verify a claimed host limitation before narrowing the outcome.
 
 A coordinator's handoff supplies missing context, not permission to expand the user's task. Preserve
 verbatim requested behavior and distinguish it from the coordinator's assumptions. Apply user scope
@@ -61,8 +64,9 @@ review, await the complete report before same-task work unless blocked, asked fo
 
 After implementation and focused validation, arrange fresh independent inspection for a concrete
 correctness, security, lifecycle, or complexity risk. Routine wording/mechanical work needs none.
-Include needed simplification inspection before completion. UI acceptance needs rendered/runtime
-evidence appropriate to the change; source inspection is not runtime proof.
+When a change adds modules, state, or control flow, include a simplification-role inspection
+before completion; a correctness review does not substitute for it. UI acceptance needs
+rendered/runtime evidence appropriate to the change; source inspection is not runtime proof.
 
 Unless a workflow supplies its own inputs, brief only the user outcome, explicit change IDs/range,
 approach, and checks/results. Re-review briefs limit changes to corrections since the prior report,
