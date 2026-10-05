@@ -60,10 +60,10 @@ behavior, unchanged capabilities, limits a reader must account for, rationale, a
 not enumerate implementation mechanisms for the worker to transcribe. DOCS.md owns consistency.
 Instructions, skills, workflow/task documents, and model-facing templates stay with main.
 
-Check the completed documents without repeating unchanged implementation review. When the task's
-total net added lines, now including these documents, exceed 500, that check includes a
-simplification-role inspection of the document changes. Reopen code only for a concrete
-behavior/contract defect, not document wording. Final delivery includes affected docs.
+Check the completed documents without repeating unchanged implementation review, including a
+simplification-role inspection of them when they bring the task past the Review section's total
+threshold. Reopen code only for a concrete behavior/contract defect, not document wording. Final
+delivery includes affected docs.
 
 ## Coordination
 
@@ -79,12 +79,12 @@ review, await the complete report before same-task work unless blocked, asked fo
 
 After implementation, focused validation, and any pending user decision that could change the
 design, arrange fresh independent inspection for a concrete correctness, security, lifecycle, or
-complexity risk. Routine wording/mechanical work needs none unless it crosses a size threshold below.
-Include a simplification-role inspection before completion when a change adds modules, state, or
-control flow, or when its net added lines (added minus deleted, excluding generated or vendored
-output) exceed 300 in production code or 500 in total so far. A correctness review does not
-substitute for it. UI acceptance needs rendered/runtime evidence appropriate to the
-change; source inspection is not runtime proof.
+complexity risk. A simplification-role inspection, which a correctness review does not replace, is
+required before completion when a change adds modules, state, or control flow, remains test-heavy
+under TESTING.md, or nets more than 300 production lines or 500 lines in total (added minus deleted,
+excluding generated or vendored output). Other routine wording/mechanical work needs none. UI
+acceptance needs rendered/runtime evidence appropriate to the change; source inspection is not
+runtime proof.
 
 Unless a workflow supplies its own inputs, brief only the user's verbatim request and corrections,
 explicit change IDs/range, approach, and checks/results. Re-review briefs limit changes to

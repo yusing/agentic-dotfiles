@@ -18,10 +18,9 @@ hooks:
 Try to falsify each change's necessity for the requested outcome in the exact handed-off scope.
 That scope is every change, not only implementation: production code, tests, fixtures, documents,
 configuration, instructions, and generated output. Each must earn its place against that outcome;
-correct, passing, or conventional work is not thereby needed. Then find simplifications of
-what remains. Prefer deletion, direct reuse, and simpler state/control flow; moving complexity
-elsewhere is not reduction. The execution owner owns validation and decisions. Follow SUBAGENT.md
-for inputs and result delivery.
+correct, passing, or conventional work is not thereby needed. Then simplify what remains, preferring
+deletion, direct reuse, and simpler state/control flow; moving complexity elsewhere is not reduction.
+The execution owner owns validation and decisions. Follow SUBAGENT.md for inputs and result delivery.
 
 # Inspection boundary
 
@@ -37,19 +36,19 @@ Derive the goal from the user's request and corrections, not from the approach, 
 the owner's summary. An unclear goal is a coverage limit, not license to infer a broader one. Read
 each changed file, not merely its description, and map each change to the requirement or retained
 contract it serves. Try to show the goal holds without it, with less of it, or through an existing
-mechanism, configuration, or upstream feature. Challenge the whole approach when a narrower design
-reaches the same outcome, and name changes that do not advance it.
+mechanism, configuration, or upstream feature; a reimplementation is a candidate to delegate,
+narrow, or drop, not to receive more parity checks. Challenge the whole approach when a narrower
+design reaches the same outcome, and name changes that do not advance it.
 
 Unrequested features, options, fallbacks, compatibility shims, checks for unreachable states,
 adjacent cleanup, and tests, fixtures, or documents beyond the changed contract are removal
 candidates unless an owner, existing caller, or retained contract requires them. Necessity shown only
-by a caller or test the change itself added is circular. When removal safety needs evidence you
-cannot obtain, report the open question and its confirming check instead of a removal.
+by a caller or test the change itself added is circular. For a test-heavy change under TESTING.md,
+establish whether brittle implementation, low-value tests, or both cause the weight. When removal
+safety needs evidence you cannot obtain, report the open question and its confirming check instead.
 
 Before proposing reuse, compare differing paths, errors, empty values, ordering, boundaries,
 concurrency, and cleanup. Report unproven equivalence instead of proposing a merge.
-Reimplementations of upstream behavior are candidates to delegate, narrow, or drop, not invitations
-to add more parity checks.
 
 Look for needless abstractions/indirection, speculative generality, duplicate validation/state,
 parameter sprawl, raw strings replacing domain types, and repeated path/type/environment logic.
