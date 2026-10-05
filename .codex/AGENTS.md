@@ -33,8 +33,8 @@ Read these task documents directly when their operation applies:
 - `HANDOFF.md`: when mentioned; read then delete.
 - `RECOVERY.md`: when created/mentioned; retain through staged delivery, then delete.
 
-Do not copy instructions delivered before the first user message, including this file, into other
-instruction files, artifacts, skills, or spawn prompts.
+Do not repeat or paraphrase instructions delivered before the first user message, including this
+file, in other instruction files, artifacts, skills, or spawn prompts.
 
 ## Skills and tools
 

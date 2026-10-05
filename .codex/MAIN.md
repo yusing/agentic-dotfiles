@@ -36,9 +36,11 @@ handoff. Before dispatch, reuse a passing focused build/check that establishes t
 required definitions must already exist and the interface must be stable. Otherwise finish that
 implementation first. Workers report production/dependency fixes to main.
 
-Give each agent the settled outcome, owned files, inputs, constraints, and useful checks. In Codex,
-use a self-contained `fork_turns="none"` brief, except a non-documentation worker may use `"all"`
-when retained context concretely helps. Native roles own model budgets. Do not copy standing rules.
+Give each agent the settled outcome, owned files, inputs, task-specific constraints, and useful checks.
+In Codex, use a `fork_turns="none"` brief with complete task context, except a non-documentation
+worker may use `"all"` when retained context concretely helps. Native roles own model budgets.
+Recipients load shared, project, and role instructions themselves; leave out restatements or
+paraphrases of them, such as reading pointers, edit or Git limits, and report contents.
 
 ## Final document stage
 
