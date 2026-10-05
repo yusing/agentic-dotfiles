@@ -47,6 +47,11 @@ history, or pushing; those follow the existing request and authorization.
 - Trailers: `Fixes #123`, `Refs #123`, `Co-authored-by:`, and any attribution the client or
   project requires, each on its own line after a blank line.
 
+Pass a multi-line message as real lines through a quoted heredoc, `git commit -F - <<'EOF'`.
+Git and the shell keep a `\n` escape inside `-m` quotes as a literal backslash and `n`, including
+when a tool-call string supplies the command. Check the stored message with
+`git log -1 --format=%B`.
+
 ## Follow-up fixes
 
 A correction to an unpublished commit goes into that commit, not into a new standalone commit
@@ -67,10 +72,10 @@ user's request, is a correction to it.
    - When the target is `HEAD`, `git commit --amend` is equivalent and needs no later squash.
 
    `amend:` and `reword:` open an editor and reject `-m`/`-F`. Without an interactive editor,
-   write the marker directly: the subject is `amend! <exact target subject>` and the remaining
-   paragraphs are the replacement message, e.g.
-   `git commit -m 'amend! feat: add parser' -m 'feat(parser): add streaming parser' -m '<body>'`;
-   add `--allow-empty` for a message-only correction.
+   write the marker directly with the heredoc form above: the first paragraph is
+   `amend! <exact target subject>` (e.g. `amend! feat: add parser`), and the remaining
+   paragraphs are the replacement message (e.g. `feat(parser): add streaming parser` and its
+   body). Add `--allow-empty` for a message-only correction.
 4. Squash the markers only when the user asks or the workflow requires a clean branch:
    `git rebase --autosquash <base>` (Git 2.44+), or
    `GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash <base>` on older Git. Squashing rewrites

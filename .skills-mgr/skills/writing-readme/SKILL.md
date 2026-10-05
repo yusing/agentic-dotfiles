@@ -13,8 +13,9 @@ that help readers, rather than aiming for a shorter document.
 
 Make the purpose, meaningful capabilities, and first useful action clear to someone
 without session history. Keep prerequisites, defaults, limitations, and important
-side effects beside the claims or commands they qualify. Link deeper technical and
-maintainer detail when it serves a separate audience.
+side effects that change what a reader does beside the claims or commands they qualify.
+Link deeper technical, maintainer, and contract detail, such as thresholds, precedence,
+and persistence rules, rather than restating it.
 
 For maintenance, update the affected explanations, examples, and links together.
 Sections follow the reader's task: everyday use belongs with usage even when it
