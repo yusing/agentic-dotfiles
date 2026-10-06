@@ -63,6 +63,12 @@ arguments to the launcher and records the effective budget in the launched roste
 merely because these defaults changed; reassess its route only when an additive request materially
 changes its workload, preserving the accepted assignment and existing recovery state.
 
+Mekugi batches inherit main's wrapper flags from preflight, before `codex`.
+This includes flags such as `--debug`, `--ansi-faint`, and `--journal-compaction`.
+Native Codex arguments, including resume targets, are not inherited; batch model,
+effort, and profile choices remain separate. Provider-specific authentication and
+the main's capture-output destination remain owned by that launch.
+
 ## Prepare
 
 Name each batch by its kind; the helper derives its branch and worktree from that name. Supply

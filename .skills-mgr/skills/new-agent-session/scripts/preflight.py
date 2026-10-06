@@ -45,7 +45,7 @@ def run(argv, cwd):
             except (ValueError, AttributeError):
                 pass
         raise RuntimeError(f"{argv[0]} {' '.join(argv[1:3])}: exit {result.returncode}" + (f": {detail[:1200]}" if detail else ""))
-    return result.stdout.rstrip()
+    return (result.stdout + (result.stderr if argv[-1:] == ["--help"] else "")).rstrip()
 
 
 def cli_mismatches(group, usage):
@@ -61,6 +61,33 @@ def cli_mismatches(group, usage):
             continue
         missing += [f"herdr {group} {sub} {flag}" for flag in flags if not re.search(rf"{flag}(?![\w-])", lines[sub])]
     return missing
+
+
+def mekugi_flags(argv, help_text):
+    """Keep shared wrapper flags for Codex batches, using live option arities."""
+    options = {name: bool(value) for name, value in re.findall(r"^  -([\w-]+)(?: ([^\n]+))?$", help_text, re.MULTILINE)}
+    if help_text and not options:
+        raise ValueError("Caller Mekugi option metadata is unavailable.")
+    end = 1
+    flags = []
+    while end < len(argv):
+        start = end
+        arg = argv[end]
+        if arg == "--" or not arg.startswith("-"):
+            break
+        name, separator, _ = arg.lstrip("-").partition("=")
+        if name not in options:
+            break
+        end += 1
+        if options[name] and not separator:
+            if end == len(argv):
+                raise ValueError("Caller Mekugi flag is missing its value.")
+            end += 1
+        # Authentication belongs to the selected provider. A capture destination
+        # belongs to one launch and must not become a shared writer across batches.
+        if name not in {"grok-auth-file", "capture-output"}:
+            flags.extend(argv[start:end])
+    return flags
 
 
 def discover(cwd, env, runner=run):
@@ -126,7 +153,13 @@ def discover(cwd, env, runner=run):
                 if executable and not os.access(executable, os.X_OK):
                     raise ValueError("Caller Mekugi executable cannot be reused.")
                 context["mekugi_executable"] = executable
-        except (KeyError, TypeError, ValueError, OSError) as exc:
+                if mekugi:
+                    argv = mekugi["argv"]
+                    if not isinstance(argv, list) or not argv or not all(isinstance(arg, str) for arg in argv):
+                        raise ValueError("Caller Mekugi arguments are unavailable.")
+                    help_text = runner([executable, "--help"], cwd) if len(argv) > 1 and argv[1].startswith("-") else ""
+                    context["mekugi_flags"] = mekugi_flags(argv, help_text)
+        except (KeyError, TypeError, ValueError, OSError, RuntimeError, subprocess.TimeoutExpired) as exc:
             errors.append(f"{key}: {exc}")
     mismatched = {}
     for group in REQUIRED_CLI:

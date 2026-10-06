@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.5
+
+Retain the main session's Mekugi wrapper flags from preflight and pass them
+before codex in batch launches. Keep native model, effort, profile, and resume
+arguments separate. Existing launched sessions retain their original settings.
+Exclude provider authentication and the main's capture destination. Preserve
+successful preflight evidence when the wrapper-help probe fails.
+
 ## 1.2.4
 
 Forward invocation-local TMPDIR and MEKUGI_RUNTIME_DIR to Mekugi launches.

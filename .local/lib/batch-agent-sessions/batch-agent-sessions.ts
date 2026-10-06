@@ -5,12 +5,12 @@ import { homedir } from "node:os";
 import { isAbsolute, join } from "node:path";
 import { parseArgs } from "node:util";
 
-export const VERSION = "1.2.4";
+export const VERSION = "1.2.5";
 export type Runner = (argv: string[], cwd: string) => string;
 export type Context = {
   base_commit: string; source_workspace_id: string; source_checkout_path: string;
   caller_pane: string; dirty_status?: string[];
-  caller_kind?: string; caller_uses_mekugi?: boolean; mekugi_executable?: string;
+  caller_kind?: string; caller_uses_mekugi?: boolean; mekugi_executable?: string; mekugi_flags?: string[];
 };
 export type Discovery = (cwd: string) => Context;
 type Route = { kind: string; model?: string; effort?: string; profile?: string; args?: string[];
@@ -475,7 +475,7 @@ export function launch(manifestPath: string, selected: string[] = [], runner: Ru
           const executable = manifest.preflight.mekugi_executable;
           if (!executable || !isAbsolute(executable) || !existsSync(executable)) throw new Error("preflight did not establish a reusable absolute Mekugi executable");
           if (!manifest.preflight.caller_uses_mekugi && !route.allow_yolo) throw new Error("Mekugi requires authorized --yolo; supply allow_yolo only after user authorization");
-          command = [executable, "codex", "--yolo", ...args];
+          command = [executable, ...(manifest.preflight.mekugi_flags ?? []), "codex", "--yolo", ...args];
           const environment = ["TMPDIR", "MEKUGI_RUNTIME_DIR"].flatMap(key => {
             const directory = process.env[key];
             if (!directory) return [];

@@ -14,7 +14,8 @@ coordinating workflow has already run it and supplies its evidence:
 skills-mgr run new-agent-session/scripts/preflight.py --cwd "$PWD"
 ```
 
-It returns caller agent kind and reusable Mekugi executable, one base commit, dirty status,
+It returns caller agent kind, reusable Mekugi executable and compatible wrapper
+flags for batch launches, one base commit, dirty status,
 source workspace, existing worktrees, and taken agent names. It also checks the installed
 Herdr CLI for the syntax used below, printing `cli: ok` or the usage of a mismatched command
 group. Reuse this evidence across launches instead of repeating discovery.

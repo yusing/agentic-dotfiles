@@ -78,6 +78,13 @@ initial tasks after checking session identity. `launch --plan FILE|-` supplies a
 prepared, not-yet-launched batches, including manifests created by the earlier prepare-only helper.
 It does not overwrite launched assignments.
 
+Preflight records main's explicit Mekugi wrapper flags in `mekugi_flags`. Launch
+places that retained argv before `codex`, preserving order and literal values.
+It excludes `--grok-auth-file` and `--capture-output`: batches select their own
+provider and must not share main's capture writer. It does not copy native Codex
+arguments or replace per-batch budgets. Manifests
+prepared before flag capture retain their original launch settings.
+
 Mekugi launches forward invocation-local `TMPDIR` and `MEKUGI_RUNTIME_DIR` when set
 to absolute paths. Set them to disk-backed storage when the system temporary
 directory cannot hold runtime snapshots; user configuration stays unchanged.

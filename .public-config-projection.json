@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "e1dcf3800138d6fac2870eef3c8bb600502bab96",
+  "sourceCommit": "9d17eebe524bd0ab15d485ed35a870bc63a72d6d",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -731,13 +731,13 @@
     {
       "path": ".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
       "kind": "file",
-      "sha256": "00e2df262e1031d4d09ce5bc69aaa2b34545a278f652250844e4ac23696a6d6a",
+      "sha256": "2914f7c014c4f1d51e9e817e3df0a56b5bd8b97056bd22dfd76c212fb6c94282",
       "executable": false
     },
     {
       "path": ".local/lib/batch-agent-sessions/CHANGELOG.md",
       "kind": "file",
-      "sha256": "41d34994c0af4051f98d54622007385f4156f8abe21aabfd2c7746db69a0da0b",
+      "sha256": "5b637578f89900415db356b2b03e6cd1a5b06f6d28e19e47287375afaf31973a",
       "executable": false
     },
     {
@@ -875,7 +875,7 @@
     {
       "path": ".skills-mgr/skills/batch-agent-sessions/references/preparation.md",
       "kind": "file",
-      "sha256": "32aff9fe73a9ef5ad165e0732934b958ad582383e239d2b23748190025e99abd",
+      "sha256": "de9ce9cd9b250217ebf76a186b4522f3b5f0b80060742c784c35bc70c457c645",
       "executable": false
     },
     {
@@ -887,7 +887,7 @@
     {
       "path": ".skills-mgr/skills/batch-agent-sessions/SKILL.md",
       "kind": "file",
-      "sha256": "d593132affcb0a93e04ea7fe0d0e16b36428dc85cfb9f90e4f2f0ce1e21c730a",
+      "sha256": "f96981b61115284efe0032edc6cfa264db8ceb6527f2be0bb7554a68657374b3",
       "executable": false
     },
     {
@@ -1073,19 +1073,19 @@
     {
       "path": ".skills-mgr/skills/new-agent-session/scripts/preflight.py",
       "kind": "file",
-      "sha256": "f45bcfea78ecd118ed0db95a47ec7ddf612a08deb6d0ec5d423e893c15cf5f4c",
+      "sha256": "c207fd7c5f4f1160d179aa91b267664db84691eef7fa6f8c4326f5f126be2bce",
       "executable": true
     },
     {
       "path": ".skills-mgr/skills/new-agent-session/scripts/test_preflight.py",
       "kind": "file",
-      "sha256": "3a63f2b435549af47774db08750ba5002dcae0f206a8b1afeaa74155c781ec88",
+      "sha256": "40330aa0cdd80dfdef6ea0121abb5b77bfb8d28c071b9c511706d4a7f25f5a75",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/new-agent-session/SKILL.md",
       "kind": "file",
-      "sha256": "0409c2cb4ff59e66a6703b896ea0e0dd1d19e305d63f88659685ef06ca4df9f2",
+      "sha256": "fa46ac858d1d0b84975501b5a946660da966730c2a3230c74b7cf87377dced01",
       "executable": false
     },
     {

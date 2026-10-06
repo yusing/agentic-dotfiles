@@ -98,7 +98,7 @@ class PreflightTests(unittest.TestCase):
                 executable.unlink()
                 def replaced(argv, cwd):
                     if argv[:3] == ["herdr", "pane", "process-info"]:
-                        return json.dumps({"result": {"process_info": {"foreground_processes": [{"name": "mekugi", "pid": process.pid}]}}})
+                        return json.dumps({"result": {"process_info": {"foreground_processes": [{"name": "mekugi", "pid": process.pid, "argv": ["mekugi", "codex"]}]}}})
                     return self.runner(argv, cwd)
                 context, _, errors = preflight.discover(Path("/caller"), self.env, replaced)
                 self.assertEqual(errors, [])
@@ -112,11 +112,44 @@ class PreflightTests(unittest.TestCase):
     def test_live_unreplaced_mekugi_keeps_resolved_executable(self):
         def live(argv, cwd):
             if argv[:3] == ["herdr", "pane", "process-info"]:
-                return json.dumps({"result": {"process_info": {"foreground_processes": [{"name": "mekugi", "pid": os.getpid()}]}}})
+                return json.dumps({"result": {"process_info": {"foreground_processes": [{"name": "mekugi", "pid": os.getpid(), "argv": ["mekugi", "codex"]}]}}})
             return self.runner(argv, cwd)
         context, _, errors = preflight.discover(Path("/caller"), self.env, live)
         self.assertEqual(errors, [])
         self.assertEqual(context["mekugi_executable"], str(Path(f"/proc/{os.getpid()}/exe").resolve(strict=True)))
+
+    def test_main_wrapper_flags_exclude_native_arguments(self):
+        flags = ["--debug", "--ansi-faint=off", "--grok-auth-file", "codex", "--capture-output=logs/capture.jsonl", "--journal-compaction", "slice"]
+        def live(argv, cwd):
+            if argv[:3] == ["herdr", "pane", "process-info"]:
+                process = {"name": "mekugi", "pid": os.getpid(), "argv": ["mekugi", *flags, "codex", "--yolo", "-m", "native-secret", "resume", "--last"]}
+                return json.dumps({"result": {"process_info": {"foreground_processes": [process]}}})
+            if argv[-1:] == ["--help"]:
+                return "  -debug\n  -ansi-faint string\n  -grok-auth-file string\n  -capture-output string\n  -journal-compaction string\n"
+            return self.runner(argv, cwd)
+        context, _, errors = preflight.discover(Path("/caller"), self.env, live)
+        self.assertEqual(errors, [])
+        self.assertEqual(context["mekugi_flags"], ["--debug", "--ansi-faint=off", "--journal-compaction", "slice"])
+        self.assertNotIn("native-secret", json.dumps(context))
+        self.assertEqual(preflight.mekugi_flags(["mekugi", "--", "codex", "resume"], ""), [])
+        self.assertEqual(preflight.mekugi_flags(["mekugi", "--yolo", "resume"], "  -debug\n"), [])
+
+    def test_failed_wrapper_help_preserves_partial_discovery(self):
+        for failure in [RuntimeError("help fixture failed"), subprocess.TimeoutExpired("mekugi --help", 30)]:
+            with self.subTest(failure=type(failure).__name__):
+                def failing(argv, cwd):
+                    if argv[:3] == ["herdr", "pane", "process-info"]:
+                        process = {"name": "mekugi", "pid": os.getpid(), "argv": ["mekugi", "--debug", "codex"]}
+                        return json.dumps({"result": {"process_info": {"foreground_processes": [process]}}})
+                    if argv[-1:] == ["--help"]:
+                        raise failure
+                    return self.runner(argv, cwd)
+                context, _, errors = preflight.discover(Path("/caller"), self.env, failing)
+                self.assertEqual(context["base_commit"], "base")
+                self.assertEqual(context["caller_kind"], "codex")
+                self.assertNotIn("mekugi_flags", context)
+                self.assertEqual(len(errors), 1)
+                self.assertTrue(errors[0].startswith("processes:"))
 
     def test_flag_prefix_does_not_satisfy_requirement(self):
         usage = USAGE["worktree"].replace("[--no-focus]", "[--no-focus-ring]")
