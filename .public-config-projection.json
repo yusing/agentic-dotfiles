@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "afdc2a93d8b9d67e2d71ddfa6cadbd295668b3f3",
+  "sourceCommit": "1acc12b3aff702ed7d5f64d1cc5064f3c45ff0bd",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -797,7 +797,7 @@
     {
       "path": ".local/lib/rewrite-home-paths/CHANGELOG.md",
       "kind": "file",
-      "sha256": "7b1f306e57a4dd1c7b3017a7658f4d8d8de39565ed84eb752c1e8d82047b63e2",
+      "sha256": "d96c9aeb8d8dcbe795dc83aebdafa077e09139441eb6e2dda08e804264b259df",
       "executable": false
     },
     {
@@ -809,7 +809,7 @@
     {
       "path": ".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
       "kind": "file",
-      "sha256": "5cedbd3a719784129fd359abd27ab90926bab2548100afdd431625fe76f97ddf",
+      "sha256": "f8a7371750172d89defcbbd8166c631a0216bc3bf02264c97fbf8c89c9262e31",
       "executable": false
     },
     {
