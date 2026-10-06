@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.9.0
+
+Support Homebrew-selected native packages on Linux alongside distro bootstrap
+packages. Use bottled Bash, Zsh, Strace, development tools, and libraries instead
+of old distro packages or shell source builds. Share selected Homebrew keg paths
+with Bash, Zsh, and Fish, and expose their pkg-config metadata to vendor builds.
+Retain system shells and bootstrap packages; reconcile declared Strace leftovers
+only after checking the Homebrew replacement.
+
 ## 2.8.2
 
 Show package-labeled Python dependency lock progress with elapsed updates every

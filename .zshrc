@@ -1,5 +1,14 @@
+for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew $HOME/.linuxbrew/bin/brew; do
+  if [ -x "$brew_bin" ]; then
+    eval "$("$brew_bin" shellenv)"
+    break
+  fi
+done
+unset brew_bin
+
 export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.bun/bin:$PATH"
 command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
+
 
 zmodload zsh/complist
 autoload -Uz compinit && compinit
@@ -103,3 +112,10 @@ clipboard_copy() {
         fi
     fi
 }
+
+if [ -r "$HOME/.local/share/dotfiles-setup/brew-paths" ]; then
+  while IFS= read -r brew_path; do
+    [ ! -d "$brew_path" ] || export PATH="$brew_path:$PATH"
+  done <"$HOME/.local/share/dotfiles-setup/brew-paths"
+fi
+unset brew_bin brew_path

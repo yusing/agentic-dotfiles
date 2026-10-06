@@ -938,6 +938,24 @@ checksum = "sha256:35c70c5c43c29108075e58b893234c67ef585f0b53a7eaf8e9e7d4eec9f33
 url = "https://github.com/eza-community/eza/releases/download/v0.23.5/eza_x86_64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/eza-community/eza/releases/assets/471228887"
 
+[[tools."github:fish-shell/fish-shell"]]
+version = "4.9.3"
+backend = "github:fish-shell/fish-shell"
+specifiers = ["latest"]
+
+[tools."github:fish-shell/fish-shell".options]
+matching_regex = '^fish-.*-linux-(x86_64|aarch64)\.tar\.xz$'
+
+[tools."github:fish-shell/fish-shell"."platforms.linux-arm64"]
+checksum = "sha256:57349f0111728c64b703a84e611aa97ff4d1fa8466385d64e67bd5bc3ffa49fc"
+url = "https://github.com/fish-shell/fish-shell/releases/download/4.9.3/fish-4.9.3-linux-aarch64.tar.xz"
+url_api = "https://api.github.com/repos/fish-shell/fish-shell/releases/assets/551107872"
+
+[tools."github:fish-shell/fish-shell"."platforms.linux-x64"]
+checksum = "sha256:8f643d10ad1abb0ef7072764c01ceb5cf61b2d373fda400cf60f0bad69b7e095"
+url = "https://github.com/fish-shell/fish-shell/releases/download/4.9.3/fish-4.9.3-linux-x86_64.tar.xz"
+url_api = "https://api.github.com/repos/fish-shell/fish-shell/releases/assets/551107873"
+
 [[tools."github:llvm/llvm-project"]]
 version = "23.1.2"
 backend = "github:llvm/llvm-project"

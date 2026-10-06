@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.8.2
+# version: 2.9.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -119,6 +119,8 @@ load_brew_env() {
     eval "$(/opt/homebrew/bin/brew shellenv)"
   elif [ -x /usr/local/bin/brew ]; then
     eval "$(/usr/local/bin/brew shellenv)"
+  elif [ -x $HOME/.linuxbrew/bin/brew ]; then
+    eval "$($HOME/.linuxbrew/bin/brew shellenv)"
   elif have brew; then
     eval "$(brew shellenv)"
   fi
@@ -126,28 +128,48 @@ load_brew_env() {
 
 # Keg-only Homebrew formulae are not on PATH. Add each declared prefix.
 load_brew_prefix_env() {
-  local name prefix
-  [ "$PM" = brew ] || return 0
+  local name prefix dir staged_paths paths=""
   have brew || return 0
   while IFS= read -r name; do
     [ -n "$name" ] || continue
+    [ "$(setup_config native-manager "$name")" = brew ] || continue
     prefix="$(setup_config native-prefix "$name" 2>/dev/null || true)"
     [ -n "$prefix" ] || continue
     prefix="$(brew --prefix "$prefix" 2>/dev/null || true)"
-    [ -n "$prefix" ] && [ -d "$prefix/bin" ] || continue
-    PATH="${prefix}/bin:${PATH}"
+    [ -n "$prefix" ] || continue
+    for dir in "$prefix/bin" "$prefix/libexec/gnubin"; do
+      [ -d "$dir" ] || continue
+      PATH="$dir:$PATH"
+      paths="$paths$dir"$'\n'
+    done
+    if [ -d "$prefix/lib/pkgconfig" ]; then
+      export PKG_CONFIG_PATH="$prefix/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+    fi
   done < <(setup_config native-required; setup_config native-optional)
   export PATH
+  mkdir -p "$BACKUP_ROOT"
+  staged_paths="$(mktemp "$BACKUP_ROOT/brew-paths.XXXXXX")"
+  printf '%s' "$paths" >"$staged_paths"
+  mv "$staged_paths" "$BACKUP_ROOT/brew-paths"
 }
 
 ensure_brew() {
-  [ "$PM" = brew ] || return 0
   load_brew_env
   if have brew; then
     return 0
   fi
+  if [ "$OS" = Linux ]; then
+    [ "$(id -u)" -ne 0 ] || die "Linuxbrew must be installed by a regular user; rerun setup without sudo"
+    case "$PM" in
+      apt)
+        refresh_pm
+        pm_install_batch build-essential procps curl file git ca-certificates
+        ;;
+      pacman) pm_install_batch base-devel procps-ng curl file git ca-certificates ;;
+    esac
+  fi
   info "installing Homebrew"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   load_brew_env
   have brew || die "Homebrew installed but brew is not on PATH"
 }
@@ -237,13 +259,21 @@ native_command_present() {
 }
 
 have_logical() {
-  local name="$1" cmd prefix commands
+  local name="$1" cmd prefix commands manager pkg
   setup_config native-enabled "$name" || return 1
   prefix="$(setup_config native-prefix "$name")" || return 1
-  if [ "$PM" = brew ] && [ -n "$prefix" ]; then
+  manager="$(setup_config native-manager "$name")" || return 1
+  if [ "$manager" = brew ] && [ -n "$prefix" ]; then
     prefix="$(brew --prefix "$prefix" 2>/dev/null || true)"
     cmd="$(pkg_cmd "$name")"
-    [ -n "$prefix" ] && [ -x "$prefix/bin/$cmd" ]
+    if [ -z "$cmd" ]; then
+      while IFS= read -r pkg; do
+        [ -n "$pkg" ] || continue
+        (PM=brew; installed_pm_package "$pkg") >/dev/null && return 0
+      done < <(mapped_pkgs "$name")
+      return 1
+    fi
+    [ -n "$prefix" ] && { [ -x "$prefix/bin/$cmd" ] || [ -x "$prefix/libexec/gnubin/$cmd" ]; }
     return
   fi
   commands="$(setup_config native-commands "$name")" || return 1
@@ -391,8 +421,13 @@ try:
             string(name)
             require(not name.startswith("-"), "names must not start with -")
     for entry in config["native"].values():
-        obj(entry, ("packages", "commands", "optional", "brew_prefix"), "native package")
+        obj(entry, ("packages", "commands", "optional", "brew_prefix", "manager", "os"), "native package")
         packages(entry.get("packages"))
+        if "manager" in entry:
+            require(entry["manager"] == "brew", "native manager override must be brew")
+            require(entry["packages"].get("brew"), "brew manager needs Homebrew packages")
+        if "os" in entry:
+            require(isinstance(entry["os"], list) and entry["os"] and all(x in ("linux", "macos") for x in entry["os"]), "invalid native os list")
         strings(entry.get("commands", []))
         require(type(entry.get("optional", False)) is bool, "optional must be boolean")
         if "brew_prefix" in entry:
@@ -548,15 +583,19 @@ try:
             pass
         elif query_action.startswith("native-"):
             native = native_map()
+            def selected(entry):
+                return entry["packages"].get(entry.get("manager", pm), []) if platform in entry.get("os", ["linux", "macos"]) else []
             if query_action in ("native-required", "native-optional"):
                 output = [key for key, entry in native.items()
-                          if entry["packages"].get(pm, []) and entry.get("optional", False) == (query_action == "native-optional")]
+                          if selected(entry) and entry.get("optional", False) == (query_action == "native-optional")]
             elif query_action == "native-enabled":
-                status = 0 if native.get(name, {}).get("packages", {}).get(pm) else 1
+                status = 0 if name in native and selected(native[name]) else 1
             else:
                 entry = native[name]
                 if query_action == "native-packages":
-                    output = entry["packages"].get(pm, [])
+                    output = selected(entry)
+                elif query_action == "native-manager":
+                    output = [entry.get("manager", pm)]
                 elif query_action == "native-command":
                     output = entry.get("commands", [])[:1]
                 elif query_action == "native-commands":
@@ -686,7 +725,7 @@ try:
         native = native_map()
         for name in native:
             queries.extend((query_action, name) for query_action in
-                           ("native-enabled", "native-packages", "native-command", "native-commands", "native-prefix"))
+                           ("native-enabled", "native-packages", "native-command", "native-commands", "native-prefix", "native-manager"))
         tools = config["mise"]["tools"]
         for tool in tools:
             queries.extend((("mise-applies", tool), ("mise-has", tool)))
@@ -718,14 +757,22 @@ PY
 }
 
 install_configured_packages() {
-  local name records
-  local names=()
-  records="$(setup_config native-required)" || return 1
-  while IFS= read -r name; do [ -z "$name" ] || names+=("$name"); done <<<"$records"
-  names+=(--optional)
-  records="$(setup_config native-optional)" || return 1
-  while IFS= read -r name; do [ -z "$name" ] || names+=("$name"); done <<<"$records"
-  install_packages "${names[@]}"
+  local name records manager mode
+  local native_names=() brew_names=()
+  for mode in required optional; do
+    if [ "$mode" = optional ]; then native_names+=(--optional); brew_names+=(--optional); fi
+    records="$(setup_config "native-$mode")" || return 1
+    while IFS= read -r name; do
+      [ -n "$name" ] || continue
+      manager="$(setup_config native-manager "$name")" || return 1
+      if [ "$manager" = brew ]; then brew_names+=("$name"); else native_names+=("$name"); fi
+    done <<<"$records"
+  done
+  install_packages "${native_names[@]}" || return 1
+  if [ "${#brew_names[@]}" -gt 1 ]; then
+    ensure_brew || return 1
+    (PM=brew; install_packages "${brew_names[@]}") || return 1
+  fi
 }
 
 # Upgrade declared installed alternatives; Arch requires a full system upgrade.
@@ -734,38 +781,40 @@ upgrade_configured_packages() {
   if [ "$PM" = pacman ]; then
     info "upgrading the full Arch system"
     refresh_pm || return 1
-    return 0
   fi
-  local records optional_records name candidates pkg installed
-  local packages=()
+  local records optional_records name candidates pkg installed manager
+  local packages=() brew_packages=()
   records="$(setup_config native-required)" || return 1
   optional_records="$(setup_config native-optional)" || return 1
   records="${records}"$'\n'"${optional_records}"
   while IFS= read -r name; do
     [ -n "$name" ] || continue
+    manager="$(setup_config native-manager "$name")" || return 1
+    [ "$manager" != pacman ] || continue
     candidates="$(mapped_pkgs "$name")" || return 1
     while IFS= read -r pkg; do
       [ -n "$pkg" ] || continue
-      installed="$(installed_pm_package "$pkg")" || continue
+      installed="$(PM="$manager"; installed_pm_package "$pkg")" || continue
       [ -n "$installed" ] || continue
-      if ! in_list "$pkg" ${packages[@]+"${packages[@]}"}; then packages+=("$pkg"); fi
+      if [ "$manager" = brew ]; then
+        in_list "$pkg" ${brew_packages[@]+"${brew_packages[@]}"} || brew_packages+=("$pkg")
+      else
+        in_list "$pkg" ${packages[@]+"${packages[@]}"} || packages+=("$pkg")
+      fi
       # Mappings are alternatives, not additional packages to manage.
       break
     done <<<"$candidates"
   done <<<"$records"
-  [ "${#packages[@]}" -gt 0 ] || return 0
-  info "upgrading setup-owned native packages: ${packages[*]}"
-  case "$PM" in
-    apt)
-      run_root apt-get update -y || return 1
-      run_root apt-get install --only-upgrade --no-remove -y "${packages[@]}" || return 1
-      ;;
-    brew)
-      brew update || return 1
-      HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade "${packages[@]}" || return 1
-      ;;
-    *) die "unknown package manager: $PM" ;;
-  esac
+  if [ "${#packages[@]}" -gt 0 ]; then
+    info "upgrading setup-owned apt packages: ${packages[*]}"
+    run_root apt-get update -y || return 1
+    run_root apt-get install --only-upgrade --no-remove -y "${packages[@]}" || return 1
+  fi
+  if [ "${#brew_packages[@]}" -gt 0 ]; then
+    info "upgrading setup-owned Homebrew packages: ${brew_packages[*]}"
+    brew update || return 1
+    HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade --force-bottle "${brew_packages[@]}" || return 1
+  fi
 }
 
 refresh_pm() {
@@ -828,7 +877,7 @@ pm_install_batch() {
       fi
       ;;
     brew)
-      brew install --no-ask "$@"
+      brew install --no-ask --force-bottle "$@"
       ;;
     *)
       die "unknown package manager: $PM"
@@ -1875,7 +1924,7 @@ for tool in json.load(sys.stdin):
 }
 
 cleanup_legacy_tool_sources() {
-  local tool cmd pkg go_installs="" go_installs_ready=0
+  local tool cmd pkg name legacy go_installs="" go_installs_ready=0
   local packages=() bun_packages=()
   info "reconciling tool ownership"
   while IFS= read -r pkg; do
@@ -1892,6 +1941,18 @@ cleanup_legacy_tool_sources() {
       bun_packages+=("$pkg")
     fi
   done < <(mise_tool_records)
+  # Only entries with an explicit legacy declaration authorize distro removal.
+  while IFS= read -r name; do
+    [ "$PM" != brew ] || continue
+    [ -n "$name" ] || continue
+    [ "$(setup_config native-manager "$name")" = brew ] || continue
+    legacy="$(legacy_packages "$name")" || return 1
+    [ -n "$legacy" ] || continue
+    have_logical "$name" || die "cannot clean up $name without its Homebrew replacement"
+    while IFS= read -r pkg; do
+      [ -z "$pkg" ] || packages+=("$pkg")
+    done <<<"$legacy"
+  done < <(setup_config native-required)
   remove_legacy_packages ${packages[@]+"${packages[@]}"}
   remove_legacy_bun_packages ${bun_packages[@]+"${bun_packages[@]}"}
   while IFS='|' read -r tool cmd; do
@@ -2129,6 +2190,7 @@ verify_aligned_brew() {
       return 1
     fi
     ver="$("$prefix/bin/$version_command" --version 2>/dev/null || true)"
+    case "$ver" in "fish, version "*) ver="${ver#fish, version }" ;; esac
     lock_ver="$(locked_tool_version "${MISE_CONFIG%/*}/mise.lock" "$tool")" || return 1
     if [ "$ver" != "$lock_ver" ]; then
       log "  MISS $name version brew=$ver lock=$lock_ver"
@@ -2281,7 +2343,7 @@ main() {
   fi
 
   STEP="ensure brew"
-  ensure_brew
+  if [ "$PM" = brew ]; then ensure_brew; fi
 
   if [ "${#UPGRADE_NAMES[@]}" -eq 0 ]; then
     STEP="ensure sudo"
@@ -2315,9 +2377,9 @@ main() {
   fi
 
   # Bring Arch's system and repository databases forward together before installs.
-  if [ "$PM" = pacman ]; then
+  if [ "$PM" = pacman ] && [ "$UPGRADE" -eq 1 ]; then
     STEP="upgrade Arch system"
-    upgrade_configured_packages
+    refresh_pm
   fi
 
   STEP="install packages"
@@ -2342,7 +2404,11 @@ main() {
   sync_mise_config
 
   STEP="upgrade setup-owned native packages"
-  if [ "$PM" != pacman ]; then upgrade_configured_packages; fi
+  if [ "$PM" = pacman ]; then
+    (refresh_pm() { :; }; upgrade_configured_packages)
+  else
+    upgrade_configured_packages
+  fi
 
   STEP="install cross-platform tools"
   if [ "$UPGRADE" -eq 1 ] || [ "${MISE_ALIGNED_CHANGED:-0}" -eq 1 ]; then
@@ -2360,6 +2426,7 @@ main() {
   rewrite_home_paths
 
   STEP="reconcile tool ownership"
+  load_brew_prefix_env
   cleanup_legacy_tool_sources
 
   STEP="install additional tools"

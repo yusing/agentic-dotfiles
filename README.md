@@ -114,6 +114,11 @@ change the login shell to Fish. It can be rerun after failure. Checkout
 collisions are backed up under `~/.local/share/dotfiles-setup/`. Unrelated files
 are left alone.
 
+Run setup as a regular user. Linux uses APT or Pacman/yay for bootstrap and
+system prerequisites, with sudo when needed, and Homebrew/Linuxbrew for the
+migrated command-line tools and development libraries. Installing Linuxbrew
+as root is rejected.
+
 For machines that should become a checkout of this repository, with its packages
 and tools installed:
 
@@ -159,7 +164,8 @@ executables before replacement, backing up previous local files under
 backups before retrying; replacement does not automatically roll back. Named
 `--upgrade TOOL...` and `--check-config` runs do not install or update vendors.
 
-Normal reruns skip tool installation when the locked versions are already installed,
+Normal reruns retain installed native packages and skip mise tool installation
+when the locked versions are already installed,
 while still repairing missing commands and shims and checking the final setup.
 Helper compilation is incremental on both normal runs and full `--upgrade` runs:
 unchanged sources and build inputs reuse the existing executable. Named upgrades
@@ -178,8 +184,8 @@ retained in a leading block; files without collisions retain their surrounding f
 including optional packages, through Homebrew or APT. Only declared packages are
 targeted; their required dependencies may also change. On Arch, `--upgrade`
 performs a **full system upgrade** with yay, including AUR packages, before
-installing native packages. Run setup as a regular user on Arch; yay uses sudo
-when required.
+installing native packages and updating Homebrew packages. Yay uses sudo when
+required.
 
 If you already have your own dotfiles, copy the pieces you want instead of
 running setup.

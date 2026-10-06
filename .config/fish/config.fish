@@ -1,5 +1,8 @@
-if type -q /opt/homebrew/bin/brew
-    eval "$(/opt/homebrew/bin/brew shellenv fish)"
+for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew $HOME/.linuxbrew/bin/brew
+    if test -x $brew_bin
+        eval ($brew_bin shellenv fish)
+        break
+    end
 end
 
 if status is-interactive
@@ -130,6 +133,14 @@ end
 if type -q mise
     mise activate fish | source
 end
+if test -r $HOME/.local/share/dotfiles-setup/brew-paths
+    while read -l brew_path
+        if test -d $brew_path
+            fish_add_path --path $brew_path
+        end
+    end <$HOME/.local/share/dotfiles-setup/brew-paths
+end
+
 
 if not set -q GOPATH
     set -l gopath (go env GOPATH 2>/dev/null)
