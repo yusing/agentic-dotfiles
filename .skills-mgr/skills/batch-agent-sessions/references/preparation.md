@@ -1,9 +1,7 @@
 # Deterministic session lifecycle
 
-The installed helper owns preparation, launch and naming, verification and prompt delivery,
-concurrent waiting, additive batches, queued follow-ups, and cleanup. The coordinator owns task
-understanding, grouping, model/effort selection, task text, interpretation of results, integration,
-and acceptance checks. The helper does not infer task completion from lifecycle state.
+Read the section for the current operation. Assignment, capacity, and acceptance decisions stay
+in the skill; this reference owns plan fields, helper mechanics, and recovery procedures.
 
 ## Resource plan
 
@@ -28,15 +26,14 @@ and acceptance checks. The helper does not infer task completion from lifecycle 
 
 - `batches` is a nonempty list of unique lower-case kebab-case names, at most 40 characters.
   The helper generates unique branches and isolated worktree paths for this run.
-- `task` is the verbatim assignment, never the coordinator's full workflow prompt.
-  `handoff` is optional, task-specific missing context. Only handoff text expands
+- `task` and optional `handoff` use the skill's assignment contract. Only handoff text expands
   `{{evidence:NAME}}` to the corresponding present copied evidence path; task text is unchanged.
 - `agent.kind` is `mekugi` for the Codex default, `codex` for explicitly requested plain Codex,
   or an installed Herdr agent kind. Codex/Mekugi accept `model`, `effort`, and `profile`.
   Other kinds receive their budgets and profiles in `args`, an optional list of native argv
   strings. No shell interpretation or OpenAI budget translation applies to `args`.
 - `model_reason` and `effort_reason` belong in the agent object for workload-selected budgets.
-  The coordinator makes those decisions; the helper retains them alongside loaded-budget receipts.
+  The helper retains them alongside loaded-budget receipts.
   Mekugi uses the absolute executable discovered by preflight and native `codex --yolo` arguments.
   A caller already running Mekugi has this mode. Other callers need user authorization,
   recorded as `agent.allow_yolo: true`, before Mekugi launch.
@@ -44,9 +41,8 @@ and acceptance checks. The helper does not infer task completion from lifecycle 
   path. Copies live outside the repository and are shared by the batches; use the returned
   paths in their handoffs. Include ignored task documents here when Git will not carry them.
 - `setup` is optional: argv arrays, not shell strings, executed once per created checkout.
-  Select only the project's needed, authorized setup commands. It is empty by default;
-  nothing builds into an installation path automatically. Setup never receives shell
-  interpolation. Its commands run in the batch checkout and inherit the caller environment.
+  It is empty by default. Commands run in the batch checkout, inherit the caller environment,
+  and receive no shell interpolation. Installation needs separate authorization.
 - `--plan -` reads the same JSON from stdin. For a plan file, pass its absolute path.
   Pass the caller's `--cwd` explicitly because `skills-mgr run` changes directory before
   executing the wrapper.
@@ -54,9 +50,12 @@ and acceptance checks. The helper does not infer task completion from lifecycle 
 Preparation calls the existing single-session preflight once. It verifies that the caller
 checkout and Herdr source workspace belong to the same Git repository, pins the caller's
 committed HEAD, creates linked subspaces with `--no-focus`, and checks every actual checkout
-HEAD. Uncommitted source edits do not follow, including uncommitted submodule pointer changes.
-Project setup can create required generated assets, dependencies, or other effects only through
-the supplied argv commands.
+HEAD. Uncommitted source edits, including submodule pointer changes, do not follow. Supplied
+setup runs after submodule preparation.
+
+## Submodule preparation
+
+Read when the source has initialized submodules.
 
 Each checkout then initializes, recursively, every submodule that is initialized in the source
 checkout, at the commit its parent records. It clones from the source's local submodule
@@ -68,7 +67,21 @@ its initialized `submodules` with their paths, commits, batch-local `branch`, an
 when the source was attached. Each initialized batch submodule is checked out on the batch's
 named branch at its recorded commit, never left detached. Preparation does not switch or modify
 source submodules; integration restores their original named branches while retaining changes.
-Setup runs afterward.
+
+## Submodule integration
+
+Read before integrating submodule changes. Sessions commit on their prepared named submodule
+branches and record those commits with parent gitlinks.
+
+Fetch nested commits from `<checkout>/<submodule path>` into the matching source submodule,
+innermost first, before integrating parent commits. Integrate onto the original named source
+branch recorded as `source_branch`. If the source was detached, identify that branch from local
+refs and reflog; ask only if it remains ambiguous. Preserve detached commits with a named ref
+before switching, then fast-forward or integrate without resetting away either history.
+
+Leave source submodules on their intended named branches. Resolve gitlink conflicts to the
+integrated nested commit and verify recursively that retained changes and parent gitlinks
+match the integrated tips before cleanup.
 
 ## Launch and wait
 
@@ -104,9 +117,8 @@ process/session identities, and each task's delivery state. Launch is not implem
 `wait --manifest PATH [--batch NAME ...] [--timeout MS]` starts a Herdr CLI wait for each selected
 launched batch concurrently, returning the first idle, done, blocked, or unknown event. The timeout
 defaults to 120000ms. Losing CLI waits are cancelled without sending keys or stopping agent processes.
-Select only outstanding batches on subsequent waits; an already-settled session otherwise wakes
-immediately. Timeout and unknown are attention states, not completion evidence. Waiting does not
-hold the manifest mutation lock, so new work can be added while a wait is outstanding.
+An already-settled session wakes immediately. Waiting does not hold the manifest mutation lock,
+so new work can be added while a wait is outstanding.
 
 ## Add batches and follow-ups
 
@@ -191,10 +203,8 @@ do not blindly resubmit. A changed process/session identity also stops delivery.
 
 ## Cleanup selection
 
-Run cleanup after integration and acceptance, repeating `--completed NAME` for only the
-batches whose work is finished and whose result has been inspected. `idle`, `done`, or
-`unknown` alone does not establish task completion. Read-only batches can finish without
-commits. Unfinished or failed-to-integrate batches stay in place.
+Repeat `--completed NAME` for each accepted, integrated, validated batch selected for removal.
+Read-only batches can finish without commits.
 
 For a completed session that still reports `unknown`, inspect its visible pane to verify
 that it is ready for input, with no ongoing turn or approval/question UI, then add

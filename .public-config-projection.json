@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "9d17eebe524bd0ab15d485ed35a870bc63a72d6d",
+  "sourceCommit": "01ab2b04d81fdf881f887cf3b577d62e5a96d8e8",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -875,7 +875,7 @@
     {
       "path": ".skills-mgr/skills/batch-agent-sessions/references/preparation.md",
       "kind": "file",
-      "sha256": "de9ce9cd9b250217ebf76a186b4522f3b5f0b80060742c784c35bc70c457c645",
+      "sha256": "4de55c54d5d05adaa73a72d5d596b90323ac059f444f3f0c4c75df65e9c306f1",
       "executable": false
     },
     {
@@ -887,7 +887,7 @@
     {
       "path": ".skills-mgr/skills/batch-agent-sessions/SKILL.md",
       "kind": "file",
-      "sha256": "f96981b61115284efe0032edc6cfa264db8ceb6527f2be0bb7554a68657374b3",
+      "sha256": "292a0e7f629d077133b65d13da259a3d22e56db914bc8924872200a9ea458751",
       "executable": false
     },
     {
@@ -1085,7 +1085,7 @@
     {
       "path": ".skills-mgr/skills/new-agent-session/SKILL.md",
       "kind": "file",
-      "sha256": "fa46ac858d1d0b84975501b5a946660da966730c2a3230c74b7cf87377dced01",
+      "sha256": "718aedb3d8e9761038468ab876c7e6c20690a303a350492656434ac364dc354f",
       "executable": false
     },
     {
