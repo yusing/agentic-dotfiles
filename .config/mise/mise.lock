@@ -1094,7 +1094,7 @@ backend = "go:github.com/yusing/shadowtree/cmd/shadowtree"
 specifiers = ["latest"]
 
 [[tools."go:github.com/yusing/skills-mgr"]]
-version = "0.0.0-20261003092910-5bc6b3d2ef1b"
+version = "0.0.0-20261006043719-4d73a988979b"
 backend = "go:github.com/yusing/skills-mgr"
 specifiers = ["latest"]
 
