@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.9.1
+
+Keep login-shell authentication prompts and errors visible during both unprivileged
+chsh attempts, so setup does not appear to stall while waiting for a password.
+
 ## 2.9.0
 
 Support Homebrew-selected native packages on Linux alongside distro bootstrap

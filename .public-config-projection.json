@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f15aab5fef5b44d080952979d19030aff085dffc",
+  "sourceCommit": "30dead64cff909cea201bf5cad44b71629e50faf",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1450,7 +1450,7 @@
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "3cc8212960c80fb6a8cdc273e3763a898d824cb0b5cd6a759445f89aad481a27",
+      "sha256": "d7d52ed9eefbbddefd10836de097f7d9aefc25f477511056ae67c9edfcf2dae7",
       "executable": false
     },
     {
