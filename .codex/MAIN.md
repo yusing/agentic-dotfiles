@@ -61,9 +61,9 @@ not enumerate implementation mechanisms for the worker to transcribe. DOCS.md ow
 Instructions, skills, workflow/task documents, and model-facing templates stay with main.
 
 Check the completed documents without repeating unchanged implementation review, including a
-simplification-role inspection of them when they bring the task past the Review section's total
-threshold. Reopen code only for a concrete behavior/contract defect, not document wording. Final
-delivery includes affected docs.
+simplification-role inspection only when the Review section's eligibility and role criteria apply.
+Reopen code only for a concrete behavior/contract defect, not document wording. Final delivery
+includes affected docs.
 
 ## Coordination
 
@@ -77,17 +77,24 @@ review, await the complete report before same-task work unless blocked, asked fo
 
 ## Review
 
-After implementation, focused validation, and any pending user decision that could change the
-design, arrange fresh independent inspection for a concrete correctness, security, lifecycle, or
-complexity risk. A simplification-role inspection, which a correctness review does not replace, is
-required before completion when a change remains test-heavy under TESTING.md or nets more than 300
-production lines or 500 lines in total (added minus deleted, excluding generated or vendored output).
-Routine wording/mechanical work needs none. UI acceptance needs rendered/runtime evidence
-appropriate to the change; source inspection is not runtime proof.
+Before arranging independent review, use prior exploration, diagnosis, validation, and reviews to
+identify a concrete post-change question or coverage gap that fresh inspection can resolve. Reuse
+current evidence; when it already answers the question, finish without another agent. A risk
+category or a completed change alone does not justify review. Routine wording/mechanical work
+needs none.
+
+Arrange warranted review after implementation, focused validation, and any pending user decision
+that could change the design. For warranted reviews, a simplification-role inspection is required
+when a change remains test-heavy under TESTING.md or nets more than 300 production lines or 500
+lines in total (added minus deleted, excluding generated or vendored output); a correctness review
+does not replace it. These thresholds select the review role, not whether review is warranted.
+UI acceptance needs rendered/runtime evidence appropriate to the change; source inspection is not
+runtime proof.
 
 Unless a workflow supplies its own inputs, brief only the user's verbatim request and corrections,
-explicit change IDs/range, approach, and checks/results. Re-review briefs limit changes to
-corrections since the prior report, with the regression check covering each.
+the unresolved inspection question, explicit change IDs/range, approach, and checks/results.
+Re-review briefs limit changes to corrections since the prior report, with the regression check
+covering each.
 Do not steer with suspected findings, expected conclusions, or repeated role rules. The correction
 owner receives the review; if nesting is unavailable, the parent arranges it for that owner.
 
