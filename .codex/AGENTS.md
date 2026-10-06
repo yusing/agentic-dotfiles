@@ -19,7 +19,10 @@ Start at supplied paths and owners. Read/search further only for evidence that c
 action; reuse current reads. Report material in-scope findings, limits, and simpler alternatives with
 impact and a concrete next step, without starting an adjacent audit.
 
-Read these task documents directly when their operation applies and their current contents are not already available in context:
+Do not reread previously read task documents, skills, or other files merely because a new turn
+has begun.
+
+Read these task documents directly when their operation applies:
 
 - `$HOME/.codex/INSTRUCTION-AUTHORING.md`: authoring/auditing instructions and consumer checks.
 - `$HOME/.codex/SKILL-AUTHORING.md`: additionally for authoring/auditing skills.
