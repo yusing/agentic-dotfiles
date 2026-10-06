@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.9.1
+# version: 2.9.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -2113,8 +2113,8 @@ ensure_fish_login_shell() {
 
   info "changing login shell to $shell_path"
   if have chsh; then
-    if chsh -s "$shell_path" "$(id -un)" \
-      || chsh -s "$shell_path" \
+    if chsh -s "$shell_path" "$(id -un)" 2>/dev/null \
+      || chsh -s "$shell_path" 2>/dev/null \
       || run_root chsh -s "$shell_path" "$(id -un)"; then
       return 0
     fi
