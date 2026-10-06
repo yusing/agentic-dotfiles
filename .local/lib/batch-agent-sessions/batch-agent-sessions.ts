@@ -5,7 +5,7 @@ import { homedir } from "node:os";
 import { isAbsolute, join } from "node:path";
 import { parseArgs } from "node:util";
 
-export const VERSION = "1.2.3";
+export const VERSION = "1.2.4";
 export type Runner = (argv: string[], cwd: string) => string;
 export type Context = {
   base_commit: string; source_workspace_id: string; source_checkout_path: string;
@@ -476,6 +476,13 @@ export function launch(manifestPath: string, selected: string[] = [], runner: Ru
           if (!executable || !isAbsolute(executable) || !existsSync(executable)) throw new Error("preflight did not establish a reusable absolute Mekugi executable");
           if (!manifest.preflight.caller_uses_mekugi && !route.allow_yolo) throw new Error("Mekugi requires authorized --yolo; supply allow_yolo only after user authorization");
           command = [executable, "codex", "--yolo", ...args];
+          const environment = ["TMPDIR", "MEKUGI_RUNTIME_DIR"].flatMap(key => {
+            const directory = process.env[key];
+            if (!directory) return [];
+            if (!isAbsolute(directory)) throw new Error(`${key} must be absolute`);
+            return [`${key}=${directory}`];
+          });
+          if (environment.length) command = ["env", ...environment, ...command];
         }
         response(runner, ["pane", "rename", batch.pane, batch.name], manifest.source);
         batch.launch = { name, state: "starting" };
@@ -505,9 +512,14 @@ export function launch(manifestPath: string, selected: string[] = [], runner: Ru
       response(runner, ["agent", "rename", batch.pane, batch.launch!.name], manifest.source);
       if (!["idle", "done", "unknown"].includes(info.agent.agent_status)) throw new Error("agent is not ready for its initial task");
       if (["mekugi", "codex"].includes(route.kind)) {
-        const text = runner(["herdr", "agent", "read", batch.pane, "--source", "detection", "--lines", "80"], manifest.source);
         const pattern = route.model ? escapeRegex(route.model) : "[a-zA-Z0-9_.:-]+";
-        const budget = new RegExp(`(${pattern})\\s*\\((low|medium|high|xhigh|max)\\)`).exec(text);
+        let budget: RegExpExecArray | null;
+        do {
+          const text = runner(["herdr", "agent", "read", batch.pane, "--source", "detection", "--lines", "80"], manifest.source);
+          budget = new RegExp(`(${pattern})\\s*\\((low|medium|high|xhigh|max)\\)`).exec(text);
+          if (budget || /\b[a-zA-Z0-9_.:-]+\s*\((low|medium|high|xhigh|max)\)/.test(text) || Date.now() >= deadline) break;
+          pause(100);
+        } while (true);
         if ((route.model || route.effort) && (!budget || (route.effort && budget[2] !== route.effort))) throw new Error("loaded model/effort could not be verified from the client UI; inspect it before task delivery");
         if (budget) { batch.launch!.model = budget[1]; batch.launch!.effort = budget[2]; }
       }
@@ -523,6 +535,27 @@ export function launch(manifestPath: string, selected: string[] = [], runner: Ru
   manifest.errors = errors;
   save(manifest, manifestPath);
   return { manifest, errors };
+}
+
+export function retryStartup(manifestPath: string, names: string[], runner: Runner = run): { manifest: Manifest; errors: string[] } {
+  if (!names.length) throw new Error("retry-startup requires --batch NAME");
+  const manifest = load(manifestPath), batches = selection(manifest, names);
+  for (const batch of batches) {
+    if (batch.state !== "prepared" || !batch.workspace || !batch.pane || batch.pane === manifest.caller_pane
+      || !batch.launch || batch.launch.state === "verified" || batch.launch.pid || batch.launch.session
+      || manifest.tasks?.some(task => task.batch === batch.name)) throw new Error(`${batch.name}: startup retry requires an undelivered, unverified launch`);
+    const { workspace } = response<Workspace>(runner, ["workspace", "get", batch.workspace], manifest.source);
+    if (!workspace.worktree?.is_linked_worktree || workspace.worktree.checkout_path !== batch.path) throw new Error(`${batch.name}: workspace no longer owns recorded checkout`);
+    const { pane } = response<{ pane: { workspace_id: string } }>(runner, ["pane", "get", batch.pane], manifest.source);
+    if (pane.workspace_id !== batch.workspace) throw new Error(`${batch.name}: pane no longer belongs to the recorded workspace`);
+    const { process_info } = response<{ process_info: ProcessInfo }>(runner, ["pane", "process-info", "--pane", batch.pane], manifest.source);
+    const { agents } = response<{ agents: Agent[] }>(runner, ["agent", "list"], manifest.source);
+    if (!process_info.shell_pid || process_info.foreground_process_group_id !== process_info.shell_pid
+      || agents.some(agent => agent.pane_id === batch.pane)) throw new Error(`${batch.name}: startup retry requires an idle shell with no agent`);
+  }
+  for (const batch of batches) delete batch.launch;
+  save(manifest, manifestPath);
+  return launch(manifestPath, names, runner);
 }
 
 export function followUp(manifestPath: string, value: unknown = undefined, runner: Runner = run, readyUnknown: string[] = []): { manifest: Manifest; errors: string[] } {
@@ -715,7 +748,7 @@ async function main(): Promise<number> {
   } });
   if (values.version) { console.log(VERSION); return 0; }
   if (values.help) {
-    console.log("batch-agent-sessions prepare --cwd DIR --plan FILE|- [--rollout PATH]\nbatch-agent-sessions add --manifest PATH --plan FILE|- [--rollout PATH]\nbatch-agent-sessions launch --manifest PATH [--batch NAME ...] [--plan FILE|-]\nbatch-agent-sessions wait --manifest PATH [--batch NAME ...] [--timeout MS]\nbatch-agent-sessions follow-up --manifest PATH [--plan FILE|-] [--ready-unknown NAME ...]\nbatch-agent-sessions cancel --manifest PATH --task ID\nbatch-agent-sessions acknowledge --manifest PATH --task ID\nbatch-agent-sessions cleanup --manifest PATH --completed NAME [--completed NAME ...] [--ready-unknown NAME ...]");
+    console.log("batch-agent-sessions prepare --cwd DIR --plan FILE|- [--rollout PATH]\nbatch-agent-sessions add --manifest PATH --plan FILE|- [--rollout PATH]\nbatch-agent-sessions launch --manifest PATH [--batch NAME ...] [--plan FILE|-]\nbatch-agent-sessions retry-startup --manifest PATH --batch NAME [--batch NAME ...]\nbatch-agent-sessions wait --manifest PATH [--batch NAME ...] [--timeout MS]\nbatch-agent-sessions follow-up --manifest PATH [--plan FILE|-] [--ready-unknown NAME ...]\nbatch-agent-sessions cancel --manifest PATH --task ID\nbatch-agent-sessions acknowledge --manifest PATH --task ID\nbatch-agent-sessions cleanup --manifest PATH --completed NAME [--completed NAME ...] [--ready-unknown NAME ...]");
     return 0;
   }
   if (positionals.length !== 1) throw new Error("use --help for lifecycle arguments");
@@ -735,6 +768,7 @@ async function main(): Promise<number> {
     if (command === "prepare" && values.cwd && values.plan) result = prepare(plan(), realpathSync(values.cwd), run, discover, values.rollout);
     else if (manifestPath && command === "add" && values.plan) result = add(manifestPath, plan(), run, values.rollout);
     else if (manifestPath && command === "launch") result = launch(manifestPath, values.batch, run, values.plan ? plan() : undefined);
+    else if (manifestPath && command === "retry-startup") result = retryStartup(manifestPath, values.batch ?? [], run);
     else if (manifestPath && command === "follow-up") result = followUp(manifestPath, values.plan ? plan() : undefined, run, values["ready-unknown"]);
     else if (manifestPath && command === "cancel" && values.task) result = cancel(manifestPath, values.task);
     else if (manifestPath && command === "acknowledge" && values.task) result = acknowledge(manifestPath, values.task, run);

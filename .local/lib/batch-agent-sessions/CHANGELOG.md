@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.4
+
+Forward invocation-local TMPDIR and MEKUGI_RUNTIME_DIR to Mekugi launches.
+Wait for the initial loaded-budget footer within the startup deadline.
+Add an explicit retry-startup operation for inspected failed starts that have no
+task delivery or retained agent identity. Verify the same linked workspace and
+idle shell before retrying, preserving live agents and uncertain prompt receipts.
+
 ## 1.2.3
 
 Prefix tasks that start with `/` with `Task:` so absolute paths and quoted slash

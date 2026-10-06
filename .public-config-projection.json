@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "323be1c876baceeba94e32f07b8fd6144fb1061c",
+  "sourceCommit": "afdc2a93d8b9d67e2d71ddfa6cadbd295668b3f3",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -731,13 +731,13 @@
     {
       "path": ".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
       "kind": "file",
-      "sha256": "48a8a5583163a66a0d43b2e87c23355ae2998e885fbcc83133f35185c7b0d948",
+      "sha256": "00e2df262e1031d4d09ce5bc69aaa2b34545a278f652250844e4ac23696a6d6a",
       "executable": false
     },
     {
       "path": ".local/lib/batch-agent-sessions/CHANGELOG.md",
       "kind": "file",
-      "sha256": "1eb922a216c22c7231f7f3f26ad2cde8b66136f0529508ad0e5a8697e49b5092",
+      "sha256": "41d34994c0af4051f98d54622007385f4156f8abe21aabfd2c7746db69a0da0b",
       "executable": false
     },
     {
@@ -875,7 +875,7 @@
     {
       "path": ".skills-mgr/skills/batch-agent-sessions/references/preparation.md",
       "kind": "file",
-      "sha256": "000d08086dde08e1c6449dfc6819f9e90be20adc76381f11e925fbd83e3e5389",
+      "sha256": "32aff9fe73a9ef5ad165e0732934b958ad582383e239d2b23748190025e99abd",
       "executable": false
     },
     {

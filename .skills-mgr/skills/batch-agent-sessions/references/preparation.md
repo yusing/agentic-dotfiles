@@ -78,6 +78,10 @@ initial tasks after checking session identity. `launch --plan FILE|-` supplies a
 prepared, not-yet-launched batches, including manifests created by the earlier prepare-only helper.
 It does not overwrite launched assignments.
 
+Mekugi launches forward invocation-local `TMPDIR` and `MEKUGI_RUNTIME_DIR` when set
+to absolute paths. Set them to disk-backed storage when the system temporary
+directory cannot hold runtime snapshots; user configuration stays unchanged.
+
 The helper preserves focus and uses only each batch's returned pane. It renames the pane by task
 kind, picks a unique harness name, and runs the native launcher. Mekugi readiness allows unknown
 state rather than waiting indefinitely for idle. Before task delivery, it verifies the worktree
@@ -163,6 +167,11 @@ new run, not a replacement for surviving resources. Use retained receipts with t
 owner's recovery flow. A failed/timed-out creation without a returned resource identity
 remains uncertain; inspect the exact recorded branch/path through Herdr before proceeding.
 The helper never resets or adopts an unrelated preexisting worktree.
+
+After inspecting a failed startup and confirming its pane is back at the shell,
+use `retry-startup --manifest PATH --batch NAME`. It checks the recorded linked
+workspace and idle shell and refuses live agents, retained agent identities, or
+any task receipt. Repeat `launch` for an existing live session instead.
 
 Launch intent and prompt submission are saved before their effects. Repeating launch can verify
 the already-started matching process but cannot silently launch another process after an uncertain
