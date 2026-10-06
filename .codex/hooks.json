@@ -11,17 +11,6 @@
           }
         ],
         "matcher": "^(apply_patch|Edit|Write)$"
-      },
-      {
-        "hooks": [
-          {
-            "command": "$HOME/.codex/hooks/bin/subagent_exec_guard",
-            "statusMessage": "Checking subagent command boundary",
-            "timeout": 5,
-            "type": "command"
-          }
-        ],
-        "matcher": "^Bash$"
       }
     ],
     "SessionStart": [
