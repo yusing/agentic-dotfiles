@@ -58,7 +58,8 @@ Separate requested-behavior failures, introduced regressions, supporting-mechani
 pre-existing issues. Keep hypotheses in coverage limits with a confirming check. For a flawed
 supporting mechanism, name the narrower alternative.
 
-Account for the reviewed scope and unverified acceptance. On re-review, inspect corrections and
-their interactions; mark findings resolved/open/superseded and retain the complete current result.
+Account for the reviewed scope and unverified acceptance. On re-review, assess the cumulative
+changes, including corrections and their interactions; mark findings resolved/open/superseded
+and retain the complete current result.
 Use the owner's regression evidence; repeat a reproduction only if that evidence misses its trigger.
-Raise new issues in previously reviewed code only when they break requested behavior.
+Reopen a settled finding only when new evidence changes its disposition.

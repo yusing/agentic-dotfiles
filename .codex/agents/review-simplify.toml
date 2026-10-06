@@ -55,6 +55,8 @@ rewrites and hypothetical generalization.
 Account for each change in scope as required (naming what requires it), reducible, or unverified.
 For each reduction, give the change, the requirement it claims or lacks, the falsifying evidence,
 the smallest removal or simplification, and whether requested and retained behavior is preserved;
-state any unrequested behavior the removal drops. Include coverage limits. On re-review, inspect
-corrections, mark opportunities applied/open/superseded, and retain the complete current result.
+state any unrequested behavior the removal drops. Include coverage limits. On re-review, assess
+the cumulative changes, including corrections and their interactions; mark opportunities
+applied/open/superseded and retain the complete current result. Reuse current evidence and reopen
+a settled finding only when new evidence changes its disposition.
 '''

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "71ec22a822630af590c9a3cde73af6ff544cab67",
+  "sourceCommit": "e1dcf3800138d6fac2870eef3c8bb600502bab96",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -47,13 +47,13 @@
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "4556fd76c0cdc0ebff065f077fc377bbbc3626c8fe35d2b131cd573c8bad8071",
+      "sha256": "b8d5e56dc2095aa32577973690ff46a321f51eb4a33462efc45d8b8af91f9d77",
       "executable": false
     },
     {
       "path": ".claude/agents/review-simplify.md",
       "kind": "file",
-      "sha256": "e3db53bc866683779914e8bb5768575c8549c097b2e9e17d42ce11a1a4f59c1d",
+      "sha256": "ce9ebedb9f56c2b932aef1658c26b00983ffd4114df0aa76259d61af25a0a5a1",
       "executable": false
     },
     {
@@ -113,13 +113,13 @@
     {
       "path": ".codex/agents/review-correctness.toml",
       "kind": "file",
-      "sha256": "5a96bf866e3bbafe57605015d036d94b42a6c7c472923a519c49f57ac8b80fa2",
+      "sha256": "548b26225eaae88c39747463661eaee2b50e4d2cde452327608192330b0921a3",
       "executable": false
     },
     {
       "path": ".codex/agents/review-simplify.toml",
       "kind": "file",
-      "sha256": "05c18e82527ffae1e13e0ef794443d6f53ca96cbc68a07e226c7a476d08f7fdd",
+      "sha256": "50b371701248dcf4b67ebe7c283b97e524892e80758ff56b4be60d8b8b106706",
       "executable": false
     },
     {
@@ -305,7 +305,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "61e1e72621a9ab4b63a9e38551ac0e75fd5740fb28cf6c5c0bdcd19095fe9387",
+      "sha256": "257c9d2b5ef24ab3a629c299c914ace64cf5b70e27bb1ed327f82443fc2b533a",
       "executable": false
     },
     {
@@ -485,13 +485,13 @@
     {
       "path": ".config/kilo/agent/review-correctness.md",
       "kind": "file",
-      "sha256": "a4a81cbf84986159cfdccab0a68688811deb10ca8d3dacf6daa40f4423542bae",
+      "sha256": "ce760a39419126d6e22b3cbc8d7ca4af3b4a3ad233cd8faa7376371ceb601451",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/review-simplify.md",
       "kind": "file",
-      "sha256": "1f98704f8829c174903223ef464fb0e34a6213023e5d71ce57e63ca78868d331",
+      "sha256": "0f3957c3a28681823f12b1422a52333bce44f632b24a8eda0ff16ede3900f5da",
       "executable": false
     },
     {

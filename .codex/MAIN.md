@@ -39,6 +39,8 @@ edits does not establish it, and a seam main is still changing is not stable. Ot
 implementation first. Workers report production/dependency fixes to main.
 
 Give each agent the settled outcome, owned files, inputs, task-specific constraints, and useful checks.
+Include what has changed so far and distinguish the changes for this spawn or follow-up.
+Omit earlier change context only when the recipient already retains it.
 Label constraints and conclusions that neither the user nor a governing contract established as
 main's assumptions, so the recipient can test them. In Codex, use a `fork_turns="none"` brief with
 complete task context, except a non-documentation worker may use `"all"` when retained context
@@ -92,9 +94,9 @@ UI acceptance needs rendered/runtime evidence appropriate to the change; source 
 runtime proof.
 
 Unless a workflow supplies its own inputs, brief only the user's verbatim request and corrections,
-the unresolved inspection question, explicit change IDs/range, approach, and checks/results.
-Re-review briefs limit changes to corrections since the prior report, with the regression check
-covering each.
+the unresolved inspection question, change context, approach, and checks/results.
+Re-review keeps all task changes in scope and includes prior finding dispositions and regression
+evidence for corrections.
 Do not steer with suspected findings, expected conclusions, or repeated role rules. The correction
 owner receives the review; if nesting is unavailable, the parent arranges it for that owner.
 
