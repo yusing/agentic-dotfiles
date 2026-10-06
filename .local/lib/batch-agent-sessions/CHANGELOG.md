@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.3
+
+Prefix tasks that start with `/` with `Task:` so absolute paths and quoted slash
+commands reach the agent as literal task text. Keep recorded task text unchanged
+for initial and follow-up delivery.
+
 ## 1.2.2
 
 Withdraw queued follow-ups without stopping agents or losing task receipts. Refuse

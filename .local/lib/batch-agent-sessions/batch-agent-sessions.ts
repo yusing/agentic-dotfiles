@@ -5,7 +5,7 @@ import { homedir } from "node:os";
 import { isAbsolute, join } from "node:path";
 import { parseArgs } from "node:util";
 
-export const VERSION = "1.2.2";
+export const VERSION = "1.2.3";
 export type Runner = (argv: string[], cwd: string) => string;
 export type Context = {
   base_commit: string; source_workspace_id: string; source_checkout_path: string;
@@ -396,7 +396,8 @@ function promptText(task: string, handoff: string | undefined, manifest: Manifes
     if (!evidence || !existsSync(evidence.path)) throw new Error(`${name}: handoff evidence is not present in this run`);
     return evidence.path;
   });
-  return task + (resolved ? `\n\nHandoff:\n${resolved}` : "");
+  const prefix = task.trimStart().startsWith("/") ? "Task:\n" : "";
+  return prefix + task + (resolved ? `\n\nHandoff:\n${resolved}` : "");
 }
 
 function deliver(manifest: Manifest, manifestPath: string, batch: Batch, task: Task, runner: Runner): void {
