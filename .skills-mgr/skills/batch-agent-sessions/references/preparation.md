@@ -10,7 +10,7 @@ in the skill; this reference owns plan fields, helper mechanics, and recovery pr
   "batches": [{
     "name": "composer",
     "task": "Exact issue text, including its IDs.",
-    "handoff": "Evidence: {{evidence:queued.png}}. Branch commits are authorized; the coordinator owns integration. Report in your own pane's journal when available.",
+    "handoff": "Evidence: {{evidence:queued.png}}. Required ignored proposal: {{evidence:proposal.md}}. Branch commits are authorized; the coordinator owns integration. Report in your own pane's journal when available.",
     "agent": {
       "kind": "mekugi",
       "model": "gpt-6.1-sol",
@@ -19,7 +19,10 @@ in the skill; this reference owns plan fields, helper mechanics, and recovery pr
       "effort_reason": "Short causal trace with focused checks."
     }
   }],
-  "evidence": [{"name": "queued.png", "source": "/absolute/clipboard/image.png"}],
+  "evidence": [
+    {"name": "queued.png", "source": "/absolute/clipboard/image.png"},
+    {"name": "proposal.md", "source": "/absolute/source/doc/proposals/proposal.md"}
+  ],
   "setup": []
 }
 ```
@@ -39,10 +42,13 @@ in the skill; this reference owns plan fields, helper mechanics, and recovery pr
   recorded as `agent.allow_yolo: true`, before Mekugi launch.
 - `evidence` is optional. Each entry has a unique single filename and an absolute source
   path. Copies live outside the repository and are shared by the batches; use the returned
-  paths in their handoffs. Include ignored task documents here when Git will not carry them.
+  paths in their handoffs. Git-ignored inputs do not follow committed HEAD; include required
+  documents and other read-only inputs here rather than point at absent checkout paths.
 - `setup` is optional: argv arrays, not shell strings, executed once per created checkout.
   It is empty by default. Commands run in the batch checkout, inherit the caller environment,
-  and receive no shell interpolation. Installation needs separate authorization.
+  and receive no shell interpolation. Use explicit source and destination paths to copy required
+  ignored inputs when the task needs them at their original relative paths; verify the copies
+  before launch. Installation needs separate authorization.
 - `--plan -` reads the same JSON from stdin. For a plan file, pass its absolute path.
   Pass the caller's `--cwd` explicitly because `skills-mgr run` changes directory before
   executing the wrapper.

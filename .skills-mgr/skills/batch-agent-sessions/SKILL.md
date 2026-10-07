@@ -27,8 +27,7 @@ Each plan entry has:
   authorization, and the session's result channel. Label causal/design guesses as hypotheses;
   owner pointers are starting points, not implementation requirements.
 - Required attached text or durable evidence paths. Independent sessions do not inherit
-  attachments. Include ignored task documents in copied evidence and use only reported-present
-  copies. Ask only when the issue's meaning cannot be recovered from supplied evidence or code.
+  attachments. Ask only when the issue's meaning cannot be recovered from supplied evidence or code.
 
 Honor explicit agent, model, effort, and profile choices. Otherwise use `gpt-6.1-sol` for
 Codex/Mekugi and select effort by the hardest inseparable requirement:
@@ -50,6 +49,14 @@ Read [Resource plan](references/preparation.md#resource-plan) for the JSON schem
 batch by its kind; the helper derives its branch and checkout. Preparation pins committed HEAD,
 so uncommitted changes do not follow. For populated submodules, also read
 [Submodule preparation](references/preparation.md#submodule-preparation).
+
+Before preparation, main checks the assignment's named files and required local inputs against
+the selected committed base. Supply required Git-ignored documents, fixtures, and configuration
+through `evidence`, or scoped `setup` when they must occupy their original checkout paths.
+Copy only task-required inputs; keep their ignore status. After preparation, verify each required
+input is present in the returned evidence or its batch checkout before launching that batch.
+Handoffs point to verified copies, not assumed source paths. Apply this check to new inputs for
+added batches and follow-ups too.
 
 ```bash
 skills-mgr run batch-agent-sessions/scripts/sessions.sh prepare --cwd "$PWD" --plan /absolute/plan.json
@@ -113,6 +120,10 @@ Resolve conflicts to preserve both batches' intended behavior and explain any de
 Validate each integrated result as needed, then run final combined validation when all accepted
 work has settled. Fix integration breakage directly unless it needs the batch session's context.
 Revisit settled documents only for a concrete integration mismatch.
+
+For assigned Git-ignored outputs, copy accepted edits back to their source paths, preserving
+ignore status and unrelated source edits. Verify the integrated copies before cleanup; branch
+commits do not carry these files.
 
 After integration and validation, use [Cleanup selection](references/preparation.md#cleanup-selection)
 and select only finished batches:
