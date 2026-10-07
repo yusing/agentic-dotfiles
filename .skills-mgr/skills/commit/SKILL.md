@@ -16,9 +16,16 @@ covers the work of that request, not later ones.
 - Make each commit one coherent, independently valid change. Reuse checks for its unchanged
   tree/scope, not unrelated suites. Split unrelated edits; keep an enabling refactor separate
   from its behavior change.
-- Stage explicitly (`git add <paths>` or `git add -p`), then review `git diff --staged` before
-  committing. Leave unrelated working-tree changes unstaged, and ask before tracking a file that
-  was untracked before the task.
+- Check `git status --short` once to establish working-tree and index scope. Reuse current
+  reviews and validation; repeat only checks whose results a later edit, hook, failure, or
+  concurrent change can invalidate.
+- Stage only intended paths or hunks, using explicit paths, interactive staging, or applying
+  a reviewed patch to the index. If the index was empty and staging adds exactly the reviewed
+  change, commit directly; otherwise review the relevant staged changes once. Keep unrelated
+  working-tree and staged changes outside the commit, and ask before tracking a file that was
+  untracked before the task.
+- Use successful commit output to confirm completion. Check post-commit state when hooks or
+  unexpected results can affect delivery.
 - Commit with the configured signing. A signing failure or timeout usually means the user must
   unlock the key: report it as a blocker and retry after they respond. Commit unsigned or change
   signing configuration only when the user authorizes it.
@@ -57,8 +64,8 @@ user's explicit request. A local-only restriction on a ref stays until the user 
 
 Pass a multi-line message as real lines through a quoted heredoc, `git commit -F - <<'EOF'`.
 Git and the shell keep a `\n` escape inside `-m` quotes as a literal backslash and `n`, including
-when a tool-call string supplies the command. Check the stored message with
-`git log -1 --format=%B`.
+when a tool-call string supplies the command. If message formatting is uncertain, inspect the
+stored message with `git log -1 --format=%B`.
 
 ## Follow-up fixes
 
