@@ -6,6 +6,8 @@ for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew $HOME/.linuxbrew/bin/
 done
 unset brew_bin
 
+export AGENT_BROWSER_ENGINE=lightpanda
+
 export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
 if [ -r "$HOME/.local/share/dotfiles-setup/brew-paths" ]; then
   while IFS= read -r brew_path; do

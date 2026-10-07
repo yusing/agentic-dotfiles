@@ -6,6 +6,8 @@ for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew $HOME/.linuxbrew/bin/
 done
 unset brew_bin
 
+export AGENT_BROWSER_ENGINE=lightpanda
+
 export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.bun/bin:$PATH"
 command -v mise >/dev/null 2>&1 && eval "$(mise activate bash)"
 if [ -r "$HOME/.local/share/dotfiles-setup/brew-paths" ]; then

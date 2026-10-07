@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.9.1
+# version: 2.10.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #

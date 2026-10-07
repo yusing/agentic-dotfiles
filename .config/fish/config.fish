@@ -19,6 +19,7 @@ set -x OPENSPEC_TELEMETRY 0
 set -x DO_NOT_TRACK 1
 set -x DISABLE_TELEMETRY 1
 set -x OMO_DISABLE_POSTHOG 1
+set -gx AGENT_BROWSER_ENGINE lightpanda
 
 set -x NODE_OPTIONS "--max-old-space-size=8192"
 

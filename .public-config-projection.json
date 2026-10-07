@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8d318d6bc5f9c08dbf7a192095c409bc64f8f480",
+  "sourceCommit": "4dbd4a5ff7acf9bcc70465e7b146510852cb7a58",
   "outputs": [
     {
       "path": ".bash_profile",
       "kind": "file",
-      "sha256": "5f94823b6ae96eb4a3d67ca3e54eb5d4bb965b716d657297fc6156ba24ea58ab",
+      "sha256": "aef4f57745e85356bacd7487061ce0c9316d106c5665b783397f7e5ace6c6694",
       "executable": false
     },
     {
       "path": ".bashrc",
       "kind": "file",
-      "sha256": "50d1fe8ba1387649a0c9af725ae6e121a2e2d25b60c3129278e306caa3969a93",
+      "sha256": "518a97d0278edb90391d6dd55e90ef0b3606412a7e4e58b8c3646902681932de",
       "executable": false
     },
     {
@@ -377,7 +377,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "94a219bb9ac35755b8fcbdd9f08a6568261836ed919b680c4a06b2d48b382792",
+      "sha256": "7109e9a68ecd79bca3d8e8aff41ce4410d62452b2609f2fa2a26c8e3a7e38b91",
       "executable": false
     },
     {
@@ -557,7 +557,7 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "46f70684219090e1fd765917b07e5bd9cd097f95370ae0aecaa16069605656a5",
+      "sha256": "b5e90ef9924b4a11c87ffac96b58db72ddfb121c8eefdcaa096b9d81f35fd25d",
       "executable": false
     },
     {
@@ -599,7 +599,7 @@
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "07139061cc733b7a2686bd4befbe864c8f4d8632e6a0bbd1596f136834d6b3f9",
+      "sha256": "74f8aa24eab8856f14799e96f42b381a54d0fc6609c93f50f5b6a1312553db2b",
       "executable": false
     },
     {
@@ -1361,7 +1361,7 @@
     {
       "path": ".zsh/fish-mirror.zsh",
       "kind": "file",
-      "sha256": "a155a0e4dc2c3ff35e22e6b2e173da3eb073f158b3cf61443fe58d5a9e40812b",
+      "sha256": "28cb7779edf20e7372ba812f78c34658f863219f406e64517f8d56d0687adae6",
       "executable": false
     },
     {
@@ -1444,25 +1444,25 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "d1cff1accd72a9ea16b7349af76c68fcf0c7ca3929bead7bc0fd55c720b8e4e9",
+      "sha256": "c46cfe0b5007660c1c6c021e62425790fc49be7e9363a892f5a13a78fdbd53e2",
       "executable": false
     },
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "d7d52ed9eefbbddefd10836de097f7d9aefc25f477511056ae67c9edfcf2dae7",
+      "sha256": "dc986fc5318d964b3d98628a30e9370806ab8729312362e72e5746a7b1dae964",
       "executable": false
     },
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "cfe855a7d01378d19dbfde55d2e6697bff2efcf7dabaa2cd8b405c6387072467",
+      "sha256": "df4114043c13902e7201e65429f20e470b61bb0797b92cf36520b839609483ad",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "3a00d8925b4b18771b581c3aaab5b6a213fba18e49decd290d9e44284a68e313",
+      "sha256": "bb1d5016a9ba8089b93610d7da408e3a9529297568ce08c5a7e0ac4ed8269034",
       "executable": true
     }
   ]

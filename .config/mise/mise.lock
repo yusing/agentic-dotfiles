@@ -956,6 +956,29 @@ checksum = "sha256:8f643d10ad1abb0ef7072764c01ceb5cf61b2d373fda400cf60f0bad69b7e
 url = "https://github.com/fish-shell/fish-shell/releases/download/4.9.3/fish-4.9.3-linux-x86_64.tar.xz"
 url_api = "https://api.github.com/repos/fish-shell/fish-shell/releases/assets/551107873"
 
+[[tools."github:lightpanda-io/browser"]]
+version = "1.0.0"
+backend = "github:lightpanda-io/browser"
+specifiers = ["1.0.0"]
+
+[tools."github:lightpanda-io/browser".options]
+matching_regex = "^lightpanda-(aarch64|x86_64)-(linux|macos)$"
+
+[tools."github:lightpanda-io/browser"."platforms.linux-arm64"]
+checksum = "sha256:69791924bcee43b13b224af4c845622c5fe66fdbc1b8143bfaa39ca8f85244f5"
+url = "https://github.com/lightpanda-io/browser/releases/download/1.0.0/lightpanda-aarch64-linux"
+url_api = "https://api.github.com/repos/lightpanda-io/browser/releases/assets/605340458"
+
+[tools."github:lightpanda-io/browser"."platforms.linux-x64"]
+checksum = "sha256:aa5a4b8ed53d1e38b3c73f5b2647d0a84a82e6744557f45f9a9c85858aa031c3"
+url = "https://github.com/lightpanda-io/browser/releases/download/1.0.0/lightpanda-x86_64-linux"
+url_api = "https://api.github.com/repos/lightpanda-io/browser/releases/assets/605343099"
+
+[tools."github:lightpanda-io/browser"."platforms.macos-arm64"]
+checksum = "sha256:955440053a84754dd64c62f970449a56a2b350cdf43ea5f2e809a73047b8173d"
+url = "https://github.com/lightpanda-io/browser/releases/download/1.0.0/lightpanda-aarch64-macos"
+url_api = "https://api.github.com/repos/lightpanda-io/browser/releases/assets/605336160"
+
 [[tools."github:llvm/llvm-project"]]
 version = "23.1.2"
 backend = "github:llvm/llvm-project"

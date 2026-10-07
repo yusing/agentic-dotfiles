@@ -19,6 +19,7 @@
 "pipx:yamllint" = { "version" = "latest", "uvx" = true }
 "pipx:semgrep" = { "version" = "latest", "uvx" = true }
 "github:vi/websocat" = { "version" = "latest", "bin" = "websocat" }
+"github:lightpanda-io/browser" = { "version" = "1.0.0", "matching_regex" = "^lightpanda-(aarch64|x86_64)-(linux|macos)$", "bin" = "lightpanda" }
 "npm:@kilocode/cli" = "latest"
 "npm:@tailwindcss/cli" = "latest"
 "npm:@trunkio/launcher" = "latest"

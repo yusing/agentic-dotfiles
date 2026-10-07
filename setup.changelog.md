@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.10.0
+
+Install the stable Lightpanda 1.0.0 release through mise. Set
+AGENT_BROWSER_ENGINE=lightpanda in Fish, Zsh, and Bash.
+
 ## 2.9.1
 
 Keep login-shell authentication prompts and errors visible during both unprivileged
