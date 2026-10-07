@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "2db5e51612eb5edcb0d181893b6b18aea943917a",
+  "sourceCommit": "55b32e534385b669e24a5485a88b2cc4641a2b3f",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -641,7 +641,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "c5f1247e6f9c612f24a03e2572bff6d038b1c26d809016378970a9227b05684a",
+      "sha256": "39a1375054f80d800a659dda35d26ca2db05bad342b74bdeca24f20cf71b3f8a",
       "executable": false
     },
     {
@@ -1307,31 +1307,43 @@
     {
       "path": ".skills-mgr/skills/writing-readme/references/application.md",
       "kind": "file",
-      "sha256": "a77a93402d6568910ff9434fea11a35321bbaa831fbaf31b73bcec7f385f145d",
+      "sha256": "4b551bf8134dc76b6d7f5730611eeb4210358e771abd3d4d25aea3a8badfede3",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/writing-readme/references/cli.md",
       "kind": "file",
-      "sha256": "b8374da997cb9a5d35d02e6e82d05f4d97d5c45f150cb949a5743ee2222badd5",
+      "sha256": "ca573540beaa0fa9ab6b5aac39dbf517c24c7ac6daa9459f0f0de0fabf58c7dd",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/writing-readme/references/collection.md",
       "kind": "file",
-      "sha256": "9ac00b4b803e01cf29bb74ce29936ce90e96b17ee7a1081e9e21b559976dff1f",
+      "sha256": "0e47ad001833f2c729240ba586306b4e17fff7ea1e2165d0f72836a9911a840e",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/writing-readme/references/configuration.md",
       "kind": "file",
-      "sha256": "3ae0cd03a2356e800b01d9ac63310d5d624ef20985e7ccb65c34cdb564a33966",
+      "sha256": "101b14077b426192577367031a81871db8f6fa06147a389ad40e49d00b633292",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/writing-readme/references/developer-tool.md",
+      "kind": "file",
+      "sha256": "037f8963fd9d56541cacdeb886119d8469d9d53890fe3967ae2c505cb25a1c06",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/writing-readme/references/infrastructure.md",
+      "kind": "file",
+      "sha256": "5b013a118d7c8e34861b28a46e404135211987e0050dc4a1ea88389e1e769824",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/writing-readme/references/library.md",
       "kind": "file",
-      "sha256": "75f8afa68161881b7b796ac65abe776bc1211c8a6533597bfec6995c274fe856",
+      "sha256": "fb82a8493cfd40b2ec5b7d3d8f2dd2fd8d2fbb85e60eae3d463b4df49f77781c",
       "executable": false
     },
     {
@@ -1341,9 +1353,15 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/writing-readme/references/starter.md",
+      "kind": "file",
+      "sha256": "1c2bf6502d54289dad3af5d093e030ffbdda466a8fdcf984832dee3668720e7e",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/writing-readme/SKILL.md",
       "kind": "file",
-      "sha256": "27e837d7470cc989404a1cbd526c8f5bedaf07154ea48792a592a0549f751d8f",
+      "sha256": "30036e290d99a8fd88ee9c850736fc26e7ae846ee50155cfc13dd00d6b64756f",
       "executable": false
     },
     {

@@ -1,11 +1,13 @@
-# Application or service README preset
+# End-user application README guide
 
 ## Reader and promise
 
 Write for someone deciding whether to use the application and then trying to reach
-its first useful result. For an internal service, write for its operator or calling
-team instead. The opening should make the product outcome, delivery model, and
-intended environment clear.
+its first useful result in a desktop, web, or mobile interface. The opening should
+make the product outcome, delivery model, and intended environment clear. Use the
+[infrastructure guide](infrastructure.md) for service operation and the
+[developer-tool guide](developer-tool.md) when the primary experience is an editor,
+TUI workbench, or coding-agent frontend.
 
 ## Default path
 
@@ -29,3 +31,11 @@ where data is stored, which services are contacted, and what defaults take effec
 Keep product evaluation and first use ahead of architecture. Describe deployment
 only when the repository supports it, and distinguish a runnable application from
 a reference implementation, demo, or work in progress.
+
+## Observed example
+
+[Immich](https://github.com/immich-app/immich#readme) opens with a product screenshot,
+places its backup warning before adoption links, offers a demo, and compares
+mobile and web capabilities. Installation lives in dedicated documentation.
+Borrow the visible product outcome and clear evaluation path. A demo, platform
+matrix, or external installation guide fits only when the project provides it.

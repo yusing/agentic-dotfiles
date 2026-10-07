@@ -1,10 +1,12 @@
-# Collection, templates, examples, or documentation README preset
+# Curated collection, examples, or documentation README guide
 
 ## Reader and promise
 
 Write for someone deciding whether the collection contains a useful item and then
 trying to find, compare, and reuse it. The opening should define the collection's
 scope and selection principle.
+Use the [starter guide](starter.md) when the main task is generating and running a
+new project, rather than finding an item in a catalog.
 
 ## Default path
 
@@ -27,3 +29,11 @@ match real contents and that linked examples still exist.
 Make discovery faster than browsing the tree unaided. Prefer a compact index and
 selection guidance over describing every file, and state when items are examples
 rather than supported production components.
+
+## Observed example
+
+[Awesome](https://github.com/sindresorhus/awesome/blob/main/readme.md) uses a
+category index and annotated links as its main useful content, with separate
+guides for contributing and creating a list. Borrow the navigation and short
+descriptions that help readers choose. Its scale and promotional opening do not
+make a huge index, installation section, or badge wall necessary for a collection.

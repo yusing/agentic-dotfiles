@@ -1,10 +1,12 @@
-# Library, SDK, or package README preset
+# Library, SDK, framework, or plugin README guide
 
 ## Reader and promise
 
 Write for a developer deciding whether the package fits a concrete integration and
 then trying to make the smallest useful call. The opening should name the problem,
 the public interface, and the supported ecosystem.
+For a framework or plugin, the first example should show its place in a working
+host application, including registration or lifecycle steps the caller needs.
 
 ## Default path
 
@@ -29,3 +31,12 @@ call sites.
 Keep the first example copyable and complete. Separate stable public API from
 internal helpers, state important ownership and lifecycle rules, and avoid turning
 the README into a duplicate API reference.
+
+## Observed example
+
+[Zod](https://github.com/colinhacks/zod/blob/main/packages/zod/README.md) introduces
+the library with a small schema and typed result, then gives installation and
+basic usage with concrete input, parsing, and error handling. It links the full
+API and specialized features to its documentation site. Borrow the small,
+complete integration example; an importable API is not an onboarding model for
+an interactive application.
