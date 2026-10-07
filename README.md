@@ -244,6 +244,7 @@ determine when it applies.
 
 | Name | Source | Purpose | Model visible | Condition |
 | --- | --- | --- | --- | --- |
+| `agent-browser` | Remote | Automate websites and Electron apps, extract data, and run exploratory QA | Yes | Always |
 | `authoring-skill` | Shared | Author, update, review, or rename skills and maintain registration and projection | Yes | Always |
 | `batch-agent-sessions` | Shared | Run parallel batch sessions with deterministic lifecycle, additive tasks, follow-ups, and integration | No | Always |
 | `build-code-skeleton` | Shared | Create an initial compile-safe project skeleton | Yes | Always |
@@ -293,6 +294,12 @@ determine when it applies.
 | `visualize` | Codex | Create in-conversation visual explanations | Yes | Always |
 | `web-design-guidelines` | Remote | Review UI against web interface guidelines | Yes | TSX, JSX, HTML, or CSS project |
 | `writing-readme` | Shared | Write or improve repository READMEs | Yes | Always |
+
+The `agent-browser` skill comes from
+[`vercel-labs/agent-browser`](https://github.com/vercel-labs/agent-browser).
+Before browser automation, load `agent-browser skills get core` for workflows
+that match the installed CLI version. Use `agent-browser skills list` to find
+specialized guides for Electron apps, Slack, exploratory QA, and cloud browsers.
 
 ## Adapting the Shell Setup
 

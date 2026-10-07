@@ -1,6 +1,15 @@
 {
   "schema_revision": 3,
   "skills": {
+    "agent-browser": {
+      "enabled": true,
+      "remote": {
+        "provider": "skills.sh",
+        "id": "vercel-labs/agent-browser/agent-browser",
+        "name": "agent-browser",
+        "locator": "vercel-labs/agent-browser/agent-browser"
+      }
+    },
     "archify": {
       "enabled": true,
       "remote": {
