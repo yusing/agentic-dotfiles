@@ -25,6 +25,31 @@ redesign when it holds, rather than defending or trimming the original.
 An independent batch root owns its assignment; a native delegate does not become main by changing cwd.
 Neither status overrides a handoff exclusion. Resolve instruction/template ownership with the coordinator.
 
+## Task workflow
+
+For authorized changes, explore the topic, settle a checkable specification, and update affected
+reader documents before implementation. Then implement with verification, review when warranted
+under Review, and deliver the complete outcome. Ordinary questions, explanations, and read-only
+reviews keep their conversational flow; this sequence does not require change-work artifacts.
+
+Exploration establishes accepted behavior, scope, non-goals, material decisions, and observable
+acceptance examples. Resolve facts from their owners and ask for unresolved user decisions that
+affect the outcome. Record interfaces, testing seams, and required checks where they affect delivery.
+A bounded change can use the confirmed request as its specification; use existing documents and
+task records rather than create a separate spec or plan without a consumer. For staged work, order
+result-bearing tasks by dependency, with verification included in each implementation slice.
+
+Update affected specs, contracts, and reader documents as decisions settle during exploration.
+Describe the intended behavior and distinguish planned work from verified results; do not invent
+validation or performance evidence. DOCS.md owns document consistency. Main keeps document work by
+default; delegate a bounded document assignment only when it replaces independent work at lower
+cost. Instructions, skills, workflow/task documents, and model-facing templates stay with main.
+
+Use the settled contract to guide implementation and verification. When evidence changes a decision
+or exposes a contract gap, update its existing record and affected documents before continuing
+against the changed behavior. At delivery, check agreement between the accepted contract, documents,
+and verified outcome; correct concrete gaps rather than defer document work to a separate final stage.
+
 ## Delegation
 
 Delegate independent factual lookup and bounded support work when it replaces main's work at lower
@@ -47,25 +72,6 @@ complete task context, except a non-documentation worker may use `"all"` when re
 concretely helps. Native roles own model budgets. Recipients load shared, project, and role
 instructions themselves; leave out restatements or paraphrases of them, such as reading pointers,
 edit or Git limits, and report contents.
-
-## Final document stage
-
-Update reader documentation once implementation, tests, validation, and applicable implementation
-review/corrections are finished, preferably approved. No-review work proceeds directly; a convergence
-stop remains an explicit review limitation, not another approval gate. Track pending doc impacts in
-the task record during code work, then update against verified behavior in one settled pass.
-
-Default README/spec/contract/proposal updates to one fresh no-history worker for the affected set.
-Main may keep only a confirmed single-location edit with no summary, Features, navigation mirror,
-or other passage on that topic. Small size does not prove isolation. Supply the reader-visible
-behavior, unchanged capabilities, limits a reader must account for, rationale, and source paths; do
-not enumerate implementation mechanisms for the worker to transcribe. DOCS.md owns consistency.
-Instructions, skills, workflow/task documents, and model-facing templates stay with main.
-
-Check the completed documents without repeating unchanged implementation review, including a
-simplification-role inspection only when the Review section's eligibility and role criteria apply.
-Reopen code only for a concrete behavior/contract defect, not document wording. Final delivery
-includes affected docs.
 
 ## Coordination
 

@@ -23,7 +23,8 @@ Honor explicit restrictions and keep effects within the accepted scope.
 
 ## Prepare and recover
 
-Before the first slice, settle the complete accepted item set, non-goals, material decisions,
+Before the first slice, complete exploration and affected reader-document updates under MAIN.md.
+Settle the complete accepted item set, non-goals, material decisions,
 original base revision, and required checks. Order the smallest independently usable slices by
 dependency. Do not divide work by technical layer or stop after the first working path.
 
@@ -47,9 +48,8 @@ that still applies. Correct in-scope defects and revalidate their consuming beha
 
 Once validation and applicable inspection are complete, create one non-empty Conventional Commit with a concise
 subject and meaningful body, record its hash, and continue without another approval prompt.
-Continue until every accepted item has implementation and validation evidence.
-Keep pending reader-document impacts in the recovery record rather than starting a document
-handoff during each slice.
+Continue until every accepted item has implementation and validation evidence. Apply MAIN.md's
+contract/document correction policy when slice evidence changes an exploration decision.
 
 ## Final review and closure
 
@@ -61,9 +61,9 @@ order, validate and inspect the affected corrections, and create
 Apply standing review convergence limits; record unresolved findings and missing coverage instead
 of repeating inspection indefinitely or claiming clearance.
 
-Perform the final reader-document stage under main/document guidance, then check affected claims
-against the completed outcome. Include those changes in their owning slice/checkpoint fixups or
-a coherent cross-slice documentation commit before recording the final range.
+Check affected document claims against the completed outcome. Include any corrections in their
+owning slice/checkpoint fixups or a coherent cross-slice correction commit before recording
+the final range.
 Fold fixups using the existing autosquash authorization. Verify that rewriting preserves the
 validated pre-rewrite tree; rerun checks only where their inputs changed. Only then mark the journal record
 complete or delete `RECOVERY.md`. Report the delivered outcome, commit range, checks, and

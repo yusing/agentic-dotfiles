@@ -16,9 +16,8 @@ and reuse guidance. This skill is read-only, including the recovery record and G
 
 A blocker needs evidence of a violated accepted requirement, contract, safety invariant,
 or required check. Missing required inspection is a gap, not a passing review.
-When this is the implementation review before the final document stage, identify pending document
-corrections without treating stale prose as implemented behavior. Scope any clearance accordingly;
-final delivery still requires the affected documents.
+Check agreement between the accepted specification, affected reader documents, and implemented
+behavior. Report concrete contract/document gaps and scope clearance to the evidence inspected.
 
 ## Result
 
