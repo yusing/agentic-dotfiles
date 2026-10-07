@@ -1,6 +1,14 @@
 {
   "version": 2,
   "native": {
+    "chromium-nspr": {"packages": {"apt": ["libnspr4"], "pacman": ["nspr"]}, "commands": [], "os": ["linux"]},
+    "chromium-nss": {"packages": {"apt": ["libnss3"], "pacman": ["nss"]}, "commands": [], "os": ["linux"]},
+    "chromium-atk": {"packages": {"apt": ["libatk1.0-0t64", "libatk1.0-0"], "pacman": ["at-spi2-core"]}, "commands": [], "os": ["linux"]},
+    "chromium-atk-bridge": {"packages": {"apt": ["libatk-bridge2.0-0t64", "libatk-bridge2.0-0"]}, "commands": [], "os": ["linux"]},
+    "chromium-atspi": {"packages": {"apt": ["libatspi2.0-0t64", "libatspi2.0-0"]}, "commands": [], "os": ["linux"]},
+    "chromium-xkbcommon": {"packages": {"apt": ["libxkbcommon0"], "pacman": ["libxkbcommon"]}, "commands": [], "os": ["linux"]},
+    "chromium-alsa": {"packages": {"apt": ["libasound2t64", "libasound2"], "pacman": ["alsa-lib"]}, "commands": [], "os": ["linux"]},
+    "chromium-xdamage": {"packages": {"apt": ["libxdamage1"], "pacman": ["libxdamage"]}, "commands": [], "os": ["linux"]},
     "font-cascadia-code-nf": {"packages": {"brew": ["font-cascadia-code-nf"]}, "commands": []},
     "font-cascadia-mono-nf": {"packages": {"brew": ["font-cascadia-mono-nf"]}, "commands": []},
     "font-ibm-plex-sans": {"packages": {"brew": ["font-ibm-plex-sans"]}, "commands": []},
