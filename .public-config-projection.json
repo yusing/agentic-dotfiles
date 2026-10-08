@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7ce7cd6088f585ea59dc79b3d9cab2ca2f4b982b",
+  "sourceCommit": "46c5759473093efeb98d52fa6445d90c35c6f58e",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -389,7 +389,7 @@
     {
       "path": ".config/ghostty/config",
       "kind": "file",
-      "sha256": "937d68544393306955cdff643a305919d217be93c4a7b5be6e5b190602d2d6de",
+      "sha256": "95dac332a8db0aa3f37b0e8fb9408e831d886f1e52c5584b9ea4527bde7752b7",
       "executable": false
     },
     {
@@ -659,7 +659,7 @@
     {
       "path": ".grok/config.toml",
       "kind": "file",
-      "sha256": "daf55e3805f3d0b956f6af92f0d0ef87997fafa17b4772d881517d83c4592948",
+      "sha256": "cabddd0894583496db6b8ce0448601f2a9a67e2cae63f8aa115a92c1a421fd1f",
       "executable": false
     },
     {
