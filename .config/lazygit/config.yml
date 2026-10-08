@@ -4,7 +4,7 @@ gui:
   shrinkSidePanelsToContent: true
   expandFocusedSidePanel: true
   expandedSidePanelWeight: 2
-  useHunkModeInStagingView: true
+  useHunkModeInDiffView: true
   showListFooter: false
   showBottomLine: false
   nerdFontsVersion: "3"
@@ -42,9 +42,8 @@ gui:
       - '#f38ba8'
     defaultFgColor:
       - '#cdd6f4'
-  authorColors:
-    '*': '#b4befe'
-
+    authorColors:
+      '*': '#b4befe'
 git:
   log:
     showWholeGraph: false

@@ -209,7 +209,11 @@ end
 # initialize interactive sessions
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    check-command oh-my-posh; and oh-my-posh init fish --config catppuccin_macchiato | source
+    check-command oh-my-posh; and oh-my-posh init fish --config "$HOME/.config/oh-my-posh/catppuccin_macchiato.omp.json" | source
+    if command -q oh-my-posh; and command -q update-oh-my-posh-theme
+        command update-oh-my-posh-theme >/dev/null 2>&1 &
+        disown $last_pid
+    end
     check-command atuin; and atuin init fish | source
     check-command fzf; and fzf --fish | source
     check-command zoxide; and zoxide init fish | source

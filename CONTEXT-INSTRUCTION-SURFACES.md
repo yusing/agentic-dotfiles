@@ -4,9 +4,16 @@ This is the path index for static instruction files. The user manages every file
 under `Paths`. That list does not describe their contents. Configuration selects
 the active surfaces; installed copies and reference dumps are not interchangeable owners.
 
-`.claude/CLAUDE.md` and `.grok/AGENTS.md` are standalone client instruction files.
-Both `@`-reference `.codex/AGENTS.md` for shared standing guidance and own their
-client-specific additions.
+`.grok/AGENTS.md` is a standalone client instruction file that owns Grok's client-specific
+additions. Grok receives shared standing guidance through `.grok/rules/AGENTS.md`, a symlink to
+`.codex/AGENTS.md`, because Grok does not expand `@` imports. `[compat.claude] agents = false` and
+`rules = false` keep Grok from also loading `.claude/CLAUDE.md` and `.claude/rules/`; Grok still
+loads the `.claude/agents/` roles.
+`.claude/CLAUDE.md` owns Claude's standing guidance directly, and `.claude/instructions/`
+holds Claude-specialized task documents. Both adapt the matching `.codex/` owners: they omit
+Codex specifics and rules Claude Code's own system prompt covers, resolve conflicts in Claude
+Code's favor, and follow Anthropic's prompting guidance. A change to a shared rule in a
+`.codex/` owner needs a matching review of its Claude counterpart.
 
 ## Paths
 
@@ -27,8 +34,10 @@ client-specific additions.
 - `.skills-mgr/skills/handoff/SKILL.md`
 - `.skills-mgr/skills/handoff/STANDARD.md`
 - `.codex/agents/*.toml`
-- `.grok/AGENTS.md` (standalone; `@` references `.codex/AGENTS.md`)
-- `.claude/CLAUDE.md` (standalone; `@` references `.codex/AGENTS.md`)
+- `.grok/AGENTS.md` (standalone Grok additions)
+- `.grok/rules/AGENTS.md` (symlink to `.codex/AGENTS.md`)
+- `.claude/CLAUDE.md` (standalone; Claude adaptation of `.codex/AGENTS.md`)
+- `.claude/instructions/*.md` (Claude adaptations of the `.codex/` task documents)
 - `.codex/skills/` (user-maintained content only)
 - `.skills-mgr/skills/`
 

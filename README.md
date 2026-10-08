@@ -25,7 +25,7 @@ preferences.
 | --- | --- |
 | The shared agent workflow | [`.codex/AGENTS.md`](.codex/AGENTS.md) |
 | Codex | [`.codex/config.toml`](.codex/config.toml), [base instructions](.codex/overridden_base_instructions.md), [agents](.codex/agents/), [hook registration](.codex/hooks.json), and [hook implementations](.codex/hooks/) |
-| Claude Code | [`.claude/settings.json`](.claude/settings.json) and [agents](.claude/agents/) |
+| Claude Code | [`.claude/settings.json`](.claude/settings.json), [instructions](.claude/CLAUDE.md), and [agents](.claude/agents/) |
 | Grok | [`.grok/config.toml`](.grok/config.toml), [instructions](.grok/AGENTS.md), and [hooks](.grok/hooks/) |
 | Reusable agent skills | [skill configuration](.skills-mgr/.skills-mgr.json) and [shared skill sources](.skills-mgr/skills/) |
 | Fish | [`.config/fish/config.fish`](.config/fish/config.fish) |
@@ -313,6 +313,16 @@ specialized guides for Electron apps, Slack, exploratory QA, and cloud browsers.
 Fish is the main shell configuration. Zsh loads a native port of the daily Fish
 behavior, while Bash has a smaller independent setup.
 
+Fish and Zsh use the local Oh My Posh theme at
+[`.config/oh-my-posh/catppuccin_macchiato.omp.json`](.config/oh-my-posh/catppuccin_macchiato.omp.json)
+so prompt initialization uses a local file. The first interactive Fish or Zsh
+launch each local calendar day checks the
+[upstream theme](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/catppuccin_macchiato.omp.json)
+in the background. Changed themes replace the local file atomically. Offline or
+failed checks keep the existing theme and retry on the next day. The daily check is shared by
+both shells and requires the helper installed by `compile-agent-tools`.
+This theme file is managed automatically, so updates replace local edits.
+
 On Linux, `tmp_clean --dry-run` previews stale generated Go and agent/test
 artifacts in `/tmp`; `tmp_clean` permanently deletes them. Only owned recognized
 directories whose contents are at least two hours old are eligible. Repositories,
@@ -342,7 +352,7 @@ adopt one layer at a time and roll back anything that does not fit.
 ├── AGENTS.md              # Repository-specific agent guidance
 ├── CONTEXT-*.md           # Ownership maps for instructions, hooks, and shell
 ├── .codex/                # Codex settings, base instructions, agents, hooks, and skills
-├── .claude/               # Claude Code settings and agents
+├── .claude/               # Claude Code settings, instructions, and agents
 ├── .grok/                 # Grok settings and Codex-hook adapters
 ├── .skills-mgr/           # Skill registry and shared skill sources
 ├── .config/fish/          # Primary shell configuration

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.10
+
+Compile the shared daily Oh My Posh theme updater.
+
 ## 1.0.9
 
 Build hooks with scriptc's LLVM-only CLI and remove generated LLVM side artifacts.

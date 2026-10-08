@@ -16,7 +16,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.8";
+export const VERSION = "1.3.10";
 
 type TreeEntry = {
 	mode: string;
@@ -112,6 +112,14 @@ const EXACT_PATHS = new Set([
 	".zsh/fish-mirror.zsh",
 	".zshrc",
 	".claude/CLAUDE.md",
+	".claude/instructions/DOCS.md",
+	".claude/instructions/GITHUB.md",
+	".claude/instructions/IMPLEMENTATION.md",
+	".claude/instructions/INSTRUCTION-AUTHORING.md",
+	".claude/instructions/MAIN.md",
+	".claude/instructions/SKILL-AUTHORING.md",
+	".claude/instructions/SUBAGENT.md",
+	".claude/instructions/TESTING.md",
 	".claude/settings.json",
 	".codex/AGENTS.md",
 	".codex/GITHUB.md",
@@ -151,6 +159,7 @@ const EXACT_PATHS = new Set([
 	// ".config/fish/completions/bun.fish", // bun installed
 	// ".config/fish/completions/grok.fish", // grok installed
 	".config/fish/config.fish",
+	".config/oh-my-posh/catppuccin_macchiato.omp.json",
 	".config/gh/config.yml",
 	".config/ghostty/config",
 	".config/kaku/kaku.lua",
@@ -168,6 +177,7 @@ const EXACT_PATHS = new Set([
 	".config/zed/settings.json",
 	".config/zed/snippets/go.json",
 	".grok/AGENTS.md",
+	".grok/rules/AGENTS.md",
 	".grok/config.toml",
 	".grok/hooks/adapt_codex_hook.ts",
 	".grok/hooks/adapt_codex_hook.changelog.md",
@@ -187,6 +197,8 @@ const EXACT_PATHS = new Set([
 	".local/lib/batch-agent-sessions/CHANGELOG.md",
 	".local/lib/tmp-clean/tmp_clean.ts",
 	".local/lib/tmp-clean/CHANGELOG.md",
+	".local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts",
+	".local/lib/update-oh-my-posh-theme/CHANGELOG.md",
 	".local/bin/compile-agent-tools",
 	".local/bin/compile-agent-tools.changelog.md",
 	".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
@@ -525,7 +537,7 @@ function projectCodexConfig(text: string): string {
 }
 
 function projectGrokConfig(text: string): string {
-	const sections = ["cli", "disabled_mcp_tools", "features", "harness", "mcp_servers.context7", "models", "telemetry", "ui"];
+	const sections = ["cli", "compat.claude", "disabled_mcp_tools", "features", "harness", "mcp_servers.context7", "models", "telemetry", "ui"];
 	return projectToml(text, new Set(["disabled_mcp_servers"]), section =>
 		sections.some(allowed => section === allowed || section.startsWith(`${allowed}.`)),
 	);

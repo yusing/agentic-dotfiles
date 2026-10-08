@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.10
+
+Publish the Claude-specialized task documents under `.claude/instructions/`, which
+`.claude/CLAUDE.md` now points to in place of importing `.codex/AGENTS.md`.
+Publish Grok's shared-guidance rule symlink and its `[compat.claude]` settings, which keep
+Grok from also loading the Claude instruction files.
+
+## 1.3.9
+
+Include the local Oh My Posh theme used by Fish and Zsh.
+Publish the shared daily theme updater source and changelog.
+
 ## 1.3.8
 
 Stop publishing the removed writing-for-agents skill path; its guidance now lives in the

@@ -51,8 +51,9 @@ or edited directly. Listing and fetching unknown skills still belong to
 after compaction the agent runs `$HOME/.codex/hooks/bin/check_project` and
 `skills-mgr list`. It has no separate subagent-start instruction, and the Grok port
 does not register `SubagentStart`; this port does not establish inventory delivery to children.
-That file `@`-references `.codex/AGENTS.md` for shared standing guidance. Do not
-copy the shared file into the Grok extra file. Codex registers direct inventory through
+Grok loads shared standing guidance from `.grok/rules/AGENTS.md`, a symlink to
+`.codex/AGENTS.md`; Grok does not expand `@` imports in any path form. Do not copy the
+shared file into the Grok extra file. Codex registers direct inventory through
 `session_start_context`; Claude registers `.codex/hooks/bin/skills_mgr_inventory`.
 Both use `.codex/hooks/bin/check_project` for project reporting.
 Its skill-access section makes the shared `skills-mgr` commands explicit for Grok.
