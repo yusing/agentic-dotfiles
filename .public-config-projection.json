@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "abc661b5d63b5cd95c2e70f47e98c217c5ba57e6",
+  "sourceCommit": "e2c105eace7f832554515817dcbfbf02a336ea2d",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -221,13 +221,13 @@
     {
       "path": ".codex/hooks/lib/locked_state.changelog.md",
       "kind": "file",
-      "sha256": "008b679e2cef6eb584e48e032eadfed1a0f3dc589e34c0f831d088e9e83e2404",
+      "sha256": "405dfa42b5aea15fe04d383aff37ffec0f02e0f94a8a2fbf81af3b023cc4bc51",
       "executable": false
     },
     {
       "path": ".codex/hooks/lib/locked_state.ts",
       "kind": "file",
-      "sha256": "9c9171ea934ddc36b6c4ccf68cbaa9b843097489c0f3a80b3d6d44e3378dcc6d",
+      "sha256": "727a08cf8878c9c8ffd2e280bd4b2fce35069c63895fc191725e63c9dafe7b03",
       "executable": false
     },
     {
@@ -245,13 +245,13 @@
     {
       "path": ".codex/hooks/lib/shell_command.changelog.md",
       "kind": "file",
-      "sha256": "189b5c7b9ab99fa7edbcd0a0868dee2a6f821611da7bbfd2bd823fe9ffa3facd",
+      "sha256": "475a08016f69d7fb66ff8e5e5927c49c0f16f982fdd44dbac039bd70b3f9c4b4",
       "executable": false
     },
     {
       "path": ".codex/hooks/lib/shell_command.ts",
       "kind": "file",
-      "sha256": "77a61eaaf4d41ad8effc2c6f6a816b05a2a27144a628700af9e478509595b9c6",
+      "sha256": "5198bbc48f4bdb31344301532da5865da1367c4d17d1e36c60612f55d857a7d1",
       "executable": false
     },
     {
@@ -557,7 +557,7 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "8d100a28a02ecaa26ddf9b0b34a64cf492a045a072c5c8a76fd68fb4cdbff8bb",
+      "sha256": "901cbafa9cb582b051a5357dc5da2d8c7752f113dfef0544f85ac0b53f2fb755",
       "executable": false
     },
     {
@@ -599,7 +599,7 @@
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "dc6cba96408eb1ece948683d201a3a2b85912b0bbf32f2a14f5478359b617e0c",
+      "sha256": "8534f89fcd43c57dd9bcacb3e1f3b3e7b19e305286eb6d972d013ad0db9c7ae7",
       "executable": false
     },
     {
@@ -683,13 +683,13 @@
     {
       "path": ".grok/hooks/skills_path_guard.changelog.md",
       "kind": "file",
-      "sha256": "efff6056ed43ebcc8cd90f1a16c50ff3f61b08678251c87e9d2f0da7d5495610",
+      "sha256": "100c37adde40a913b03016e5ab15d6b5f1980646280fc1d25b1a1627700590b9",
       "executable": false
     },
     {
       "path": ".grok/hooks/skills_path_guard.ts",
       "kind": "file",
-      "sha256": "dc951141f8988ff48e8bc3100624167df91dc78d07a09d0333bcb9e531cdee35",
+      "sha256": "ebc1cc6f2f36c13575ee09633f2886214a4f76bbb7f56a5ee87fd6819f07f1cc",
       "executable": false
     },
     {
@@ -767,13 +767,13 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "cfb31c84a366191722d8642a6ff941cae077e5682ebf8d07df5d2a346cf3d087",
+      "sha256": "293aa4e90eacb502d12b85e56966e442751f7bacd96b90793b0dff7db981a46b",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "de7e31a2778404cc8b077cd381e27a9591dc2ee9a1c54e5441afa5e8703aa9c7",
+      "sha256": "48a3d80390292728b797924f767eaee85f1c5995f62e139d51898d7c235aa77d",
       "executable": false
     },
     {
@@ -1468,19 +1468,19 @@
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "dc986fc5318d964b3d98628a30e9370806ab8729312362e72e5746a7b1dae964",
+      "sha256": "eb7d99ad2a4a1c6e10577654e0c9b683a93f03a8639122a83895e8a832d6f7f5",
       "executable": false
     },
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "237c226327f48d4bfe552e5724eafa334604f491ffd0efcd8137c2cb6c65188e",
+      "sha256": "7065594d5654431f94fefabc18ad599e71e63fb6149356d74e006299f0f5000c",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "b393b980395fca2e14db35d3086acb5a253320da53e9856943d7b3f987e22a7e",
+      "sha256": "f6587d35c2d70c0206cfa5df113775310902a81db65cd93b90c2b8a13cb05773",
       "executable": true
     }
   ]

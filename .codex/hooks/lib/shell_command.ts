@@ -1,4 +1,4 @@
-export const VERSION = "1.0.6";
+export const VERSION = "1.0.7";
 
 export const SHELLS = new Set(["bash", "dash", "sh", "zsh"]);
 const COMMAND_PREFIXES = new Set(["!", "do", "elif", "exec", "if", "then"]);
@@ -15,13 +15,13 @@ const INPUT_EXECUTORS = new Set([
 // All shell scans use the same comment boundary and preserve the newline,
 // which still separates any real command that follows the comment.
 function commentEnd(command: string, index: number, tokenBoundary: boolean): number {
-  if (!tokenBoundary || command[index] !== "#") return index;
-  while (index < command.length && command[index] !== "\n") index += 1;
+  if (!tokenBoundary || command.charAt(index) !== "#") return index;
+  while (index < command.length && command.charAt(index) !== "\n") index += 1;
   return index;
 }
 
 export function isSeparatorToken(token: string): boolean {
-  return token.length > 0 && [...token].every((character) => SEPARATORS.has(character));
+  return token.length > 0 && token.split("").every((character) => SEPARATORS.has(character));
 }
 
 // Mask only literal quoted identifier delimiters with a complete terminator.
@@ -187,8 +187,8 @@ function scanTokens(command: string, punctuation: ReadonlySet<string>): string[]
 }
 
 function readQuoted(command: string, start: number): [string, number] {
-  const ansi = command[start] === "$" && command[start + 1] === "'";
-  const quote = ansi ? "'" : command[start];
+  const ansi = command.charAt(start) === "$" && command.charAt(start + 1) === "'";
+  const quote = ansi ? "'" : command.charAt(start);
   if (quote !== "'" && quote !== '"') {
     throw new Error("not a quote");
   }

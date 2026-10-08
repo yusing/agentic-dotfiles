@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-export const VERSION = "1.0.2";
+export const VERSION = "1.0.3";
 
 const LOCK_EX = 2;
 const LOCK_UN = 8;
@@ -27,7 +27,9 @@ function acquireDirLock(dirPath: string, create: boolean): { dir: string; fd: nu
     throw new Error(`ENOENT: ${dirPath}`);
   }
   const lockPath = path.join(dirPath, ".lock");
-  const descriptor = fs.openSync(lockPath, "a+");
+  const descriptor = fs.openSync(
+    lockPath, fs.constants.O_RDWR | fs.constants.O_CREAT | fs.constants.O_APPEND, 0o600,
+  );
   fs.chmodSync(lockPath, 0o600);
   try {
     applyLock(descriptor, LOCK_EX);
@@ -97,7 +99,9 @@ export function withLockedFile<T>(
   if (createParent) {
     ensurePrivateDir(path.dirname(filePath));
   }
-  const descriptor = fs.openSync(filePath, "a");
+  const descriptor = fs.openSync(
+    filePath, fs.constants.O_WRONLY | fs.constants.O_CREAT | fs.constants.O_APPEND, 0o600,
+  );
   fs.chmodSync(filePath, 0o600);
   try {
     applyLock(descriptor, LOCK_EX);

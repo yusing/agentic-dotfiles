@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.9
+
+Build hooks with scriptc's LLVM-only CLI and remove generated LLVM side artifacts.
+
 ## 1.0.8
 
 Compile the standalone tmp_clean helper.

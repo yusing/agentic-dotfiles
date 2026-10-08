@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.10.1
+
+Pin scriptc to 0.2.6. Run its native-CLI installer through the mise postinstall
+hook, trusting only scriptc's Bun lifecycle script.
+
 ## 2.10.0
 
 Install the stable Lightpanda 1.0.0 release through mise. Set
