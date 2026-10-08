@@ -10,7 +10,7 @@ in the skill; this reference owns plan fields, helper mechanics, and recovery pr
   "batches": [{
     "name": "composer",
     "task": "Exact issue text, including its IDs.",
-    "handoff": "Evidence: {{evidence:queued.png}}. Required ignored proposal: {{evidence:proposal.md}}. Branch commits are authorized; the coordinator owns integration. Report in your own pane's journal when available.",
+    "handoff": "Evidence: {{evidence:queued.png}}. Required ignored proposal: {{evidence:proposal.md}}. Branch commits are authorized; the coordinator owns integration.",
     "agent": {
       "kind": "mekugi",
       "model": "gpt-6.1-sol",
@@ -28,7 +28,8 @@ in the skill; this reference owns plan fields, helper mechanics, and recovery pr
 ```
 
 - `batches` is a nonempty list of unique lower-case kebab-case names, at most 40 characters.
-  The helper generates unique branches and isolated worktree paths for this run.
+  Each name is passed unchanged as the linked space's label. The helper generates unique
+  branches and isolated worktree paths for this run.
 - `task` and optional `handoff` use the skill's assignment contract. Only handoff text expands
   `{{evidence:NAME}}` to the corresponding present copied evidence path; task text is unchanged.
 - `agent.kind` is `mekugi` for the Codex default, `codex` for explicitly requested plain Codex,

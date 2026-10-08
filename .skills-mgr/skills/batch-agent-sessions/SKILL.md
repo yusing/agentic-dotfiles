@@ -23,9 +23,12 @@ Each plan entry has:
 
 - `task`: the assigned issues verbatim, including session/thread IDs, without the coordinator's
   workflow request or skill invocation.
-- `handoff`: missing evidence, settled user decisions, ownership boundaries, branch-commit
-  authorization, and the session's result channel. Label causal/design guesses as hypotheses;
-  owner pointers are starting points, not implementation requirements.
+- `handoff`: only task-specific context the session lacks: evidence, settled user decisions,
+  material scope or edit-overlap boundaries, and required authorization. Keep agent/model/effort
+  choices in the route fields; omit standing guidance, default result-channel instructions,
+  and generic coordination reminders. Omit the handoff when no additional context is needed.
+  Label causal/design guesses as hypotheses; owner pointers are starting points, not
+  implementation requirements.
 - Required attached text or durable evidence paths. Independent sessions do not inherit
   attachments. Ask only when the issue's meaning cannot be recovered from supplied evidence or code.
 
@@ -46,7 +49,9 @@ Keep running assignments and recovery state when defaults change.
 ## Prepare and launch
 
 Read [Resource plan](references/preparation.md#resource-plan) for the JSON schema. Name each
-batch by its kind; the helper derives its branch and checkout. Preparation pins committed HEAD,
+batch by its kind, relative to the source project: `journal-ui` under `mekugi`, not
+`mekugi-journal-ui`. The batch name is also the linked space's label; the parent already names
+the project. The helper derives its branch and checkout. Preparation pins committed HEAD,
 so uncommitted changes do not follow. For populated submodules, also read
 [Submodule preparation](references/preparation.md#submodule-preparation).
 
@@ -87,9 +92,9 @@ attention event, act on it, and select the remaining outstanding batches for the
 Lifecycle state and timeout are not completion evidence. Mekugi may remain `unknown` after a
 turn; inspect its pane and commits instead of waiting indefinitely for `idle`.
 
-Answer authorized questions in the session's question input; relay unresolved decisions to the
-user. For a shared blocker, reuse an existing answer or ask once, then relay it to every affected
-session and have each check its pending attempt before retrying.
+The coordinator may answer non-decision questions in the session's question input. Each batch
+session asks decision questions directly; the user answers in that session. The coordinator leaves
+decision questions to the user and does not forward questions to the user or other sessions.
 
 ## Add work
 
