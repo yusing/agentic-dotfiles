@@ -1239,8 +1239,9 @@ tool_platforms = {
     for tool, value in configured_tools.items()
 }
 for tool in locked:
-    # Package-manager backends lock versions rather than release artifacts.
-    if tool.startswith(("go:", "npm:", "pipx:")):
+    # Rust delegates downloads to rustup; package-manager backends also lock
+    # versions rather than release artifacts.
+    if tool == "rust" or tool.startswith(("go:", "npm:", "pipx:")):
         continue
     tool_required = {
         platform for platform in required

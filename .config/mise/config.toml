@@ -62,7 +62,7 @@
 "aqua:BurntSushi/ripgrep" = "latest"
 "aqua:boyter/scc" = "latest"
 "aqua:rtk-ai/rtk" = "latest"
-"aqua:rust-lang/rustup" = "latest"
+"rust" = { "version" = "latest", "targets" = ["wasm32-wasip2"] }
 "aqua:sharkdp/bat" = "latest"
 "aqua:sharkdp/fd" = "latest"
 "aqua:sharkdp/hyperfine" = "latest"

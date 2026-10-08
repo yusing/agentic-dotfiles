@@ -123,6 +123,13 @@ Setup installs Lightpanda 1.0.0 from its GitHub release binaries through mise.
 Fish, Zsh, and Bash export `AGENT_BROWSER_ENGINE=lightpanda` so agent-browser
 uses it by default. Open a new shell after setup to load this setting.
 
+Rust uses mise's native Rust backend to install the compiler, Cargo, and the
+`wasm32-wasip2` target needed for Zed dev extensions. Mise activation in Fish
+and Zsh exposes the Rust binaries and selects the locked toolchain; login Bash
+uses mise shims. An installer-only rustup package does not provide a toolchain.
+Open a new shell and fully restart GUI-launched editors after setup so they
+load the updated environment.
+
 For machines that should become a checkout of this repository, with its packages
 and tools installed:
 
