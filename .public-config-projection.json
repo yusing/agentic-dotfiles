@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "55b32e534385b669e24a5485a88b2cc4641a2b3f",
+  "sourceCommit": "7539ce2bb7d3b6df59ca59b07abffb2954ff9c4b",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -573,15 +573,15 @@
       "executable": false
     },
     {
-      "path": ".config/mise/locks/pipx-semgrep/1.179.0~2131a6f0/pyproject.toml",
+      "path": ".config/mise/locks/pipx-semgrep/1.180.0~2131a6f0/pyproject.toml",
       "kind": "file",
-      "sha256": "172a67c246a0893ac138d2dd753099c2c5c6e66f371a2ce2a3f94aad0977e613",
+      "sha256": "6182afb63edd5b64d6f517b3744d2d1dab2f4e2bd57757063d219ca855d55203",
       "executable": false
     },
     {
-      "path": ".config/mise/locks/pipx-semgrep/1.179.0~2131a6f0/uv.lock",
+      "path": ".config/mise/locks/pipx-semgrep/1.180.0~2131a6f0/uv.lock",
       "kind": "file",
-      "sha256": "2e1fcbf4813e68f76590a100cd1f693f0469b31e43e5182206880d7c292dcba4",
+      "sha256": "2193a09e7c6c25b9144f3a93c2e34c378bd74e41e21228a302a56889bd9d0583",
       "executable": false
     },
     {
@@ -599,7 +599,7 @@
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "74f8aa24eab8856f14799e96f42b381a54d0fc6609c93f50f5b6a1312553db2b",
+      "sha256": "1f2bdec4c3b93049d874c5e01d264801eeea4bbb02073237926de797521678a4",
       "executable": false
     },
     {
@@ -641,7 +641,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "39a1375054f80d800a659dda35d26ca2db05bad342b74bdeca24f20cf71b3f8a",
+      "sha256": "6e19868f9f91b742d3bc3be359e4f1fbf931f823b0c59f1f1b1d4eea2f4939d2",
       "executable": false
     },
     {

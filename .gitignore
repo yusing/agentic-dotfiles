@@ -128,9 +128,9 @@ __pycache__
 !/.config/mise/locks/pipx-rich-cli/1.8.1~73c63f16/pyproject.toml
 !/.config/mise/locks/pipx-rich-cli/1.8.1~73c63f16/uv.lock
 !/.config/mise/locks/pipx-semgrep/
-!/.config/mise/locks/pipx-semgrep/1.179.0~2131a6f0/
-!/.config/mise/locks/pipx-semgrep/1.179.0~2131a6f0/pyproject.toml
-!/.config/mise/locks/pipx-semgrep/1.179.0~2131a6f0/uv.lock
+!/.config/mise/locks/pipx-semgrep/1.180.0~2131a6f0/
+!/.config/mise/locks/pipx-semgrep/1.180.0~2131a6f0/pyproject.toml
+!/.config/mise/locks/pipx-semgrep/1.180.0~2131a6f0/uv.lock
 !/.config/mise/locks/pipx-yamllint/
 !/.config/mise/locks/pipx-yamllint/1.38.0~4f6a58c7/
 !/.config/mise/locks/pipx-yamllint/1.38.0~4f6a58c7/pyproject.toml
