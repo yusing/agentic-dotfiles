@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "model": "opus[1m]",
+  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "ccstatusline",
@@ -8,12 +8,12 @@
     "refreshInterval": 10
   },
   "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": false,
     "gopls-lsp@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "php-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": false,
+    "php-lsp@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": false
   },
   "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
