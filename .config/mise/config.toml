@@ -83,3 +83,4 @@
 "go:github.com/yusing/shadowtree/cmd/shadowtree" = "latest"
 "go:github.com/yusing/shadowtree/cmd/shadowtree-lsp" = "latest"
 "go:github.com/swaggo/swag/cmd/swag" = "latest"
+"go:github.com/icholy/gomajor" = "latest"
