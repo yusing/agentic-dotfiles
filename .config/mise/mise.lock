@@ -1099,6 +1099,11 @@ version = "0.0.0-20261008030512-13fb11cafed3"
 backend = "go:github.com/yusing/shadowtree/cmd/shadowtree"
 specifiers = ["latest"]
 
+[[tools."go:github.com/yusing/shadowtree/cmd/shadowtree-lsp"]]
+version = "0.0.0-20261008030512-13fb11cafed3"
+backend = "go:github.com/yusing/shadowtree/cmd/shadowtree-lsp"
+specifiers = ["latest"]
+
 [[tools."go:github.com/yusing/skills-mgr"]]
 version = "0.0.0-20261006043719-4d73a988979b"
 backend = "go:github.com/yusing/skills-mgr"
