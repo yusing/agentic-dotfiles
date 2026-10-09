@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.10.3
+
+Declare old APT and Pacman packages from the Linuxbrew migration for cleanup.
+Include optional tools only when their Homebrew replacements are available.
+Retain system shells and packages required by other installed software.
+
 ## 2.10.2
 
 Point setup help at Mosh image paste. Setup still retires old push services

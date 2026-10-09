@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.2
+# version: 2.10.3
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1925,7 +1925,7 @@ for tool in json.load(sys.stdin):
 }
 
 cleanup_legacy_tool_sources() {
-  local tool cmd pkg name legacy go_installs="" go_installs_ready=0
+  local tool cmd pkg name legacy mode go_installs="" go_installs_ready=0
   local packages=() bun_packages=()
   info "reconciling tool ownership"
   while IFS= read -r pkg; do
@@ -1943,17 +1943,22 @@ cleanup_legacy_tool_sources() {
     fi
   done < <(mise_tool_records)
   # Only entries with an explicit legacy declaration authorize distro removal.
-  while IFS= read -r name; do
-    [ "$PM" != brew ] || continue
-    [ -n "$name" ] || continue
-    [ "$(setup_config native-manager "$name")" = brew ] || continue
-    legacy="$(legacy_packages "$name")" || return 1
-    [ -n "$legacy" ] || continue
-    have_logical "$name" || die "cannot clean up $name without its Homebrew replacement"
-    while IFS= read -r pkg; do
-      [ -z "$pkg" ] || packages+=("$pkg")
-    done <<<"$legacy"
-  done < <(setup_config native-required)
+  for mode in required optional; do
+    while IFS= read -r name; do
+      [ "$PM" != brew ] || continue
+      [ -n "$name" ] || continue
+      [ "$(setup_config native-manager "$name")" = brew ] || continue
+      legacy="$(legacy_packages "$name")" || return 1
+      [ -n "$legacy" ] || continue
+      if ! have_logical "$name"; then
+        [ "$mode" != optional ] || continue
+        die "cannot clean up $name without its Homebrew replacement"
+      fi
+      while IFS= read -r pkg; do
+        [ -z "$pkg" ] || packages+=("$pkg")
+      done <<<"$legacy"
+    done < <(setup_config "native-$mode")
+  done
   remove_legacy_packages ${packages[@]+"${packages[@]}"}
   remove_legacy_bun_packages ${bun_packages[@]+"${bun_packages[@]}"}
   while IFS='|' read -r tool cmd; do
