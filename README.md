@@ -25,7 +25,7 @@ preferences.
 | --- | --- |
 | The shared agent workflow | [`.codex/AGENTS.md`](.codex/AGENTS.md) |
 | Codex | [`.codex/config.toml`](.codex/config.toml), [base instructions](.codex/overridden_base_instructions.md), [agents](.codex/agents/), [hook registration](.codex/hooks.json), and [hook implementations](.codex/hooks/) |
-| Claude Code | [`.claude/settings.json`](.claude/settings.json) and [agents](.claude/agents/) |
+| Claude Code | [`.claude/settings.json`](.claude/settings.json), [instructions](.claude/CLAUDE.md), and [agents](.claude/agents/) |
 | Grok | [`.grok/config.toml`](.grok/config.toml), [instructions](.grok/AGENTS.md), and [hooks](.grok/hooks/) |
 | Reusable agent skills | [skill configuration](.skills-mgr/.skills-mgr.json) and [shared skill sources](.skills-mgr/skills/) |
 | Fish | [`.config/fish/config.fish`](.config/fish/config.fish) |
@@ -40,8 +40,6 @@ shell behavior.
 
 ## Image paste in remote sessions
 
-### Mosh
-
 Run setup on both computers to install the [yusing/mosh fork](https://github.com/yusing/mosh),
 then connect from the computer holding the image:
 
@@ -51,9 +49,9 @@ mosh user@host
 
 In Mekugi, press **Ctrl+^ followed by i** to attach a clipboard PNG over the
 existing encrypted Mosh connection. **Ctrl+^ followed by c** cancels capture or
-upload. Ordinary paste keys are unchanged; no `clip-session` or additional SSH
-connection is needed. The client needs `wl-paste` on Wayland or `xclip` on X11;
-macOS uses its built-in `osascript`. Both ends must run the fork.
+upload. Ordinary paste keys are unchanged. The client needs `wl-paste` on
+Wayland or `xclip` on X11; macOS uses its built-in `osascript`. Both ends must
+run the fork.
 
 Images can be up to 64 MiB. Mosh shows progress, keeps typing and screen updates
 responsive, and delivers one bracketed image-path paste after upload succeeds.
@@ -63,43 +61,6 @@ client and server remain alive, but does not survive restarting either process.
 Incomplete files are removed on cancellation, failure, or server exit. Completed
 private image files remain in remote temporary storage for pending drafts and
 follow the host's normal temporary-file cleanup policy.
-
-### SSH and older Mosh installations
-
-Run setup on both computers, then connect from the computer holding the image:
-
-```sh
-clip-session ssh user@host
-clip-session mosh user@host
-# Or launch an application directly:
-clip-session ssh user@host codex
-```
-
-The source needs `pngpaste` on macOS, `wl-paste` on Wayland, or `xclip` on X11.
-Both computers need the updated `clip-session`. SSH host aliases, ports, and
-identities come from your SSH config. Paste connections use noninteractive SSH
-key authentication, including your SSH agent, and the server must allow remote
-Unix-socket forwarding (`AllowStreamLocalForwarding`). No reverse-login key,
-source SSH server, remote `DISPLAY`, or Xvfb is required.
-
-In Codex, press **Ctrl+V** to attach the image from the computer where you pressed
-Paste. Copying alone transfers nothing. Each paste pulls over a new SSH connection
-and becomes an image attachment, not filename text. Text paste through the terminal
-is unchanged. Other applications must support attaching images from bracketed-pasted
-image paths; this is not a general remote desktop clipboard.
-
-Use the launcher rather than plain `ssh`/`mosh`. Each client's input carries its
-own immutable image reference, so existing applications and simultaneous clients
-do not depend on an old pane's environment or a shared clipboard. There is no
-multiplexer-specific configuration. A failed paste never falls back to an old
-remote image. Mosh keeps running if the auxiliary SSH connection drops; paste
-again after connectivity returns and it opens a fresh connection. Ctrl+C and
-Mosh's escape key remain responsive while a pull waits. Images up to 32 MiB are
-supported; a paste attempt times out after 15 seconds.
-
-Private image files remain in remote temporary storage after disconnection,
-so queued input and drafts can still use them. They follow the host's normal
-`/tmp` cleanup policy; do not clear them before submitting an attached draft.
 
 Setup stops the old `clip-watch`, `clip-recv`, and `clip-xvfb` services and the
 macOS watcher, and moves remaining legacy launch files and helpers into
@@ -113,6 +74,22 @@ sudo, install packages and tools, rewrite tracked configuration paths, and
 change the login shell to Fish. It can be rerun after failure. Checkout
 collisions are backed up under `~/.local/share/dotfiles-setup/`. Unrelated files
 are left alone.
+
+Run setup as a regular user. Linux uses APT or Pacman/yay for bootstrap and
+system prerequisites, with sudo when needed, and Homebrew/Linuxbrew for the
+migrated command-line tools and development libraries. Installing Linuxbrew
+as root is rejected.
+
+Setup installs Lightpanda 1.0.0 from its GitHub release binaries through mise.
+Fish, Zsh, and Bash export `AGENT_BROWSER_ENGINE=lightpanda` so agent-browser
+uses it by default. Open a new shell after setup to load this setting.
+
+Rust uses mise's native Rust backend to install the compiler, Cargo, and the
+`wasm32-wasip2` target needed for Zed dev extensions. Mise activation in Fish
+and Zsh exposes the Rust binaries and selects the locked toolchain; login Bash
+uses mise shims. An installer-only rustup package does not provide a toolchain.
+Open a new shell and fully restart GUI-launched editors after setup so they
+load the updated environment.
 
 For machines that should become a checkout of this repository, with its packages
 and tools installed:
@@ -159,7 +136,8 @@ executables before replacement, backing up previous local files under
 backups before retrying; replacement does not automatically roll back. Named
 `--upgrade TOOL...` and `--check-config` runs do not install or update vendors.
 
-Normal reruns skip tool installation when the locked versions are already installed,
+Normal reruns retain installed native packages and skip mise tool installation
+when the locked versions are already installed,
 while still repairing missing commands and shims and checking the final setup.
 Helper compilation is incremental on both normal runs and full `--upgrade` runs:
 unchanged sources and build inputs reuse the existing executable. Named upgrades
@@ -178,8 +156,8 @@ retained in a leading block; files without collisions retain their surrounding f
 including optional packages, through Homebrew or APT. Only declared packages are
 targeted; their required dependencies may also change. On Arch, `--upgrade`
 performs a **full system upgrade** with yay, including AUR packages, before
-installing native packages. Run setup as a regular user on Arch; yay uses sudo
-when required.
+installing native packages and updating Homebrew packages. Yay uses sudo when
+required.
 
 If you already have your own dotfiles, copy the pieces you want instead of
 running setup.
@@ -195,6 +173,7 @@ Start with the instruction stack before copying client settings:
 - [`AGENTS.md`](AGENTS.md) is this checkout's repository-level agent file, not the
   shared client workflow.
 - [`.codex/MAIN.md`](.codex/MAIN.md) covers coordination and delegation;
+  [`.codex/REVIEW.md`](.codex/REVIEW.md) covers delivery checks and review after implementation;
   [`.codex/IMPLEMENTATION.md`](.codex/IMPLEMENTATION.md) covers implementation craft,
   [`.codex/TESTING.md`](.codex/TESTING.md) covers validation and regression evidence,
   and [`.codex/DOCS.md`](.codex/DOCS.md) covers reader-document purpose and consistency.
@@ -234,6 +213,7 @@ determine when it applies.
 
 | Name | Source | Purpose | Model visible | Condition |
 | --- | --- | --- | --- | --- |
+| `agent-browser` | Remote | Automate websites and Electron apps, extract data, and run exploratory QA | Yes | Always |
 | `authoring-skill` | Shared | Author, update, review, or rename skills and maintain registration and projection | Yes | Always |
 | `batch-agent-sessions` | Shared | Run parallel batch sessions with deterministic lifecycle, additive tasks, follow-ups, and integration | No | Always |
 | `build-code-skeleton` | Shared | Create an initial compile-safe project skeleton | Yes | Always |
@@ -284,10 +264,26 @@ determine when it applies.
 | `web-design-guidelines` | Remote | Review UI against web interface guidelines | Yes | TSX, JSX, HTML, or CSS project |
 | `writing-readme` | Shared | Write or improve repository READMEs | Yes | Always |
 
+The `agent-browser` skill comes from
+[`vercel-labs/agent-browser`](https://github.com/vercel-labs/agent-browser).
+Before browser automation, load `agent-browser skills get core` for workflows
+that match the installed CLI version. Use `agent-browser skills list` to find
+specialized guides for Electron apps, Slack, exploratory QA, and cloud browsers.
+
 ## Adapting the Shell Setup
 
 Fish is the main shell configuration. Zsh loads a native port of the daily Fish
 behavior, while Bash has a smaller independent setup.
+
+Fish and Zsh use the local Oh My Posh theme at
+[`.config/oh-my-posh/catppuccin_macchiato.omp.json`](.config/oh-my-posh/catppuccin_macchiato.omp.json)
+so prompt initialization uses a local file. The first interactive Fish or Zsh
+launch each local calendar day checks the
+[upstream theme](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/catppuccin_macchiato.omp.json)
+in the background. Changed themes replace the local file atomically. Offline or
+failed checks keep the existing theme and retry on the next day. The daily check is shared by
+both shells and requires the helper installed by `compile-agent-tools`.
+This theme file is managed automatically, so updates replace local edits.
 
 On Linux, `tmp_clean --dry-run` previews stale generated Go and agent/test
 artifacts in `/tmp`; `tmp_clean` permanently deletes them. Only owned recognized
@@ -318,7 +314,7 @@ adopt one layer at a time and roll back anything that does not fit.
 ├── AGENTS.md              # Repository-specific agent guidance
 ├── CONTEXT-*.md           # Ownership maps for instructions, hooks, and shell
 ├── .codex/                # Codex settings, base instructions, agents, hooks, and skills
-├── .claude/               # Claude Code settings and agents
+├── .claude/               # Claude Code settings, instructions, and agents
 ├── .grok/                 # Grok settings and Codex-hook adapters
 ├── .skills-mgr/           # Skill registry and shared skill sources
 ├── .config/fish/          # Primary shell configuration

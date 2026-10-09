@@ -6,6 +6,7 @@ import {
 	lstat,
 	mkdir,
 	mkdtemp,
+	readdir,
 	readlink,
 	rename,
 	rm,
@@ -16,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.8";
+export const VERSION = "1.3.15";
 
 type TreeEntry = {
 	mode: string;
@@ -112,14 +113,26 @@ const EXACT_PATHS = new Set([
 	".zsh/fish-mirror.zsh",
 	".zshrc",
 	".claude/CLAUDE.md",
+	".claude/instructions/DOCS.md",
+	".claude/instructions/GITHUB.md",
+	".claude/instructions/IMPLEMENTATION.md",
+	".claude/instructions/INSTRUCTION-AUTHORING.md",
+	".claude/instructions/MAIN.md",
+	".claude/instructions/REVIEW.md",
+	".claude/instructions/SKILL-AUTHORING.md",
+	".claude/instructions/SUBAGENT.md",
+	".claude/instructions/TESTING.md",
 	".claude/settings.json",
 	".codex/AGENTS.md",
+	".codex/DOCS.md",
 	".codex/GITHUB.md",
 	".codex/IMPLEMENTATION.md",
 	".codex/INSTRUCTION-AUTHORING.md",
 	".codex/SKILL-AUTHORING.md",
 	".codex/MAIN.md",
+	".codex/REVIEW.md",
 	".codex/SUBAGENT.md",
+	".codex/TESTING.md",
 	".codex/config.toml",
 	".codex/hooks.json",
 	".codex/hooks/check_project.ts",
@@ -151,6 +164,7 @@ const EXACT_PATHS = new Set([
 	// ".config/fish/completions/bun.fish", // bun installed
 	// ".config/fish/completions/grok.fish", // grok installed
 	".config/fish/config.fish",
+	".config/oh-my-posh/catppuccin_macchiato.omp.json",
 	".config/gh/config.yml",
 	".config/ghostty/config",
 	".config/kaku/kaku.lua",
@@ -168,6 +182,7 @@ const EXACT_PATHS = new Set([
 	".config/zed/settings.json",
 	".config/zed/snippets/go.json",
 	".grok/AGENTS.md",
+	".grok/rules/AGENTS.md",
 	".grok/config.toml",
 	".grok/hooks/adapt_codex_hook.ts",
 	".grok/hooks/adapt_codex_hook.changelog.md",
@@ -177,16 +192,15 @@ const EXACT_PATHS = new Set([
 	".grok/hooks/skills_path_guard.changelog.md",
 	".local/bin/check_project",
 	".local/bin/check_project.changelog.md",
-	".local/lib/clip-session/clip-session.ts",
-	".local/lib/clip-session/clipboard.ts",
-	".local/lib/clip-session/terminal.ts",
-	".local/lib/clip-session/CHANGELOG.md",
+	".local/bin/svn-merge",
 	".local/lib/compile-agent-tools/compile-agent-tools.ts",
 	".local/lib/compile-agent-tools/CHANGELOG.md",
 	".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
 	".local/lib/batch-agent-sessions/CHANGELOG.md",
 	".local/lib/tmp-clean/tmp_clean.ts",
 	".local/lib/tmp-clean/CHANGELOG.md",
+	".local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts",
+	".local/lib/update-oh-my-posh-theme/CHANGELOG.md",
 	".local/bin/compile-agent-tools",
 	".local/bin/compile-agent-tools.changelog.md",
 	".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
@@ -525,7 +539,7 @@ function projectCodexConfig(text: string): string {
 }
 
 function projectGrokConfig(text: string): string {
-	const sections = ["cli", "disabled_mcp_tools", "features", "harness", "mcp_servers.context7", "models", "telemetry", "ui"];
+	const sections = ["cli", "compat.claude", "disabled_mcp_tools", "features", "harness", "mcp_servers.context7", "models", "telemetry", "ui"];
 	return projectToml(text, new Set(["disabled_mcp_servers"]), section =>
 		sections.some(allowed => section === allowed || section.startsWith(`${allowed}.`)),
 	);
@@ -972,6 +986,17 @@ async function removeStalePath(destination: string, path: string): Promise<void>
 	}
 }
 
+async function holdsOnlyStaleOutputs(destination: string, path: string, stalePaths: Set<string>): Promise<boolean> {
+	const target = destinationPath(destination, path);
+	const stat = await lstat(target);
+	if (stat.isSymbolicLink() || !stat.isDirectory()) return false;
+	for (const entry of await readdir(target, { recursive: true })) {
+		const child = `${path}/${entry}`;
+		if (!(await lstat(join(target, entry))).isDirectory() && !stalePaths.has(child)) return false;
+	}
+	return true;
+}
+
 async function matchesRecord(destination: string, record: OutputRecord): Promise<boolean> {
 	const path = destinationPath(destination, record.path);
 	try {
@@ -996,23 +1021,42 @@ async function synchronize(destination: string, staged: string, projection: Map<
 	}));
 	const previouslyOwned = new Set(previousOutputs.keys());
 	previouslyOwned.add(OUTPUT_MANIFEST_PATH);
-
-	for (const [path, entry] of projection) {
-		const target = destinationPath(destination, path);
-		await assertSafeParents(destination, path);
-		// Identical unowned files can be claimed: they already match, so
-		// taking ownership does not overwrite destination-authored work.
-		if (!previouslyOwned.has(path) && !(await sameEntry(target, entry)) && (await pathExists(target))) {
-			throw new Error(`destination path is not owned by the projection: ${path}`);
-		}
-	}
 	const staleOutputs = [...previousOutputs.values()].filter(
 		output => output.path !== OUTPUT_MANIFEST_PATH && !projection.has(output.path),
 	);
+	const stalePaths = new Set(staleOutputs.map(output => output.path));
+
+	for (const [path, entry] of projection) {
+		const target = destinationPath(destination, path);
+		// A stale output removed below may currently occupy a parent path
+		// or contain the target (a file replacing a directory or the reverse).
+		const parents = dirname(path).split("/");
+		const staleParent = parents
+			.map((_, index) => parents.slice(0, index + 1).join("/"))
+			.find(parent => stalePaths.has(parent));
+		await assertSafeParents(destination, staleParent ?? path);
+		if (staleParent) continue;
+		// Identical unowned files can be claimed: they already match, so
+		// taking ownership does not overwrite destination-authored work.
+		if (
+			!previouslyOwned.has(path) &&
+			!(await sameEntry(target, entry)) &&
+			(await pathExists(target)) &&
+			!(await holdsOnlyStaleOutputs(destination, path, stalePaths))
+		) {
+			throw new Error(`destination path is not owned by the projection: ${path}`);
+		}
+	}
 	for (const record of staleOutputs) {
 		if (!(await matchesRecord(destination, record))) {
 			throw new Error(`stale generated path was modified outside the projection: ${record.path}`);
 		}
+	}
+
+	let removed = 0;
+	for (const record of staleOutputs) {
+		await removeStalePath(destination, record.path);
+		removed++;
 	}
 
 	let changed = 0;
@@ -1021,12 +1065,6 @@ async function synchronize(destination: string, staged: string, projection: Map<
 		if (await sameEntry(target, entry)) continue;
 		await atomicInstall(staged, destination, path, entry);
 		changed++;
-	}
-
-	let removed = 0;
-	for (const record of staleOutputs) {
-		await removeStalePath(destination, record.path);
-		removed++;
 	}
 
 	const manifestEntry: ProjectedEntry = { kind: "file", content: Buffer.from(encodeJson(manifest)), executable: false };

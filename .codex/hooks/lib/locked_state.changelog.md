@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3
+
+Create lock files with mode 0600 using numeric fs.constants flags supported by
+scriptc 0.2.6. Keep chmod to secure existing lock files too.
+
 ## 1.0.2
 
 Recognize lock-acquisition failures by their error prefix instead of a

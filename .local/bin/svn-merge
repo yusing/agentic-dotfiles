@@ -1,0 +1,264 @@
+#!/bin/sh
+# Perform an svn trunk/branches sync merge in either direction and print the
+# resulting commit message, formatted to match this project's convention:
+#   up:   Merge rF<revs> from branches/<name> to trunk (T<ticket> ...)
+#   down: Merge rF<revs> from trunk to branches/<name> (T<ticket> ...)
+#
+# A merge reports only the revisions added by that invocation. `message`
+# instead reads the pending mergeinfo from the working copy against its own
+# base revision, so it can reproduce the list after conflicts are resolved:
+# a conflicted merge cannot simply be run again while its target has local
+# modifications.
+# Commit the target directory itself with the merged files: its svn:mergeinfo
+# property is what prevents a later merge from selecting the same revisions.
+set -eu
+
+script_name=$(basename "$0")
+
+usage() {
+	echo "usage: $script_name up|down [ticket ...]" >&2
+	echo "       $script_name message up|down [ticket ...]" >&2
+	echo "  run from a branches/<name> working copy" >&2
+	exit 2
+}
+
+[ "$#" -ge 1 ] || usage
+mode=merge
+if [ "$1" = message ]; then
+	mode=message
+	shift
+fi
+[ "$#" -ge 1 ] || usage
+direction=$1
+shift
+case "$direction" in
+up | down) ;;
+*) usage ;;
+esac
+
+relurl=$(svn info --show-item relative-url . 2>/dev/null) || {
+	echo "$script_name: not an svn working copy" >&2
+	exit 1
+}
+wc_root=$(svn info --show-item wc-root .)
+
+case "$relurl" in
+*/branches/*/*)
+	echo "$script_name: run this from the root of a branches/<name> working copy" >&2
+	exit 1
+	;;
+*/branches/*)
+	branch=${relurl##*/branches/}
+	project_root_url=${relurl%/branches/*}
+	;;
+*)
+	echo "$script_name: run this from a branches/<name> working copy" >&2
+	exit 1
+	;;
+esac
+
+trunk_url="$project_root_url/trunk"
+branch_url="$project_root_url/branches/$branch"
+trunk_path="$wc_root/trunk"
+branch_path="$wc_root/branches/$branch"
+
+# Revisions of $source_url recorded as merged into the given target, which
+# may be a working copy path or a URL. The trailing marker for a partially
+# merged revision is removed so that revision can still appear in messages.
+merged_revs() {
+	svn mergeinfo --show-revs merged "$source_url" "$1" |
+		sed -n 's/^r\([0-9][0-9]*\).*/\1/p'
+}
+
+# Revisions in $2 that are absent from $1. Keyed on FILENAME rather than
+# NR == FNR, which misreads the second file as the first when $1 is empty --
+# the case when the target has no recorded mergeinfo for the source at all.
+missing_from() {
+	awk -v exclude="$1" '
+		FILENAME == exclude { if ($1 ~ /^[0-9]+$/) seen[$1 + 0] = 1; next }
+		$1 ~ /^[0-9]+$/ && !(($1 + 0) in seen) { print $1 + 0 }
+	' "$1" "$2" | sort -n
+}
+
+require_clean_target() {
+	if ! status=$(svn status "$target_path"); then
+		echo "$script_name: cannot inspect merge target: $target_path" >&2
+		exit 1
+	fi
+	changes=$(printf '%s\n' "$status" |
+		awk 'substr($0, 1, 1) != "?" && substr($0, 1, 1) != "I" && substr($0, 1, 1) != "X"')
+	if [ -n "$changes" ]; then
+		echo "$script_name: target has versioned changes; merge requires a clean working copy: $target_path" >&2
+		printf '%s\n' "$changes" >&2
+		exit 1
+	fi
+}
+
+# Revisions created by a sync from trunk are bookkeeping on the feature
+# branch, not feature work to replay onto trunk. A follow-up commit that only
+# reverts an accidental change from such a sync belongs to the same excluded
+# operation. Both forms are identified by this project's commit convention.
+excluded_up_revs() {
+	svn log --stop-on-copy "$source_url" |
+		awk -v branch="$branch" '
+			/^r[0-9]+ \|/ {
+				rev = $1
+				sub(/^r/, "", rev)
+				first_line = 1
+				next
+			}
+			/^[-]+$/ || $0 == "" { next }
+			!first_line { next }
+			{
+				first_line = 0
+				if ($0 ~ /^Merge / && index($0, "trunk to") && index($0, "branches/" branch)) {
+					excluded[rev] = 1
+					next
+				}
+				if ($0 ~ /^Revert .* from r[0-9]+/) {
+					source_rev = $0
+					sub(/^.* from r/, "", source_rev)
+					sub(/[^0-9].*$/, "", source_rev)
+					reverts[rev] = source_rev
+				}
+			}
+			END {
+				for (rev in reverts) {
+					if (reverts[rev] in excluded) excluded[rev] = 1
+				}
+				for (rev in excluded) print rev
+			}
+		' | sort -n
+}
+
+case "$direction" in
+up)
+	source_url=$branch_url
+	target_url=$trunk_url
+	target_path=$trunk_path
+	tail="from branches/$branch to trunk"
+	;;
+down)
+	source_url=$trunk_url
+	target_url=$branch_url
+	target_path=$branch_path
+	tail="from trunk to branches/$branch"
+	;;
+esac
+
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
+
+if [ "$mode" = merge ]; then
+	require_clean_target
+	svn update "$target_path"
+	require_clean_target
+	merged_revs "$target_path" >"$tmpdir/before"
+	if [ "$direction" = up ]; then
+		svn mergeinfo --show-revs eligible "$source_url" "$target_path" |
+			sed -n 's/^r\([0-9][0-9]*\).*/\1/p' >"$tmpdir/eligible"
+		excluded_up_revs >"$tmpdir/excluded"
+		missing_from "$tmpdir/excluded" "$tmpdir/eligible" >"$tmpdir/to_merge"
+		if [ ! -s "$tmpdir/to_merge" ]; then
+			echo "$script_name: no eligible branch revisions (up)" >&2
+			exit 0
+		fi
+		rev_args=$(awk 'BEGIN { sep = "" } { printf "%s%s", sep, $1; sep = "," } END { print "" }' "$tmpdir/to_merge")
+		svn merge -c "$rev_args" "$source_url" "$target_path"
+	else
+		# A prior down-merge commit without its matching svn:mergeinfo makes SVN
+		# offer those revisions again. Refuse the merge instead of replaying work
+		# that the branch history says is already present.
+		svn log --stop-on-copy --search '*from *trunk to *branches*' "$target_url" |
+			awk -v branch="$branch" '
+				/^Merge / && index($0, "trunk to") && index($0, "branches/" branch) {
+					n = split($2, specs, ",")
+					for (i = 1; i <= n; i++) {
+						if (specs[i] ~ /^rF[0-9]+$/) {
+							sub(/^rF/, "", specs[i])
+							print specs[i]
+						} else if (specs[i] ~ /^rF[0-9]+-[0-9]+$/) {
+							sub(/^rF/, "", specs[i])
+							split(specs[i], bounds, "-")
+							for (rev = bounds[1]; rev <= bounds[2]; rev++) print rev
+						} else if (specs[i] ~ /^r[0-9]+-rF[0-9]+$/) {
+							# Older messages placed the F marker on the range end.
+							sub(/^r/, "", specs[i])
+							sub(/-rF/, "-", specs[i])
+							split(specs[i], bounds, "-")
+							for (rev = bounds[1]; rev <= bounds[2]; rev++) print rev
+						}
+					}
+				}
+			' | sort -nu >"$tmpdir/claimed"
+		# Only revisions SVN still considers eligible can be replayed. This also
+		# ignores historical ranges whose revisions never changed the source.
+		svn mergeinfo --show-revs eligible "$source_url" "$target_path" |
+			sed -n 's/^r\([0-9][0-9]*\).*/\1/p' >"$tmpdir/eligible"
+		awk -v eligible="$tmpdir/eligible" '
+			FILENAME == eligible { replayable[$1 + 0] = 1; next }
+			(($1 + 0) in replayable) { print $1 + 0 }
+		' "$tmpdir/eligible" "$tmpdir/claimed" | sort -n >"$tmpdir/replayed"
+		if [ -s "$tmpdir/replayed" ]; then
+			replayed=$(awk 'BEGIN { sep = "" } { printf "%sr%s", sep, $1; sep = "," } END { print "" }' "$tmpdir/replayed")
+			echo "$script_name: branch history says $replayed already merged, but SVN still considers them eligible" >&2
+			echo "$script_name: restore or record those revisions before running down again" >&2
+			exit 1
+		fi
+		svn merge "$source_url" "$target_path"
+	fi
+fi
+
+# Conflicts occupy three separate status columns: text in the first,
+# property in the second, and tree in the seventh. A tree conflict leaves
+# the first column blank, so anchoring on it would let one through.
+conflicts=$(svn status "$target_path" |
+	awk 'substr($0, 1, 1) == "C" || substr($0, 2, 1) == "C" || substr($0, 7, 1) == "C"')
+if [ -n "$conflicts" ]; then
+	echo "$script_name: conflicts in $target_path; resolve, then run: $script_name message $direction" >&2
+	printf '%s\n' "$conflicts" >&2
+	exit 1
+fi
+if [ "$mode" = message ]; then
+	# Pegging the target URL at the working copy's base revision keeps the
+	# comparison local: a merge someone else committed to the target after the
+	# last update is not part of this working copy's pending change.
+	base_rev=$(svn info --show-item revision "$target_path")
+	merged_revs "$target_url@$base_rev" >"$tmpdir/before"
+fi
+merged_revs "$target_path" >"$tmpdir/local"
+revs=$(missing_from "$tmpdir/before" "$tmpdir/local")
+
+if [ -z "$revs" ]; then
+	echo "$script_name: no pending merge revisions ($direction)" >&2
+	exit 0
+fi
+
+# Collapses contiguous runs (e.g. 1,2,3 -> rF1-3) so the same merged set
+# always renders to the same message text.
+revlist=$(printf '%s\n' "$revs" | awk '
+	{
+		n = $1 + 0
+		if (NR == 1) { start = n; prev = n; next }
+		if (n == prev + 1) { prev = n; next }
+		emit(start, prev)
+		start = n; prev = n
+	}
+	END {
+		emit(start, prev)
+		print out
+	}
+	function emit(s, e) {
+		if (out != "") out = out ","
+		if (s == e) out = out "rF" s
+		else out = out "rF" s "-" e
+	}
+')
+
+if [ "$#" -gt 0 ]; then
+	tickets=" ($*)"
+else
+	tickets=""
+fi
+
+printf 'Merge %s %s%s\n' "$revlist" "$tail" "$tickets"

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.11
+
+Stop building the retired SSH image-pull helper.
+
+## 1.0.10
+
+Compile the shared daily Oh My Posh theme updater.
+
+## 1.0.9
+
+Build hooks with scriptc's LLVM-only CLI and remove generated LLVM side artifacts.
+
 ## 1.0.8
 
 Compile the standalone tmp_clean helper.
@@ -10,11 +22,11 @@ Compile the manifest-owned batch-agent-sessions preparation and cleanup helper.
 
 ## 1.0.6
 
-Build the dependency-free clip-session without installing the retired X11 package.
+Build the dependency-free SSH image-pull helper without installing the retired X11 package.
 
 ## 1.0.5
 
-Build clip-session with its locked X11 dependency on both platforms instead of the retired macOS clip-watch helper.
+Build the SSH image-pull helper with its locked X11 dependency on both platforms instead of the retired macOS clip-watch helper.
 
 ## 1.0.4
 

@@ -1,122 +1,86 @@
 # Continuation content standard
 
-Write a self-contained account that lets a fresh session resume the unfinished task.
-Preserve what determines the next action, not the history of how the previous session got there.
+Give a fresh session the state that determines its next action, not a history of the session.
 
 ## Caller boundary
 
-This standard defines content for either runtime compaction or a file handoff. The caller supplies
-the cutoff and controls delivery, destination, and response format. This standard does not require
-a file, a path-only response, or any particular delivery mechanism.
+The caller supplies the cutoff, destination, delivery, and response format. This standard defines
+content for runtime compaction or a file handoff; it requires neither a file nor a path-only reply.
+Use context already held at the cutoff. Do not investigate, validate, or continue implementation
+while composing; name gaps instead.
 
-Use the task context held at the cutoff. Do not investigate, run checks, or continue implementation
-to prepare the handoff. State material gaps instead of filling them with assumptions.
-
-Handoff requests and their instruction reads, composition, delivery, and acknowledgements are
-control flow, not unfinished user work. If a new caller takes over an undelivered handoff, inherit
-the earlier task cutoff and supersede its delivery obligations. Carry neither caller's handoff
-control flow into the task account. The next session resumes the underlying work, not an abandoned
-file-writing or acknowledgement step.
+Handoff invocation, instruction reads, composition, delivery, and acknowledgements are control
+flow, not unfinished user work. A new caller that takes over an undelivered handoff inherits the
+original task cutoff and supersedes its delivery obligations. Resume the underlying task, not
+an abandoned handoff or acknowledgement step.
 
 ## Current request
 
-Begin with the current task: the requested outcome, acceptance criteria, scope, and still-binding
-constraints. Consolidate repeated requests into one account. Preserve distinct unfinished outcomes;
-a recent subtask must not displace the rest of the request.
+Start with the outcome, acceptance criteria, scope, and still-binding constraints. Consolidate
+repeated requests without losing distinct unfinished outcomes. Apply corrections only to the
+affected requirement and retain compatible approvals. Preserve exact wording when paraphrasing
+would erase a distinction; distinguish user decisions from agent assumptions.
 
-Read prohibitions as part of the request, including their scope over coordinated actions. Keep a
-prohibited operation out of pending work even when an earlier plan proposed it. Preserve exact
-operational boundaries: prohibiting one command or target does not prohibit every use of its tool.
-Apply user corrections to the affected requirement without discarding compatible requirements.
-Preserve still-valid approvals within their scope; neither a routine nor an inherited plan grants
-additional permission. Record genuinely unresolved authorization as a decision needed, not an action
-to execute.
+Carry prohibitions with their operational scope, including coordinated actions. A prohibition on
+one command or target does not ban its entire tool. Exclude prohibited work even if an old plan
+included it. Record unresolved authorization as a decision, not an executable action.
 
-Keep exact user wording when it defines a distinction that paraphrasing would lose. Distinguish
-a user-approved interpretation from an agent's assumption; an assumption does not become user
-intent through repetition.
+Keep an aside only while obligations remain. Carry a useful fact from an answered question under
+its topic, not as a completed conversation item.
 
-Include an aside only while it has unfinished obligations. If an answered question yielded a fact
-needed for the standing task, carry that fact in its relevant section without mentioning the
-question or its completion.
+## Useful state
 
-## Useful continuation state
+Keep a detail only when it supplies a needed baseline, changes unfinished work, prevents a known
+wrong turn or repeated investigation, or preserves an outstanding obligation:
 
-Select a detail only if it establishes a needed baseline, changes an unfinished action or decision,
-prevents a specific known wrong turn or repeated investigation, or preserves an outstanding
-obligation. Apply this test to every section, including the last action; none is required merely
-for continuity.
+- Relevant local changes and uncommitted/deployed state, including ownership or staging distinctions.
+  Prefer narrow file/symbol pointers over a changelog or copied specification.
+- Latest relevant measurements and their acceptance metric. Separate reported results from checks
+  verified for this exact state; old suite counts do not validate later edits. Name unchecked behavior.
+- Material findings, revisable assumptions and their reasons, evidence limits, and still-open choices.
+  An unproven limitation is not an impossibility result.
+- Outstanding approvals, failures, reporting, and external obligations. Keep recovery details only
+  for a live need, not a completed operation's backup history.
+- Useful agent findings, not completed rosters or session-local identities. For ongoing work, keep
+  enough information to inspect it or identify the recovery gap; do not claim old agents remain live.
 
-- Describe relevant local changes and their uncommitted or deployed state. Preserve ownership or
-  staging distinctions when they affect safe continuation. Use narrow file or symbol pointers
-  instead of a file-by-file implementation changelog or copied specification.
-- Keep the latest relevant measurement, its acceptance metric, and the remaining gap. Distinguish
-  reported results from checks actually verified for the represented state. Record which behavior
-  remains unchecked; old suite counts and fixed failures do not validate later changes.
-- Keep findings and their evidential limits when they prevent repeating expensive work or
-  making an unsupported claim. An unproven limit is not an impossibility result. Leave genuinely
-  unchosen approaches open.
-- Preserve outstanding failures, approvals, reporting, and external obligations. Carry recovery
-  details only for a live recovery need, not because a completed rebase once produced a backup.
-- Carry useful agent findings, not completed-agent rosters, session-local identities, or claims
-  that those agents remain available. For running work, retain the information needed to inspect
-  or resume it, or explicitly identify the recovery gap.
-
-Remove superseded plans, completed action lists, abandoned hypotheses, stale identifiers, and
-historical validation chronology. Do not invent documentation reconciliation or cleanup work from
-a stale reference; retain it only when it is genuinely required by the unfinished outcome.
+Remove superseded plans, abandoned hypotheses, stale identifiers, and validation chronology.
+A stale documentation reference does not create new reconciliation or cleanup work.
 
 ## Evidence and references
 
-Attribute binding requirements to the user or their authoritative owner. Prefer repository paths,
-test names, and retrievable evidence over names of agents or inaccessible tool-result identifiers.
-When the conversation is the only source of a useful result, preserve its substance as a reported
-finding. Do not upgrade it to fresh verification. Keep relevant working assumptions revisable,
-with their rationale, rather than restating them as constraints.
+Attribute binding requirements to the user or authoritative owner. Prefer retrievable paths and
+test names over agent names or inaccessible tool-result IDs. If conversation is the only source,
+retain the useful substance as reported evidence, not fresh verification.
 
-Include an external path only for a needed input, evidence source, or recovery artifact. Preserve
-the essential conclusion in the handoff when a temporary artifact would otherwise be its only
-source. State known missing or unverified availability and any resulting dependency. A dead path
-must not masquerade as an available source or create an obligation to recreate irrelevant material.
+Use relative paths inside the workspace and absolute external paths only for needed inputs or
+recovery evidence. Preserve essential conclusions when a temporary artifact is their only source.
+Name missing/unverified availability; a dead path is not an instruction to recreate irrelevant work.
 
-Carry task-specific requirements, not the active instruction set. Exclude system and developer
-instructions, injected `AGENTS.md` contents, standing repository and agent rules, and skill bodies,
-including paraphrased summaries of those instructions. When unfinished work needs a maintained
-instruction document or specification, reference its authoritative path rather than repeating its
-contents; preserve an `AGENTS.md` path when that file is itself an unfinished work target.
+Carry task-specific requirements, not system/developer text, AGENTS.md contents, standing rules,
+or skill bodies, even paraphrased. Point to maintained instructions/specifications needed for
+unfinished work. An AGENTS.md path may remain when it is itself a work target. Replace secrets
+with descriptive placeholders and a safe source or necessary reacquisition obligation.
 
-Use relative paths within the workspace and absolute paths for external resources. Preserve
-secrets and sensitive data only as descriptive placeholders, with a safe source reference or a
-necessary reacquisition obligation.
+## Unfinished actions
 
-## Actions without frozen recipes
+Describe checks and operations by intent, relevant interface/test, and indispensable inputs such
+as a replay fixture or acceptance limit. Do not freeze incidental shell recipes, wrappers, flags,
+build settings, or install steps. Keep exact commands only for an explicit user method or a
+prohibited operation, with their authorization meaning intact.
 
-Describe unfinished operations and checks by intent, relevant test or interface, and indispensable
-inputs such as the replay fixture and acceptance limit. The continuing session chooses execution
-commands from the current project state and applicable instructions. Do not carry shell recipes,
-flags, wrappers, build settings, or installation steps merely because a previous session used or
-planned them.
-
-Exact command text may identify a prohibited operation or an explicitly required user method.
-Preserve that meaning and authorization boundary; do not convert it into a suggested recipe.
-
-Include an `Active skills to reread` section only for skills still required by an explicit instruction
-or an ongoing workflow. List their names, not their bodies. Omit previously loaded skills whose
-work is finished, speculative future skills, and an empty section. The current instructions govern
-skill selection when work resumes.
+Include `Active skills to reread` only for skills still required by an explicit instruction or
+ongoing workflow. List names, not bodies; omit completed, speculative, and empty entries.
 
 ## Shape and continuation
 
-Use topical headings suited to the live content, such as Task, Current state, Validation,
-Findings, or Remaining decisions. State each fact once. Include no preamble, change history,
-mandatory last-action section, or empty template sections.
+Use headings suited to the state. State each fact once; omit preambles, empty templates, mandatory
+last-action sections, and change history.
 
-When work remains, put Continuation last. Give the first unfinished action in a `Next:` line and
-any later obligations in a `Then:` line. Respect dependencies: prerequisite hook obligations first,
-then unfinished asides newest first, then standing work in request order. Preserve an incomplete
-hook's owner reference without copying its instructions.
+Put Continuation last when work remains: `Next:` names the first unfinished action and `Then:`
+later obligations. Order prerequisite hooks first, then unfinished asides newest first, then
+standing work in request order. Reference an incomplete hook's owner without copying its rules.
 
-Completion includes any required validation, documentation, reporting, and external obligations,
-not implementation alone. If nothing remains, say so without manufacturing another action. If a
-user decision or unavailable dependency blocks progress, identify the concrete gap and preserve
+Completion includes required validation, documents, reporting, and external obligations. If none
+remain, say so. For a blocker, name the concrete missing decision/dependency and preserve
 independent work that can still proceed.

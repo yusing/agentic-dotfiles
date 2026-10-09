@@ -1,5 +1,34 @@
 # Changelog
 
+## 2.10.2
+
+Point setup help at Mosh image paste. Setup still retires old push services
+and backs up their remaining files.
+
+## 2.10.1
+
+Pin scriptc to 0.2.6. Run its native-CLI installer through the mise postinstall
+hook, trusting only scriptc's Bun lifecycle script.
+
+## 2.10.0
+
+Install the stable Lightpanda 1.0.0 release through mise. Set
+AGENT_BROWSER_ENGINE=lightpanda in Fish, Zsh, and Bash.
+
+## 2.9.1
+
+Keep login-shell authentication prompts and errors visible during both unprivileged
+chsh attempts, so setup does not appear to stall while waiting for a password.
+
+## 2.9.0
+
+Support Homebrew-selected native packages on Linux alongside distro bootstrap
+packages. Use bottled Bash, Zsh, Strace, development tools, and libraries instead
+of old distro packages or shell source builds. Share selected Homebrew keg paths
+with Bash, Zsh, and Fish, and expose their pkg-config metadata to vendor builds.
+Retain system shells and bootstrap packages; reconcile declared Strace leftovers
+only after checking the Homebrew replacement.
+
 ## 2.8.2
 
 Show package-labeled Python dependency lock progress with elapsed updates every
@@ -24,7 +53,7 @@ services only when present and reload user units only after moving legacy units.
 
 ## 2.8.0
 
-Declare the Mosh fork through the existing vendor installer and legacy-package cleanup configuration, with native source-build prerequisites. Use built-in Mosh image paste while retaining clip-session for SSH; keep setup free of Mosh-specific installation logic.
+Declare the Mosh fork through the existing vendor installer and legacy-package cleanup configuration, with native source-build prerequisites. Use built-in Mosh image paste while retaining SSH image pull; keep setup free of Mosh-specific installation logic.
 
 Stream labeled progress from all vendor installers while preserving bounded parallel installation and aggregated failures.
 
@@ -34,7 +63,7 @@ Use per-paste SSH image attachments without remote Xvfb. Stop installing Xvfb fo
 
 ## 2.7.0
 
-Replace clipboard push setup with recoverable retirement of old services, LaunchAgent, and helpers. Use session-scoped SSH clipboard pull via clip-session; leave shared Tailscale and linger settings unchanged.
+Replace clipboard push setup with recoverable retirement of old services, LaunchAgent, and helpers. Use session-scoped SSH clipboard pull; leave shared Tailscale and linger settings unchanged.
 
 ## 2.6.0
 

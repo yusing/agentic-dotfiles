@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+Split separator tokens explicitly for scriptc 0.2.6's LLVM compiler.
+
 ## 1.1.1
 
 Use shell scanner 1.0.6: search commands inside quoted heredoc data no longer count

@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.2.5
+
+Retain the main session's Mekugi wrapper flags from preflight and pass them
+before codex in batch launches. Keep native model, effort, profile, and resume
+arguments separate. Existing launched sessions retain their original settings.
+Exclude provider authentication and the main's capture destination. Preserve
+successful preflight evidence when the wrapper-help probe fails.
+
+## 1.2.4
+
+Forward invocation-local TMPDIR and MEKUGI_RUNTIME_DIR to Mekugi launches.
+Wait for the initial loaded-budget footer within the startup deadline.
+Add an explicit retry-startup operation for inspected failed starts that have no
+task delivery or retained agent identity. Verify the same linked workspace and
+idle shell before retrying, preserving live agents and uncertain prompt receipts.
+
+## 1.2.3
+
+Prefix tasks that start with `/` with `Task:` so absolute paths and quoted slash
+commands reach the agent as literal task text. Keep recorded task text unchanged
+for initial and follow-up delivery.
+
+## 1.2.2
+
+Withdraw queued follow-ups without stopping agents or losing task receipts. Refuse
+initial, delivered, or uncertain tasks; cancelled tasks stay cancelled on plan replay
+and no longer block cleanup.
+
+## 1.2.1
+
+Confirm an empty, ready Mekugi composer before task delivery and return focus
+from navigation panes to Main. Leave drafts and dialogs untouched, with the task
+queued instead of recording an uncertain prompt that the agent never received.
+
 ## 1.2.0
 
 Keep run directories, checkouts, and evidence under the state directory instead of `/tmp`.

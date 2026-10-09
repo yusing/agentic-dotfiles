@@ -1,9 +1,7 @@
 # Deterministic session lifecycle
 
-The installed helper owns preparation, launch and naming, verification and prompt delivery,
-concurrent waiting, additive batches, queued follow-ups, and cleanup. The coordinator owns task
-understanding, grouping, model/effort selection, task text, interpretation of results, integration,
-and acceptance checks. The helper does not infer task completion from lifecycle state.
+Read the section for the current operation. Assignment, capacity, and acceptance decisions stay
+in the skill; this reference owns plan fields, helper mechanics, and recovery procedures.
 
 ## Resource plan
 
@@ -12,7 +10,7 @@ and acceptance checks. The helper does not infer task completion from lifecycle 
   "batches": [{
     "name": "composer",
     "task": "Exact issue text, including its IDs.",
-    "handoff": "Evidence: {{evidence:queued.png}}. Branch commits are authorized; the coordinator owns integration. Report in your own pane's journal when available.",
+    "handoff": "Evidence: {{evidence:queued.png}}. Required ignored proposal: {{evidence:proposal.md}}. Branch commits are authorized; the coordinator owns integration.",
     "agent": {
       "kind": "mekugi",
       "model": "gpt-6.1-sol",
@@ -21,32 +19,37 @@ and acceptance checks. The helper does not infer task completion from lifecycle 
       "effort_reason": "Short causal trace with focused checks."
     }
   }],
-  "evidence": [{"name": "queued.png", "source": "/absolute/clipboard/image.png"}],
+  "evidence": [
+    {"name": "queued.png", "source": "/absolute/clipboard/image.png"},
+    {"name": "proposal.md", "source": "/absolute/source/doc/proposals/proposal.md"}
+  ],
   "setup": []
 }
 ```
 
 - `batches` is a nonempty list of unique lower-case kebab-case names, at most 40 characters.
-  The helper generates unique branches and isolated worktree paths for this run.
-- `task` is the verbatim assignment, never the coordinator's full workflow prompt.
-  `handoff` is optional, task-specific missing context. Only handoff text expands
+  Each name is passed unchanged as the linked space's label. The helper generates unique
+  branches and isolated worktree paths for this run.
+- `task` and optional `handoff` use the skill's assignment contract. Only handoff text expands
   `{{evidence:NAME}}` to the corresponding present copied evidence path; task text is unchanged.
 - `agent.kind` is `mekugi` for the Codex default, `codex` for explicitly requested plain Codex,
   or an installed Herdr agent kind. Codex/Mekugi accept `model`, `effort`, and `profile`.
   Other kinds receive their budgets and profiles in `args`, an optional list of native argv
   strings. No shell interpretation or OpenAI budget translation applies to `args`.
 - `model_reason` and `effort_reason` belong in the agent object for workload-selected budgets.
-  The coordinator makes those decisions; the helper retains them alongside loaded-budget receipts.
+  The helper retains them alongside loaded-budget receipts.
   Mekugi uses the absolute executable discovered by preflight and native `codex --yolo` arguments.
   A caller already running Mekugi has this mode. Other callers need user authorization,
   recorded as `agent.allow_yolo: true`, before Mekugi launch.
 - `evidence` is optional. Each entry has a unique single filename and an absolute source
   path. Copies live outside the repository and are shared by the batches; use the returned
-  paths in their handoffs. Include ignored task documents here when Git will not carry them.
+  paths in their handoffs. Git-ignored inputs do not follow committed HEAD; include required
+  documents and other read-only inputs here rather than point at absent checkout paths.
 - `setup` is optional: argv arrays, not shell strings, executed once per created checkout.
-  Select only the project's needed, authorized setup commands. It is empty by default;
-  nothing builds into an installation path automatically. Setup never receives shell
-  interpolation. Its commands run in the batch checkout and inherit the caller environment.
+  It is empty by default. Commands run in the batch checkout, inherit the caller environment,
+  and receive no shell interpolation. Use explicit source and destination paths to copy required
+  ignored inputs when the task needs them at their original relative paths; verify the copies
+  before launch. Installation needs separate authorization.
 - `--plan -` reads the same JSON from stdin. For a plan file, pass its absolute path.
   Pass the caller's `--cwd` explicitly because `skills-mgr run` changes directory before
   executing the wrapper.
@@ -54,9 +57,12 @@ and acceptance checks. The helper does not infer task completion from lifecycle 
 Preparation calls the existing single-session preflight once. It verifies that the caller
 checkout and Herdr source workspace belong to the same Git repository, pins the caller's
 committed HEAD, creates linked subspaces with `--no-focus`, and checks every actual checkout
-HEAD. Uncommitted source edits do not follow, including uncommitted submodule pointer changes.
-Project setup can create required generated assets, dependencies, or other effects only through
-the supplied argv commands.
+HEAD. Uncommitted source edits, including submodule pointer changes, do not follow. Supplied
+setup runs after submodule preparation.
+
+## Submodule preparation
+
+Read when the source has initialized submodules.
 
 Each checkout then initializes, recursively, every submodule that is initialized in the source
 checkout, at the commit its parent records. It clones from the source's local submodule
@@ -68,7 +74,21 @@ its initialized `submodules` with their paths, commits, batch-local `branch`, an
 when the source was attached. Each initialized batch submodule is checked out on the batch's
 named branch at its recorded commit, never left detached. Preparation does not switch or modify
 source submodules; integration restores their original named branches while retaining changes.
-Setup runs afterward.
+
+## Submodule integration
+
+Read before integrating submodule changes. Sessions commit on their prepared named submodule
+branches and record those commits with parent gitlinks.
+
+Fetch nested commits from `<checkout>/<submodule path>` into the matching source submodule,
+innermost first, before integrating parent commits. Integrate onto the original named source
+branch recorded as `source_branch`. If the source was detached, identify that branch from local
+refs and reflog; ask only if it remains ambiguous. Preserve detached commits with a named ref
+before switching, then fast-forward or integrate without resetting away either history.
+
+Leave source submodules on their intended named branches. Resolve gitlink conflicts to the
+integrated nested commit and verify recursively that retained changes and parent gitlinks
+match the integrated tips before cleanup.
 
 ## Launch and wait
 
@@ -77,6 +97,17 @@ route fields. With no selection, it includes every retained batch and skips alre
 initial tasks after checking session identity. `launch --plan FILE|-` supplies assignments for
 prepared, not-yet-launched batches, including manifests created by the earlier prepare-only helper.
 It does not overwrite launched assignments.
+
+Preflight records main's explicit Mekugi wrapper flags in `mekugi_flags`. Launch
+places that retained argv before `codex`, preserving order and literal values.
+It excludes `--grok-auth-file` and `--capture-output`: batches select their own
+provider and must not share main's capture writer. It does not copy native Codex
+arguments or replace per-batch budgets. Manifests
+prepared before flag capture retain their original launch settings.
+
+Mekugi launches forward invocation-local `TMPDIR` and `MEKUGI_RUNTIME_DIR` when set
+to absolute paths. Set them to disk-backed storage when the system temporary
+directory cannot hold runtime snapshots; user configuration stays unchanged.
 
 The helper preserves focus and uses only each batch's returned pane. It renames the pane by task
 kind, picks a unique harness name, and runs the native launcher. Mekugi readiness allows unknown
@@ -93,9 +124,8 @@ process/session identities, and each task's delivery state. Launch is not implem
 `wait --manifest PATH [--batch NAME ...] [--timeout MS]` starts a Herdr CLI wait for each selected
 launched batch concurrently, returning the first idle, done, blocked, or unknown event. The timeout
 defaults to 120000ms. Losing CLI waits are cancelled without sending keys or stopping agent processes.
-Select only outstanding batches on subsequent waits; an already-settled session otherwise wakes
-immediately. Timeout and unknown are attention states, not completion evidence. Waiting does not
-hold the manifest mutation lock, so new work can be added while a wait is outstanding.
+An already-settled session wakes immediately. Waiting does not hold the manifest mutation lock,
+so new work can be added while a wait is outstanding.
 
 ## Add batches and follow-ups
 
@@ -104,8 +134,9 @@ fresh batch and evidence names to a retained run. Existing batches, evidence, an
 are untouched. New batches share the source checkout's current committed HEAD by default; an
 optional resolved `base_commit` selects another accepted baseline for that cohort. Initial
 preparation uses its preflight HEAD. Uncommitted edits never follow implicitly. Launch the added
-names separately. Duplicate batch names are rejected rather than re-created; use follow-ups for
-additional work in an existing batch. A fully cleaned run needs a new preparation.
+names separately. Duplicate batch names are rejected rather than re-created. Select a fresh
+batch or a follow-up using the session-capacity rule in the skill. A fully cleaned run needs a
+new preparation.
 
 For `follow-up --manifest PATH --plan FILE|-`, use:
 
@@ -127,6 +158,12 @@ records them before delivery, queues them while working or blocked, and submits 
 task per ready batch per call. `follow-up --manifest PATH` flushes the queue without adding tasks.
 Only idle/done sessions receive automatic delivery; inspected-ready unknown sessions need
 `--ready-unknown NAME`, just as cleanup does. It never types ordinary task text into a question UI.
+
+`cancel --manifest PATH --task ID` marks one queued follow-up as cancelled under the manifest
+lock. Repeating it is a no-op. It retains the original task and ID, sends no terminal input,
+and does not stop the agent. Initial, delivered, and uncertain tasks are rejected. Cancelled
+tasks cannot be resent by replaying their plan and do not block cleanup. Use a fresh task or
+batch ID when rerouting the work.
 
 ## Images missing from disk
 
@@ -157,6 +194,11 @@ owner's recovery flow. A failed/timed-out creation without a returned resource i
 remains uncertain; inspect the exact recorded branch/path through Herdr before proceeding.
 The helper never resets or adopts an unrelated preexisting worktree.
 
+After inspecting a failed startup and confirming its pane is back at the shell,
+use `retry-startup --manifest PATH --batch NAME`. It checks the recorded linked
+workspace and idle shell and refuses live agents, retained agent identities, or
+any task receipt. Repeat `launch` for an existing live session instead.
+
 Launch intent and prompt submission are saved before their effects. Repeating launch can verify
 the already-started matching process but cannot silently launch another process after an uncertain
 attempt. A `submitting` task means delivery is uncertain, not absent: further delivery and cleanup
@@ -168,10 +210,8 @@ do not blindly resubmit. A changed process/session identity also stops delivery.
 
 ## Cleanup selection
 
-Run cleanup after integration and acceptance, repeating `--completed NAME` for only the
-batches whose work is finished and whose result has been inspected. `idle`, `done`, or
-`unknown` alone does not establish task completion. Read-only batches can finish without
-commits. Unfinished or failed-to-integrate batches stay in place.
+Repeat `--completed NAME` for each accepted, integrated, validated batch selected for removal.
+Read-only batches can finish without commits.
 
 For a completed session that still reports `unknown`, inspect its visible pane to verify
 that it is ready for input, with no ongoing turn or approval/question UI, then add

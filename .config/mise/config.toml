@@ -10,6 +10,7 @@
 "go" = "latest"
 "bun" = "latest"
 "node" = "latest"
+"github:fish-shell/fish-shell" = { "version" = "latest", "os" = ["linux"], "matching_regex" = "^fish-.*-linux-(x86_64|aarch64)\\.tar\\.xz$" }
 "github:aristocratos/btop" = { "version" = "latest", "os" = ["linux"], "matching_regex" = "^btop-(x86_64|aarch64)-unknown-linux-musl\\.tar\\.gz$", "strip_components" = 1, "bin_path" = "bin", "postinstall" = "mkdir -p \"$MISE_TOOL_INSTALL_PATH/share/btop\" && ln -s ../../themes \"$MISE_TOOL_INSTALL_PATH/share/btop/themes\"" }
 "python" = "latest"
 "github:microsoft/TypeScript" = { "version" = "latest", "matching_regex" = "^typescript-(linux|darwin|win32)-", "strip_components" = 1, "bin_path" = "lib" }
@@ -18,6 +19,7 @@
 "pipx:yamllint" = { "version" = "latest", "uvx" = true }
 "pipx:semgrep" = { "version" = "latest", "uvx" = true }
 "github:vi/websocat" = { "version" = "latest", "bin" = "websocat" }
+"github:lightpanda-io/browser" = { "version" = "1.0.0", "matching_regex" = "^lightpanda-(aarch64|x86_64)-(linux|macos)$", "bin" = "lightpanda" }
 "npm:@kilocode/cli" = "latest"
 "npm:@tailwindcss/cli" = "latest"
 "npm:@trunkio/launcher" = "latest"
@@ -26,7 +28,7 @@
 "npm:ctx7" = "latest"
 "npm:markdownlint-cli" = "latest"
 "npm:oxlint-tsgolint" = "latest"
-"npm:scriptc" = "0.0.36"
+"npm:scriptc" = { "version" = "0.2.6", "postinstall" = "cd \"$MISE_TOOL_INSTALL_PATH\" && bun pm trust scriptc" }
 "npm:vite" = "latest"
 "aqua:astral-sh/uv" = "latest"
 "aqua:astral-sh/ruff" = "latest"
@@ -60,7 +62,7 @@
 "aqua:BurntSushi/ripgrep" = "latest"
 "aqua:boyter/scc" = "latest"
 "aqua:rtk-ai/rtk" = "latest"
-"aqua:rust-lang/rustup" = "latest"
+"rust" = { "version" = "latest", "targets" = ["wasm32-wasip2"] }
 "aqua:sharkdp/bat" = "latest"
 "aqua:sharkdp/fd" = "latest"
 "aqua:sharkdp/hyperfine" = "latest"
@@ -79,4 +81,6 @@
 "go:github.com/yusing/skills-mgr" = "latest"
 "go:github.com/yusing/git-agent/cmd/git-agent" = "latest"
 "go:github.com/yusing/shadowtree/cmd/shadowtree" = "latest"
+"go:github.com/yusing/shadowtree/cmd/shadowtree-lsp" = "latest"
 "go:github.com/swaggo/swag/cmd/swag" = "latest"
+"go:github.com/icholy/gomajor" = "latest"

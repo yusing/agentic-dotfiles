@@ -28,7 +28,7 @@ prompt and task/result contract are read directly from the native TOML, so sourc
 cannot pass the focused test while generated ports are stale.
 
 Only the worker role includes `Agent` in its `tools` allowlist, so it can dispatch
-independent inspections when explicitly assigned. Main's inspection policy lives in MAIN.md;
+independent inspections when explicitly assigned. Main's inspection policy lives in REVIEW.md;
 shared guidance does not reopen a worker assignment. This requires a Claude runtime and depth limit
 that permit nested agents; the generator does not configure runtime limits.
 The allowlist omits `Edit` and `NotebookEdit` for the review and council roles. `Write` stays
@@ -57,9 +57,10 @@ Grok resolves its subagent types from these same files, which `grok inspect --js
 `"source": {"type": "project", "path": ".../.claude/agents/<name>.md"}` for every role. There is
 therefore no `.grok/agents/` directory and no third copy of any role: this port is the role
 surface for both clients, and a native Grok role file would shadow the Claude one and split
-ownership. `[compat.claude]` in `.grok/config.toml` documents its `agents` cell as covering named
-instruction files rather than this directory, so which cell gates the discovery is unconfirmed;
-`grok inspect` is the check that it still happens.
+ownership. `[compat.claude] agents = false` in `.grok/config.toml` disables only Claude's named
+instruction files such as `~/.claude/CLAUDE.md`, and `rules = false` disables `.claude/rules/`;
+`grok inspect` still lists every role here with both cells off, and it is the check that discovery
+still happens.
 
 Grok drops what it has no field for. `model` and `effort` are Claude names, so a Grok subagent
 runs on the session model at the session reasoning effort. The frontmatter `Bash` matcher still

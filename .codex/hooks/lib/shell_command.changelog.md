@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7
+
+Use charAt for literal character comparisons that scriptc 0.2.6 rejects as
+context-narrowed string indexing. Preserve comment and quote handling.
+Split separator tokens explicitly instead of spreading strings.
+
 ## 1.0.6
 
 Keep heredoc bodies visible when the command names a shell, `source`, `xargs`, or

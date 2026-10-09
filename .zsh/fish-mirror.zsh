@@ -52,6 +52,7 @@ export OPENSPEC_TELEMETRY=0
 export DO_NOT_TRACK=1
 export DISABLE_TELEMETRY=1
 export OMO_DISABLE_POSTHOG=1
+export AGENT_BROWSER_ENGINE=lightpanda
 export NODE_OPTIONS='--max-old-space-size=8192'
 
 export HOMEBREW_AUTO_UPDATE_SECS=86400
@@ -196,7 +197,10 @@ make() {
 }
 
 if [[ -o interactive ]]; then
-    _zfm_command_exists oh-my-posh && eval "$(oh-my-posh init zsh --config catppuccin_macchiato)"
+    _zfm_command_exists oh-my-posh && eval "$(oh-my-posh init zsh --config "$HOME/.config/oh-my-posh/catppuccin_macchiato.omp.json")"
+    if _zfm_command_exists oh-my-posh && _zfm_command_exists update-oh-my-posh-theme; then
+        (command update-oh-my-posh-theme >/dev/null 2>&1 &!)
+    fi
     _zfm_command_exists atuin && eval "$(atuin init zsh)"
     _zfm_command_exists fzf && eval "$(fzf --zsh 2>/dev/null)" 2>/dev/null
     _zfm_command_exists zoxide && eval "$(zoxide init zsh)"

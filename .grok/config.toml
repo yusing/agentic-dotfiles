@@ -44,5 +44,10 @@ enabled = false
 [harness]
 disable_workspace_teleport = true
 
+[compat.claude]
+hooks = false
+agents = false
+rules = false
+
 [disabled_mcp_tools]
 __managed_gateway_connectors = ["tasks"]

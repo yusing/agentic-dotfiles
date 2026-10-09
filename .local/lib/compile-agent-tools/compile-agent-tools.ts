@@ -16,7 +16,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.8";
+const VERSION = "1.0.11";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -187,14 +187,14 @@ function main(): void {
       ? join(codexHooks, "lib", "flock.ffi.json")
       : "";
     const digest = digestInputs(
-      `scriptc=${scriptcIdentity} target=${target} shared=${sharedHookDigest} ffi=${ffi} flags=--no-keep-c`,
+      `scriptc=${scriptcIdentity} target=${target} shared=${sharedHookDigest} ffi=${ffi} flags=--no-keep-llvm`,
       [source, ...extraInputs],
     );
     const state = join(cacheRoot, `${name}.digest`);
     if (isExecutable(output) && storedDigest(state) === digest) return;
 
     buildAtomically(output, scriptc, (temporary) => {
-      const args = ["build", source, "-o", temporary, "--no-keep-c"];
+      const args = ["build", source, "-o", temporary, "--no-keep-llvm"];
       if (ffi) args.push("--ffi", ffi);
       return args;
     });
@@ -267,10 +267,10 @@ function main(): void {
     ["svn-merge", "svn-merge"],
     ["open-file-in-herdr", "open-file-in-herdr"],
     ["deltapath-wifi-routes", "deltapath-wifi-routes"],
+    ["update-oh-my-posh-theme", "update-oh-my-posh-theme"],
   ]) {
     compileHelper(join(localLib, directory, `${name}.ts`));
   }
-  compileHelper(join(localLib, "clip-session", "clip-session.ts"));
   compileHelper(join(localLib, "project-public-config", "project-public-config.ts"), true);
 }
 

@@ -1,5 +1,42 @@
 # Changelog
 
+## 1.3.15
+
+Stop publishing the retired SSH image-pull helper sources.
+
+## 1.3.14
+
+Publish the `svn-merge` shell helper. The script is the maintained source, so the
+projection includes it with the other published local tools.
+
+## 1.3.13
+
+Synchronize a destination where a generated directory becomes a file or a generated file
+becomes a directory: stale outputs occupying those paths no longer count as unowned, and they
+are removed before new outputs are installed.
+
+## 1.3.12
+
+Publish `.codex/DOCS.md` and `.codex/TESTING.md`, which the README and the shared routing list
+already point to.
+
+## 1.3.11
+
+Publish the Codex and Claude `REVIEW.md` task documents, which now own the post-change review
+policy previously kept in `MAIN.md`.
+
+## 1.3.10
+
+Publish the Claude-specialized task documents under `.claude/instructions/`, which
+`.claude/CLAUDE.md` now points to in place of importing `.codex/AGENTS.md`.
+Publish Grok's shared-guidance rule symlink and its `[compat.claude]` settings, which keep
+Grok from also loading the Claude instruction files.
+
+## 1.3.9
+
+Include the local Oh My Posh theme used by Fish and Zsh.
+Publish the shared daily theme updater source and changelog.
+
 ## 1.3.8
 
 Stop publishing the removed writing-for-agents skill path; its guidance now lives in the
@@ -30,7 +67,7 @@ Publish the source-bound terminal paste implementation instead of the retired X 
 
 ## 1.3.2
 
-Publish clip-session sources and locked build inputs instead of retired push helpers, watcher sources, and service units.
+Publish SSH image-pull sources and locked build inputs instead of retired push helpers, watcher sources, and service units.
 
 ## 1.3.1
 

@@ -3,7 +3,7 @@ import { resolve, extname } from "node:path";
 import { parseTOML, type AST } from "toml-eslint-parser";
 import { parseTree, createScanner, SyntaxKind, type Node, type ParseError } from "jsonc-parser";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.0.1";
 type Value = { raw: string } | Map<string, Value> | Value[];
 type Edit = { start: number; end: number; text: string };
 const quote = (s: string) => JSON.stringify(s).replaceAll("\x7f", "\\u007f");
@@ -11,7 +11,7 @@ const quote = (s: string) => JSON.stringify(s).replaceAll("\x7f", "\\u007f");
 export function homeReplacer(home: string, expandHome: boolean) {
   const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const boundary = "(?=/|[^\\w.-]|$)";
-  const pattern = `(?<![\\w/])(?:${escape(home)}${boundary}|/(?:home|Users?)/[A-Za-z0-9_.-]+${boundary})${expandHome ? "|\\$HOME\\b" : ""}`;
+  const pattern = `(?<![\\w/])(?:${escape(home)}${boundary}|/(?:home/(?!linuxbrew${boundary})|Users?/)[A-Za-z0-9_.-]+${boundary})${expandHome ? "|\\$HOME\\b" : ""}`;
   return (s: string) => s.replace(new RegExp(pattern, "g"), () => home);
 }
 

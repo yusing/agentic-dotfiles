@@ -13,18 +13,13 @@ readable path from `pre` through `cmd` to `post`.
    changed behavior. Read the complete configuration when inheritance or overrides require it.
 2. Inspect a same-name profile recipe or override only when its inherited
    behavior matters.
-3. Reuse the existing recipe, argument, var, enum set, or include that owns the
-   behavior. DON'T introduce a parallel source of truth.
-4. Choose the smallest feature set that makes the workflow explicit. DON'T add a
-   field merely because it exists; every feature must answer a current
-   requirement.
+3. Reuse the owning recipe, argument, var, enum set, or include. Add fields only for
+   the current contract, not because the feature table makes them available.
 
 ## Configuration form
 
-- DO write command fields as shell strings; never TOML argv arrays.
-- DO quote placeholders in shell text: `command "{path}"`.
-- DO compose with `@recipe` or `@path:recipe`; never a nested `shadowtree`
-  process.
+- Write commands as shell strings, not TOML argv arrays. Quote placeholders:
+  `command "{path}"`. Compose with `@recipe`/`@path:recipe`, not nested Shadowtree processes.
 - Argument types are `string`, `int`, `float`, `bool`, `path`, `rel_path`,
   `duration`, and `duration:seconds`.
 
@@ -108,17 +103,15 @@ post = ["docker compose down"]
 
 ## Validate the contract
 
-Run `--check` and `--print` on the exact recipe with representative arguments,
-adding `--shell` for expanded shell syntax.
+Use `--check` on the changed recipe, adding `--shell` when shell syntax needs checking.
+Use `--print` to inspect changed resolved stages, sandbox, or persistence.
 
 - `--check` covers command shape, references, cycles, workdir, log paths,
   placeholders, typed values, and current or future reserved-name rules.
 - `--print` confirms stages, sandbox mode, workdir, arguments, and sync-out
   without running commands.
-- DO exercise success, failure, cancellation-sensitive cleanup, malformed input,
-  unrelated recipe-name collisions, and unknown future values whenever the
-  changed contract exposes those paths.
+- Exercise affected success/error, cleanup, argument, and name-resolution paths;
+  the feature table is not a requirement for an exhaustive test matrix.
 
-When changing Shadowtree itself, keep runtime, schema, editor diagnostics, docs,
-examples, and this skill aligned. In an ordinary consumer project, change only
-the owning config and its directly affected documentation or tests.
+For changes to Shadowtree itself, align affected runtime/schema/editor/document consumers.
+In a consumer project, change the owning config and directly affected documents/tests.

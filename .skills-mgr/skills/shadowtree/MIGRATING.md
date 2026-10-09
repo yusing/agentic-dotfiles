@@ -25,7 +25,7 @@ parsers, temporary pass-through variables, usage banners, traps, wrappers.
 
 ## 2. Inspect the target project
 
-Read the active config and affected includes in full.
+Read the active fields and affected includes; read complete sections when inheritance requires it.
 
 - DO reuse a profile built-in or existing recipe when it already provides the
   required contract, overriding only the behavior gap.
@@ -109,8 +109,9 @@ instructions, and other recipes to the direct invocation form.
 
 ## 6. Prove the migration
 
-Validate definition and shell syntax with `--check`, `--check --shell`, and
-`--print`, without executing host-mutating work. Then compare old against new:
+Validate with `--check`, adding `--shell` for changed shell syntax. Inspect changed resolution
+with `--print`, without executing host mutations. Compare affected old/new contracts using
+the relevant cases below, not a compulsory matrix:
 
 - Default invocation and each retained input form.
 - Named, positional, boundary, and forwarded arguments where applicable.

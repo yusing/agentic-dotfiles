@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Plan, write, or revise git commits, including folding follow-up fixes into earlier commits.
+description: Plan, write, revise, or push git commits, including folding follow-up fixes into earlier commits.
 disable-model-invocation: false
 ---
 
@@ -8,20 +8,36 @@ disable-model-invocation: false
 
 A documented project convention (contributing guide, commitlint or similar config) takes
 precedence over the message format below. This skill does not authorize committing, rewriting
-history, or pushing; those follow the existing request and authorization.
+history, or pushing; those follow the existing request and authorization. A commit or push request
+covers the work of that request, not later ones.
 
 ## Shape commits
 
-- Make each commit one coherent change that builds and passes its tests on its own. Split
-  unrelated edits; keep a refactor separate from the behavior change it enables.
-- Stage explicitly (`git add <paths>` or `git add -p`), then review `git diff --staged` before
-  committing. Leave unrelated working-tree changes unstaged.
+- Make each commit one coherent, independently valid change. Reuse checks for its unchanged
+  tree/scope, not unrelated suites. Split unrelated edits; keep an enabling refactor separate
+  from its behavior change.
+- Check `git status --short` once to establish working-tree and index scope. Reuse current
+  reviews and validation; repeat only checks whose results a later edit, hook, failure, or
+  concurrent change can invalidate.
+- Stage only intended paths or hunks, using explicit paths, interactive staging, or applying
+  a reviewed patch to the index. If the index was empty and staging adds exactly the reviewed
+  change, commit directly; otherwise review the relevant staged changes once. Keep unrelated
+  working-tree and staged changes outside the commit, and ask before tracking a file that was
+  untracked before the task.
+- Use successful commit output to confirm completion. Check post-commit state when hooks or
+  unexpected results can affect delivery.
 - Commit with the configured signing. A signing failure or timeout usually means the user must
   unlock the key: report it as a blocker and retry after they respond. Commit unsigned or change
   signing configuration only when the user authorizes it.
 - When squashing several commits into one, as in a squash merge, derive the message from
   theirs. Keep their reasons and consequences, and drop steps that the combined change no
   longer shows.
+
+## Push
+
+A push request publishes the current branch to its existing upstream. Tags, new remote branches,
+force pushes, and a branch that is not the default or has diverged from its upstream each need the
+user's explicit request. A local-only restriction on a ref stays until the user lifts it.
 
 ## Message format
 
@@ -46,10 +62,18 @@ history, or pushing; those follow the existing request and authorization.
 - Trailers: `Fixes #123`, `Refs #123`, `Co-authored-by:`, and any attribution the client or
   project requires, each on its own line after a blank line.
 
+Pass a multi-line message as real lines through a quoted heredoc, `git commit -F - <<'EOF'`.
+Git and the shell keep a `\n` escape inside `-m` quotes as a literal backslash and `n`, including
+when a tool-call string supplies the command. If message formatting is uncertain, inspect the
+stored message with `git log -1 --format=%B`.
+
 ## Follow-up fixes
 
-A correction to a commit that is not yet on a shared or protected branch goes into that commit,
-not into a new standalone commit such as `fix typo` or `address review`.
+A correction to an unpublished commit goes into that commit, not into a new standalone commit
+such as `fix typo` or `address review`. A commit is unpublished when no remote-tracking branch
+contains it (`git branch -r --contains <sha>` prints nothing) and no one else builds on it, even
+when it sits on the local default branch. Replacing the target's approach, including at the
+user's request, is a correction to it.
 
 1. Find the commit that introduced the code being corrected: `git log --oneline <base>..HEAD`,
    `git blame`, or `git log -L <range>:<file>`.
@@ -63,16 +87,15 @@ not into a new standalone commit such as `fix typo` or `address review`.
    - When the target is `HEAD`, `git commit --amend` is equivalent and needs no later squash.
 
    `amend:` and `reword:` open an editor and reject `-m`/`-F`. Without an interactive editor,
-   write the marker directly: the subject is `amend! <exact target subject>` and the remaining
-   paragraphs are the replacement message, e.g.
-   `git commit -m 'amend! feat: add parser' -m 'feat(parser): add streaming parser' -m '<body>'`;
-   add `--allow-empty` for a message-only correction.
+   write the marker directly with the heredoc form above: the first paragraph is
+   `amend! <exact target subject>` (e.g. `amend! feat: add parser`), and the remaining
+   paragraphs are the replacement message (e.g. `feat(parser): add streaming parser` and its
+   body). Add `--allow-empty` for a message-only correction.
 4. Squash the markers only when the user asks or the workflow requires a clean branch:
    `git rebase --autosquash <base>` (Git 2.44+), or
    `GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash <base>` on older Git. Squashing rewrites
    history; force-pushing the result needs `--force-with-lease` and authorization to rewrite
    the remote branch.
 
-Make a regular commit (usually `fix`) instead when the target is already on the default branch,
-a release branch, or another branch others build on, or when the correction is a distinct change
-worth its own history entry.
+Make a regular commit (usually `fix`) instead when the target is published, or when the change
+is a distinct change worth its own history entry rather than a revision of the target.

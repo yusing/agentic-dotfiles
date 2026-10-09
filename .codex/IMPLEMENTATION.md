@@ -1,31 +1,27 @@
 # Implementation
 
-Craft standards for any agent implementing or inspecting a change, applied within that agent's own
-role and scope.
+Apply these standards within your role and scope. Use the accepted contract to resolve code/test
+conflicts; consult history only when intent remains unclear.
 
-When code conflicts with tests or fixtures, use the accepted contract to decide which changes.
-Consult history when the intended behavior remains unresolved.
+## Behavior
 
-## Runtime behavior
+Reuse existing owners and mechanisms for the smallest requested change. Fix a defect at its
+established cause; suppressing specified behavior that exposes it is not a fix. Use a dependency's
+supported capability before writing a narrower replacement. Add an abstraction
+only for a current shared responsibility, invariant, or necessary algorithm, not possible future
+use. Avoid duplicating host/provider policy or adding persistence, fallbacks, or compatibility the
+task and supported contracts do not need.
 
-For operations whose silence would obscure progress, expose meaningful milestones or measurable
-completion through the owning interface, reusing host progress, logging, or job-state facilities.
-Start/finish notices alone are insufficient. Progress must remain auxiliary and must not determine
-or interfere with successful core behavior.
+For simplification requests, remove mechanisms or required decisions at the affected owner.
+Moving code or adding replacement layers does not satisfy that request.
 
-## No surprises
-
-Do not introduce safeguards that block intended behavior. When a required safeguard rejects an operation,
-explain why through the owning interface rather than failing silently.
-Failures in unrelated or nonessential work must not cause the intended behavior to fail.
-Skip safeguards for purely hypothetical concerns; raise any concrete unresolved tradeoff in the completion report.
+For work whose silence hides progress, reuse host milestones or measurable progress. Start/finish
+notices alone are insufficient; progress must remain auxiliary to successful core behavior.
+Required safeguards explain rejection. Unrelated or nonessential failures must not block the
+intended outcome; do not add safeguards for hypothetical risks.
 
 ## Hygiene
 
-Remove behavior, tests, and supporting artifacts superseded by the accepted change. Do not preserve compatibility unless
-the user says otherwise, and ask only if no safe assumption can be made; do not keep the test with opposite assertion
-for something no longer exists; do not add fallback layers for hypothetical consumers or edge-case handling for impossible scenarios.
-Report unrelated pre-existing obsolete paths for the user to decide.
-
-Edit authoritative sources, not generated, vendored, or minified outputs. Regenerate affected
-consumers through their owning workflow.
+Remove behavior, tests, and artifacts superseded by the accepted change. Keep compatibility only
+when required; report unrelated obsolete paths instead of deleting them. Edit authoritative sources
+and regenerate their consumers, not generated, vendored, or minified outputs.

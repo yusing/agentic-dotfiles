@@ -1,5 +1,8 @@
-if type -q /opt/homebrew/bin/brew
-    eval "$(/opt/homebrew/bin/brew shellenv fish)"
+for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew $HOME/.linuxbrew/bin/brew
+    if test -x $brew_bin
+        eval ($brew_bin shellenv fish)
+        break
+    end
 end
 
 if status is-interactive
@@ -16,6 +19,7 @@ set -x OPENSPEC_TELEMETRY 0
 set -x DO_NOT_TRACK 1
 set -x DISABLE_TELEMETRY 1
 set -x OMO_DISABLE_POSTHOG 1
+set -gx AGENT_BROWSER_ENGINE lightpanda
 
 set -x NODE_OPTIONS "--max-old-space-size=8192"
 
@@ -130,6 +134,14 @@ end
 if type -q mise
     mise activate fish | source
 end
+if test -r $HOME/.local/share/dotfiles-setup/brew-paths
+    while read -l brew_path
+        if test -d $brew_path
+            fish_add_path --path $brew_path
+        end
+    end <$HOME/.local/share/dotfiles-setup/brew-paths
+end
+
 
 if not set -q GOPATH
     set -l gopath (go env GOPATH 2>/dev/null)
@@ -197,7 +209,11 @@ end
 # initialize interactive sessions
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    check-command oh-my-posh; and oh-my-posh init fish --config catppuccin_macchiato | source
+    check-command oh-my-posh; and oh-my-posh init fish --config "$HOME/.config/oh-my-posh/catppuccin_macchiato.omp.json" | source
+    if command -q oh-my-posh; and command -q update-oh-my-posh-theme
+        command update-oh-my-posh-theme >/dev/null 2>&1 &
+        disown $last_pid
+    end
     check-command atuin; and atuin init fish | source
     check-command fzf; and fzf --fish | source
     check-command zoxide; and zoxide init fish | source

@@ -3,7 +3,7 @@ import * as path from "path";
 import { handleVersion, isRecord, readEvent, writeJson } from "../../.codex/hooks/lib/hook_runtime.ts";
 import { shellTokens } from "../../.codex/hooks/lib/shell_command.ts";
 
-export const VERSION = "1.1.1";
+export const VERSION = "1.1.2";
 
 export const DENIAL_REASON =
   "Blocked search of /home/$USER/*/skills or a broad search rooted at " +
@@ -134,7 +134,7 @@ function shellForbidsSkills(command: string, cwd: string, user?: string): boolea
   let segment: string[] = [];
   let currentCwd = cwd;
   for (const token of [...tokens, ";"]) {
-    if (token.length > 0 && [...token].every((character) => SEPARATORS.has(character))) {
+    if (token.length > 0 && token.split("").every((character) => SEPARATORS.has(character))) {
       if (segment.length > 0) {
         const executable = path.basename(segment[0] ?? "");
         if (executable === "cd") {

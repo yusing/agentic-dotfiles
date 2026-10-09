@@ -4,113 +4,74 @@ description: Author, create, update, review, or rename agent skills from any pro
 disable-model-invocation: false
 ---
 
-# Authoring Skill
+# Authoring skill
 
-Use this skill for skill authoring and maintenance, whether the current directory is home
-or another project. This skill's global availability does not make authored skills global.
-Home paths below are relative to `$HOME`; repo paths are relative to the target repository.
+Use for skill maintenance in any project. Design/consumer guidance lives in
+`$HOME/.codex/INSTRUCTION-AUTHORING.md` and `$HOME/.codex/SKILL-AUTHORING.md`.
+Global availability of this authoring skill does not make the edited skill global.
 
-## Scope and known owners
+## Owners
 
-Preserve an existing skill's scope. For a new skill, repo-specific behavior belongs in the repo;
-use global scope for intentionally reusable cross-project guidance, not merely because this
-skill is globally available.
-
-| Scope | Content owner | Selection |
+| Scope | Content | Selection |
 | --- | --- | --- |
-| Global/shared | `$HOME/.skills-mgr/skills/<name>/SKILL.md` | `$HOME/.skills-mgr/.skills-mgr.json` |
-| Remote/shared | `$HOME/.skills-mgr/skills/.remote-patches/<reference-key>.patch` over the fetched body | The registry's remote reference |
-| Repo-local | `<repo>/.agents/skills/<name>/SKILL.md`, or the repo's established skill owner | `<repo>/.skills-mgr.json` when an override is needed |
+| Shared | `$HOME/.skills-mgr/skills/<name>/SKILL.md` | `$HOME/.skills-mgr/.skills-mgr.json` |
+| Remote | `$HOME/.skills-mgr/skills/.remote-patches/<reference-key>.patch` over fetched content | Registry remote reference |
+| Project | `<repo>/.agents/skills/<name>/SKILL.md` or established owner | `<repo>/.skills-mgr.json` for overrides |
 
-Repo-local `.agents/skills` content is enabled by default without a selection entry. Project
-selection overrides global selection; enabling shared content for one repo does not require
-enabling it globally. Keep repo skill content in the repo so it travels with that repository.
+Project skills are enabled by default; project selection overrides global selection. Preserve an
+existing scope. Inspect the named owner, not other stores, unless it is missing or behavior
+contradicts the map. `skills-mgr inspect <name>` reports owner, selection, native alternatives,
+remote patch, complete-manifest SHA256, and body health; `resolved` identifies what get serves.
 
-- Authoring guidance: `$HOME/.codex/SKILL-AUTHORING.md` and
-  `$HOME/.codex/INSTRUCTION-AUTHORING.md`.
-- Home-managed inventory only: the `## Agent Skills` table in `$HOME/README.md`.
-- Home public projection only: `PROJECTED_SKILL_NAMES` in
-  `$HOME/.local/lib/project-public-config/project-public-config.ts`; its fixture coverage is in
-  `$HOME/.local/tests/project_public_config_test.ts`.
+## Content and registration
 
-Start at the named owner for the requested operation. These locations and the procedures below
-replace tool/source discovery; investigate further only when an owner is missing or the observed
-behavior contradicts them. Compare neighboring skills only when choosing a new purpose or
-resolving actual overlap. Repo-only changes do not need home inventory or projection edits.
+Keep directory/frontmatter `name` in lower-case kebab-case. Frontmatter owns `name`, `description`,
+and `disable-model-invocation`; true means user-invoked, omitted from list but available via get/run.
+A disabled managed name may fall back to Claude/plugin or Grok native content: check the served
+owner instead of assuming it is your copy.
 
-`skills-mgr inspect <name>` reports the actual owner, effective selection, native alternatives,
-remote patch path, complete-manifest SHA256, and body health as JSON. A disabled owner can still
-be inspected; `resolved` identifies what `get` would serve, not necessarily the managed copy.
+Put optional references/scripts under the skill root and use relative links. Consumers read
+`skills-mgr get <name>/<path>` or run `skills-mgr run <name>/<script>`.
 
-## Content
+For selection, use `skills-mgr set <name> true` or a condition; `-g` selects shared scope, as does
+running from home. `set <name> inherit` removes an override, not inherited availability. Registry
+keys stay sorted. Conditions are Bash, including `lang`, `has_dependency`, and `tooling`; their
+full grammar is in the skills-mgr README's Conditional Expressions section.
 
-- Use the content owner for the selected scope and a lower-case kebab-case name that
-  matches both the directory and the frontmatter `name`. `skills-mgr get` falls back to
-  Claude plugin and Grok native skills when the managed one is disabled, so a name shared with
-  an enabled native skill serves that skill instead; choose another name or disable the native one.
-- Frontmatter holds `name`, `description`, and `disable-model-invocation`. Set the latter to
-  `true` only for a user-invoked skill: `list` then omits it, while `get` and `run` still serve
-  it by name.
-- Put optional material under the skill directory, such as `references/` or `scripts/`.
-  Agents read it with `skills-mgr get <name>/<relative-path>` and run scripts with
-  `skills-mgr run <name>/<relative-path>`, so refer to these files by path relative to the
-  skill root.
+For a complete replacement use `skills-mgr edit <name> --file <path|-> --expect-sha256 <digest>`
+with inspect's digest. Local edits retain the directory; a renamed frontmatter updates selection
+and placeholders. Remote edits write an overlay, never the fetched cache.
 
-## Registration
+Managed `.agents/skills` and `.claude/skills` copies are frontmatter placeholders identified by
+`.skills-mgr-placeholder`, not authored project skills. Any skills-mgr command may start a due
+background refresh (five-minute interval), regenerate them, and stage edits. Include affected
+placeholders and report incidental edits. Use `refresh-runner` only when immediate regeneration
+is needed; it also refreshes due remote content/caches.
 
-Add or update `"<name>": { "enabled": <value> }` in the applicable registry's `skills` object,
-keeping keys sorted. `<value>` is `true`, `false`, or a Bash condition string evaluated from the project
-directory, where exit status 0 enables the skill. Beyond ordinary commands, conditions can use
-the builtins `lang <language>`, `has_dependency <name> ['<range>']`, and `tooling <name>`; for
-example `"lang go"`, `"lang js || lang ts"`, or `"[ \"$PWD\" == \"$HOME\" ]"` for home only.
-The skills-mgr README's `Conditional Expressions` section, in its Go module source, lists the
-supported languages and range syntax.
+## Names and publication
 
-For an existing managed or local skill, `skills-mgr set <name> true` or
-`skills-mgr set <name> 'lang go'` writes the selection and updates its managed placeholders.
-Use `-g` after `set` for shared selection; running from home also selects the global layer.
-`skills-mgr set <name> inherit` removes the override rather than disabling inherited content.
+For renames, align owning directory, frontmatter, selection, and active references. Refresh
+placeholders through skills-mgr. After a direct filesystem rename, remove only superseded
+SKILL.md/marker files and empty old placeholder directories.
 
-For a full-manifest replacement, use `skills-mgr edit <name> --file <path|->`; `-` reads stdin.
-Include `--expect-sha256 <digest>` from `inspect` to reject stale edits. Local edits retain their
-directory and update selection keys and placeholders when the frontmatter name changes. Remote
-edits write the local patch, not the fetched cache; retain remote name and invocation metadata.
+For shared skills, add a home README `## Agent Skills` row for a new skill, and update it only when
+name, purpose, visibility, or selection changes: name order, source `Shared`, plain-word condition. Project-only
+edits need no home inventory/projection changes.
 
-For managed shared content, skills-mgr writes frontmatter-only placeholders under
-`.agents/skills/<name>/` and `.claude/skills/<name>/`. These generated placeholders are not
-repo-local authored content; distinguish them by `.skills-mgr-placeholder`. A background refresh, started by any
-`skills-mgr` command once the previous cycle is at least five minutes old, regenerates
-them and may stage them. Include the affected placeholders in the change once they appear.
-`skills-mgr refresh-runner` runs that refresh directly when immediate regeneration is needed;
-it also refreshes due remote skills and registry caches. Inspect and report unrelated refresh edits.
-
-For home-managed skills, add or update a row in the `## Agent Skills` table in `README.md`, in name order, with source `Shared`,
-a short purpose, whether the model can see it, and its condition in plain words.
-
-## Renames and public projection
-
-For any rename, move the owning directory and align frontmatter, applicable selection keys, and
-references in the owning scope. For home-managed skills, also update the home inventory row.
-Refresh managed placeholders through skills-mgr rather than editing them.
-A direct filesystem rename can leave the old placeholders behind: remove only the superseded
-`SKILL.md` and `.skills-mgr-placeholder` files in the old `.agents/skills/<name>/` and
-`.claude/skills/<name>/` directories, then remove those directories if empty.
-For a published skill, rename its entry in `PROJECTED_SKILL_NAMES` and its projector fixture.
-The projector's version and `CHANGELOG.md` live alongside its source; rebuild with
-`.local/bin/compile-agent-tools` and validate with
-`bun test ./.local/tests/project_public_config_test.ts` from home.
-The projector reads committed revisions, not working-tree edits, so updating its selection is
-separate from publishing the changed content.
+Published names live in `PROJECTED_SKILL_NAMES` in
+`$HOME/.local/lib/project-public-config/project-public-config.ts`. Renames also change its fixture
+in `$HOME/.local/tests/project_public_config_test.ts`; version/changelog sit by projector source.
+Rebuild with compile-agent-tools and run `bun test ./.local/tests/project_public_config_test.ts`.
+Projection reads committed revisions, not working-tree content; selection edits do not publish.
 
 ## Validation
 
-- `skills-mgr check <name> [<required-skill> ...] [<name>/<reference-or-script> ...]` checks
-  served bodies and all listed Markdown references of a skill. Supply mandatory dependencies and
-  scripts explicitly; scripts are read, not run. A failed lookup, stale patch, or frontmatter-only
-  body is a failure. Use the project directory where the condition should hold. Home validation
-  ownership and other mapped checks are in `$HOME/CONTEXT-VALIDATION.md`.
-- From a directory where the condition should hold, `skills-mgr list --claude` shows the skill
-  with the intended description (unless the model cannot invoke it), and `skills-mgr get <name>`
-  prints its content.
-- For a repo-local or conditional skill, `skills-mgr get <name>` from a nonmatching directory does not expose it (unavailable or disabled).
-- Every referenced file resolves through `skills-mgr get <name>/<relative-path>`.
+Use `skills-mgr check <name> [<required-skill> ...] [<name>/<reference-or-script> ...]` from a
+matching project. It checks the served body and Markdown links; list required dependencies/scripts
+explicitly. Scripts are read, not run. Unresolved, stale-overlay, and placeholder bodies fail.
+Home's mapped maintenance checks are in `$HOME/CONTEXT-VALIDATION.md`.
+
+Verify matching selection/get and adjacent nonmatching conditions without changing selection just
+for the check. `list --claude` shows model-visible descriptions; user-invoked skills remain omitted.
+Each linked resource must resolve through get. Compare neighboring skills only for real purpose
+overlap, not as a routine inventory step.
