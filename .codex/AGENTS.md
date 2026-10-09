@@ -20,13 +20,16 @@ action; reuse current reads. Report material in-scope findings, limits, and simp
 impact and a concrete next step, without starting an adjacent audit.
 
 Do not reread previously read task documents, skills, or other files merely because a new turn
-has begun.
+has begun. After compaction, reread the task documents and skills that unfinished work still needs;
+compaction drops their text.
 
 Read these task documents directly when their operation applies:
 
 - `$HOME/.codex/INSTRUCTION-AUTHORING.md`: authoring/auditing instructions and consumer checks.
 - `$HOME/.codex/SKILL-AUTHORING.md`: additionally for authoring/auditing skills.
-- `$HOME/.codex/MAIN.md`: main planning, delegation, coordination, and review arrangement.
+- `$HOME/.codex/MAIN.md`: main planning, delegation, and coordination.
+- `$HOME/.codex/REVIEW.md`: main, after an authorized change is implemented and focused-validated,
+  before completion or a slice commit; read it then even if read earlier.
 - `$HOME/.codex/SUBAGENT.md`: delegate assignment, messages, and result delivery, not dispatch policy.
 - `$HOME/.codex/IMPLEMENTATION.md`: code/operational implementation or its inspection, not pure
   lookup, diagnosis, settled support tests, or mechanical wording edits. Explicit audits may use it.

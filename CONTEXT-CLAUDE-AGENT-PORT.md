@@ -28,7 +28,7 @@ prompt and task/result contract are read directly from the native TOML, so sourc
 cannot pass the focused test while generated ports are stale.
 
 Only the worker role includes `Agent` in its `tools` allowlist, so it can dispatch
-independent inspections when explicitly assigned. Main's inspection policy lives in MAIN.md;
+independent inspections when explicitly assigned. Main's inspection policy lives in REVIEW.md;
 shared guidance does not reopen a worker assignment. This requires a Claude runtime and depth limit
 that permit nested agents; the generator does not configure runtime limits.
 The allowlist omits `Edit` and `NotebookEdit` for the review and council roles. `Write` stays

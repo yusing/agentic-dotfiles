@@ -8,7 +8,7 @@ disable-model-invocation: false
 
 Use for an important question that still has multiple evidence-supported answers after ordinary
 investigation. State the target, output, evidence boundary, assumptions, exclusions, and authority.
-Ordinary inspection follows the standing review policy.
+Ordinary inspection follows REVIEW.md.
 
 ## Composition
 

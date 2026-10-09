@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.12
+
+Publish `.codex/DOCS.md` and `.codex/TESTING.md`, which the README and the shared routing list
+already point to.
+
+## 1.3.11
+
+Publish the Codex and Claude `REVIEW.md` task documents, which now own the post-change review
+policy previously kept in `MAIN.md`.
+
 ## 1.3.10
 
 Publish the Claude-specialized task documents under `.claude/instructions/`, which

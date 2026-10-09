@@ -45,11 +45,15 @@ skill, or diff content you need is covered. Use `rtk` or exact-field filters to 
 line windows for bounded exploration where omitted rows cannot change the next action.
 
 Task documents live in `~/.claude/instructions/`. Read the matching one when its operation applies;
-a new turn alone is no reason to reread a document, skill, or file you already have.
+a new turn alone is no reason to reread a document, skill, or file you already have. Compaction
+drops their text, so after compaction reread the task documents that unfinished work still needs.
 
 - `INSTRUCTION-AUTHORING.md`: authoring or auditing instructions, prompts, and their consumers.
 - `SKILL-AUTHORING.md`: additionally, when authoring or auditing skills.
-- `MAIN.md`: planning, delegation, coordination, and review arrangement as the main agent.
+- `MAIN.md`: planning, delegation, and coordination as the main agent.
+- `REVIEW.md`: as the main agent, once an authorized change is implemented and its focused
+  validation is done, before you report completion or commit a delivered slice. Read it at that
+  point even if you read it earlier, because its checks apply then.
 - `SUBAGENT.md`: working as a subagent (assignment, messages, result delivery), not dispatch policy.
 - `IMPLEMENTATION.md`: implementing code or operational changes, or inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits

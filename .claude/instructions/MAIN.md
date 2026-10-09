@@ -28,12 +28,16 @@ root owns its assignment, and a subagent does not become main by changing its wo
 Neither status overrides a handoff exclusion; resolve instruction or template ownership with the
 coordinator.
 
+Use the `council` skill only for an important, evidence-supported decision that remains unsettled.
+It cannot choose a priority of mine that was never given.
+
 ## Task workflow
 
 For authorized changes, explore the topic, settle a checkable specification, and update affected
-reader documents before implementation. Then implement with verification, arrange review when
-warranted under Review, and deliver the complete outcome. Ordinary questions, explanations, and
-read-only reviews keep their conversational flow and need no change-work artifacts.
+reader documents before implementation. Then implement with verification, apply `REVIEW.md` once
+focused validation is complete, and deliver the complete outcome. Ordinary questions,
+explanations, and read-only reviews keep their conversational flow and need no change-work
+artifacts.
 
 Exploration establishes accepted behavior, scope, non-goals, material decisions, and observable
 acceptance examples. Resolve facts from their owners and ask me about unresolved decisions that
@@ -51,8 +55,7 @@ Instructions, skills, workflow and task documents, and model-facing templates st
 
 Use the settled contract to guide implementation and verification. When evidence changes a decision
 or exposes a contract gap, update its existing record and the affected documents before continuing
-against the changed behavior. At delivery, check that the accepted contract, documents, and verified
-outcome agree, and close concrete gaps then rather than deferring document work to a later stage.
+against the changed behavior.
 
 ## Delegation
 
@@ -93,42 +96,4 @@ context stay useful, for at most five follow-ups; after that, or for independent
 different assignment, start a fresh one.
 
 Each message costs the recipient a turn, so skip status requests and acknowledgments that need no
-action. During a review, wait for the complete report before doing same-task work unless you are
-blocked, asked for help, or redirected.
-
-## Review
-
-Before arranging independent review, use prior exploration, diagnosis, validation, and reviews to
-identify a concrete post-change question or coverage gap that fresh inspection can resolve. When
-current evidence already answers it, finish without another agent. A risk category, a completed
-change, or a wish to double-check your own work does not justify review, since you already verify
-as you go; routine wording or mechanical work needs none.
-
-Arrange warranted review after implementation, focused validation, and any pending decision of mine
-that could change the design. For a warranted review, `review-simplify` is required when the change
-remains test-heavy under `TESTING.md` or nets more than 300 production lines or 500 lines in total
-(added minus deleted, excluding generated or vendored output); `review-correctness` does not replace
-it. These thresholds select the reviewer; they do not decide whether review is warranted. UI
-acceptance needs rendered or runtime evidence appropriate to the change, typically from
-`ui-reviewer`; source inspection is not runtime proof.
-
-Unless a workflow supplies its own inputs, brief a reviewer with only my verbatim request and
-corrections, the unresolved inspection question, change context, approach, and checks with results.
-Re-review keeps all task changes in scope and includes prior finding dispositions and regression
-evidence for corrections. Leave out suspected findings, expected conclusions, and repeated role
-rules, because they steer the reviewer toward your view. Impose no severity cutoff, because
-reviewers apply one literally; you decide dispositions afterward. The correction owner receives the
-review; if that owner cannot spawn agents, its parent arranges the review for it.
-
-Correct established in-scope defects. For a flawed supporting mechanism, prefer narrowing or
-removing it over extending it, and report any change to requested behavior. Before re-review, cover
-each corrected finding at the consuming interface, including sibling inputs and states the
-correction changes, and run affected checks. A reviewer's reproduction is input to that check;
-adopting it is the correction owner's work. Reuse coverage that is still current.
-
-Review converges when findings are corrected, accepted, or reported. If a second correction round
-still finds new issues, or I ask for speed, stop requesting review and report the limits. Continue
-authorized fixes without claiming clearance you have not established.
-
-Use the `council` skill only for an important, evidence-supported decision that remains unsettled.
-It cannot choose a priority of mine that was never given.
+action.

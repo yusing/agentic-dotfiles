@@ -22,6 +22,7 @@ __pycache__
 !/.claude/instructions/IMPLEMENTATION.md
 !/.claude/instructions/INSTRUCTION-AUTHORING.md
 !/.claude/instructions/MAIN.md
+!/.claude/instructions/REVIEW.md
 !/.claude/instructions/SKILL-AUTHORING.md
 !/.claude/instructions/SUBAGENT.md
 !/.claude/instructions/TESTING.md
@@ -38,6 +39,7 @@ __pycache__
 !/.codex/agents/ui-reviewer.toml
 !/.codex/agents/worker.toml
 !/.codex/config.toml
+!/.codex/DOCS.md
 !/.codex/GITHUB.md
 !/.codex/hooks.json
 !/.codex/hooks/
@@ -69,6 +71,7 @@ __pycache__
 !/.codex/INSTRUCTION-AUTHORING.md
 !/.codex/MAIN.md
 !/.codex/overridden_base_instructions.md
+!/.codex/REVIEW.md
 !/.codex/SKILL-AUTHORING.md
 !/.codex/skills/
 !/.codex/skills/dump-last-response/
@@ -83,6 +86,7 @@ __pycache__
 !/.codex/skills/session-usage/scripts/session_usage.py
 !/.codex/skills/session-usage/SKILL.md
 !/.codex/SUBAGENT.md
+!/.codex/TESTING.md
 !/.config/
 !/.config/atuin/
 !/.config/atuin/config.toml

@@ -11,7 +11,7 @@ base-to-head range against the accepted outcome, including cross-slice integrati
 ## Independent inspection
 
 Use a stable range and the delivery owner's current recovery record. A plaintext journal
-snapshot is sufficient when direct journal access is unavailable. Apply standing inspection
+snapshot is sufficient when direct journal access is unavailable. Apply REVIEW.md's inspection
 and reuse guidance. This skill is read-only, including the recovery record and Git state.
 
 A blocker needs evidence of a violated accepted requirement, contract, safety invariant,

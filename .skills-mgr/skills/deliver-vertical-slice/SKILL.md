@@ -43,8 +43,9 @@ including only the UI, service, integration, and persistence work it needs. Remo
 stubs and routes without narrowing the accepted outcome.
 
 Validate the slice through its real entry point, affected contracts, and applicable build/typecheck.
-Use standing risk-based inspection and convergence limits on the stable slice; reuse coverage
-that still applies. Correct in-scope defects and revalidate their consuming behavior.
+Then read REVIEW.md and apply its delivery check, inspection, and convergence rules to the stable
+slice; reuse coverage that still applies. Correct in-scope defects and revalidate their consuming
+behavior.
 
 Once validation and applicable inspection are complete, create one non-empty Conventional Commit with a concise
 subject and meaningful body, record its hash, and continue without another approval prompt.
@@ -58,8 +59,9 @@ range, and the current recovery record; a plaintext journal snapshot is enough w
 is unavailable. Record its findings and coverage. Correct confirmed blockers in original slice
 order, validate and inspect the affected corrections, and create
 `git commit --fixup=<slice-commit>` against the checkpoint or slice each correction belongs to.
-Apply standing review convergence limits; record unresolved findings and missing coverage instead
-of repeating inspection indefinitely or claiming clearance.
+Reread REVIEW.md before inspecting these corrections and apply its convergence limits; record
+unresolved findings and missing coverage instead of repeating inspection indefinitely or claiming
+clearance.
 
 Check affected document claims against the completed outcome. Include any corrections in their
 owning slice/checkpoint fixups or a coherent cross-slice correction commit before recording

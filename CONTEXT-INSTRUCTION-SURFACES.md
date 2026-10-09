@@ -23,6 +23,7 @@ Code's favor, and follow Anthropic's prompting guidance. A change to a shared ru
 - `.codex/AGENTS.md`
 - `.codex/GITHUB.md`
 - `.codex/MAIN.md`
+- `.codex/REVIEW.md`
 - `.codex/SUBAGENT.md`
 - `.codex/IMPLEMENTATION.md`
 - `.codex/TESTING.md`
