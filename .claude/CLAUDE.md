@@ -44,9 +44,12 @@ Do not treat a truncated read as complete evidence. Continue ranged reads until 
 skill, or diff content you need is covered. Use `rtk` or exact-field filters to cut noise; reserve
 line windows for bounded exploration where omitted rows cannot change the next action.
 
-Task documents live in `~/.claude/instructions/`. Read the matching one when its operation applies;
-a new turn alone is no reason to reread a document, skill, or file you already have. Compaction
+A new turn alone is no reason to reread a document, skill, or file you already have. Compaction
 drops their text, so after compaction reread the task documents that unfinished work still needs.
+
+Read these task documents directly, once per context, the moment when their operation applies:
+
+### In ~/.claude/instructions
 
 - `INSTRUCTION-AUTHORING.md`: authoring or auditing instructions, prompts, and their consumers.
 - `SKILL-AUTHORING.md`: additionally, when authoring or auditing skills.
@@ -54,20 +57,25 @@ drops their text, so after compaction reread the task documents that unfinished 
 - `REVIEW.md`: as the main agent, once an authorized change is implemented and its focused
   validation is done, before you report completion or commit a delivered slice. Read it at that
   point even if you read it earlier, because its checks apply then.
-- `SUBAGENT.md`: working as a subagent (assignment, messages, result delivery), not dispatch policy.
 - `IMPLEMENTATION.md`: implementing code or operational changes, or inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits
   may use it.
 - `TESTING.md`: writing tests or fixtures, or selecting validation. Projects supply runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents, not every worker task.
 - `GITHUB.md`: preparing pull-request, issue, or comment text.
-- `HANDOFF.md` in the project: when mentioned, read it and then delete it.
-- `RECOVERY.md` in the project: when created or mentioned, keep it through staged delivery, then
+
+- `SUBAGENT.md`: subagent only: assignment, messages, and result delivery, not dispatch policy.
+
+### In workdir
+
+- `HANDOFF.md`: when mentioned, read it and then delete it.
+- `RECOVERY.md`: when created or mentioned, keep it through staged delivery, then
   delete it.
 
 Subagents other than the built-in Explore and Plan load this file themselves, so leave its content
-out of other instruction files, artifacts, skills, and agent prompts rather than repeating or
-paraphrasing it. When Explore or Plan needs one of these rules, state that rule in its prompt.
+and the task documents above out of other instruction files, artifacts, skills, and agent prompts
+rather than repeating or paraphrasing them. When Explore or Plan needs one of these rules, state
+that rule in its prompt.
 
 ## Skills and tools
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "9850ea4f7e6d625c67d401981bca0ffe34723c21",
+  "sourceCommit": "16028ef834808807b4629ae2a312aad96aacc347",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -71,7 +71,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "5b73912b1a53ee14d1c316ba8d009e616391f74864c46f7c3ed253dc2b692fd0",
+      "sha256": "05816694d2dd8abe47d5e5a06324395536d52ef8552213450425c938291b76c9",
       "executable": false
     },
     {
@@ -137,7 +137,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "efb28a4b90d5acc651d75341330eaee32c9d07a1e4254712f738d2f4a84bc0b2",
+      "sha256": "b8588407d0175051163598822abb9864dee2aeebef9d3a115f38fd91d6780195",
       "executable": false
     },
     {

@@ -23,24 +23,30 @@ Do not reread previously read task documents, skills, or other files merely beca
 has begun. After compaction, reread the task documents and skills that unfinished work still needs
 unless the recovered context already shows their text; compaction otherwise drops it.
 
-Read these task documents directly when their operation applies:
+Read these task documents directly, once per context, the moment when their operation applies:
 
-- `$HOME/.codex/INSTRUCTION-AUTHORING.md`: authoring/auditing instructions and consumer checks.
-- `$HOME/.codex/SKILL-AUTHORING.md`: additionally for authoring/auditing skills.
-- `$HOME/.codex/MAIN.md`: main planning, delegation, and coordination.
-- `$HOME/.codex/REVIEW.md`: main, after an authorized change is implemented and focused-validated,
+### In ~/.codex
+
+- `INSTRUCTION-AUTHORING.md`: authoring/auditing instructions and consumer checks.
+- `SKILL-AUTHORING.md`: additionally for authoring/auditing skills.
+- `MAIN.md`: main: planning, delegation, and coordination.
+- `REVIEW.md`: main: after an authorized change is implemented and focused-validated,
   before completion or a slice commit; read it then even if read earlier.
-- `$HOME/.codex/SUBAGENT.md`: delegate assignment, messages, and result delivery, not dispatch policy.
-- `$HOME/.codex/IMPLEMENTATION.md`: code/operational implementation or its inspection, not pure
+- `IMPLEMENTATION.md`: code/operational implementation or its inspection, not pure
   lookup, diagnosis, settled support tests, or mechanical wording edits. Explicit audits may use it.
-- `$HOME/.codex/TESTING.md`: tests/fixtures or validation selection; project owners supply runner details.
-- `$HOME/.codex/DOCS.md`: writing, integrating, or reviewing reader documents, not every worker task.
-- `$HOME/.codex/GITHUB.md`: preparing pull-request, issue, or comment text.
+- `TESTING.md`: tests/fixtures or validation selection; project owners supply runner details.
+- `DOCS.md`: writing, integrating, or reviewing reader documents, not every worker task.
+- `GITHUB.md`: preparing pull-request, issue, or comment text.
+
+- `SUBAGENT.md`: subagent only: delegate assignment, messages, and result delivery, not dispatch policy.
+
+### In workdir
+
 - `HANDOFF.md`: when mentioned; read then delete.
 - `RECOVERY.md`: when created/mentioned; retain through staged delivery, then delete.
 
 Do not repeat or paraphrase instructions delivered before the first user message, including this
-file, in other instruction files, artifacts, skills, or spawn prompts.
+file and task docs above, in other instruction files, artifacts, skills, or spawn prompts.
 
 ## Skills and tools
 
