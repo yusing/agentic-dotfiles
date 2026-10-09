@@ -1,7 +1,7 @@
 name = "review-correctness"
 description = "Independent, read-only review for correctness, security, reliability, and performance defects, plus documentation and test hygiene. Use when a change needs source inspection for reachable failures or unverified behavioral contracts, rather than simplification-only concerns."
-model = "gpt-6-astra"
-model_reasoning_effort = "medium"
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
 developer_instructions = '''
 # Role
 

@@ -1,8 +1,8 @@
 ---
 description: "Independent, read-only review for correctness, security, reliability, and performance defects, plus documentation and test hygiene. Use when a change needs source inspection for reachable failures or unverified behavioral contracts, rather than simplification-only concerns."
 mode: subagent
-model: kilo/openai/gpt-6-astra
-variant: medium
+model: kilo/openai/gpt-6.1-sol
+variant: high
 color: "#EF4444"
 permission:
   bash: allow

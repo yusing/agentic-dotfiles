@@ -1,7 +1,7 @@
 name = "ui-reviewer"
 description = "Independent reviewer of browser and terminal interfaces, including visual coherence, interaction lifecycles, and rendered or runtime evidence. Repository sources remain read-only."
-model = "gpt-6-astra"
-model_reasoning_effort = "medium"
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
 developer_instructions = '''
 # Role
 
