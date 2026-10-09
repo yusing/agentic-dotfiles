@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.16";
+export const VERSION = "1.3.17";
 
 type TreeEntry = {
 	mode: string;
@@ -751,8 +751,12 @@ function transformText(path: string, text: string, privateHomes: string[]): stri
 	}
 	for (const privateHome of privateHomes) projected = projected.replaceAll(privateHome, "$HOME");
 	// Committed content can retain home paths from a different host than the
-	// machine running the projection.
-	projected = projected.replaceAll(/(?<![A-Za-z0-9._~\/-])(?:\/home|\/Users)\/[A-Za-z0-9._-]+/g, "$HOME");
+	// machine running the projection. `/home/linuxbrew` is the Linuxbrew prefix,
+	// so keep it, including its descendants, as rewrite-home-paths does.
+	projected = projected.replaceAll(
+		/(?<![A-Za-z0-9._~\/-])(?:\/home(?!\/linuxbrew(?=\/|[^\w.-]|$))|\/Users)\/[A-Za-z0-9._-]+/g,
+		"$HOME",
+	);
 	// A tailnet address names one of the author's own machines, so replace it with
 	// the documentation placeholder rather than publishing the host it points at.
 	projected = projected.replaceAll(TAILNET_ADDRESS, TAILNET_PLACEHOLDER);

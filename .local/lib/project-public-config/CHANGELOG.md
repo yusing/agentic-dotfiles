@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.17
+
+Keep the Linuxbrew prefix `/home/linuxbrew` when replacing private home paths.
+That prefix is shared, and the published rewrite-home-paths changelog documents
+the exception.
+
 ## 1.3.16
 
 Stop publishing the retired grok-explore helper.

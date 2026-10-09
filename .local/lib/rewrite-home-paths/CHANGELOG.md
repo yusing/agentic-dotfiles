@@ -2,7 +2,7 @@
 
 ## 1.0.1
 
-Preserve `$HOME` and its descendants when rewriting user home paths.
+Preserve `/home/linuxbrew` and its descendants when rewriting user home paths.
 
 ## 1.0.0
 

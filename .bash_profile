@@ -1,4 +1,4 @@
-for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew $HOME/.linuxbrew/bin/brew; do
+for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
   if [ -x "$brew_bin" ]; then
     eval "$("$brew_bin" shellenv)"
     break
