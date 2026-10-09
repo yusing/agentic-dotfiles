@@ -20,8 +20,8 @@ action; reuse current reads. Report material in-scope findings, limits, and simp
 impact and a concrete next step, without starting an adjacent audit.
 
 Do not reread previously read task documents, skills, or other files merely because a new turn
-has begun. After compaction, reread the task documents and skills that unfinished work still needs;
-compaction drops their text.
+has begun. After compaction, reread the task documents and skills that unfinished work still needs
+unless the recovered context already shows their text; compaction otherwise drops it.
 
 Read these task documents directly when their operation applies:
 

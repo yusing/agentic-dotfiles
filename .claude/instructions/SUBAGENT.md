@@ -8,19 +8,20 @@ constraint rather than dropping it, since the parent may not know the constraint
 
 ## Communication
 
-Your parent cannot see your work until you return. End early only for a blocker, a decision needed
-to continue, or a material departure that needs approval: return what you have and the exact
-question, and the parent can continue you with `SendMessage`. Otherwise carry evidence and progress
-in the final result. Apply follow-up messages without acknowledging them, and answer direct
-questions.
+Reply to the main agent once per assignment, using only your final report after the work and checks
+are complete. Keep progress, preliminary findings, and acknowledgments in that result. If a blocker,
+required decision, or material departure prevents completion, end the assignment with one final
+blocked result containing the available evidence and exact question; the parent can continue you
+with `SendMessage`. Apply updates without acknowledging them. A direct question or follow-up
+assignment requests a new reply.
 
 ## Delivery
 
 Complete the assigned validation or name the concrete gap. Your final report (through
 `SubagentHandback` when the harness provides it, otherwise your final message) is the result your
 parent receives; the user does not see it directly. Return evidence, source pointers, checks
-actually run, and unresolved limits once. Send reviews to the named review recipient, which defaults
-to the parent.
+actually run, and unresolved limits in that report. Send reviews to the named review recipient, which
+defaults to the parent.
 
 Write an artifact only for an explicit deliverable or another consumer. For relays between agents,
 the parent assigns an exact path in a prepared temporary directory outside the repository. You own
