@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.13";
+export const VERSION = "1.3.14";
 
 type TreeEntry = {
 	mode: string;
@@ -192,6 +192,7 @@ const EXACT_PATHS = new Set([
 	".grok/hooks/skills_path_guard.changelog.md",
 	".local/bin/check_project",
 	".local/bin/check_project.changelog.md",
+	".local/bin/svn-merge",
 	".local/lib/clip-session/clip-session.ts",
 	".local/lib/clip-session/clipboard.ts",
 	".local/lib/clip-session/terminal.ts",

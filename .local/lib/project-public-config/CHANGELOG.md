@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.14
+
+Publish the `svn-merge` shell helper. The script is the maintained source, so the
+projection includes it with the other published local tools.
+
 ## 1.3.13
 
 Synchronize a destination where a generated directory becomes a file or a generated file
