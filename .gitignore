@@ -180,7 +180,6 @@ __pycache__
 !/.local/bin/check_project.changelog.md
 !/.local/bin/compile-agent-tools
 !/.local/bin/compile-agent-tools.changelog.md
-!/.local/bin/grok-explore
 !/.local/bin/svn-merge
 !/.local/lib/
 !/.local/lib/batch-agent-sessions/

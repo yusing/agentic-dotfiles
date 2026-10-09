@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "9fca0142b36fb1d93719d23a06dc9d301605e06c",
+  "sourceCommit": "94bd8420d0e68d9ee7a170b8231e940732936c39",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -719,7 +719,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "f22c28d395498df1a25774d07fc717039d910b94eac82e4687080ebbf06e5333",
+      "sha256": "4c423d3e38d50bfac62edab6b4c5ddcdad2f030b280e430deaef8b0167dea110",
       "executable": false
     },
     {
@@ -806,12 +806,6 @@
       "executable": false
     },
     {
-      "path": ".local/bin/grok-explore",
-      "kind": "file",
-      "sha256": "3d70e20b904f16f39469e81bd69df279804ea02e566eec547b023f1b53fa5ded",
-      "executable": true
-    },
-    {
       "path": ".local/bin/svn-merge",
       "kind": "file",
       "sha256": "eed095224325b2aced25bfcd5d6d692a543d6b4ec890305b67be7f6974bbf8cb",
@@ -832,25 +826,25 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "95b3a4787ff28e53b52f12c09f4d57cc3830a26cb8e4af2661a6a168872f07ee",
+      "sha256": "f70e6247839caca3cde7a40e5a83612ac569e7115e66fab7a1b417038695ede2",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "cec1dda6aee4ed653bde2569aa4d182d75893b9083fdae784627156f1e519770",
+      "sha256": "cdb8a18b1882a4a1e9907d2ff6a74bd8a1c58e2be384a7864b4005858d0edaa2",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "c1aae36c516e01f8dccf48f717828132859b7093381b67823e85bfc3b7b3a157",
+      "sha256": "8d06bab64d21a2fc9a168ea4f492a296935092abe2f935b072785b2431e6bc98",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "55bcdd3dba513c2058a3729533d35f9cb71bb73371aacedc6aeb355a46684a37",
+      "sha256": "afc9a481e6fcabbc4b6b882ab094cee7d08105575819f25c02bddae07ca20649",
       "executable": true
     },
     {

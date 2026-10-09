@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.12
+
+Stop building the retired grok-explore helper.
+
 ## 1.0.11
 
 Stop building the retired SSH image-pull helper.

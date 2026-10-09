@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.15";
+export const VERSION = "1.3.16";
 
 type TreeEntry = {
 	mode: string;
@@ -207,7 +207,6 @@ const EXACT_PATHS = new Set([
 	".local/lib/rewrite-home-paths/package.json",
 	".local/lib/rewrite-home-paths/bun.lock",
 	".local/lib/rewrite-home-paths/CHANGELOG.md",
-	".local/bin/grok-explore",
 	".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
 	".local/lib/sync-claude-agent-ports/CHANGELOG.md",
 	".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",

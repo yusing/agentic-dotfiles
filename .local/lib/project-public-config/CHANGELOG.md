@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.16
+
+Stop publishing the retired grok-explore helper.
+
 ## 1.3.15
 
 Stop publishing the retired SSH image-pull helper sources.
