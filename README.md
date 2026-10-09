@@ -139,6 +139,8 @@ backups before retrying; replacement does not automatically roll back. Named
 Normal reruns retain installed native packages and skip mise tool installation
 when the locked versions are already installed,
 while still repairing missing commands and shims and checking the final setup.
+Setup also probes `scriptc --version` and reinstalls its locked version if the
+native installation is incomplete, before compiling helpers and hooks.
 Helper compilation is incremental on both normal runs and full `--upgrade` runs:
 unchanged sources and build inputs reuse the existing executable. Named upgrades
 skip helpers entirely. With this repository's `.githooks` enabled, a successful

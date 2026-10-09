@@ -2,6 +2,10 @@
 
 ## 2.10.3
 
+Probe scriptc's version instead of accepting its executable placeholder as a
+working compiler. Repair incomplete locked installations on normal setup and
+named upgrades, and validate the repaired compiler before continuing.
+
 Declare old APT and Pacman packages from the Linuxbrew migration for cleanup.
 Include optional tools only when their Homebrew replacements are available.
 Retain system shells and packages required by other installed software.

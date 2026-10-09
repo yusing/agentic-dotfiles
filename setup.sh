@@ -1132,11 +1132,20 @@ mise_tool_path() {
   esac
 }
 
+# scriptc ships an executable placeholder before its native postinstall runs.
+mise_tool_usable() {
+  [ -n "$2" ] && [ -x "$2" ] || return 1
+  case "$1" in
+    npm:scriptc) "$2" --version >/dev/null 2>&1 ;;
+    *) return 0 ;;
+  esac
+}
+
 validate_mise_tool() {
   local tool="$1" cmd="$2" path
   path="$(mise_tool_path "$tool" "$cmd" 2>/dev/null || true)"
-  [ -n "$path" ] && [ -x "$path" ] \
-    || die "mise installed $tool, but $cmd is unavailable"
+  mise_tool_usable "$tool" "$path" \
+    || die "mise installed $tool, but $cmd is unavailable or unusable"
 }
 
 install_locked_mise_tools() {
@@ -1174,7 +1183,7 @@ for tool, versions in json.load(sys.stdin).items():
   while IFS='|' read -r tool cmd; do
     mise_tool_applies "$tool" || continue
     path="$(mise_tool_path "$tool" "$cmd" 2>/dev/null || true)"
-    if [ -z "$path" ] || [ ! -x "$path" ]; then
+    if ! mise_tool_usable "$tool" "$path"; then
       info "reinstalling $tool so $cmd is available"
       mise_cmd install --force --locked "$tool"
       validate_mise_tool "$tool" "$cmd"
@@ -1649,7 +1658,7 @@ install_named_mise_tools() {
   while IFS='|' read -r tool cmd; do
     in_list "$tool" "${UPGRADE_TOOLS[@]}" || continue
     path="$(mise_tool_path "$tool" "$cmd" 2>/dev/null || true)"
-    if [ -z "$path" ] || [ ! -x "$path" ]; then
+    if ! mise_tool_usable "$tool" "$path"; then
       info "reinstalling $tool so $cmd is available"
       mise_cmd install --force --locked "$tool"
       validate_mise_tool "$tool" "$cmd"
@@ -2221,7 +2230,7 @@ verify_setup() {
   while IFS='|' read -r tool cmd; do
     mise_tool_applies "$tool" || continue
     path="$(mise_tool_path "$tool" "$cmd" 2>/dev/null || true)"
-    if [ -n "$path" ] && [ -x "$path" ]; then
+    if mise_tool_usable "$tool" "$path"; then
       log "  ok  $cmd ($path)"
     else
       log "  MISS $cmd ($tool)"
