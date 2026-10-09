@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.1
+# version: 2.10.2
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -2124,7 +2124,7 @@ ensure_fish_login_shell() {
 }
 
 # ---------------------------------------------------------------------------
-# Image paste over SSH or mosh
+# Legacy clipboard push retirement
 # ---------------------------------------------------------------------------
 
 # Retire the push implementation on both source and receiver machines. Keep
@@ -2274,10 +2274,8 @@ yay uses sudo when required.
 --upgrade TOOL... re-resolves only the named mise tools (identifier or command
 name, such as git-agent) and installs the lock after a completed setup. It skips
 native packages, vendors, checkout, helper compilation, and verification.
-Image paste: use clip-session ssh HOST or clip-session mosh HOST after setup on
-both ends. Ctrl+V pulls images over a fresh SSH connection into Codex image
-attachments, including in existing panes. No remote DISPLAY or Xvfb is needed.
-Setup retires old push services and backs up their remaining files.
+Image paste uses the installed Mosh fork. Setup retires old push services and
+backs up their remaining files.
 A mise tool may declare a native package for the operating systems outside its
 os list. When that declaration aligns a Homebrew formula, the formula stays on
 the locked mise version.

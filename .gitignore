@@ -186,11 +186,6 @@ __pycache__
 !/.local/lib/batch-agent-sessions/
 !/.local/lib/batch-agent-sessions/batch-agent-sessions.ts
 !/.local/lib/batch-agent-sessions/CHANGELOG.md
-!/.local/lib/clip-session/
-!/.local/lib/clip-session/CHANGELOG.md
-!/.local/lib/clip-session/clip-session.ts
-!/.local/lib/clip-session/clipboard.ts
-!/.local/lib/clip-session/terminal.ts
 !/.local/lib/compile-agent-tools/
 !/.local/lib/compile-agent-tools/CHANGELOG.md
 !/.local/lib/compile-agent-tools/compile-agent-tools.ts

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.10.2
+
+Point setup help at Mosh image paste. Setup still retires old push services
+and backs up their remaining files.
+
 ## 2.10.1
 
 Pin scriptc to 0.2.6. Run its native-CLI installer through the mise postinstall
@@ -48,7 +53,7 @@ services only when present and reload user units only after moving legacy units.
 
 ## 2.8.0
 
-Declare the Mosh fork through the existing vendor installer and legacy-package cleanup configuration, with native source-build prerequisites. Use built-in Mosh image paste while retaining clip-session for SSH; keep setup free of Mosh-specific installation logic.
+Declare the Mosh fork through the existing vendor installer and legacy-package cleanup configuration, with native source-build prerequisites. Use built-in Mosh image paste while retaining SSH image pull; keep setup free of Mosh-specific installation logic.
 
 Stream labeled progress from all vendor installers while preserving bounded parallel installation and aggregated failures.
 
@@ -58,7 +63,7 @@ Use per-paste SSH image attachments without remote Xvfb. Stop installing Xvfb fo
 
 ## 2.7.0
 
-Replace clipboard push setup with recoverable retirement of old services, LaunchAgent, and helpers. Use session-scoped SSH clipboard pull via clip-session; leave shared Tailscale and linger settings unchanged.
+Replace clipboard push setup with recoverable retirement of old services, LaunchAgent, and helpers. Use session-scoped SSH clipboard pull; leave shared Tailscale and linger settings unchanged.
 
 ## 2.6.0
 

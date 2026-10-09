@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.15
+
+Stop publishing the retired SSH image-pull helper sources.
+
 ## 1.3.14
 
 Publish the `svn-merge` shell helper. The script is the maintained source, so the
@@ -63,7 +67,7 @@ Publish the source-bound terminal paste implementation instead of the retired X 
 
 ## 1.3.2
 
-Publish clip-session sources and locked build inputs instead of retired push helpers, watcher sources, and service units.
+Publish SSH image-pull sources and locked build inputs instead of retired push helpers, watcher sources, and service units.
 
 ## 1.3.1
 

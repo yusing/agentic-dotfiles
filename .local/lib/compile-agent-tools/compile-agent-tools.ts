@@ -16,7 +16,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.10";
+const VERSION = "1.0.11";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -271,7 +271,6 @@ function main(): void {
   ]) {
     compileHelper(join(localLib, directory, `${name}.ts`));
   }
-  compileHelper(join(localLib, "clip-session", "clip-session.ts"));
   compileHelper(join(localLib, "project-public-config", "project-public-config.ts"), true);
 }
 

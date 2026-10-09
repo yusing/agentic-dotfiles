@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7e6a3e90a71b688f6c80b78620da69015fb258db",
+  "sourceCommit": "6e3ea754129a3dcb72229e97307ba22a0a2fb2e4",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -719,7 +719,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "f588ddf778d541c082febaa32198e60b41268e8b73c284712da713a8ad51c75a",
+      "sha256": "f22c28d395498df1a25774d07fc717039d910b94eac82e4687080ebbf06e5333",
       "executable": false
     },
     {
@@ -830,51 +830,27 @@
       "executable": false
     },
     {
-      "path": ".local/lib/clip-session/CHANGELOG.md",
-      "kind": "file",
-      "sha256": "61298393a48fd85247e7d3279bfdf1e808da7bd1e4c8bc79c475ac9d44375563",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/clip-session/clip-session.ts",
-      "kind": "file",
-      "sha256": "f5037c196450d9098545d8c34b80e6a932eb65bfe86316527537d0422d12215b",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/clip-session/clipboard.ts",
-      "kind": "file",
-      "sha256": "9f2bca46ccf203221e1591b65ef266f4f57de63f44378d5c4c17e36bbde9a468",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/clip-session/terminal.ts",
-      "kind": "file",
-      "sha256": "8052d2b6bf8af2a75c6b7ef245a60210138dca98d1404509937131717a64ab94",
-      "executable": false
-    },
-    {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "8287014792ea34642d2727a3a96a8ac3384e879c7a4dd46f65c8d4dd4b8c3890",
+      "sha256": "95b3a4787ff28e53b52f12c09f4d57cc3830a26cb8e4af2661a6a168872f07ee",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "203e57392f5167333304f7a7628f2a65771babe144c545ea64150fbaa19d20b5",
+      "sha256": "cec1dda6aee4ed653bde2569aa4d182d75893b9083fdae784627156f1e519770",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "7c3cd92b43cb5a3bd9af759182a8c48836eef44c612a20c57e8f6f06afe24c42",
+      "sha256": "c1aae36c516e01f8dccf48f717828132859b7093381b67823e85bfc3b7b3a157",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "84776ccbd0202b161d407f2a641434329e3b03c764ac72351fec879cdab8c256",
+      "sha256": "55bcdd3dba513c2058a3729533d35f9cb71bb73371aacedc6aeb355a46684a37",
       "executable": true
     },
     {
@@ -1563,13 +1539,13 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "c4c0ef6f32e089ee2f5ab5947e7ba1f54ba64edd463d7c57c5b6c490abe2010d",
+      "sha256": "45f79bb5922c2d6cc0cb1448a7012e5ea6242ce603b7e3e444e02c3b22e923ba",
       "executable": false
     },
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "eb7d99ad2a4a1c6e10577654e0c9b683a93f03a8639122a83895e8a832d6f7f5",
+      "sha256": "aa989db33e070351e4266b02db7587ed637c544e7348509172f8cc3f0345a370",
       "executable": false
     },
     {
@@ -1581,7 +1557,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "f6587d35c2d70c0206cfa5df113775310902a81db65cd93b90c2b8a13cb05773",
+      "sha256": "9f91df01a4655d3c9b17d7151bb2d59d30493f14bade1ae078bd1aa77629dd61",
       "executable": true
     }
   ]

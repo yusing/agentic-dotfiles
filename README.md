@@ -40,8 +40,6 @@ shell behavior.
 
 ## Image paste in remote sessions
 
-### Mosh
-
 Run setup on both computers to install the [yusing/mosh fork](https://github.com/yusing/mosh),
 then connect from the computer holding the image:
 
@@ -51,9 +49,9 @@ mosh user@host
 
 In Mekugi, press **Ctrl+^ followed by i** to attach a clipboard PNG over the
 existing encrypted Mosh connection. **Ctrl+^ followed by c** cancels capture or
-upload. Ordinary paste keys are unchanged; no `clip-session` or additional SSH
-connection is needed. The client needs `wl-paste` on Wayland or `xclip` on X11;
-macOS uses its built-in `osascript`. Both ends must run the fork.
+upload. Ordinary paste keys are unchanged. The client needs `wl-paste` on
+Wayland or `xclip` on X11; macOS uses its built-in `osascript`. Both ends must
+run the fork.
 
 Images can be up to 64 MiB. Mosh shows progress, keeps typing and screen updates
 responsive, and delivers one bracketed image-path paste after upload succeeds.
@@ -63,43 +61,6 @@ client and server remain alive, but does not survive restarting either process.
 Incomplete files are removed on cancellation, failure, or server exit. Completed
 private image files remain in remote temporary storage for pending drafts and
 follow the host's normal temporary-file cleanup policy.
-
-### SSH and older Mosh installations
-
-Run setup on both computers, then connect from the computer holding the image:
-
-```sh
-clip-session ssh user@host
-clip-session mosh user@host
-# Or launch an application directly:
-clip-session ssh user@host codex
-```
-
-The source needs `pngpaste` on macOS, `wl-paste` on Wayland, or `xclip` on X11.
-Both computers need the updated `clip-session`. SSH host aliases, ports, and
-identities come from your SSH config. Paste connections use noninteractive SSH
-key authentication, including your SSH agent, and the server must allow remote
-Unix-socket forwarding (`AllowStreamLocalForwarding`). No reverse-login key,
-source SSH server, remote `DISPLAY`, or Xvfb is required.
-
-In Codex, press **Ctrl+V** to attach the image from the computer where you pressed
-Paste. Copying alone transfers nothing. Each paste pulls over a new SSH connection
-and becomes an image attachment, not filename text. Text paste through the terminal
-is unchanged. Other applications must support attaching images from bracketed-pasted
-image paths; this is not a general remote desktop clipboard.
-
-Use the launcher rather than plain `ssh`/`mosh`. Each client's input carries its
-own immutable image reference, so existing applications and simultaneous clients
-do not depend on an old pane's environment or a shared clipboard. There is no
-multiplexer-specific configuration. A failed paste never falls back to an old
-remote image. Mosh keeps running if the auxiliary SSH connection drops; paste
-again after connectivity returns and it opens a fresh connection. Ctrl+C and
-Mosh's escape key remain responsive while a pull waits. Images up to 32 MiB are
-supported; a paste attempt times out after 15 seconds.
-
-Private image files remain in remote temporary storage after disconnection,
-so queued input and drafts can still use them. They follow the host's normal
-`/tmp` cleanup policy; do not clear them before submitting an attached draft.
 
 Setup stops the old `clip-watch`, `clip-recv`, and `clip-xvfb` services and the
 macOS watcher, and moves remaining legacy launch files and helpers into
