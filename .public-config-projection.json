@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "eab5a6aad9be786b8670d8490f6440a773c4d273",
+  "sourceCommit": "10f0170fceb1a9849ac2fd19dd0c02bb7e78c2da",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -719,7 +719,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "82c57c8fcfe4955d3168e75fe86023bf92b98ef2c38850357bbf6d75d46f9699",
+      "sha256": "f588ddf778d541c082febaa32198e60b41268e8b73c284712da713a8ad51c75a",
       "executable": false
     },
     {
@@ -809,6 +809,12 @@
       "path": ".local/bin/grok-explore",
       "kind": "file",
       "sha256": "3d70e20b904f16f39469e81bd69df279804ea02e566eec547b023f1b53fa5ded",
+      "executable": true
+    },
+    {
+      "path": ".local/bin/svn-merge",
+      "kind": "file",
+      "sha256": "eed095224325b2aced25bfcd5d6d692a543d6b4ec890305b67be7f6974bbf8cb",
       "executable": true
     },
     {

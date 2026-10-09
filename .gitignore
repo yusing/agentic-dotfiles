@@ -181,6 +181,7 @@ __pycache__
 !/.local/bin/compile-agent-tools
 !/.local/bin/compile-agent-tools.changelog.md
 !/.local/bin/grok-explore
+!/.local/bin/svn-merge
 !/.local/lib/
 !/.local/lib/batch-agent-sessions/
 !/.local/lib/batch-agent-sessions/batch-agent-sessions.ts
