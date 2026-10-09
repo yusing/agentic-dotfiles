@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.13
+
+Synchronize a destination where a generated directory becomes a file or a generated file
+becomes a directory: stale outputs occupying those paths no longer count as unowned, and they
+are removed before new outputs are installed.
+
 ## 1.3.12
 
 Publish `.codex/DOCS.md` and `.codex/TESTING.md`, which the README and the shared routing list

@@ -6,6 +6,7 @@ import {
 	lstat,
 	mkdir,
 	mkdtemp,
+	readdir,
 	readlink,
 	rename,
 	rm,
@@ -16,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.12";
+export const VERSION = "1.3.13";
 
 type TreeEntry = {
 	mode: string;
@@ -988,6 +989,17 @@ async function removeStalePath(destination: string, path: string): Promise<void>
 	}
 }
 
+async function holdsOnlyStaleOutputs(destination: string, path: string, stalePaths: Set<string>): Promise<boolean> {
+	const target = destinationPath(destination, path);
+	const stat = await lstat(target);
+	if (stat.isSymbolicLink() || !stat.isDirectory()) return false;
+	for (const entry of await readdir(target, { recursive: true })) {
+		const child = `${path}/${entry}`;
+		if (!(await lstat(join(target, entry))).isDirectory() && !stalePaths.has(child)) return false;
+	}
+	return true;
+}
+
 async function matchesRecord(destination: string, record: OutputRecord): Promise<boolean> {
 	const path = destinationPath(destination, record.path);
 	try {
@@ -1012,23 +1024,42 @@ async function synchronize(destination: string, staged: string, projection: Map<
 	}));
 	const previouslyOwned = new Set(previousOutputs.keys());
 	previouslyOwned.add(OUTPUT_MANIFEST_PATH);
-
-	for (const [path, entry] of projection) {
-		const target = destinationPath(destination, path);
-		await assertSafeParents(destination, path);
-		// Identical unowned files can be claimed: they already match, so
-		// taking ownership does not overwrite destination-authored work.
-		if (!previouslyOwned.has(path) && !(await sameEntry(target, entry)) && (await pathExists(target))) {
-			throw new Error(`destination path is not owned by the projection: ${path}`);
-		}
-	}
 	const staleOutputs = [...previousOutputs.values()].filter(
 		output => output.path !== OUTPUT_MANIFEST_PATH && !projection.has(output.path),
 	);
+	const stalePaths = new Set(staleOutputs.map(output => output.path));
+
+	for (const [path, entry] of projection) {
+		const target = destinationPath(destination, path);
+		// A stale output removed below may currently occupy a parent path
+		// or contain the target (a file replacing a directory or the reverse).
+		const parents = dirname(path).split("/");
+		const staleParent = parents
+			.map((_, index) => parents.slice(0, index + 1).join("/"))
+			.find(parent => stalePaths.has(parent));
+		await assertSafeParents(destination, staleParent ?? path);
+		if (staleParent) continue;
+		// Identical unowned files can be claimed: they already match, so
+		// taking ownership does not overwrite destination-authored work.
+		if (
+			!previouslyOwned.has(path) &&
+			!(await sameEntry(target, entry)) &&
+			(await pathExists(target)) &&
+			!(await holdsOnlyStaleOutputs(destination, path, stalePaths))
+		) {
+			throw new Error(`destination path is not owned by the projection: ${path}`);
+		}
+	}
 	for (const record of staleOutputs) {
 		if (!(await matchesRecord(destination, record))) {
 			throw new Error(`stale generated path was modified outside the projection: ${record.path}`);
 		}
+	}
+
+	let removed = 0;
+	for (const record of staleOutputs) {
+		await removeStalePath(destination, record.path);
+		removed++;
 	}
 
 	let changed = 0;
@@ -1037,12 +1068,6 @@ async function synchronize(destination: string, staged: string, projection: Map<
 		if (await sameEntry(target, entry)) continue;
 		await atomicInstall(staged, destination, path, entry);
 		changed++;
-	}
-
-	let removed = 0;
-	for (const record of staleOutputs) {
-		await removeStalePath(destination, record.path);
-		removed++;
 	}
 
 	const manifestEntry: ProjectedEntry = { kind: "file", content: Buffer.from(encodeJson(manifest)), executable: false };
