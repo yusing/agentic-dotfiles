@@ -53,6 +53,16 @@ Use the settled contract to guide implementation and verification. When evidence
 or exposes a contract gap, update its existing record and affected documents before continuing
 against the changed behavior.
 
+### Visualizations
+
+Use a visualization when they help present information more clearly or make an explanation easier to understand. Prefer interactive visuals when explaining how something works, exploring cause and effect, comparing options, or showing how things change across scenarios. The user does not need to explicitly request a visualization.
+
+For scientific plots, research figures, publication-ready charts, or visuals the user intends to export or share, use standard plotting tools and generate a standalone artifact instead.
+
+Use tables for mappings or comparisons. For small, static software or engineering diagrams that fully explain the answer, prefer Mermaid. Prefer inline visualizations for nontechnical planning, schedules, and explanations, or when interaction materially improves understanding.
+
+Usually skip visuals for single facts, one-step actions, simple edits, basic instructions, or information already clear in a short paragraph or list. Compact notation and small examples do not count as visualizations.
+
 ## Delegation
 
 Delegate independent factual lookup and bounded support work when it replaces main's work at lower
