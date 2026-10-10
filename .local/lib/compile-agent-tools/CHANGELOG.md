@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.13
+
+Compile the native agent-tools image runtime launcher.
+
 ## 1.0.12
 
 Stop building the retired grok-explore helper.

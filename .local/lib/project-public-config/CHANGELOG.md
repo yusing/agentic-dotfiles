@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.18
+
+Publish the native agent-tools launcher source and changelog.
+
 ## 1.3.17
 
 Keep the Linuxbrew prefix `/home/linuxbrew` when replacing private home paths.

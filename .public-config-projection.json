@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "81df51e86d7fc82fab5aa39d6dcd659e94199153",
+  "sourceCommit": "ec225206106251044440258d1c886a2d2522b6ff",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -731,7 +731,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "5d861e85cac99e6b91fe6c586e07e67739cd4c242fdcd3be225b2aa82230daf6",
+      "sha256": "6e1e3d917d8f64ef79c7e7a197ed44e00a29e43939498cb6f438e1ece8710623",
       "executable": false
     },
     {
@@ -824,6 +824,18 @@
       "executable": true
     },
     {
+      "path": ".local/lib/agent-tools/agent-tools.ts",
+      "kind": "file",
+      "sha256": "1cd0363331c2c8a456aaad155959f4ef882ec28fd45d6cd8291560a843ed3b1d",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/agent-tools/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "a46c30ca0de6fe2c86773a4effa24d5ec40172b1abde2a0b3d31d59e14dd0267",
+      "executable": false
+    },
+    {
       "path": ".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
       "kind": "file",
       "sha256": "2914f7c014c4f1d51e9e817e3df0a56b5bd8b97056bd22dfd76c212fb6c94282",
@@ -838,25 +850,25 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "f70e6247839caca3cde7a40e5a83612ac569e7115e66fab7a1b417038695ede2",
+      "sha256": "5b3c130d3320c626fc9efc41564fe79db3c9ecf7d7fcab50f66492209326d4bd",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "cdb8a18b1882a4a1e9907d2ff6a74bd8a1c58e2be384a7864b4005858d0edaa2",
+      "sha256": "b4ea6fab2bd172fa60c5a01185285164f48ae65267365e9d9937c1e6d291cb4b",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "77e7fc573ddded23f98453bd55080a2af6771a1a2b16e1884c5566b2b1f79644",
+      "sha256": "5d7cf6b1fe4e4806e4376d9758fcd782c0d889c5253fe42aadd6cecc8734d323",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "e3b8b86b7d020a0dccc70fcc3ff7e145d30d9dcad3e357fc71259217447d37f2",
+      "sha256": "ecfbf55f802273d22e03d84940c0c5f572f6dcb87136fe84d9e71042e2a4c4e1",
       "executable": true
     },
     {
@@ -1545,7 +1557,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "a87dffcdf7547858951fcba945f0347320a48b62799311e01b496d2599639420",
+      "sha256": "e384f37f732cf211777a77d838c0b544987c0fd50065981f8f46dd7425c222b4",
       "executable": false
     },
     {

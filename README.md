@@ -69,6 +69,36 @@ linger settings unchanged because other tools may use them.
 
 ## Bootstrap
 
+### Linux image delivery, in development
+
+The Linux replacement uses a read-only SquashFS runtime and zsync delta updates.
+CI will install the declared tools once for Linux x86-64 and ARM64; consumers
+will download and mount the result without Docker, extraction, or selecting
+APT/Pacman packages. The macOS installer stays unchanged. Image building,
+published upgrades, and setup integration are still being implemented; the
+existing setup commands below remain the installation route until then.
+
+The first capability is local image execution through the compiled `agent-tools`
+helper. It requires Linux FUSE access, user namespaces, and `squashfuse`,
+`fusermount3` (or `fusermount`), and `bwrap` on PATH. The release bootstrap that
+will supply these utilities is not yet implemented. Compile with the existing
+helper builder, then run a trusted Linux root-filesystem image:
+
+```sh
+.local/bin/compile-agent-tools
+agent-tools run --image /path/to/tools.sqfs -- git --version
+```
+
+The launcher preserves the invoking user's home, current project, temporary
+files, runtime sockets, and environment. Tool files stay read-only. It provides
+a bundled runtime, not a security sandbox. Only run images you trust. The local
+image route does not authenticate its publisher. Each invocation mounts its own
+image. On exit, it removes the host mount while FUSE serves any surviving
+background processes until they release their runtime. It does not replace the
+host's system libraries. Both `/tmp` and `/var/tmp` retain their host contents.
+
+### Existing installer
+
 Setup supports macOS, Debian/Ubuntu, and Arch-based Linux. Running it may use
 sudo, install packages and tools, rewrite tracked configuration paths, and
 change the login shell to Fish. It can be rerun after failure. Checkout
