@@ -19,21 +19,21 @@ async function mountPaths() {
 
 test("mount skeleton preserves image siblings, symlinks, and new host paths", async () => {
   const root = await temporary();
-  await mkdir(join(root, "home/builder"), { recursive: true });
+  await mkdir(join(root, "people/builder"), { recursive: true });
   await mkdir(join(root, "usr/bin"), { recursive: true });
   await symlink("usr/bin", join(root, "bin"));
   const args = await filesystemArgs(root, [
-    { destination: "$HOME user", source: "/host/user", kind: "--bind" },
+    { destination: "/people/another user", source: "/host/user", kind: "--bind" },
     { destination: "/projects/new", source: "/host/project", kind: "--bind" },
   ]);
   expect(args).toEqual([
-    "--symlink", "usr/bin", "/bin", "--dir", "/home",
-    "--bind", "/host/user", "$HOME user",
-    "--ro-bind", join(root, "home/builder"), "$HOME",
+    "--symlink", "usr/bin", "/bin", "--dir", "/people",
+    "--bind", "/host/user", "/people/another user",
+    "--ro-bind", join(root, "people/builder"), "/people/builder",
     "--dir", "/projects", "--bind", "/host/project", "/projects/new",
     "--ro-bind", join(root, "usr"), "/usr",
   ]);
-  expect((await readdir(root)).sort()).toEqual(["bin", "home", "usr"]);
+  expect((await readdir(root)).sort()).toEqual(["bin", "people", "usr"]);
 });
 
 test("invalid images fail before mounting", async () => {
