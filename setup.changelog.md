@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.10.5
+
+Skip APT recommendations and suggestions during installation and declared-package
+upgrades. Required dependencies still install with their packages.
+
 ## 2.10.4
 
 Manage Composer, cloc, rga, media and development utilities, Ruby, and Zsh

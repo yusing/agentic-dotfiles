@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.4
+# version: 2.10.5
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -808,7 +808,7 @@ upgrade_configured_packages() {
   if [ "${#packages[@]}" -gt 0 ]; then
     info "upgrading setup-owned apt packages: ${packages[*]}"
     run_root apt-get update -y || return 1
-    run_root apt-get install --only-upgrade --no-remove -y "${packages[@]}" || return 1
+    run_root apt-get install --no-install-recommends --no-install-suggests --only-upgrade --no-remove -y "${packages[@]}" || return 1
   fi
   if [ "${#brew_packages[@]}" -gt 0 ]; then
     info "upgrading setup-owned Homebrew packages: ${brew_packages[*]}"
@@ -867,7 +867,7 @@ pm_install_batch() {
   [ "$#" -gt 0 ] || return 0
   case "$PM" in
     apt)
-      run_root apt-get install -y "$@"
+      run_root apt-get install --no-install-recommends --no-install-suggests -y "$@"
       ;;
     pacman)
       if have yay && [ "$(id -u)" -ne 0 ]; then

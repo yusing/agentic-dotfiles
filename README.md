@@ -80,6 +80,9 @@ system prerequisites, with sudo when needed, and Homebrew/Linuxbrew for the
 migrated command-line tools and development libraries. Installing Linuxbrew
 as root is rejected.
 
+APT installs required dependencies but skips optional recommended and suggested packages,
+including during full upgrades.
+
 Setup installs Lightpanda 1.0.0 from its GitHub release binaries through mise.
 Fish, Zsh, and Bash export `AGENT_BROWSER_ENGINE=lightpanda` so agent-browser
 uses it by default. Open a new shell after setup to load this setting.
