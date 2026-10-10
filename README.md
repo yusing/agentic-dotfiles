@@ -69,45 +69,62 @@ linger settings unchanged because other tools may use them.
 
 ## Bootstrap
 
-### Linux image delivery, in development
+### Linux image delivery
 
-The Linux replacement uses a read-only SquashFS runtime and zsync delta updates.
-CI will install the declared tools once for Linux x86-64 and ARM64; consumers
-will download and mount the result without Docker, extraction, or selecting
-APT/Pacman packages. The macOS installer stays unchanged. Image building,
-published upgrades, and setup integration are still being implemented; the
-existing setup commands below remain the installation route until then.
+Linux x86-64 and ARM64 use one Debian-based read-only SquashFS runtime, built
+from `setup.json` in Docker. The consumer pulls raw OCI artifact files and mounts
+the image. It needs neither Docker nor payload extraction nor APT/Pacman tool
+selection. macOS keeps the existing installer described below.
 
-The first capability is local image execution through the compiled `agent-tools`
-helper. It requires Linux FUSE access, user namespaces, and `squashfuse`,
-`fusermount3` (or `fusermount`), and `bwrap` on PATH. The release bootstrap that
-will supply these utilities is not yet implemented. Compile with the existing
-helper builder, then run a trusted Linux root-filesystem image:
+```sh
+bash setup.sh                  # bootstrap, pull, and configure Linux
+agent-tools pull               # install or upgrade the Linux runtime
+agent-tools run -- git --version
+```
+
+The implementation is being completed. A published channel is required before
+these installation commands can succeed. CI builds both architectures, caches
+installation downloads, and refreshes tools weekly. Releases include the native
+bootstrap; the large image lives in GHCR to avoid release-asset size limits.
+Upgrades use zsync to reuse matching image blocks, verify SHA-256 identities, and
+switch all managed command launchers together. A failed pull keeps the active
+runtime. Already running processes keep their old image. Updates reconstruct a
+new image file; they do not extract its contents, and require space for both
+images during the update. Older images remain available locally.
+
+Linux requires `/dev/fuse` access, unprivileged user namespaces, and a working
+host `fusermount3` (or `fusermount`). The bootstrap supplies Bubblewrap,
+Squashfuse, and zsync. Restricted containers or host security policy can prevent
+mounting; enabling these kernel facilities is a host administrator operation.
+The bootstrap requires curl and a glibc-based Linux host compatible with Bun's
+native executable. Tool libraries come from the image, not the host distro.
+
+The launcher preserves the invoking user's home, current project, temporary
+files, runtime sockets, and environment. Tools remain read-only. It supplies a
+runtime environment, not a security sandbox. Trust the configured HTTPS GitHub
+and GHCR publishers. Registry SHA-256 checks verify downloaded content, not an
+independent publisher signature. Each invocation mounts its own image. On exit,
+it removes the host mount while FUSE serves surviving background processes until
+they release their runtime. Both `/tmp` and `/var/tmp` retain host contents.
+
+For local testing, compile the helper and run a trusted root-filesystem image:
 
 ```sh
 .local/bin/compile-agent-tools
 agent-tools run --image /path/to/tools.sqfs -- git --version
 ```
 
-The launcher preserves the invoking user's home, current project, temporary
-files, runtime sockets, and environment. Tool files stay read-only. It provides
-a bundled runtime, not a security sandbox. Only run images you trust. The local
-image route does not authenticate its publisher. Each invocation mounts its own
-image. On exit, it removes the host mount while FUSE serves any surviving
-background processes until they release their runtime. It does not replace the
-host's system libraries. Both `/tmp` and `/var/tmp` retain their host contents.
+### macOS installer and CI image installation
 
-### Existing installer
-
-Setup supports macOS, Debian/Ubuntu, and Arch-based Linux. Running it may use
+The source installer supports macOS and CI image builds on Debian/Ubuntu.
+Linux consumers use the image route above. Running it may use
 sudo, install packages and tools, rewrite tracked configuration paths, and
 change the login shell to Fish. It can be rerun after failure. Checkout
 collisions are backed up under `~/.local/share/dotfiles-setup/`. Unrelated files
 are left alone.
 
-Run setup as a regular user. Linux uses APT or Pacman/yay for bootstrap and
-system prerequisites, with sudo when needed, and Homebrew/Linuxbrew for the
-migrated command-line tools and development libraries. Installing Linuxbrew
+Run setup as a regular user. Image builds use APT for system prerequisites and Homebrew/Linuxbrew for the
+migrated command-line tools and development libraries, inside Docker. Installing Linuxbrew
 as root is rejected.
 
 APT installs required dependencies but skips optional recommended and suggested packages,

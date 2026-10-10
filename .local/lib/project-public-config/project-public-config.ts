@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.18";
+export const VERSION = "1.3.19";
 
 type TreeEntry = {
 	mode: string;
@@ -196,7 +196,14 @@ const EXACT_PATHS = new Set([
 	".local/lib/compile-agent-tools/compile-agent-tools.ts",
 	".local/lib/compile-agent-tools/CHANGELOG.md",
 	".local/lib/agent-tools/agent-tools.ts",
+	".local/lib/agent-tools/pull.ts",
 	".local/lib/agent-tools/CHANGELOG.md",
+	".local/lib/tool-image/Dockerfile",
+	".local/lib/tool-image/finalize.ts",
+	".local/lib/tool-image/CHANGELOG.md",
+	".github/workflows/tool-images.yml",
+	".local/tests/agent_tools_test.ts",
+	".local/tests/agent_tools_pull_test.ts",
 	".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
 	".local/lib/batch-agent-sessions/CHANGELOG.md",
 	".local/lib/tmp-clean/tmp_clean.ts",
@@ -385,6 +392,7 @@ function isIncludedPath(path: string): boolean {
 }
 
 function isExcludedPath(path: string): boolean {
+	if (path.startsWith(".local/tests/") && EXACT_PATHS.has(path)) return false;
 	const parts = path.toLowerCase().split("/");
 	return parts.some(part => EXCLUDED_PATH_PARTS.has(part));
 }

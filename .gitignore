@@ -189,6 +189,7 @@ __pycache__
 !/.local/lib/agent-tools/
 !/.local/lib/agent-tools/agent-tools.ts
 !/.local/lib/agent-tools/CHANGELOG.md
+!/.local/lib/agent-tools/pull.ts
 !/.local/lib/batch-agent-sessions/
 !/.local/lib/batch-agent-sessions/batch-agent-sessions.ts
 !/.local/lib/batch-agent-sessions/CHANGELOG.md
@@ -215,6 +216,9 @@ __pycache__
 !/.local/lib/update-oh-my-posh-theme/
 !/.local/lib/update-oh-my-posh-theme/CHANGELOG.md
 !/.local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts
+!/.local/tests/
+!/.local/tests/agent_tools_pull_test.ts
+!/.local/tests/agent_tools_test.ts
 !/.skills-mgr/
 !/.skills-mgr/.skills-mgr.json
 !/.skills-mgr/skills/

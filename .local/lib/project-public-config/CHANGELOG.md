@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.19
+
+Publish the Linux OCI pull implementation and image delivery inputs.
+
 ## 1.3.18
 
 Publish the native agent-tools launcher source and changelog.
