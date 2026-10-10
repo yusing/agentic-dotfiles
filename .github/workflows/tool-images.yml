@@ -13,6 +13,7 @@ on:
       - .local/bin/compile-agent-tools
       - .codex/hooks/**
       - .grok/hooks/**
+      - .local/tests/agent_tools_test.ts
       - .github/workflows/tool-images.yml
   pull_request:
     paths:
@@ -21,6 +22,7 @@ on:
       - .config/mise/**
       - .local/lib/agent-tools/**
       - .local/lib/tool-image/**
+      - .local/tests/agent_tools_test.ts
       - .github/workflows/tool-images.yml
   schedule:
     - cron: '17 3 * * 2'
