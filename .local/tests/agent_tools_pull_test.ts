@@ -159,4 +159,3 @@ test.skipIf(!runtime || !oldImage || !newImage || !control)("real OCI first pull
     server.stop(true);
   }
 }, 120000);
-
