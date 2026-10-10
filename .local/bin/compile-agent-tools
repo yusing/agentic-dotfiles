@@ -1,10 +1,14 @@
 #!/bin/sh
-# version: 1.1.0
+# version: 1.2.0
 # Rebuild changed user-owned helper and hook binaries for this machine.
 
 set -eu
 
 tool_home=${HOME:?HOME must be set}
+managed_tools=$tool_home/.local/share/agent-tools/current/agent-tools
+if [ "${SETUP_IMAGE_BUILD:-0}" != 1 ] && [ "${1:-}" != --version ] && [ -x "$managed_tools" ]; then
+	exec "$managed_tools" link-hooks
+fi
 local_bin=$tool_home/.local/bin
 engine_source=$tool_home/.local/lib/compile-agent-tools/compile-agent-tools.ts
 engine=$local_bin/compile-agent-tools-engine

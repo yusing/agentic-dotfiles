@@ -15,3 +15,9 @@ if [ -r "$HOME/.local/share/dotfiles-setup/brew-paths" ]; then
   done <"$HOME/.local/share/dotfiles-setup/brew-paths"
 fi
 unset brew_bin brew_path
+
+if [ "${AGENT_TOOLS_RUNTIME:-0}" = 1 ]; then
+  export PATH="/opt/agent-tools/bin:$PATH"
+elif [ -d "$HOME/.local/share/agent-tools/bin" ]; then
+  export PATH="$HOME/.local/share/agent-tools/bin:$PATH"
+fi

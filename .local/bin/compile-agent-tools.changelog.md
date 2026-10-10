@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+Keep image-managed Linux hooks linked to the active runtime after Git updates.
+Source compilation remains available for image builds and macOS.
+
 ## 1.1.0
 
 Keep a content-keyed compiled build engine current, then use it to rebuild missing,

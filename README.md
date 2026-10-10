@@ -79,12 +79,12 @@ selection. macOS keeps the existing installer described below.
 ```sh
 bash setup.sh                  # bootstrap, pull, and configure Linux
 agent-tools pull               # install or upgrade the Linux runtime
-agent-tools run -- git --version
+git --version                  # managed commands are on the shell PATH
 ```
 
-The implementation is being completed. A published channel is required before
-these installation commands can succeed. CI builds both architectures, caches
-installation downloads, and refreshes tools weekly. Releases include the native
+The public pull channel must be published before these commands can succeed.
+CI builds both architectures, caches installation downloads, and refreshes tools
+weekly. Releases include the native
 bootstrap; the large image lives in GHCR to avoid release-asset size limits.
 Upgrades use zsync to reuse matching image blocks, verify SHA-256 identities, and
 switch all managed command launchers together. A failed pull keeps the active
@@ -98,6 +98,11 @@ Squashfuse, and zsync. Restricted containers or host security policy can prevent
 mounting; enabling these kernel facilities is a host administrator operation.
 The bootstrap requires curl and a glibc-based Linux host compatible with Bun's
 native executable. Tool libraries come from the image, not the host distro.
+
+Managed Fish remains a login shell. Pulls work from inside that shell as well as
+from a host shell. `agent-tools run -- COMMAND` reuses the current runtime when
+already inside a managed shell. Run alternate `--image` or `--state` selections
+from a host shell.
 
 The launcher preserves the invoking user's home, current project, temporary
 files, runtime sockets, and environment. Tools remain read-only. It supplies a
@@ -113,6 +118,15 @@ For local testing, compile the helper and run a trusted root-filesystem image:
 .local/bin/compile-agent-tools
 agent-tools run --image /path/to/tools.sqfs -- git --version
 ```
+
+Maintainers must set the GHCR packages `agentic-tools` and
+`agentic-tools-container` to public after their first publication. CI checks
+anonymous manifest and artifact access before promoting either stable channel.
+GitHub creates new packages as private even for public source repositories.
+
+Linux inventory changes need a new CI publication before consumers can pull
+them. The Linux tool images workflow also accepts `refresh=true` for a manual
+upstream refresh, in addition to its weekly schedule.
 
 ### macOS installer and CI image installation
 
@@ -197,6 +211,9 @@ skip helpers entirely. With this repository's `.githooks` enabled, a successful
 merge or rebase (including `git pull`) runs the same incremental build, so helper
 updates do not require a full setup run. Commit amendments do not trigger it.
 You can also run `.local/bin/compile-agent-tools` directly after editing a helper.
+These source-compilation rules apply to macOS and image builds. On image-managed
+Linux, the compiler entry point restores the native hook links to the active
+image; CI builds updated helpers for the next pull.
 
 Setup rewrites `/home/<user>`, `/User/<user>`, and `/Users/<user>` paths in
 tracked runtime configuration to the current home, plus `$HOME` in agent
@@ -204,12 +221,11 @@ configuration. Colliding JSON and TOML keys are merged recursively; later values
 win conflicts, including arrays. A compiled TypeScript helper runs after tool
 installation and compilation. Files requiring a merge are reformatted, with comments
 retained in a leading block; files without collisions retain their surrounding formatting.
-`--upgrade` also upgrades installed native packages declared in `setup.json`,
+For macOS and CI image installation, `--upgrade` also upgrades installed native packages declared in `setup.json`,
 including optional packages, through Homebrew or APT. Only declared packages are
-targeted; their required dependencies may also change. On Arch, `--upgrade`
-performs a **full system upgrade** with yay, including AUR packages, before
-installing native packages and updating Homebrew packages. Yay uses sudo when
-required.
+targeted; their required dependencies may also change. Linux consumers upgrade
+only the published image with `agent-tools pull`; setup does not upgrade the
+host distribution.
 
 If you already have your own dotfiles, copy the pieces you want instead of
 running setup.

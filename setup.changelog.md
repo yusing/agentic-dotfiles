@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.0
+
+Install Linux tools by pulling a verified mounted runtime. Keep macOS package
+installation unchanged. Run source installation only inside CI image builds.
+
 ## 2.11.0
 
 Support isolated CI image installation without changing host checkout, shell,

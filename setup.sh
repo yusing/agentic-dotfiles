@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.11.0
+# version: 3.0.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -2267,6 +2267,12 @@ usage() {
   cat <<'EOF'
 Usage: setup.sh [--upgrade [TOOL...]] [--config PATH] [--check-config]
 
+Linux consumers install or upgrade the complete mounted tool image. Run
+agent-tools pull for subsequent upgrades. Docker and payload extraction are
+not needed. Linux consumers reject --config and named --upgrade TOOL arguments.
+The host must provide FUSE access and unprivileged user namespaces.
+
+The source installation options below apply to macOS and CI image builds.
 Package choices and vendor installers live in setup.json beside this script.
 Mise declarations also live in setup.json; .config/mise/config.toml is generated.
 --config selects another JSON file; SETUP_CONFIG is the environment equivalent.
@@ -2299,6 +2305,47 @@ EOF
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
+setup_linux_image() {
+  local state="$HOME/.local/share/agent-tools" staged binary checksum
+  [ -r /dev/fuse ] && [ -w /dev/fuse ] || die "Linux image delivery needs read/write access to /dev/fuse"
+  have fusermount3 || have fusermount || die "Install the host FUSE mount helper (fusermount3) once before bootstrap"
+  mkdir -p "$LOCAL_BIN" "$BACKUP_ROOT" "$state"
+  if [ ! -x "$LOCAL_BIN/agent-tools" ] || ! "$LOCAL_BIN/agent-tools" --help | grep -q 'agent-tools pull'; then
+    have curl || die "Linux bootstrap needs curl"
+    have sha256sum || die "Linux bootstrap needs sha256sum"
+    STEP="download Linux image bootstrap"
+    staged="$(mktemp -d "$state/.bootstrap.XXXXXX")"
+    binary="agent-tools-linux-$GOARCH"
+    checksum="$binary.sha256"
+    info "downloading native Linux image bootstrap"
+    if ! curl -fSL "https://github.com/$REPO_SLUG/releases/latest/download/$binary" -o "$staged/$binary" \
+      || ! curl -fsSL "https://github.com/$REPO_SLUG/releases/latest/download/$checksum" -o "$staged/$checksum" \
+      || ! (cd "$staged" && sha256sum -c "$checksum"); then
+      rm -rf "$staged"
+      die "image bootstrap download failed; the existing helper was preserved"
+    fi
+    chmod 755 "$staged/$binary"
+    if ! "$staged/$binary" --version; then rm -rf "$staged"; die "image bootstrap cannot run on this host"; fi
+    mv -f "$staged/$binary" "$LOCAL_BIN/agent-tools"
+    rm -rf "$staged"
+  fi
+  STEP="pull Linux tool runtime"
+  "$LOCAL_BIN/agent-tools" pull
+  export PATH="$state/bin:$PATH"
+  STEP="configure native hooks"
+  "$state/bin/agent-tools" link-hooks
+  cd "$HOME"
+  STEP="setup home git repository"
+  setup_home_repo
+  STEP="resolve home paths in configuration"
+  "$state/bin/rewrite-home-paths"
+  STEP="set login shell"
+  ensure_fish_login_shell
+  STEP="configure image paste"
+  configure_image_paste
+  info "Linux image setup complete; open a new shell session"
+}
 
 main() {
   local check_config=0 explicit_config="${SETUP_CONFIG_EXPLICIT:-0}"
@@ -2340,6 +2387,12 @@ main() {
   fi
   if [ "$explicit_config" -eq 1 ] && [ ! -f "$SETUP_CONFIG" ]; then
     die "setup config is missing: $SETUP_CONFIG"
+  fi
+  if [ "$OS" = Linux ] && [ "${SETUP_IMAGE_BUILD:-0}" != 1 ]; then
+    [ "$explicit_config" != 1 ] || die "Linux inventories are installed in CI; --config is available for image builds and macOS"
+    [ "${#UPGRADE_NAMES[@]}" -eq 0 ] || die "Linux upgrades the complete image; run agent-tools pull"
+    setup_linux_image
+    return
   fi
   if [ -f "$SETUP_CONFIG" ] && { have python3 || have python; }; then
     setup_config validate
