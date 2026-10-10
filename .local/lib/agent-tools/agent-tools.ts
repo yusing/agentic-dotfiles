@@ -2,7 +2,7 @@ import { lstat, mkdir, mkdtemp, open, readdir, readFile, readlink, realpath, ren
 import { basename, dirname, join, resolve } from "node:path";
 import { pullImage, stateDirectory } from "./pull";
 
-export const VERSION = "0.2.0";
+export const VERSION = "0.2.1";
 type Binding = { destination: string; source?: string; kind: "--bind" | "--ro-bind" | "--dev-bind" | "--proc" };
 
 const usage = `Usage: agent-tools pull [--repository REGISTRY/REPOSITORY] [--tag TAG] [--state DIR]
@@ -140,7 +140,6 @@ export async function runImage(image: string, command: string[], runtime?: strin
   process.on("SIGINT", onInterrupt);
   process.on("SIGTERM", onTerminate);
   try {
-    console.error("agent-tools: mounting tool image");
     fuse = Bun.spawn([squashfuse, "-f", imagePath, mount], { stdin: "ignore", stdout: "ignore", stderr: "inherit" });
     const deadline = Date.now() + 10_000;
     while (!await mounted(mount)) {
@@ -210,9 +209,13 @@ if (import.meta.main) {
     const runtime = dirname(await realpath(process.execPath));
     const invoked = basename(process.argv0);
     const command = invoked.replace(/^-/, "");
-    if (command !== "agent-tools" && await exists(join(runtime, "tools.sqfs"))) {
+    if (command !== "agent-tools" && (await exists(join(runtime, "tools.sqfs")) || ["fish", "bash", "zsh"].includes(command))) {
       const login = invoked.startsWith("-") && ["fish", "bash", "zsh"].includes(command);
-      process.exitCode = await runImage(join(runtime, "tools.sqfs"), [command, ...(login ? ["--login"] : []), ...args], runtime);
+      if (process.env.AGENT_TOOLS_RUNTIME === "1") {
+        process.execve(`/opt/agent-tools/bin/${command}`, [command, ...(login ? ["--login"] : []), ...args], process.env as Record<string, string>);
+      }
+      const active = await exists(join(runtime, "tools.sqfs")) ? runtime : await realpath(join(stateDirectory(), "current"));
+      process.exitCode = await runImage(join(active, "tools.sqfs"), [command, ...(login ? ["--login"] : []), ...args], active);
     } else if (args[0] === "pull" && process.env.AGENT_TOOLS_RUNTIME === "1" && process.env.AGENT_TOOLS_UPDATER !== "1") {
       // The control namespace maps root to this user. It grants mount capability
       // only for update verification, not for ordinary managed commands.

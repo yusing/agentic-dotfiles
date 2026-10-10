@@ -93,6 +93,8 @@ __pycache__
 !/.config/ccstatusline/
 !/.config/ccstatusline/settings.json
 !/.config/fish/
+!/.config/fish/conf.d/
+!/.config/fish/conf.d/00-agent-tools.fish
 !/.config/fish/config.fish
 !/.config/gh/
 !/.config/gh/config.yml

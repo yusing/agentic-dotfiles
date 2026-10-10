@@ -1,5 +1,5 @@
 import { afterEach, expect, test } from "bun:test";
-import { mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { filesystemArgs } from "../lib/agent-tools/agent-tools";
 
@@ -45,6 +45,45 @@ test("invalid images fail before mounting", async () => {
   expect(result.stderr.toString()).toContain("IMAGE must be a SquashFS file");
 });
 
+test.skipIf(!image)("host shell startup enters once and preserves invocation arguments", async () => {
+  const root = await temporary();
+  const state = join(root, ".local/share/agent-tools/current");
+  await mkdir(state, { recursive: true });
+  await mkdir(join(root, ".local/bin"), { recursive: true });
+  await symlink(binary, join(root, ".local/bin/agent-tools"));
+  await symlink(image!, join(state, "tools.sqfs"));
+  await symlink(Bun.which("bwrap")!, join(state, "bwrap"));
+  const fuse = Bun.which("squashfuse")!;
+  const mounts = join(root, "mounts");
+  await writeFile(join(state, "squashfuse"), `#!/bin/sh\nprintf 'mount\\n' >> '${mounts}'\nexec '${fuse}' "$@"\n`, { mode: 0o755 });
+  await symlink(binary, join(state, "agent-tools"));
+  let count = 0;
+  for (const [shell, executable] of [["fish", "/usr/bin/fish"], ["bash", "/bin/bash"],
+    ["zsh", Bun.which("zsh") ?? "/usr/bin/zsh"]]) {
+    if (!await Bun.file(executable).exists()) continue;
+    const config = shell === "fish" ? ".config/fish/config.fish" : `.${shell}rc`;
+    await mkdir(join(root, ".config/fish"), { recursive: true });
+    await copyFile(resolve(import.meta.dir, "../..", config), join(root, config));
+    if (shell === "fish") {
+      await mkdir(join(root, ".config/fish/conf.d"), { recursive: true });
+      await copyFile(resolve(import.meta.dir, "../../.config/fish/conf.d/00-agent-tools.fish"), join(root, ".config/fish/conf.d/00-agent-tools.fish"));
+      await writeFile(join(root, ".config/fish/conf.d/10-integration.fish"), 'printf "integration-runtime=%s\\n" "$AGENT_TOOLS_RUNTIME"\ngit --version\n');
+    }
+    const script = shell === "fish"
+      ? 'printf "runtime=%s arg=%s\\n" "$AGENT_TOOLS_RUNTIME" "$argv[1]"'
+      : 'printf "runtime=%s arg=%s\\n" "$AGENT_TOOLS_RUNTIME" "$1"';
+    const child = Bun.spawn([executable, "-i", "-c", script, ...(shell === "fish" ? [] : [shell]), "literal ; $(no-command)"],
+      { env: { ...process.env, HOME: root, TERM: "xterm-256color", AGENT_TOOLS_RUNTIME: "", ZDOTDIR: root }, stderr: "pipe" });
+    const output = await new Response(child.stdout).text();
+    const error = await new Response(child.stderr).text();
+    expect(await child.exited, error).toBe(0);
+    expect(output).toContain("runtime=1 arg=literal ; $(no-command)");
+    if (shell === "fish") expect(output.match(/integration-runtime=.*\n/g)).toEqual(["integration-runtime=1\n"]);
+    expect(error).not.toContain("agent-tools:");
+    expect((await readFile(mounts, "utf8")).trim().split("\n").length).toBe(++count);
+  }
+}, 30_000);
+
 test.skipIf(!image)("mounted command retains UID, home, project, argv, status, and read-only runtime", async () => {
   const root = await temporary();
   const userDirectory = "/opt/agent-tools-test/user space";
@@ -70,7 +109,7 @@ sys.exit(23)`;
   const stderr = await new Response(child.stderr).text();
   expect(await child.exited, stderr).toBe(23);
   expect(stdout).toBe("runtime-ok\n");
-  expect(stderr).toContain("mounting tool image");
+  expect(stderr).toBe("");
   expect(await readFile(join(root, "user space/written"), "utf8")).toBe("literal ; $(not-a-command)");
   expect(await readFile(join(root, "project space/written"), "utf8")).toBe(project);
   expect(await mountPaths()).toEqual(before);

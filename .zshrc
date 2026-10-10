@@ -1,3 +1,10 @@
+if [[ ${AGENT_TOOLS_RUNTIME:-0} != 1 && -x "$HOME/.local/share/agent-tools/current/agent-tools" && -o interactive ]]; then
+    typeset -a runtime_argv=()
+    while IFS= read -r -d '' argument; do runtime_argv+=("$argument"); done </proc/$$/cmdline
+    [[ ! -o login ]] || runtime_argv=("${runtime_argv[1]}" --login "${runtime_argv[@]:1}")
+    exec "$HOME/.local/bin/agent-tools" run -- zsh "${runtime_argv[@]:1}"
+fi
+
 for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
   if [ -x "$brew_bin" ]; then
     eval "$("$brew_bin" shellenv)"

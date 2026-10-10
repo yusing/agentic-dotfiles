@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.20";
+export const VERSION = "1.3.21";
 
 type TreeEntry = {
 	mode: string;
@@ -164,6 +164,7 @@ const EXACT_PATHS = new Set([
 	// ".config/fish/completions/bun.fish", // bun installed
 	// ".config/fish/completions/grok.fish", // grok installed
 	".config/fish/config.fish",
+	".config/fish/conf.d/00-agent-tools.fish",
 	".config/oh-my-posh/catppuccin_macchiato.omp.json",
 	".config/gh/config.yml",
 	".config/ghostty/config",

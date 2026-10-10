@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.21
+
+Publish early Fish runtime entry before shell integrations load.
+
 ## 1.3.20
 
 Stop publishing the batch-agent-sessions skill and helper, replaced by Mekugi native orchestration.

@@ -103,11 +103,16 @@ from a host shell. `agent-tools run -- COMMAND` reuses the current runtime when
 already inside a managed shell. Run alternate `--image` or `--state` selections
 from a host shell.
 
+Fish, interactive Bash, and interactive Zsh enter the installed runtime before
+loading their tool integrations, including when a terminal selects an older host
+shell executable. Startup mounts once; commands inside that shell reuse its
+runtime. Normal command launches produce no mount progress messages.
+
 The launcher preserves the invoking user's home, current project, temporary
 files, runtime sockets, and environment. Tools remain read-only. It supplies a
 runtime environment, not a security sandbox. Trust the configured HTTPS GitHub
 and GHCR publishers. Registry SHA-256 checks verify downloaded content, not an
-independent publisher signature. Each invocation mounts its own image. On exit,
+independent publisher signature. Each host runtime launch mounts its own image. On exit,
 it removes the host mount while FUSE serves surviving background processes until
 they release their runtime. Both `/tmp` and `/var/tmp` retain host contents.
 

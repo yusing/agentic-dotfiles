@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "78e5b571bdf664326daf8e61f08d359e833d0308",
+  "sourceCommit": "ca41327fe02baaf449a266ed702e429cb70f6613",
   "outputs": [
     {
       "path": ".bash_profile",
       "kind": "file",
-      "sha256": "8bbd29be3924e71c9e35a0e63345498835241688e735ec6c7d83e566c7165927",
+      "sha256": "9bbafbf5cbf25a29af256de5111ff7bdaee25bb2d022220ccb1b9ee888da42aa",
       "executable": false
     },
     {
       "path": ".bashrc",
       "kind": "file",
-      "sha256": "ee3b2da34575dc97532849342a4b61902c58b8fa2d1a86bc92a7960b9d5e6a8d",
+      "sha256": "1e6eeaf7f2b27334cda6a52c3b309cbf7fa60cd822359db174b6484d06c99dbe",
       "executable": false
     },
     {
@@ -447,6 +447,12 @@
       "executable": false
     },
     {
+      "path": ".config/fish/conf.d/00-agent-tools.fish",
+      "kind": "file",
+      "sha256": "f2997505edd8674f3c375ebbdae1409e341f2f92b9c11af4046c287be6ed7fb9",
+      "executable": false
+    },
+    {
       "path": ".config/fish/config.fish",
       "kind": "file",
       "sha256": "a9ab481591c072e87f8e3e880bf228884811ff3ce6f7efb7cf162b3155e0bec4",
@@ -737,7 +743,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "faf9d490953b24fdd05ac51c59d1a3639fcbbfc3e6c282308c518c4c6aa2b83d",
+      "sha256": "22db62a4f0742e6ff01602fca6e77db1e2f3225f112d3ae3ffa9aa5c6ea990d3",
       "executable": false
     },
     {
@@ -832,13 +838,13 @@
     {
       "path": ".local/lib/agent-tools/agent-tools.ts",
       "kind": "file",
-      "sha256": "bd8186ad6666e5d00713436eb8c710b382f487f6787f67614f9307d480b5d629",
+      "sha256": "f25736af01a3307625d60f88cc13a948a94e0dfd19915c42791c4e7b5bdd17b6",
       "executable": false
     },
     {
       "path": ".local/lib/agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "e5007bd153b3e7be57fce553ad2007d98415491d7003045345761b4a220ccb7a",
+      "sha256": "e8a7dce3373fa5a24b44bbdf2c40c82848936f5630079fb5dc29232072e30cda",
       "executable": false
     },
     {
@@ -862,13 +868,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "d5b1d52bd6bf6d1525e61041b4bcf33a14142c43bf8c29d50e3eeca0689614e4",
+      "sha256": "a3fa4e9836be45f22ffe7a32be0394f013c2cc7de3fe0374b9652b679cbdd26c",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "32113fa3a37952a4a1e276a32c112a1b2d0be6e0b6736b55c7622ba21cb91321",
+      "sha256": "14e6714af899e5274e240ad799a91b0dd4669d2201e339d1e02e37463f0a14df",
       "executable": true
     },
     {
@@ -970,7 +976,7 @@
     {
       "path": ".local/tests/agent_tools_test.ts",
       "kind": "file",
-      "sha256": "d097f1dedad36dc0704bd3ff0894afabfc315edd2dbc60531565dd872cf50e36",
+      "sha256": "e0ac481ce553b82aed830397e7f4bbe2e728ac5895ad4d0b6404e7cd798b6936",
       "executable": false
     },
     {
@@ -1492,7 +1498,7 @@
     {
       "path": ".zshrc",
       "kind": "file",
-      "sha256": "83623c1ee36e87ca7ff921f854ff1ba660d0de65049554c7240c3c078d9e94a6",
+      "sha256": "e263a79d25e224efb0c91bc4dc6b30d3118b439d1a46806db8923b44c1341bac",
       "executable": false
     },
     {
@@ -1569,7 +1575,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "7af3bd029c06beb47547d4771fe146d8d049ff4fd5c007d537c35bcee7b41b91",
+      "sha256": "b1053f64ce3260e587647842eae340e0ea2dcabcc04cb43a545b4f3d8958272c",
       "executable": false
     },
     {

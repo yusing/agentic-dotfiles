@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+Keep normal command execution silent. Reuse the current runtime for command
+links invoked from a managed shell.
+
 ## 0.2.0
 
 Pull raw OCI artifacts without extraction. Verify content identities, reuse
