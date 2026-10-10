@@ -136,6 +136,10 @@ __pycache__
 !/.config/mise/
 !/.config/mise/config.toml
 !/.config/mise/locks/
+!/.config/mise/locks/pipx-pyflakes/
+!/.config/mise/locks/pipx-pyflakes/4.0.3~6c883192/
+!/.config/mise/locks/pipx-pyflakes/4.0.3~6c883192/pyproject.toml
+!/.config/mise/locks/pipx-pyflakes/4.0.3~6c883192/uv.lock
 !/.config/mise/locks/pipx-rich-cli/
 !/.config/mise/locks/pipx-rich-cli/1.8.1~73c63f16/
 !/.config/mise/locks/pipx-rich-cli/1.8.1~73c63f16/pyproject.toml

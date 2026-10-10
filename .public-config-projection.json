@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "436d53fcd4ed97b19640876b751d4a60a6e6ce12",
+  "sourceCommit": "b34ba71a936f0340a33d4977244379731f6dc791",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -629,7 +629,19 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "572b1fa6cad4d01aa706e1e79d73f9d4d147b75c01f7c6ccee6d0659f7fc0a3c",
+      "sha256": "5954cd0d86d2e9178e30a4240a6d2b3eba4a8c7d3480c3de7c12476f58f133ca",
+      "executable": false
+    },
+    {
+      "path": ".config/mise/locks/pipx-pyflakes/4.0.3~6c883192/pyproject.toml",
+      "kind": "file",
+      "sha256": "9cf1294fe9f29769477f0b7633a369d32b2832d57ca056794b9452ebbc7bc2c7",
+      "executable": false
+    },
+    {
+      "path": ".config/mise/locks/pipx-pyflakes/4.0.3~6c883192/uv.lock",
+      "kind": "file",
+      "sha256": "c6d4d1ac3f645634348076a98791574a85c55710a941cbeddc010c35da8b2958",
       "executable": false
     },
     {
@@ -671,7 +683,7 @@
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "ed97f8738a8d486c6b90d505af8e7f937ebb07e63fccc409075e6eb58a4c5477",
+      "sha256": "38f6cb052de410c31e5837e43593d6e0080d2561e035bf1f738764976ac6b18e",
       "executable": false
     },
     {
@@ -719,7 +731,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "4c423d3e38d50bfac62edab6b4c5ddcdad2f030b280e430deaef8b0167dea110",
+      "sha256": "5d861e85cac99e6b91fe6c586e07e67739cd4c242fdcd3be225b2aa82230daf6",
       "executable": false
     },
     {
@@ -1456,7 +1468,7 @@
     {
       "path": ".zshrc",
       "kind": "file",
-      "sha256": "83248f49ab992514937de923597fdda27da62eb66bcec1f449ff888d32f75b58",
+      "sha256": "6cfc941e3eafb338af6ac808e3380342560a315aba86820feeccb64d5a581a5a",
       "executable": false
     },
     {
@@ -1539,19 +1551,19 @@
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "277859d6aee0e07f9432696428c8c449b5115672122992bb9599ef1de4f01c41",
+      "sha256": "999e4215394f29b1f8b3b3558e7e38f90e4a89dcd2b685348d0780ef08392a72",
       "executable": false
     },
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "95b06c9b440d0ea783eec6c97e7cd90eb59e06b64b8450d4ecaa309672accb44",
+      "sha256": "8feb57ffbf461cf517034864b1bad41117fdf7fa88220cbb6d1e842061a760c4",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "489089516e3a9216199bc0d0acebdb682ef3e0be7926036ba2334fdec1e4e495",
+      "sha256": "d927012029e83bc4a501a54ab44a0c236cc7edeb147cb8fefe8174834d407265",
       "executable": true
     }
   ]

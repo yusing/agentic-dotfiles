@@ -11,7 +11,11 @@ command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 
 
 zmodload zsh/complist
-autoload -Uz compinit && compinit
+if [[ -r "${HOMEBREW_PREFIX:-}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]]; then
+    source "${HOMEBREW_PREFIX}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+else
+    autoload -Uz compinit && compinit
+fi
 
 zstyle ':completion:*' matcher-list \
     'm:{a-zA-Z}={A-Za-z} l:|=* r:|=*'
@@ -25,14 +29,14 @@ zstyle ':completion:*' verbose yes
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 [[ -r "$HOME/.zsh/fish-mirror.zsh" ]] && source "$HOME/.zsh/fish-mirror.zsh"
 
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+if [[ -r "$HOME/.local/share/dotfiles-setup/brew-paths" ]]; then
+    while IFS= read -r brew_path; do
+        [[ ! -d "$brew_path" ]] || export PATH="$brew_path:$PATH"
+    done < "$HOME/.local/share/dotfiles-setup/brew-paths"
+fi
+unset brew_path
 
-[[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] \
-    && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] \
-    && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -r /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]] \
-    && source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 zle -C expand-alias complete-word _expand_alias
 expand-alias-space() {
@@ -119,3 +123,9 @@ if [ -r "$HOME/.local/share/dotfiles-setup/brew-paths" ]; then
   done <"$HOME/.local/share/dotfiles-setup/brew-paths"
 fi
 unset brew_bin brew_path
+
+for zsh_plugin in zsh-autosuggestions zsh-syntax-highlighting; do
+    zsh_plugin_path="${HOMEBREW_PREFIX:-}/share/$zsh_plugin/$zsh_plugin.zsh"
+    [[ ! -r "$zsh_plugin_path" ]] || source "$zsh_plugin_path"
+done
+unset zsh_plugin zsh_plugin_path

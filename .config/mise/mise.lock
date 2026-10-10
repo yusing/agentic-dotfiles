@@ -108,6 +108,26 @@ url = "https://github.com/astral-sh/uv/releases/download/0.12.23/uv-aarch64-appl
 url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/608232483"
 provenance = "github-attestations"
 
+[[tools."aqua:bazelbuild/bazel"]]
+version = "9.3.0"
+backend = "aqua:bazelbuild/bazel"
+specifiers = ["latest"]
+
+[tools."aqua:bazelbuild/bazel"."platforms.linux-arm64"]
+checksum = "sha256:615cc2509819047e4930fe6643c5f01ebd705ccadf75e8f0b85f9b83cc6a6ca0"
+url = "https://github.com/bazelbuild/bazel/releases/download/9.3.0/bazel-9.3.0-linux-arm64"
+url_api = "https://api.github.com/repos/bazelbuild/bazel/releases/assets/619248098"
+
+[tools."aqua:bazelbuild/bazel"."platforms.linux-x64"]
+checksum = "sha256:d302d22ed77ee5658b87857249baa579db84300ecebe0a1e9a357b5b20f80eb8"
+url = "https://github.com/bazelbuild/bazel/releases/download/9.3.0/bazel-9.3.0-linux-x86_64"
+url_api = "https://api.github.com/repos/bazelbuild/bazel/releases/assets/619248138"
+
+[tools."aqua:bazelbuild/bazel"."platforms.macos-arm64"]
+checksum = "sha256:f29ca3f3bf577eb1619aeeed401b64a10901c8da8031aaa4add54a4ad0e99e3a"
+url = "https://github.com/bazelbuild/bazel/releases/download/9.3.0/bazel-9.3.0-darwin-arm64"
+url_api = "https://api.github.com/repos/bazelbuild/bazel/releases/assets/619247856"
+
 [[tools."aqua:bazelbuild/bazelisk"]]
 version = "1.29.0"
 backend = "aqua:bazelbuild/bazelisk"
@@ -310,6 +330,26 @@ url_api = "https://api.github.com/repos/gitleaks/gitleaks/releases/assets/378332
 checksum = "sha256:b40ab0ae55c505963e365f271a8d3846efbc170aa17f2607f13df610a9aeb6a5"
 url = "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_darwin_arm64.tar.gz"
 url_api = "https://api.github.com/repos/gitleaks/gitleaks/releases/assets/378332059"
+
+[[tools."aqua:go-swagger/go-swagger"]]
+version = "0.36.6"
+backend = "aqua:go-swagger/go-swagger"
+specifiers = ["latest"]
+
+[tools."aqua:go-swagger/go-swagger"."platforms.linux-arm64"]
+checksum = "sha256:32cf8d22d6291f65fbcbb769577b15d345c4c0a6d0dc6211e992384fa714a779"
+url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.6/swagger_0.36.6_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/554544618"
+
+[tools."aqua:go-swagger/go-swagger"."platforms.linux-x64"]
+checksum = "sha256:57771dffc04ec5bcfb6b63a4ae071822717cc5b0a5d026a36b211c0ea0884fd5"
+url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.6/swagger_0.36.6_Linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/554544567"
+
+[tools."aqua:go-swagger/go-swagger"."platforms.macos-arm64"]
+checksum = "sha256:78c5f2c60819d58dfa1adbc1f4986c572cd338b087f70312bd9f18b7fb45994a"
+url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.6/swagger_0.36.6_Darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/554544568"
 
 [[tools."aqua:go-task/task"]]
 version = "3.54.0"
@@ -903,6 +943,29 @@ url = "https://github.com/atuinsh/atuin/releases/download/v18.23.0/atuin-aarch64
 url_api = "https://api.github.com/repos/atuinsh/atuin/releases/assets/580134148"
 provenance = "github-attestations"
 
+[[tools."github:dlvhdr/gh-dash"]]
+version = "4.26.0"
+backend = "github:dlvhdr/gh-dash"
+specifiers = ["latest"]
+
+[tools."github:dlvhdr/gh-dash".options]
+matching_regex = "^gh-dash_.*_(linux|darwin)-(amd64|arm64)$"
+
+[tools."github:dlvhdr/gh-dash"."platforms.linux-arm64"]
+checksum = "sha256:eb73585f0d873e1039729bd9bc5b2c2dcdfc22ab30b47f96aece51270a5332d4"
+url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.0/gh-dash_v4.26.0_linux-arm64"
+url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/579134369"
+
+[tools."github:dlvhdr/gh-dash"."platforms.linux-x64"]
+checksum = "sha256:469012a8c607a503a4e873bc3862adedbc2c1c31878c62a396cd9874555f25ac"
+url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.0/gh-dash_v4.26.0_linux-amd64"
+url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/579134244"
+
+[tools."github:dlvhdr/gh-dash"."platforms.macos-arm64"]
+checksum = "sha256:3bcb088df5668a1b53f213a7a889b19a0eda59be48d44a3586ec54fc778494d1"
+url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.0/gh-dash_v4.26.0_darwin-arm64"
+url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/579134246"
+
 [[tools."github:eza-community/eza"]]
 version = "0.23.5"
 backend = "github:eza-community/eza"
@@ -1006,6 +1069,29 @@ checksum = "sha256:902e2fe1cf0799198ef902c6b8c310a450fef629a6baba41d45641ef75c04
 url = "https://github.com/microsoft/TypeScript/releases/download/v7.0.2/typescript-darwin-arm64.tgz"
 url_api = "https://api.github.com/repos/microsoft/TypeScript/releases/assets/522602966"
 
+[[tools."github:mikalv/mcdu"]]
+version = "0.6.0"
+backend = "github:mikalv/mcdu"
+specifiers = ["latest"]
+
+[tools."github:mikalv/mcdu".options]
+matching_regex = '^mcdu-(linux-.*-musl|macos-.*)\.tar\.gz$'
+
+[tools."github:mikalv/mcdu"."platforms.linux-arm64"]
+checksum = "sha256:09a3868e721f69759bb8f013e87944a1c50d24a131208deb169682b82941c0b2"
+url = "https://github.com/mikalv/mcdu/releases/download/v0.6.0/mcdu-linux-aarch64-musl.tar.gz"
+url_api = "https://api.github.com/repos/mikalv/mcdu/releases/assets/532083007"
+
+[tools."github:mikalv/mcdu"."platforms.linux-x64"]
+checksum = "sha256:f97d4b7ad32681252c4f8cb62321e69f287579686bce36c3bcfa5e543c0e3597"
+url = "https://github.com/mikalv/mcdu/releases/download/v0.6.0/mcdu-linux-x86_64-musl.tar.gz"
+url_api = "https://api.github.com/repos/mikalv/mcdu/releases/assets/532083006"
+
+[tools."github:mikalv/mcdu"."platforms.macos-arm64"]
+checksum = "sha256:acd6ce5231c56ed034892a8c7e083f5c9c69b9fb9fe2c2245c83d17649f2a11a"
+url = "https://github.com/mikalv/mcdu/releases/download/v0.6.0/mcdu-macos-aarch64.tar.gz"
+url_api = "https://api.github.com/repos/mikalv/mcdu/releases/assets/532083005"
+
 [[tools."github:tailscale/tailcat"]]
 version = "0.7.0"
 backend = "github:tailscale/tailcat"
@@ -1046,6 +1132,25 @@ checksum = "sha256:7dd8c585da66c9977ecff5d50a93c4c77a946322668b7ab2e0082dd07d11e
 url = "https://github.com/tldr-pages/tlrc/releases/download/v1.13.1/tlrc-v1.13.1-aarch64-apple-darwin.tar.gz"
 url_api = "https://api.github.com/repos/tldr-pages/tlrc/releases/assets/427272020"
 provenance = "github-attestations"
+
+[[tools."github:tonistiigi/binfmt"]]
+version = "10.2.3-68"
+backend = "github:tonistiigi/binfmt"
+specifiers = ["latest"]
+
+[tools."github:tonistiigi/binfmt".options]
+matching_regex = '^binfmt_linux-(amd64|arm64)\.tar\.gz$'
+version_prefix = "deploy/v"
+
+[tools."github:tonistiigi/binfmt"."platforms.linux-arm64"]
+checksum = "sha256:f34d842ae7df0018c1e66ff06066da6c66c41e9e6788caa76916a07250286ac0"
+url = "https://github.com/tonistiigi/binfmt/releases/download/deploy/v10.2.3-68/binfmt_linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/tonistiigi/binfmt/releases/assets/441599085"
+
+[tools."github:tonistiigi/binfmt"."platforms.linux-x64"]
+checksum = "sha256:9f955e980acb29986365766db7d36383a1dbbf2159f30b532a74474f6f5dd75d"
+url = "https://github.com/tonistiigi/binfmt/releases/download/deploy/v10.2.3-68/binfmt_linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/tonistiigi/binfmt/releases/assets/441599094"
 
 [[tools."github:vi/websocat"]]
 version = "1.14.1"
@@ -1195,6 +1300,15 @@ specifiers = ["0.2.6"]
 version = "8.3.3"
 backend = "npm:vite"
 specifiers = ["latest"]
+
+[[tools."pipx:pyflakes"]]
+version = "4.0.3"
+backend = "pipx:pyflakes"
+specifiers = ["latest"]
+uv = { path = "locks/pipx-pyflakes/4.0.3~6c883192", digest = "sha256:c6d4d1ac3f645634348076a98791574a85c55710a941cbeddc010c35da8b2958" }
+
+[tools."pipx:pyflakes".options]
+uvx = "true"
 
 [[tools."pipx:rich-cli"]]
 version = "1.8.1"

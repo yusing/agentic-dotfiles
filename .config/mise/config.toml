@@ -12,11 +12,12 @@
 "node" = "latest"
 "github:fish-shell/fish-shell" = { "version" = "latest", "os" = ["linux"], "matching_regex" = "^fish-.*-linux-(x86_64|aarch64)\\.tar\\.xz$" }
 "github:aristocratos/btop" = { "version" = "latest", "os" = ["linux"], "matching_regex" = "^btop-(x86_64|aarch64)-unknown-linux-musl\\.tar\\.gz$", "strip_components" = 1, "bin_path" = "bin", "postinstall" = "mkdir -p \"$MISE_TOOL_INSTALL_PATH/share/btop\" && ln -s ../../themes \"$MISE_TOOL_INSTALL_PATH/share/btop/themes\"" }
-"python" = "latest"
+"python" = { "version" = "latest", "postinstall" = "\"$MISE_TOOL_INSTALL_PATH/bin/python\" -m pip install PyYAML==6.0.3" }
 "github:microsoft/TypeScript" = { "version" = "latest", "matching_regex" = "^typescript-(linux|darwin|win32)-", "strip_components" = 1, "bin_path" = "lib" }
 "github:llvm/llvm-project" = { "version" = "latest", "os" = ["linux"], "version_prefix" = "llvmorg-", "matching_regex" = "^LLVM-.*-Linux-(X64|ARM64)\\.tar\\.xz$", "strip_components" = 1, "bin_path" = "bin" }
 "pipx:rich-cli" = { "version" = "latest", "uvx" = true }
 "pipx:yamllint" = { "version" = "latest", "uvx" = true }
+"pipx:pyflakes" = { "version" = "latest", "uvx" = true }
 "pipx:semgrep" = { "version" = "latest", "uvx" = true }
 "github:vi/websocat" = { "version" = "latest", "bin" = "websocat" }
 "github:lightpanda-io/browser" = { "version" = "1.0.0", "matching_regex" = "^lightpanda-(aarch64|x86_64)-(linux|macos)$", "bin" = "lightpanda" }
@@ -48,6 +49,11 @@
 "aqua:casey/just" = "latest"
 "aqua:go-task/task" = "latest"
 "aqua:bazelbuild/bazelisk" = "latest"
+"aqua:bazelbuild/bazel" = "latest"
+"aqua:go-swagger/go-swagger" = "latest"
+"github:dlvhdr/gh-dash" = { "version" = "latest", "bin" = "gh-dash", "matching_regex" = "^gh-dash_.*_(linux|darwin)-(amd64|arm64)$" }
+"github:mikalv/mcdu" = { "version" = "latest", "matching_regex" = "^mcdu-(linux-.*-musl|macos-.*)\\.tar\\.gz$" }
+"github:tonistiigi/binfmt" = { "version" = "latest", "os" = ["linux"], "version_prefix" = "deploy/v", "matching_regex" = "^binfmt_linux-(amd64|arm64)\\.tar\\.gz$", "bin" = "binfmt" }
 "aqua:koalaman/shellcheck" = "latest"
 "aqua:jesseduffield/lazygit" = "latest"
 "aqua:mikefarah/yq" = "latest"

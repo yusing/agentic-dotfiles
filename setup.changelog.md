@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.10.4
+
+Manage Composer, cloc, rga, media and development utilities, Ruby, and Zsh
+plugins through Homebrew. Load the managed plugins in Zsh. Manage Bazel,
+go-swagger, gh-dash, and mcdu through mise. Manage the Tree-sitter CLI and runtime
+library through Homebrew on Linux and macOS. Declare WebKitGTK libraries for
+both Debian/Ubuntu and Arch; skip Linux-specific packages on macOS. Manage
+tonistiigi/binfmt's Linux command through mise and document its Docker image
+for emulator installation on Linux and macOS. Leave registration manual.
+Manage PostgreSQL 18 through Homebrew without migrating existing databases.
+Load declared Homebrew command paths in Zsh as well as Fish and Bash.
+Declare Linux OpenBSD netcat sources and retain macOS's built-in nc. Manage
+Pyflakes through mise; install PyYAML into mise Python, which already provides pip.
+Keep only remaining unmanaged packages in
+arch-deps.txt. Reconcile migrated distro packages only after validating their
+replacements, retaining copies that installed applications still require.
+
+Replace the mocked setup test suite with offline configuration, real compiler,
+cross-platform package selection, and managed Zsh startup smoke checks.
+
 ## 2.10.3
 
 Probe scriptc's version instead of accepting its executable placeholder as a
