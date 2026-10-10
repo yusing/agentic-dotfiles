@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.5
+# version: 2.11.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -2405,7 +2405,7 @@ main() {
   ensure_toml_parser
 
   STEP="setup home git repository"
-  setup_home_repo
+  [ "${SETUP_IMAGE_BUILD:-0}" = 1 ] || setup_home_repo
 
   STEP="validate mise inventory"
   setup_config mise-records >/dev/null
@@ -2436,7 +2436,7 @@ main() {
   fi
 
   STEP="resolve home paths in configuration"
-  rewrite_home_paths
+  [ "${SETUP_IMAGE_BUILD:-0}" = 1 ] || rewrite_home_paths
 
   STEP="reconcile tool ownership"
   load_brew_prefix_env
@@ -2446,10 +2446,10 @@ main() {
   run_additional_installs
 
   STEP="set login shell"
-  ensure_fish_login_shell
+  [ "${SETUP_IMAGE_BUILD:-0}" = 1 ] || ensure_fish_login_shell
 
   STEP="configure image paste"
-  configure_image_paste
+  [ "${SETUP_IMAGE_BUILD:-0}" = 1 ] || configure_image_paste
 
   STEP="verify"
   hash -r 2>/dev/null || true

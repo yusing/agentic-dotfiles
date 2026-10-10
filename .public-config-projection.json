@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "cb973d94ff2561f58b3d4ba5da9e8056c62a00d4",
+  "sourceCommit": "9d65553f8fdda4f7fa85f8caa2ff5c7d6c3de498",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -729,9 +729,15 @@
       "executable": false
     },
     {
+      "path": ".github/workflows/tool-images.yml",
+      "kind": "file",
+      "sha256": "861d5aa767f2984c0cc5f5024b7b7a9642101e9bc79ed1671ffb3ea092a3fdc5",
+      "executable": false
+    },
+    {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "b60a2c51a9e82de538286da81f2b5f8e275969923bbaa0c655deefaff7d446e8",
+      "sha256": "bc731b6fcaacd51d21ecdf9da04744900a34eabacf5049ac02f247dbf76cfe72",
       "executable": false
     },
     {
@@ -935,6 +941,24 @@
       "path": ".local/lib/tmp-clean/tmp_clean.ts",
       "kind": "file",
       "sha256": "d328bbe59b1aef87bb03b4f708730057304719c825ca85d9473f327d57b5fcec",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/tool-image/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "34db7de7f120ea3b142aed2d1d41b9f573d3ebf0174cd39f88499c01ca2761b9",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/tool-image/Dockerfile",
+      "kind": "file",
+      "sha256": "6954442ef6d715c5b678cb16240540f3a6c4bf4db6c421aababa5b3696a86aaa",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/tool-image/finalize.ts",
+      "kind": "file",
+      "sha256": "5adccb304c03aedf6e3a870ec13c9793940f2c6103f39185de1dbc58d7567ee6",
       "executable": false
     },
     {
@@ -1581,7 +1605,7 @@
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "2bdd439f1932525ebb26a29f09e140937d4a5a7b8ecb349def4bbecc3f0834de",
+      "sha256": "7a1318aae028bc45f70e80ae55548d5418e6877d260bab6320862f4731ad2219",
       "executable": false
     },
     {
@@ -1593,7 +1617,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "4509d1ee93dc9d84a248f268d5493116ec4fefc6d85f117b13350d6fe1d5e39b",
+      "sha256": "c1284a20d2eedef8d41315eb18d0daa08b5d1f3af0d89b2ce0de0b417dcdd24e",
       "executable": true
     }
   ]

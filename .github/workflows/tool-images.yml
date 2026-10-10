@@ -1,0 +1,221 @@
+name: Linux tool images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - setup.sh
+      - setup.json
+      - .config/mise/**
+      - .local/lib/agent-tools/**
+      - .local/lib/tool-image/**
+      - .local/lib/compile-agent-tools/**
+      - .local/bin/compile-agent-tools
+      - .codex/hooks/**
+      - .grok/hooks/**
+      - .github/workflows/tool-images.yml
+  pull_request:
+    paths:
+      - setup.sh
+      - setup.json
+      - .config/mise/**
+      - .local/lib/agent-tools/**
+      - .local/lib/tool-image/**
+      - .github/workflows/tool-images.yml
+  schedule:
+    - cron: '17 3 * * 2'
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: Refresh all upstream tool versions
+        type: boolean
+        default: false
+
+concurrency:
+  group: linux-tool-images
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 180
+    permissions:
+      contents: read
+      packages: write
+    env:
+      REGISTRY: ghcr.io/${{ github.repository_owner }}/agentic-tools
+    steps:
+      - name: Free space for the complete tool inventory
+        run: |
+          # The measured installation layer exceeds the runner's default free space.
+          # All toolchains are installed inside Docker, not from these hosted SDKs.
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
+          df -h /
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+      - name: Prepare filtered build context
+        run: |
+          context=$(mktemp -d)
+          bun build --compile --outfile=/tmp/project-public-config .local/lib/project-public-config/project-public-config.ts
+          /tmp/project-public-config "$context"
+          echo "IMAGE_CONTEXT=$context" >> "$GITHUB_ENV"
+          if [[ '${{ github.event_name }}' == schedule || '${{ inputs.refresh }}' == true ]]; then
+            echo 'IMAGE_REFRESH=1' >> "$GITHUB_ENV"
+            echo "UPGRADE_EPOCH=$GITHUB_RUN_ID" >> "$GITHUB_ENV"
+          else
+            echo 'IMAGE_REFRESH=0' >> "$GITHUB_ENV"
+            echo 'UPGRADE_EPOCH=locked' >> "$GITHUB_ENV"
+          fi
+      - uses: docker/setup-buildx-action@v4
+        id: buildx
+      - uses: actions/cache@v6
+        with:
+          path: tool-download-cache
+          key: tool-downloads-${{ matrix.arch }}-${{ github.run_id }}
+          restore-keys: tool-downloads-${{ matrix.arch }}-
+      - uses: reproducible-containers/buildkit-cache-dance@v3
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          cache-map: '{"tool-download-cache": {"target": "/opt/agent-home/.cache", "uid": "1000", "gid": "1000"}}'
+      - uses: docker/login-action@v4
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build container runtime
+        uses: docker/build-push-action@v7
+        with:
+          context: ${{ env.IMAGE_CONTEXT }}
+          file: ${{ env.IMAGE_CONTEXT }}/.local/lib/tool-image/Dockerfile
+          target: tools
+          outputs: type=image,push=${{ github.event_name != 'pull_request' }},compression=zstd,compression-level=3,oci-mediatypes=true
+          tags: ${{ env.REGISTRY }}-container:build-${{ github.run_id }}-linux-${{ matrix.arch }}
+          labels: org.opencontainers.image.source=https://github.com/${{ github.repository }}
+          build-args: |
+            REFRESH=${{ env.IMAGE_REFRESH }}
+            UPGRADE_EPOCH=${{ env.UPGRADE_EPOCH }}
+          secrets: github_token=${{ secrets.GITHUB_TOKEN }}
+          cache-from: type=gha,scope=tools-${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=tools-${{ matrix.arch }}
+      - name: Export SquashFS artifact
+        uses: docker/build-push-action@v7
+        with:
+          context: ${{ env.IMAGE_CONTEXT }}
+          file: ${{ env.IMAGE_CONTEXT }}/.local/lib/tool-image/Dockerfile
+          target: export
+          outputs: type=local,dest=out
+          build-args: |
+            REFRESH=${{ env.IMAGE_REFRESH }}
+            UPGRADE_EPOCH=${{ env.UPGRADE_EPOCH }}
+          secrets: github_token=${{ secrets.GITHUB_TOKEN }}
+          cache-from: type=gha,scope=tools-${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=tools-${{ matrix.arch }}
+      - name: Test the consumer runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fuse3
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          export PATH="$PWD/out:$PATH"
+          out/agent-tools run --image "$PWD/out/tools.sqfs" -- /bin/sh -ec '
+            git --version
+            python -c "import yaml; print(yaml.__version__)"
+            node -e "require(\"crypto\").randomBytes(16)"
+            scriptc --version
+            mosh-server --version
+          '
+          AGENT_TOOLS_TEST_BINARY="$PWD/out/agent-tools" AGENT_TOOLS_TEST_IMAGE="$PWD/out/tools.sqfs" \
+            bun test ./.local/tests/agent_tools_test.ts
+          # shellcheck disable=SC2016
+          out/agent-tools run --image "$PWD/out/tools.sqfs" -- /bin/sh -ec '
+            for command in unzip xclip gcc; do
+              test -x "/opt/agent-tools/bin/$command"
+            done
+          '
+      - uses: oras-project/setup-oras@v2
+      - name: Publish immutable raw OCI files
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          printf '%s' "$GH_TOKEN" | oras login ghcr.io -u '${{ github.actor }}' --password-stdin
+          cd out
+          files=()
+          for file in *; do
+            [[ "$file" == zsyncmake ]] || files+=("$file:application/octet-stream")
+          done
+          oras push "$REGISTRY:build-$GITHUB_RUN_ID-linux-${{ matrix.arch }}" \
+            --artifact-type application/vnd.yusing.agent-tools.v1 \
+            --annotation 'org.yusing.agent-tools.arch=${{ matrix.arch }}' \
+            --annotation "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY" \
+            --annotation "org.opencontainers.image.revision=$GITHUB_SHA" "${files[@]}"
+          mkdir -p ../bootstrap
+          cp agent-tools '../bootstrap/agent-tools-linux-${{ matrix.arch }}'
+          cd ../bootstrap
+          sha256sum 'agent-tools-linux-${{ matrix.arch }}' > 'agent-tools-linux-${{ matrix.arch }}.sha256'
+      - uses: actions/upload-artifact@v7
+        if: github.event_name != 'pull_request'
+        with:
+          name: bootstrap-${{ matrix.arch }}
+          path: bootstrap/*
+          retention-days: 1
+
+  release:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      packages: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REGISTRY: ghcr.io/${{ github.repository_owner }}/agentic-tools
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: bootstrap-*
+          merge-multiple: true
+          path: bootstrap
+      - uses: oras-project/setup-oras@v2
+      - name: Check anonymous artifact access before promotion
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, urllib.parse, urllib.request
+          base = os.environ["REGISTRY"].removeprefix("ghcr.io/")
+          for repository in (base, f"{base}-container"):
+              query = urllib.parse.urlencode({"service": "ghcr.io", "scope": f"repository:{repository}:pull"})
+              token = json.load(urllib.request.urlopen(f"https://ghcr.io/token?{query}"))["token"]
+              headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.oci.image.manifest.v1+json, application/vnd.oci.image.index.v1+json"}
+              for arch in ("amd64", "arm64"):
+                  tag = f"build-{os.environ['GITHUB_RUN_ID']}-linux-{arch}"
+                  url = f"https://ghcr.io/v2/{repository}/manifests/{tag}"
+                  manifest = json.load(urllib.request.urlopen(urllib.request.Request(url, headers=headers)))
+                  assert manifest["schemaVersion"] == 2
+                  if repository == base:
+                      descriptor = next(file for file in manifest["layers"] if file["annotations"]["org.opencontainers.image.title"] == "commands.json")
+                      url = f"https://ghcr.io/v2/{repository}/blobs/{descriptor['digest']}"
+                      data = urllib.request.urlopen(urllib.request.Request(url, headers=headers)).read()
+                      assert f"sha256:{hashlib.sha256(data).hexdigest()}" == descriptor["digest"]
+                  print(f"Anonymous publication access verified: {repository}, {arch}")
+          PY
+      - name: Publish bootstrap and promote tested images
+        run: |
+          gh release create "tools-$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --latest --title "Linux tools $GITHUB_RUN_ID" \
+            --notes 'Linux x86-64 and ARM64 SquashFS tools. Install with setup.sh or upgrade with agent-tools pull.' bootstrap/*
+          printf '%s' "$GH_TOKEN" | oras login ghcr.io -u '${{ github.actor }}' --password-stdin
+          for arch in amd64 arm64; do
+            oras tag "$REGISTRY:build-$GITHUB_RUN_ID-linux-$arch" "stable-linux-$arch"
+            oras tag "$REGISTRY-container:build-$GITHUB_RUN_ID-linux-$arch" "stable-linux-$arch"
+          done

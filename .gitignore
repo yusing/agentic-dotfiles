@@ -164,6 +164,9 @@ __pycache__
 !/.config/zed/snippets/
 !/.config/zed/snippets/go.json
 !/.gitconfig
+!/.github/
+!/.github/workflows/
+!/.github/workflows/tool-images.yml
 !/.gitignore
 !/.gitignore_global
 !/.grok/
@@ -213,6 +216,10 @@ __pycache__
 !/.local/lib/tmp-clean/
 !/.local/lib/tmp-clean/CHANGELOG.md
 !/.local/lib/tmp-clean/tmp_clean.ts
+!/.local/lib/tool-image/
+!/.local/lib/tool-image/CHANGELOG.md
+!/.local/lib/tool-image/Dockerfile
+!/.local/lib/tool-image/finalize.ts
 !/.local/lib/update-oh-my-posh-theme/
 !/.local/lib/update-oh-my-posh-theme/CHANGELOG.md
 !/.local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts

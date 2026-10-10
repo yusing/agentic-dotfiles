@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.11.0
+
+Support isolated CI image installation without changing host checkout, shell,
+configuration paths, or clipboard services.
+
 ## 2.10.5
 
 Skip APT recommendations and suggestions during installation and declared-package
