@@ -22,9 +22,6 @@
     "authoring-skill": {
       "enabled": true
     },
-    "batch-agent-sessions": {
-      "enabled": true
-    },
     "build-code-skeleton": {
       "enabled": true
     },

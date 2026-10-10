@@ -16,7 +16,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.13";
+const VERSION = "1.0.14";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -258,7 +258,6 @@ function main(): void {
   }
   if (platform() === "linux") compileHelper(join(localLib, "agent-tools", "agent-tools.ts"));
   for (const [directory, name] of [
-    ["batch-agent-sessions", "batch-agent-sessions"],
     ["tmp-clean", "tmp_clean"],
     ["sync-claude-agent-ports", "sync-claude-agent-ports"],
     ["sync-kilo-agent-ports", "sync-kilo-agent-ports"],

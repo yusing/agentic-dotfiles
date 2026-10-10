@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.19";
+export const VERSION = "1.3.20";
 
 type TreeEntry = {
 	mode: string;
@@ -204,8 +204,6 @@ const EXACT_PATHS = new Set([
 	".github/workflows/tool-images.yml",
 	".local/tests/agent_tools_test.ts",
 	".local/tests/agent_tools_pull_test.ts",
-	".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
-	".local/lib/batch-agent-sessions/CHANGELOG.md",
 	".local/lib/tmp-clean/tmp_clean.ts",
 	".local/lib/tmp-clean/CHANGELOG.md",
 	".local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts",
@@ -226,7 +224,6 @@ const EXACT_PATHS = new Set([
 
 const PROJECTED_SKILL_NAMES = [
 	"authoring-skill",
-	"batch-agent-sessions",
 	"build-code-skeleton",
 	"codebase-review",
 	"commit",

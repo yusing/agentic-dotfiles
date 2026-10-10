@@ -193,9 +193,6 @@ __pycache__
 !/.local/lib/agent-tools/agent-tools.ts
 !/.local/lib/agent-tools/CHANGELOG.md
 !/.local/lib/agent-tools/pull.ts
-!/.local/lib/batch-agent-sessions/
-!/.local/lib/batch-agent-sessions/batch-agent-sessions.ts
-!/.local/lib/batch-agent-sessions/CHANGELOG.md
 !/.local/lib/compile-agent-tools/
 !/.local/lib/compile-agent-tools/CHANGELOG.md
 !/.local/lib/compile-agent-tools/compile-agent-tools.ts
@@ -234,12 +231,6 @@ __pycache__
 !/.skills-mgr/skills/.remote-patches/72af4d9e0d00c4e4a9e66bbe2525a6b029fc1bedc63ea0eceb54d4d8e29888de.patch
 !/.skills-mgr/skills/authoring-skill/
 !/.skills-mgr/skills/authoring-skill/SKILL.md
-!/.skills-mgr/skills/batch-agent-sessions/
-!/.skills-mgr/skills/batch-agent-sessions/references/
-!/.skills-mgr/skills/batch-agent-sessions/references/preparation.md
-!/.skills-mgr/skills/batch-agent-sessions/scripts/
-!/.skills-mgr/skills/batch-agent-sessions/scripts/sessions.sh
-!/.skills-mgr/skills/batch-agent-sessions/SKILL.md
 !/.skills-mgr/skills/build-code-skeleton/
 !/.skills-mgr/skills/build-code-skeleton/agents/
 !/.skills-mgr/skills/build-code-skeleton/agents/openai.yaml

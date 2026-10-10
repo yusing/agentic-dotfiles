@@ -283,7 +283,6 @@ determine when it applies.
 | --- | --- | --- | --- | --- |
 | `agent-browser` | Remote | Automate websites and Electron apps, extract data, and run exploratory QA | Yes | Always |
 | `authoring-skill` | Shared | Author, update, review, or rename skills and maintain registration and projection | Yes | Always |
-| `batch-agent-sessions` | Shared | Run parallel batch sessions with deterministic lifecycle, additive tasks, follow-ups, and integration | No | Always |
 | `build-code-skeleton` | Shared | Create an initial compile-safe project skeleton | Yes | Always |
 | `codebase-review` | Shared | Review the whole working tree | No | Always |
 | `commit` | Shared | Write commits and fold follow-up fixes into them | Yes | Always |
