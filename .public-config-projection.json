@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "028d1fdc4b29f9548d33f321c99a7fd5cd6fb9e7",
+  "sourceCommit": "1fc14084d872a249227b574eddf8620830163051",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -227,13 +227,13 @@
     {
       "path": ".codex/hooks/generated_code_guard.changelog.md",
       "kind": "file",
-      "sha256": "fe8e9bbfb572019e48c35eb297c7ec6dcae0f6d673a118a78f0ca63865718641",
+      "sha256": "7e2f7ca71be1ce07f9b23b1692ab289f5b1eeb980372878a959cb9147888e375",
       "executable": false
     },
     {
       "path": ".codex/hooks/generated_code_guard.ts",
       "kind": "file",
-      "sha256": "4b792f1463d02c6fce529dab33d3cb95f2eeedf40da5bca24a04a58f7e680069",
+      "sha256": "8cf6ca2f6bc6e021bfc4583c8a005ec69c929961c7093d4a03a709081db75840",
       "executable": false
     },
     {

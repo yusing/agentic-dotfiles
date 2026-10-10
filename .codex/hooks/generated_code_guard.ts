@@ -12,7 +12,7 @@ import {
   writeJson,
 } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.2";
+export const VERSION = "1.0.3";
 
 const MARKER_GENERATED = "Code generated";
 const MARKER_DO_NOT_EDIT = "DO NOT EDIT";
@@ -84,6 +84,9 @@ function patchSectionMatches(
 }
 
 export function isGeneratedGoSource(source: string): boolean {
+  if (!source.includes(MARKER_GENERATED) || !source.includes(MARKER_DO_NOT_EDIT)) {
+    return false;
+  }
   let index = 0;
   let inBlockComment = false;
   let inDoubleQuote = false;
@@ -221,7 +224,7 @@ function targetPaths(event: Record<string, unknown>): string[] {
   const seen = new Set<string>();
   for (const rawPath of rawPaths) {
     const resolved = resolvePath(rawPath, cwd);
-    if (!seen.has(resolved)) {
+    if (path.extname(resolved) === ".go" && !seen.has(resolved)) {
       paths.push(resolved);
       seen.add(resolved);
     }
@@ -257,7 +260,11 @@ function replaceHunk(source: string[], hunk: string): string[] | undefined {
   }
   const limit = source.length - before.length + 1;
   for (let index = 0; index < Math.max(limit, 0); index += 1) {
-    if (source.slice(index, index + before.length).every((line, offset) => line === before[offset])) {
+    let offset = 0;
+    while (offset < before.length && source[index + offset] === before[offset]) {
+      offset += 1;
+    }
+    if (offset === before.length) {
       return [...source.slice(0, index), ...after, ...source.slice(index + before.length)];
     }
   }
@@ -271,7 +278,15 @@ function updatedSource(filePath: string, body: string): string | undefined {
   } catch {
     return undefined;
   }
-  let source = existing.split(/\r?\n/);
+  // Patch hunks replace whole lines, so each marker must occur in the original
+  // source or the patch body. Keep reconstruction when comments can be joined.
+  if (
+    (!existing.includes(MARKER_GENERATED) && !body.includes(MARKER_GENERATED)) ||
+    (!existing.includes(MARKER_DO_NOT_EDIT) && !body.includes(MARKER_DO_NOT_EDIT))
+  ) {
+    return undefined;
+  }
+  let source = existing.includes("\r") ? existing.split(/\r?\n/) : existing.split("\n");
   const hunks = body.split(/^@@[^\r\n]*\r?$/m).slice(1);
   if (hunks.length === 0) {
     return undefined;
@@ -296,6 +311,9 @@ function patchSources(patch: string, cwd: string): Array<[string, string]> {
       continue;
     }
     const filePath = resolvePath(match.path, cwd);
+    if (path.extname(filePath) !== ".go") {
+      continue;
+    }
     const body = match.body;
     let source = operation === "Update" ? updatedSource(filePath, body) : undefined;
     if (source === undefined) {
@@ -310,7 +328,10 @@ function patchSources(patch: string, cwd: string): Array<[string, string]> {
   return proposed;
 }
 
-function proposedSources(event: Record<string, unknown>): Array<[string, string]> {
+function proposedSources(
+  event: Record<string, unknown>,
+  directPaths: string[],
+): Array<[string, string]> {
   const toolInput = event.tool_input;
   if (!isRecord(toolInput)) {
     return [];
@@ -318,7 +339,6 @@ function proposedSources(event: Record<string, unknown>): Array<[string, string]
   const cwdValue = asString(event.cwd);
   const cwd = cwdValue && cwdValue.length > 0 ? cwdValue : process.cwd();
   const proposed: Array<[string, string]> = [];
-  const directPaths = targetPaths(event);
   const content = toolInput.content;
   if (typeof content === "string") {
     for (const filePath of directPaths) {
@@ -360,11 +380,14 @@ export function responseFor(event: unknown): Record<string, unknown> | undefined
   if (!isRecord(event)) {
     return undefined;
   }
-  const existingGenerated = targetPaths(event).some((filePath) => isGeneratedGoFile(filePath));
-  const proposedGenerated = proposedSources(event).some(
-    ([filePath, source]) => path.extname(filePath) === ".go" && isGeneratedGoSource(source),
+  const paths = targetPaths(event);
+  if (paths.some((filePath) => isGeneratedGoFile(filePath))) {
+    return deny(REJECTION_REASON);
+  }
+  const proposedGenerated = proposedSources(event, paths).some(
+    ([, source]) => isGeneratedGoSource(source),
   );
-  if (!existingGenerated && !proposedGenerated) {
+  if (!proposedGenerated) {
     return undefined;
   }
   return deny(REJECTION_REASON);
