@@ -118,6 +118,7 @@ jobs:
           file: ${{ env.IMAGE_CONTEXT }}/.local/lib/tool-image/Dockerfile
           target: export
           outputs: type=local,dest=out
+          provenance: false
           build-args: |
             REFRESH=${{ env.IMAGE_REFRESH }}
             UPGRADE_EPOCH=${{ env.UPGRADE_EPOCH }}
@@ -166,6 +167,16 @@ jobs:
           cp agent-tools '../bootstrap/agent-tools-linux-${{ matrix.arch }}'
           cd ../bootstrap
           sha256sum 'agent-tools-linux-${{ matrix.arch }}' > 'agent-tools-linux-${{ matrix.arch }}.sha256'
+      - name: Test the published anonymous consumer pull
+        if: github.event_name != 'pull_request'
+        run: |
+          consumer=$(mktemp -d "$RUNNER_TEMP/agent-tools-consumer.XXXXXX")
+          out/agent-tools pull --repository "$REGISTRY" \
+            --tag "build-$GITHUB_RUN_ID-linux-${{ matrix.arch }}" --state "$consumer"
+          "$consumer/bin/git" --version
+          "$consumer/bin/agent-tools" pull --repository "$REGISTRY" \
+            --tag "build-$GITHUB_RUN_ID-linux-${{ matrix.arch }}" --state "$consumer"
+          rm -rf "$consumer"
       - uses: actions/upload-artifact@v7
         if: github.event_name != 'pull_request'
         with:

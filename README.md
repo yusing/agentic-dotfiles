@@ -82,7 +82,6 @@ agent-tools pull               # install or upgrade the Linux runtime
 git --version                  # managed commands are on the shell PATH
 ```
 
-The public pull channel must be published before these commands can succeed.
 CI builds both architectures, caches installation downloads, and refreshes tools
 weekly. Releases include the native
 bootstrap; the large image lives in GHCR to avoid release-asset size limits.
@@ -121,7 +120,7 @@ agent-tools run --image /path/to/tools.sqfs -- git --version
 
 Maintainers must set the GHCR packages `agentic-tools` and
 `agentic-tools-container` to public after their first publication. CI checks
-anonymous manifest and artifact access before promoting either stable channel.
+anonymous pulls and mounted commands before promoting either stable channel.
 GitHub creates new packages as private even for public source repositories.
 
 Linux inventory changes need a new CI publication before consumers can pull
