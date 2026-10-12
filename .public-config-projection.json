@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b34ba71a936f0340a33d4977244379731f6dc791",
+  "sourceCommit": "b6ca2bec1b3858a51964ec64f492ced51f9b7ece",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -227,13 +227,13 @@
     {
       "path": ".codex/hooks/generated_code_guard.changelog.md",
       "kind": "file",
-      "sha256": "fe8e9bbfb572019e48c35eb297c7ec6dcae0f6d673a118a78f0ca63865718641",
+      "sha256": "7e2f7ca71be1ce07f9b23b1692ab289f5b1eeb980372878a959cb9147888e375",
       "executable": false
     },
     {
       "path": ".codex/hooks/generated_code_guard.ts",
       "kind": "file",
-      "sha256": "4b792f1463d02c6fce529dab33d3cb95f2eeedf40da5bca24a04a58f7e680069",
+      "sha256": "8cf6ca2f6bc6e021bfc4583c8a005ec69c929961c7093d4a03a709081db75840",
       "executable": false
     },
     {
@@ -731,7 +731,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "5d861e85cac99e6b91fe6c586e07e67739cd4c242fdcd3be225b2aa82230daf6",
+      "sha256": "5a957ff2cda102739e08abe68ba06d8003f3a03ba404ab0591f8831b2f4ee99e",
       "executable": false
     },
     {
@@ -822,18 +822,6 @@
       "kind": "file",
       "sha256": "eed095224325b2aced25bfcd5d6d692a543d6b4ec890305b67be7f6974bbf8cb",
       "executable": true
-    },
-    {
-      "path": ".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
-      "kind": "file",
-      "sha256": "2914f7c014c4f1d51e9e817e3df0a56b5bd8b97056bd22dfd76c212fb6c94282",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/batch-agent-sessions/CHANGELOG.md",
-      "kind": "file",
-      "sha256": "5b637578f89900415db356b2b03e6cd1a5b06f6d28e19e47287375afaf31973a",
-      "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
@@ -953,24 +941,6 @@
       "path": ".skills-mgr/skills/authoring-skill/SKILL.md",
       "kind": "file",
       "sha256": "305c9a9fc817e91d93a64f517db8247db1e2683feada2fffbeb76fe48cbf30a8",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/batch-agent-sessions/references/preparation.md",
-      "kind": "file",
-      "sha256": "c6790cc6cf93e5d985959f6b7b56bc3e27a844a533c87ff68d9b2def20cd1c33",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/batch-agent-sessions/scripts/sessions.sh",
-      "kind": "file",
-      "sha256": "c901979f5da84a6d8ca1c3b63aae1c6fa7a8fe253b01a81758fd5a32a5f6e723",
-      "executable": true
-    },
-    {
-      "path": ".skills-mgr/skills/batch-agent-sessions/SKILL.md",
-      "kind": "file",
-      "sha256": "0a03559717ca970a58ab226ebd3559b5d9dfe611fe3457f27e0c8ce0a2eab3ea",
       "executable": false
     },
     {
