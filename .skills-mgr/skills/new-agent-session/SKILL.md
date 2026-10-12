@@ -7,7 +7,7 @@ disable-model-invocation: true
 # New agent session
 
 Deliver a visible, interactive agent in its own worktree and linked Herdr subspace.
-Use this workflow for standalone launches; `batch-agent-sessions` owns batch orchestration.
+Use this workflow for standalone launches. Mekugi's `/orchestrate` coordinates batch threads.
 
 ## Preflight and inputs
 
@@ -37,7 +37,7 @@ its caller runs. A new pane may lack the executable on PATH. If the caller's Mek
 cannot be reused, report the failure rather than substitute plain Codex.
 Launch Mekugi with `codex --yolo` (no approvals or sandbox). A Mekugi caller already uses this
 mode; other callers need user authorization. Standalone launches do not copy caller arguments
-such as `--debug` or resume targets; batch wrapper inheritance belongs to `batch-agent-sessions`.
+such as `--debug` or resume targets.
 
 Create the linked subspace, preserving focus unless the user requests a change:
 

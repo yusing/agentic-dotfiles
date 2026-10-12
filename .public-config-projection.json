@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b6ca2bec1b3858a51964ec64f492ced51f9b7ece",
+  "sourceCommit": "a9e0735b3ffc8fe5f313ed97a0d71d8d2f6f0975",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -826,25 +826,25 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "f70e6247839caca3cde7a40e5a83612ac569e7115e66fab7a1b417038695ede2",
+      "sha256": "f52bb995798b4c5e0647df704755874611e96e8e55e8c92064f3bd368108a4de",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "cdb8a18b1882a4a1e9907d2ff6a74bd8a1c58e2be384a7864b4005858d0edaa2",
+      "sha256": "2bce5cc818f35ab2597381fc5d43264c7af18f60c03aa6ab4a15cc2629ed7334",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "77e7fc573ddded23f98453bd55080a2af6771a1a2b16e1884c5566b2b1f79644",
+      "sha256": "1388f787fb7a3154e39c3bc66d30868aafbca045bf2c6e0d7356f139ffb707d1",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "e3b8b86b7d020a0dccc70fcc3ff7e145d30d9dcad3e357fc71259217447d37f2",
+      "sha256": "a536c906db045f9e1a5420126f9b89f6c6f181fd42e6e7466651612cf3807811",
       "executable": true
     },
     {
@@ -922,7 +922,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "25f646c988f68dea0b23f9601d5d87f6e562d538078c2013ab4a4d6754e6f0f8",
+      "sha256": "f719c9074da3e94e4fdc840d0068c082f28fe3427ba45dd67fbf20554bc75da7",
       "executable": false
     },
     {
@@ -1138,7 +1138,7 @@
     {
       "path": ".skills-mgr/skills/new-agent-session/SKILL.md",
       "kind": "file",
-      "sha256": "718aedb3d8e9761038468ab876c7e6c20690a303a350492656434ac364dc354f",
+      "sha256": "ba29a28c96bd687d543c42161a95b074aecf35eff509b232a42a4fffde8bc54f",
       "executable": false
     },
     {
@@ -1515,7 +1515,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "2d677bb16f3184eff1df98c8658a5e20faa83fc05bc8142eaba25c2bb61ff9ae",
+      "sha256": "69ccb168c035543e82362e02c1c8c98804605fddf1363962240d7c78d0bb869d",
       "executable": false
     },
     {
