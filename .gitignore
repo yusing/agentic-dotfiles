@@ -169,6 +169,10 @@ __pycache__
 !/.local/bin/compile-agent-tools.changelog.md
 !/.local/bin/svn-merge
 !/.local/lib/
+!/.local/lib/agent-tools/
+!/.local/lib/agent-tools/agent-tools.ts
+!/.local/lib/agent-tools/CHANGELOG.md
+!/.local/lib/agent-tools/pull.ts
 !/.local/lib/compile-agent-tools/
 !/.local/lib/compile-agent-tools/CHANGELOG.md
 !/.local/lib/compile-agent-tools/compile-agent-tools.ts
@@ -192,6 +196,8 @@ __pycache__
 !/.local/lib/update-oh-my-posh-theme/
 !/.local/lib/update-oh-my-posh-theme/CHANGELOG.md
 !/.local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts
+!/.local/tests/
+!/.local/tests/agent_tools_test.ts
 !/.skills-mgr/
 !/.skills-mgr/.skills-mgr.json
 !/.skills-mgr/skills/
