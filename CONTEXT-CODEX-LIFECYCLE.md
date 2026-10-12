@@ -22,10 +22,11 @@
    suppression rules. Hook refresh is separate from the cached static `AGENTS.md` discovery.
    Matched events receive project context and current skill metadata without
    selecting implementation or validation work.
-3. **Tool loop.** Before matched tools run, guards may reject generated-Go edits or container
-   mutations and unclassified commands from spawned agents. Recognized read-only container
-   inspection remains available. The registrations and supported command forms bound
-   this coverage.
+3. **Tool loop.** Before matched tools run, Codex's registered generated-code guard may reject
+   direct generated-Go edits. Codex does not register `subagent_exec_guard`; role prompts still
+   state the spawned-agent container and orchestration command boundary. Role guidance is
+   separate from runtime permissions and enforcement. Registrations and supported command
+   forms bound hook coverage.
    Guards are silent when their policies do not apply.
 4. **Turn end.** All matching hooks from active configuration sources run for their lifecycle
    event. The enabled Browser plugin currently contributes a `Stop` MCP hook independently of

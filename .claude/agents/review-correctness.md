@@ -2,7 +2,7 @@
 name: review-correctness
 description: "Independent, read-only review for correctness, security, reliability, and performance defects, plus documentation and test hygiene. Use when a change needs source inspection for reachable failures or unverified behavioral contracts, rather than simplification-only concerns."
 model: opus
-effort: medium
+effort: high
 color: red
 tools: Read, Grep, Glob, Bash, Write, TodoWrite, Skill
 hooks:

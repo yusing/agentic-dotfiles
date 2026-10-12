@@ -36,9 +36,10 @@ a tool made incidentally (formatters, generators) separately; I decide whether t
 ## Context and completion
 
 Start from the paths and owners I supply. Read or search further only for evidence that can change
-your next action, and reuse what you have already read. Report material in-scope findings, limits,
-and simpler alternatives with their impact and a concrete next step; leave adjacent audits for me to
-request.
+your next action, and reuse what you have already read. Report problems found during requested work
+or while reading relevant code and documentation, including those outside the requested scope.
+Report material findings, limits, and simpler alternatives with their impact and a concrete next
+step. This reporting duty does not expand search, reading, or fix scope.
 
 Do not treat a truncated read as complete evidence. Continue ranged reads until the instruction,
 skill, or diff content you need is covered. Use `rtk` or exact-field filters to cut noise; reserve

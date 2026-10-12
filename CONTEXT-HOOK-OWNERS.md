@@ -31,18 +31,20 @@
   `.codex/hooks/bin/skills_mgr_inventory` command adds the `--- skills-mgr injected ---` heading
   for Claude; it is not the command currently registered by Codex.
   `CONTEXT-GROK-HOOK-PORT.md` records Grok's missing subagent-start delivery.
-- Tool guards: `.codex/hooks/bin/generated_code_guard` blocks direct generated-Go edits;
-  `.codex/hooks/bin/subagent_exec_guard` owns the container and orchestration command boundary
-  for spawned agents, keyed on the event's `agent_type`. Codex registers the former for
-  `apply_patch|Edit|Write` and the latter for `Bash`; `.claude/settings.json` registers the
-  former for Claude's edit tools. These matcher strings alone do not prove
+- Tool guards: `.codex/hooks/bin/generated_code_guard` blocks direct generated-Go edits.
+  Codex registers it for `apply_patch|Edit|Write`; `.claude/settings.json` registers it for
+  Claude's edit tools. `.codex/hooks/bin/subagent_exec_guard` implements the container and
+  orchestration command boundary for spawned agents, keyed on the event's `agent_type`.
+  It has no Codex registration. Claude registers it through Bash-capable role frontmatter,
+  and Grok through its explicit port configuration. These matcher strings alone do not prove
   coverage of every client tool or command wrapper. Check the client's hook-name mapping when
   a tool surface changes.
 - Subagent command boundary: Codex re-applies the parent turn's permission profile and
   approval policy after a role layer, so `sandbox_mode` and `approval_policy` in
   `.codex/agents/*.toml` have no runtime effect and must not be declared there.
-  `.codex/hooks/bin/subagent_exec_guard` enforces its matched command boundary when the event
-  identifies the running role. Events without a spawned-role identity are exempt; a spawned
+  `.codex/hooks/bin/subagent_exec_guard` enforces its matched command boundary only in clients
+  that register it and only when the event identifies the running role. Codex does not register
+  this hook. Events without a spawned-role identity are exempt; a spawned
   `default` role is still restricted. Task authorization and runtime permissions remain applicable.
   Every role prompt
   states the boundary: recognized read-only container and orchestration inspection is allowed;

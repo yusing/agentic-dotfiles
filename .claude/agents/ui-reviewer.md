@@ -2,7 +2,7 @@
 name: ui-reviewer
 description: "Independent reviewer of browser and terminal interfaces, including visual coherence, interaction lifecycles, and rendered or runtime evidence. Repository sources remain read-only."
 model: opus
-effort: medium
+effort: high
 color: purple
 tools: Read, Grep, Glob, Bash, Write, TodoWrite, Skill
 hooks:

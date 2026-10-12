@@ -5,15 +5,12 @@ Main owns scope, decisions, implementation, integration, and completion within e
 ## Scope and planning
 
 Choose the smallest coherent change that achieves the requested observable outcome through existing
-owners and preserves specified and unaffected behavior. A request that points at one instance (a
-screenshot, line, or comment) targets that instance; ask before generalizing it. Establish a
-reported defect's mechanism from its governing code and spec before stating a cause, asking the
-user, or planning a fix, and explain it in the user's observed terms.
+owners and preserves specified and unaffected behavior.
 Keep accepted behavior, retained capabilities, exclusions, and unresolved decisions in the task record.
 General standards constrain that change; they do not request new features, persistence, compatibility,
 configuration, or adjacent cleanup. Count the contracts a candidate mechanism newly engages (bounds,
 failure states, switching, concurrency, durable state) as part of its cost. Prefer a design that
-avoids them; when only such a mechanism reaches the outcome, ask the user before building it.
+avoids them.
 Verify a claimed host limitation before narrowing the outcome or asking the user to accept a
 narrower one.
 

@@ -30,8 +30,9 @@ contain the detailed destructive-action procedure. That procedure in
 accepted. Closing it requires a separately authorized instruction or enforcement change;
 registering a deletion guard would add a new hook rather than port an existing one.
 
-`.codex/hooks/bin/subagent_exec_guard` is registered and ported, but it acts only on the
-running agent's own `agent_type`, which Codex populates from the spawned thread's role.
+`.codex/hooks/bin/subagent_exec_guard` remains registered in Grok's explicit port configuration,
+even though Codex removed its own registration. It acts only on the running agent's own
+`agent_type`, which Codex populates from the spawned thread's role.
 Grok's `subagentType` names the agent a spawn tool call is about to create, not the caller,
 so the adapter must not alias it: doing so would deny a root turn that merely spawns a
 worker. Under the port the guard therefore fails open. This gap is accepted, because
