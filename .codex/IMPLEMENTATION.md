@@ -29,6 +29,10 @@ Skip safeguards for purely hypothetical concerns; raise any concrete unresolved 
 
 ## Hygiene
 
+Inline sole-caller helpers unless they preserve shared policy, an invariant, or a nontrivial
+algorithm. After a refactor, remove superseded forwarding wrappers and update their callers to
+use the retained owner directly, unless compatibility is explicitly requested.
+
 Remove behavior and artifacts superseded by the accepted change. Remove tests for superseded behavior
 rather than invert their assertions merely to retain them. Keep compatibility only when the user
 explicitly requests it; report unrelated obsolete paths instead of deleting them. Edit authoritative
