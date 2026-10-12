@@ -1,11 +1,5 @@
 # Changelog
 
-## 1.0.14
-
-Compile the native agent-tools upgrade helper. Provision managed Python and
-Rust during setup and reconcile native ownership on both platforms. Rebuild
-symlinked outputs atomically instead of accepting a matching cached digest.
-
 ## 1.0.13
 
 Stop building the retired batch-agent-sessions helper.

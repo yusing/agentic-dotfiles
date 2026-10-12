@@ -1,10 +1,5 @@
 # Changelog
 
-## 1.1.1
-
-Include setup helper dependencies in the compiler engine build identity.
-Compile native helpers and hooks on both supported platforms.
-
 ## 1.1.0
 
 Keep a content-keyed compiled build engine current, then use it to rebuild missing,

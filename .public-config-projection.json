@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3ac4f87417d5455ee5dcb0e6f62c6746db5452ec",
+  "sourceCommit": "5bdb708c24193ad8f967fcf3536a8ba0a1ff50fc",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -683,7 +683,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "c1103ee3379dab8889e8ae0ee377ce94c0cad848c236e7f9e52eb55357d43e1f",
+      "sha256": "12bcdded851646f51422a314d90feb291dbf05050bee84455fdb43ca8124ab48",
       "executable": false
     },
     {
@@ -760,13 +760,13 @@
     {
       "path": ".local/bin/compile-agent-tools",
       "kind": "file",
-      "sha256": "9f801e7e5466be3d7d1f4b1903d2fd39e5d1c4d386ada5dfd391a23978c94aac",
+      "sha256": "84fc2cd4c94da816c20c533585db7686ec055ddd08a91085fb1776697b00c130",
       "executable": true
     },
     {
       "path": ".local/bin/compile-agent-tools.changelog.md",
       "kind": "file",
-      "sha256": "957466302962fa576d272d6a011df3ec137b2eedbb499d5ccbf0206a42c2a2ec",
+      "sha256": "00dc4be631741336d95f95f20279f24f1c665d2fff00a19656af1cd397d8822e",
       "executable": false
     },
     {
@@ -776,45 +776,27 @@
       "executable": true
     },
     {
-      "path": ".local/lib/agent-tools/agent-tools.ts",
-      "kind": "file",
-      "sha256": "ffbf62c3ea8349578c98f0325921500616876d42512ee8adca7a93c68f80496a",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/agent-tools/CHANGELOG.md",
-      "kind": "file",
-      "sha256": "065a11915ab91c0e23a45f89999cd9433f6f03cec28b702e48cad1e7e2d95fd4",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/agent-tools/pull.ts",
-      "kind": "file",
-      "sha256": "976546db538549a2141f5f10f3df16edbbf327b98aff90af64b302779c3150ed",
-      "executable": false
-    },
-    {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "06a0a9df6195303a0c0840f0767e848da631c2c96e76b33c995d363b4bb3cf71",
+      "sha256": "f52bb995798b4c5e0647df704755874611e96e8e55e8c92064f3bd368108a4de",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "2779ba8e9d699280f2fee00d89b752cdbf0b1d36c7cbc4b1a307c8e39ce9ab15",
+      "sha256": "2bce5cc818f35ab2597381fc5d43264c7af18f60c03aa6ab4a15cc2629ed7334",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "15307aabde36b25aea9f852a6ea52714575baa18c8d446d30b351733782a06d1",
+      "sha256": "1388f787fb7a3154e39c3bc66d30868aafbca045bf2c6e0d7356f139ffb707d1",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "9bd1f3c02f0e07cede8528a6083ca49d76b061bc661da3333e5bc23b7cb3dc5c",
+      "sha256": "a536c906db045f9e1a5420126f9b89f6c6f181fd42e6e7466651612cf3807811",
       "executable": true
     },
     {
@@ -887,12 +869,6 @@
       "path": ".local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts",
       "kind": "file",
       "sha256": "59a17489e7f5e5f71ff1df71a271651fb71925393aefb0fc8bf94676add69ff8",
-      "executable": false
-    },
-    {
-      "path": ".local/tests/agent_tools_test.ts",
-      "kind": "file",
-      "sha256": "578fdf28c5a002a3d2c32382c2bfdaf00a963ecaa280f4d92f58a659eeb3feef",
       "executable": false
     },
     {
@@ -1497,7 +1473,7 @@
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "df26e48b8b3d7bcdfadef1b8c2a97c4ed9954a14a47d731a7c79fe00a28001aa",
+      "sha256": "999e4215394f29b1f8b3b3558e7e38f90e4a89dcd2b685348d0780ef08392a72",
       "executable": false
     },
     {
@@ -1509,7 +1485,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "fc3d3f85dc1c3d65ff40c342cbc1a5132cc21d48c6c14df30fee1f19a42f4c64",
+      "sha256": "d927012029e83bc4a501a54ab44a0c236cc7edeb147cb8fefe8174834d407265",
       "executable": true
     }
   ]

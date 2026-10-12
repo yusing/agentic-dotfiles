@@ -5,7 +5,6 @@ import {
   chmodSync,
   constants,
   existsSync,
-  lstatSync,
   mkdirSync,
   readFileSync,
   readdirSync,
@@ -17,22 +16,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.14";
-export const HELPER_SOURCES = [
-  ["rewrite-home-paths", "rewrite-home-paths"],
-  ["agent-tools", "agent-tools"],
-  ["tmp-clean", "tmp_clean"],
-  ["sync-claude-agent-ports", "sync-claude-agent-ports"],
-  ["sync-kilo-agent-ports", "sync-kilo-agent-ports"],
-  ["claude-config-helper", "claude-config-helper"],
-  ["patch-bitwarden-cli-fast-exit", "patch-bitwarden-cli-fast-exit"],
-  ["svn-merge", "svn-merge"],
-  ["open-file-in-herdr", "open-file-in-herdr"],
-  ["deltapath-wifi-routes", "deltapath-wifi-routes"],
-  ["update-oh-my-posh-theme", "update-oh-my-posh-theme"],
-  ["project-public-config", "project-public-config"],
-] as const;
-
+const VERSION = "1.0.13";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -161,7 +145,7 @@ function usesFfi(files: string[]): boolean {
     .some((file) => existsSync(file) && readFileSync(file, "utf8").includes("locked_state.ts"));
 }
 
-async function main(): Promise<void> {
+function main(): void {
   if (process.argv.length > 2 && process.argv[2] === "--version") {
     process.stdout.write(`${VERSION}\n`);
     return;
@@ -207,7 +191,7 @@ async function main(): Promise<void> {
       [source, ...extraInputs],
     );
     const state = join(cacheRoot, `${name}.digest`);
-    if (isExecutable(output) && !lstatSync(output).isSymbolicLink() && storedDigest(state) === digest) return;
+    if (isExecutable(output) && storedDigest(state) === digest) return;
 
     buildAtomically(output, scriptc, (temporary) => {
       const args = ["build", source, "-o", temporary, "--no-keep-llvm"];
@@ -240,7 +224,7 @@ async function main(): Promise<void> {
       [dirname(source), bunConfig],
     );
     const state = join(cacheRoot, `${name}.digest`);
-    if (isExecutable(output) && !lstatSync(output).isSymbolicLink() && storedDigest(state) === digest) return;
+    if (isExecutable(output) && storedDigest(state) === digest) return;
 
     if (name === "rewrite-home-paths") ensureRewriteDependencies(dirname(source));
     buildAtomically(output, bun, (temporary) => [
@@ -269,21 +253,30 @@ async function main(): Promise<void> {
   ]);
   compileHook(join(grokHooks, "skills_path_guard.ts"), grokBin);
 
-  for (const [directory, name] of HELPER_SOURCES) {
-    if (name === "rewrite-home-paths" && !existsSync(join(localLib, directory, "package.json"))) continue;
-    compileHelper(join(localLib, directory, `${name}.ts`),
-      name === "rewrite-home-paths" || name === "project-public-config");
+  if (existsSync(join(localLib, "rewrite-home-paths", "package.json"))) {
+    compileHelper(join(localLib, "rewrite-home-paths", "rewrite-home-paths.ts"), true);
   }
-  if (process.env.SETUP_CONFIG) {
-    const { provisionLanguages, cleanupTools } = await import("../agent-tools/agent-tools");
-    await provisionLanguages(process.env.SETUP_CONFIG, process.env.UPGRADE === "1");
-    await cleanupTools(process.env.SETUP_CONFIG);
+  for (const [directory, name] of [
+    ["tmp-clean", "tmp_clean"],
+    ["sync-claude-agent-ports", "sync-claude-agent-ports"],
+    ["sync-kilo-agent-ports", "sync-kilo-agent-ports"],
+    ["claude-config-helper", "claude-config-helper"],
+    ["patch-bitwarden-cli-fast-exit", "patch-bitwarden-cli-fast-exit"],
+    ["svn-merge", "svn-merge"],
+    ["open-file-in-herdr", "open-file-in-herdr"],
+    ["deltapath-wifi-routes", "deltapath-wifi-routes"],
+    ["update-oh-my-posh-theme", "update-oh-my-posh-theme"],
+  ]) {
+    compileHelper(join(localLib, directory, `${name}.ts`));
   }
+  compileHelper(join(localLib, "project-public-config", "project-public-config.ts"), true);
 }
 
-if (import.meta.main) main().catch(error => {
+try {
+  main();
+} catch (error) {
   if (error instanceof BuildFailure) process.exit(error.status);
   const message = error instanceof Error ? error.message : String(error);
   process.stderr.write(`${message}\n`);
   process.exit(1);
-});
+}

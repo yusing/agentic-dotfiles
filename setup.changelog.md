@@ -1,11 +1,5 @@
 # Changelog
 
-## 2.10.5
-
-Use the shared native installer on Linux and macOS. Provision Brew-managed
-languages and reconcile exact package ownership through compiled helpers.
-Skip optional APT recommendations during installation and upgrades.
-
 ## 2.10.4
 
 Manage Composer, cloc, rga, media and development utilities, Ruby, and Zsh

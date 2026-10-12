@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.19";
+export const VERSION = "1.3.18";
 
 type TreeEntry = {
 	mode: string;
@@ -195,10 +195,6 @@ const EXACT_PATHS = new Set([
 	".local/bin/svn-merge",
 	".local/lib/compile-agent-tools/compile-agent-tools.ts",
 	".local/lib/compile-agent-tools/CHANGELOG.md",
-	".local/lib/agent-tools/agent-tools.ts",
-	".local/lib/agent-tools/pull.ts",
-	".local/lib/agent-tools/CHANGELOG.md",
-	".local/tests/agent_tools_test.ts",
 	".local/lib/tmp-clean/tmp_clean.ts",
 	".local/lib/tmp-clean/CHANGELOG.md",
 	".local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts",
@@ -384,7 +380,6 @@ function isIncludedPath(path: string): boolean {
 }
 
 function isExcludedPath(path: string): boolean {
-	if (path.startsWith(".local/tests/") && EXACT_PATHS.has(path)) return false;
 	const parts = path.toLowerCase().split("/");
 	return parts.some(part => EXCLUDED_PATH_PARTS.has(part));
 }

@@ -1,5 +1,5 @@
 #!/bin/sh
-# version: 1.1.1
+# version: 1.1.0
 # Rebuild changed user-owned helper and hook binaries for this machine.
 
 set -eu
@@ -27,9 +27,6 @@ digest=$(
 	{
 		printf '%s\n' "bun=$bun_identity target=$target_identity flags=build--compile"
 		git hash-object "$wrapper" "$engine_source"
-		for dependency in "$tool_home/.local/lib/agent-tools/agent-tools.ts" "$tool_home/.local/lib/agent-tools/pull.ts"; do
-			[ ! -f "$dependency" ] || git hash-object "$dependency"
-		done
 		[ ! -f "$tool_home/.bunfig.toml" ] || git hash-object "$tool_home/.bunfig.toml"
 	} | git hash-object --stdin
 )
