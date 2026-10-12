@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.0.6
+
+Delegate shared Brew language provisioning to the existing compiler call.
+Linux setup uses only pull for image activation, hooks and host retirement.
+
+## 3.0.5
+
+Upgrade older Linux bootstraps before pulling artifacts with the portable host
+Fish fallback. Preserve the existing bootstrap if the download fails.
+
+## 3.0.4
+
+Record exact retired Bazelisk and WebKitGTK 6 package identities for Linux host
+cleanup, separate from removed installation declarations.
+
+## 3.0.0
+
+Install Linux tools by pulling a verified mounted runtime. Keep macOS package
+installation unchanged. Run source installation only inside CI image builds.
+
+## 2.11.0
+
+Support isolated CI image installation without changing host checkout, shell,
+configuration paths, or clipboard services.
+
+## 2.10.5
+
+Skip APT recommendations and suggestions during installation and declared-package
+upgrades. Required dependencies still install with their packages.
+
 ## 2.10.4
 
 Manage Composer, cloc, rga, media and development utilities, Ruby, and Zsh

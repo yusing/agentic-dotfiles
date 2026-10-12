@@ -1,10 +1,14 @@
 #!/bin/sh
-# version: 1.1.0
+# version: 1.2.1
 # Rebuild changed user-owned helper and hook binaries for this machine.
 
 set -eu
 
 tool_home=${HOME:?HOME must be set}
+managed_tools=$tool_home/.local/share/agent-tools/current/agent-tools
+if [ "${SETUP_IMAGE_BUILD:-0}" != 1 ] && [ "${1:-}" != --version ] && [ -x "$managed_tools" ]; then
+	exit 0
+fi
 local_bin=$tool_home/.local/bin
 engine_source=$tool_home/.local/lib/compile-agent-tools/compile-agent-tools.ts
 engine=$local_bin/compile-agent-tools-engine
@@ -27,6 +31,9 @@ digest=$(
 	{
 		printf '%s\n' "bun=$bun_identity target=$target_identity flags=build--compile"
 		git hash-object "$wrapper" "$engine_source"
+		for dependency in "$tool_home/.local/lib/agent-tools/agent-tools.ts" "$tool_home/.local/lib/agent-tools/pull.ts"; do
+			[ ! -f "$dependency" ] || git hash-object "$dependency"
+		done
 		[ ! -f "$tool_home/.bunfig.toml" ] || git hash-object "$tool_home/.bunfig.toml"
 	} | git hash-object --stdin
 )

@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.4
+# version: 3.0.6
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -328,23 +328,22 @@ ensure_toml_parser() {
 # Only main enables this cache, after copying its immutable run snapshot.
 # Manifest fields and query output remain data, including shell metacharacters.
 setup_config_cached() {
-  local wanted_count="$#" wanted_action="${1-}" wanted_arg1="${2-}" wanted_arg2="${3-}"
-  local id status count action arg1 arg2 extra line
-  [ "$wanted_count" -le 3 ] || return 2
-  [ -r "$SETUP_CONFIG_CACHE/manifest" ] || return 2
-  while IFS='|' read -r id status count action arg1 arg2 extra; do
-    [ "$count" = "$wanted_count" ] || continue
-    [ "$action" = "$wanted_action" ] || continue
-    [ "$arg1" = "$wanted_arg1" ] || continue
-    [ "$arg2" = "$wanted_arg2" ] || continue
-    [ -z "$extra" ] || return 2
-    [ -r "$SETUP_CONFIG_CACHE/$id.out" ] || return 2
+  local path="$SETUP_CONFIG_CACHE" argument status line
+  [ "$#" -le 3 ] || return 2
+  for argument in "$@"; do
+    argument="${argument//%/%25}"
+    argument="${argument//\//%2F}"
+    path="$path/q-$argument"
+  done
+  [ -r "$path/record" ] || return 2
+  {
+    IFS= read -r status
+    case "$status" in 0|1) ;; *) return 2 ;; esac
     while IFS= read -r line; do
       printf '%s\n' "$line"
-    done <"$SETUP_CONFIG_CACHE/$id.out"
+    done
     return "$status"
-  done <"$SETUP_CONFIG_CACHE/manifest"
-  return 2
+  } <"$path/record"
 }
 
 prepare_setup_config_cache() {
@@ -371,6 +370,7 @@ setup_config() {
   fi
   SETUP_PM="$PM" SETUP_OS="$OS" \
     py - "$SETUP_CONFIG" "$@" <<'PY'
+import errno
 import json
 import math
 import os
@@ -421,7 +421,9 @@ try:
             string(name)
             require(not name.startswith("-"), "names must not start with -")
     for entry in config["native"].values():
-        obj(entry, ("packages", "commands", "optional", "brew_prefix", "manager", "os"), "native package")
+        obj(entry, ("packages", "commands", "optional", "brew_prefix", "manager", "os", "legacy_mise"), "native package")
+        strings(entry.get("legacy_mise", []))
+        require(all(not x.startswith("-") for x in entry.get("legacy_mise", [])), "invalid legacy mise tool")
         packages(entry.get("packages"))
         if "manager" in entry:
             require(entry["manager"] == "brew", "native manager override must be brew")
@@ -549,7 +551,10 @@ try:
             require(re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key), "invalid environment variable name")
             string(value)
     for entry in config["legacy"].values():
-        obj(entry, ("packages", "bun", "files", "directories"), "legacy entry")
+        obj(entry, ("packages", "bun", "files", "directories", "legacy_mise", "retired"), "legacy entry")
+        strings(entry.get("legacy_mise", []))
+        require(all(not x.startswith("-") for x in entry.get("legacy_mise", [])), "invalid retired mise tool")
+        require(type(entry.get("retired", False)) is bool, "legacy retired must be boolean")
         packages(entry.get("packages", {}))
         if "bun" in entry:
             string(entry["bun"])
@@ -742,7 +747,14 @@ try:
         manifest = []
         for index, cached_query in enumerate(queries):
             status, text = query(cached_query[0], cached_query[1:])
-            (cache / f"{index}.out").write_text(text)
+            path = cache.joinpath(*("q-" + arg.replace("%", "%25").replace("/", "%2F") for arg in cached_query))
+            try:
+                path.mkdir(parents=True, exist_ok=True)
+                (path / "record").write_text(f"{status}\n{text}")
+            except OSError as error:
+                if error.errno != errno.ENAMETOOLONG:
+                    raise
+                # Valid long names still work through the uncached query route.
             fields = [str(index), str(status), str(len(cached_query)), *cached_query]
             manifest.append("|".join(fields) + "\n")
         (cache / "manifest").write_text("".join(manifest))
@@ -808,12 +820,12 @@ upgrade_configured_packages() {
   if [ "${#packages[@]}" -gt 0 ]; then
     info "upgrading setup-owned apt packages: ${packages[*]}"
     run_root apt-get update -y || return 1
-    run_root apt-get install --only-upgrade --no-remove -y "${packages[@]}" || return 1
+    run_root apt-get install --no-install-recommends --no-install-suggests --only-upgrade --no-remove -y "${packages[@]}" || return 1
   fi
   if [ "${#brew_packages[@]}" -gt 0 ]; then
     info "upgrading setup-owned Homebrew packages: ${brew_packages[*]}"
     brew update || return 1
-    HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade --force-bottle "${brew_packages[@]}" || return 1
+    HOMEBREW_NO_AUTO_UPDATE=1 brew_managed_packages upgrade "${brew_packages[@]}" || return 1
   fi
 }
 
@@ -863,11 +875,32 @@ EOF
   [ "$any" -eq 0 ]
 }
 
+# mcdu's upstream tap installs checksummed binaries rather than Brew bottles.
+# Keep the bottle-only policy for all other managed formulae.
+brew_managed_packages() {
+  local action="$1" package
+  shift
+  local bottles=() archives=() options=()
+  [ "$action" != install ] || options+=(--no-ask)
+  for package in "$@"; do
+    case "$package" in
+      mikalv/mcdu/mcdu|mcdu) archives+=("$package") ;;
+      *) bottles+=("$package") ;;
+    esac
+  done
+  if [ "${#bottles[@]}" -gt 0 ]; then
+    brew "$action" ${options[@]+"${options[@]}"} --force-bottle "${bottles[@]}" || return 1
+  fi
+  if [ "${#archives[@]}" -gt 0 ]; then
+    brew "$action" ${options[@]+"${options[@]}"} "${archives[@]}" || return 1
+  fi
+}
+
 pm_install_batch() {
   [ "$#" -gt 0 ] || return 0
   case "$PM" in
     apt)
-      run_root apt-get install -y "$@"
+      run_root apt-get install --no-install-recommends --no-install-suggests -y "$@"
       ;;
     pacman)
       if have yay && [ "$(id -u)" -ne 0 ]; then
@@ -877,7 +910,7 @@ pm_install_batch() {
       fi
       ;;
     brew)
-      brew install --no-ask --force-bottle "$@"
+      brew_managed_packages install "$@"
       ;;
     *)
       die "unknown package manager: $PM"
@@ -1711,331 +1744,13 @@ installed_pm_package() {
   esac
 }
 
-# Prints the installed packages that require $1. Empty output means removing $1
-# breaks nothing that is still installed. Optional dependencies are excluded:
-# they do not block a removal.
-pm_dependents() {
-  case "$PM" in
-    apt)
-      apt-cache rdepends --installed --no-recommends --no-suggests \
-        --no-conflicts --no-breaks --no-replaces --no-enhances "$1" 2>/dev/null \
-        | awk 'NR > 2 { gsub(/[|<>]/, "", $1); if ($1 != "") print $1 }'
-      ;;
-    brew)
-      brew uses --installed "$1" 2>/dev/null || true
-      ;;
-    pacman)
-      # "Required By" holds one space-separated list that wraps onto indented
-      # continuation lines; the next field name starts at column one.
-      LC_ALL=C pacman -Qi "$1" 2>/dev/null | awk '
-        /^[^[:space:]]/ { collecting = 0 }
-        /^Required By[[:space:]]*:/ { collecting = 1; sub(/^[^:]*:[[:space:]]*/, "") }
-        collecting { for (i = 1; i <= NF; i++) if ($i != "None") print $i }
-      '
-      ;;
-  esac
-}
-
-# Prints the subset of the given installed packages that can be removed in one
-# transaction: a package qualifies once every installed package depending on it
-# is in the subset too. A package held back for an outside dependent can in turn
-# hold back another, so the set is narrowed until it stops changing. Packages the
-# machine still needs are reported and skipped individually instead of costing
-# the whole batch its removal.
-filter_removable_packages() {
-  local pkg dep keep changed=1
-  local remaining=("$@") kept=()
-
-  [ "$#" -gt 0 ] || return 0
-
-  while [ "$changed" -eq 1 ]; do
-    changed=0
-    kept=()
-    for pkg in ${remaining[@]+"${remaining[@]}"}; do
-      keep=1
-      while IFS= read -r dep; do
-        [ -n "$dep" ] || continue
-        if ! in_list "$dep" ${remaining[@]+"${remaining[@]}"}; then
-          warn "keeping legacy $PM package $pkg; still required by $dep"
-          keep=0
-          break
-        fi
-      done < <(pm_dependents "$pkg")
-      [ "$keep" -eq 0 ] || kept+=("$pkg")
-    done
-    if [ "${#kept[@]}" -ne "${#remaining[@]}" ]; then
-      remaining=(${kept[@]+"${kept[@]}"})
-      changed=1
-    fi
-  done
-
-  [ "${#remaining[@]}" -eq 0 ] || printf '%s\n' ${remaining[@]+"${remaining[@]}"}
-}
-
-remove_legacy_packages() {
-  local pkg resolved plan removed name
-  local candidates=() removable=()
-  for pkg in "$@"; do
-    [ -n "$pkg" ] || continue
-    resolved="$(installed_pm_package "$pkg")" || continue
-    in_list "$resolved" ${candidates[@]+"${candidates[@]}"} || candidates+=("$resolved")
-  done
-  [ "${#candidates[@]}" -gt 0 ] || return 0
-
-  while IFS= read -r pkg; do
-    [ -n "$pkg" ] || continue
-    removable+=("$pkg")
-  done < <(filter_removable_packages "${candidates[@]}")
-  [ "${#removable[@]}" -gt 0 ] || return 0
-
-  # The replacements are installed and validated before this runs, so a refused
-  # removal leaves a redundant package behind rather than a broken setup.
-  case "$PM" in
-    brew)
-      info "removing legacy brew packages: ${removable[*]}"
-      brew uninstall --formula "${removable[@]}" \
-        || warn "keeping legacy brew packages; brew refused the removal"
-      ;;
-    apt)
-      plan="$(apt-get -s remove "${removable[@]}")" \
-        || { warn "keeping legacy apt packages; removal simulation failed"; return 0; }
-      removed="$(printf '%s\n' "$plan" | awk '$1 == "Remv" { print $2 }')"
-      for name in $removed; do
-        if ! in_list "${name%%:*}" ${removable[@]+"${removable[@]}"}; then
-          warn "keeping legacy apt packages; removal would also remove $name"
-          return 0
-        fi
-      done
-      info "removing legacy apt packages: ${removable[*]}"
-      run_root apt-get remove -y "${removable[@]}" \
-        || warn "keeping legacy apt packages; apt refused the removal"
-      ;;
-    pacman)
-      info "removing legacy pacman packages: ${removable[*]}"
-      run_root pacman -R --noconfirm "${removable[@]}" \
-        || warn "keeping legacy pacman packages; pacman refused the removal"
-      ;;
-  esac
-}
-
-remove_legacy_file() {
-  local path="$1" replacement="$2" path_real replacement_real
-  if [ ! -e "$path" ] && [ ! -L "$path" ]; then
-    return 0
-  fi
-  if [ -n "$replacement" ] && [ -e "$replacement" ]; then
-    path_real="$(realpath "$path" 2>/dev/null || true)"
-    replacement_real="$(realpath "$replacement" 2>/dev/null || true)"
-    if [ -n "$path_real" ] && [ "$path_real" = "$replacement_real" ]; then
-      return 0
-    fi
-  fi
-  info "removing legacy tool path $path"
-  rm -f "$path"
-}
-
-legacy_bun_package() { setup_config legacy-bun "$1"; }
-
-# Prints the bun global package for $1 unless ~/.bun/bin/$1 is already the
-# validated mise replacement.
-legacy_bun_leftover_package() {
-  local cmd="$1" replacement="$2" pkg bin path_real replacement_real
-  pkg="$(legacy_bun_package "$cmd")"
-  [ -n "$pkg" ] || return 0
-  bin="${HOME}/.bun/bin/${cmd}"
-  if [ -n "$replacement" ] && { [ -e "$bin" ] || [ -L "$bin" ]; }; then
-    path_real="$(realpath "$bin" 2>/dev/null || true)"
-    replacement_real="$(realpath "$replacement" 2>/dev/null || true)"
-    if [ -n "$path_real" ] && [ "$path_real" = "$replacement_real" ]; then
-      return 0
-    fi
-  fi
-  printf '%s\n' "$pkg"
-}
-
-installed_bun_packages() {
-  local manifest="${HOME}/.bun/install/global/package.json"
-  [ -f "$manifest" ] || return 0
-  [ "$#" -gt 0 ] || return 0
-  BUN_GLOBAL_MANIFEST="$manifest" py - "$@" <<'PY'
-import json, os, sys
-from pathlib import Path
-
-data = json.loads(Path(os.environ["BUN_GLOBAL_MANIFEST"]).read_text())
-deps = data.get("dependencies") or {}
-for pkg in sys.argv[1:]:
-    if pkg in deps:
-        print(pkg)
-PY
-}
-
-remove_legacy_bun_packages() {
-  local pkg
-  local packages=()
-  [ "$#" -gt 0 ] || return 0
-  while IFS= read -r pkg; do
-    [ -n "$pkg" ] || continue
-    in_list "$pkg" ${packages[@]+"${packages[@]}"} || packages+=("$pkg")
-  done < <(installed_bun_packages "$@")
-  [ "${#packages[@]}" -gt 0 ] || return 0
-  info "removing leftover bun packages: ${packages[*]}"
-  bun remove -g "${packages[@]}" \
-    || warn "keeping leftover bun packages; bun remove failed"
-}
-
-cleanup_legacy_files() {
-  local cmd="$1" path probe origin replacement records
-  records="$(setup_config legacy-files "$cmd")" || return 1
-  while IFS='|' read -r path probe; do
-    [ -n "$path" ] || continue
-    path="${HOME}/$path"
-    [ -e "$path" ] || [ -L "$path" ] || continue
-    replacement="$(mise_cmd which "$probe" 2>/dev/null || true)"
-    remove_legacy_file "$path" "$replacement"
-  done <<<"$records"
-  records="$(setup_config legacy-directories "$cmd")" || return 1
-  while IFS='|' read -r path probe origin; do
-    [ -n "$path" ] || continue
-    path="${HOME}/$path"
-    if [ -n "$probe" ]; then
-      [ -x "$path/$probe" ] || continue
-    else
-      [ -d "$path/.git" ] || continue
-      git -C "$path" remote get-url origin 2>/dev/null | grep -Fq "$origin" || continue
-    fi
-    info "removing legacy tool directory $path"
-    rm -rf "$path"
-  done <<<"$records"
-}
-
-# Only declared Go-package commands are candidates; preserve all other binaries.
-cleanup_go_toolchain_command() {
-  local tool="$1" cmd="$2" replacement installs root
-  case "$tool" in go:*) ;; *) return 0 ;; esac
-  case "$cmd" in ''|*/*|go|gofmt|.|..) die "unsafe Go cleanup command: $cmd" ;; esac
-  replacement="$(mise_tool_path "$tool" "$cmd")" || return 1
-  [ -x "$replacement" ] || die "cannot clean up $cmd without its mise package binary"
-  if [ "$#" -ge 3 ]; then
-    installs="$3"
-  else
-    installs="$(mise_cmd ls go --installed --json)" || return 1
-    installs="$(printf '%s' "$installs" | py -c '
-import json, sys
-for tool in json.load(sys.stdin):
-    print(tool["install_path"])
-')" || return 1
-  fi
-  while IFS= read -r root; do
-    [ -n "$root" ] || continue
-    case "$root" in /*) ;; *) die "invalid Go installation path: $root" ;; esac
-    [ -x "$root/bin/go" ] || die "invalid Go installation: $root"
-    remove_legacy_file "$root/bin/$cmd" "$replacement"
-  done <<<"$installs"
-}
-
-cleanup_legacy_tool_sources() {
-  local tool cmd pkg name legacy mode go_installs="" go_installs_ready=0
-  local packages=() bun_packages=()
-  info "reconciling tool ownership"
-  while IFS= read -r pkg; do
-    [ -z "$pkg" ] || packages+=("$pkg")
-  done < <(legacy_packages mise)
-  while IFS='|' read -r tool cmd; do
-    mise_tool_applies "$tool" || continue
-    validate_mise_tool "$tool" "$cmd"
-    while IFS= read -r pkg; do
-      [ -z "$pkg" ] || packages+=("$pkg")
-    done < <(legacy_packages "$cmd")
-    pkg="$(legacy_bun_leftover_package "$cmd" "$(mise_cmd which "$cmd" 2>/dev/null || true)")"
-    if [ -n "$pkg" ] && ! in_list "$pkg" ${bun_packages[@]+"${bun_packages[@]}"}; then
-      bun_packages+=("$pkg")
-    fi
-  done < <(mise_tool_records)
-  # Only entries with an explicit legacy declaration authorize distro removal.
-  for mode in required optional; do
-    while IFS= read -r name; do
-      [ "$PM" != brew ] || continue
-      [ -n "$name" ] || continue
-      [ "$(setup_config native-manager "$name")" = brew ] || continue
-      legacy="$(legacy_packages "$name")" || return 1
-      [ -n "$legacy" ] || continue
-      if ! have_logical "$name"; then
-        [ "$mode" != optional ] || continue
-        die "cannot clean up $name without its Homebrew replacement"
-      fi
-      while IFS= read -r pkg; do
-        [ -z "$pkg" ] || packages+=("$pkg")
-      done <<<"$legacy"
-    done < <(setup_config "native-$mode")
-  done
-  remove_legacy_packages ${packages[@]+"${packages[@]}"}
-  remove_legacy_bun_packages ${bun_packages[@]+"${bun_packages[@]}"}
-  while IFS='|' read -r tool cmd; do
-    mise_tool_applies "$tool" || continue
-    case "$tool" in
-      go:*)
-        if [ "$go_installs_ready" -eq 0 ]; then
-          go_installs="$(mise_cmd ls go --installed --json)" || return 1
-          go_installs="$(printf '%s' "$go_installs" | py -c '
-import json, sys
-for tool in json.load(sys.stdin):
-    print(tool["install_path"])
-')" || return 1
-          go_installs_ready=1
-        fi
-        cleanup_go_toolchain_command "$tool" "$cmd" "$go_installs"
-        ;;
-    esac
-    cleanup_legacy_files "$cmd"
-    validate_mise_tool "$tool" "$cmd"
-  done < <(mise_tool_records)
-  if [ "$OS" = Darwin ]; then
-    local removed_mise=0 tool name align version_command pkg cmd prefix install_id install_dir
-    # A keg-only formula owns its command here. Drop a copy under ~/.local/bin
-    # and a mise install left from another operating system's archive.
-    if [ "$PM" = brew ]; then
-      while IFS= read -r name; do
-        [ -n "$name" ] || continue
-        setup_config native-enabled "$name" || continue
-        prefix="$(setup_config native-prefix "$name")" || continue
-        [ -n "$prefix" ] || continue
-        cmd="$(setup_config native-command "$name")" || continue
-        [ -n "$cmd" ] || continue
-        prefix="$(brew --prefix "$prefix" 2>/dev/null || true)"
-        [ -n "$prefix" ] && [ -x "$prefix/bin/$cmd" ] || continue
-        remove_legacy_file "${LOCAL_BIN}/$cmd" "$prefix/bin/$cmd"
-      done < <(setup_config native-required)
-    fi
-    while IFS='|' read -r tool name align version_command pkg; do
-      [ -n "$tool" ] || continue
-      mise_tool_applies "$tool" && continue
-      setup_config native-enabled "$name" || continue
-      install_id="${tool//[:\/]/-}"
-      case "$install_id" in
-        ""|*/*|*..*) die "unsafe mise install id: $tool" ;;
-      esac
-      install_dir="${HOME}/.local/share/mise/installs/${install_id}"
-      if [ -d "$install_dir" ] || [ -L "$install_dir" ]; then
-        info "removing leftover mise install $tool"
-        rm -rf -- "$install_dir"
-        removed_mise=1
-      fi
-    done < <(setup_config mise-native)
-    if [ "$removed_mise" -eq 1 ] && [ -x "$MISE_BIN" ]; then
-      mise_cmd reshim >/dev/null 2>&1 \
-        || warn "could not refresh mise shims after removing leftover mise installs"
-    fi
-  fi
-  hash -r 2>/dev/null || true
-}
-
 # ---------------------------------------------------------------------------
 # Additional tools
 # ---------------------------------------------------------------------------
 
 install_vendor() {
-  local name="$1" path url shell label item records installed
-  local updates=() environment=() obsolete=() packages=()
+  local name="$1" path url shell label item records
+  local updates=() environment=()
   path="${HOME}/$(setup_config vendor-field "$name" path)"
   url="$(setup_config vendor-field "$name" url)"
   shell="$(setup_config vendor-field "$name" shell)"
@@ -2052,23 +1767,7 @@ install_vendor() {
     "$path" "${updates[@]}"
   fi
   [ -x "$path" ] || die "$label is unavailable at $path"
-  records="$(setup_config vendor-field "$name" legacy_mise)"
-  while IFS= read -r item; do
-    [ -n "$item" ] || continue
-    installed="$(mise_cmd ls --installed --json "$item")" || return 1
-    installed="$(printf '%s' "$installed" | py -c 'import json,sys; print(1 if json.load(sys.stdin) else 0)')" || return 1
-    if [ "$installed" = 1 ]; then
-      obsolete+=("$item")
-    fi
-  done <<<"$records"
-  if [ "${#obsolete[@]}" -gt 0 ]; then
-    mise_cmd uninstall --all "${obsolete[@]}" >/dev/null 2>&1 \
-      || warn "could not remove legacy mise-managed $label"
-    mise_cmd reshim
-  fi
-  records="$(legacy_packages "$name")"
-  while IFS= read -r item; do [ -z "$item" ] || packages+=("$item"); done <<<"$records"
-  remove_legacy_packages ${packages[@]+"${packages[@]}"}
+
 }
 
 run_additional_installs() (
@@ -2267,6 +1966,12 @@ usage() {
   cat <<'EOF'
 Usage: setup.sh [--upgrade [TOOL...]] [--config PATH] [--check-config]
 
+Linux consumers install or upgrade the complete mounted tool image. Run
+agent-tools pull for subsequent upgrades. Docker and payload extraction are
+not needed. Linux consumers reject --config and named --upgrade TOOL arguments.
+The host must provide FUSE access and unprivileged user namespaces.
+
+The source installation options below apply to macOS and CI image builds.
 Package choices and vendor installers live in setup.json beside this script.
 Mise declarations also live in setup.json; .config/mise/config.toml is generated.
 --config selects another JSON file; SETUP_CONFIG is the environment equivalent.
@@ -2282,9 +1987,7 @@ unchanged tools retain their locked versions without a full remote refresh. Pack
 sources are removed only after the replacement validates. --upgrade advances the
 tracked multi-platform mise lock, installs it, and upgrades installed native
 packages declared in setup.json (including optional packages). Package managers
-may also update required dependencies. On Arch, --upgrade performs a full system
-upgrade with yay, including AUR packages. Run setup as a regular user on Arch;
-yay uses sudo when required.
+may also update required dependencies. Linux upgrades use agent-tools pull.
 --upgrade TOOL... re-resolves only the named mise tools (identifier or command
 name, such as git-agent) and installs the lock after a completed setup. It skips
 native packages, vendors, checkout, helper compilation, and verification.
@@ -2299,6 +2002,57 @@ EOF
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
+supported_image_bootstrap() {
+  local version
+  version="$("$1" --version 2>/dev/null)" || return 1
+  [[ "$version" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || return 1
+  (( 10#${BASH_REMATCH[1]} > 0 || 10#${BASH_REMATCH[2]} > 2 \
+    || (10#${BASH_REMATCH[2]} == 2 && 10#${BASH_REMATCH[3]} >= 8) ))
+}
+
+setup_linux_image() {
+  local state="$HOME/.local/share/agent-tools" staged binary checksum
+  [ -r /dev/fuse ] && [ -w /dev/fuse ] || die "Linux image delivery needs read/write access to /dev/fuse"
+  have fusermount3 || have fusermount || die "Install the host FUSE mount helper (fusermount3) once before bootstrap"
+  mkdir -p "$LOCAL_BIN" "$BACKUP_ROOT" "$state"
+  # Older bootstraps reject the portable host-shell artifact. Upgrade the
+  # consumer before pulling the corrected release, preserving it on failure.
+  if [ ! -x "$LOCAL_BIN/agent-tools" ] || ! supported_image_bootstrap "$LOCAL_BIN/agent-tools"; then
+    have curl || die "Linux bootstrap needs curl"
+    have sha256sum || die "Linux bootstrap needs sha256sum"
+    STEP="download Linux image bootstrap"
+    staged="$(mktemp -d "$state/.bootstrap.XXXXXX")"
+    binary="agent-tools-linux-$GOARCH"
+    checksum="$binary.sha256"
+    info "downloading native Linux image bootstrap"
+    if ! curl -fSL "https://github.com/$REPO_SLUG/releases/latest/download/$binary" -o "$staged/$binary" \
+      || ! curl -fsSL "https://github.com/$REPO_SLUG/releases/latest/download/$checksum" -o "$staged/$checksum" \
+      || ! (cd "$staged" && sha256sum -c "$checksum"); then
+      rm -rf "$staged"
+      die "image bootstrap download failed; the existing helper was preserved"
+    fi
+    chmod 755 "$staged/$binary"
+    if ! supported_image_bootstrap "$staged/$binary"; then
+      rm -rf "$staged"
+      die "published bootstrap is unavailable or older than 0.2.8; the existing helper was preserved"
+    fi
+    mv -f "$staged/$binary" "$LOCAL_BIN/agent-tools"
+    rm -rf "$staged"
+  fi
+  STEP="pull Linux tool runtime"
+  "$LOCAL_BIN/agent-tools" pull
+  export PATH="$state/bin:$PATH"
+  cd "$HOME"
+  STEP="setup home git repository"
+  setup_home_repo
+  STEP="resolve home paths in configuration"
+  "$state/bin/rewrite-home-paths"
+  # Keep the host login shell outside the image's no-new-privileges namespace.
+  STEP="configure image paste"
+  configure_image_paste
+  info "Linux image setup complete; open a new shell session"
+}
 
 main() {
   local check_config=0 explicit_config="${SETUP_CONFIG_EXPLICIT:-0}"
@@ -2340,6 +2094,12 @@ main() {
   fi
   if [ "$explicit_config" -eq 1 ] && [ ! -f "$SETUP_CONFIG" ]; then
     die "setup config is missing: $SETUP_CONFIG"
+  fi
+  if [ "$OS" = Linux ] && [ "${SETUP_IMAGE_BUILD:-0}" != 1 ]; then
+    [ "$explicit_config" != 1 ] || die "Linux inventories are installed in CI; --config is available for image builds and macOS"
+    [ "${#UPGRADE_NAMES[@]}" -eq 0 ] || die "Linux upgrades the complete image; run agent-tools pull"
+    setup_linux_image
+    return
   fi
   if [ -f "$SETUP_CONFIG" ] && { have python3 || have python; }; then
     setup_config validate
@@ -2405,7 +2165,7 @@ main() {
   ensure_toml_parser
 
   STEP="setup home git repository"
-  setup_home_repo
+  [ "${SETUP_IMAGE_BUILD:-0}" = 1 ] || setup_home_repo
 
   STEP="validate mise inventory"
   setup_config mise-records >/dev/null
@@ -2430,26 +2190,25 @@ main() {
     install_locked_mise_tools
   fi
 
-  STEP="compile user-owned helpers and hooks"
-  if [ -x "${LOCAL_BIN}/compile-agent-tools" ]; then
-    "${LOCAL_BIN}/compile-agent-tools"
-  fi
-
-  STEP="resolve home paths in configuration"
-  rewrite_home_paths
-
-  STEP="reconcile tool ownership"
-  load_brew_prefix_env
-  cleanup_legacy_tool_sources
-
   STEP="install additional tools"
   run_additional_installs
 
+  STEP="reconcile tool ownership"
+  load_brew_prefix_env
+
+  STEP="compile user-owned helpers and hooks"
+  if [ -x "${LOCAL_BIN}/compile-agent-tools" ]; then
+    SETUP_CONFIG="$SETUP_CONFIG" UPGRADE="$UPGRADE" "${LOCAL_BIN}/compile-agent-tools"
+  fi
+
+  STEP="resolve home paths in configuration"
+  [ "${SETUP_IMAGE_BUILD:-0}" = 1 ] || rewrite_home_paths
+
   STEP="set login shell"
-  ensure_fish_login_shell
+  [ "${SETUP_IMAGE_BUILD:-0}" = 1 ] || ensure_fish_login_shell
 
   STEP="configure image paste"
-  configure_image_paste
+  [ "${SETUP_IMAGE_BUILD:-0}" = 1 ] || configure_image_paste
 
   STEP="verify"
   hash -r 2>/dev/null || true

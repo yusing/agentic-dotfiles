@@ -7,7 +7,14 @@ done
 unset brew_bin
 
 export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.bun/bin:$PATH"
-command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
+if [[ ${AGENT_TOOLS_RUNTIME:-0} == 1 ]]; then
+    export PATH="/opt/agent-tools/bin:$PATH"
+elif [[ -d "$HOME/.local/share/agent-tools/bin" ]]; then
+    export PATH="$HOME/.local/share/agent-tools/bin:$PATH"
+fi
+if [[ ${AGENT_TOOLS_RUNTIME:-0} != 1 && ! -d "$HOME/.local/share/agent-tools/bin" ]]; then
+    command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
+fi
 
 
 zmodload zsh/complist
@@ -129,3 +136,9 @@ for zsh_plugin in zsh-autosuggestions zsh-syntax-highlighting; do
     [[ ! -r "$zsh_plugin_path" ]] || source "$zsh_plugin_path"
 done
 unset zsh_plugin zsh_plugin_path
+
+if [[ ${AGENT_TOOLS_RUNTIME:-0} == 1 ]]; then
+    export PATH="/opt/agent-tools/bin:$PATH"
+elif [[ -d "$HOME/.local/share/agent-tools/bin" ]]; then
+    export PATH="$HOME/.local/share/agent-tools/bin:$PATH"
+fi

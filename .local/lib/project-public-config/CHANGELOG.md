@@ -1,8 +1,29 @@
 # Changelog
 
+## 1.3.23
+
+Publish the prerequisite base recipe and its manual multi-architecture CI builder.
+
+## 1.3.22
+
+Publish the small OCI regression fixtures and their bounded CI runner with the
+Linux image workflow.
+
+## 1.3.21
+
+Publish early Fish runtime entry before shell integrations load.
+
 ## 1.3.20
 
 Stop publishing the batch-agent-sessions skill and helper, replaced by Mekugi native orchestration.
+
+## 1.3.19
+
+Publish the Linux OCI pull implementation and image delivery inputs.
+
+## 1.3.18
+
+Publish the native agent-tools launcher source and changelog.
 
 ## 1.3.17
 

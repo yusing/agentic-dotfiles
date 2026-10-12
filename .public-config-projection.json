@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "2abb9560926ec54a6b8048d319f3a9d8760c6b08",
+  "sourceCommit": "234ef06912080c88e68c29eca587e5362be91a78",
   "outputs": [
     {
       "path": ".bash_profile",
       "kind": "file",
-      "sha256": "71902df2faac2a7cd366b9544653fcfff8377b5360ec93c8979ad9eaec204102",
+      "sha256": "8bbd29be3924e71c9e35a0e63345498835241688e735ec6c7d83e566c7165927",
       "executable": false
     },
     {
       "path": ".bashrc",
       "kind": "file",
-      "sha256": "9ea4a6bb3a33dd9ed07d7879767e4acbfb461d24f39acc042aa890e1b946543a",
+      "sha256": "ee3b2da34575dc97532849342a4b61902c58b8fa2d1a86bc92a7960b9d5e6a8d",
       "executable": false
     },
     {
@@ -449,7 +449,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "19fc04ac2e1acd610bcfc45deb904310d52ff4d274102c3254fa17f29ebe95be",
+      "sha256": "a9ab481591c072e87f8e3e880bf228884811ff3ce6f7efb7cf162b3155e0bec4",
       "executable": false
     },
     {
@@ -681,9 +681,21 @@
       "executable": false
     },
     {
+      "path": ".github/workflows/tool-image-base.yml",
+      "kind": "file",
+      "sha256": "c2e20e5b277a890b70a5a9188c44f133420c9d0c302b3e86823faa0787eb6e08",
+      "executable": false
+    },
+    {
+      "path": ".github/workflows/tool-images.yml",
+      "kind": "file",
+      "sha256": "6cf33561b58a2db487a2bfc56ae291634648ee408228ad2bd071eadb530f0211",
+      "executable": false
+    },
+    {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "12bcdded851646f51422a314d90feb291dbf05050bee84455fdb43ca8124ab48",
+      "sha256": "837ced9b255803e6f025c40f28bf9444c6cfb30262d22d5325b0c149ad3b50e6",
       "executable": false
     },
     {
@@ -760,13 +772,13 @@
     {
       "path": ".local/bin/compile-agent-tools",
       "kind": "file",
-      "sha256": "84fc2cd4c94da816c20c533585db7686ec055ddd08a91085fb1776697b00c130",
+      "sha256": "5d86ab532057cbf14e8e5ae8976e9c2c6de88c794e8be3713e600e9a1af7b4ee",
       "executable": true
     },
     {
       "path": ".local/bin/compile-agent-tools.changelog.md",
       "kind": "file",
-      "sha256": "00dc4be631741336d95f95f20279f24f1c665d2fff00a19656af1cd397d8822e",
+      "sha256": "d7bb45ac2e042a9efbced0ac1fe981e7602f52f606ce204afa1a53cfb9069a01",
       "executable": false
     },
     {
@@ -776,27 +788,45 @@
       "executable": true
     },
     {
+      "path": ".local/lib/agent-tools/agent-tools.ts",
+      "kind": "file",
+      "sha256": "fd4b4c1cc0636e9ee9a1ddb1b71e105daea3b4382cb51bed62386bef5c1dde81",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/agent-tools/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "23fa9d6ab3069e93da11f96fee042643b1ab70d50690c4b2dc5254ae5056d8d3",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/agent-tools/pull.ts",
+      "kind": "file",
+      "sha256": "a79a015a585777ce26059c8702939f80a9386762441a4d619a66244440b02295",
+      "executable": false
+    },
+    {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "37ede8992783d19dc7a428cc1174392bad0b841a14e5aeca29d6c1cc24b37531",
+      "sha256": "7cb176f54cd69d9216f53913fc36f167cbeecee80f1345bfe878706ee7c96e12",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "ad2acc27b1d258551e25b9c08bf3890e5f92ac7bd27d4d7d294e150e6333922b",
+      "sha256": "df3eb009d0a6d8e972f5377798d068f1d77c200c24010bd008889e633a425612",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "745ead9ff555eb9a36212db49deaf701910b51330136f21d184048048f1a76c0",
+      "sha256": "06f6f37f09373a6c0913eb9a67d10acbefd205c571a05f78e17b3e85add24920",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "e1dd015d3cc9014d1eca9468a3fe20e83fbf5426858688005b517114dcf17e36",
+      "sha256": "88d7e737552f117a299dacfb31824bfbba8394b4d4038fcf2008498c6f75dc99",
       "executable": true
     },
     {
@@ -826,25 +856,25 @@
     {
       "path": ".local/lib/sync-claude-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "87cd16d8ef3414a80cdc762cca302e80e0f867e1624f763414f50a28228f5f5c",
+      "sha256": "b446804284030aa296fecdcedb800558caec1edb6c1dff418dd36296948539bc",
       "executable": false
     },
     {
       "path": ".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
       "kind": "file",
-      "sha256": "6ef6d8bc2eb3bd9d58c621bacb5dd6d6d1347b75ae5f10c668ace9a852528e1b",
+      "sha256": "36e4607543ea3a8412be3b5822b3e445d2c366d74b79b62b3ee89000eaf6f9e9",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "be6552ed92b20913986f19b0e069b5afb09d626bcca5ffdd9159c626dd94c945",
+      "sha256": "c9ecdd2fe4378a6e4ad702a1751c9746235c28e3e40e7afe6c3ecf15c90714ac",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
       "kind": "file",
-      "sha256": "86094c8fd88460be40d9f714ec2250142e4a69ca7a5b3b2e8eac56778c5626a2",
+      "sha256": "951fbd6b908651282ba51347815c3739ad57318fa0e4ba57b9e548168ba2a4bd",
       "executable": false
     },
     {
@@ -860,6 +890,30 @@
       "executable": false
     },
     {
+      "path": ".local/lib/tool-image/base.Dockerfile",
+      "kind": "file",
+      "sha256": "bbed91886e34c0faf789f8bc8d3d656095c6e55b030943096ee1e028198588ed",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/tool-image/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "3c1c40d06198826b5a83d33327fe8e7b01b4c0fb49b45a94b49d13b96e3dd769",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/tool-image/Dockerfile",
+      "kind": "file",
+      "sha256": "1c9ca93360d06a4a30c885f019d4b5dc58d40db2b6a095a3fd86c63e18b509ce",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/tool-image/finalize.ts",
+      "kind": "file",
+      "sha256": "e31b5bdd05c5e9388df6b5c9020bc84d80bab0e1d40c2cb72e872074bbb7fdcf",
+      "executable": false
+    },
+    {
       "path": ".local/lib/update-oh-my-posh-theme/CHANGELOG.md",
       "kind": "file",
       "sha256": "c0b60d5c9008a324fbef436b1747cf7ab168bf9848951c2eae440f924e34b1ab",
@@ -869,6 +923,30 @@
       "path": ".local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts",
       "kind": "file",
       "sha256": "59a17489e7f5e5f71ff1df71a271651fb71925393aefb0fc8bf94676add69ff8",
+      "executable": false
+    },
+    {
+      "path": ".local/tests/agent_tools_pull_ci.sh",
+      "kind": "file",
+      "sha256": "12d73cbb644ca151d0ffba2110bb097d10b9efc592be23be140eec72bacd9b48",
+      "executable": false
+    },
+    {
+      "path": ".local/tests/agent_tools_pull_fixture.Dockerfile",
+      "kind": "file",
+      "sha256": "ef31ea5a9efd26710c554363db566d51fcdff075838a8df158638023c942a9ed",
+      "executable": false
+    },
+    {
+      "path": ".local/tests/agent_tools_pull_test.ts",
+      "kind": "file",
+      "sha256": "04a15c6ce77ef4262d3664cb73b3cbc1c86588dd4159797d739ccd1ba2910038",
+      "executable": false
+    },
+    {
+      "path": ".local/tests/agent_tools_test.ts",
+      "kind": "file",
+      "sha256": "b18e9b01362a45252bf0bed67b9b07325b491adf936278def27961d67cd80c18",
       "executable": false
     },
     {
@@ -1390,7 +1468,7 @@
     {
       "path": ".zshrc",
       "kind": "file",
-      "sha256": "6cfc941e3eafb338af6ac808e3380342560a315aba86820feeccb64d5a581a5a",
+      "sha256": "83623c1ee36e87ca7ff921f854ff1ba660d0de65049554c7240c3c078d9e94a6",
       "executable": false
     },
     {
@@ -1467,13 +1545,13 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "69ccb168c035543e82362e02c1c8c98804605fddf1363962240d7c78d0bb869d",
+      "sha256": "fe87fb434b5c6f19f12abdf09581a7fc4b901b035aa0430cc967c75f3ce36b45",
       "executable": false
     },
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "999e4215394f29b1f8b3b3558e7e38f90e4a89dcd2b685348d0780ef08392a72",
+      "sha256": "c8b31da2136631700cb38dc24d138dd5116713b7850e483dc112c7c2ada64ace",
       "executable": false
     },
     {
@@ -1485,7 +1563,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "d927012029e83bc4a501a54ab44a0c236cc7edeb147cb8fefe8174834d407265",
+      "sha256": "ed9b9a9678e063c4ad9c1bcbcc1bd102ed24b0b2d8e8fb9856e8a40c8555c278",
       "executable": true
     }
   ]

@@ -5,6 +5,12 @@ for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linu
     end
 end
 
+if test "$AGENT_TOOLS_RUNTIME" = 1
+    fish_add_path --path --move --prepend /opt/agent-tools/bin
+else if test -d $HOME/.local/share/agent-tools/bin
+    fish_add_path --path --move --prepend $HOME/.local/share/agent-tools/bin
+end
+
 if status is-interactive
     function echo-error -a message
         echo "$message" >&2
@@ -131,7 +137,7 @@ if type -q brew
     test -n "$llvm_prefix"; and test -d "$llvm_prefix/bin"; and fish_add_path --move --prepend $llvm_prefix/bin
 end
 
-if type -q mise
+if test "$AGENT_TOOLS_RUNTIME" != 1; and not test -d $HOME/.local/share/agent-tools/bin; and type -q mise
     mise activate fish | source
 end
 if test -r $HOME/.local/share/dotfiles-setup/brew-paths
@@ -441,3 +447,9 @@ end
 # >>> grok installer >>>
 fish_add_path $HOME/.grok/bin
 # <<< grok installer <<<
+
+if test "$AGENT_TOOLS_RUNTIME" = 1
+    fish_add_path --path --move --prepend /opt/agent-tools/bin
+else if test -d $HOME/.local/share/agent-tools/bin
+    fish_add_path --move --prepend $HOME/.local/share/agent-tools/bin
+end

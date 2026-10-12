@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.4";
+export const VERSION = "1.0.5";
 export const BUILTIN_ROLES = [
   "ask",
   "code",
@@ -166,7 +166,8 @@ if (import.meta.main) {
       console.log("Usage: sync-kilo-agent-ports [--check | --version]\nGenerate .config/kilo/agent from native .codex/agents TOMLs.");
     } else {
       if (args.length && !(args.length === 1 && args[0] === "--check")) throw new Error("expected --check, --version, or no arguments");
-      const home = resolve(dirname(process.execPath), "../..");
+      const home = process.env.AGENT_TOOLS_RUNTIME === "1" ? process.env.HOME : resolve(dirname(process.execPath), "../..");
+      if (!home) throw new Error("HOME must be set inside the image runtime");
       process.exitCode = syncPorts(home, args[0] === "--check");
     }
   } catch (error) {

@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.20";
+export const VERSION = "1.3.23";
 
 type TreeEntry = {
 	mode: string;
@@ -164,6 +164,7 @@ const EXACT_PATHS = new Set([
 	// ".config/fish/completions/bun.fish", // bun installed
 	// ".config/fish/completions/grok.fish", // grok installed
 	".config/fish/config.fish",
+	".config/fish/conf.d/00-agent-tools.fish",
 	".config/oh-my-posh/catppuccin_macchiato.omp.json",
 	".config/gh/config.yml",
 	".config/ghostty/config",
@@ -195,6 +196,19 @@ const EXACT_PATHS = new Set([
 	".local/bin/svn-merge",
 	".local/lib/compile-agent-tools/compile-agent-tools.ts",
 	".local/lib/compile-agent-tools/CHANGELOG.md",
+	".local/lib/agent-tools/agent-tools.ts",
+	".local/lib/agent-tools/pull.ts",
+	".local/lib/agent-tools/CHANGELOG.md",
+	".local/lib/tool-image/Dockerfile",
+	".local/lib/tool-image/base.Dockerfile",
+	".local/lib/tool-image/finalize.ts",
+	".local/lib/tool-image/CHANGELOG.md",
+	".github/workflows/tool-images.yml",
+	".github/workflows/tool-image-base.yml",
+	".local/tests/agent_tools_test.ts",
+	".local/tests/agent_tools_pull_test.ts",
+	".local/tests/agent_tools_pull_ci.sh",
+	".local/tests/agent_tools_pull_fixture.Dockerfile",
 	".local/lib/tmp-clean/tmp_clean.ts",
 	".local/lib/tmp-clean/CHANGELOG.md",
 	".local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts",
@@ -380,6 +394,7 @@ function isIncludedPath(path: string): boolean {
 }
 
 function isExcludedPath(path: string): boolean {
+	if (path.startsWith(".local/tests/") && EXACT_PATHS.has(path)) return false;
 	const parts = path.toLowerCase().split("/");
 	return parts.some(part => EXCLUDED_PATH_PARTS.has(part));
 }

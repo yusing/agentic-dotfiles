@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+- Use the caller home for role sources and output when running from the Linux image.
+
 ## 1.0.4
 
 - Port the investigator role and rename web-reviewer to ui-reviewer.

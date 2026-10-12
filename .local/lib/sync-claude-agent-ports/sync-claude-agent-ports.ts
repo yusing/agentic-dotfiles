@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.9";
+export const VERSION = "1.0.10";
 const MODEL_MAP: Record<string, string> = {
   "gpt-6-luna": "sonnet",
   "gpt-6.1-sol": "opus",
@@ -140,7 +140,8 @@ if (import.meta.main) {
       console.log("Usage: sync-claude-agent-ports [--check | --version]\nGenerate .claude/agents from native .codex/agents TOMLs.");
     } else {
       if (args.length && !(args.length === 1 && args[0] === "--check")) throw new Error("expected --check, --version, or no arguments");
-      const home = resolve(dirname(process.execPath), "../..");
+      const home = process.env.AGENT_TOOLS_RUNTIME === "1" ? process.env.HOME : resolve(dirname(process.execPath), "../..");
+      if (!home) throw new Error("HOME must be set inside the image runtime");
       process.exitCode = syncPorts(home, args[0] === "--check");
     }
   } catch (error) {

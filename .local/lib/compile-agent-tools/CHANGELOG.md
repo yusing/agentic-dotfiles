@@ -1,8 +1,23 @@
 # Changelog
 
+## 1.0.16
+
+Provision shared Brew Python/PyYAML and Brew rustup/WASI during native setup
+and image compilation. Reconcile native retirement during setup. Ordinary
+compiler runs only build helpers; Linux image hooks are linked by pull. Native
+setup provisions after the final Brew path record rebuild and vendor install.
+
+## 1.0.15
+
+Export the maintained helper inventory for exact host retirement ownership.
+
 ## 1.0.14
 
 Stop building the retired batch-agent-sessions helper.
+
+## 1.0.13
+
+Compile the native agent-tools image runtime launcher.
 
 ## 1.0.12
 

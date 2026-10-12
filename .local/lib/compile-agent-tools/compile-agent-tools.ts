@@ -16,7 +16,22 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.14";
+const VERSION = "1.0.16";
+export const HELPER_SOURCES = [
+  ["rewrite-home-paths", "rewrite-home-paths"],
+  ["agent-tools", "agent-tools"],
+  ["tmp-clean", "tmp_clean"],
+  ["sync-claude-agent-ports", "sync-claude-agent-ports"],
+  ["sync-kilo-agent-ports", "sync-kilo-agent-ports"],
+  ["claude-config-helper", "claude-config-helper"],
+  ["patch-bitwarden-cli-fast-exit", "patch-bitwarden-cli-fast-exit"],
+  ["svn-merge", "svn-merge"],
+  ["open-file-in-herdr", "open-file-in-herdr"],
+  ["deltapath-wifi-routes", "deltapath-wifi-routes"],
+  ["update-oh-my-posh-theme", "update-oh-my-posh-theme"],
+  ["project-public-config", "project-public-config"],
+] as const;
+
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -145,7 +160,7 @@ function usesFfi(files: string[]): boolean {
     .some((file) => existsSync(file) && readFileSync(file, "utf8").includes("locked_state.ts"));
 }
 
-function main(): void {
+async function main(): Promise<void> {
   if (process.argv.length > 2 && process.argv[2] === "--version") {
     process.stdout.write(`${VERSION}\n`);
     return;
@@ -221,7 +236,7 @@ function main(): void {
     const output = join(localBin, name);
     const digest = digestInputs(
       `bun=${bunIdentity} target=${target} flags=build--compile`,
-      [dirname(source), bunConfig],
+      [dirname(source), bunConfig, ...(name === "agent-tools" ? [join(localLib, "compile-agent-tools", "compile-agent-tools.ts")] : [])],
     );
     const state = join(cacheRoot, `${name}.digest`);
     if (isExecutable(output) && storedDigest(state) === digest) return;
@@ -253,30 +268,21 @@ function main(): void {
   ]);
   compileHook(join(grokHooks, "skills_path_guard.ts"), grokBin);
 
-  if (existsSync(join(localLib, "rewrite-home-paths", "package.json"))) {
-    compileHelper(join(localLib, "rewrite-home-paths", "rewrite-home-paths.ts"), true);
+  for (const [directory, name] of HELPER_SOURCES) {
+    if (name === "rewrite-home-paths" && !existsSync(join(localLib, directory, "package.json"))) continue;
+    compileHelper(join(localLib, directory, `${name}.ts`),
+      name === "rewrite-home-paths" || name === "project-public-config");
   }
-  for (const [directory, name] of [
-    ["tmp-clean", "tmp_clean"],
-    ["sync-claude-agent-ports", "sync-claude-agent-ports"],
-    ["sync-kilo-agent-ports", "sync-kilo-agent-ports"],
-    ["claude-config-helper", "claude-config-helper"],
-    ["patch-bitwarden-cli-fast-exit", "patch-bitwarden-cli-fast-exit"],
-    ["svn-merge", "svn-merge"],
-    ["open-file-in-herdr", "open-file-in-herdr"],
-    ["deltapath-wifi-routes", "deltapath-wifi-routes"],
-    ["update-oh-my-posh-theme", "update-oh-my-posh-theme"],
-  ]) {
-    compileHelper(join(localLib, directory, `${name}.ts`));
+  if (process.env.SETUP_CONFIG && (platform() === "darwin" || process.env.SETUP_IMAGE_BUILD === "1")) {
+    const { provisionLanguages, cleanupTools } = await import("../agent-tools/agent-tools");
+    await provisionLanguages(process.env.SETUP_CONFIG, process.env.UPGRADE === "1");
+    if (platform() === "darwin") await cleanupTools(process.env.SETUP_CONFIG);
   }
-  compileHelper(join(localLib, "project-public-config", "project-public-config.ts"), true);
 }
 
-try {
-  main();
-} catch (error) {
+if (import.meta.main) main().catch(error => {
   if (error instanceof BuildFailure) process.exit(error.status);
   const message = error instanceof Error ? error.message : String(error);
   process.stderr.write(`${message}\n`);
   process.exit(1);
-}
+});
