@@ -8,6 +8,9 @@ State the intended outcome, scope, constraints, and checkable completion criteri
 and unresolved user decisions explicit. Standards constrain requested work; they must not turn
 neighboring concerns into added product requirements or automatic approval gates.
 
+For written outputs, specify the intended audience and useful level of detail; include tone
+constraints when relevant.
+
 Prefer stable outcomes over recipes the model can choose. Prescribe mechanics only for unfamiliar
 tools, domain constraints, or local integration. Retain non-obvious facts, reasons, and gotchas;
 leave discoverable commands, layout, and configuration with their owners.

@@ -8,9 +8,13 @@ boundaries. Each case must protect a distinct observable requirement or defect; 
 permutations, or fixtures alone do not justify a test matrix. Reuse existing fixtures and
 assertions before creating another harness.
 
+Validate layout and visual appearance through rendered output; validate text content at its
+consuming interface.
+
 A useful test fails when its intended behavior breaks. Avoid tautologies, incidental string checks,
 synthetic inputs that bypass the changed producer/consumer, and duplicate UI appearance assertions
 already covered by rendered snapshots. Keep test-only helpers/seams in tests, not production.
+Do not introduce surfaces the user did not request merely to support tests.
 Preserve separate state, interaction, color, wire, privacy, and transformation contracts when affected.
 A change is test-heavy when tests add more than 50 net lines and more than its production code,
 unless tests are the requested outcome. Before review, trace that weight to brittle implementation

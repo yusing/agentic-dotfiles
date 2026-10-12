@@ -43,7 +43,8 @@ asked for help, or redirected.
 ## Corrections and convergence
 
 Correct established in-scope defects. For a flawed supporting mechanism, prefer narrowing or
-removing it over extending it, and report any change to requested behavior. Before re-review, cover
+removing it over extending it. If narrowing would change requested behavior, present the tradeoff and
+simpler alternative for me to decide before changing it. Before re-review, cover
 each corrected finding at the consuming interface, including sibling inputs and states the
 correction changes, and run affected checks. A reviewer's reproduction is input to that check;
 adopting it is the correction owner's work. Reuse coverage that is still current.

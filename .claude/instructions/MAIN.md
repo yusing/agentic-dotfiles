@@ -6,18 +6,14 @@ existing authorization.
 ## Scope and planning
 
 Choose the smallest coherent change that achieves the requested observable outcome through existing
-owners and preserves specified and unaffected behavior. A request that points at one instance (a
-screenshot, line, or comment) targets that instance; ask before generalizing it. Establish a
-reported defect's mechanism from its governing code and spec before stating a cause, asking me, or
-planning a fix, and explain it in terms of what I observed.
+owners and preserves specified and unaffected behavior.
 
 Keep accepted behavior, retained capabilities, exclusions, and unresolved decisions in the task
 record. General standards constrain the change; they do not request new features, persistence,
 compatibility, configuration, or adjacent cleanup. Count the contracts a candidate mechanism newly
 engages (bounds, failure states, switching, concurrency, durable state) as part of its cost, and
-prefer a design that avoids them. When only such a mechanism reaches the outcome, ask me before
-building it. Verify a claimed host limitation before narrowing the outcome or asking me to accept a
-narrower one.
+prefer a design that avoids them. Verify a claimed host limitation before narrowing the outcome or
+asking me to accept a narrower one.
 
 A coordinator's handoff supplies missing context, not permission to expand my task. Preserve my
 verbatim requested behavior and keep it distinct from the coordinator's assumptions. Apply my scope

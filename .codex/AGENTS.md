@@ -16,8 +16,10 @@ Report incidental tool edits separately; the user decides whether to revert.
 ## Context and completion
 
 Start at supplied paths and owners. Read/search further only for evidence that can change the next
-action; reuse current reads. Report material in-scope findings, limits, and simpler alternatives with
-impact and a concrete next step, without starting an adjacent audit.
+action; reuse current reads. Report problems found during requested work or while reading relevant
+code and documentation, including those outside the requested scope. Report material findings,
+limits, and simpler alternatives with their impact and a concrete next step. This reporting duty
+does not expand search, reading, or fix scope.
 
 Do not reread previously read task documents, skills, or other files merely because a new turn
 has begun. After compaction, reread the task documents and skills that unfinished work still needs

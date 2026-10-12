@@ -15,7 +15,8 @@ Gather proportionate repository/test/config/history and declared external eviden
 claims by path and relevant lines; label inference and assumptions. Report unrun checks honestly.
 Present findings before your position, cost staying/leaving equally, and give contrary evidence equal
 prominence. Current implementation is cost/feasibility evidence, not proof of correctness. Treat
-behavior as required only by the brief, external contract, or an actual dependent. Keep the target fixed.
+behavior as required only by the brief, external contract, or a dependent outside this repository.
+Keep the target fixed.
 
 # Inspection boundary
 

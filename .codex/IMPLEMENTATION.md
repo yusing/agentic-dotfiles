@@ -6,8 +6,8 @@ conflicts; consult history only when intent remains unclear.
 ## Behavior
 
 Reuse existing owners and mechanisms for the smallest requested change. Fix a defect at its
-established cause; suppressing specified behavior that exposes it is not a fix. Use a dependency's
-supported capability before writing a narrower replacement. Add an abstraction
+established cause. Use a dependency's supported capability before writing a narrower replacement.
+Add an abstraction
 only for a current shared responsibility, invariant, or necessary algorithm, not possible future
 use. Avoid duplicating host/provider policy or adding persistence, fallbacks, or compatibility the
 task and supported contracts do not need.
@@ -15,13 +15,21 @@ task and supported contracts do not need.
 For simplification requests, remove mechanisms or required decisions at the affected owner.
 Moving code or adding replacement layers does not satisfy that request.
 
-For work whose silence hides progress, reuse host milestones or measurable progress. Start/finish
-notices alone are insufficient; progress must remain auxiliary to successful core behavior.
-Required safeguards explain rejection. Unrelated or nonessential failures must not block the
-intended outcome; do not add safeguards for hypothetical risks.
+For operations whose silence would obscure progress, expose meaningful milestones or measurable
+completion through the owning interface, reusing host progress, logging, or job-state facilities.
+Start/finish notices alone are insufficient. Progress must remain auxiliary and must not determine
+or interfere with successful core behavior.
+
+## No surprises
+
+Do not introduce safeguards that block intended behavior. When a required safeguard rejects an operation,
+explain why through the owning interface rather than failing silently.
+Failures in unrelated or nonessential work must not cause the intended behavior to fail.
+Skip safeguards for purely hypothetical concerns; raise any concrete unresolved tradeoff in the completion report.
 
 ## Hygiene
 
-Remove behavior, tests, and artifacts superseded by the accepted change. Keep compatibility only
-when required; report unrelated obsolete paths instead of deleting them. Edit authoritative sources
-and regenerate their consumers, not generated, vendored, or minified outputs.
+Remove behavior and artifacts superseded by the accepted change. Remove tests for superseded behavior
+rather than invert their assertions merely to retain them. Keep compatibility only when the user
+explicitly requests it; report unrelated obsolete paths instead of deleting them. Edit authoritative
+sources and regenerate their consumers, not generated, vendored, or minified outputs.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6d3141ff869e382ecf81a5b2333c165dcedc1b15",
+  "sourceCommit": "110fd47976af528f86b5a250615cc8c1d21dc4d8",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -23,7 +23,7 @@
     {
       "path": ".claude/agents/council-investigator.md",
       "kind": "file",
-      "sha256": "b32ff60579686fe5c269adbd68925a8752cca565a23fba223c5bc9bb76292986",
+      "sha256": "6a47d17402332163a0256613dda08c290aa1953b88fcbc67a330117a8bb7ae01",
       "executable": false
     },
     {
@@ -47,7 +47,7 @@
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "b8d5e56dc2095aa32577973690ff46a321f51eb4a33462efc45d8b8af91f9d77",
+      "sha256": "95e84480a93a2601fdb54e89ca0217efb2d0485328aa6dfc8d999a05ff2541fb",
       "executable": false
     },
     {
@@ -59,7 +59,7 @@
     {
       "path": ".claude/agents/ui-reviewer.md",
       "kind": "file",
-      "sha256": "a00861639e3b981f41cccbedf85cef64a94094649f1a43a9342f3337c1f7f3fe",
+      "sha256": "e8f2cb33b4d98c640819b82c7e0f359b350eba75ccde25a5fc876cdcde33a68a",
       "executable": false
     },
     {
@@ -71,7 +71,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "05816694d2dd8abe47d5e5a06324395536d52ef8552213450425c938291b76c9",
+      "sha256": "5ca7aa4a6ba4cfb80130dcedeb86c8837b434cce856da8e0f283d2b9577a9b5f",
       "executable": false
     },
     {
@@ -89,25 +89,25 @@
     {
       "path": ".claude/instructions/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "1750caa995596ef0726e3c94757f8aac591447f9dd4277ad34a6d4947d4dc802",
+      "sha256": "8f80f93b91945e11b0dc20d500f5caa5f0178588345d49a0d09fef96f2431b6a",
       "executable": false
     },
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "05f8f8048b7103780dc442dea753a6ca4c6fdbdf826c34dd5d1e9dd0fc3f5030",
+      "sha256": "0803780693d7f0f73a829d43b2ee30f1ca22e4a3908937e088019d205f2b6370",
       "executable": false
     },
     {
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
-      "sha256": "f002874d5ffe6c074eb90b6999ff1da301e0e600277d3482cd3808b73b4db772",
+      "sha256": "5e7f2f5d775d56bfe3db95d0761c3335b297cb17ea329206287cffb8ecf0d277",
       "executable": false
     },
     {
       "path": ".claude/instructions/REVIEW.md",
       "kind": "file",
-      "sha256": "f414f409d062b6677f798124b4eac5652bdd9efd7b33af868a26ddbb948bc7bd",
+      "sha256": "0ac550d20cf1a32c35edf8c59b6255935b74294e68743c8223c08cc09e5f7657",
       "executable": false
     },
     {
@@ -125,7 +125,7 @@
     {
       "path": ".claude/instructions/TESTING.md",
       "kind": "file",
-      "sha256": "996158a1bb8e1726c1eef52cfb2aaf7cd7fe55f964128813c84201cc753c47f8",
+      "sha256": "86d94bbadfe295ef44c506de5cffc3b9b9600f943b50547655e38bc0a98043ab",
       "executable": false
     },
     {
@@ -137,13 +137,13 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "b8588407d0175051163598822abb9864dee2aeebef9d3a115f38fd91d6780195",
+      "sha256": "8a583d92671a00b46fe1eecff8db620e125587b8c5617ea947c53c9f11125777",
       "executable": false
     },
     {
       "path": ".codex/agents/council-investigator.toml",
       "kind": "file",
-      "sha256": "77b483ba7aa42d137ec1e059b68081e7a41d0fb66c53ab6bbb2d44f86f42b16d",
+      "sha256": "dbab41a7440892a12e766cc5b5e03c2148c622ff67f8451a348dba4d8592c6d7",
       "executable": false
     },
     {
@@ -353,19 +353,19 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "70310a8b8f897c4c88c59225d56c8e7533fdf4f15f7fbed57ba9fa491472808d",
+      "sha256": "690d2c0ad9e1d54cf0e76b832009ac2b665a91283ef53b83edbbe7e9c9f96b61",
       "executable": false
     },
     {
       "path": ".codex/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "19d0187a7ed0e3b70bd1b6a0a65aefa31390cda244922039e385bed5f1380b68",
+      "sha256": "d5c7ecf9217c33ceadd1cf1d0efd1657dc440251cc6794e8c07505b15e06d6e2",
       "executable": false
     },
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "c0f316188bd83622d4df2d25dc7f3abe12df72d4220e2ecb936f0c5c5589f7bf",
+      "sha256": "354870d05173f5c347ce523fac134a1da8138a518c3ca0fddebe82a28e3bcb78",
       "executable": false
     },
     {
@@ -377,7 +377,7 @@
     {
       "path": ".codex/REVIEW.md",
       "kind": "file",
-      "sha256": "9f3ff1f227e6a9510565315058af864f626c23de1820c193ca0febd9c6dd7fb6",
+      "sha256": "a2f75c43d5455aedd3ec3be12441ad06eac38337aacb4e0793d6b2b979cced64",
       "executable": false
     },
     {
@@ -431,7 +431,7 @@
     {
       "path": ".codex/TESTING.md",
       "kind": "file",
-      "sha256": "6add02847d213a30b716b696b4efa942a53869817d7d8348f14c5ad4157f485c",
+      "sha256": "a76aa853322234f024d4ad37cfcdc9f81ad135ad5daf7377e2f3b9eace7eae95",
       "executable": false
     },
     {
@@ -503,7 +503,7 @@
     {
       "path": ".config/kilo/agent/council-investigator.md",
       "kind": "file",
-      "sha256": "945575639346520dad580eccc92b345660c378623e173bebc94fa780d0075d5a",
+      "sha256": "54754515991e2e18da81ef9c91664c2594a0f600e9eac5f53e6dce892ffe47fa",
       "executable": false
     },
     {
@@ -1437,13 +1437,13 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "e91b350cd66a59919769d8cadf5548ab74678e36501f0423c5a482f593ab8d1b",
+      "sha256": "b492296c58febc0d727618990f76935c9f78f4839967c85e4b81f99caae38dda",
       "executable": false
     },
     {
       "path": "CONTEXT-GROK-HOOK-PORT.md",
       "kind": "file",
-      "sha256": "dea73f1bc29cb82f718904eaee426f934144c210e64c871c0d71fb1f544bdd77",
+      "sha256": "ab5bfa2ffcd78c6f497ce035d07b717b045efb54b654c121f99ef72006d61b52",
       "executable": false
     },
     {
@@ -1461,7 +1461,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "d94f0100117d7435853a966d04b1baad237ad9be6b69301cac9f03f7a53ab073",
+      "sha256": "d6c66a60a6c08c3098d4f419862bb26c46423f2148a9b75e96d0288fa5a1abaf",
       "executable": false
     },
     {
