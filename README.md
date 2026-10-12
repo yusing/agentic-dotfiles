@@ -67,102 +67,84 @@ macOS watcher, and moves remaining legacy launch files and helpers into
 `~/.local/share/dotfiles-setup/retired-clipboard/`. It leaves Tailscale operator and
 linger settings unchanged because other tools may use them.
 
-## Bootstrap
+## Install and upgrade
 
-Setup supports macOS, Debian/Ubuntu, and Arch-based Linux. Running it may use
-sudo, install packages and tools, rewrite tracked configuration paths, and
-change the login shell to Fish. It can be rerun after failure. Checkout
-collisions are backed up under `~/.local/share/dotfiles-setup/`. Unrelated files
-are left alone.
+Review [setup.json](setup.json) before running setup. It installs tools and
+configures this home checkout. Run as a regular user; setup can request sudo.
+Checkout collisions are backed up under `~/.local/share/dotfiles-setup/`.
+Copy selected files instead if you want to retain your own dotfiles.
 
-Run setup as a regular user. Linux uses APT or Pacman/yay for bootstrap and
-system prerequisites, with sudo when needed, and Homebrew/Linuxbrew for the
-migrated command-line tools and development libraries. Installing Linuxbrew
-as root is rejected.
+```sh
+bash setup.sh
+```
 
-Setup installs Lightpanda 1.0.0 from its GitHub release binaries through mise.
-Fish, Zsh, and Bash export `AGENT_BROWSER_ENGINE=lightpanda` so agent-browser
-uses it by default. Open a new shell after setup to load this setting.
-
-Rust uses mise's native Rust backend to install the compiler, Cargo, and the
-`wasm32-wasip2` target needed for Zed dev extensions. Mise activation in Fish
-and Zsh exposes the Rust binaries and selects the locked toolchain; login Bash
-uses mise shims. An installer-only rustup package does not provide a toolchain.
-Open a new shell and fully restart GUI-launched editors after setup so they
-load the updated environment.
-
-For machines that should become a checkout of this repository, with its packages
-and tools installed:
+For a new machine that should become a checkout of this repository:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/yusing/agentic-dotfiles/main/setup.sh | bash
 ```
 
-From an existing checkout:
+Linux and macOS use native installation. After setup, upgrade managed tools with:
 
 ```sh
-bash setup.sh             # install or reconcile the locked tool set
-bash setup.sh --upgrade   # upgrade setup-managed packages and tools
-bash setup.sh --upgrade git-agent   # upgrade only the named mise tools
+agent-tools pull
 ```
 
-Naming tools after `--upgrade` re-resolves only their lock entries, plus any
-declarations changed in `setup.json`, then installs the lock. Use the tool
-identifier from `setup.json` or its command name. It skips native packages,
-vendors, the Git checkout, helper compilation, and verification, so it needs a
-completed setup. Upstream proxies may still serve a newly pushed Go commit late.
+### Tool sources
 
-Python dependency locking reports the package being resolved and elapsed time every
-30 seconds. Each Python tool has a 10-minute lock-resolution limit; a timeout stops
-that resolution without replacing the existing mise configuration, lock or dependency
-graphs. For a slow package index, allow more time with
-`SETUP_PYTHON_LOCK_TIMEOUT=1200 bash setup.sh --upgrade` (seconds per Python tool).
+Both platforms use Homebrew for compatible native tools, including Go, Bun,
+Node.js, Fish, LLVM, SwiftLint, Python, and rustup. Formulae follow Brew's stable
+channel. Brew uses available prebuilt bottles; mcdu uses its upstream tap's
+checksummed prebuilt archives.
 
-When the home Git repository has a commit at `HEAD` (including worktrees), Git
-setup is skipped: no identity, hooks, remote, branch, fetch, or checkout changes.
-An empty repository is force-checked out to `origin/main`; an existing unrelated
-origin is rejected. Tool installation and configuration still run.
+npm packages retain their npm source through Mise, including agent-browser and
+markdownlint-cli. Bun performs npm installation. Mise also supplies tools
+without a compatible current Brew source, including gh-dash and go-swagger,
+plus pinned scriptc 0.2.6 and Lightpanda 1.0.0. The shells select Lightpanda as
+agent-browser's default engine.
 
-Mosh uses the same vendor and legacy-package declarations as other tools in
-`setup.json`. Setup installs the fork through its own installer into
-`~/.local/opt/mosh`, with command links in `~/.local/bin`, then reconciles old
-APT, Pacman, or Homebrew Mosh packages through the usual legacy cleanup. Packages
-still needed by another installed package may be retained with a warning.
-Normal reruns keep the installed fork; `--upgrade` rebuilds the current fork.
-Native build prerequisites are declared in `setup.json`; macOS also needs Xcode
-or its Command Line Tools. The fork installer validates its build and staged
-executables before replacement, backing up previous local files under
-`~/.local/share/mosh/backups/`. After a filesystem write failure, restore those
-backups before retrying; replacement does not automatically roll back. Named
-`--upgrade TOOL...` and `--check-config` runs do not install or update vendors.
+Python uses Brew's interpreter with a managed virtual environment for PyYAML
+6.0.3 and Pyflakes 4.0.3. Brew rustup supplies
+stable Rust and `wasm32-wasip2`. Normal native reruns retain installed Rust;
+full upgrades refresh it. Both platforms install these environments locally. Cargo downloads and project output remain writable.
 
-Normal reruns retain installed native packages and skip mise tool installation
-when the locked versions are already installed,
-while still repairing missing commands and shims and checking the final setup.
-Setup also probes `scriptc --version` and reinstalls its locked version if the
-native installation is incomplete, before compiling helpers and hooks.
-Helper compilation is incremental on both normal runs and full `--upgrade` runs:
-unchanged sources and build inputs reuse the existing executable. Named upgrades
-skip helpers entirely. With this repository's `.githooks` enabled, a successful
-merge or rebase (including `git pull`) runs the same incremental build, so helper
-updates do not require a full setup run. Commit amendments do not trigger it.
-You can also run `.local/bin/compile-agent-tools` directly after editing a helper.
+Linux uses GNU netcat and Brew Chromium/WebKitGTK 4.1 libraries. WebKitGTK 6 and
+Bazelisk are excluded. macOS uses its system netcat and WebKit framework.
+PostgreSQL 18 has a separate Brew data directory; setup leaves its server stopped
+and does not migrate or delete existing databases. Mosh and the agent clients
+use their declared vendor installers.
 
-Setup rewrites `/home/<user>`, `/User/<user>`, and `/Users/<user>` paths in
-tracked runtime configuration to the current home, plus `$HOME` in agent
-configuration. Colliding JSON and TOML keys are merged recursively; later values
-win conflicts, including arrays. A compiled TypeScript helper runs after tool
-installation and compilation. Files requiring a merge are reformatted, with comments
-retained in a leading block; files without collisions retain their surrounding formatting.
-`--upgrade` also upgrades installed native packages declared in `setup.json`,
-including optional packages, through Homebrew or APT. Only declared packages are
-targeted; their required dependencies may also change. On Arch, `--upgrade`
-performs a **full system upgrade** with yay, including AUR packages, before
-installing native packages and updating Homebrew packages. Yay uses sudo when
-required.
+### Native installation
 
-If you already have your own dotfiles, copy the pieces you want instead of
-running setup.
+Homebrew supplies compatible native tools on both platforms. Linux needs a
+supported host package manager for bootstrap prerequisites; macOS needs Xcode
+Command Line Tools. Setup configures the host Fish shell and compiles managed
+helpers. Open a new terminal after installation.
+
+```sh
+bash setup.sh                      # install missing tools
+agent-tools pull                   # upgrade managed tools
+bash setup.sh --upgrade git-agent   # upgrade only a named Mise tool
+```
+
+Normal setup retains installed versions. Full upgrades refresh declared Brew,
+Mise, vendor, and Rust tools. Named upgrades accept a Mise identifier or command
+name and skip Brew, vendors, helpers, configuration, and cleanup.
+
+### Stale-tool cleanup
+
+After replacements validate, setup retires eligible old installations using
+explicit ownership declarations and exact Mise receipts. Current native tools,
+unrelated dependencies, host shells, active installations, services, databases,
+and configuration data remain. Cleanup can require sudo for process inspection
+or system package removal. Close retained active tools and rerun the upgrade to
+finish retirement. Broad autoremove is not used.
+
+For an existing image installation, first run the updated `bash setup.sh` from a
+host terminal, then `~/.local/bin/agent-tools pull`. The old image launcher remains
+available until the native upgrade succeeds and the login shell uses native Fish.
+Inactive images are removed; running image commands retain their release until
+they exit. Close old image sessions and rerun pull to reclaim that space.
 
 ## Adapting the Agent Setup
 
@@ -204,72 +186,14 @@ development environment.
 
 ## Agent Skills
 
-The table covers skills registered in
-[`.skills-mgr/.skills-mgr.json`](.skills-mgr/.skills-mgr.json). Source is Shared
-for local skills under [`.skills-mgr/skills/`](.skills-mgr/skills/), Codex for
-Codex-only skills under [`.codex/skills/`](.codex/skills/) or Codex plugins, and
-Remote for skills installed from a JSON locator. Disabled entries are omitted.
-“Model visible” means the model can select the skill itself. Conditions come
-from the JSON and describe when a skill is enabled; each skill's instructions
-determine when it applies.
+[The registry](.skills-mgr/.skills-mgr.json) selects shared, Codex-only, and remote
+skills. Start with the skills needed for your project; each skill owns its usage
+instructions and conditions. Local sources live under
+[shared skills](.skills-mgr/skills/) and [Codex skills](.codex/skills/).
 
-| Name | Source | Purpose | Model visible | Condition |
-| --- | --- | --- | --- | --- |
-| `agent-browser` | Remote | Automate websites and Electron apps, extract data, and run exploratory QA | Yes | Always |
-| `authoring-skill` | Shared | Author, update, review, or rename skills and maintain registration and projection | Yes | Always |
-| `build-code-skeleton` | Shared | Create an initial compile-safe project skeleton | Yes | Always |
-| `codebase-review` | Shared | Review the whole working tree | No | Always |
-| `commit` | Shared | Write commits and fold follow-up fixes into them | Yes | Always |
-| `context7-mcp` | Codex | Fetch current library documentation from Context7 | Yes | Always |
-| `council` | Shared | Gather independent agent judgments | Yes | Always |
-| `deliver-vertical-slice` | Shared | Deliver an approved change end to end | Yes | Always |
-| `deslop` | Shared | Reduce production code while preserving behavior | No | Always |
-| `dump-last-response` | Codex | Save the preceding assistant response | No | Always |
-| `final-review` | Shared | Review a completed delivery independently | Yes | Always |
-| `frontend-design` | Remote | Shape distinctive visual design for UI work | Yes | Always |
-| `go-json-v2` | Shared | Apply Go's `encoding/json/v2` APIs | Yes | Go project |
-| `go-microoptimizations` | Shared | Optimize measured Go hot paths | No | Go project |
-| `golang-best-practices` | Shared | Apply version-aware Go guidance and local conventions | Yes | Go project |
-| `handoff` | Shared | Prepare a handoff for another agent | No | Always |
-| `herdr` | Remote | Control Herdr panes, tabs, and agent sessions | Yes | Home directory with `herdr` |
-| `high-end-visual-design` | Remote | Apply high-end visual design details | Yes | TSX, JSX, HTML, or CSS project |
-| `human-flavoured-writing` | Shared | Write natural, human-sounding project copy | No | Always |
-| `js-ts-best-practices` | Shared | Apply JavaScript and TypeScript practices | Yes | JavaScript or TypeScript project |
-| `juststore-rendering-optimizer` | Shared | Design, review, or optimize juststore React state | Yes | JavaScript or TypeScript project with `juststore` |
-| `minimalist-ui` | Remote | Design clean editorial-style interfaces | Yes | TSX, JSX, HTML, or CSS project |
-| `new-agent-session` | Shared | Start an agent session in a new worktree and Herdr subspace | No | Always |
-| `new-project` | Shared | Run the new-project workflow | Yes | Always |
-| `openai-docs` | Codex | Look up Codex and OpenAI product documentation | Yes | Always |
-| `postgres-17-18-features` | Shared | Apply PostgreSQL 17 and 18 features | Yes | PostgreSQL project |
-| `read-codex-session` | Codex | Inspect local Codex session transcripts | No | Always |
-| `retro` | Remote | Identify workflow improvements from an agent session | No | Always |
-| `rust-async-patterns` | Remote | Apply Tokio async Rust patterns | Yes | Rust project |
-| `rust-best-practices` | Remote | Apply idiomatic Rust coding standards | Yes | Rust project |
-| `rust-patterns` | Remote | Apply idiomatic Rust patterns | Yes | Rust project |
-| `scriptc-compiler` | Shared | Read scriptc documentation | Yes | Always |
-| `session-usage` | Codex | Report current Codex token usage | No | Always |
-| `shadcn` | Remote | Work with shadcn/ui components | Yes | Node project with `components.json` |
-| `shadowtree` | Shared | Run and author Shadowtree recipes | Yes | Always |
-| `show-me` | Remote | Explain a topic with concise diagrams | Yes | Always |
-| `supabase-postgres-best-practices` | Remote | Apply Supabase PostgreSQL practices | Yes | PostgreSQL project |
-| `tauri-v2` | Remote | Build with Tauri v2 | Yes | Tauri v2 project |
-| `teardown` | Shared | Render structured visual explanations to HTML | Yes | Always |
-| `thermo-nuclear-code-quality-review` | Remote | Run a strict maintainability review | No | Always |
-| `ui-ux-pro-max` | Remote | Design or review UI and UX | Yes | TSX, JSX, HTML, or CSS project |
-| `use-modern-go` | Remote | Look up version-specific Go guidelines and explain individual rules | Yes | Go project |
-| `user-experience` | Shared | Improve user-facing workflow behavior | Yes | Always |
-| `using-pjdoc` | Shared | Validate indexed project documentation | Yes | Always |
-| `vercel-react-best-practices` | Remote | Apply Vercel React practices | Yes | Node project with React |
-| `vercel-react-native-skills` | Remote | Apply Vercel React Native practices | Yes | Node project with React Native |
-| `visualize` | Codex | Create in-conversation visual explanations | Yes | Always |
-| `web-design-guidelines` | Remote | Review UI against web interface guidelines | Yes | TSX, JSX, HTML, or CSS project |
-| `writing-readme` | Shared | Write or improve repository READMEs | Yes | Always |
-
-The `agent-browser` skill comes from
-[`vercel-labs/agent-browser`](https://github.com/vercel-labs/agent-browser).
-Before browser automation, load `agent-browser skills get core` for workflows
-that match the installed CLI version. Use `agent-browser skills list` to find
-specialized guides for Electron apps, Slack, exploratory QA, and cloud browsers.
+The [agent-browser skill](https://github.com/vercel-labs/agent-browser) covers
+browser automation. Load `agent-browser skills get core` for the installed CLI's
+workflow; `agent-browser skills list` lists its specialized guides.
 
 ## Adapting the Shell Setup
 
@@ -305,6 +229,47 @@ current configuration and merge the parts you want. In particular, check:
 
 Keeping your existing configuration beside this repository makes it easier to
 adopt one layer at a time and roll back anything that does not fit.
+
+## Terminal presets
+
+On macOS, setup installs `font-cascadia-code-nf`, `font-cascadia-mono-nf`,
+`font-ibm-plex-sans`, and `font-jetbrains-mono-nerd-font`. The tracked [Kaku configuration](.config/kaku/kaku.lua)
+retains Kaku’s stock fonts and theme-dependent weights, adding JetBrainsMono Nerd
+Font Mono only as an icon fallback on macOS. Linux font settings are unchanged. Only Kaku's Lua configuration is tracked, not its session or private state. Native upgrades include
+declared Homebrew font casks as well as formulae.
+
+The [WezTerm configuration](.config/wezterm/wezterm.lua) is a standalone port of
+Kaku's palettes, JetBrains Mono weights, layout, cursor,
+copy-on-select, and compatible Cmd shortcuts. Kaku Dark is forced regardless of
+the system appearance. It uses the login shell, line height
+1.1, and JetBrainsMono Nerd Font Mono as an icon fallback (also on Linux). Install
+those two font families before use. The current display uses Kaku's 15-point
+baseline and 26px padding, with font size divided by 1.1³ (11.27 pt), equivalent
+to three Ctrl+- steps. Ctrl+0 resets to that smaller baseline. Display sizing is explicit
+rather than queried during startup, because that query can hang WezTerm.
+This replaces the previous Ghostty-style transparency, ligatures, and automatic
+maximization. Existing windows may need Ctrl+0 to clear an earlier zoom adjustment.
+Window decorations use the platform title bar and resizable frame, without Kaku's
+integrated buttons or custom border. Their appearance depends on the desktop/compositor.
+Kaku-specific AI/tool overlays, smart Tab/close handling, renderer color remapping,
+pane gaps, session/CWD persistence, and custom tab/native UI
+are not reproduced. Dark ANSI black stays dark for correct backgrounds, rather
+than Kaku's special light foreground treatment. WezTerm's native close confirmation
+and tab titles are used.
+
+The [Ghostty configuration](.config/ghostty/config) uses the same forced Kaku Dark
+palette, 11.27-point Medium JetBrains Mono with Nerd Font fallback, upright text,
+Medium bold, font thickening enabled, disabled ligatures, opaque background, blinking
+bar cursor, and copy-on-select.
+Cell height is increased by 10%; 13-point side/top padding approximates WezTerm's
+26px at 2x display scale. Font rasterization and DPI handling can differ between
+terminals, so equal point sizes are not a pixel-perfect guarantee. Native server-side
+decorations, Ghostty shortcuts, Fish/SSH integration, and unfocused command-finish
+notifications remain. Ghostty retains its own tab UI, cursor blink timing, and
+byte-limited scrollback rather than WezTerm's 10,000-line limit.
+Reload with Ctrl+Shift+, and use Ctrl+0 to reset any manual font zoom; open a new
+window for changed padding and initial dimensions. Ghostty's Ctrl+- changes the
+size by one point, not WezTerm's multiplicative step.
 
 ## Repository Map
 
