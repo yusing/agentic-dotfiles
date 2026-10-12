@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.14
+
+Stop building the retired batch-agent-sessions helper.
+
 ## 1.0.12
 
 Stop building the retired grok-explore helper.

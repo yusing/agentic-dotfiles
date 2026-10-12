@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.20
+
+Stop publishing the batch-agent-sessions skill and helper, replaced by Mekugi native orchestration.
+
 ## 1.3.17
 
 Keep the Linuxbrew prefix `/home/linuxbrew` when replacing private home paths.

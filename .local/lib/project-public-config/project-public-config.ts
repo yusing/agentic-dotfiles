@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.17";
+export const VERSION = "1.3.20";
 
 type TreeEntry = {
 	mode: string;
@@ -195,8 +195,6 @@ const EXACT_PATHS = new Set([
 	".local/bin/svn-merge",
 	".local/lib/compile-agent-tools/compile-agent-tools.ts",
 	".local/lib/compile-agent-tools/CHANGELOG.md",
-	".local/lib/batch-agent-sessions/batch-agent-sessions.ts",
-	".local/lib/batch-agent-sessions/CHANGELOG.md",
 	".local/lib/tmp-clean/tmp_clean.ts",
 	".local/lib/tmp-clean/CHANGELOG.md",
 	".local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts",
@@ -217,7 +215,6 @@ const EXACT_PATHS = new Set([
 
 const PROJECTED_SKILL_NAMES = [
 	"authoring-skill",
-	"batch-agent-sessions",
 	"build-code-skeleton",
 	"codebase-review",
 	"commit",
