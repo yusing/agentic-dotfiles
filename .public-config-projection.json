@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a9e0735b3ffc8fe5f313ed97a0d71d8d2f6f0975",
+  "sourceCommit": "27da3c937d91f7482cb728dcdf83002abd818398",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -629,61 +629,13 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "5954cd0d86d2e9178e30a4240a6d2b3eba4a8c7d3480c3de7c12476f58f133ca",
-      "executable": false
-    },
-    {
-      "path": ".config/mise/locks/pipx-pyflakes/4.0.3~6c883192/pyproject.toml",
-      "kind": "file",
-      "sha256": "9cf1294fe9f29769477f0b7633a369d32b2832d57ca056794b9452ebbc7bc2c7",
-      "executable": false
-    },
-    {
-      "path": ".config/mise/locks/pipx-pyflakes/4.0.3~6c883192/uv.lock",
-      "kind": "file",
-      "sha256": "c6d4d1ac3f645634348076a98791574a85c55710a941cbeddc010c35da8b2958",
-      "executable": false
-    },
-    {
-      "path": ".config/mise/locks/pipx-rich-cli/1.8.1~73c63f16/pyproject.toml",
-      "kind": "file",
-      "sha256": "ba23a0169375209e2c0cf5e1a81f3a9c735c5ebb478efcfa61e4b46f4c3a9a5a",
-      "executable": false
-    },
-    {
-      "path": ".config/mise/locks/pipx-rich-cli/1.8.1~73c63f16/uv.lock",
-      "kind": "file",
-      "sha256": "3079f784bc7da27f2b822620b44c41c184219dc55c3719ef43fd93415e60e551",
-      "executable": false
-    },
-    {
-      "path": ".config/mise/locks/pipx-semgrep/1.180.0~2131a6f0/pyproject.toml",
-      "kind": "file",
-      "sha256": "6182afb63edd5b64d6f517b3744d2d1dab2f4e2bd57757063d219ca855d55203",
-      "executable": false
-    },
-    {
-      "path": ".config/mise/locks/pipx-semgrep/1.180.0~2131a6f0/uv.lock",
-      "kind": "file",
-      "sha256": "2193a09e7c6c25b9144f3a93c2e34c378bd74e41e21228a302a56889bd9d0583",
-      "executable": false
-    },
-    {
-      "path": ".config/mise/locks/pipx-yamllint/1.38.0~4f6a58c7/pyproject.toml",
-      "kind": "file",
-      "sha256": "013b5cf3be1ca02796a6a01de7a65df7ecc0569a2207df275985edeeab381b20",
-      "executable": false
-    },
-    {
-      "path": ".config/mise/locks/pipx-yamllint/1.38.0~4f6a58c7/uv.lock",
-      "kind": "file",
-      "sha256": "121caf1641b4f806800ab7ca8d9a9ed92b6d15631ba0ed299e9e2a17e1895a04",
+      "sha256": "547966318677e474f363e55180b9d7bfae5f9cd30b5b09f9ccb0744d5e13c22a",
       "executable": false
     },
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "38f6cb052de410c31e5837e43593d6e0080d2561e035bf1f738764976ac6b18e",
+      "sha256": "e2837acfd608557f7d4770fdcd62fc3a299bd09bcb02a781e4d6033084025e57",
       "executable": false
     },
     {
@@ -731,7 +683,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "5a957ff2cda102739e08abe68ba06d8003f3a03ba404ab0591f8831b2f4ee99e",
+      "sha256": "12bcdded851646f51422a314d90feb291dbf05050bee84455fdb43ca8124ab48",
       "executable": false
     },
     {
@@ -1527,7 +1479,7 @@
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "8feb57ffbf461cf517034864b1bad41117fdf7fa88220cbb6d1e842061a760c4",
+      "sha256": "346598b735abaa896f18c810d979edd2d342e8897f52cd7f02ef20db4b913bca",
       "executable": false
     },
     {
