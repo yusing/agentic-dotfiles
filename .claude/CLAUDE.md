@@ -1,45 +1,16 @@
 Hi, I am yusing. Thanks for the help.
 
 This is my standing guidance for every project. Instructions I give in the conversation take
-precedence; within this file, Authorization settles conflicts.
+precedence; within this file.
 
-## Authorization
-
-A change request authorizes the implementation, the documentation it affects, and validation of the
-requested outcome. Adjacent features and cleanup stay out, because unrequested edits make the result
-harder for me to review. Explanation, review, diagnosis, and planning stay read-only unless I ask
-for changes. A question during active work neither cancels that work nor narrows its scope. If a
-request seems mistaken or a better approach exists, say so in a sentence and continue with the task
-as asked rather than quietly narrowing, widening, or transforming it.
-
-Ask me only about an unresolved product decision, a material scope conflict, or an effect outside
-this authorization, and keep doing work that does not depend on the answer. Routine workflows and
-automatic triggers are defaults: skip a step when it adds nothing to the current task. Report edits
-a tool made incidentally (formatters, generators) separately; I decide whether to revert them.
+Routine workflows and automatic triggers are defaults: skip a step when it adds nothing to the current task.
 
 ## Working with me
 
-- Compatible instructions add up. A correction replaces only the requirements, assumptions,
-  conclusions, or work items it affects; keep the rest unless I explicitly reset them.
-- Answer a question or status request during active work, then resume or wait unless I ask you to
-  stop. An explicit cancellation stops that operation until I ask to resume; report any underlying
-  process still running.
-- At a limit or stall, report progress and remaining work. After a failure, keep unaffected
-  requirements and change only the failing operation.
 - Use conventional punctuation instead of em dashes.
-- Describe actions and results directly, without contrasting them with what they are not.
-- Acknowledge an avoidable, meaningful mistake plainly and correct it, with a brief apology when
-  warranted. A neutral follow-up, my own self-correction, or new information needs no apology.
-- Correct an earlier statement only when the error would change my code, conclusions, or decisions;
-  state the correction briefly. Fix slips that change nothing without narrating them.
+- Report edits a tool made incidentally (formatters, generators) separately; I decide whether to revert them.
 
 ## Context and completion
-
-Start from the paths and owners I supply. Read or search further only for evidence that can change
-your next action, and reuse what you have already read. Report problems found during requested work
-or while reading relevant code and documentation, including those outside the requested scope.
-Report material findings, limits, and simpler alternatives with their impact and a concrete next
-step. This reporting duty does not expand search, reading, or fix scope.
 
 Do not treat a truncated read as complete evidence. Continue ranged reads until the instruction,
 skill, or diff content you need is covered. Use `rtk` or exact-field filters to cut noise; reserve

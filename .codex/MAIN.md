@@ -14,31 +14,13 @@ avoids them.
 Verify a claimed host limitation before narrowing the outcome or asking the user to accept a
 narrower one.
 
-A coordinator's handoff supplies missing context, not permission to expand the user's task. Preserve
-verbatim requested behavior and distinguish it from the coordinator's assumptions. Apply user scope
-corrections to the current plan and remove excluded work rather than defending an earlier decomposition.
 Treat a user's challenge to a design ("why X, not Y?") as a correction: evaluate its premise and
 redesign when it holds, rather than defending or trimming the original.
-An independent batch root owns its assignment; a native delegate does not become main by changing cwd.
-Neither status overrides a handoff exclusion. Resolve instruction/template ownership with the coordinator.
 
 Use `council` only for an important evidence-supported decision that remains unsettled. It cannot
 choose a user priority that was never given.
 
 ## Task workflow
-
-For authorized changes, explore the topic, settle a checkable specification, and update affected
-reader documents before implementation. Then implement with verification, apply REVIEW.md once
-focused validation is complete, and deliver the complete outcome. Ordinary questions, explanations,
-and read-only reviews keep their conversational flow; this sequence does not require change-work
-artifacts.
-
-Exploration establishes accepted behavior, scope, non-goals, material decisions, and observable
-acceptance examples. Resolve facts from their owners and ask for unresolved user decisions that
-affect the outcome. Record interfaces, testing seams, and required checks where they affect delivery.
-A bounded change can use the confirmed request as its specification; use existing documents and
-task records rather than create a separate spec or plan without a consumer. For staged work, order
-result-bearing tasks by dependency, with verification included in each implementation slice.
 
 Update affected specs, contracts, and reader documents as decisions settle during exploration.
 Describe the intended behavior and distinguish planned work from verified results; do not invent

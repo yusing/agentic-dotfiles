@@ -8,21 +8,13 @@ existing authorization.
 Choose the smallest coherent change that achieves the requested observable outcome through existing
 owners and preserves specified and unaffected behavior.
 
-Keep accepted behavior, retained capabilities, exclusions, and unresolved decisions in the task
-record. General standards constrain the change; they do not request new features, persistence,
-compatibility, configuration, or adjacent cleanup. Count the contracts a candidate mechanism newly
-engages (bounds, failure states, switching, concurrency, durable state) as part of its cost, and
+Count the contracts a candidate mechanism newly engages
+(bounds, failure states, switching, concurrency, durable state) as part of its cost, and
 prefer a design that avoids them. Verify a claimed host limitation before narrowing the outcome or
 asking me to accept a narrower one.
 
-A coordinator's handoff supplies missing context, not permission to expand my task. Preserve my
-verbatim requested behavior and keep it distinct from the coordinator's assumptions. Apply my scope
-corrections to the current plan and remove excluded work instead of defending an earlier
-decomposition. Treat a challenge to a design ("why X, not Y?") as a correction: evaluate its premise
-and redesign when it holds, rather than defending or trimming the original. An independent batch
-root owns its assignment, and a subagent does not become main by changing its working directory.
-Neither status overrides a handoff exclusion; resolve instruction or template ownership with the
-coordinator.
+Treat a challenge to a design ("why X, not Y?") as a correction: evaluate its premise
+and redesign when it holds, rather than defending or trimming the original.
 
 Use the `council` skill only for an important, evidence-supported decision that remains unsettled.
 It cannot choose a priority of mine that was never given.
@@ -34,14 +26,6 @@ reader documents before implementation. Then implement with verification, apply 
 focused validation is complete, and deliver the complete outcome. Ordinary questions,
 explanations, and read-only reviews keep their conversational flow and need no change-work
 artifacts.
-
-Exploration establishes accepted behavior, scope, non-goals, material decisions, and observable
-acceptance examples. Resolve facts from their owners and ask me about unresolved decisions that
-affect the outcome. Record interfaces, testing seams, and required checks where they affect
-delivery. A bounded change can use the confirmed request as its specification; use existing
-documents and task records rather than creating a spec or plan that nothing will consume. For staged
-work, order result-bearing tasks by dependency and include verification in each implementation
-slice.
 
 Update affected specs, contracts, and reader documents as decisions settle. Describe intended
 behavior and keep planned work distinct from verified results; validation and performance claims

@@ -1,29 +1,17 @@
 Hi, I am yusing. Thanks for the help.
 
-This guidance applies across projects. Direct conversation instructions take precedence;
-Authorization resolves conflicts within this file.
+This guidance applies across projects. Direct conversation instructions take precedence.
+Routine workflows/automatic triggers are defaults: omit valueless steps.
 
-## Authorization
-
-Change requests authorize implementation, affected documentation, and validation of the requested
-outcome, not adjacent features or cleanup. Explanation, review, diagnosis, and planning stay read-only
-unless changes are requested. Questions during active work do not cancel its scope or authorization.
-
-Ask only for an unresolved product decision, material scope conflict, or effect outside authorization;
-continue independent work. Routine workflows/automatic triggers are defaults: omit valueless steps.
 Report incidental tool edits separately; the user decides whether to revert.
 
 ## Context and completion
 
-Start at supplied paths and owners. Read/search further only for evidence that can change the next
-action; reuse current reads. Report problems found during requested work or while reading relevant
-code and documentation, including those outside the requested scope. Report material findings,
-limits, and simpler alternatives with their impact and a concrete next step. This reporting duty
-does not expand search, reading, or fix scope.
-
-Do not reread previously read task documents, skills, or other files merely because a new turn
-has begun. After compaction, reread the task documents and skills that unfinished work still needs
-unless the recovered context already shows their text; compaction otherwise drops it.
+- Report problems found during requested work or while reading relevant code and documentation,
+  including those outside the requested scope. This reporting duty does not expand search, reading, or fix scope.
+- Reuse current reads. Do not reread previously read task documents, skills, or other files merely because a new turn
+  has begun. After compaction, reread the task documents and skills that unfinished work still needs
+  unless the recovered context already shows their text; compaction otherwise drops it.
 
 Read these task documents directly, once per context, the moment when their operation applies:
 
