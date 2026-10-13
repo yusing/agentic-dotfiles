@@ -1,6 +1,10 @@
 {
   "version": 2,
   "native": {
+    "system-time": {"packages": {"apt": ["time"], "pacman": ["time"]}, "commands": [], "os": ["linux"]},
+    "system-curl": {"packages": {"apt": ["curl"], "pacman": ["curl"]}, "commands": [], "os": ["linux"]},
+    "system-bash": {"packages": {"apt": ["bash"], "pacman": ["bash"]}, "commands": [], "os": ["linux"]},
+    "system-git": {"packages": {"apt": ["git"], "pacman": ["git"]}, "commands": [], "os": ["linux"]},
     "chromium-nspr": {"packages": {"apt": ["libnspr4"], "pacman": ["nspr"], "brew": ["nspr"]}, "commands": [], "os": ["linux"], "manager": "brew", "brew_prefix": "nspr"},
     "chromium-nss": {"packages": {"apt": ["libnss3"], "pacman": ["nss"], "brew": ["nss"]}, "commands": [], "os": ["linux"], "manager": "brew", "brew_prefix": "nss"},
     "chromium-atk": {"packages": {"apt": ["libatk1.0-0t64", "libatk1.0-0"], "pacman": ["at-spi2-core"], "brew": ["at-spi2-core"]}, "commands": [], "os": ["linux"], "manager": "brew", "brew_prefix": "at-spi2-core"},
@@ -41,7 +45,7 @@
     "wl-clipboard": {"packages": {"brew": ["wl-clipboard"]}, "commands": ["wl-paste"], "optional": true, "manager": "brew", "brew_prefix": "wl-clipboard", "os": ["linux"]},
     "pngpaste": {"packages": {"brew": ["pngpaste"]}, "commands": ["pngpaste"]},
     "imagemagick": {"packages": {"brew": ["imagemagick"]}, "commands": ["magick", "convert"], "optional": true, "manager": "brew", "brew_prefix": "imagemagick"},
-    "time": {"packages": {"brew": ["gnu-time"]}, "commands": [], "optional": true, "manager": "brew", "brew_prefix": "gnu-time"},
+    "time": {"packages": {"brew": ["gnu-time"]}, "commands": [], "manager": "brew", "brew_prefix": "gnu-time"},
     "taplo": {"packages": {"brew": ["taplo"]}, "commands": ["taplo"], "manager": "brew", "brew_prefix": "taplo"},
     "php": {"packages": {"brew": ["php"]}, "commands": ["php"], "manager": "brew", "brew_prefix": "php"},
     "composer": {"packages": {"brew": ["composer"]}, "commands": ["composer"], "manager": "brew", "brew_prefix": "composer"},
@@ -178,8 +182,6 @@
   },
   "legacy": {
     "wrk": {"packages": {"apt": ["wrk"], "pacman": ["wrk"]}},
-    "git": {"packages": {"apt": ["git"], "pacman": ["git"]}},
-    "curl": {"packages": {"apt": ["curl"], "pacman": ["curl"]}},
     "make": {"packages": {"apt": ["make"], "pacman": ["make"]}},
     "autoconf": {"packages": {"apt": ["autoconf"], "pacman": ["autoconf"]}},
     "automake": {"packages": {"apt": ["automake"], "pacman": ["automake"]}},
@@ -196,7 +198,6 @@
     "wget": {"packages": {"apt": ["wget"], "pacman": ["wget"]}},
     "wl-clipboard": {"packages": {"apt": ["wl-clipboard"], "pacman": ["wl-clipboard"]}},
     "imagemagick": {"packages": {"apt": ["imagemagick"], "pacman": ["imagemagick"]}},
-    "time": {"packages": {"apt": ["time"], "pacman": ["time"]}},
     "php": {"packages": {"apt": ["php-cli", "php"], "pacman": ["php"]}},
     "composer": {"packages": {"apt": ["composer"], "pacman": ["composer"]}},
     "cloc": {"packages": {"apt": ["cloc"], "pacman": ["cloc"]}},
