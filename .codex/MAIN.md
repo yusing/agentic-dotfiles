@@ -22,6 +22,12 @@ choose a user priority that was never given.
 
 ## Task workflow
 
+For authorized changes, explore the topic, settle a checkable specification, and update affected
+reader documents before implementation. Then implement with verification, apply `REVIEW.md` once
+focused validation is complete, and deliver the complete outcome. Ordinary questions,
+explanations, and read-only reviews keep their conversational flow and need no change-work
+artifacts.
+
 Update affected specs, contracts, and reader documents as decisions settle during exploration.
 Describe the intended behavior and distinguish planned work from verified results; do not invent
 validation or performance evidence. DOCS.md owns document consistency. Main keeps document work by
