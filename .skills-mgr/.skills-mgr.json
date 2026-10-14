@@ -13,10 +13,10 @@
     "archify": {
       "enabled": true,
       "remote": {
-        "provider": "skills.sh",
-        "id": "tt-a1i/archify/archify",
+        "provider": "repository",
+        "id": "https://github.com/tt-a1i/archify#archify",
         "name": "archify",
-        "locator": "tt-a1i/archify/archify"
+        "locator": "https://github.com/tt-a1i/archify"
       }
     },
     "authoring-skill": {
