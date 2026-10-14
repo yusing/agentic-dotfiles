@@ -12,6 +12,11 @@ only for a current shared responsibility, invariant, or necessary algorithm, not
 use. Avoid duplicating host/provider policy or adding persistence, fallbacks, or compatibility the
 task and supported contracts do not need.
 
+Keep each behavioral definition at one owner across features. Producers and consumers must
+share that definition, not maintain parallel case lists or recognition rules. When changing a
+producer, trace its consumers, including display and replay, and test the produced data through
+them. Separate operations can share definitions without sharing their side effects.
+
 For simplification requests, remove mechanisms or required decisions at the affected owner.
 Moving code or adding replacement layers does not satisfy that request.
 
