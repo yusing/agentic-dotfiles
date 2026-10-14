@@ -21,6 +21,12 @@ It cannot choose a priority of mine that was never given.
 
 ## Task workflow
 
+Before implementation, establish a viable end-to-end approach for the requested outcome,
+including the actual consumer integration. Resolve critical feasibility questions with source
+evidence or bounded disposable probes before building supporting machinery. If the approach
+cannot meet the accepted requirements, report the limitation and resolve it before implementation;
+do not build a partial mechanism first and negotiate a narrower outcome afterward.
+
 For authorized changes, explore the topic, settle a checkable specification, and update affected
 reader documents before implementation. Then implement with verification, apply `REVIEW.md` once
 focused validation is complete, and deliver the complete outcome. Ordinary questions,
