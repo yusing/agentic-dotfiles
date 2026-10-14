@@ -10,6 +10,14 @@ Routine workflows and automatic triggers are defaults: skip a step when it adds 
 - Use conventional punctuation instead of em dashes.
 - Report edits a tool made incidentally (formatters, generators) separately; I decide whether to revert them.
 
+## Product scope
+
+For public-facing software, derive scope from user requirements and accepted product contracts.
+Do not infer product limits from my setup, the current environment or operating system, or the
+current project's kind, language, or framework. Keep local implementation and validation conditions
+separate from supported product scope. When intended scope or breadth is unclear, ask before
+choosing it. Preserve explicit limits; general applicability does not request extra features.
+
 ## Context and completion
 
 Do not treat a truncated read as complete evidence. Continue ranged reads until the instruction,

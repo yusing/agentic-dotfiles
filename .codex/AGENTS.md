@@ -5,6 +5,14 @@ Routine workflows/automatic triggers are defaults: omit valueless steps.
 
 Report incidental tool edits separately; the user decides whether to revert.
 
+## Product scope
+
+For public-facing software, derive scope from user requirements and accepted product contracts.
+Do not infer product limits from my setup, the current environment or operating system, or the
+current project's kind, language, or framework. Keep local implementation and validation conditions
+separate from supported product scope. When intended scope or breadth is unclear, ask before
+choosing it. Preserve explicit limits; general applicability does not request extra features.
+
 ## Context and completion
 
 - Report problems found during requested work or while reading relevant code and documentation,
