@@ -1,6 +1,8 @@
 # Continuation content standard
 
 Give a fresh session the state that determines its next action, not a history of the session.
+Assume the handoff consumer has NONE of the prior conversation, journal, tool results, session states.
+The document must be self contained and remain actionable without those session stores.
 
 ## Caller boundary
 
@@ -19,11 +21,16 @@ an abandoned handoff or acknowledgement step.
 Start with the outcome, acceptance criteria, scope, and still-binding constraints. Consolidate
 repeated requests without losing distinct unfinished outcomes. Apply corrections only to the
 affected requirement and retain compatible approvals. Preserve exact wording when paraphrasing
-would erase a distinction; distinguish user decisions from agent assumptions.
+would erase a distinction. Attribute a decision to the user only when explicitly stated.
+Keep observations, agent conclusions, and proposals distinct from user decisions. An interruption
+records that work stopped; it does not establish a new prohibition or revoke authorization.
 
-Carry prohibitions with their operational scope, including coordinated actions. A prohibition on
-one command or target does not ban its entire tool. Exclude prohibited work even if an old plan
-included it. Record unresolved authorization as a decision, not an executable action.
+Carry only constraints that still apply to the receiving session, preserving their operational
+scope. Omit session-scoped constraints entirely, including temporary limits on spawning children;
+do not carry them forward as restrictions, historical notes, or permission questions. A prohibition
+on one command or target does not ban its entire tool. Exclude work that remains prohibited even
+if an old plan included it. Describe genuinely unresolved authorization as an open question, not
+a user decision or executable action.
 
 Keep an aside only while obligations remain. Carry a useful fact from an answered question under
 its topic, not as a completed conversation item.
@@ -41,17 +48,20 @@ wrong turn or repeated investigation, or preserves an outstanding obligation:
   An unproven limitation is not an impossibility result.
 - Outstanding approvals, failures, reporting, and external obligations. Keep recovery details only
   for a live need, not a completed operation's backup history.
-- Useful agent findings, not completed rosters or session-local identities. For ongoing work, keep
-  enough information to inspect it or identify the recovery gap; do not claim old agents remain live.
+- Useful findings stated in terms of the work, not agent names or roster entries. For unfinished
+  work, give its purpose, current result, and a retrievable source or artifact when one exists.
+  Do not claim old agents remain live.
 
 Remove superseded plans, abandoned hypotheses, stale identifiers, and validation chronology.
 A stale documentation reference does not create new reconciliation or cleanup work.
 
 ## Evidence and references
 
-Attribute binding requirements to the user or authoritative owner. Prefer retrievable paths and
-test names over agent names or inaccessible tool-result IDs. If conversation is the only source,
-retain the useful substance as reported evidence, not fresh verification.
+Attribute binding requirements to the user or authoritative owner. Use workspace paths, Git
+revisions, test names, and independently readable artifacts. State the needed conclusion inline;
+a journal path, child name, or tool-result ID cannot substitute for it. Include an opaque identifier
+only when necessary to retrieve evidence, with its location and retrieval method. If conversation
+is the only source, retain the useful substance as reported evidence, not fresh verification.
 
 Use relative paths inside the workspace and absolute external paths only for needed inputs or
 recovery evidence. Preserve essential conclusions when a temporary artifact is their only source.
@@ -76,6 +86,9 @@ ongoing workflow. List names, not bodies; omit completed, speculative, and empty
 
 Use headings suited to the state. State each fact once; omit preambles, empty templates, mandatory
 last-action sections, and change history.
+
+Before delivery, read the document as a fresh agent: each next action must identify the work and
+its inputs without session-only references, and each claimed user decision must have explicit support.
 
 Put Continuation last when work remains: `Next:` names the first unfinished action and `Then:`
 later obligations. Order prerequisite hooks first, then unfinished asides newest first, then
