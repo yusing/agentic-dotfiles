@@ -56,8 +56,9 @@ higher-priority requirements stay mandatory; follow the constraints of a selecte
 adapt its routine steps under Authorization.
 
 The `--- skills-mgr injected ---` inventory lists skills served by skills-mgr. Acquire them through
-`skills-mgr`, not through exposed placeholder files: bodies with `skills-mgr get <skill>
-[start:end]`, references with `skills-mgr get <skill>/<path> [start:end]`, and scripts with
+`skills-mgr`, not through `Skill` tool or read the exposed placeholder files:
+bodies with `skills-mgr get <skill> [start:end]`,
+references with `skills-mgr get <skill>/<path> [start:end]`, and scripts with
 `skills-mgr run <skill>/<script> [args...]` (ranges are optional, 1-based, inclusive). A name I
 invoke may be absent from the catalog; acquire its body and required references anyway, and load
 optional references only for the current operation. To change a skill, edit its maintained owner

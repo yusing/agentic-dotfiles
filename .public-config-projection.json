@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "fd1bf069a93ddff4fce9c48d07986ba8fdee26f8",
+  "sourceCommit": "fc50153955a0898db0691e896ae9c2e71ddd02a4",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -71,7 +71,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "1c39d2e64fb2a99e644079fe634eced52fd50e57e478433c01c79155239fdcf7",
+      "sha256": "2ca49f9ad9c51066be251aeef00a26710b5423f7c027d2fcc55abf19281f0097",
       "executable": false
     },
     {
