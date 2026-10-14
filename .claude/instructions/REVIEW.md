@@ -21,11 +21,12 @@ your own work does not justify it, since you already verify as you go; routine w
 work needs none. UI acceptance needs rendered or runtime evidence appropriate to the change,
 typically from `ui-reviewer`; source inspection is not runtime proof.
 
-Simplification: `review-simplify` is required when the change remains test-heavy after the
-`TESTING.md` test-weight check or nets more than 300 production lines or 500 lines in total (added
-minus deleted, excluding generated or vendored output), whether or not a correctness question
-exists. `review-correctness` does not replace it. Below these thresholds, arrange one only for a
-concrete necessity question that current evidence cannot settle.
+Simplification: identify a concrete necessity or complexity question that fresh inspection can
+resolve, independently of correctness. Test-heavy changes under TESTING.md or net additions above
+300 production lines or 500 total lines (excluding generated or vendored output) are signals to
+assess, not automatic review or completion gates. Arrange `review-simplify` when current evidence
+cannot settle that question; reuse evidence that already does. `review-correctness` does not
+replace a warranted simplification review.
 
 ## Briefing and waiting
 

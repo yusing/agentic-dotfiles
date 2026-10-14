@@ -20,11 +20,12 @@ it already answers the question, skip this review. A risk category or a complete
 not justify it. Routine wording/mechanical work needs none. UI acceptance needs rendered/runtime
 evidence appropriate to the change; source inspection is not runtime proof.
 
-Simplification: a simplification-role inspection is required when the change remains test-heavy
-after the TESTING.md test-weight check or nets more than 300 production lines or 500 lines in total
-(added minus deleted, excluding generated or vendored output), whether or not a correctness question
-exists. A correctness review does not replace it. Below these thresholds, arrange one only for a
-concrete necessity question that current evidence cannot settle.
+Simplification: identify a concrete necessity or complexity question that fresh inspection can
+resolve, independently of correctness. Test-heavy changes under TESTING.md or net additions above
+300 production lines or 500 total lines (excluding generated or vendored output) are signals to
+assess, not automatic review or completion gates. Arrange a simplification-role inspection when
+current evidence cannot settle that question; reuse evidence that already does. A correctness
+review does not replace a warranted simplification review.
 
 ## Briefing and waiting
 

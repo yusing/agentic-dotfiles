@@ -19,9 +19,9 @@ Preserve separate state, interaction, color, wire, privacy, and transformation c
 change affects them.
 
 A change is test-heavy when its tests add more than 50 net lines and more than its production code,
-unless tests are the requested outcome. Before review, trace that weight either to brittle
-implementation that needs many cases, which you simplify, or to cases these rules exclude, which you
-remove or merge.
+unless tests are the requested outcome. Use that weight to assess brittle implementation or
+redundant cases, not to presume either exists. Simplify evidenced complexity and remove or merge
+redundant cases; retain tests needed for distinct requested behavior regardless of the ratio.
 
 Run focused checks after a coherent implementation, not on known-broken intermediate edits. Broaden
 only for effects that cross owner boundaries. Reduce test cost without weakening distinct coverage.

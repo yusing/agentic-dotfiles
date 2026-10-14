@@ -17,7 +17,8 @@ leave discoverable commands, layout, and configuration with their owners.
 
 State desired behavior directly and name the actor. Keep a prohibition only for a distinct boundary
 with no useful positive form. Delete generic coaching, no-op assurances, repeated caveats, and
-examples that add no needed distinction. Shorter wording must not erase supported capabilities.
+examples that add no needed distinction. Shorter wording must preserve the actor, trigger,
+authority, exceptions, and required behavior, not just the topic or supported capabilities.
 
 Give each rule one owner: base communication/safety, shared authorization, main orchestration,
 delegate delivery, native role methods, project facts, or skill-specific methods. Link instead of
@@ -39,8 +40,9 @@ changes within the requested client. Report excluded consumer drift without chan
 Check actual inheritance, fresh/no-history assembly, and client capabilities before assuming
 isolation or redundancy.
 
-Evaluate both matching and adjacent nonmatching cases. Check that required steps change behavior,
-serve the task, and do not cause redundant reads, tests, permission requests, or broader scope.
+Compare before-and-after decisions for matching, adjacent nonmatching, and exception cases.
+Check that required steps change behavior, serve the task, and do not cause redundant reads,
+tests, permission requests, or broader scope.
 Remove stale rules at their owner rather than append another correction beside them.
 
 Separate structural/drift checks from behavioral conclusions. Source inspection cannot prove live

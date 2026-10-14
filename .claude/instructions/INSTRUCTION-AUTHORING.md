@@ -63,7 +63,8 @@ differ from the general guide, they take precedence. Each bullet links the secti
 - State expected length for written deliverables, which Opus 5 makes longer by default
   ([deliverable length][o5-length]).
 - Delete generic coaching, no-op assurances, repeated caveats, and restatements of the harness's own
-  system prompt. Shorter wording must not erase supported capabilities.
+  system prompt. Shorter wording must preserve the actor, trigger, authority, exceptions, and
+  required behavior, not just the topic or supported capabilities.
 
 Claude Code loads `~/.claude/CLAUDE.md` and the `CLAUDE.md` files in the working directory and every
 directory above it at launch ([how CLAUDE.md files load][cc-load]), expands their `@` imports at
@@ -105,9 +106,10 @@ and Plan load `CLAUDE.md` but not Claude Code's system prompt ([what loads at
 startup][cc-subagents]). A rule dropped from `CLAUDE.md` as a duplicate of that system prompt
 therefore stops reaching subagents; keep it when they need it.
 
-Evaluate both matching and adjacent nonmatching cases. Check that each required step changes
-behavior, serves the task, and causes no redundant reads, tests, permission prompts, or broader
-scope. Remove a stale rule at its owner rather than appending another correction beside it.
+Compare before-and-after decisions for matching, adjacent nonmatching, and exception cases.
+Check that each required step changes behavior, serves the task, and causes no redundant reads,
+tests, permission prompts, or broader scope. Remove a stale rule at its owner rather than appending
+another correction beside it.
 
 Keep structural and drift checks separate from behavioral conclusions. Source inspection cannot
 prove live reload or better model outcomes. Treat a rationale as a claim, not an approval checklist;

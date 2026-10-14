@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a7fb9ac420cb8cb3e82c479471d00ab189300886",
+  "sourceCommit": "0e2fabcae9d9ade0ed1e77fa1d719b05aaae7917",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -95,7 +95,7 @@
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "0803780693d7f0f73a829d43b2ee30f1ca22e4a3908937e088019d205f2b6370",
+      "sha256": "0e8c818c16227a47d13c2b3be016aabb2c96ab11927856b0054ff7c0dcd9d2b6",
       "executable": false
     },
     {
@@ -107,7 +107,7 @@
     {
       "path": ".claude/instructions/REVIEW.md",
       "kind": "file",
-      "sha256": "0ac550d20cf1a32c35edf8c59b6255935b74294e68743c8223c08cc09e5f7657",
+      "sha256": "665089a7b500c8bb857ad13507693e86b9e6bd4333dbaaa71c0fe3bb4291a92d",
       "executable": false
     },
     {
@@ -125,7 +125,7 @@
     {
       "path": ".claude/instructions/TESTING.md",
       "kind": "file",
-      "sha256": "86d94bbadfe295ef44c506de5cffc3b9b9600f943b50547655e38bc0a98043ab",
+      "sha256": "5bd882fc983a8a05286ed87dba1daeaf61f824f53a89fe21a1a7697e39b69c32",
       "executable": false
     },
     {
@@ -359,7 +359,7 @@
     {
       "path": ".codex/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "d5c7ecf9217c33ceadd1cf1d0efd1657dc440251cc6794e8c07505b15e06d6e2",
+      "sha256": "edebce7d6ac0fc421e3dc9e181f41b86db3f17835f8564e2ab40b68912cb6cb8",
       "executable": false
     },
     {
@@ -377,7 +377,7 @@
     {
       "path": ".codex/REVIEW.md",
       "kind": "file",
-      "sha256": "a2f75c43d5455aedd3ec3be12441ad06eac38337aacb4e0793d6b2b979cced64",
+      "sha256": "d28575032d40b8dca6174bae86f10a25c4001baebf99c4b68cc7e37839c9cfbf",
       "executable": false
     },
     {
@@ -431,7 +431,7 @@
     {
       "path": ".codex/TESTING.md",
       "kind": "file",
-      "sha256": "a76aa853322234f024d4ad37cfcdc9f81ad135ad5daf7377e2f3b9eace7eae95",
+      "sha256": "a78d6ac19254e730479f836ac76ad1668465185b3b2877000ebea1b645e15807",
       "executable": false
     },
     {
