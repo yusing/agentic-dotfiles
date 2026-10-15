@@ -267,11 +267,11 @@ set -g theme_nerd_fonts yes
 set -g theme_color_scheme solarized-dark
 
 if check-command eza
-    alias ls 'eza -al --color=always --group-directories-first --icons=always'
-    alias la 'eza -a --color=always --group-directories-first --icons=always'
-    alias ll 'eza -l --color=always --group-directories-first --icons=always'
-    alias lt 'eza -aT --color=always --group-directories-first --icons=always'
-    alias l. "eza -a | grep -e '^\.'"
+    abbr --add --position command ls 'eza -al --color=always --group-directories-first --icons=always'
+    abbr --add --position command la 'eza -a --color=always --group-directories-first --icons=always'
+    abbr --add --position command ll 'eza -l --color=always --group-directories-first --icons=always'
+    abbr --add --position command lt 'eza -aT --color=always --group-directories-first --icons=always'
+    abbr --add --position command l. "eza -a | grep -e '^\.'"
 end
 
 abbr --add --position command tmux 'tmux -u'
