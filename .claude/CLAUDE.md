@@ -27,6 +27,10 @@ line windows for bounded exploration where omitted rows cannot change the next a
 A new turn alone is no reason to reread a document, skill, or file you already have. Compaction
 drops their text, so after compaction reread the task documents that unfinished work still needs.
 
+Write code, tests, documents, and other deliverables for readers who never saw this conversation.
+Do not quote, paraphrase, or refer to my prompts or other conversation content in them unless I
+supply text for that deliverable.
+
 Read these task documents directly, once per context, the moment when their operation applies:
 
 ### In ~/.claude/instructions
@@ -44,13 +48,12 @@ Read these task documents directly, once per context, the moment when their oper
 - `DOCS.md`: writing, integrating, or reviewing reader documents, not every worker task.
 - `GITHUB.md`: preparing pull-request, issue, or comment text.
 
-- `SUBAGENT.md`: subagent only: assignment, messages, and result delivery, not dispatch policy.
+- `SUBAGENT.md`: only when you are a subagent, never as the main agent: assignment, messages, and
+  result delivery, not dispatch policy.
 
 ### In workdir
 
 - `HANDOFF.md`: when mentioned, read it and then delete it.
-- `RECOVERY.md`: when created or mentioned, keep it through staged delivery, then
-  delete it.
 
 Subagents other than the built-in Explore and Plan load this file themselves, so leave its content
 and the task documents above out of other instruction files, artifacts, skills, and agent prompts
@@ -97,8 +100,6 @@ skill or plugin authorized messaging other people, name and link it in the final
 
 ## Delegates
 
-The main agent owns integration and completion, and it alone edits instructions, skills,
-workflow and task guidance, and delivery hooks; subagents return findings and proposals for those.
 Keep each durable rule at its existing owner instead of appending recaps elsewhere. An explicit
 review states its scope beyond pending changes and separates missing runtime or browser coverage
 from source inspection.

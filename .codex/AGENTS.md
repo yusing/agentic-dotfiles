@@ -20,6 +20,9 @@ choosing it. Preserve explicit limits; general applicability does not request ex
 - Reuse current reads. Do not reread previously read task documents, skills, or other files merely because a new turn
   has begun. After compaction, reread the task documents and skills that unfinished work still needs
   unless the recovered context already shows their text; compaction otherwise drops it.
+- Write code, tests, documents, and other deliverables for readers without session history. Do not
+  quote, paraphrase, or refer to my prompts or other conversation content in them unless I supply
+  text for that deliverable.
 
 Read these task documents directly, once per context, the moment when their operation applies:
 
@@ -36,12 +39,11 @@ Read these task documents directly, once per context, the moment when their oper
 - `DOCS.md`: writing, integrating, or reviewing reader documents, not every worker task.
 - `GITHUB.md`: preparing pull-request, issue, or comment text.
 
-- `SUBAGENT.md`: subagent only: delegate assignment, messages, and result delivery, not dispatch policy.
+- `SUBAGENT.md`: FOR SUBAGENTS ONLY: delegate assignment, messages, and result delivery, not dispatch policy.
 
 ### In workdir
 
 - `HANDOFF.md`: when mentioned; read then delete.
-- `RECOVERY.md`: when created/mentioned; retain through staged delivery, then delete.
 
 Do not repeat or paraphrase instructions delivered before the first user message, including this
 file and task docs above, in other instruction files, artifacts, skills, or spawn prompts.
@@ -65,7 +67,6 @@ minified, or generated data, extract exact fields/bounded bytes and reuse unchan
 
 ## Delegates
 
-Use native role capabilities within authorized scope. Main owns integration/completion and edits
-instructions, skills, workflow/task guidance, and delivery hooks; delegates return findings/proposals.
+Use native role capabilities within authorized scope.
 Keep durable rules at their existing owner instead of appending recaps. Explicit reviews state scope
 beyond pending changes and separate missing runtime/browser coverage from source inspection.

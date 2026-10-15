@@ -23,8 +23,7 @@ Honor explicit restrictions and keep effects within the accepted scope.
 
 ## Prepare and recover
 
-Before the first slice, complete exploration and affected reader-document updates under MAIN.md.
-Settle the complete accepted item set, non-goals, material decisions,
+Before the first slice, settle the complete accepted item set, non-goals, material decisions,
 original base revision, and required checks. Order the smallest independently usable slices by
 dependency. Do not divide work by technical layer or stop after the first working path.
 
@@ -49,8 +48,7 @@ behavior.
 
 Once validation and applicable inspection are complete, create one non-empty Conventional Commit with a concise
 subject and meaningful body, record its hash, and continue without another approval prompt.
-Continue until every accepted item has implementation and validation evidence. Apply MAIN.md's
-contract/document correction policy when slice evidence changes an exploration decision.
+Continue until every accepted item has implementation and validation evidence.
 
 ## Final review and closure
 

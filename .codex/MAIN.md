@@ -22,27 +22,24 @@ choose a user priority that was never given.
 
 ## Task workflow
 
-Before implementation, establish a viable end-to-end approach for the requested outcome,
-including the actual consumer integration. Resolve critical feasibility questions with source
-evidence or bounded disposable probes before building supporting machinery. If the approach
-cannot meet the accepted requirements, report the limitation and resolve it before implementation;
-do not build a partial mechanism first and negotiate a narrower outcome afterward.
+For authorized changes, before implementation:
 
-For authorized changes, explore the topic, settle a checkable specification, and update affected
-reader documents before implementation. Then implement with verification, apply `REVIEW.md` once
-focused validation is complete, and deliver the complete outcome. Ordinary questions,
-explanations, and read-only reviews keep their conversational flow and need no change-work
-artifacts.
+- settle a viable end-to-end approach for the requested outcome, including the actual consumer
+  integration
+- settle the workflow: sequencing, delegation, and validation
+- write the documentation changes: update affected specs, contracts, and reader documents
 
-Update affected specs, contracts, and reader documents as decisions settle during exploration.
-Describe the intended behavior and distinguish planned work from verified results; do not invent
-validation or performance evidence. DOCS.md owns document consistency. Main keeps document work by
-default; delegate a bounded document assignment only when it replaces independent work at lower
-cost. Instructions, skills, workflow/task documents, and model-facing templates stay with main.
+Resolve critical feasibility questions with source evidence or bounded disposable probes before
+building supporting machinery. If the approach cannot meet the accepted requirements, report the
+limitation and resolve it before implementation; do not build a partial mechanism first and
+negotiate a narrower outcome afterward. When evidence changes a settled decision or exposes a
+contract gap, update its existing record and affected documents before continuing against the
+changed behavior.
 
-Use the settled contract to guide implementation and verification. When evidence changes a decision
-or exposes a contract gap, update its existing record and affected documents before continuing
-against the changed behavior.
+Apply `REVIEW.md` once focused validation is complete.
+
+Ordinary questions, explanations, and read-only reviews keep their conversational flow and need no
+change-work artifacts.
 
 ### Visualizations
 
@@ -56,24 +53,30 @@ Usually skip visuals for single facts, one-step actions, simple edits, basic ins
 
 ## Delegation
 
-Delegate independent factual lookup and bounded support work when it replaces main's work at lower
-cost. Keep next-step-dependent discovery and production changes local. Instruction audits and edits
-at named owners remain main's. Select roles from the native catalog; do not disguise diagnosis as lookup.
+Select roles from the native catalog; do not disguise diagnosis as lookup.
 
-Main keeps tightly coupled regressions, broken-test migration, and snapshots. Delegate coherent
-acceptance, differential, fixture-heavy, or cross-cutting suites when the independent outcome warrants
-handoff. Before dispatch, reuse a passing focused build/check that establishes the assigned seam;
-required definitions must already exist and the interface must be stable. A check from before later
-edits does not establish it, and a seam main is still changing is not stable. Otherwise finish that
-implementation first. Workers report production/dependency fixes to main.
+- Lookup: delegate independent factual lookup and bounded support work when a broad scope needs
+  concise context. Keep next-step-dependent discovery local.
+- Documents: main by default; delegate a bounded document assignment when it speeds up delivery.
+- LLM-facing: main owns instructions, skills, workflow/task documents, model-facing templates, and
+  delivery hooks; delegates return findings/proposals for them.
+- Tests: main keeps tightly coupled regressions, broken-test migration, and snapshots. Delegate
+  coherent acceptance, differential, fixture-heavy, or cross-cutting suites when the independent
+  outcome warrants handoff. Before dispatch, reuse a passing focused build/check that establishes
+  the assigned seam; required definitions must already exist and the interface must be stable. A
+  check from before later edits does not establish it, and a seam main is still changing is not
+  stable. Otherwise finish that implementation first. Workers report production/dependency fixes to
+  main.
 
-Give each agent the settled outcome, owned files, inputs, task-specific constraints, and useful checks.
+Give each agent, as applicable, the settled outcome, owned files, inputs, task-specific constraints,
+and useful checks.
 Include what has changed so far and distinguish the changes for this spawn or follow-up.
 Omit earlier change context only when the recipient already retains it.
 Label constraints and conclusions that neither the user nor a governing contract established as
 main's assumptions, so the recipient can test them. In Codex, use a `fork_turns="none"` brief with
-complete task context, except a non-documentation worker may use `"all"` when retained context
-concretely helps. Native roles own model budgets. Recipients load shared, project, and role
+complete task context, except a worker may use `"all"` when retained context concretely helps.
+
+Native roles own model budgets. Recipients load shared, project, and role
 instructions themselves; leave out restatements or paraphrases of them, such as reading pointers,
 edit or Git limits, and report contents.
 

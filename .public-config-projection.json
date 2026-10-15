@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ae98bd7c07b89079b64c8e0721c6bc0e1dd802d0",
+  "sourceCommit": "efd21a4ec6d78e05e374db7e8b4def18a24a40ce",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -71,7 +71,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "987c7a6bb900ff5713b68a0b07808d5b85e4b4051a8f528f08f118671469cffd",
+      "sha256": "407bbc66dce5ce231cc8ba2ed464e88f3a1ee1fb9c5b633e12a8b874173c72bf",
       "executable": false
     },
     {
@@ -101,7 +101,7 @@
     {
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
-      "sha256": "dde4ae8fcc6a14828c9304352bab32b48a4cee5cc0fb4a95a14f8771797e0b88",
+      "sha256": "2e6c17a389906c810cd39e3889c08bc0851da0da9d0765448d48c9bccd776e7a",
       "executable": false
     },
     {
@@ -125,7 +125,7 @@
     {
       "path": ".claude/instructions/TESTING.md",
       "kind": "file",
-      "sha256": "5bd882fc983a8a05286ed87dba1daeaf61f824f53a89fe21a1a7697e39b69c32",
+      "sha256": "99bb4eb229625950c58d687b9cb0cd975fd8a9fcb78881d66a2cbb6fc20efad6",
       "executable": false
     },
     {
@@ -137,7 +137,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "eb332527d37b1f2133e222ab21873cbaf8d5a2c4c26a04279293cfecea2e50fd",
+      "sha256": "f81dcee4074c923288744e73445b457fc4bd9278710ad788ee9d1d6b1f0b1574",
       "executable": false
     },
     {
@@ -365,7 +365,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "e2965f0edff863b2e0f8ff69322e26b79ea2ef92d9d8fa8e6827fd3d0e99f5f2",
+      "sha256": "98db827b3e92d49462883d7b8072251e7dc9b859d5fd12203ab6eac464ac6df9",
       "executable": false
     },
     {
@@ -431,7 +431,7 @@
     {
       "path": ".codex/TESTING.md",
       "kind": "file",
-      "sha256": "a78d6ac19254e730479f836ac76ad1668465185b3b2877000ebea1b645e15807",
+      "sha256": "d3ea414056a24e9b2b0d2041eb3b5566728bfcf7f0b5e30fa4f8c0b37d136a56",
       "executable": false
     },
     {
@@ -964,7 +964,7 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "ce8e0f8921de2c2585cc73b6ece253f8ff729e31030bdd6ec346d9ebce7f389d",
+      "sha256": "d4a4fe7ca36d87579fa716b72947110b4e99085939d40bb200ec5f83b050839e",
       "executable": false
     },
     {
