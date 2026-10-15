@@ -1,4 +1,5 @@
 #!/bin/sh
+# version: 1.1.0
 # Perform an svn trunk/branches sync merge in either direction and print the
 # resulting commit message, formatted to match this project's convention:
 #   up:   Merge rF<revs> from branches/<name> to trunk (T<ticket> ...)
@@ -151,7 +152,12 @@ trap 'rm -rf "$tmpdir"' EXIT
 
 if [ "$mode" = merge ]; then
 	require_clean_target
-	svn update "$target_path"
+	if [ "$direction" = down ] && [ -d "$trunk_path" ]; then
+		# Bring the local trunk checkout to the revision being merged from.
+		svn update "$target_path" "$trunk_path"
+	else
+		svn update "$target_path"
+	fi
 	require_clean_target
 	merged_revs "$target_path" >"$tmpdir/before"
 	if [ "$direction" = up ]; then
@@ -204,6 +210,39 @@ if [ "$mode" = merge ]; then
 			echo "$script_name: branch history says $replayed already merged, but SVN still considers them eligible" >&2
 			echo "$script_name: restore or record those revisions before running down again" >&2
 			exit 1
+		fi
+		# A trunk revision that merged this branch up carries work the branch
+		# already has. `up` cherry-picks, so SVN does not recognise that work
+		# as reflective and would replay it here, conflicting with the branch's
+		# own adds, deletes, and later edits. Record those revisions as merged
+		# without applying them, then merge the rest.
+		if [ -s "$tmpdir/eligible" ]; then
+			svn log -r "$(head -n 1 "$tmpdir/eligible"):HEAD" "$source_url" |
+				awk -v branch="$branch" -v eligible="$tmpdir/eligible" '
+					BEGIN {
+						while ((getline line < eligible) > 0) replayable[line + 0] = 1
+						marker = "branches/" branch " to "
+					}
+					/^r[0-9]+ \|/ {
+						rev = $1
+						sub(/^r/, "", rev)
+						first_line = 1
+						next
+					}
+					/^[-]+$/ || $0 == "" { next }
+					!first_line { next }
+					{
+						first_line = 0
+						i = index($0, marker)
+						if ($0 ~ /^Merge/ && i && substr($0, i + length(marker)) ~ /^[^ ]*trunk/ && ((rev + 0) in replayable))
+							print rev + 0
+					}
+				' | sort -n >"$tmpdir/reflective"
+		fi
+		if [ -s "$tmpdir/reflective" ]; then
+			rev_args=$(awk 'BEGIN { sep = "" } { printf "%s%s", sep, $1; sep = "," } END { print "" }' "$tmpdir/reflective")
+			echo "$script_name: recording up-merges from branches/$branch as merged without applying: $rev_args" >&2
+			svn merge --record-only -c "$rev_args" "$source_url" "$target_path"
 		fi
 		svn merge "$source_url" "$target_path"
 	fi
