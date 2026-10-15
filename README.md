@@ -200,6 +200,17 @@ workflow; `agent-browser skills list` lists its specialized guides.
 Fish is the main shell configuration. Zsh loads a native port of the daily Fish
 behavior, while Bash has a smaller independent setup.
 
+Use `scc-prod [paths...] [scc options]` to count production-oriented source, for
+example `scc-prod src --by-file` or `scc-prod --format json`. It requires `scc`
+and the helper built by `compile-agent-tools`. The plain `scc` command is unchanged.
+The helper excludes dependency/build directories, test and example filenames,
+benchmarks, explicitly named generated/minified files, and files with recognized
+generated headers in their leading comments. It preserves handwritten code that
+merely quotes a generated marker or contains long lines. It uses two scc passes
+and reports filtering progress on stderr; output formats, ignore files, and
+output destinations remain scc-owned. Counts are file-based: inline tests and
+generated code without a recognized name or header can still be counted.
+
 Fish and Zsh use the local Oh My Posh theme at
 [`.config/oh-my-posh/catppuccin_macchiato.omp.json`](.config/oh-my-posh/catppuccin_macchiato.omp.json)
 so prompt initialization uses a local file. The first interactive Fish or Zsh

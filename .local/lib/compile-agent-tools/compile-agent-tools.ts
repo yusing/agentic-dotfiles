@@ -16,7 +16,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.13";
+const VERSION = "1.0.14";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -258,6 +258,7 @@ function main(): void {
   }
   for (const [directory, name] of [
     ["tmp-clean", "tmp_clean"],
+    ["scc-prod", "scc-prod"],
     ["sync-claude-agent-ports", "sync-claude-agent-ports"],
     ["sync-kilo-agent-ports", "sync-kilo-agent-ports"],
     ["claude-config-helper", "claude-config-helper"],

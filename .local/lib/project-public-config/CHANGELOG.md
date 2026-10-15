@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.19
+
+Publish scc-prod sources for standalone production-oriented source counts.
+
 ## 1.3.18
 
 Stop publishing the batch-agent-sessions skill and helper, replaced by Mekugi native orchestration.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "37a15c12ebfa51382cd2f41990892980a65e0ede",
+  "sourceCommit": "6cb11060517f579ea4abdfe6fa0b1d1f0ce9b1ec",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -449,7 +449,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "19fc04ac2e1acd610bcfc45deb904310d52ff4d274102c3254fa17f29ebe95be",
+      "sha256": "c37827bd51f0d553b3dfa3aa64f7e4bd0fab6661ca61b1dd0c0a3bfba93074db",
       "executable": false
     },
     {
@@ -683,7 +683,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "e7f0ec706d2f31f19a81b73f3ff6d3b6a361b8e60f89eb9e2d75e5deb4f742f0",
+      "sha256": "fe09ecd2eb001d6ee0b7b0eaae4c7e5c8603b6c5f6adff91e2c051c4564a3825",
       "executable": false
     },
     {
@@ -778,25 +778,25 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "f52bb995798b4c5e0647df704755874611e96e8e55e8c92064f3bd368108a4de",
+      "sha256": "c2c7d9ab51c1acbab2dadc371efa09d87b5a7ca14e827ed6854d793d95213246",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "2bce5cc818f35ab2597381fc5d43264c7af18f60c03aa6ab4a15cc2629ed7334",
+      "sha256": "52e862b18fda57c26a803c3e6cb8dfdf5c56ee3d277055a08927ce9ae9a18a12",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "1388f787fb7a3154e39c3bc66d30868aafbca045bf2c6e0d7356f139ffb707d1",
+      "sha256": "a04830c737f9127707f221876fe1e8895968116e16b1a5abf585933de2e814e3",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "a536c906db045f9e1a5420126f9b89f6c6f181fd42e6e7466651612cf3807811",
+      "sha256": "754734b97543b9bab4b20b274ac2e4a352c6477f2d17cf914838c2cdfbb3094b",
       "executable": true
     },
     {
@@ -821,6 +821,18 @@
       "path": ".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
       "kind": "file",
       "sha256": "f8a7371750172d89defcbbd8166c631a0216bc3bf02264c97fbf8c89c9262e31",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/scc-prod/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "72ad5adf861be688a913a30102804422cf0d321cfbaadefa03f285267ea9774d",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/scc-prod/scc-prod.ts",
+      "kind": "file",
+      "sha256": "957c90f1562ad25d9f71998f544986468ec8c5aea94376d94d9f09bf6b4898d6",
       "executable": false
     },
     {
@@ -1390,7 +1402,7 @@
     {
       "path": ".zsh/fish-mirror.zsh",
       "kind": "file",
-      "sha256": "ee3033cd7c5b4de3467548fcd464c983a1191f6e673c13dfe7da343a06f43741",
+      "sha256": "9b7e4372e2f8e50bce0b01ed30981d639c34b5237f795cce37ad886a0eebcff8",
       "executable": false
     },
     {
@@ -1473,7 +1485,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "30cbbd86aaf2eb9f7314c301e1cb06bd0bc9a70cf7ebcd1fbcf06b38320a3935",
+      "sha256": "f6398211354624ef8dac4282fd731331876284e8d39cf963549e34a974bf28d8",
       "executable": false
     },
     {

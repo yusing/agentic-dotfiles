@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.14
+
+Build the standalone scc-prod source-count helper.
+
 ## 1.0.13
 
 Stop building the retired batch-agent-sessions helper.

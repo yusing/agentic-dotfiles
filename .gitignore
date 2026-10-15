@@ -180,6 +180,9 @@ __pycache__
 !/.local/lib/rewrite-home-paths/CHANGELOG.md
 !/.local/lib/rewrite-home-paths/package.json
 !/.local/lib/rewrite-home-paths/rewrite-home-paths.ts
+!/.local/lib/scc-prod/
+!/.local/lib/scc-prod/CHANGELOG.md
+!/.local/lib/scc-prod/scc-prod.ts
 !/.local/lib/sync-claude-agent-ports/
 !/.local/lib/sync-claude-agent-ports/CHANGELOG.md
 !/.local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts
