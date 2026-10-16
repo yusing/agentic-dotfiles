@@ -76,9 +76,11 @@ Label constraints and conclusions that neither the user nor a governing contract
 main's assumptions, so the recipient can test them. In Codex, use a `fork_turns="none"` brief with
 complete task context, except a worker may use `"all"` when retained context concretely helps.
 
-Native roles own model budgets. Recipients load shared, project, and role
-instructions themselves; leave out restatements or paraphrases of them, such as reading pointers,
-edit or Git limits, and report contents.
+Native roles own model budgets. The harness supplies shared instructions and discovers project
+guidance for the recipient. Keep shared, project, role, and skill policy at its owner rather than
+copying or paraphrasing it into task briefs. When an assignment needs a skill method the recipient
+does not have, name the applicable skill or reference for it to load. Preserve task-specific scope,
+user requirements, and constraints in the brief; these are assignment context, not policy recaps.
 
 ## Coordination
 

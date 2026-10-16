@@ -31,9 +31,11 @@ Skip safeguards for purely hypothetical concerns; raise any concrete unresolved 
 
 Inline sole-caller helpers unless they preserve shared policy, an invariant, or a nontrivial
 algorithm. After a refactor, remove superseded forwarding wrappers and update their callers to
-use the retained owner directly, unless compatibility is explicitly requested.
+use the retained owner directly, unless a retained supported contract or explicit user requirement
+needs the compatibility wrapper.
 
 Remove behavior and artifacts the accepted change supersedes. Remove tests for superseded behavior
-rather than invert their assertions merely to retain them. Keep compatibility only when I explicitly
-request it, and report unrelated obsolete paths instead of deleting them. Edit authoritative sources
-and regenerate their consumers; leave generated, vendored, and minified outputs to their generators.
+rather than invert their assertions merely to retain them. Preserve compatibility required by retained
+supported contracts; add further compatibility only when I explicitly request it. Report unrelated
+obsolete paths instead of deleting them. Edit authoritative sources and regenerate their consumers;
+leave generated, vendored, and minified outputs to their generators.

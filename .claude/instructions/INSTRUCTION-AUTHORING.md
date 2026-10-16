@@ -19,6 +19,8 @@ Give each rule one owner: base communication and safety, shared authorization, m
 delegate delivery, agent role methods, project facts, or skill-specific methods. Link instead of
 copying. Put universally needed context inline and conditional detail behind a precise operation
 trigger. Do not add a layer that only moves the same complexity elsewhere.
+Authorized instruction maintenance may adapt a rule for separately loaded clients or regenerate
+its consumers.
 
 Shared rules preserve roles and settled assignments. Workflows own delegation and readiness gates;
 agent definitions own tools, model, and effort. Check documentation and mechanical work too.
@@ -62,9 +64,9 @@ differ from the general guide, they take precedence. Each bullet links the secti
   descriptive XML tag ([XML tags][bp-xml]).
 - State expected length for written deliverables, which Opus 5 makes longer by default
   ([deliverable length][o5-length]).
-- Delete generic coaching, no-op assurances, repeated caveats, and restatements of the harness's own
-  system prompt. Shorter wording must preserve the actor, trigger, authority, exceptions, and
-  required behavior, not just the topic or supported capabilities.
+- Delete generic coaching, no-op assurances, and repeated caveats. Shorter wording must preserve
+  the actor, trigger, authority, exceptions, and required behavior, not just the topic or supported
+  capabilities.
 
 Claude Code loads `~/.claude/CLAUDE.md` and the `CLAUDE.md` files in the working directory and every
 directory above it at launch ([how CLAUDE.md files load][cc-load]), expands their `@` imports at
@@ -100,11 +102,11 @@ reduce adherence ([effective instructions][cc-size]). Point to conditional docum
 Trace affected main and subagent paths, applicable instructions, pointers, and generated consumers.
 For renames, align paths, references, metadata, selection, tests, and allowlists, and keep
 historical names in records. Regenerate from authoritative sources. Check actual inheritance,
-fresh-context assembly, and client capabilities before assuming isolation or redundancy; for
-example, named Claude subagents start without conversation history, and all but the built-in Explore
-and Plan load `CLAUDE.md` but not Claude Code's system prompt ([what loads at
-startup][cc-subagents]). A rule dropped from `CLAUDE.md` as a duplicate of that system prompt
-therefore stops reaching subagents; keep it when they need it.
+fresh-context assembly, and client capabilities before assuming isolation or redundancy.
+Custom subagents receive `CLAUDE.md` through the harness, separately from their role prompt;
+parent conversation history and the main agent's default system prompt are separate inputs.
+The documented built-in Explore and Plan behavior differs ([what loads at startup][cc-subagents]).
+Check the actual recipient's delivered context before deciding that a rule is duplicated or missing.
 
 Compare before-and-after decisions for matching, adjacent nonmatching, and exception cases.
 Check that each required step changes behavior, serves the task, and causes no redundant reads,

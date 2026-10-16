@@ -11,13 +11,28 @@ additions. Grok receives shared standing guidance through `.grok/rules/AGENTS.md
 loads the `.claude/agents/` roles.
 `.claude/CLAUDE.md` owns Claude's standing guidance directly, and `.claude/instructions/`
 holds Claude-specialized task documents. Both adapt the matching `.codex/` owners: they omit
-Codex specifics and rules Claude Code's own system prompt covers, resolve conflicts in Claude
-Code's favor, and follow Anthropic's prompting guidance. A change to a shared rule in a
+Codex specifics, resolve client conflicts in Claude Code's favor, and follow Anthropic's prompting
+guidance. Assess redundancy from the instructions actually delivered to each consumer, rather than
+assuming the main agent's system prompt also reaches its subagents. A change to a shared rule in a
 `.codex/` owner needs a matching review of its Claude counterpart.
+
+## Layers and loading
+
+| Layer | Delivery and readers |
+| --- | --- |
+| Codex base override | Selected by `.codex/config.toml`; replacement and priority are defined in `CONTEXT-CODEX-LIFECYCLE.md`. Claude does not consume it. |
+| Client standing guidance | The harness loads `.codex/AGENTS.md` or `.claude/CLAUDE.md` for main and custom subagents, independently of conversation-history inheritance. Claude's documented built-in Explore/Plan exception is described in its standing guidance. |
+| Repository guidance | Root `AGENTS.md` and its `CLAUDE.md` symlink route home-configuration maintenance, not independent projects below home. Discovery scope depends on the client; see `CONTEXT-CODEX-LIFECYCLE.md` and Claude's instruction-authoring guidance. |
+| Task documents | Main reads `MAIN.md`; subagents read `SUBAGENT.md`. Any applicable role reads `DOCS.md`, `IMPLEMENTATION.md`, or `TESTING.md` when its operation triggers them. Other document triggers remain in the client standing file. |
+| Native roles and skills | Role configuration supplies the selected role; skill metadata selects an on-demand body. Neither a catalog entry nor a parent's tool read establishes that a child has the body. |
+
+Instruction-authoring guidance owns changes to these layers. The maps describe maintained owners,
+generated consumers, and reference evidence; they are not an additional set of workflow rules.
 
 ## Paths
 
 - `AGENTS.md`
+- `CLAUDE.md` (symlink to root `AGENTS.md`, not to `.claude/CLAUDE.md`)
 - `CONTEXT-*.md`
 - `.codex/config.toml` (base prompt, compaction prompt, and client settings)
 - `.codex/AGENTS.md`

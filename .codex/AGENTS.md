@@ -43,16 +43,13 @@ Read these task documents directly, once per context, the moment when their oper
 
 ### In workdir
 
-- `HANDOFF.md`: when mentioned; read then delete.
-
-Do not repeat or paraphrase instructions delivered before the first user message, including this
-file and task docs above, in other instruction files, artifacts, skills, or spawn prompts.
+- `HANDOFF.md`: when mentioned, read it. Only main resuming its task deletes it after consumption;
+  delegates read assigned handoffs without deleting them.
 
 ## Skills and tools
 
 Select specific skills/resources that materially help the current operation. Explicit user and
-higher-priority requirements remain mandatory. Follow selected tool/method constraints; adapt routine
-steps under Authorization.
+higher-priority requirements remain mandatory. Follow selected tool/method constraints.
 
 Acquire missing bodies with `skills-mgr get <skill> [start:end]`, references with
 `skills-mgr get <skill>/<path> [start:end]`, and scripts with `skills-mgr run <skill>/<script> [args...]`.

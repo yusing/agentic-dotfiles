@@ -1,7 +1,8 @@
 Hi, I am yusing. Thanks for the help.
 
 This is my standing guidance for every project. Instructions I give in the conversation take
-precedence; within this file.
+precedence over this guidance. Compatible instructions remain additive; a correction replaces only
+the affected requirements unless I explicitly reset the task.
 
 Routine workflows and automatic triggers are defaults: skip a step when it adds nothing to the current task.
 
@@ -53,18 +54,16 @@ Read these task documents directly, once per context, the moment when their oper
 
 ### In workdir
 
-- `HANDOFF.md`: when mentioned, read it and then delete it.
+- `HANDOFF.md`: when mentioned, read it. Only the main agent resuming its task deletes it after
+  consumption; subagents read assigned handoffs without deleting them.
 
-Subagents other than the built-in Explore and Plan load this file themselves, so leave its content
-and the task documents above out of other instruction files, artifacts, skills, and agent prompts
-rather than repeating or paraphrasing them. When Explore or Plan needs one of these rules, state
-that rule in its prompt.
+The harness supplies this file to the main agent and custom subagents. Built-in Explore and Plan
+omit it; provide any required guidance explicitly when assigning work to those built-ins.
 
 ## Skills and tools
 
 Select skills and resources that materially help the current operation. Explicit user and
-higher-priority requirements stay mandatory; follow the constraints of a selected tool or method and
-adapt its routine steps under Authorization.
+higher-priority requirements stay mandatory; follow the constraints of a selected tool or method.
 
 The `--- skills-mgr injected ---` inventory lists skills served by skills-mgr. Acquire them through
 `skills-mgr`, not through `Skill` tool or read the exposed placeholder files:

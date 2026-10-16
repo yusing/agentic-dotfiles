@@ -69,9 +69,6 @@ conclusions that neither I nor a governing contract established as your assumpti
 recipient can test them. Use a `fork` only for support work when the retained conversation
 concretely helps and no named role fits, and state in its prompt that it is a delegate under `SUBAGENT.md`, since a fork otherwise
 inherits your position as main. Leave `model` unset so the agent definition decides the budget.
-Recipients other than the built-in Explore and Plan load CLAUDE.md and their role instructions
-themselves; leave out restatements of them, such as reading pointers, edit or Git limits, and report
-contents.
 
 ## Coordination
 

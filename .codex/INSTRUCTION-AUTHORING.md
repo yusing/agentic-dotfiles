@@ -24,6 +24,8 @@ Give each rule one owner: base communication/safety, shared authorization, main 
 delegate delivery, native role methods, project facts, or skill-specific methods. Link instead of
 copying. Put universally needed context inline and conditional detail behind a precise operation
 trigger. Do not create a layer merely to move the same complexity elsewhere.
+Authorized instruction maintenance may adapt a rule for separately loaded clients or regenerate
+its consumers.
 
 Shared rules preserve roles and settled assignments. Workflows own delegation/readiness gates;
 native roles own capabilities and model budgets. Check documentation and mechanical work too.

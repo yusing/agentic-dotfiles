@@ -2,7 +2,10 @@
 
 1. **Bootstrap and static context.** `.codex/config.toml` selects
    `.codex/overridden_base_instructions.md` for model-level communication, turn and tool-use
-   mechanics, and safety. It uses
+   mechanics, and safety. This Codex-only file replaces the selected model's
+   `model_messages.instructions_template` from `.codex/models_cache.json`; the two bodies are
+   not appended together. The selected base is the highest-priority of these configurable
+   instruction layers; runtime and platform instructions remain separate inputs. It uses
    `.skills-mgr/skills/handoff/STANDARD.md`, the handoff standard, for checkpoint
    handoffs. The user-invoked `handoff` skill uses the same standard for document content while
    its `SKILL.md` owns the cutoff, `HANDOFF.md` destination, and path-only response. Codex loads
@@ -76,6 +79,12 @@ the local implementation with the official
   project-doc manager reuses cached documents while environment selection and trust stay unchanged;
   editing a file alone does not prove a live session has reloaded it. Check a fresh session or
   actual delivered context when reload behavior matters.
+  Global guidance and project discovery are separate: in the inspected source, starting inside
+  `.codex/` under this home repository can select `.codex/AGENTS.md` both globally and as a
+  project file, without cross-source path deduplication. This is a conditional source-level overlap,
+  not proof of duplicate delivery by the installed client. Verify delivered context before adding
+  suppression or changing the standing owner. Project traversal stops at its selected root, so
+  an independent nested repository need not receive the home repository's `AGENTS.md`.
 - **Skills and hooks:** Skill catalogs expose metadata, not the selected body. Native catalog
   guidance, hook-injected inventories, and skill bodies are separate instruction surfaces.
   Check the client's parser and effective settings; similarly named frontmatter fields are not
@@ -84,6 +93,9 @@ the local implementation with the official
   Thread-spawn startup dispatches SubagentStart rather than SessionStart; history forks can carry
   prior hook context alongside fresh injection. Verify startup, subagent, and compaction delivery
   before removing or duplicating instructions.
+  A no-history child's inherited instruction snapshot does not include skill bodies the parent
+  obtained through tool reads. A task brief can name an applicable skill/reference for the child
+  to acquire without paraphrasing its method.
 
 For Codex source checks, start under `projects/codex/codex-rs/`: `core/src/agent/role.rs`
 owns role overrides, `core/src/agent/control/spawn.rs` owns child assembly, and
