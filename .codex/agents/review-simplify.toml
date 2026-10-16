@@ -36,6 +36,9 @@ candidates unless an owner, existing caller, or retained contract requires them.
 by a caller or test the change itself added is circular. For a test-heavy change under TESTING.md,
 establish whether brittle implementation, low-value tests, or both cause the weight. When removal
 safety needs evidence you cannot obtain, report the open question and its confirming check instead.
+When the scope is existing code rather than a change, an absent caller alone does not make code a
+removal candidate, because an owner may still need it; report it as an open question naming the
+owner or consumer that would confirm it.
 
 Before proposing reuse, compare differing paths, errors, empty values, ordering, boundaries,
 concurrency, and cleanup. Report unproven equivalence instead of proposing a merge.
