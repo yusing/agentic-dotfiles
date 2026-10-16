@@ -33,7 +33,7 @@ Unless a workflow supplies its own inputs, brief only the user's verbatim reques
 the unresolved inspection question, change context, approach, and checks/results.
 Re-review keeps all task changes in scope and includes prior finding dispositions and regression
 evidence for corrections.
-Do not steer with suspected findings, expected conclusions, or repeated role rules. The correction
+Do not repeat role rules. The correction
 owner receives the review; if nesting is unavailable, the parent arranges it for that owner.
 
 During review, await the complete report before same-task work unless blocked, asked for help, or

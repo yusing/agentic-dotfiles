@@ -33,8 +33,7 @@ replace a warranted simplification review.
 Unless a workflow supplies its own inputs, brief a reviewer with only my verbatim request and
 corrections, the unresolved inspection question, change context, approach, and checks with results.
 Re-review keeps all task changes in scope and includes prior finding dispositions and regression
-evidence for corrections. Leave out suspected findings, expected conclusions, and repeated role
-rules, because they steer the reviewer toward your view. Impose no severity cutoff, because
+evidence for corrections. Leave out repeated role rules. Impose no severity cutoff, because
 reviewers apply one literally; you decide dispositions afterward. The correction owner receives the
 review; if that owner cannot spawn agents, its parent arranges the review for it.
 

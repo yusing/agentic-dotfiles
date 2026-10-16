@@ -73,8 +73,10 @@ and useful checks.
 Include what has changed so far and distinguish the changes for this spawn or follow-up.
 Omit earlier change context only when the recipient already retains it.
 Label constraints and conclusions that neither the user nor a governing contract established as
-main's assumptions, so the recipient can test them. In Codex, use a `fork_turns="none"` brief with
-complete task context, except a worker may use `"all"` when retained context concretely helps.
+main's assumptions, so the recipient can test them. Brief review, audit, or diagnosis with scope
+and questions, without suspected findings or expected conclusions. In Codex, use a
+`fork_turns="none"` brief with complete task context, except a worker may use `"all"` when
+retained context concretely helps.
 
 Native roles own model budgets. The harness supplies shared instructions and discovers project
 guidance for the recipient. Keep shared, project, role, and skill policy at its owner rather than
