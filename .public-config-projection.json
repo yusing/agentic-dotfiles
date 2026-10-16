@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "48b4bc53681945797ae4f78153dfe4f553720387",
+  "sourceCommit": "8d5acdabbc630cfef78a1760807076673d95d21e",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -131,7 +131,7 @@
     {
       "path": ".claude/settings.json",
       "kind": "file",
-      "sha256": "7c5779357946d21c0a475025502bf9c301777c019cb1372fec534d5fe682c912",
+      "sha256": "d602becef52b3bb4d6521d02557ad9382598be3e8cc01ad4d5fd9f1845491531",
       "executable": false
     },
     {
@@ -329,13 +329,13 @@
     {
       "path": ".codex/hooks/skills_mgr_inventory.changelog.md",
       "kind": "file",
-      "sha256": "8d8ac49bcebed4d8f663f70a61aca245afbdab75595b4e1e9277ac349398e236",
+      "sha256": "a8df36c72a911bcbcd23575e39d4e3ae1e459cc3b3d1881bfb6387e7ca0e2614",
       "executable": false
     },
     {
       "path": ".codex/hooks/skills_mgr_inventory.ts",
       "kind": "file",
-      "sha256": "3c49cc4fd252e1fdec7d06434303e96c58e4d5b0423a27abe5ae1b149346ac04",
+      "sha256": "da8858288d04287f287f52824f6a45a99feac75a5e359fb2b7018bc62eda29bc",
       "executable": false
     },
     {
@@ -1431,7 +1431,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "d38e797c2f2d1b1c7f9cfd725701190a72c25ea7e48fb380bed596f7627c9e97",
+      "sha256": "69749f9e9724f44a753c5230b7fe5d2b94750ab43257cd0c205e0fdc69877d24",
       "executable": false
     },
     {
@@ -1461,7 +1461,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "d6c66a60a6c08c3098d4f419862bb26c46423f2148a9b75e96d0288fa5a1abaf",
+      "sha256": "ce29ad40764960195be55e954ed5638097832ca7fc7215c62359073c348473f0",
       "executable": false
     },
     {

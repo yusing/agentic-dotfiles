@@ -316,19 +316,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$HOME/.codex/hooks/bin/skills_mgr_inventory",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
-    "PostCompact": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.codex/hooks/bin/skills_mgr_inventory",
+            "command": "$HOME/.codex/hooks/bin/skills_mgr_inventory --subagent-start",
             "timeout": 5
           }
         ]

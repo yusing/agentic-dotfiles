@@ -96,11 +96,12 @@ have no harness equivalent, which is what makes the registration worth having.
 
 `.codex/hooks/bin/skills_mgr_inventory` is the shared inventory hook. It owns the
 `--- skills-mgr injected ---` heading so the injected list is not mistaken for Claude's own
-visible skills. `skills-mgr list` scopes itself from the session environment, so the Claude
-registration needs no harness flag or adapter. The current settings register it with `*`
-matchers for `SessionStart`, `SubagentStart`, and `PostCompact`. Check the running client's
-event sequence before assuming one inventory delivery per compaction; the registrations
-themselves do not deduplicate it.
+visible skills. `skills-mgr list` scopes itself from the session environment. Claude adds plain
+stdout to context for `SessionStart`, whose `*` matcher also covers compaction, but ignores it for
+`SubagentStart`; the `SubagentStart` registration therefore passes `--subagent-start`, which wraps
+the list in the `additionalContext` envelope. `PostCompact` output never reaches context, so it
+has no registration. Claude also fires `SubagentStart` when a subagent is resumed, so a continued
+subagent receives the list again.
 
 `.claude/hooks/` remains Herdr-managed and untracked. The shared hook is covered by the existing
 `.codex/hooks/*` allowlist entry. The `SessionStart` group that reports the session to Herdr stays

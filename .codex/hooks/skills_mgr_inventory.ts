@@ -1,9 +1,10 @@
 import { spawnSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
-import { handleVersion } from "./lib/hook_runtime.ts";
+import { additionalContext } from "./lib/hook_response.ts";
+import { handleVersion, writeJson } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.1.0";
 export const HEADING = "--- skills-mgr injected ---";
 
 function which(command: string): string | undefined {
@@ -37,9 +38,13 @@ function main(): number {
   }
   const body = result.stdout;
   if (body.trim().length > 0) {
-    process.stdout.write(`${HEADING}\n${body}`);
-    if (!body.endsWith("\n")) {
-      process.stdout.write("\n");
+    const context = `${HEADING}\n${body}${body.endsWith("\n") ? "" : "\n"}`;
+    // Claude adds plain stdout to context only for session-level events; a subagent
+    // receives hook context only through the additionalContext envelope.
+    if (process.argv.includes("--subagent-start")) {
+      writeJson(additionalContext(context, "SubagentStart"));
+    } else {
+      process.stdout.write(context);
     }
   }
   return result.status ?? 1;

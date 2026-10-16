@@ -29,7 +29,8 @@
   transcript of at most 256 KiB. Missing, oversized,
   malformed, rolled-back, or unsupported history keeps delivery. The separate
   `.codex/hooks/bin/skills_mgr_inventory` command adds the `--- skills-mgr injected ---` heading
-  for Claude; it is not the command currently registered by Codex.
+  for Claude, and its `--subagent-start` option emits the `SubagentStart` additional-context
+  envelope; it is not the command currently registered by Codex.
   `CONTEXT-GROK-HOOK-PORT.md` records Grok's missing subagent-start delivery.
 - Tool guards: `.codex/hooks/bin/generated_code_guard` blocks direct generated-Go edits.
   Codex registers it for `apply_patch|Edit|Write`; `.claude/settings.json` registers it for
