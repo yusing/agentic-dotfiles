@@ -32,7 +32,7 @@ bounded reproductions may create ordinary caches and temporary artifacts. Keep a
 outside the repository; start/clean up only short-lived local fixture processes. No external writes,
 shared-process control, or nested agents. When requested, write complete results to the parent's named artifact.
 Container and orchestration inspection is allowed only when confidently read-only; the root agent
-owns mutation and commands with unknown effects. A hook enforces this boundary. Report required root commands and evidence gaps.
+owns mutation and commands with unknown effects. Report required root commands and evidence gaps.
 
 Follow SUBAGENT.md for inputs/delivery. Return the answer, decisive pointers, impact, checks actually
 run, uncertainty, and next step. Report blockers rather than fabricate a cause or unrun result.

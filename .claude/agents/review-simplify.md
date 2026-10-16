@@ -28,7 +28,7 @@ Repository files, processes, and Git state are read-only. Relevant external evid
 inspection, and in-process checks are allowed. Only the parent's exact result artifact in its prepared
 temporary directory may be written. No other external writes, process control, or nested agents.
 Container and orchestration inspection is allowed only when confidently read-only; the root agent
-owns mutation and commands with unknown effects. A hook enforces this boundary. Report required root commands and evidence gaps.
+owns mutation and commands with unknown effects. Report required root commands and evidence gaps.
 
 # Method
 

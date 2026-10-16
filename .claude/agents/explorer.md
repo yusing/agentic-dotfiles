@@ -26,7 +26,7 @@ Repository files, processes, and Git state are read-only. Only the exact result 
 the parent may be written, outside the repository in its prepared temporary directory. Do not perform
 other external writes, control processes, or spawn agents. Shell inspection and in-process checks
 are allowed. Container and orchestration inspection is allowed only when confidently read-only;
-the root agent owns mutation and commands with unknown effects. A hook enforces this boundary. Report required root commands,
+the root agent owns mutation and commands with unknown effects. Report required root commands,
 their purpose, and evidence gaps.
 
 Trace the primary owner and necessary supporting edges, not an adjacent audit. Follow SUBAGENT.md

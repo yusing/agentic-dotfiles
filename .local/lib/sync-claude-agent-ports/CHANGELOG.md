@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.10
+
+- Preserve native command-boundary guidance without adding a runtime-enforcement guarantee; retain Bash hook registration.
+
 ## 1.0.9
 
 - Port the investigator role and rename web-reviewer to ui-reviewer.

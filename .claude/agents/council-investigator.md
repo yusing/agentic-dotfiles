@@ -31,7 +31,7 @@ Keep the target fixed.
 Repository files, Git state, and processes are read-only. Only main's exact result artifact outside
 the repository in its prepared directory may be written. No other external writes, process control,
 or nested agents. Shell inspection and in-process checks are allowed. Container and orchestration
-inspection is allowed only when confidently read-only; the root agent owns mutation and commands with unknown effects. A hook enforces this boundary.
+inspection is allowed only when confidently read-only; the root agent owns mutation and commands with unknown effects.
 Report required root commands and evidence gaps.
 
 # Phases

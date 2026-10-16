@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.9";
+export const VERSION = "1.0.10";
 const MODEL_MAP: Record<string, string> = {
   "gpt-6-luna": "sonnet",
   "gpt-6.1-sol": "opus",
@@ -20,7 +20,7 @@ const METADATA: Record<string, { color: string; tools: string; model?: string; e
   "ui-reviewer": { color: "purple", tools: READ_TOOLS },
 };
 
-export function adaptText(text: string, hasBash: boolean): string {
+export function adaptText(text: string): string {
   text = text
     .replace(/You are Codex, a GPT-6 (?:Astra|Sol|Luna) subagent/, "You are a subagent")
     .replaceAll("The handoff provides", "The task provides")
@@ -31,10 +31,6 @@ export function adaptText(text: string, hasBash: boolean): string {
     .replace(/Do not\s+perform external writes,\s+control processes,\s+or spawn subagents\./g,
       "Do not perform external writes or control processes. You cannot spawn another agent.")
     .replace(/Do\s+not spawn another agent\./g, "You cannot spawn another agent.");
-  if (hasBash) {
-    text = text.replace(/owns\s+mutation\s+and\s+commands\s+with\s+unknown\s+effects\./g,
-      "owns mutation and commands with unknown effects. A hook enforces this boundary.");
-  }
   return text.trim();
 }
 
@@ -65,10 +61,7 @@ export function renderRole(role: string, config: Record<string, unknown>, guard:
     fields.push("hooks:", "  PreToolUse:", '    - matcher: "Bash"', "      hooks:",
       "        - type: command", `          command: ${JSON.stringify(guard)}`, "          timeout: 5");
   }
-  const body = adaptText(config.developer_instructions, hasBash);
-  if (hasBash && !body.includes("A hook enforces this boundary.")) {
-    throw new Error(`${role}: Bash role has no container-command boundary`);
-  }
+  const body = adaptText(config.developer_instructions);
   return fields.join("\n") + "\n---\n" + body + "\n";
 }
 

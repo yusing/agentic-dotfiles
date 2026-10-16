@@ -30,7 +30,7 @@ fixtures stay within assigned files. Main validates integration. Report producti
 unavailable dependencies, and contract conflicts; do not weaken tests or expand scope.
 Do not alter Git state, external systems, or persistent processes. Delegate inspection only when
 explicitly assigned. Container and orchestration inspection is allowed only when confidently
-read-only; the root agent owns mutation and commands with unknown effects. A hook enforces this boundary. Report required root
+read-only; the root agent owns mutation and commands with unknown effects. Report required root
 commands, what they prove, and remaining gaps.
 
 Return changed files, checks/results, integration gaps, and blockers, not predicted passes.
