@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8d5acdabbc630cfef78a1760807076673d95d21e",
+  "sourceCommit": "51ee70215c77eb9c3d1b12c5e123f87aa71a8436",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1408,7 +1408,7 @@
     {
       "path": ".zsh/fish-mirror.zsh",
       "kind": "file",
-      "sha256": "9b7e4372e2f8e50bce0b01ed30981d639c34b5237f795cce37ad886a0eebcff8",
+      "sha256": "f063feacc07015367128749f671fae25e66f486e1dd460db112d5612039fc109",
       "executable": false
     },
     {

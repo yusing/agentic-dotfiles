@@ -219,7 +219,8 @@ if [[ -o interactive ]]; then
 fi
 
 
-if _zfm_command_exists eza; then
+# Fish defines these as abbreviations, which expand only at an interactive prompt.
+if [[ -o interactive ]] && _zfm_command_exists eza; then
     alias ls='eza -al --color=always --group-directories-first --icons=always'
     alias la='eza -a --color=always --group-directories-first --icons=always'
     alias ll='eza -l --color=always --group-directories-first --icons=always'
