@@ -52,7 +52,10 @@ user's explicit request. A local-only restriction on a ref stays until the user 
 - `type`: `feat`, `fix`, `perf`, `refactor`, `docs`, `test`, `build`, `ci`, `chore`, or `revert`.
 - `scope`: optional; the affected component, package, or area, in lower case.
 - `subject`: imperative mood, lower-case start, no trailing period, at most 72 characters
-  including the prefix. State what the change does, not how it was made.
+  including the prefix and any work reference. State what the change does, not how it was made.
+- Work reference: when the user names a work item for the task, or the user's recent commits on
+  the branch end their subjects with one, such as `(wp#123)`, end every subject with it. When
+  recent subjects carry different references and the task names none, ask which applies.
 - `body`: omit it when the subject is enough. Add one when the subject cannot carry the reason
   or the full scope, such as a commit that combines several user-visible fixes. Explain why the
   change is needed and any non-obvious consequence or trade-off; do not narrate the diff. Wrap
