@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.5
+# version: 2.10.6
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1703,6 +1703,7 @@ installed_pm_package() {
 
 install_vendor() {
   local name="$1" path url shell label item records
+  local remote version cmd current build_pattern='\[build ([0-9a-f]{7,40})\]$'
   local updates=() environment=()
   path="${HOME}/$(setup_config vendor-field "$name" path)"
   url="$(setup_config vendor-field "$name" url)"
@@ -1713,6 +1714,33 @@ install_vendor() {
   records="$(setup_config vendor-env "$name")"
   while IFS= read -r item; do [ -z "$item" ] || environment+=("$item"); done <<<"$records"
   if [ ! -x "$path" ] || { [ "$UPGRADE" -eq 1 ] && [ "${#updates[@]}" -eq 0 ]; }; then
+    # This installer builds a shallow checkout of the fork's default branch.
+    # Compare embedded revisions, not the unchanged Mosh release version.
+    if [ -x "$path" ] && [ "$url" = https://raw.githubusercontent.com/yusing/mosh/master/install-mosh.sh ]; then
+      info "checking $label for source updates"
+      remote="$(git ls-remote --exit-code https://github.com/yusing/mosh.git HEAD)" || {
+        warn "could not check $label revision; existing installation was preserved"
+        return 1
+      }
+      remote="${remote%%[[:space:]]*}"
+      [[ "$remote" =~ ^[0-9a-f]{40}$ ]] || {
+        warn "invalid upstream revision for $label; existing installation was preserved"
+        return 1
+      }
+      current=1
+      for cmd in mosh mosh-client mosh-server; do
+        version="$("${path%/*}/$cmd" --version 2>/dev/null)" || { current=0; break; }
+        version="${version%%$'\n'*}"
+        if ! [[ "$version" =~ $build_pattern ]] || [[ "$remote" != "${BASH_REMATCH[1]}"* ]]; then
+          current=0
+          break
+        fi
+      done
+      if [ "$current" -eq 1 ]; then
+        info "$label is up to date ($remote); skipping build"
+        return 0
+      fi
+    fi
     info "installing/updating $label"
     curl -fsSL "$url" | env ${environment[@]+"${environment[@]}"} "$shell"
   elif [ "$UPGRADE" -eq 1 ]; then
@@ -1942,6 +1970,7 @@ name, such as git-agent) and installs the lock after a completed setup. It skips
 native packages, vendors, checkout, helper compilation, and verification.
 Image paste uses the installed Mosh fork. Setup retires old push services and
 backs up their remaining files.
+Full upgrades skip rebuilding Mosh when its installed build matches the fork.
 A mise tool may declare a native package for the operating systems outside its
 os list. When that declaration aligns a Homebrew formula, the formula stays on
 the locked mise version.

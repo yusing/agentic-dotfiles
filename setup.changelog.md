@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.10.6
+
+Skip rebuilding the Mosh fork during full upgrades when the installed launcher,
+client, and server identify the latest upstream commit. Keep installation for
+missing, older, or unrecognized builds, and report failed revision checks.
+
 ## 2.10.5
 
 Use the shared native installer on Linux and macOS. Provision Brew-managed

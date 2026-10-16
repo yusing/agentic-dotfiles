@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "efd21a4ec6d78e05e374db7e8b4def18a24a40ce",
+  "sourceCommit": "691fdd1641df1052204a29f8fbffcebba1a85f7b",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1485,13 +1485,13 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "f6398211354624ef8dac4282fd731331876284e8d39cf963549e34a974bf28d8",
+      "sha256": "aeddfc8d290ea9ab09d51ff5036147eb952ec21734116903ccaf635d2fc75342",
       "executable": false
     },
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "df26e48b8b3d7bcdfadef1b8c2a97c4ed9954a14a47d731a7c79fe00a28001aa",
+      "sha256": "14a47038c6df304eb3b004f7c02823fdf23e36d32be3ed7c76422318b8d84718",
       "executable": false
     },
     {
@@ -1503,7 +1503,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "fc3d3f85dc1c3d65ff40c342cbc1a5132cc21d48c6c14df30fee1f19a42f4c64",
+      "sha256": "638c5c00691a1f18f101cff048629284f965211b2b9c691fb4b677d7d551aece",
       "executable": true
     }
   ]
