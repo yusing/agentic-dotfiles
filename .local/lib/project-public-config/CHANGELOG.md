@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.20
+
+Publish the user-invoked instruction-audit skill for evidence-backed instruction reviews.
+
 ## 1.3.19
 
 Publish scc-prod sources for standalone production-oriented source counts.

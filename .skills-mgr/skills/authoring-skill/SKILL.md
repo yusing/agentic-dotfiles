@@ -54,9 +54,10 @@ For renames, align owning directory, frontmatter, selection, and active referenc
 placeholders through skills-mgr. After a direct filesystem rename, remove only superseded
 SKILL.md/marker files and empty old placeholder directories.
 
-For shared skills, add a home README `## Agent Skills` row for a new skill, and update it only when
-name, purpose, visibility, or selection changes: name order, source `Shared`, plain-word condition. Project-only
-edits need no home inventory/projection changes.
+Keep skill-specific names, purposes, and invocation details in the skill and registry. Update the
+home README only when readers need a changed discovery, selection, or usage workflow; a routine
+skill addition needs no individual entry. Preserve its existing structure. Project-only edits
+need no home README/projection changes.
 
 Published names live in `PROJECTED_SKILL_NAMES` in
 `$HOME/.local/lib/project-public-config/project-public-config.ts`. Renames also change its fixture

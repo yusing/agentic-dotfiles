@@ -118,6 +118,9 @@
     "human-flavoured-writing": {
       "enabled": true
     },
+    "instruction-audit": {
+      "enabled": true
+    },
     "js-ts-best-practices": {
       "enabled": "lang js || lang ts"
     },

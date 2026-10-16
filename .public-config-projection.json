@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f3061baa99006951d476afa7502a5c5f40b42c59",
+  "sourceCommit": "48b4bc53681945797ae4f78153dfe4f553720387",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -683,7 +683,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "fe09ecd2eb001d6ee0b7b0eaae4c7e5c8603b6c5f6adff91e2c051c4564a3825",
+      "sha256": "e4beb64fca71621cd2d45ab315e59de9f948af8a89f441ea90e79dadc9e8426e",
       "executable": false
     },
     {
@@ -790,13 +790,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "a04830c737f9127707f221876fe1e8895968116e16b1a5abf585933de2e814e3",
+      "sha256": "100f403ebca03e9e8c24f7f90f66dff265de9ad0ce38494a284eb81c6bae04c1",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "754734b97543b9bab4b20b274ac2e4a352c6477f2d17cf914838c2cdfbb3094b",
+      "sha256": "044806b3dacf9cc3fc788fff9d32ab5e1dcfa58b9012507020d846b41b9b70bc",
       "executable": true
     },
     {
@@ -886,7 +886,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "f28b53ef9817ecf450081e1ed3589447f9001838ba998998e99a74b98b052a45",
+      "sha256": "230495c97da35d40d6c355012d97e23821eebe582dd6a89998490b76b709dcc1",
       "executable": false
     },
     {
@@ -910,7 +910,7 @@
     {
       "path": ".skills-mgr/skills/authoring-skill/SKILL.md",
       "kind": "file",
-      "sha256": "305c9a9fc817e91d93a64f517db8247db1e2683feada2fffbeb76fe48cbf30a8",
+      "sha256": "e3083f3f752327ba7070998a31b93d20956857690fe611d8e3bf520ba2e35f2c",
       "executable": false
     },
     {
@@ -1073,6 +1073,12 @@
       "path": ".skills-mgr/skills/human-flavoured-writing/SKILL.md",
       "kind": "file",
       "sha256": "09fe0f0c4b11e15b537b4d774f4b4ba83d099c47dd1825e48087cf6f94f3ea6f",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/instruction-audit/SKILL.md",
+      "kind": "file",
+      "sha256": "2e9fcd7b28e6f564a0c4cc69fc1f53c05b17cf3f016d0778ea7273fb6608878a",
       "executable": false
     },
     {

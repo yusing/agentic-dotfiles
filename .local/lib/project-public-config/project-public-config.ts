@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.19";
+export const VERSION = "1.3.20";
 
 type TreeEntry = {
 	mode: string;
@@ -229,6 +229,7 @@ const PROJECTED_SKILL_NAMES = [
 	"golang-best-practices",
 	"handoff",
 	"human-flavoured-writing",
+	"instruction-audit",
 	"js-ts-best-practices",
 	"juststore-rendering-optimizer",
 	"new-agent-session",
