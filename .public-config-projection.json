@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3fa8fe47f8668829b10a64e47397d86571633ae1",
+  "sourceCommit": "2342c4269ad757b090ebd47f3df5b3bcbb2be2bd",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -683,7 +683,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "e4beb64fca71621cd2d45ab315e59de9f948af8a89f441ea90e79dadc9e8426e",
+      "sha256": "75f9e16de3e2f9ac766de03fd59b238944e1d1db8a7185ac95dfd1ec2d499f74",
       "executable": false
     },
     {
@@ -938,9 +938,39 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/commit/references/feat.md",
+      "kind": "file",
+      "sha256": "9ce3a652d454a1dc068988011d0b30d134919d8cb30e14d0ff34411b6d17c563",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/commit/references/fix.md",
+      "kind": "file",
+      "sha256": "3a55a39ee0f0a6a0f60909414f08ace2dbb249a8f12a59aaf790e3dcb2369baf",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/commit/references/perf.md",
+      "kind": "file",
+      "sha256": "029902755062299673f27bd9d69e8a33ed7d77fad165b8a253448e2946ee2306",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/commit/references/refactor.md",
+      "kind": "file",
+      "sha256": "144df9fa1aa8c7f8f524e00a94ae4d1eaddcba946e6d34a10df0bf4b94786d47",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/commit/references/test.md",
+      "kind": "file",
+      "sha256": "73d79f4ac0efe5f930441010b81376d65d66fd9f024c5677e6e9d2105fd93bcf",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/commit/SKILL.md",
       "kind": "file",
-      "sha256": "d32d99561df0ae527b1b4ed7a433e8417b24655fcd34702512d600bf07271324",
+      "sha256": "7cffb0dfb4e03f0702e1277cd960a19e67c47dd4a6526b4d3a5aa58b4e93b639",
       "executable": false
     },
     {

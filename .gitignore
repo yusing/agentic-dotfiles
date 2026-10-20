@@ -213,6 +213,12 @@ __pycache__
 !/.skills-mgr/skills/codebase-review/agents/openai.yaml
 !/.skills-mgr/skills/codebase-review/SKILL.md
 !/.skills-mgr/skills/commit/
+!/.skills-mgr/skills/commit/references/
+!/.skills-mgr/skills/commit/references/feat.md
+!/.skills-mgr/skills/commit/references/fix.md
+!/.skills-mgr/skills/commit/references/perf.md
+!/.skills-mgr/skills/commit/references/refactor.md
+!/.skills-mgr/skills/commit/references/test.md
 !/.skills-mgr/skills/commit/SKILL.md
 !/.skills-mgr/skills/council/
 !/.skills-mgr/skills/council/agents/

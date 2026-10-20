@@ -52,18 +52,64 @@ user's explicit request. A local-only restriction on a ref stays until the user 
 - `type`: `feat`, `fix`, `perf`, `refactor`, `docs`, `test`, `build`, `ci`, `chore`, or `revert`.
 - `scope`: optional; the affected component, package, or area, in lower case.
 - `subject`: imperative mood, lower-case start, no trailing period, at most 72 characters
-  including the prefix and any work reference. State what the change does, not how it was made.
+  including the prefix and any work reference. Name the concrete effect in the words someone
+  searching the log would use: the behavior a fix corrects, the capability a feature adds, the
+  structure a refactor creates. Follow a broad verb such as "align", "preserve", or "clarify"
+  with the specific thing that changes, or pick a more specific verb.
 - Work reference: when the user names a work item for the task, or the user's recent commits on
   the branch end their subjects with one, such as `(wp#123)`, end every subject with it. When
   recent subjects carry different references and the task names none, ask which applies.
-- `body`: omit it when the subject is enough. Add one when the subject cannot carry the reason
-  or the full scope, such as a commit that combines several user-visible fixes. Explain why the
-  change is needed and any non-obvious consequence or trade-off; do not narrate the diff. Wrap
-  at 72 columns.
 - Breaking change: add `!` after the type or scope and a `BREAKING CHANGE: <description>`
   trailer describing the migration.
-- Trailers: `Fixes #123`, `Refs #123`, `Co-authored-by:`, and any attribution the client or
-  project requires, each on its own line after a blank line.
+- Trailers: `Fixes #123`, `Refs #123`, `Link: <url>`, `Co-authored-by:`, and any attribution
+  the client or project requires, each on its own line after a blank line.
+
+### Body
+
+Write the body for a maintainer who reads `git log` or `git blame` months later with the
+repository but without the conversation, task notes, review rounds, or local runs behind the
+commit. It records why the commit exists and what it changes; the diff already shows how.
+
+- Keep it self-contained. Use the project's established names and plain words, and define any
+  term the code does not already define, because labels coined while working mean nothing to
+  that reader.
+- Point to an external source through something the reader can open: an issue or pull request
+  number, a URL, a commit SHA with its subject, or a path in the repository. When the source is
+  private or temporary, such as a chat, a local run, or a review round, state the facts it
+  contributed and leave out the name.
+- Write short prose paragraphs in the order the type's format below gives, each answering one
+  question. Most bodies run 3 to 12 lines; the reasoning sets the length, not the diff size.
+- Open each paragraph with words that announce its role, because the paragraphs carry no labels
+  and a reader scans their first words: a problem paragraph opens with its cause
+  (`Because ...`) or, when the cause is unknown or self-evident, with `Previously,`; a change
+  paragraph opens with the imperative verb of the action; an evidence paragraph opens with
+  `Verified by`, `Measured with`, or a similar phrase.
+- Mention behavior that stays unchanged only where a reader would expect it to change, such as a
+  public API kept compatible through an internal rewrite.
+- Back each claim with the most specific evidence that shows it: a named regression test that
+  fails without the change, a before-and-after measurement with its method, or a reproduction
+  with its observed result. A full-suite pass is the baseline for every commit; cite it only when
+  nothing more specific exists. State unverified parts as unverified.
+- When one commit carries several user-visible changes, as a squash can, give each its own
+  paragraph or list item with its own reason.
+- Wrap at 72 columns; a URL or trailer may run longer.
+
+Omit the body only when the subject alone tells that reader why the commit exists, as for most
+`chore` commits, typo fixes, and mechanical updates.
+
+### Formats by type
+
+Before writing the body of a `fix`, `perf`, `feat`, `refactor`, or `test` commit, read the
+matching reference: [fix](references/fix.md), [perf](references/perf.md),
+[feat](references/feat.md), [refactor](references/refactor.md), [test](references/test.md).
+
+- `docs`: what readers lacked or had wrong, and what the document now gives them. Subject only
+  for a typo or link fix.
+- `chore`, `build`, `ci`: usually one line. Add a body when the reason is not evident, such as
+  why a dependency moved (an advisory or a needed upstream fix, linked), what generated content
+  was refreshed from which source or command, or what a pipeline change fixes or enables.
+- `revert`: keep Git's `This reverts commit <sha>.` line and say why: what the reverted commit
+  broke, with a pointer to the failure, or why its approach is withdrawn.
 
 Pass a multi-line message as real lines through a quoted heredoc, `git commit -F - <<'EOF'`.
 Git and the shell keep a `\n` escape inside `-m` quotes as a literal backslash and `n`, including
