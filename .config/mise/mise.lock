@@ -93,7 +93,7 @@ backend = "go:github.com/icholy/gomajor"
 specifiers = ["latest"]
 
 [[tools."go:github.com/yusing/git-agent/cmd/git-agent"]]
-version = "0.0.0-20261007084730-16386b115d37"
+version = "0.0.0-20261017012417-dee24bc9569f"
 backend = "go:github.com/yusing/git-agent/cmd/git-agent"
 specifiers = ["latest"]
 
