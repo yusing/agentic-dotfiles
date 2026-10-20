@@ -52,6 +52,15 @@
     "deliver-vertical-slice": {
       "enabled": true
     },
+    "design-taste-frontend": {
+      "enabled": "lang tsx || lang jsx || lang html || lang css",
+      "remote": {
+        "provider": "repository",
+        "id": "https://github.com/Leonxlnx/taste-skill#design-taste-frontend",
+        "name": "design-taste-frontend",
+        "locator": "https://github.com/Leonxlnx/taste-skill"
+      }
+    },
     "deslop": {
       "enabled": true
     },
@@ -62,7 +71,7 @@
       "enabled": true
     },
     "frontend-design": {
-      "enabled": true,
+      "enabled": "lang tsx || lang jsx || lang html || lang css",
       "remote": {
         "provider": "skills.sh",
         "id": "anthropics/skills/frontend-design",
@@ -106,15 +115,6 @@
         "locator": "herdrdev/herdr/herdr"
       }
     },
-    "high-end-visual-design": {
-      "enabled": "lang tsx | lang jsx | lang html | lang css",
-      "remote": {
-        "provider": "skills.sh",
-        "id": "leonxlnx/taste-skill/high-end-visual-design",
-        "name": "high-end-visual-design",
-        "locator": "leonxlnx/taste-skill/high-end-visual-design"
-      }
-    },
     "human-flavoured-writing": {
       "enabled": true
     },
@@ -126,15 +126,6 @@
     },
     "juststore-rendering-optimizer": {
       "enabled": "(lang js || lang ts) && has_dependency juststore"
-    },
-    "minimalist-ui": {
-      "enabled": "lang tsx || lang jsx || lang html || lang css",
-      "remote": {
-        "provider": "skills.sh",
-        "id": "leonxlnx/taste-skill/minimalist-ui",
-        "name": "minimalist-ui",
-        "locator": "leonxlnx/taste-skill/minimalist-ui"
-      }
     },
     "new-agent-session": {
       "enabled": true
