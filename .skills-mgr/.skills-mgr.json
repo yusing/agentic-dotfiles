@@ -70,6 +70,9 @@
     "final-review": {
       "enabled": true
     },
+    "find-skills": {
+      "enabled": true
+    },
     "frontend-design": {
       "enabled": "lang tsx || lang jsx || lang html || lang css",
       "remote": {
