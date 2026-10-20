@@ -37,6 +37,7 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `.codex/config.toml` (base prompt, compaction prompt, and client settings)
 - `.codex/AGENTS.md`
 - `.codex/GITHUB.md`
+- `.codex/FRONTEND.md` (client-neutral; `.claude/instructions/FRONTEND.md` symlinks to it)
 - `.codex/MAIN.md`
 - `.codex/REVIEW.md`
 - `.codex/SUBAGENT.md`

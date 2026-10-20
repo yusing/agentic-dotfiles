@@ -38,6 +38,7 @@ Read these task documents directly, once per context, the moment when their oper
 - `TESTING.md`: tests/fixtures or validation selection; project owners supply runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents, not every worker task.
 - `GITHUB.md`: preparing pull-request, issue, or comment text.
+- `FRONTEND.md`: building, restyling, or reviewing a web UI.
 
 - `SUBAGENT.md`: FOR SUBAGENTS ONLY: delegate assignment, messages, and result delivery, not dispatch policy.
 
