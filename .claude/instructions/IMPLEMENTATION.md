@@ -6,7 +6,8 @@ accepted contract; consult history only when intent remains unclear.
 ## Behavior
 
 Reuse existing owners and mechanisms for the smallest change that delivers the request. Fix a defect
-at its established cause. Use a dependency's supported capability before writing a narrower replacement.
+at its established cause, and keep the fix to that mechanism even when a similar module solved
+the problem with a wider change. Use a dependency's supported capability before writing a narrower replacement.
 Add an abstraction only for
 a current shared responsibility, invariant, or necessary algorithm. Leave host or provider policy to
 its owner, and add persistence, fallbacks, or compatibility only when the task or a supported

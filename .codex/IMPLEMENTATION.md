@@ -6,7 +6,8 @@ conflicts; consult history only when intent remains unclear.
 ## Behavior
 
 Reuse existing owners and mechanisms for the smallest requested change. Fix a defect at its
-established cause. Use a dependency's supported capability before writing a narrower replacement.
+established cause, and keep the fix to that mechanism even when a similar module solved the
+problem with a wider change. Use a dependency's supported capability before writing a narrower replacement.
 Add an abstraction
 only for a current shared responsibility, invariant, or necessary algorithm, not possible future
 use. Avoid duplicating host/provider policy or adding persistence, fallbacks, or compatibility the
