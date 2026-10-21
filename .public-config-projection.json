@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "1b434a21d69d6e7e3ab8ccfe712e36a1722fb1ea",
+  "sourceCommit": "afb52fa8fef5e5477f69a6d0a52fe6a5dbd0022c",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -683,7 +683,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "75f9e16de3e2f9ac766de03fd59b238944e1d1db8a7185ac95dfd1ec2d499f74",
+      "sha256": "ca0d634b87b3e989bee9d2cdd434f7474295fafe24be492425857bcb8befca0f",
       "executable": false
     },
     {
@@ -790,13 +790,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "100f403ebca03e9e8c24f7f90f66dff265de9ad0ce38494a284eb81c6bae04c1",
+      "sha256": "febe8e1d82d7f5767d0ddbad873cd5ea3e2a80f8d4bfa57833f7354360596f2e",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "044806b3dacf9cc3fc788fff9d32ab5e1dcfa58b9012507020d846b41b9b70bc",
+      "sha256": "c109c4a7fc83d590ecb80b003e5a5cb958f3606f46b9d39ac7e1eb2c8682a484",
       "executable": true
     },
     {
@@ -886,7 +886,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "9311efd2d43cbe3ded5c32086c50628de2199d700576efa480d0964719890f40",
+      "sha256": "e17f5faef62d5c366b97d7d245344629e3bfc2ee5513361c5521ed33fc120dcd",
       "executable": false
     },
     {
@@ -910,7 +910,7 @@
     {
       "path": ".skills-mgr/skills/authoring-skill/SKILL.md",
       "kind": "file",
-      "sha256": "e3083f3f752327ba7070998a31b93d20956857690fe611d8e3bf520ba2e35f2c",
+      "sha256": "017f0974611e976674275cd8a4ee689af20b637d90249591973065ca835e3353",
       "executable": false
     },
     {
@@ -1157,6 +1157,12 @@
       "path": ".skills-mgr/skills/new-project/SKILL.md",
       "kind": "file",
       "sha256": "bf1a063bf54b6e18cb08e35a34feb2a8e4a565e92a74c5d63c50f737fcd89879",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/plane-body-editing/SKILL.md",
+      "kind": "file",
+      "sha256": "de7c323f7cb7b59744439faea20fc801a836b63330f44ee6b1bd0c1a75196a15",
       "executable": false
     },
     {

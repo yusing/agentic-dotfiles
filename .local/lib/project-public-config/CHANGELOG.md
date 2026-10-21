@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.21
+
+Publish the Plane body-editing skill for cached JavaScript and local-file patches.
+
 ## 1.3.20
 
 Publish the user-invoked instruction-audit skill for evidence-backed instruction reviews.

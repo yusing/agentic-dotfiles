@@ -59,11 +59,16 @@ home README only when readers need a changed discovery, selection, or usage work
 skill addition needs no individual entry. Preserve its existing structure. Project-only edits
 need no home README/projection changes.
 
-Published names live in `PROJECTED_SKILL_NAMES` in
-`$HOME/.local/lib/project-public-config/project-public-config.ts`. Renames also change its fixture
-in `$HOME/.local/tests/project_public_config_test.ts`; version/changelog sit by projector source.
-Rebuild with compile-agent-tools and run `bun test ./.local/tests/project_public_config_test.ts`.
-Projection reads committed revisions, not working-tree content; selection edits do not publish.
+Include projection maintenance when creating, removing, or renaming a shared skill. Published
+names live in `PROJECTED_SKILL_NAMES` in
+`$HOME/.local/lib/project-public-config/project-public-config.ts`. Add a new published name,
+remove a deleted name, or replace a renamed name, and update the corresponding fixture in
+`$HOME/.local/tests/project_public_config_test.ts` in the same change. Establish inclusion for a
+new shared skill explicitly; preserve deliberate private exclusions and project-only scope.
+Update the projector's adjacent version/changelog once per dirty worktree, rebuild with
+`compile-agent-tools`, and run `bun test ./.local/tests/project_public_config_test.ts`.
+Projection reads committed revisions, not working-tree content; registration and allowlist edits
+prepare publication but do not publish uncommitted skill content.
 
 ## Validation
 
