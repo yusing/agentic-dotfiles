@@ -87,7 +87,9 @@ unchanged argument semantics. For binary, minified, or generated data, extract e
 bounded bytes, and reuse unchanged scans.
 
 Shell text is code: quote it for the shell that runs it, and keep secrets out of command
-substitution and output.
+substitution and output. The Bash tool can run zsh rather than bash; there an unquoted variable
+does not word-split and an unmatched glob aborts the command, so pass lists through arrays or
+`xargs` and quote globs meant for the called program.
 
 ## Destructive actions
 
