@@ -1,12 +1,12 @@
-"model" = "gpt-6.1-sol"
+"model" = "gpt-6-astra"
 "model_reasoning_summary" = "auto"
-"model_context_window" = 300000
-"model_auto_compact_token_limit" = 270000
+"model_context_window" = 350000
+"model_auto_compact_token_limit" = 320000
 "experimental_compact_prompt_file" = "$HOME/.skills-mgr/skills/handoff/STANDARD.md"
 "personality" = "friendly"
 "plan_mode_reasoning_effort" = "high"
 "hide_agent_reasoning" = false
-"service_tier" = "fast"
+"service_tier" = "default"
 "approval_policy" = "on-request"
 "approvals_reviewer" = "auto_review"
 "model_instructions_file" = "$HOME/.codex/overridden_base_instructions.md"
@@ -59,7 +59,7 @@ fullscreen_transcript = true
 "enabled" = false
 
 ["mcp_servers"."openaiDeveloperDocs"]
-"url" = "https://developers.openai.com/mcp"
+url = "https://developers.openai.com/mcp"
 
 ["notice"]
 "hide_rate_limit_model_nudge" = true
