@@ -15,7 +15,9 @@ implement resolutions only within the accompanying authorization.
 Identify the selected clients, instruction surfaces, audit questions, relevant sessions or time
 window, and whether changes are requested. Use the current session when none is named; expand to a
 bounded relevant local sample when historical behavior matters. State the coverage and gaps rather
-than treating a sample as a complete history.
+than treating a sample as a complete history. Cover every surface that steers the audited behavior
+for the same readers, including unchanged roles and sibling skills, not only pending edits or the
+files an incident touched.
 
 Use the environment's existing instruction-authoring and ownership guidance. Trace configured
 entry points to their maintained owners, generated consumers, installed copies, and captured
@@ -38,6 +40,7 @@ Split genuinely independent work across the available roles. Useful lanes are:
 | Client or layer review | Conflicts, duplicate effective delivery, stale pointers, missing relationships, and rules assigned to the wrong owner or reader. |
 | Session investigation | Actual instruction/action/correction chains showing misdirection, redundant work, or failure to load applicable guidance. |
 | Checks and tool economy | Existing validation and its wiring, stale assertions, excessive reads or output, and mechanical mistakes a current check could catch. |
+| Necessity review | Every in-scope segment (sentence, rule, row, template) and unit (section, reference, skill, role). Justify each by its origin, a user correction, an observed failure, or a non-discoverable fact, or falsify it as discoverable, default model behavior, delivered to the same reader by another layer, stale, inert, or harmful. For units, add load or dispatch evidence and the standing context cost of always-listed descriptions. |
 
 Omit lanes without applicable scope or evidence. Give reviewers the factual scope and user
 requirements independently, without feeding them another reviewer's conclusions. Main pauses its
@@ -75,7 +78,10 @@ Prefer removing stale rules, narrowing triggers, correcting ownership, and preci
 navigation over adding another layer or repeating policy. Evaluate progressive disclosure,
 positioning, and whether the file's structure clearly signals active policy, reference evidence,
 generated content, or historical records. Treat formatting and placement as design hypotheses
-unless evidence establishes their effect.
+unless evidence establishes their effect. A correction must not restate a rule its readers already
+receive; weigh what each added line duplicates and report the net change. Merge a reference whose
+load trigger matches every use of its parent. Remove a unit without load or dispatch evidence after
+moving its unique content to the owning unit.
 
 When fixes are authorized, settle their owner and consumer impact before editing. Reuse existing
 validation: repair broken checks before inventing replacements, and distinguish mechanical checks
@@ -87,5 +93,7 @@ automatic audit outputs.
 Follow the existing authoring, validation, and review workflow for authorized changes.
 
 Report the prioritized findings and dispositions, changed owners and consumers when applicable,
-checks actually performed, and remaining delivery or behavioral gaps. Structural checks and source
+checks actually performed, and remaining delivery or behavioral gaps. Keep per-segment necessity
+verdicts in a ledger file and report the falsified verdicts, keeps resting only on judgment, and
+verdict counts. Structural checks and source
 inspection do not establish live reload, enforcement, or improved model outcomes.
