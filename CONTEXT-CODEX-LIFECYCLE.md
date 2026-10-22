@@ -5,11 +5,12 @@
    mechanics, and safety. This Codex-only file replaces the selected model's
    `model_messages.instructions_template` from `.codex/models_cache.json`; the two bodies are
    not appended together. The selected base is the highest-priority of these configurable
-   instruction layers; runtime and platform instructions remain separate inputs. It uses
-   `.skills-mgr/skills/handoff/STANDARD.md`, the handoff standard, for checkpoint
-   handoffs. The user-invoked `handoff` skill uses the same standard for document content while
-   its `SKILL.md` owns the cutoff, `HANDOFF.md` destination, and path-only response. Codex loads
-   `.codex/AGENTS.md` for durable workflow guidance and the root `AGENTS.md` for repository context
+   instruction layers; runtime and platform instructions remain separate inputs. The user-invoked
+   `handoff` skill uses `.skills-mgr/skills/handoff/STANDARD.md` for document content while its
+   `SKILL.md` owns the
+   cutoff, `HANDOFF.md` destination, and path-only response. Runtime compaction uses this
+   standard only when the effective compaction-prompt setting selects it.
+   Codex loads `.codex/AGENTS.md` for durable workflow guidance and the root `AGENTS.md` for repository context
    routing. The routed context maps and skill bodies are loaded only when their triggers match.
    Codex also discovers `.codex/agents/*.toml`; each role description guides role selection,
    while the spawning client or tool owns invocation mechanics. The assembly, inheritance,
@@ -18,7 +19,7 @@
    `.codex/hooks.json`, any inline hook configuration, and manifests for enabled plugins.
 2. **Session start.** At startup and after context compaction or clearing,
    `.codex/hooks.json` runs `.codex/hooks/bin/check_project` and `skills-mgr list`.
-   Resuming an existing session does not run these root-session hooks.
+   Resuming an existing session does not run these project and skill context commands.
    The project and inventory commands run through `.codex/hooks/bin/session_start_context`.
    Thread-spawn startup runs SubagentStart instead of root SessionStart and delivers project context and inventory
    through the same wrapper. `CONTEXT-HOOK-OWNERS.md` owns the fork and retained-context
@@ -32,13 +33,11 @@
    forms bound hook coverage.
    Guards are silent when their policies do not apply.
 4. **Turn end.** All matching hooks from active configuration sources run for their lifecycle
-   event. The enabled Browser plugin currently contributes a `Stop` MCP hook independently of
-   `.codex/hooks.json`.
-5. **Compaction.** `.skills-mgr/skills/handoff/STANDARD.md` is caller-neutral: the runtime owns
-   the compaction cutoff and delivery while the standard preserves unfinished obligations,
-   needed owner references, and the exact names of still-applicable skills.
-   When compaction interrupts an undelivered file handoff, runtime delivery supersedes the file
-   destination and resumes the task from before the file-handoff invocation.
+   event. Inspect effective enabled plugin manifests alongside `.codex/hooks.json`.
+5. **Compaction.** The runtime owns the compaction cutoff, prompt selection, and delivery.
+   The managed handoff standard defines caller-neutral content for file handoffs and for a
+   runtime that explicitly selects it. Its interruption and continuation rules do not establish
+   delivery by the current runtime.
    After handoff, the base prompt rereads named skills or, when that section is absent, selects
    them again from the current operation. The reloaded shared instructions recover the active
    scope and reread only the guidance needed for remaining work. Routine local work does not

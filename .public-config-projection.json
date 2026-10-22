@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "fbcb8b2110ff015b908705aa7103c95d439ca536",
+  "sourceCommit": "6f7adc98263a9ed5926c52b690b99a49db871945",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1473,7 +1473,7 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "238754461609074c9a7d9a83c53b7fcefab994c9b77973573b68cae772264e08",
+      "sha256": "dc3af3e79efe17420cbad754f2bd8c5e30298e85842d19ade240a7bbffacf4f8",
       "executable": false
     },
     {
@@ -1491,7 +1491,7 @@
     {
       "path": "CONTEXT-HOOK-ARCHITECTURE.md",
       "kind": "file",
-      "sha256": "87ad388397616c33faef2d46bc0c225201f37b7e5e3920aa87320f97f5e089db",
+      "sha256": "c580998984dc832397b54748d09ebbd9e3d1faafcef264702dc682df179ce2c5",
       "executable": false
     },
     {
@@ -1503,7 +1503,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "b50dbdbf3b89755a81d3f046c99065412420fafaa3e4a8b3acb257b3e2ab82ad",
+      "sha256": "b94081a4366769acf1bce475e8d1106d68d6a9cef0a67190637661ee1c8cc869",
       "executable": false
     },
     {

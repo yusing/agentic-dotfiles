@@ -14,9 +14,8 @@ copying the policies they own.
   `.codex/hooks/` is not by itself an active hook; it must be registered by an active
   configuration source.
 - An enabled plugin manifest owns its plugin hook registrations and implementation
-  references. The current Browser plugin contributes a `Stop` MCP hook, independently
-  of `.codex/hooks.json`. Inspect enabled plugin manifests when mapping complete hook
-  coverage rather than treating `.codex/hooks.json` as the whole registry.
+  references. Inspect effective enabled plugin manifests when mapping complete hook coverage
+  rather than treating `.codex/hooks.json` as the whole registry.
 - The registered implementation under `.codex/hooks/` owns its detection, state,
   decision, and injected wording. Hooks read event JSON from stdin and may deny an
   operation, add event-scoped context, or update session state.

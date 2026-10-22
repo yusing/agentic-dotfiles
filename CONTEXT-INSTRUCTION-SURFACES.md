@@ -70,8 +70,9 @@ removing only the registry entry leaves the cached skill discoverable through ge
 For example, `golang-best-practices` is owned by
 `.skills-mgr/skills/golang-best-practices/SKILL.md`; its `lang go` activation can make
 `skills-mgr get` report it disabled from this home-directory repository. Skill authoring
-can read that owning file directly without searching other skill stores. The configured
-compaction prompt likewise points to the managed handoff standard, not a client-local copy.
+can read that owning file directly without searching other skill stores. `.codex/config.toml`
+also owns runtime compaction-prompt selection; the file-handoff route alone does not establish
+that the runtime selects the managed handoff standard.
 
 
 ## Generated and imported surfaces
