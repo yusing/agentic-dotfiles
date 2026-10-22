@@ -4,11 +4,15 @@ description: Create an actionable and redacted handoff document for a fresh agen
 disable-model-invocation: true
 ---
 
-Write a Markdown handoff document so a fresh agent can resume the work. Save it as
-`HANDOFF.md` in the current workspace. Writing it replaces any earlier handoff at that path, and
+Write a Markdown handoff document for the user's requested continuation, not the
+whole conversation backlog.
+Save it as `HANDOFF.md` in that task's workspace or worktree, using the location already
+established in context rather than the shell's cwd or a parent checkout. An explicit
+user destination takes precedence. Writing it replaces any earlier handoff at that path, and
 the earlier one stays unread.
 
-Compose the document from the context you already hold, and hand off immediately.
+After the required reads, write the document as the next action from the context already
+held. Do not interleave planning commentary, task investigation or progress reporting.
 
 The standard owns the document content. This skill owns the cutoff, file destination, and final
 path-only response.

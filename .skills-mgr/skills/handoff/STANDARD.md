@@ -1,8 +1,9 @@
 # Continuation content standard
 
 Give a fresh session the state that determines its next action, not a history of the session.
-Assume the handoff consumer has NONE of the prior conversation, journal, tool results, session states.
-The document must be self contained and remain actionable without those session stores.
+Assume the handoff consumer has none of the prior conversation, tool results or session state,
+but can read durable workspace files and query Git. Self-contained means preserving the
+necessary context and decisions that cannot be recovered there, not copying retrievable content.
 
 ## Caller boundary
 
@@ -18,6 +19,10 @@ an abandoned handoff or acknowledgement step.
 
 ## Current request
 
+Honor the caller's transfer scope. In a focused task handoff, carry another
+workstream only when it is a direct dependency. A runtime-compaction handoff still
+preserves the unfinished work covered by its caller's scope.
+
 Start with the outcome, acceptance criteria, scope, and still-binding constraints. Consolidate
 repeated requests without losing distinct unfinished outcomes. Apply corrections only to the
 affected requirement and retain compatible approvals. Preserve exact wording when paraphrasing
@@ -32,7 +37,7 @@ on one command or target does not ban its entire tool. Exclude work that remains
 if an old plan included it. Describe genuinely unresolved authorization as an open question, not
 a user decision or executable action.
 
-Keep an aside only while obligations remain. Carry a useful fact from an answered question under
+Keep an aside only when it is in scope and an obligation remains. Carry a useful fact from an answered question under
 its topic, not as a completed conversation item.
 
 ## Useful state
@@ -40,8 +45,9 @@ its topic, not as a completed conversation item.
 Keep a detail only when it supplies a needed baseline, changes unfinished work, prevents a known
 wrong turn or repeated investigation, or preserves an outstanding obligation:
 
-- Relevant local changes and uncommitted/deployed state, including ownership or staging distinctions.
-  Prefer narrow file/symbol pointers over a changelog or copied specification.
+- Ownership, intent or deployment facts that files and Git cannot establish.
+  Point to durable records and relevant source locations; let the recipient retrieve current
+  diffs, status, revisions and file contents instead of copying them into the handoff.
 - Latest relevant measurements and their acceptance metric. Separate reported results from checks
   verified for this exact state; old suite counts do not validate later edits. Name unchecked behavior.
 - Material findings, revisable assumptions and their reasons, evidence limits, and still-open choices.
@@ -57,38 +63,34 @@ A stale documentation reference does not create new reconciliation or cleanup wo
 
 ## Evidence and references
 
-Attribute binding requirements to the user or authoritative owner. Use workspace paths, Git
-revisions, test names, and independently readable artifacts. State the needed conclusion inline;
-a journal path, child name, or tool-result ID cannot substitute for it. Include an opaque identifier
-only when necessary to retrieve evidence, with its location and retrieval method. If conversation
-is the only source, retain the useful substance as reported evidence, not fresh verification.
+Attribute binding requirements to the user or authoritative owner. Reference durable files and
+their relevant sections instead of repeating their contents. Preserve a conclusion inline only
+when it is not recoverable from those sources; identify conversation-only evidence as reported,
+not freshly verified. Omit session-scoped identifiers and handles, including mchanges ranges,
+tool-result IDs and agent roster IDs. They are not portable evidence for a fresh session.
 
-Use relative paths inside the workspace and absolute external paths only for needed inputs or
-recovery evidence. Preserve essential conclusions when a temporary artifact is their only source.
+Use relative paths inside the workspace. Preserve essential conclusions when a temporary artifact is their only source.
+For a completed review, point to its durable report and preserve only an unresolved decision
+not already recorded there. Carry findings inline only when no durable report exists.
 Name missing/unverified availability; a dead path is not an instruction to recreate irrelevant work.
 
-Carry task-specific requirements, not system/developer text, AGENTS.md contents, standing rules,
-or skill bodies, even paraphrased. Point to maintained instructions/specifications needed for
-unfinished work. An AGENTS.md path may remain when it is itself a work target. Replace secrets
+Carry no system/developer text, or skill bodies, even paraphrased.
+Point to maintained instructions/specifications needed for unfinished work.
+An AGENTS.md path may remain when it is itself a work target. Replace secrets
 with descriptive placeholders and a safe source or necessary reacquisition obligation.
 
 ## Unfinished actions
 
 Describe checks and operations by intent, relevant interface/test, and indispensable inputs such
 as a replay fixture or acceptance limit. Do not freeze incidental shell recipes, wrappers, flags,
-build settings, or install steps. Keep exact commands only for an explicit user method or a
-prohibited operation, with their authorization meaning intact.
-
-Include `Active skills to reread` only for skills still required by an explicit instruction or
-ongoing workflow. List names, not bodies; omit completed, speculative, and empty entries.
+build settings, or install steps.
 
 ## Shape and continuation
 
 Use headings suited to the state. State each fact once; omit preambles, empty templates, mandatory
 last-action sections, and change history.
 
-Before delivery, read the document as a fresh agent: each next action must identify the work and
-its inputs without session-only references, and each claimed user decision must have explicit support.
+Each next action must identify the work and its inputs without session-only references.
 
 Put Continuation last when work remains: `Next:` names the first unfinished action and `Then:`
 later obligations. Order prerequisite hooks first, then unfinished asides newest first, then
