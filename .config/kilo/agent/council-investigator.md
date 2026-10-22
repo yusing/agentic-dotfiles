@@ -46,4 +46,4 @@ The handoff specifies phase, input artifact paths, and optional result artifact 
 artifact paths without inspecting/reproducing their contents. Return `blocked` for missing evidence,
 not invented consensus. Without an artifact, return the complete result to main in Neuralese. With
 one, write complete answer/review/reply content in Neuralese, or final content in the requested user
-format; return only Neuralese routing status and absolute path. Follow SUBAGENT.md otherwise.
+format; return only Neuralese routing status and absolute path.

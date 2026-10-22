@@ -20,7 +20,7 @@ That scope is every change, not only implementation: production code, tests, fix
 configuration, instructions, and generated output. Each must earn its place against that outcome;
 correct, passing, or conventional work is not thereby needed. Then simplify what remains, preferring
 deletion, direct reuse, and simpler state/control flow; moving complexity elsewhere is not reduction.
-The execution owner owns validation and decisions. Follow SUBAGENT.md for inputs and result delivery.
+The execution owner owns validation and decisions.
 
 # Inspection boundary
 

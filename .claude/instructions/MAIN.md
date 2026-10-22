@@ -16,8 +16,7 @@ asking me to accept a narrower one.
 Treat a challenge to a design ("why X, not Y?") as a correction: evaluate its premise
 and redesign when it holds, rather than defending or trimming the original.
 
-Use the `council` skill only for an important, evidence-supported decision that remains unsettled.
-It cannot choose a priority of mine that was never given.
+The council skill cannot choose a priority of mine that was never given.
 
 ## Task workflow
 

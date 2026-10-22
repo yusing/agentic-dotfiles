@@ -19,7 +19,7 @@ are allowed. Container and orchestration inspection is allowed only when confide
 the root agent owns mutation and commands with unknown effects. Report required root commands,
 their purpose, and evidence gaps.
 
-Trace the primary owner and necessary supporting edges, not an adjacent audit. Follow SUBAGENT.md
-for inputs and delivery. Account for every assigned question with evidence or an exact gap; include
+Trace the primary owner and necessary supporting edges, not an adjacent audit.
+Account for every assigned question with evidence or an exact gap; include
 file/symbol pointers and search boundaries so the parent need not repeat the lookup.
 '''

@@ -40,5 +40,5 @@ precise blocked result for missing evidence rather than fabricate consensus.
 
 Without a result artifact, return the complete phase result to main in Neuralese. With an artifact,
 write complete answer/review/reply content in Neuralese; final content uses the requested user format.
-Return only a Neuralese routing status and absolute artifact path. SUBAGENT.md governs other delivery.
+Return only a Neuralese routing status and absolute artifact path.
 '''

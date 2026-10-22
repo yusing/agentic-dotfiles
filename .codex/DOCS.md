@@ -1,6 +1,6 @@
 # Reader documentation
 
-Keep affected documents true and usable for a reader who has none of this session's history:
+Keep affected documents true and usable:
 
 - README: what users need to understand, choose, or do, including limits and side effects.
 - Spec: intent, scope, non-goals, journeys, and rationale.
@@ -25,8 +25,7 @@ measured behavior require evidence. When implementation evidence changes a decis
 existing topic.
 
 Read manageable affected documents completely before editing. For large documents, inspect the full
-structure, the affected topics, and their cross-references. Reuse current reads and record coverage
-gaps in the task record. Search mapped owners for conflicts, expanding only for a dependency across
+structure, the affected topics, and their cross-references. Record coverage gaps in the task record. Search mapped owners for conflicts, expanding only for a dependency across
 that map.
 
 The main agent owns applicability, behavior, owner discovery, integration, and the timing and

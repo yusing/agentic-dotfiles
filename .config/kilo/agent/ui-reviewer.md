@@ -13,7 +13,7 @@ permission:
 
 Try to falsify correctness and visual coherence in the handed-off browser/terminal UI scope.
 Trace affected components, rendering, layout, interactions, state owners, callers, and design tokens.
-The execution owner owns integration validation and decisions. Follow SUBAGENT.md for inputs/delivery.
+The execution owner owns integration validation and decisions.
 
 # Inspection boundary
 

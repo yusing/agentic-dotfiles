@@ -1,0 +1,47 @@
+# skills-mgr-base-sha256 7faca08b51b643b2ddd0836f92af15574444024685dcc1e677dbbb39ae8c9e8f
+# skills-mgr-result-sha256 c6b2b70d86ad3903505778ec78acf63a3dadd616f9b1e23d23a63feab437c7d8
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -72,19 +72,12 @@
+ 
+ For every meaningful change, ask:
+ 
+-- Is there a "code judo" move that would make this dramatically simpler?
+-- Can this change be reframed so fewer concepts, branches, or helper layers are needed?
+ - Does this improve or worsen the local architecture?
+ - Did the diff add branching complexity where a better abstraction should exist?
+ - Did a previously cohesive module become more coupled, more stateful, or harder to scan?
+-- Is this logic living in the right file and layer?
+ - Did this change enlarge a file or component past a healthy size boundary?
+ - Are there repeated conditionals that signal a missing model or missing helper?
+ - Is the implementation direct and legible, or does it rely on special cases and incidental control flow?
+-- Is this abstraction actually earning its keep, or is it just a wrapper?
+-- Did the diff introduce casts, optionality, or ad-hoc object shapes that obscure the real invariant?
+-- Is this logic living in the canonical layer, or did the diff leak details across a boundary?
+-- Is this orchestration more sequential or less atomic than it needs to be?
+ 
+ ## What to Flag Aggressively
+ 
+@@ -112,7 +105,6 @@
+ 
+ When you identify a code-quality problem, prefer suggestions like:
+ 
+-- Delete a whole layer of indirection rather than polishing it.
+ - Reframe the state model so conditionals disappear instead of getting centralized.
+ - Change the ownership boundary so the feature becomes a natural extension of an existing abstraction.
+ - Turn special-case logic into a simpler default flow with fewer exceptions.
+@@ -123,14 +115,9 @@
+ - Separate orchestration from business logic.
+ - Collapse duplicate branches into a single clearer flow.
+ - Delete wrappers that do not meaningfully clarify the API.
+-- Reuse the existing canonical helper instead of introducing a near-duplicate.
+ - Make type boundaries more explicit so the control flow gets simpler.
+-- Move the logic to the package/module/layer that already owns the concept.
+-- Parallelize independent work when that also simplifies the orchestration.
+-- Restructure related updates into a more atomic flow when partial state would be harder to reason about.
+ 
+ Do not be satisfied with "maybe rename this" feedback when the real issue is structural.
+-Do not be satisfied with a merely cleaner version of the same messy idea if there is a plausible path to a much simpler idea.
+ 
+ ## Review Tone
+ 

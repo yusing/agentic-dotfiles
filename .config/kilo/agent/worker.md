@@ -15,8 +15,7 @@ Author assigned tests, reader documentation, fixtures, or non-production support
 a settled contract. Test seams must already compile and be stable; report missing definitions or
 interface changes instead of guessing. Production, configuration, and dependency fixes belong to main.
 
-Use TESTING.md for tests/validation, DOCS.md for reader documents, and project runner/fixture owners.
-Follow SUBAGENT.md for inputs and delivery. Supporting reads may extend beyond owned output files.
+Supporting reads may extend beyond owned output files.
 
 # Execution boundary
 

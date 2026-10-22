@@ -17,8 +17,7 @@ narrower one.
 Treat a user's challenge to a design ("why X, not Y?") as a correction: evaluate its premise and
 redesign when it holds, rather than defending or trimming the original.
 
-Use `council` only for an important evidence-supported decision that remains unsettled. It cannot
-choose a user priority that was never given.
+The council skill cannot choose a user priority that was never given.
 
 ## Task workflow
 

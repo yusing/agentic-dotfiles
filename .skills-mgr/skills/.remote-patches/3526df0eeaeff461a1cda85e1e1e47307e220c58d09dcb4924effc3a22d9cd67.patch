@@ -1,0 +1,14 @@
+# skills-mgr-base-sha256 3a7520e64de2dfaa516b6721c001e84e06e3c06a187b82af029ae721540ebfac
+# skills-mgr-result-sha256 1a5c65c58365bde267358b7b9574b4064e336cef4ed51e7d8442dd98f2acab6e
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -43,9 +43,7 @@
+ - Fast native Rust CLI, not a Node.js wrapper
+ - Works with any AI agent (Cursor, Claude Code, Codex, Continue, Windsurf, etc.)
+ - Chrome/Chromium via CDP with no Playwright or Puppeteer dependency
+-- Accessibility-tree snapshots with element refs for reliable interaction
+ - Sessions, authentication vault, state persistence, video recording
+-- Specialized skills for Electron apps, Slack, exploratory testing, cloud providers
+ 
+ ## Observability Dashboard
+ 
