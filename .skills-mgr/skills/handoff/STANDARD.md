@@ -31,10 +31,9 @@ Keep observations, agent conclusions, and proposals distinct from user decisions
 records that work stopped; it does not establish a new prohibition or revoke authorization.
 
 Carry only constraints that still apply to the receiving session, preserving their operational
-scope. Omit session-scoped constraints entirely, including temporary limits on spawning children;
-do not carry them forward as restrictions, historical notes, or permission questions. A prohibition
-on one command or target does not ban its entire tool. Exclude work that remains prohibited even
-if an old plan included it. Describe genuinely unresolved authorization as an open question, not
+scope. Omit constraints that expire at the transfer boundary; runtime compaction within the
+same session retains its still-binding session constraints. A prohibition on one command or target
+does not ban its entire tool. Exclude work that remains prohibited even if an old plan included it. Describe genuinely unresolved authorization as an open question, not
 a user decision or executable action.
 
 Keep an aside only when it is in scope and an obligation remains. Carry a useful fact from an answered question under
