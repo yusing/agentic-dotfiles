@@ -88,8 +88,7 @@ commit. It records why the commit exists and what it changes; the diff already s
   public API kept compatible through an internal rewrite.
 - Back each claim with the most specific evidence that shows it: a named regression test that
   fails without the change, a before-and-after measurement with its method, or a reproduction
-  with its observed result. A full-suite pass is the baseline for every commit; cite it only when
-  nothing more specific exists. State unverified parts as unverified.
+  with its observed result. State unverified parts as unverified.
 - When one commit carries several user-visible changes, as a squash can, give each its own
   paragraph or list item with its own reason.
 - Wrap at 72 columns; a URL or trailer may run longer.

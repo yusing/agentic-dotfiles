@@ -25,13 +25,12 @@ Situations:
 refactor(billing): compute invoice totals in one place
 
 Because the PDF renderer, the email summary, and the API each computed
-invoice totals, they disagreed on rounding for multi-currency invoices,
-and tax-exemption support (#230) would need the same change three
-times.
+invoice totals, tax-exemption support (#230) would need the same
+change three times.
 
 Move the calculation into billing.Totals, which all three outputs now
-call. Rounding follows the API's existing banker's rounding.
+call. Preserve the existing rounding rules in every output.
 
 Verified unchanged by the invoice tests, which pass without edits; the
-multi-currency PDF and email snapshots now match the API's figures.
+multi-currency PDF, email, and API snapshots remain unchanged.
 </example>

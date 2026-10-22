@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3b5d1ecc086b2fffc02b143f04965dded8190911",
+  "sourceCommit": "2abfa952fbfdaeb1bfd03cca7ea3bc56cc1424f2",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -958,7 +958,7 @@
     {
       "path": ".skills-mgr/skills/commit/references/refactor.md",
       "kind": "file",
-      "sha256": "144df9fa1aa8c7f8f524e00a94ae4d1eaddcba946e6d34a10df0bf4b94786d47",
+      "sha256": "bc1455f122fe0b6de2d2f6498744136127a4ff1786313d8d29df04bdedfeb60b",
       "executable": false
     },
     {
@@ -970,7 +970,7 @@
     {
       "path": ".skills-mgr/skills/commit/SKILL.md",
       "kind": "file",
-      "sha256": "7cffb0dfb4e03f0702e1277cd960a19e67c47dd4a6526b4d3a5aa58b4e93b639",
+      "sha256": "56ff5000fbe6695f63404c485f8709103befae1045c412970c80fa356ff8f602",
       "executable": false
     },
     {
