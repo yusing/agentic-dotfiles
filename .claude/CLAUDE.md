@@ -40,8 +40,7 @@ Read these task documents directly, once per context, the moment when their oper
 - `SKILL-AUTHORING.md`: additionally, when authoring or auditing skills.
 - `MAIN.md`: planning, delegation, and coordination as the main agent.
 - `REVIEW.md`: as the main agent, once an authorized change is implemented and its focused
-  validation is done, before you report completion or commit a delivered slice. Read it at that
-  point even if you read it earlier, because its checks apply then.
+  validation is done, before you report completion or commit a delivered slice.
 - `IMPLEMENTATION.md`: implementing code or operational changes, or inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits
   may use it.

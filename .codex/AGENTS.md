@@ -32,7 +32,7 @@ Read these task documents directly, once per context, the moment when their oper
 - `SKILL-AUTHORING.md`: additionally for authoring/auditing skills.
 - `MAIN.md`: main: planning, delegation, and coordination.
 - `REVIEW.md`: main: after an authorized change is implemented and focused-validated,
-  before completion or a slice commit; read it then even if read earlier.
+  before completion or a slice commit.
 - `IMPLEMENTATION.md`: code/operational implementation or its inspection, not pure
   lookup, diagnosis, settled support tests, or mechanical wording edits. Explicit audits may use it.
 - `TESTING.md`: tests/fixtures or validation selection; project owners supply runner details.

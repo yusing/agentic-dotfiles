@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "c657bade255db75b9424da860baa7291e0d05f86",
+  "sourceCommit": "ece7e6cf85fc49da8976113f6a63b073dd04d4ca",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -71,7 +71,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "1fdb43068430101f69f625b44fe3f43eb871a6498f62a0813ec56440d7f34be0",
+      "sha256": "b49b3f1ca9f1db65c0ff1c7e3e83aa4333fe41376d58c26d5625572dda7a8222",
       "executable": false
     },
     {
@@ -137,7 +137,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "d23ec824e1dae127bebb0f47c51a35e316b93a105452eaf311aa3002625d325c",
+      "sha256": "015e8eda41ce7c19eb96859d8339cd7e6253175cb1efc4b16c713ac560070a33",
       "executable": false
     },
     {
@@ -916,7 +916,7 @@
     {
       "path": ".skills-mgr/skills/.remote-patches/72af4d9e0d00c4e4a9e66bbe2525a6b029fc1bedc63ea0eceb54d4d8e29888de.patch",
       "kind": "file",
-      "sha256": "401b59d8665dda738b8d7e5b450ab45a7e271b060ff0466363e6dcd8c7bd95f7",
+      "sha256": "675205f322a06022055194cf9c439834deebb7596f6a8870e159fb038b47a680",
       "executable": false
     },
     {
