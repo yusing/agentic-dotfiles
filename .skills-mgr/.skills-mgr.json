@@ -121,6 +121,9 @@
     "human-flavoured-writing": {
       "enabled": true
     },
+    "i-want": {
+      "enabled": true
+    },
     "instruction-audit": {
       "enabled": true
     },
