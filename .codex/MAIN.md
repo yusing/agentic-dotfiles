@@ -86,8 +86,4 @@ user requirements, and constraints in the brief; these are assignment context, n
 ## Coordination
 
 After dispatch, do disjoint work or wait. Use returned evidence; repeat work only for a concrete gap,
-conflict, or correction. Keep edits off files/interfaces a running delegate depends on. Send necessary
-contract corrections promptly; batch other messages. Reuse an agent while its scope/context remain
-useful, and start fresh for independent judgment or a different assignment.
-
-Messages cost turns. Do not request status or acknowledge information that needs no action.
+conflict, or correction. Keep edits off files/interfaces a running delegate depends on.

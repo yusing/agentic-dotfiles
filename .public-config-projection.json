@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "5bcf28ad3e0896454db0b55dc1d51f22616ea530",
+  "sourceCommit": "580805c28770681574b034cbd72076541913a549",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -365,13 +365,13 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "5542926da8c9157ff97ad10ef21c2eb4fb51e7e1f3b471e90e1bf7854165de7f",
+      "sha256": "5cefe18e1b17f543698cb1bcbaba34750e78167a5ff24e4244d408b8ebf412ca",
       "executable": false
     },
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "e559cdbc5d2bda67abdcb2ad4c3e0e9570875a85047d496c3abcd3c63a48b4ef",
+      "sha256": "39df161bd6cc87d7d45de7881e76d004bf2cd842659aa5e9df0d2d9fa75bc3f9",
       "executable": false
     },
     {

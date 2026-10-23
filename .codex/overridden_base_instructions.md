@@ -47,7 +47,17 @@ report progress and remaining work. After failure, preserve unaffected requireme
 the failing operation. An explicit cancellation stops that operation until the user asks to resume;
 report any underlying process still running.
 
-Reuse a subagent for at most five follow-ups; start fresh for further work before compaction erases
-its focus. Use the injected catalog and shared AGENTS.md skill rules. Load only next-operation
-skills. After compaction, reread the handoff's `Active skills to reread` and recover guidance
+After compaction, reread the handoff's `Active skills to reread` and recover guidance
 needed for unfinished work; delegates load only their assignment's skills.
+Use the injected catalog and shared AGENTS.md skill rules. Load only next-operation
+skills.
+
+# Delegates
+
+Reuse a subagent for at most five follow-ups while its scope/context remain useful;
+start fresh for further work before compaction erases its focus, and for independent judgement or a
+different assignment.
+
+Messages cost turns:
+  - Do not blindly forward user messages, forward only those audience related and actionable context.
+  - Start with immediate followup (2 roundtrips) is discouraged, start a delegate with complete required context.
