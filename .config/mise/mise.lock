@@ -23,7 +23,7 @@ url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.6/swagge
 url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/554544568"
 
 [[tools."github:dlvhdr/gh-dash"]]
-version = "4.26.1"
+version = "4.26.2"
 backend = "github:dlvhdr/gh-dash"
 specifiers = ["latest"]
 
@@ -31,19 +31,19 @@ specifiers = ["latest"]
 matching_regex = "^gh-dash_.*_(linux|darwin)-(amd64|arm64)$"
 
 [tools."github:dlvhdr/gh-dash"."platforms.linux-arm64"]
-checksum = "sha256:0ba9f87538b2ad0564b493ea99604246d89af65369f49ee391a13eb2f7180621"
-url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.1/gh-dash_v4.26.1_linux-arm64"
-url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/625307675"
+checksum = "sha256:67e55fe550e86dc7555979f8e0d05b88e1ba086b022a6e19e071dfc67369ec50"
+url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.2/gh-dash_v4.26.2_linux-arm64"
+url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/647120648"
 
 [tools."github:dlvhdr/gh-dash"."platforms.linux-x64"]
-checksum = "sha256:e5f6878c0ee28774c1f036e2719d0de6dad52b858fd850e16daef1325b657f9a"
-url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.1/gh-dash_v4.26.1_linux-amd64"
-url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/625307671"
+checksum = "sha256:565d7dbfafc568c06441ab49d31c7059b7ade7cbba12490fa7f12f9bb71dc1b5"
+url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.2/gh-dash_v4.26.2_linux-amd64"
+url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/647120492"
 
 [tools."github:dlvhdr/gh-dash"."platforms.macos-arm64"]
-checksum = "sha256:6dda0fec036e498c1e0d7a333bd9df7f22f0261667a9720b4bb331a96c9b4297"
-url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.1/gh-dash_v4.26.1_darwin-arm64"
-url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/625307355"
+checksum = "sha256:591cfe85838c3459b56b4a08bcdf0ce11a5c59a92d466ab312cca0c4ad0d163f"
+url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.2/gh-dash_v4.26.2_darwin-arm64"
+url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/647120754"
 
 [[tools."github:lightpanda-io/browser"]]
 version = "1.0.0"
@@ -118,7 +118,7 @@ backend = "go:golang.org/x/tools/cmd/deadcode"
 specifiers = ["latest"]
 
 [[tools."npm:@kilocode/cli"]]
-version = "7.8.12"
+version = "7.8.15"
 backend = "npm:@kilocode/cli"
 specifiers = ["latest"]
 
@@ -143,7 +143,7 @@ backend = "npm:ccstatusline"
 specifiers = ["latest"]
 
 [[tools."npm:ctx7"]]
-version = "0.6.1"
+version = "0.8.1"
 backend = "npm:ctx7"
 specifiers = ["latest"]
 
@@ -157,12 +157,17 @@ version = "7.0.2004"
 backend = "npm:oxlint-tsgolint"
 specifiers = ["latest"]
 
+[[tools."npm:pyright"]]
+version = "1.1.414"
+backend = "npm:pyright"
+specifiers = ["latest"]
+
 [[tools."npm:scriptc"]]
 version = "0.2.6"
 backend = "npm:scriptc"
 specifiers = ["0.2.6"]
 
 [[tools."npm:vite"]]
-version = "8.3.4"
+version = "8.3.5"
 backend = "npm:vite"
 specifiers = ["latest"]

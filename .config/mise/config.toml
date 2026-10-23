@@ -16,6 +16,7 @@
 "npm:ccstatusline" = "latest"
 "npm:ctx7" = "latest"
 "npm:oxlint-tsgolint" = "latest"
+"npm:pyright" = "latest"
 "npm:scriptc" = { "version" = "0.2.6", "postinstall" = "cd \"$MISE_TOOL_INSTALL_PATH\" && bun pm trust scriptc" }
 "npm:vite" = "latest"
 "aqua:go-swagger/go-swagger" = "latest"
