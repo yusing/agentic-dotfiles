@@ -338,6 +338,8 @@ end
 
 function disk-clean
     set -l before (disk-usage)
+    # Prefer a three-day cutoff where the cleaner supports age filtering.
+    @check-command docker; and docker builder prune --all --force --filter until=72h
     @check-command find; and find ~/projects -type f -name package.json | grep -v node_modules | xargs -n1 dirname | xargs -I {} bun pm --cwd {} cache rm > /dev/null 2>&1
     @check-command uv; and uv cache clean
     @check-command pip; and pip cache purge
@@ -347,11 +349,19 @@ function disk-clean
     @check-command golangci-lint; and golangci-lint cache clean
     @check-command tldr; and tldr --clean-cache
     @check-command oh-my-posh; and oh-my-posh cache clear
-    @check-command go; and go clean -cache && go clean -modcache && go clean -fuzzcache
+    if @check-command go
+        set -l go_cache (go env GOCACHE)
+        if test -d "$go_cache"
+            # Entry mtimes track use with up to one hour of lag, including executable directories.
+            find -H "$go_cache" -mindepth 2 -maxdepth 2 \( -name '*-a' -o -name '*-d' \) \
+                -mmin +4380 -exec rm -rf -- {} +
+        end
+        go clean -fuzzcache
+    end
     @check-command journalctl; and sudo journalctl --vacuum-size=500M --vacuum-time=3d > /dev/null 2>&1
     @check-command yay; and yes | yay -Sc > /dev/null 2>&1
     @check-command bun; and bun pm -g cache rm
-    @check-command brew; and brew cleanup --prune=all
+    @check-command brew; and brew cleanup --prune=3
     set -l after (disk-usage)
     echo "$before -> $after"
 end
