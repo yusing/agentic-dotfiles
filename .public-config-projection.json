@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7d381a5fd8763e0b8f6e8ed520dfbfb402373588",
+  "sourceCommit": "17b6c64d791072f6f34dcb98f74a2a7cd1147cac",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -35,7 +35,7 @@
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "cb58734725aef3ed4d5a0b14f225d20a0f9bbe7befbe1fb0c66b9472aa926470",
+      "sha256": "2475908a422b0162cd31d19fb3528c7b78639017bc83b0b0fbfb8bd692e38c45",
       "executable": false
     },
     {
@@ -149,7 +149,7 @@
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "5fa0df72ad01643554bf08b33655ae4b24903626afba71a49cea6fbb1161fef4",
+      "sha256": "8e4d39c191fcc8a3a693b808e22f87d1afe64c9bb3cf8406df1a2e3b889dea7c",
       "executable": false
     },
     {
@@ -515,7 +515,7 @@
     {
       "path": ".config/kilo/agent/explorer.md",
       "kind": "file",
-      "sha256": "ecf7ed56a3dfc112e357dd05d217646bbe4c19ea61de1d91854c780293bc0018",
+      "sha256": "6eb8d0d74d3495fd9503934c64f24672e4d2a5e411e12c988690874ff1f95b0a",
       "executable": false
     },
     {

@@ -1,5 +1,16 @@
 name = "explorer"
-description = "Read-only source explorer for bounded factual lookups, caller traces, and explanations of observed behavior; not a diagnosis, audit, design review, or recommendation role."
+description = """
+Use explorer for specific, well-scoped codebase questions: factual lookups, caller traces, and
+explanations of observed behavior. Explorers are fast and authoritative.
+
+Trust explorer results and avoid repeating exploration they have already covered. You may still
+inspect code yourself to gain needed context or resolve a concrete gap or conflict.
+Run multiple explorers in parallel for distinct codebase questions that can be answered
+independently. While waiting, continue local work that does not depend on their results.
+Reuse existing explorers for related questions.
+
+This role is read-only. Diagnosis, audits, impact assessment, design reviews, and recommendations
+belong to other roles."""
 model = "gpt-6.1-sol"
 model_reasoning_effort = "low"
 developer_instructions = '''
