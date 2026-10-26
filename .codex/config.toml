@@ -1,6 +1,6 @@
 "model" = "gpt-6-astra"
 "model_reasoning_summary" = "auto"
-"model_context_window" = 400000
+"model_context_window" = 350000
 "personality" = "none"
 "plan_mode_reasoning_effort" = "ultra"
 "hide_agent_reasoning" = false
