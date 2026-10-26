@@ -2,11 +2,12 @@ import { mkdtemp, open, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-const VERSION = "1.0.0";
+const VERSION = "1.0.1";
+export const SOURCE_EXTENSIONS = "c,h,cc,cpp,cxx,hpp,cs,go,java,js,mjs,cjs,jsx,ts,tsx,py,rb,php,rs,kt,kts,swift,scala,dart,vue,svelte,m,mm,sh,sql,lua,ex,exs,zig";
 const EXCLUDED_DIRS = ".git,.hg,.svn,vendor,node_modules,dist,build,out,target,coverage,.venv,venv,third_party,Pods,__pycache__,.gradle,bower_components";
 const EXCLUDED_PATH = String.raw`(^|/)(_?tests?|__tests__|spec|fixtures|mocks?|testdata|__mocks__|benches|benchmarks?|examples?|samples?|e2e|integration[-_]?tests?|test[-_](utils|support|helpers)|generated|__generated__)(/|$)|(^|/)_?tests?([_-][^/]*)?\.[^/]+$|(_tests?|\.tests?|\.spec|_spec|_bench|\.bench|\.benchmark)\.|\.(gen|generated|min)\.[^/]*$|\.pb\.(go|cc|h)$`;
 const DEFAULTS = [
-  "--include-ext", "c,h,cc,cpp,cxx,hpp,cs,go,java,js,mjs,cjs,jsx,ts,tsx,py,rb,php,rs,kt,kts,swift,scala,dart,vue,svelte,m,mm,sh,sql,lua,ex,exs,zig",
+  "--include-ext", SOURCE_EXTENSIONS,
   "--exclude-dir", EXCLUDED_DIRS,
   "--not-match", EXCLUDED_PATH,
   "--no-gen=false", "--no-min=false", "--no-min-gen=false",
@@ -19,6 +20,12 @@ const DISCOVERY = [
   "--verbose=false", "--debug=false", "--trace=false",
 ];
 const HEADER = /^(?:code generated\b|@generated\b|<?auto(?:matically)?[- ]generated\b|this file (?:is|was|has been) (?:auto(?:matically)?[- ]generated|generated)\b|generated\b.*(?:do not edit|by\b)|do not edit(?:\s*[.!]|\s*$))/i;
+const namePattern = new RegExp(EXCLUDED_PATH);
+const excludedDirs = new Set(EXCLUDED_DIRS.split(","));
+
+export function excludedPath(path: string): boolean {
+  return namePattern.test(path.replaceAll("\\", "/")) || path.split(/[\\/]/).slice(0, -1).some(part => excludedDirs.has(part));
+}
 
 // Inspect only the leading comment preamble, never strings in executable code.
 export function generatedHeader(source: string): boolean {
@@ -131,11 +138,9 @@ async function main(): Promise<void> {
   const files = new Set(languages.flatMap(language => (language.Files ?? []).map(file => file.Location)));
   const exclusions: string[] = [];
   const excludedPaths = new Set<string>();
-  const namePattern = new RegExp(EXCLUDED_PATH);
-  const excludedDirs = new Set(EXCLUDED_DIRS.split(","));
   let headers = 0;
   for (const path of files) {
-    const excludedByName = namePattern.test(path.replaceAll("\\", "/")) || path.split(/[\\/]/).slice(0, -1).some(part => excludedDirs.has(part));
+    const excludedByName = excludedPath(path);
     let generated = false;
     if (!excludedByName) {
       const file = await open(path, "r");

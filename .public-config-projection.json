@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "17b6c64d791072f6f34dcb98f74a2a7cd1147cac",
+  "sourceCommit": "1cb20013b07305d55e327a800d6eddcc3013664b",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -808,13 +808,13 @@
     {
       "path": ".local/lib/scc-prod/CHANGELOG.md",
       "kind": "file",
-      "sha256": "72ad5adf861be688a913a30102804422cf0d321cfbaadefa03f285267ea9774d",
+      "sha256": "27b03e7e0a46e31721044a80dad44ecc361b532ba66c09821d1429d937206824",
       "executable": false
     },
     {
       "path": ".local/lib/scc-prod/scc-prod.ts",
       "kind": "file",
-      "sha256": "957c90f1562ad25d9f71998f544986468ec8c5aea94376d94d9f09bf6b4898d6",
+      "sha256": "3715041186c0f936033a3b055fced1c859bdd5953cea4c835f416258248d7a84",
       "executable": false
     },
     {
