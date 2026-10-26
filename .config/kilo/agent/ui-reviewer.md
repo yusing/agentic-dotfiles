@@ -1,7 +1,7 @@
 ---
 description: "Independent reviewer of browser and terminal interfaces, including visual coherence, interaction lifecycles, and rendered or runtime evidence. Repository sources remain read-only."
 mode: subagent
-model: kilo/openai/gpt-6.1-sol
+model: kilo/openai/gpt-6-astra
 variant: high
 color: "#A855F7"
 permission:

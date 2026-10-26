@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "cc427cb038a2363de4b23fbe624f386d9371026b",
+  "sourceCommit": "b2823aed85a738436b6037530fa0a9869fdd7c13",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -173,7 +173,7 @@
     {
       "path": ".codex/agents/ui-reviewer.toml",
       "kind": "file",
-      "sha256": "9a936e902e4686a471764ca0655f3e472c5fe427949ad38a83a701dd26c45cd7",
+      "sha256": "cbe4ef6eb8f80010253861e7f99e3fbbaac257d5762ed23ccbaf91cb2e2a3e2a",
       "executable": false
     },
     {
@@ -557,7 +557,7 @@
     {
       "path": ".config/kilo/agent/ui-reviewer.md",
       "kind": "file",
-      "sha256": "dac13948abc02e627942f15af687b2b1f7872fbb52435ec4524c261e46d1be5f",
+      "sha256": "fe7e0ff7a5623c19ff47390344440f6722eb79327124fc5f8e1488058897a552",
       "executable": false
     },
     {
