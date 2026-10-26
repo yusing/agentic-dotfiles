@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.15
+
+Build git-diffstat alongside scc-prod, tracking their shared source inputs.
+
 ## 1.0.14
 
 Build the standalone scc-prod source-count helper.

@@ -1,5 +1,12 @@
 # Changelog
 
+## git-diffstat 1.0.0
+
+Show per-file Git diff statistics and totals, retaining commit, staged, path, and
+untracked-file comparisons. Production statistics share scc-prod's default source
+extensions, path exclusions, and generated-header detection, including historical
+and deleted files. Build both helpers from this directory.
+
 ## scc-prod 1.0.1
 
 Expose the default source extensions and path exclusions for reuse.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "1cb20013b07305d55e327a800d6eddcc3013664b",
+  "sourceCommit": "96b4370bdbb87ed9cd3785f7264e99ace95ad243",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -659,13 +659,13 @@
     {
       "path": ".gitconfig",
       "kind": "file",
-      "sha256": "783cc860624dca4cee94bdc36962ca347214f88b37db1b203b96c56eebf8c378",
+      "sha256": "74e0b8760751957e859e8d4759f5bd0ee354bbea53f80c9e5d1e0404def59c8a",
       "executable": false
     },
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "fe9d55caae164625509b056ef09c9a304c5160084e0f26901d2cce8374d8431c",
+      "sha256": "5539f5341e2d45f799020e3a29d953e8c5464b2fad07a749705914bbd27fd98a",
       "executable": false
     },
     {
@@ -760,25 +760,25 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "c2c7d9ab51c1acbab2dadc371efa09d87b5a7ca14e827ed6854d793d95213246",
+      "sha256": "f56bd41200be6bd6bc24cd3f62b6f624afec9361e04d0d1eac56aefb5bb69651",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "52e862b18fda57c26a803c3e6cb8dfdf5c56ee3d277055a08927ce9ae9a18a12",
+      "sha256": "a806b702f460a0f7324fec0cb186778dced03855815e76fba6dd6b0d9dab4b33",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "febe8e1d82d7f5767d0ddbad873cd5ea3e2a80f8d4bfa57833f7354360596f2e",
+      "sha256": "9817e6c78807635cc772153acd96eee1df45cf2799385d2ec4a44803c81f085b",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "c109c4a7fc83d590ecb80b003e5a5cb958f3606f46b9d39ac7e1eb2c8682a484",
+      "sha256": "9d0adbebea01e64458a3601bfe7c368b0bba23454513a7c8be03341af28a3dff",
       "executable": true
     },
     {
@@ -808,7 +808,13 @@
     {
       "path": ".local/lib/scc-prod/CHANGELOG.md",
       "kind": "file",
-      "sha256": "27b03e7e0a46e31721044a80dad44ecc361b532ba66c09821d1429d937206824",
+      "sha256": "71591a2941cbecf4883f17654bc285ddca8a66c5d5bffcd7e668d9b3b7addec9",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/scc-prod/git-diffstat.ts",
+      "kind": "file",
+      "sha256": "d0bac4c7b09751f13ecc6470795fedbb707fe7b9976d75b2143efc115fd8ff67",
       "executable": false
     },
     {
@@ -1521,7 +1527,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "aeddfc8d290ea9ab09d51ff5036147eb952ec21734116903ccaf635d2fc75342",
+      "sha256": "4ace370e94b24997b8d3498289089272b03df61a873a4a0a5bd0ac8a9371f66e",
       "executable": false
     },
     {

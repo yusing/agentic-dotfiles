@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.22
+
+Publish the git-diffstat source used by the Git statistics aliases.
+
 ## 1.3.21
 
 Publish the Plane body-editing skill for cached JavaScript and local-file patches.

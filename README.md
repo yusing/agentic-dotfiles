@@ -213,6 +213,14 @@ and reports filtering progress on stderr; output formats, ignore files, and
 output destinations remain scc-owned. Counts are file-based: inline tests and
 generated code without a recognized name or header can still be counted.
 
+Use `git diffstat` for per-file change counts and totals, including untracked files
+without changing the real index. `git diffstat-prod` applies the same default
+source extensions, path exclusions, and generated-header detection as `scc-prod`.
+Both require the helper built by `compile-agent-tools` and accept Git diff
+arguments, such as `--cached`, `HEAD~2 HEAD`, or `-- src/`. A single leading
+revision, such as `git diffstat-prod HEAD`, shows that commit. Production filtering
+inspects the compared version of each file, using its old version for deletions.
+
 Fish and Zsh use the local Oh My Posh theme at
 [`.config/oh-my-posh/catppuccin_macchiato.omp.json`](.config/oh-my-posh/catppuccin_macchiato.omp.json)
 so prompt initialization uses a local file. The first interactive Fish or Zsh
