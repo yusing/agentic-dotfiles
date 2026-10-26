@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.23";
+export const VERSION = "1.3.24";
 
 type TreeEntry = {
 	mode: string;
@@ -236,7 +236,6 @@ const PROJECTED_SKILL_NAMES = [
 	"juststore-rendering-optimizer",
 	"new-agent-session",
 	"new-project",
-	"plane-body-editing",
 	"postgres-17-18-features",
 	"scriptc-compiler",
 	"shadcn",
@@ -741,6 +740,16 @@ function transformText(path: string, text: string, privateHomes: string[]): stri
 	if (path === ".codex/config.toml") projected = projectCodexConfig(projected);
 	else if (path === ".grok/config.toml") projected = projectGrokConfig(projected);
 	else if (path === ".claude/settings.json") projected = projectClaudeSettings(projected);
+	else if (path === ".skills-mgr/.skills-mgr.json") {
+		const registry = objectValue(JSON.parse(projected), path);
+		if (registry.skills !== undefined) {
+			const skills = objectValue(registry.skills, `${path} skills`);
+			registry.skills = Object.fromEntries(
+				Object.entries(skills).filter(([name]) => name !== "plane" && name !== "plane-body-editing"),
+			);
+		}
+		projected = encodeJson(registry);
+	}
 	else if (path === ".codex/hooks.json") projected = encodeJson(removeGeneratedHooks(JSON.parse(projected)));
 	else if (path === ".config/zed/settings.json") projected = projectZedSettings(projected);
 	else if (path === ".gitconfig") projected = projectGitConfig(projected);

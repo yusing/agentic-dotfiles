@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.24
+
+Exclude the private Plane skill, its former plane-body-editing name, and their
+registry entries from public projection.
+
 ## 1.3.23
 
 Publish the Codex delegation task document used by main and coordinating subagents.

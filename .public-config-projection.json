@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ef1ab3336b9ebfaef57b4eedae96a90729c8daa2",
+  "sourceCommit": "5d31bec1d90a0db74c9b6199e2244a1d217df170",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -671,7 +671,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "48aa69d3f5292c15a27918e704cf33c9c2e8731ef2e0a710ad59ef514b80145f",
+      "sha256": "4728b2843dbf38db728c1edb70d26c0fece1c73e7687994b98eb0446245ebbc7",
       "executable": false
     },
     {
@@ -778,13 +778,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "eb821545b7376d6d10eadb3f3e079ddcb170cac2f61e94fbbc34f0e95435f6cd",
+      "sha256": "671c3b751300313650755efcf7974314913db87613562256c73e4cf5dd899947",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "070eea7c98696d1f9910313300c059c2e27836407ba30ecee5b5856e778ddfc3",
+      "sha256": "e96e3d4ed1b73b6d2984ac729522c71a64925a150c3475319e132c0305b9767a",
       "executable": true
     },
     {
@@ -880,7 +880,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "e3632357c6fe17ecda742f935a295dd8625edc3b122907659ece24e8738336e8",
+      "sha256": "9589a185c384a78f6124f69d890a30fcfa7be6c22d2cb0cd332bb62371a4bc7c",
       "executable": false
     },
     {
@@ -1163,12 +1163,6 @@
       "path": ".skills-mgr/skills/new-project/SKILL.md",
       "kind": "file",
       "sha256": "bf1a063bf54b6e18cb08e35a34feb2a8e4a565e92a74c5d63c50f737fcd89879",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/plane-body-editing/SKILL.md",
-      "kind": "file",
-      "sha256": "de7c323f7cb7b59744439faea20fc801a836b63330f44ee6b1bd0c1a75196a15",
       "executable": false
     },
     {
