@@ -1,20 +1,17 @@
 "model" = "gpt-6-astra"
 "model_reasoning_summary" = "auto"
-"model_context_window" = 350000
-"model_auto_compact_token_limit" = 320000
-"experimental_compact_prompt_file" = "$HOME/.skills-mgr/skills/handoff/STANDARD.md"
-"personality" = "friendly"
-"plan_mode_reasoning_effort" = "high"
+"model_context_window" = 400000
+"personality" = "none"
+"plan_mode_reasoning_effort" = "ultra"
 "hide_agent_reasoning" = false
 "service_tier" = "default"
 "approval_policy" = "on-request"
 "approvals_reviewer" = "auto_review"
 "model_instructions_file" = "$HOME/.codex/overridden_base_instructions.md"
-"model_reasoning_effort" = "high"
+"model_reasoning_effort" = "ultra"
 "sandbox_mode" = "danger-full-access"
 ["skills"]
 "include_instructions" = false
-"config" = [{ "path" = "$HOME/.codex/skills/.system/slides/SKILL.md", "enabled" = false }, { "path" = "$HOME/.codex/skills/.system/spreadsheets/SKILL.md", "enabled" = false }, { "path" = "$HOME/.codex/skills/.system/skill-creator/SKILL.md", "enabled" = false }, { "name" = "openai-templates:artifact-template-analytics-dashboard", "enabled" = false }, { "name" = "openai-templates:artifact-template-business-review", "enabled" = false }, { "name" = "openai-templates:artifact-template-design-report", "enabled" = false }, { "name" = "openai-templates:artifact-template-experiment-analysis", "enabled" = false }, { "name" = "openai-templates:artifact-template-financial-budget", "enabled" = false }, { "name" = "openai-templates:artifact-template-investment-committee-memo", "enabled" = false }, { "name" = "openai-templates:artifact-template-legal-memorandum", "enabled" = false }, { "name" = "openai-templates:artifact-template-market-trends-report", "enabled" = false }, { "name" = "openai-templates:artifact-template-minimal-letterhead", "enabled" = false }, { "name" = "openai-templates:artifact-template-operating-calendar", "enabled" = false }, { "name" = "openai-templates:artifact-template-operating-review", "enabled" = false }, { "name" = "openai-templates:artifact-template-project-kickoff", "enabled" = false }, { "name" = "openai-templates:artifact-template-project-tracker", "enabled" = false }, { "name" = "openai-templates:artifact-template-sales-pipeline", "enabled" = false }, { "name" = "openai-templates:artifact-template-simple-dark-mode", "enabled" = false }, { "name" = "openai-templates:artifact-template-simple-light-mode", "enabled" = false }, { "name" = "openai-templates:artifact-template-strategy-memorandum", "enabled" = false }, { "name" = "openai-templates:artifact-template-system-design", "enabled" = false }, { "name" = "openai-templates:artifact-template-team-alignment", "enabled" = false }, { "name" = "openai-templates:artifact-template-three-statement-forecast", "enabled" = false }]
 
 ["analytics"]
 "enabled" = false
