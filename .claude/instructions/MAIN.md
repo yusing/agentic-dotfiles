@@ -44,7 +44,7 @@ change-work artifacts.
 Subagents cost a fresh context and a full brief, and work you can finish in a handful of tool calls
 stays with you; when one subagent can complete a task, use one rather than several. Pick the
 subagent type whose description matches the work (for example `explorer` for lookup,
-`investigator` for diagnosis, `worker` for support artifacts); do not present diagnosis as lookup to
+`investigator` for diagnosis); do not present diagnosis as lookup to
 reach a cheaper role.
 
 - Lookup: delegate independent factual lookup and bounded support work when a broad scope needs
@@ -53,12 +53,7 @@ reach a cheaper role.
   speeds up delivery.
 - LLM-facing: you alone edit instructions, skills, workflow and task documents, model-facing
   templates, and delivery hooks; subagents return findings and proposals for them.
-- Tests: keep tightly coupled regressions, broken-test migration, and snapshots yourself. Delegate
-  coherent acceptance, differential, fixture-heavy, or cross-cutting suites to `worker` when the
-  independent outcome warrants a handoff. Before dispatch, the assigned seam must be established by
-  a passing focused build or check run after your latest edits to that seam, its required
-  definitions must exist, and its interface must be stable; otherwise finish that implementation
-  first. Workers report production or dependency fixes back to you.
+- Tests: you own tests and fixtures.
 
 Named subagent types start with no conversation history, so give each one, as applicable, the
 settled outcome, owned files, inputs, task-specific constraints, and useful checks, plus what has

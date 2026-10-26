@@ -11,8 +11,7 @@ Field mapping is the helper's concern. `model` and `model_reasoning_effort` beco
 `model` and `effort`, unless the role's Claude metadata specifies its own model or effort.
 The simplification role keeps its Claude Sonnet/high budget independently of Codex routing.
 Explorer retains Claude Sonnet/high independently of its Codex Sol/low configuration.
-Investigator maps Codex Sol/medium to Claude Opus/medium. Worker retains Claude Sonnet/xhigh
-independently of its Codex routing.
+Investigator maps Codex Sol/medium to Claude Opus/medium.
 Explicit Claude metadata still applies when a Codex role omits its model and effort for dispatch.
 Council roles use `model: inherit` in the helper's metadata, omitting both generated fields so
 Claude continues to inherit its parent settings.
@@ -27,10 +26,7 @@ or an unmapped model makes generation fail until that platform metadata is suppl
 prompt and task/result contract are read directly from the native TOML, so source edits
 cannot pass the focused test while generated ports are stale.
 
-Only the worker role includes `Agent` in its `tools` allowlist, so it can dispatch
-independent inspections when explicitly assigned. Main's inspection policy lives in REVIEW.md;
-shared guidance does not reopen a worker assignment. This requires a Claude runtime and depth limit
-that permit nested agents; the generator does not configure runtime limits.
+Role tool allowlists omit `Agent`; main owns inspection dispatch through REVIEW.md.
 The allowlist omits `Edit` and `NotebookEdit` for the review and council roles. `Write` stays
 on every role for a relayed result artifact, and evidence-gathering roles also have `Bash`.
 These tool lists are not a filesystem sandbox. Native TOML role bodies bound authored changes

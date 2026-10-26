@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "661596d2258ba555aed2e169fb42f1b07d33a5d0",
+  "sourceCommit": "7d381a5fd8763e0b8f6e8ed520dfbfb402373588",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -63,15 +63,9 @@
       "executable": false
     },
     {
-      "path": ".claude/agents/worker.md",
-      "kind": "file",
-      "sha256": "bc3d2980d4063b9574961a1f14f42c85b734baa71a4c534379e58d677b8c0ba9",
-      "executable": false
-    },
-    {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "b49b3f1ca9f1db65c0ff1c7e3e83aa4333fe41376d58c26d5625572dda7a8222",
+      "sha256": "234e48cf090d90a5ac92c8d483ec753007f93bbf631aea1c1f3ea144c9ef74be",
       "executable": false
     },
     {
@@ -101,7 +95,7 @@
     {
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
-      "sha256": "508fae75647daecfad5f5cba152e8081a9ca57e4de03071d98df1d3eaa6a8487",
+      "sha256": "8db7a541da498dc5674c73cdaff67faa9579c47f4f6c090abada489bdeabfcdb",
       "executable": false
     },
     {
@@ -137,7 +131,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "81ae0b0016141486888df043c206ac03d45439c6a2f3890546253efdd0cb786a",
+      "sha256": "2fca9c4a7f05747f368b21ddb69c2d462c3d48fbba8530a34e9488b73c452a40",
       "executable": false
     },
     {
@@ -180,12 +174,6 @@
       "path": ".codex/agents/ui-reviewer.toml",
       "kind": "file",
       "sha256": "9a936e902e4686a471764ca0655f3e472c5fe427949ad38a83a701dd26c45cd7",
-      "executable": false
-    },
-    {
-      "path": ".codex/agents/worker.toml",
-      "kind": "file",
-      "sha256": "04a0aa678a079bd249904de6cbca56db3d0560e142bd2875471c92bdb4b6d981",
       "executable": false
     },
     {
@@ -365,7 +353,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "5cefe18e1b17f543698cb1bcbaba34750e78167a5ff24e4244d408b8ebf412ca",
+      "sha256": "9453fb918de477efa8b637da744e44ac147756b75b8b1dccab06f63c4c364bec",
       "executable": false
     },
     {
@@ -573,12 +561,6 @@
       "executable": false
     },
     {
-      "path": ".config/kilo/agent/worker.md",
-      "kind": "file",
-      "sha256": "ab38f7d13afd257da49fe4a952be4edd86dab21f5c77c3e27c255683350ca18a",
-      "executable": false
-    },
-    {
       "path": ".config/lazygit/config.yml",
       "kind": "file",
       "sha256": "831d9299bb2706dfeaf1d84f05601b8820b5e700cb033aa8ffa1abd73124db77",
@@ -683,7 +665,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "6e5dfe0a6c3ce285e08a586b6480aabf6207ae1f01b24da0acd0bb1a7db17b1a",
+      "sha256": "fe9d55caae164625509b056ef09c9a304c5160084e0f26901d2cce8374d8431c",
       "executable": false
     },
     {
@@ -838,25 +820,25 @@
     {
       "path": ".local/lib/sync-claude-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "9fd96ec457a2206ae11b46f012349d4a4e254b6ac91a0aad5d42fbc196e3688e",
+      "sha256": "c37b9d0a1036f99f94f5b2f1ce129f9da16be532bb9386664d25df6567283696",
       "executable": false
     },
     {
       "path": ".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
       "kind": "file",
-      "sha256": "b36a3720ae3cc2b2fd6670f37ecb306cc456b673e5a05893590efe12bd3898bb",
+      "sha256": "7538d582f5c8dff110b1e9e2711c81c5d60a74fd0da1d99bb22a492634d4dd3f",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "be6552ed92b20913986f19b0e069b5afb09d626bcca5ffdd9159c626dd94c945",
+      "sha256": "9335273f1216f03e646e412668dafa8f79b4834947dd9ed25941dbbc04af64c5",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
       "kind": "file",
-      "sha256": "86094c8fd88460be40d9f714ec2250142e4a69ca7a5b3b2e8eac56778c5626a2",
+      "sha256": "feabbfcf12165d76375437b6fbd256412a1e318cbfd7ebaa25a53ecd20315bf5",
       "executable": false
     },
     {
@@ -1479,7 +1461,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "69749f9e9724f44a753c5230b7fe5d2b94750ab43257cd0c205e0fdc69877d24",
+      "sha256": "fde8c0590f7efd229fdd247ef3cf39cd60a632c85b7e7b2b38246ab265997a64",
       "executable": false
     },
     {
@@ -1521,7 +1503,7 @@
     {
       "path": "CONTEXT-KILO-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "40e0548a3dc0c951874c76ea11744f0aff6d05ff93db5e08c2c09945dc28f75d",
+      "sha256": "70e8b83ca9d1b1d90d7c2e38f5dfe150ca91452496c1d06b184c73a6cd17ffd2",
       "executable": false
     },
     {

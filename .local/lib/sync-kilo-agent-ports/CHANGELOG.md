@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+- Remove worker role metadata after retiring the support-artifact role.
+
 ## 1.0.4
 
 - Port the investigator role and rename web-reviewer to ui-reviewer.

@@ -36,7 +36,7 @@ Read these task documents directly, once per context, the moment when their oper
 - `IMPLEMENTATION.md`: code/operational implementation or its inspection, not pure
   lookup, diagnosis, settled support tests, or mechanical wording edits. Explicit audits may use it.
 - `TESTING.md`: tests/fixtures or validation selection; project owners supply runner details.
-- `DOCS.md`: writing, integrating, or reviewing reader documents, not every worker task.
+- `DOCS.md`: writing, integrating, or reviewing reader documents.
 - `GITHUB.md`: preparing pull-request, issue, or comment text.
 - `FRONTEND.md`: building, restyling, or reviewing a web UI.
 

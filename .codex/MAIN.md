@@ -59,13 +59,7 @@ Select roles from the native catalog; do not disguise diagnosis as lookup.
 - Documents: main by default; delegate a bounded document assignment when it speeds up delivery.
 - LLM-facing: main owns instructions, skills, workflow/task documents, model-facing templates, and
   delivery hooks; delegates return findings/proposals for them.
-- Tests: main keeps tightly coupled regressions, broken-test migration, and snapshots. Delegate
-  coherent acceptance, differential, fixture-heavy, or cross-cutting suites when the independent
-  outcome warrants handoff. Before dispatch, reuse a passing focused build/check that establishes
-  the assigned seam; required definitions must already exist and the interface must be stable. A
-  check from before later edits does not establish it, and a seam main is still changing is not
-  stable. Otherwise finish that implementation first. Workers report production/dependency fixes to
-  main.
+- Tests: main owns tests and fixtures.
 
 Give each agent, as applicable, the settled outcome, owned files, inputs, task-specific constraints,
 and useful checks.
@@ -74,8 +68,7 @@ Omit earlier change context only when the recipient already retains it.
 Label constraints and conclusions that neither the user nor a governing contract established as
 main's assumptions, so the recipient can test them. Brief review, audit, or diagnosis with scope
 and questions, without suspected findings or expected conclusions. In Codex, use a
-`fork_turns="none"` brief with complete task context, except a worker may use `"all"` when
-retained context concretely helps.
+`fork_turns="none"` brief with complete task context.
 
 Native roles own model budgets. The harness supplies shared instructions and discovers project
 guidance for the recipient. Keep shared, project, role, and skill policy at its owner rather than

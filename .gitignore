@@ -14,7 +14,6 @@ __pycache__
 !/.claude/agents/review-correctness.md
 !/.claude/agents/review-simplify.md
 !/.claude/agents/ui-reviewer.md
-!/.claude/agents/worker.md
 !/.claude/CLAUDE.md
 !/.claude/instructions/
 !/.claude/instructions/DOCS.md
@@ -37,7 +36,6 @@ __pycache__
 !/.codex/agents/review-correctness.toml
 !/.codex/agents/review-simplify.toml
 !/.codex/agents/ui-reviewer.toml
-!/.codex/agents/worker.toml
 !/.codex/config.toml
 !/.codex/DOCS.md
 !/.codex/GITHUB.md
@@ -121,7 +119,6 @@ __pycache__
 !/.config/kilo/agent/review-correctness.md
 !/.config/kilo/agent/review-simplify.md
 !/.config/kilo/agent/ui-reviewer.md
-!/.config/kilo/agent/worker.md
 !/.config/lazygit/
 !/.config/lazygit/config.yml
 !/.config/micro/

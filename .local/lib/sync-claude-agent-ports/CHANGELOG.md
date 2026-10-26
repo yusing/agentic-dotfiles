@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.11
+
+- Remove worker role metadata after retiring the support-artifact role.
+
 ## 1.0.10
 
 - Preserve native command-boundary guidance without adding a runtime-enforcement guarantee; retain Bash hook registration.
