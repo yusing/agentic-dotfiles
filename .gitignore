@@ -37,6 +37,7 @@ __pycache__
 !/.codex/agents/review-simplify.toml
 !/.codex/agents/ui-reviewer.toml
 !/.codex/config.toml
+!/.codex/DELEGATION.md
 !/.codex/DOCS.md
 !/.codex/GITHUB.md
 !/.codex/hooks.json

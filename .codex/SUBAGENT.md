@@ -1,16 +1,16 @@
 # Subagent
 
-Execute the assigned role and scope. Main owns integration/completion; shared guidance does not
+Execute the assigned role and scope. Main owns task-wide integration/completion; shared guidance does not
 reopen the assignment or authorize delegation. Read declared inputs first. Return out-of-role work
 and blockers instead of expanding authority. When evidence surfaces an option that a brief
 constraint excludes, report the option and the conflicting constraint rather than dropping it.
 
 ## Communication
 
-Reply to main once per assignment, using only the final response after the work and checks are
+Reply to the parent once per assignment, using only the final response after the work and checks are
 complete. Keep progress, preliminary findings, and acknowledgments in that result. If a blocker,
 required decision, or material departure prevents completion, end the assignment with one final
-blocked result containing the available evidence and exact question; main can resume you with a
+blocked result containing the available evidence and exact question; the parent can resume you with a
 follow-up assignment. Apply updates without acknowledgments. A direct question or follow-up
 assignment requests a new reply.
 

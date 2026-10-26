@@ -23,7 +23,7 @@ assuming the main agent's system prompt also reaches its subagents. A change to 
 | Codex base override | Selected by `.codex/config.toml`; replacement and priority are defined in `CONTEXT-CODEX-LIFECYCLE.md`. Claude does not consume it. |
 | Client standing guidance | The harness loads `.codex/AGENTS.md` or `.claude/CLAUDE.md` for main and custom subagents, independently of conversation-history inheritance. Claude's documented built-in Explore/Plan exception is described in its standing guidance. |
 | Repository guidance | Root `AGENTS.md` and its `CLAUDE.md` symlink route home-configuration maintenance, not independent projects below home. Discovery scope depends on the client; see `CONTEXT-CODEX-LIFECYCLE.md` and Claude's instruction-authoring guidance. |
-| Task documents | Main reads `MAIN.md`; subagents read `SUBAGENT.md`. Any applicable role reads `DOCS.md`, `IMPLEMENTATION.md`, or `TESTING.md` when its operation triggers them. Other document triggers remain in the client standing file. |
+| Task documents | Main reads `MAIN.md`; subagents read `SUBAGENT.md`. Any Codex agent, including a subagent coordinating children, reads `DELEGATION.md` before delegation or coordination. Claude retains dispatch guidance in its adapted `MAIN.md`. Any applicable role reads `DOCS.md`, `IMPLEMENTATION.md`, or `TESTING.md` when its operation triggers them. Other document triggers remain in the client standing file. |
 | Native roles and skills | Role configuration supplies the selected role; skill metadata selects an on-demand body. Neither a catalog entry nor a parent's tool read establishes that a child has the body. |
 
 Instruction-authoring guidance owns changes to these layers. The maps describe maintained owners,
@@ -39,6 +39,7 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `.codex/GITHUB.md`
 - `.codex/FRONTEND.md` (client-neutral; `.claude/instructions/FRONTEND.md` symlinks to it)
 - `.codex/MAIN.md`
+- `.codex/DELEGATION.md`
 - `.codex/REVIEW.md`
 - `.codex/SUBAGENT.md`
 - `.codex/IMPLEMENTATION.md`

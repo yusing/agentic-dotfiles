@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.23
+
+Publish the Codex delegation task document used by main and coordinating subagents.
+
 ## 1.3.22
 
 Publish the git-diffstat source used by the Git statistics aliases.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b2823aed85a738436b6037530fa0a9869fdd7c13",
+  "sourceCommit": "f816d618ac20b41e1b68ddeeff73090d571c8be4",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -131,7 +131,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "2fca9c4a7f05747f368b21ddb69c2d462c3d48fbba8530a34e9488b73c452a40",
+      "sha256": "174ea8ac54a70b32433d0479ecf0bc4853e836d895a767be63863ad5acd9bd1d",
       "executable": false
     },
     {
@@ -183,9 +183,15 @@
       "executable": false
     },
     {
+      "path": ".codex/DELEGATION.md",
+      "kind": "file",
+      "sha256": "dd941a7b07a1aea1d567a0c9978547f5e5611540f7a4b0332e65a0068a23ea3c",
+      "executable": false
+    },
+    {
       "path": ".codex/DOCS.md",
       "kind": "file",
-      "sha256": "a935ffa18770c4e0a7641392915191a4f882d55a5160c24a02f036b63ee54a0a",
+      "sha256": "106165d19af48c06d57e2682a5755ebdd3423b3ea98404881c2f4b2dabdd4585",
       "executable": false
     },
     {
@@ -353,13 +359,13 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "8b0bb8699e38e5ebe21aff7064bfe04813073a1b194abb80abba24d4d3f9bf6f",
+      "sha256": "2cb6f7069c32ed372e588f2feea178afd45e5ca7ba54485f751d576b9c744a67",
       "executable": false
     },
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "39df161bd6cc87d7d45de7881e76d004bf2cd842659aa5e9df0d2d9fa75bc3f9",
+      "sha256": "d5a401d6ebee83eea812ded0d61b4859a94026ccde11168b721e9d8a5d44e7d6",
       "executable": false
     },
     {
@@ -413,7 +419,7 @@
     {
       "path": ".codex/SUBAGENT.md",
       "kind": "file",
-      "sha256": "0715454c935f979dfc4486d01b17167a1bfeb762939e35689e7b501765752b2f",
+      "sha256": "b8d8f25f130811b5e4fe054948c68c10f38e8873fb70d2eb1b5db8c0fa4a62d1",
       "executable": false
     },
     {
@@ -665,7 +671,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "5539f5341e2d45f799020e3a29d953e8c5464b2fad07a749705914bbd27fd98a",
+      "sha256": "48aa69d3f5292c15a27918e704cf33c9c2e8731ef2e0a710ad59ef514b80145f",
       "executable": false
     },
     {
@@ -772,13 +778,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "9817e6c78807635cc772153acd96eee1df45cf2799385d2ec4a44803c81f085b",
+      "sha256": "eb821545b7376d6d10eadb3f3e079ddcb170cac2f61e94fbbc34f0e95435f6cd",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "9d0adbebea01e64458a3601bfe7c368b0bba23454513a7c8be03341af28a3dff",
+      "sha256": "070eea7c98696d1f9910313300c059c2e27836407ba30ecee5b5856e778ddfc3",
       "executable": true
     },
     {
@@ -1503,7 +1509,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "b94081a4366769acf1bce475e8d1106d68d6a9cef0a67190637661ee1c8cc869",
+      "sha256": "32ac8e3e2c638c0c6b5f01af296ea8acaa7700d07d948ef4005349ad2221f87a",
       "executable": false
     },
     {

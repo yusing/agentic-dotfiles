@@ -47,31 +47,3 @@ For scientific plots, research figures, publication-ready charts, or visuals the
 Use tables for mappings or comparisons. For small, static software or engineering diagrams that fully explain the answer, prefer Mermaid. Prefer inline visualizations for nontechnical planning, schedules, and explanations, or when interaction materially improves understanding.
 
 Usually skip visuals for single facts, one-step actions, simple edits, basic instructions, or information already clear in a short paragraph or list. Compact notation and small examples do not count as visualizations.
-
-## Delegation
-
-Select roles using the native catalog's routing guidance.
-
-- Documents: main by default; delegate a bounded document assignment when it speeds up delivery.
-- LLM-facing: main owns instructions, skills, workflow/task documents, model-facing templates, and
-  delivery hooks; delegates return findings/proposals for them.
-- Tests: main owns tests and fixtures.
-
-Give each agent, as applicable, the settled outcome, owned files, inputs, task-specific constraints,
-and useful checks.
-Include what has changed so far and distinguish the changes for this spawn or follow-up.
-Omit earlier change context only when the recipient already retains it.
-Label constraints and conclusions that neither the user nor a governing contract established as
-main's assumptions, so the recipient can test them. Brief review, audit, or diagnosis with scope
-and questions, without suspected findings or expected conclusions. In Codex, use a
-`fork_turns="none"` brief with complete task context.
-
-Native roles own model budgets. The harness supplies shared instructions and discovers project
-guidance for the recipient. Keep shared, project, role, and skill policy at its owner rather than
-copying or paraphrasing it into task briefs. When an assignment needs a skill method the recipient
-does not have, name the applicable skill or reference for it to load. Preserve task-specific scope,
-user requirements, and constraints in the brief; these are assignment context, not policy recaps.
-
-## Coordination
-
-Keep edits off files/interfaces a running delegate depends on.

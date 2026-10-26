@@ -28,6 +28,6 @@ Read manageable affected documents completely before editing. For large document
 structure, the affected topics, and their cross-references. Record coverage gaps in the task record. Search mapped owners for conflicts, expanding only for a dependency across
 that map.
 
-The main agent owns applicability, behavior, owner discovery, integration, and the timing and
-authorship policy in `MAIN.md`. Instructions, skills, workflow and task documents, and model-facing
-templates stay with the main agent.
+The main agent owns applicability, behavior, owner discovery, and integration. `MAIN.md` owns timing;
+`DELEGATION.md` owns authorship policy. Instructions, skills, workflow and task documents, and
+model-facing templates stay with the main agent.

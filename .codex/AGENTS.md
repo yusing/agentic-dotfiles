@@ -30,7 +30,8 @@ Read these task documents directly, once per context, the moment when their oper
 
 - `INSTRUCTION-AUTHORING.md`: authoring/auditing instructions and consumer checks.
 - `SKILL-AUTHORING.md`: additionally for authoring/auditing skills.
-- `MAIN.md`: main: planning, delegation, and coordination.
+- `MAIN.md`: main: scope, planning, and completion.
+- `DELEGATION.md`: any agent, including subagents, before delegating or coordinating other agents.
 - `REVIEW.md`: main: after an authorized change is implemented and focused-validated,
   before completion or a slice commit.
 - `IMPLEMENTATION.md`: code/operational implementation or its inspection, not pure
