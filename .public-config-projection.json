@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "96b4370bdbb87ed9cd3785f7264e99ace95ad243",
+  "sourceCommit": "716906d0cbd51e2c606512a56c27680a3163247e",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -23,25 +23,25 @@
     {
       "path": ".claude/agents/council-investigator.md",
       "kind": "file",
-      "sha256": "a499948862ed409b20ba9383d1d262b77eead098f8efa3cb07b622a4d0f5beaa",
+      "sha256": "f5e47fdb70d02652070b89bb93784640bc2fd3302939a2ac7a31fe67146d6ca9",
       "executable": false
     },
     {
       "path": ".claude/agents/council-member.md",
       "kind": "file",
-      "sha256": "5c7e4b619cd44677fe5abdd8f03c4e1129f98ce71fa9f253849c6524a9ff91e1",
+      "sha256": "8a5a9d6db65ea621fbbe0464f48f8e1349fd909fd64e56c0fdb66468ee6fa968",
       "executable": false
     },
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "2475908a422b0162cd31d19fb3528c7b78639017bc83b0b0fbfb8bd692e38c45",
+      "sha256": "a90a997809a0b000f50100b060b1982a1e3ef6f322996cc63008446b697a66bd",
       "executable": false
     },
     {
       "path": ".claude/agents/investigator.md",
       "kind": "file",
-      "sha256": "9eb745f5c24f68af41cd93495479f979fc5f3eae79ad23bba499340330aeaa9f",
+      "sha256": "f524829b15ca63203b113d51a1571bb435b21fb258537d548e27e24c197ead57",
       "executable": false
     },
     {
@@ -95,7 +95,7 @@
     {
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
-      "sha256": "8db7a541da498dc5674c73cdaff67faa9579c47f4f6c090abada489bdeabfcdb",
+      "sha256": "f3d5b6359c22ecb784e0e03808a6afb262323a88b0d2459ffb37d66832b6aa95",
       "executable": false
     },
     {
@@ -137,25 +137,25 @@
     {
       "path": ".codex/agents/council-investigator.toml",
       "kind": "file",
-      "sha256": "2f3798e15897632b4a61ba6d8a9f9c377439b9648df523d42d0868ccf73ab94d",
+      "sha256": "594bf307f860cf17e11370f4fd69f14b684a61a7e763c1634997000fcedc8325",
       "executable": false
     },
     {
       "path": ".codex/agents/council-member.toml",
       "kind": "file",
-      "sha256": "cb81b671e4d7a201a6b66aedfbc7c9b09c0a4cdc0f620f070dbc9583008391ce",
+      "sha256": "04213311c8744dd8259bdb2c3d5901679cce244fdaf07447931b19d552ac6d2d",
       "executable": false
     },
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "8e4d39c191fcc8a3a693b808e22f87d1afe64c9bb3cf8406df1a2e3b889dea7c",
+      "sha256": "f3d92ea8307afce09def58c59c6009db24a2a807fe2f413ebfd07f37987344a6",
       "executable": false
     },
     {
       "path": ".codex/agents/investigator.toml",
       "kind": "file",
-      "sha256": "36576239d183b951af8442d74ef85ab7b4fbbd1fa0ed6f0bcfb6eef5cb21a6a8",
+      "sha256": "5661c05b524ec5236d3edf0bf0dd13583ae3d163e7c619bb7a4d2c962153eafb",
       "executable": false
     },
     {
@@ -353,7 +353,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "9453fb918de477efa8b637da744e44ac147756b75b8b1dccab06f63c4c364bec",
+      "sha256": "8b0bb8699e38e5ebe21aff7064bfe04813073a1b194abb80abba24d4d3f9bf6f",
       "executable": false
     },
     {
@@ -491,13 +491,13 @@
     {
       "path": ".config/kilo/agent/council-investigator.md",
       "kind": "file",
-      "sha256": "8b69def7cdd861744244038ef95b12340eabf86357fe22da13ad31f347812a0b",
+      "sha256": "e06d816fa2a44f842ac1354e689cf07e2547017ac132125d3b28fafee558978d",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/council-member.md",
       "kind": "file",
-      "sha256": "c5b5c130586d887da6f1435780b231763c26cd9fa8e6bc1ffe0e684a4e0799c6",
+      "sha256": "33afcef53357b97aab9e6fce2fb576e10b4f5b3095af2a3d9221c94c032485ba",
       "executable": false
     },
     {
@@ -515,7 +515,7 @@
     {
       "path": ".config/kilo/agent/explorer.md",
       "kind": "file",
-      "sha256": "6eb8d0d74d3495fd9503934c64f24672e4d2a5e411e12c988690874ff1f95b0a",
+      "sha256": "c2bd4edf1a50b0046abd0fe4a877cec85ef6777ed393c21bf654e248e1d6cb1c",
       "executable": false
     },
     {
@@ -527,7 +527,7 @@
     {
       "path": ".config/kilo/agent/investigator.md",
       "kind": "file",
-      "sha256": "96c18839289314744b9d279470ee601ec253b58c31c042779f19718baf056b8f",
+      "sha256": "410f97cdad7f15d8aff457c4810b33e31e7b5ebea5fe8b20afefec0ca0913a02",
       "executable": false
     },
     {

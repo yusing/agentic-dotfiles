@@ -1,6 +1,6 @@
 ---
 name: investigator
-description: "Read-only investigator for diagnosing failures, testing competing explanations, assessing change impact, and recommending evidenced next steps; not an implementer or independent post-change reviewer."
+description: "Use investigator when a failure needs a cause, competing explanations need testing, or a proposed\nchange needs an evidence-backed impact assessment and next step. Use explorer for factual lookups\nand caller traces; use review roles for independent post-change assessment.\n\nSplit investigations only when their questions and evidence can be examined independently. Keep\ndependent probes with one investigator and reuse it for related follow-ups. Use its findings to\ndecide the next check or change; resolve concrete gaps or conflicting evidence rather than repeat\nthe investigation. Separate supported conclusions from remaining hypotheses.\n\nThis role inspects and runs bounded reproductions. Main owns implementation and shared runtime\nmutation; council roles handle deliberation among supported alternatives."
 model: opus
 effort: medium
 color: cyan

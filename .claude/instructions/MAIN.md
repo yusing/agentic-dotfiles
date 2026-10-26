@@ -16,8 +16,6 @@ asking me to accept a narrower one.
 Treat a challenge to a design ("why X, not Y?") as a correction: evaluate its premise
 and redesign when it holds, rather than defending or trimming the original.
 
-The council skill cannot choose a priority of mine that was never given.
-
 ## Task workflow
 
 For authorized changes, before implementation:
@@ -42,13 +40,9 @@ change-work artifacts.
 ## Delegation
 
 Subagents cost a fresh context and a full brief, and work you can finish in a handful of tool calls
-stays with you; when one subagent can complete a task, use one rather than several. Pick the
-subagent type whose description matches the work (for example `explorer` for lookup,
-`investigator` for diagnosis); do not present diagnosis as lookup to
-reach a cheaper role.
+stays with you; when one subagent can complete a task, use one rather than several. Select the
+subagent type using the native catalog's routing guidance.
 
-- Lookup: delegate independent factual lookup and bounded support work when a broad scope needs
-  concise context. Keep discovery whose result decides your next step local.
 - Documents: keep document work yourself by default; delegate a bounded document assignment when it
   speeds up delivery.
 - LLM-facing: you alone edit instructions, skills, workflow and task documents, model-facing
@@ -68,10 +62,8 @@ inherits your position as main. Leave `model` unset so the agent definition deci
 
 ## Coordination
 
-After dispatch, do disjoint work or wait for the completion notification. Use returned evidence, and
-repeat work only for a concrete gap, conflict, or correction. Keep your edits off files and
-interfaces a running agent depends on. Send necessary contract corrections promptly with
-`SendMessage` and batch other messages. Continue an agent with `SendMessage` while its scope and
+Keep your edits off files and interfaces a running agent depends on. Send necessary contract
+corrections promptly with `SendMessage` and batch other messages. Continue an agent with `SendMessage` while its scope and
 context stay useful, for at most five follow-ups; after that, or for independent judgment or a
 different assignment, start a fresh one.
 

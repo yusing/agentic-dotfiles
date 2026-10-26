@@ -7,6 +7,7 @@ Trust explorer results and avoid repeating exploration they have already covered
 inspect code yourself to gain needed context or resolve a concrete gap or conflict.
 Run multiple explorers in parallel for distinct codebase questions that can be answered
 independently. While waiting, continue local work that does not depend on their results.
+Keep next-step-dependent discovery local.
 Reuse existing explorers for related questions.
 
 This role is read-only. Diagnosis, audits, impact assessment, design reviews, and recommendations

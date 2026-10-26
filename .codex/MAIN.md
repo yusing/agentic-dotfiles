@@ -17,8 +17,6 @@ narrower one.
 Treat a user's challenge to a design ("why X, not Y?") as a correction: evaluate its premise and
 redesign when it holds, rather than defending or trimming the original.
 
-The council skill cannot choose a user priority that was never given.
-
 ## Task workflow
 
 For authorized changes, before implementation:
@@ -52,10 +50,8 @@ Usually skip visuals for single facts, one-step actions, simple edits, basic ins
 
 ## Delegation
 
-Select roles from the native catalog; do not disguise diagnosis as lookup.
+Select roles using the native catalog's routing guidance.
 
-- Lookup: delegate independent factual lookup and bounded support work when a broad scope needs
-  concise context. Keep next-step-dependent discovery local.
 - Documents: main by default; delegate a bounded document assignment when it speeds up delivery.
 - LLM-facing: main owns instructions, skills, workflow/task documents, model-facing templates, and
   delivery hooks; delegates return findings/proposals for them.
@@ -78,5 +74,4 @@ user requirements, and constraints in the brief; these are assignment context, n
 
 ## Coordination
 
-After dispatch, do disjoint work or wait. Use returned evidence; repeat work only for a concrete gap,
-conflict, or correction. Keep edits off files/interfaces a running delegate depends on.
+Keep edits off files/interfaces a running delegate depends on.

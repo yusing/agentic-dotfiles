@@ -1,5 +1,16 @@
 name = "investigator"
-description = "Read-only investigator for diagnosing failures, testing competing explanations, assessing change impact, and recommending evidenced next steps; not an implementer or independent post-change reviewer."
+description = """
+Use investigator when a failure needs a cause, competing explanations need testing, or a proposed
+change needs an evidence-backed impact assessment and next step. Use explorer for factual lookups
+and caller traces; use review roles for independent post-change assessment.
+
+Split investigations only when their questions and evidence can be examined independently. Keep
+dependent probes with one investigator and reuse it for related follow-ups. Use its findings to
+decide the next check or change; resolve concrete gaps or conflicting evidence rather than repeat
+the investigation. Separate supported conclusions from remaining hypotheses.
+
+This role inspects and runs bounded reproductions. Main owns implementation and shared runtime
+mutation; council roles handle deliberation among supported alternatives."""
 model = "gpt-6.1-sol"
 model_reasoning_effort = "medium"
 developer_instructions = '''

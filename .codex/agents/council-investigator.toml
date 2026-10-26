@@ -1,5 +1,18 @@
 name = "council-investigator"
-description = "Evidence-gathering council member for deliberation that depends on implementation feasibility, cost, or current behavior."
+description = """
+Use council-investigator as an evidence-gathering council seat when deliberation depends on current
+behavior, implementation feasibility, costs, or external contracts. Use investigator for ordinary
+diagnosis and impact assessment; use council-member for reasoning within declared evidence
+without repository discovery.
+
+Use the council skill to choose the composition and route phases and artifacts. Assign the same
+decision target as the other seats and let this role gather its own implementation evidence.
+Keep its findings out of other members' first passes, then continue the same investigator through
+the assigned comparison and response phases.
+
+Implementation is evidence of costs and feasibility, not proof that the current design is right.
+This role gathers evidence and deliberates; it does not implement changes or supply independent
+post-change approval."""
 model = "gpt-6-astra"
 model_reasoning_effort = "medium"
 developer_instructions = '''
