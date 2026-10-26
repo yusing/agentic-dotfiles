@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "5d31bec1d90a0db74c9b6199e2244a1d217df170",
+  "sourceCommit": "6bef5fc247346e462e3e58bb8a2337439f9a1346",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -880,7 +880,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "9589a185c384a78f6124f69d890a30fcfa7be6c22d2cb0cd332bb62371a4bc7c",
+      "sha256": "165920965ee7088f3422966ff214219a17c4db9c03d29132f2a0ba02d4e9369a",
       "executable": false
     },
     {

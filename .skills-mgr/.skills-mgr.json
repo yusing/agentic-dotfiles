@@ -74,7 +74,7 @@
       "enabled": true
     },
     "frontend-design": {
-      "enabled": "lang tsx || lang jsx || lang html || lang css",
+      "enabled": false,
       "remote": {
         "provider": "skills.sh",
         "id": "anthropics/skills/frontend-design",
@@ -287,7 +287,7 @@
       "enabled": true
     },
     "web-design-guidelines": {
-      "enabled": "lang tsx || lang jsx || lang html || lang css",
+      "enabled": false,
       "remote": {
         "provider": "SkillsMP",
         "id": "vercel-labs-agent-skills-skills-web-design-guidelines-skill-md",
