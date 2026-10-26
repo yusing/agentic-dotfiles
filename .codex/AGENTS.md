@@ -59,7 +59,7 @@ only dependent work; reuse substitution/install approval or ask. Missing automat
 not block routine work.
 
 Honor explicit dependency versions; otherwise verify the latest compatible stable release from
-registry/package-manager metadata. Apply `rtk` to noisy producers, not quiet filters/operators.
+registry/package-manager metadata. Apply `rtk` to noisy producers.
 Use raw execution for exact output, file redirection, or changed argument semantics. For binary,
 minified, or generated data, extract exact fields/bounded bytes and reuse unchanged scans.
 
@@ -68,3 +68,7 @@ minified, or generated data, extract exact fields/bounded bytes and reuse unchan
 Use native role capabilities within authorized scope.
 Keep durable rules at their existing owner instead of appending recaps. Explicit reviews state scope
 beyond pending changes and separate missing runtime/browser coverage from source inspection.
+
+## Worktrees
+
+Worktrees lives in `./.worktrees`, never under `$TMPDIR`.
