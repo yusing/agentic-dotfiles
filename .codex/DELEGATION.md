@@ -16,8 +16,7 @@ Start with a complete brief rather than an immediate follow-up. Give each agent,
 the settled outcome, owned files, inputs, task-specific constraints, and useful checks.
 Include what has changed so far and distinguish the changes for this spawn or follow-up.
 Omit earlier change context only when the recipient already retains it.
-Label constraints and conclusions that neither the user nor a governing contract established as
-your assumptions, so the recipient can test them. Brief review, audit, or diagnosis with scope
+Brief review, audit, or diagnosis with scope
 and questions, without suspected findings or expected conclusions. In Codex, use a
 `fork_turns="none"` brief with complete task context.
 

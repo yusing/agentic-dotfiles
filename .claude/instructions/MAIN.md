@@ -52,9 +52,8 @@ subagent type using the native catalog's routing guidance.
 Named subagent types start with no conversation history, so give each one, as applicable, the
 settled outcome, owned files, inputs, task-specific constraints, and useful checks, plus what has
 changed so far and which changes belong to this assignment or follow-up. Omit earlier change context
-only when the recipient already retains it, as with a continued agent. Label constraints and
-conclusions that neither I nor a governing contract established as your assumptions, so the
-recipient can test them. Brief a review, audit, or diagnosis with its scope and questions; leave
+only when the recipient already retains it, as with a continued agent.
+Brief a review, audit, or diagnosis with its scope and questions; leave
 out suspected findings and expected conclusions, because they steer the recipient toward your view.
 Use a `fork` only for support work when the retained conversation
 concretely helps and no named role fits, and state in its prompt that it is a delegate under `SUBAGENT.md`, since a fork otherwise

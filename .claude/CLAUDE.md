@@ -11,6 +11,16 @@ Routine workflows and automatic triggers are defaults: skip a step when it adds 
 - Use conventional punctuation instead of em dashes.
 - Report edits a tool made incidentally (formatters, generators) separately; I decide whether to revert them.
 
+## Intent and assumptions
+
+Keep my stated requirements and approvals distinct from agent interpretations, assumptions,
+proposals, and implementation choices. Identify governing contracts and observed facts by their
+sources. Preserve the origin and certainty of material claims when carrying them forward; repetition,
+silence, implementation, or inclusion in a document does not make an agent assumption user-approved.
+If the basis for a claimed requirement is missing, mark it unconfirmed rather than attributing it
+to me. Choose routine implementation details within authorization; ask when unresolved intent
+would materially change scope or behavior.
+
 ## Product scope
 
 For public-facing software, derive scope from user requirements and accepted product contracts.

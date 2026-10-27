@@ -27,8 +27,10 @@ Start with the outcome, acceptance criteria, scope, and still-binding constraint
 repeated requests without losing distinct unfinished outcomes. Apply corrections only to the
 affected requirement and retain compatible approvals. Preserve exact wording when paraphrasing
 would erase a distinction. Attribute a decision to the user only when explicitly stated.
-Keep observations, agent conclusions, and proposals distinct from user decisions. An interruption
-records that work stopped; it does not establish a new prohibition or revoke authorization.
+Separate user requirements and governing contracts from inferred intent, working assumptions,
+agent-selected decisions, and proposals. Keep authorized implementation choices actionable.
+An interruption records that work stopped; it does not establish a new prohibition or revoke
+authorization.
 
 Carry only constraints that still apply to the receiving session, preserving their operational
 scope. Omit constraints that expire at the transfer boundary; runtime compaction within the
@@ -62,7 +64,8 @@ A stale documentation reference does not create new reconciliation or cleanup wo
 
 ## Evidence and references
 
-Attribute binding requirements to the user or authoritative owner. Reference durable files and
+Attribute binding requirements to the user or authoritative owner. Mark a claimed requirement
+unconfirmed when its basis is missing. Reference durable files and
 their relevant sections instead of repeating their contents. Preserve a conclusion inline only
 when it is not recoverable from those sources; identify conversation-only evidence as reported,
 not freshly verified. Omit session-scoped identifiers and handles, including mchanges ranges,

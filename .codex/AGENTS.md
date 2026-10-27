@@ -5,6 +5,16 @@ Routine workflows/automatic triggers are defaults: omit valueless steps.
 
 Report incidental tool edits separately; the user decides whether to revert.
 
+## Intent and assumptions
+
+Keep user-stated requirements and approvals distinct from agent interpretations, assumptions,
+proposals, and implementation choices. Identify governing contracts and observed facts by their
+sources. Preserve the origin and certainty of material claims when carrying them forward; repetition,
+silence, implementation, or inclusion in a document does not make an agent assumption user-approved.
+If the basis for a claimed requirement is missing, mark it unconfirmed rather than attributing it
+to the user. Choose routine implementation details within authorization; ask when unresolved intent
+would materially change scope or behavior.
+
 ## Product scope
 
 For public-facing software, derive scope from user requirements and accepted product contracts.
