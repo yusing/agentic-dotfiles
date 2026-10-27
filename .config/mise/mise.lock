@@ -93,7 +93,7 @@ backend = "go:github.com/icholy/gomajor"
 specifiers = ["latest"]
 
 [[tools."go:github.com/yusing/git-agent/cmd/git-agent"]]
-version = "0.0.0-20261017012417-dee24bc9569f"
+version = "0.0.0-20261027022624-add2b820215b"
 backend = "go:github.com/yusing/git-agent/cmd/git-agent"
 specifiers = ["latest"]
 
@@ -108,7 +108,7 @@ backend = "go:github.com/yusing/shadowtree/cmd/shadowtree-lsp"
 specifiers = ["latest"]
 
 [[tools."go:github.com/yusing/skills-mgr"]]
-version = "0.0.0-20261014043029-521cd4c12e1d"
+version = "0.0.0-20261027030336-e8a5afe0ec89"
 backend = "go:github.com/yusing/skills-mgr"
 specifiers = ["latest"]
 
