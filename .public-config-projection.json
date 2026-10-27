@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7685a343aabb20a7e9504fce0305fb3c34997123",
+  "sourceCommit": "5f0a656d264a068929cd9604097091a70342ab19",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -149,7 +149,7 @@
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "f3d92ea8307afce09def58c59c6009db24a2a807fe2f413ebfd07f37987344a6",
+      "sha256": "43d9508c9d8b51635b489e96998d9b687261222e77fd192ea1296599bddafc47",
       "executable": false
     },
     {
@@ -1473,7 +1473,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "fde8c0590f7efd229fdd247ef3cf39cd60a632c85b7e7b2b38246ab265997a64",
+      "sha256": "0ef305affbe84227106a60386e92406a45d4910298db801fb31397c7a99dd807",
       "executable": false
     },
     {
@@ -1515,7 +1515,7 @@
     {
       "path": "CONTEXT-KILO-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "70e8b83ca9d1b1d90d7c2e38f5dfe150ca91452496c1d06b184c73a6cd17ffd2",
+      "sha256": "f3733129cbc8b940b41f332ef18be1e8f92f0e0d6c0fcfcce63820282b068e0b",
       "executable": false
     },
     {

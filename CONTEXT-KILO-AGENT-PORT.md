@@ -13,7 +13,8 @@ become Kilo's `model` and `variant`. Codex Luna maps to
 `kilo/deepseek/deepseek-v4.1-flash`. Codex Sol and Astra keep the same model
 ids under `kilo/openai/`. Council roles omit both generated fields so Kilo
 continues to inherit its parent settings. A new Codex role or an unmapped
-model makes generation fail until that platform metadata is supplied. DeepSeek
+model makes generation fail until that platform metadata is supplied. Codex Terra
+is currently unmapped, so generation fails for Explorer. DeepSeek
 Flash only offers `none`, `low`, `high`, and `max`, so a Luna role whose Codex
 variant is outside that set also fails. The behavioral prompt and task/result
 contract are read directly from the native TOML, so source edits cannot pass
