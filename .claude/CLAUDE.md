@@ -91,15 +91,16 @@ reuse an approval I already gave for a substitute or install, or ask. A missing 
 alone does not block routine work.
 
 Honor explicit dependency versions. Otherwise, verify the latest compatible stable release from
-registry or package-manager metadata, since remembered versions go stale. Apply `rtk` to noisy
-producers, not to quiet filters; run commands raw when you need exact output, file redirection, or
-unchanged argument semantics. For binary, minified, or generated data, extract exact fields or
-bounded bytes, and reuse unchanged scans.
+registry or package-manager metadata, since remembered versions go stale. A hook already routes
+supported Bash commands through `rtk`, which can summarize or hide lines. When you need exact output,
+run `rtk bypass <command>` or fetch elided lines with the printed `rtk recall` id. For binary,
+minified, or generated data, extract exact fields or bounded bytes, and reuse unchanged scans.
 
 Shell text is code: quote it for the shell that runs it, and keep secrets out of command
 substitution and output. The Bash tool can run zsh rather than bash; there an unquoted variable
-does not word-split and an unmatched glob aborts the command, so pass lists through arrays or
-`xargs` and quote globs meant for the called program.
+does not word-split, an unmatched glob aborts the command, and a word starting with `=` (such as an
+`echo =====` separator) expands as a command path and aborts it. Pass lists through arrays or
+`xargs`, and quote globs meant for the called program (`--include='*.ts'`) and `=`-leading words.
 
 ## Destructive actions
 
