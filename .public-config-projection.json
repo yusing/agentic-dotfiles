@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "679e3d73b8743365e739e737ec7e645c4c20783a",
+  "sourceCommit": "957c7d43f1312d8b918eb577c37e43d9b3244edf",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -677,7 +677,7 @@
     {
       "path": ".gitignore_global",
       "kind": "file",
-      "sha256": "456b54943b9f0e18a70dbd09a1051c214492661ba3849a91b1dd42e3860ce597",
+      "sha256": "d563c5aa809aac249ad4f887d55ce3c669f019670df4966f1467fd753faffe39",
       "executable": false
     },
     {
@@ -1006,7 +1006,7 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "d4a4fe7ca36d87579fa716b72947110b4e99085939d40bb200ec5f83b050839e",
+      "sha256": "7ded849e92c31db899665ea8ad25e58424623495b27bd8976b29cf986f1c9237",
       "executable": false
     },
     {
@@ -1024,7 +1024,7 @@
     {
       "path": ".skills-mgr/skills/final-review/SKILL.md",
       "kind": "file",
-      "sha256": "b0d959bc4889d6d8b7a5329a604fa7c2e017932dd1c272cee4e955a531816357",
+      "sha256": "1d0eebaef8f4bc15099a0fb87cdb8434e121007d51466c657eeefcac1090b491",
       "executable": false
     },
     {

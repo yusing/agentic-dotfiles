@@ -28,10 +28,10 @@ original base revision, and required checks. Order the smallest independently us
 dependency. Do not divide work by technical layer or stop after the first working path.
 
 The delivery owner maintains one recovery record from staged entry through completion. Reuse the
-record established by `new-project`, or create it on direct entry to this skill. Use the Mekugi
-journal when available; otherwise use project-root `RECOVERY.md` outside commits. Capture the
-accepted items and decisions, original base and current head, slice order, checkpoint and slice
-commits, validation and review results, and next unfinished work. Keep it current after every
+record established by `new-project`, or create it on direct entry to this skill. Store it as a
+valid JSON object in project-root `RECOVERY.json` outside commits. Capture the accepted items
+and decisions, original base and current head, slice order, checkpoint and slice commits,
+validation and review results, and next unfinished work. Keep it current after every
 completed slice, review, correction, and history rewrite. No fixed template or duplicate artifact
 is needed.
 
@@ -53,8 +53,8 @@ Continue until every accepted item has implementation and validation evidence.
 ## Final review and closure
 
 Give a fresh independent reviewer the `final-review` skill, the exact original-base-to-current-head
-range, and the current recovery record; a plaintext journal snapshot is enough when direct access
-is unavailable. Record its findings and coverage. Correct confirmed blockers in original slice
+range, and the current `RECOVERY.json` contents. Record its findings and coverage.
+Correct confirmed blockers in original slice
 order, validate and inspect the affected corrections, and create
 `git commit --fixup=<slice-commit>` against the checkpoint or slice each correction belongs to.
 Reread REVIEW.md before inspecting these corrections and apply its convergence limits; record
@@ -65,7 +65,7 @@ Check affected document claims against the completed outcome. Include any correc
 owning slice/checkpoint fixups or a coherent cross-slice correction commit before recording
 the final range.
 Fold fixups using the existing autosquash authorization. Verify that rewriting preserves the
-validated pre-rewrite tree; rerun checks only where their inputs changed. Only then mark the journal record
-complete or delete `RECOVERY.md`. Report the delivered outcome, commit range, checks, and
+validated pre-rewrite tree; rerun checks only where their inputs changed. Only then delete
+`RECOVERY.json`. Report the delivered outcome, commit range, checks, and
 remaining limitations. If blocked on user input or work outside scope, retain the recovery record
 with the concrete gap and next unfinished work.
