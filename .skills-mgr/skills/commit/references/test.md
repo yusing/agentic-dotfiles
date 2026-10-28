@@ -9,7 +9,7 @@ Body paragraphs, in order:
    tests guard against (with the fix commit's SHA or issue) or the contract they pin.
 2. Coverage, action first: the imperative verb of the addition, which behavior the tests
    exercise, and at what level, such as unit, integration, or end to end.
-3. Proof, when it adds confidence: open with `Verified by` and show the tests fail against a
+3. Proof, when such a run was made: open with `Verified by` and show the tests fail against a
    known-bad version, such as the commit before the fix they guard.
 
 Situations:

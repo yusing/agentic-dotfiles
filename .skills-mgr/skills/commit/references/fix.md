@@ -12,8 +12,8 @@ Body paragraphs, in order:
 2. Fix, action first: the imperative verb of the change, the approach, why it beats an obvious
    alternative when one exists, and any consequence a caller or operator may notice.
 3. Proof: open with `Verified by` and name the evidence that the failure is gone, such as a
-   regression test that fails without the change, or a reproduction with its result before and
-   after.
+   regression test that drives the failure, or a reproduction with its result. State a result
+   without the change only when it was observed.
 
 Link the report with a `Fixes #123` trailer or a URL.
 

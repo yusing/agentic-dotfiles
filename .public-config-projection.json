@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d66fafc17d31fa44df83dbc22050706e81e192d9",
+  "sourceCommit": "f82d9ca3ba2a6224e9d6f6c63327d27c7a7293e7",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -958,7 +958,7 @@
     {
       "path": ".skills-mgr/skills/commit/references/fix.md",
       "kind": "file",
-      "sha256": "3a55a39ee0f0a6a0f60909414f08ace2dbb249a8f12a59aaf790e3dcb2369baf",
+      "sha256": "bb2f8da4cd6861e80fc44c840e256e78f0be6a0d995a5841ef259b9dce9beb88",
       "executable": false
     },
     {
@@ -976,13 +976,13 @@
     {
       "path": ".skills-mgr/skills/commit/references/test.md",
       "kind": "file",
-      "sha256": "73d79f4ac0efe5f930441010b81376d65d66fd9f024c5677e6e9d2105fd93bcf",
+      "sha256": "39e1934e8859267f21acc7b45ae25510acf5fba92129a57e4145a126eb30a605",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/commit/SKILL.md",
       "kind": "file",
-      "sha256": "56ff5000fbe6695f63404c485f8709103befae1045c412970c80fa356ff8f602",
+      "sha256": "3dcc5ef128e60bff5fc0d0a7b64694179a28197321dcc0f721f43e3b5f0f8af5",
       "executable": false
     },
     {

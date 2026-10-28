@@ -58,7 +58,8 @@ user's explicit request. A local-only restriction on a ref stays until the user 
   with the specific thing that changes, or pick a more specific verb.
 - Work reference: when the user names a work item for the task, or the user's recent commits on
   the branch end their subjects with one, such as `(wp#123)`, end every subject with it. When
-  recent subjects carry different references and the task names none, ask which applies.
+  recent subjects carry different references and the task names none, reuse the reference of the
+  commit or item the change fixes or continues; ask which applies only for unrelated new work.
 - Breaking change: add `!` after the type or scope and a `BREAKING CHANGE: <description>`
   trailer describing the migration.
 - Trailers: `Fixes #123`, `Refs #123`, `Link: <url>`, `Co-authored-by:`, and any attribution
@@ -87,8 +88,9 @@ commit. It records why the commit exists and what it changes; the diff already s
 - Mention behavior that stays unchanged only where a reader would expect it to change, such as a
   public API kept compatible through an internal rewrite.
 - Back each claim with the most specific evidence that shows it: a named regression test that
-  fails without the change, a before-and-after measurement with its method, or a reproduction
-  with its observed result. State unverified parts as unverified.
+  drives the failure, a before-and-after measurement with its method, or a reproduction with its
+  observed result. Claim a failure without the change only when it was observed. State unverified
+  parts as unverified.
 - When one commit carries several user-visible changes, as a squash can, give each its own
   paragraph or list item with its own reason.
 - Wrap at 72 columns; a URL or trailer may run longer.
@@ -146,4 +148,5 @@ user's request, is a correction to it.
    the remote branch.
 
 Make a regular commit (usually `fix`) instead when the target is published, or when the change
-is a distinct change worth its own history entry rather than a revision of the target.
+is a distinct change worth its own history entry rather than a revision of the target. Also make a
+regular commit when the client refuses a fold the user did not request, and mention the refusal.
