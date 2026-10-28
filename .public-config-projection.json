@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b661507f01cd34a298ada90b8ee536398e8951d6",
+  "sourceCommit": "134584f7231f08fea2c8f2418cb97b229fa8b481",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,7 +65,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "01475d8b1f36d08bd2aaf2f40683107f2f8f3057d886e559b07d354f2d44d216",
+      "sha256": "4892df72c3e50d1cf0dfae865eb4f6da9b5579324c2b941ae483f9086f7a764f",
       "executable": false
     },
     {
@@ -1515,7 +1515,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "d087fa6049c82e792291389e997c9e036c0863fae5d4b0356fa817af9d216bec",
+      "sha256": "e4edd7d76fed44661d053b1d902b1c7ef24689d56898a5d3171af6a7992c2b3e",
       "executable": false
     },
     {

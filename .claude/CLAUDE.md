@@ -67,6 +67,9 @@ Read these task documents directly, once per context, the moment when their oper
 
 - `HANDOFF.md`: when mentioned, read it. Only the main agent resuming its task deletes it after
   consumption; subagents read assigned handoffs without deleting them.
+- `AGENTS.md`: when the working directory is the home directory, read it before maintaining that
+  configuration repository. Settings exclude it from automatic loading so that projects below
+  home neither receive it nor lose their own `AGENTS.md`.
 
 The harness supplies this file to the main agent and custom subagents. Built-in Explore and Plan
 omit it; provide any required guidance explicitly when assigning work to those built-ins.
