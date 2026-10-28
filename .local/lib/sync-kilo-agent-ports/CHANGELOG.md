@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.6
+
+- Map Codex GPT-6.1 Terra roles to Kilo's matching OpenAI model id.
+
 ## 1.0.5
 
 - Remove worker role metadata after retiring the support-artifact role.

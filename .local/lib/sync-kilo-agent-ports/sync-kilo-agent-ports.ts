@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.5";
+export const VERSION = "1.0.6";
 export const BUILTIN_ROLES = [
   "ask",
   "code",
@@ -13,6 +13,7 @@ export const BUILTIN_ROLES = [
 ] as const;
 const MODEL_MAP: Record<string, string> = {
   "gpt-6-luna": "kilo/deepseek/deepseek-v4.1-flash",
+  "gpt-6.1-terra": "kilo/openai/gpt-6.1-terra",
   "gpt-6.1-sol": "kilo/openai/gpt-6.1-sol",
   "gpt-6-astra": "kilo/openai/gpt-6-astra",
 };

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.12
+
+- Map Codex GPT-6.1 Terra roles to Claude Sonnet.
+
 ## 1.0.11
 
 - Remove worker role metadata after retiring the support-artifact role.

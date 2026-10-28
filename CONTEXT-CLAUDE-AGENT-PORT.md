@@ -22,8 +22,8 @@ artifact paths the parent names in the task text.
 
 The helper copies each descriptive role summary from the TOML without adding invocation policy.
 Colors, tool allowlists, and the Codex-to-Claude model mapping live in the helper. A new Codex role
-or an unmapped model makes generation fail until that platform metadata is supplied. Codex Terra
-is currently unmapped, so generation fails even for Explorer's explicit Claude override. The behavioral
+or an unmapped model makes generation fail until that platform metadata is supplied, even when
+the role's Claude metadata overrides the model. Codex Terra maps to Claude Sonnet. The behavioral
 prompt and task/result contract are read directly from the native TOML, so source edits
 cannot pass the focused test while generated ports are stale.
 

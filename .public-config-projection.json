@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "957c7d43f1312d8b918eb577c37e43d9b3244edf",
+  "sourceCommit": "c3e8451ae2080a93200dd2ce1f7a7e0c11cf6248",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -521,7 +521,7 @@
     {
       "path": ".config/kilo/agent/explorer.md",
       "kind": "file",
-      "sha256": "c2bd4edf1a50b0046abd0fe4a877cec85ef6777ed393c21bf654e248e1d6cb1c",
+      "sha256": "55d31455f7f6795143e9a0e1bc2c80c6ce1d2c4469a815e0d6f075ed4e0f4bbf",
       "executable": false
     },
     {
@@ -832,25 +832,25 @@
     {
       "path": ".local/lib/sync-claude-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "c37b9d0a1036f99f94f5b2f1ce129f9da16be532bb9386664d25df6567283696",
+      "sha256": "cb6c91387490fc50021a993baf96be9de3d993fcd2279be1017362538587b612",
       "executable": false
     },
     {
       "path": ".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
       "kind": "file",
-      "sha256": "7538d582f5c8dff110b1e9e2711c81c5d60a74fd0da1d99bb22a492634d4dd3f",
+      "sha256": "950fb1af89ef6ddf9cc34bf4cb3108eed5fef3a8e4740fc5805d224d0b4217cf",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "9335273f1216f03e646e412668dafa8f79b4834947dd9ed25941dbbc04af64c5",
+      "sha256": "c9b562d6a2a3a17e19be21c1b23fc700bbc68442c77c187a6ae9eb428c09ba85",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
       "kind": "file",
-      "sha256": "feabbfcf12165d76375437b6fbd256412a1e318cbfd7ebaa25a53ecd20315bf5",
+      "sha256": "3e5ca72414b82b31ff77d47f4c5a45b144da68c5df44ea58dc891951bb866503",
       "executable": false
     },
     {
@@ -1473,7 +1473,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "0ef305affbe84227106a60386e92406a45d4910298db801fb31397c7a99dd807",
+      "sha256": "aae1edcf28aca6c97f58a6e9552e0fd852b3ddab7bece9c304d2a8cfe36466b0",
       "executable": false
     },
     {
@@ -1515,7 +1515,7 @@
     {
       "path": "CONTEXT-KILO-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "f3733129cbc8b940b41f332ef18be1e8f92f0e0d6c0fcfcce63820282b068e0b",
+      "sha256": "b80e7b93b790683a58399570e478bfa35d653f738dc629f775c737c3ace4ac9d",
       "executable": false
     },
     {
