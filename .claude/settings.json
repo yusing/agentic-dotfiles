@@ -24,7 +24,6 @@
   "permissions": {
     "allow": [
       "Edit(/**)",
-      "Write(/**)",
       "Bash(git status)",
       "Bash(rtk git status)",
       "Bash(git status *)",
