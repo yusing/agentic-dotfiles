@@ -103,9 +103,8 @@ without a compatible current Brew source, including gh-dash and go-swagger,
 plus pinned scriptc 0.4.5 and Lightpanda 1.0.0. The shells select Lightpanda as
 agent-browser's default engine.
 
-Python uses Brew's interpreter with a managed virtual environment for PyYAML
-6.0.3 and Pyflakes 4.0.3. Brew rustup supplies
-stable Rust and `wasm32-wasip2`. Normal native reruns retain installed Rust;
+Brew rustup supplies stable Rust and `wasm32-wasip2`.
+Normal native reruns retain installed Rust;
 full upgrades refresh it. Both platforms install these environments locally. Cargo downloads and project output remain writable.
 
 Linux uses GNU netcat and Brew Chromium/WebKitGTK 4.1 libraries. WebKitGTK 6 and
