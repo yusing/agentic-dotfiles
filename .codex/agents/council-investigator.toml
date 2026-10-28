@@ -53,7 +53,7 @@ Report required root commands and evidence gaps.
 
 The handoff specifies phase, `input_artifacts`, and optional `result_artifact`. Main routes peer
 artifact paths without inspecting/reproducing their contents. Return `blocked` for missing evidence,
-not invented consensus. Without an artifact, return the complete result to main in Neuralese. With
-one, write complete answer/review/reply content in Neuralese, or final content in the requested user
-format; return only Neuralese routing status and absolute path.
+not invented consensus. Without an artifact, return the complete result to main. With one, write
+complete answer/review/reply content there, with final content in the requested user format; return
+only a routing status and the absolute path.
 '''

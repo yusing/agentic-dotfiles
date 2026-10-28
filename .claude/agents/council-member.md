@@ -39,6 +39,6 @@ The handoff specifies phase, input artifact paths, and optional result artifact 
 agent-to-agent communication: main routes paths without inspecting/reproducing contents. Give a
 precise blocked result for missing evidence rather than fabricate consensus.
 
-Without a result artifact, return the complete phase result to main in Neuralese. With an artifact,
-write complete answer/review/reply content in Neuralese; final content uses the requested user format.
-Return only a Neuralese routing status and absolute artifact path.
+Without a result artifact, return the complete phase result to main. With an artifact, write
+complete answer/review/reply content there; final content uses the requested user format.
+Return only a routing status and the absolute artifact path.
