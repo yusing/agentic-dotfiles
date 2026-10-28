@@ -5,70 +5,66 @@ description: scriptc compiler documentation. Use when compiling with scriptc, or
 
 # scriptc compiler
 
-scriptc compiles ordinary TypeScript and JavaScript to a native executable. The binary has no Node, V8, or JS engine unless `--dynamic` embeds quickjs-ng for npm packages and `any`. Typecheck is real `tsc` (`es2025`, nearest `tsconfig.json`). A construct with no lowering is an `SC` compile error, never a silent miscompile. Static-tier stdout and exit codes match Node except the numbered divergences below.
+scriptc compiles TypeScript and JavaScript to native code without embedding Node, V8, or another JavaScript engine. This contract targets scriptc 0.4.5. Type checking uses TypeScript 7, `es2025`, scriptc's ambient declarations, and the nearest `tsconfig.json`. Unsupported TypeScript operations produce `SC` diagnostics; some unsupported JavaScript operations defer the error until execution.
 
-Published docs: [scriptc.dev](https://scriptc.dev). This skill holds the working contract. Open a linked page or a file under [references/](references/) only when the question is outside it. `scriptc coverage` / `scriptc build` on the file is more current than any write-up.
+Published docs: [scriptc.dev](https://scriptc.dev/docs). References link the version-tagged sources because the website can describe newer releases. Load a reference only for details outside this body. Check the installed `--version`, `--help`, and `coverage` / `build` on the actual entry file before relying on a capability.
 
 ## Commands
 
 - `scriptc build <file.ts|.js>` — typecheck, compile. Default `--emit=exe`. Without `-o`, the artifact lands in `.scriptc/` next to the input.
 - `scriptc run <file>` — build and run with inherited stdio. **Does not forward extra argv**; `build` then invoke the binary to pass arguments.
-- `scriptc coverage <file>` — per-statement static / `--dynamic` / blocker report with `SC` codes. Does not emit a binary. Type errors gate analysis.
-- `scriptc cache warm` — prebuild runtime packs for CI or another target.
+- `scriptc coverage <file>` — per-statement native / dynamic-tier / blocker report with `SC` codes. Does not emit a binary. Type errors gate analysis.
+- `scriptc cache warm [runtime|tls]` — verify and load installed precompiled runtime families; ordinary builds need no warm step.
+- `scriptc merge-profiles -o app.profdata <profiles…>` — merge instrumentation profiles for a subsequent `--profile-use` build.
 
-Frequent flags: `-o <path>`, `--emit ir|c|llvm|asm|obj|exe`, `--dynamic`, `--ffi <manifest.json>`, `--backend c|llvm`, `--sanitize`, `--keep-c` (default) / `--no-keep-c`.
+Frequent flags: `-o <path>`, `--emit ir|llvm|asm|obj|exe`, `--ffi <manifest.json>`, `--optimization release|dev|speed`, `--strip`, `--sanitize`, `--keep-llvm` (default) / `--no-keep-llvm`. LLVM is the only backend; C emission and `--dynamic` are removed.
 
-`--emit=ir|c|llvm` need only Node. `exe` needs the platform linker/SDK. `--backend llvm` is default; a native program outside the LLVM tier falls back to C with one stderr line unless `--backend llvm` is pinned (then `SC3001`). `wasm32-wasi` never falls back.
+`coverage` and `--emit=ir|llvm|asm|obj` need only the installed compiler. `exe` needs a linker and platform SDK/sysroot. npm installation and `run` on WASI need Node.js 24 or later.
 
-Env: `SCRIPTC_CC=zigcc` and `SCRIPTC_TARGET=<triple>` for cross-compilation; `SCRIPTC_NO_CACHE=1` to skip the cache. Full flags and env: [references/cli.md](references/cli.md).
+Cross-compilation uses `SCRIPTC_TARGET=<triple>`, zig, and a matching-version target runtime pack. `SCRIPTC_CC` selects the sanitizer compiler, not the cross-link target. Full flags and env: [references/cli.md](references/cli.md).
 
-## Tiers
+## Native compilation and packages
 
-1. **Static** (default) — native code, no engine.
-2. **`--dynamic`** — embedded engine (~620KB) for shipped npm JS and `any`. Values copy across the boundary; a lying type throws a catchable `TypeError`. Without the flag, those sites are compile errors (often `SC2013` / `SC2011`).
-3. **Rejected** — compile error. `--dynamic` does not clear blockers.
+Typed operations use native layouts. Supported `any`, untyped JavaScript, and runtime-typed values use native checked storage, called the **dynamic tier**; it is not an embedded engine. Prefer concrete types in hot loops. `--explain-dynamic` locates dynamic operations; `SC6101` warns about likely-hot untyped functions. `--tier=static-only` prevents future demotions of unsupported constructs, but currently behaves like `auto` and does not eliminate existing checked-value code.
 
-`any` without `--dynamic` is `SC2011`. Prefer `unknown` and a checked cast, or opt into the engine.
-
-npm packages resolve at build time and are embedded; the executable does not read `node_modules` at runtime. `--npm-static` and `--provenance-sources` are experimental.
+npm dependencies compile natively at build time when eligible. Packages with their own declarations or DefinitelyTyped types are selected automatically; `--npm-static=<pkg>` can select an untyped direct dependency, and `pkg...` selects its dependency closure. Unsupported packages produce diagnostics. `--provenance-sources` is experimental. Node-island flags in 0.4.5 are report-only, not a runtime fallback. `eval`, `Function`, and `vm` cannot execute JavaScript source at runtime.
 
 ## Divergences that change code
 
-- Arrays are dense. Out-of-bounds reads and `pop()` on empty **trap** (abort), they do not yield `undefined`. `process.argv[2] ?? "world"` traps when the arg is missing — check `process.argv.length > 2`.
+- Array holes, missing reads, and empty `pop()` / `shift()` have Node-like support, but statically typed out-of-range accesses can still hard-trap. Keep bounds checks at uncertain indexes; verify the concrete entry before removing them.
 - Hard traps are not catchable. User `throw`, JSON parse errors, checked casts, and fs/regex errors are catchable.
 - `process.argv[0]` is `"scriptc"`; `argv[1]` is the binary path; `argv[2]…` are program args.
-- Record width-subtyping and island crossings **copy**; mutations do not alias back.
+- Record conversions between different field shapes can **copy**; mutations need not alias back. Checked storage preserves identity for supported records, arrays, classes, and native handles.
 - `JSON.parse(s) as T` validates at runtime and throws a path-named error on mismatch.
 - Uncaught stderr is `Uncaught <value>`, not a Node stack. Exit code and pre-throw stdout still match.
 
-Language fences (loose `==` except nullish/same-primitive, `any` as class fields, unpinned generic function values, …) and the rest of this list: [references/limitations.md](references/limitations.md).
+Language fences, property-order warnings, and further runtime differences: [references/limitations.md](references/limitations.md).
 
 ## Node surface
 
-Static on native targets: `fs` (sync and promises), `path`, `process`, `child_process`, `os`, `crypto`, `url`/`URL`, `zlib`, timers and signals, `net` / `http` / `https` / `tls` / `dgram` / `dns` / `readline`.
+Native targets support subsets of `fs` (sync and promises), `path`, `process`, `child_process`, `os`, `crypto`, `url`/`URL`, `zlib`, timers and signals, `net` / `http` / `https` / `tls` / `dgram` / `dns` / `readline`, streams, and workers. Support is API- and overload-specific; use coverage before replacing a workaround.
 
-WASI (`SCRIPTC_TARGET=wasm32-wasi`): no sockets/fetch, **no child processes**, no signals, no `os.networkInterfaces()`, no `fs.watch`, no `--sanitize`, no FFI, no `--lib` (`SC3002`). `scriptc run` preopens cwd as `/` and host `/tmp` as guest `/tmp`.
+WASI (`SCRIPTC_TARGET=wasm32-wasi`): no sockets/fetch, child processes, signals, `os.networkInterfaces()`, `fs.watch`, `--sanitize`, or native FFI. Library mode emits an async-free Wasm reactor. `scriptc run` preopens cwd as `/` and the host's temporary directory as guest `/tmp`.
 
 ## Coverage
 
-`scriptc coverage file.ts` counts statements in *your* program, not dependencies.
+`scriptc coverage file.ts` reports native compilation, dynamic-tier statements, blockers, and Node divergences; dependency details are listed separately.
 
-- `compile statically` — native, no engine.
-- `runs with --dynamic` — would need the engine; without `--dynamic` each site is a build error.
-- `blockers` — no tier, even with `--dynamic`. Same `SC` codes as `scriptc build`.
+- `--fail-on=blockers` fails for reachable build blockers; `divergences` also fails for Node differences, and `dynamic` also fails for `SC6101` hot-code warnings.
+- `--print=diagnostics` emits versioned JSON suitable for automation.
 
-`scriptc coverage file.ts --dynamic` asks what a `--dynamic` build would compile. It also lists Node builtins reached by embedded packages and whether each is shimmed.
+Coverage is analysis, not runtime acceptance. Compile and exercise the real consumer after a migration.
 
 ## FFI
 
-`scriptc build main.ts --ffi ffi.json` binds a **signature-only** `declare function` to a C symbol. The binding is that exact declaration only (no aliases, overloads, or functions with bodies). Format 1 is values: `f64`, `bool`, `u8`/`u32`/`i32`, `string`, `bytes`, `void` returns. No pointer/string/byte returns, no variadics, no structs by value, no `dlopen`, executable builds only (not `--lib`). ABI table, example, and callback formats: [references/ffi.md](references/ffi.md).
+`scriptc build main.ts --ffi ffi.json` binds a **signature-only** `declare function` to a C symbol. Format 1 supports basic scalar and borrowed span parameters. Formats 2–5 add callbacks; 6 adds scalar widths and writable spans; 7 adds bigint-backed 64-bit values, opaque pointers, and a static `node:ffi` catalog. No variadics, structs by value, owned pointer/string/byte returns, or runtime library loading. Executable builds only. ABI and ownership details: [references/ffi.md](references/ffi.md).
 
 ## Platforms
 
 | Target | How | Notes |
 | --- | --- | --- |
-| macOS arm64/x64 | host helper + runtime pack | Full surface, `--dynamic`, `--sanitize` |
-| Linux arm64/x86_64 | helper + pack; `…-linux-musl` for musl | Servers, TLS, fetch, `fs.watch`, `child_process`; needs matching libc |
-| Windows x64 | MSVC helper + pack | Same surface including `child_process` |
-| iOS/Android arm64 | `SCRIPTC_CC=zigcc` + target triple | `--lib` archives only |
-| WASI Preview 1 | helper + WASI pack | Full language/`--dynamic`; host-capability limits above |
+| macOS arm64/x64 | compiler + runtime pack + clang/SDK | Compiler host needs macOS 15+; executables target 14+ |
+| Linux arm64/x86_64 | compiler + pack + clang or zig | glibc 2.34+ or musl; musl executables link statically |
+| Windows x64 | compiler + runtime pack + zig | Supported Node API subset including child processes |
+| iOS/Android arm64 | target triple + runtime pack | `--lib` archives only; iOS requires a macOS host |
+| WASI Preview 1 | zig + WASI pack | Host-capability limits above; `run` needs Node 24+ |

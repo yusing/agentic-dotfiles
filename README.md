@@ -100,7 +100,7 @@ checksummed prebuilt archives.
 npm packages retain their npm source through Mise, including agent-browser and
 markdownlint-cli. Bun performs npm installation. Mise also supplies tools
 without a compatible current Brew source, including gh-dash and go-swagger,
-plus pinned scriptc 0.2.6 and Lightpanda 1.0.0. The shells select Lightpanda as
+plus pinned scriptc 0.4.5 and Lightpanda 1.0.0. The shells select Lightpanda as
 agent-browser's default engine.
 
 Python uses Brew's interpreter with a managed virtual environment for PyYAML
