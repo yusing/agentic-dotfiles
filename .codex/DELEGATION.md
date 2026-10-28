@@ -10,7 +10,8 @@ Select roles using the native catalog's routing guidance.
 - Documents: main by default; delegate a bounded document assignment when it speeds up delivery.
 - LLM-facing: main owns instructions, skills, workflow/task documents, model-facing templates, and
   delivery hooks; delegates return findings/proposals for them.
-- Tests: main owns tests and fixtures.
+- Tests: the agent implementing a change updates the tests and fixtures it affects; do not assign
+  tests to a separate delegate.
 
 Start with a complete brief rather than an immediate follow-up. Give each agent, as applicable,
 the settled outcome, owned files, inputs, task-specific constraints, and useful checks.

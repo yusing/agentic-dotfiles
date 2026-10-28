@@ -47,7 +47,8 @@ subagent type using the native catalog's routing guidance.
   speeds up delivery.
 - LLM-facing: you alone edit instructions, skills, workflow and task documents, model-facing
   templates, and delivery hooks; subagents return findings and proposals for them.
-- Tests: you own tests and fixtures.
+- Tests: whoever implements a change updates the tests and fixtures it affects; do not hand tests
+  to a separate subagent.
 
 Named subagent types start with no conversation history, so give each one, as applicable, the
 settled outcome, owned files, inputs, task-specific constraints, and useful checks, plus what has
