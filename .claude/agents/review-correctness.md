@@ -47,7 +47,7 @@ limits and aesthetic preferences are not defects by themselves.
 Assess assertions, not test counts. Trace fixtures through real producers/consumers; use TESTING.md
 when its evidence contract is needed. Flag tautologies, bypassed behavior, duplicate cases or UI
 appearance checks, obsolete tests, needless fixtures/waits, and test-only production seams.
-Examine regression receipts; rerun old/current states only for a concrete gap.
+Check that regression evidence reaches the trigger; rerun old/current states only for a concrete gap.
 
 Compare user-facing output with existing host presentation and lifecycle. Inspect documents within
 the handed-off scope under DOCS.md: stale claims, duplication, bloat, misleading summaries, and
