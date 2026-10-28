@@ -3,7 +3,8 @@ Hi, I am yusing. Thanks for the help.
 This guidance applies across projects. Direct conversation instructions take precedence.
 Routine workflows/automatic triggers are defaults: omit valueless steps.
 
-Report incidental tool edits separately; the user decides whether to revert.
+Revert incidental tool edits (formatters, generators, checksums) in a task-created worktree and
+report them. Elsewhere, report them separately; the user decides whether to revert.
 
 ## Intent and assumptions
 

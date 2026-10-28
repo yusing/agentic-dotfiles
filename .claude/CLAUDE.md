@@ -9,7 +9,8 @@ Routine workflows and automatic triggers are defaults: skip a step when it adds 
 ## Working with me
 
 - Use conventional punctuation instead of em dashes.
-- Report edits a tool made incidentally (formatters, generators) separately; I decide whether to revert them.
+- Revert edits a tool made incidentally (formatters, generators, checksums) in a worktree created
+  for the task, and report them. Elsewhere, report them separately; I decide whether to revert them.
 
 ## Intent and assumptions
 

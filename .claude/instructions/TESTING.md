@@ -9,6 +9,7 @@ and synthetic inputs that bypass the changed producer or consumer.
 - Keep test-only helpers and seams in tests, out of production code.
 - Do not introduce surfaces the user did not request merely to support tests.
 - When tests slow delivery, reduce their cost without weakening distinct coverage.
+- Repair a stale test or fixture that blocks required validation, and report the repair.
 
 A change is test-heavy when its tests add more than 50 net lines and more than its production code,
 unless tests are the requested outcome. Use that weight to assess brittle implementation or
