@@ -49,6 +49,8 @@ each corrected finding at the consuming interface, including sibling inputs and 
 correction changes, and run affected checks. A reviewer's reproduction is input to that check;
 adopting it is the correction owner's work. Reuse coverage that is still current.
 
-Review converges when findings are corrected, accepted, or reported. If a second correction round
-still finds new issues, or I ask for speed, stop requesting review and report the limits. Continue
-authorized fixes without claiming clearance you have not established.
+Request re-review only when a correction changes the design or reaches code the review did not
+cover; otherwise the correction's checks close the finding. Review converges when findings are
+corrected, accepted, or reported. If a second correction round still finds new issues, or I ask
+for speed, stop requesting review and report the limits. Continue authorized fixes without
+claiming clearance you have not established.
