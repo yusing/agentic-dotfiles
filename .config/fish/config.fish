@@ -223,6 +223,7 @@ if status is-interactive
     check-command gh; and gh completion --shell fish | source
     check-command herdr; and herdr completion fish | source
     check-command shadowtree; and shadowtree completion fish | source
+    check-command skills-mgr; and skills-mgr completion fish | source
     # live cwd from Herdr. Load it only outside Herdr panes.
     # if test "$HERDR_ENV" != 1
     # end

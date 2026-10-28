@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "4d5410d4f79badcf57d4df00b0efbd286f23a928",
+  "sourceCommit": "7ba05e35839fcd37af94bfc5aa8a0f12ace7e24a",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -443,7 +443,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "35bdfcb636bf39e9e1787afa329b5b6281a1e07aeca45ffadfc95005175fe145",
+      "sha256": "dee7da29a332b0ebe78511994a78a4c8290dc6b075bddd84b4c01787e6eabcb4",
       "executable": false
     },
     {
