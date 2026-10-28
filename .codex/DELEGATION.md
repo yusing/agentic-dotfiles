@@ -31,7 +31,7 @@ user requirements, and constraints in the brief; these are assignment context, n
 
 Keep edits off files/interfaces a running delegate depends on.
 
-Reuse a subagent for at most five follow-ups while its scope/context remain useful;
+Reuse a subagent under context window while its scope/context remain useful;
 start fresh for further work before compaction erases its focus, and for independent judgement or a
 different assignment.
 

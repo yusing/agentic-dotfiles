@@ -36,12 +36,13 @@ choosing it. Preserve explicit limits; general applicability does not request ex
 
 Read these task documents directly, once per context, the moment when their operation applies:
 
-### In ~/.codex
+### In $HOME/.codex
 
 - `INSTRUCTION-AUTHORING.md`: authoring/auditing instructions and consumer checks.
 - `SKILL-AUTHORING.md`: additionally for authoring/auditing skills.
 - `MAIN.md`: main: scope, planning, and completion.
 - `DELEGATION.md`: any agent, including subagents, before delegating or coordinating other agents.
+  - `MODEL-ROUTING.md`: any agent, including subagents, before delegating `default` and `worker` roles.
 - `REVIEW.md`: main: after an authorized change is implemented and focused-validated,
   before completion or a slice commit.
 - `IMPLEMENTATION.md`: code/operational implementation or its inspection, not pure

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "020dad7ae54f31d5fc4da24f2231be456a5fac7a",
+  "sourceCommit": "4d5410d4f79badcf57d4df00b0efbd286f23a928",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -131,7 +131,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "2d4b9e7961fbeb9e9ce4615efb8a00e6f743015897b5e41cc747cfb201040b2a",
+      "sha256": "9b7cb29eb29707e69577a41edeac9682e52e8af4757bcce97f5d1c9a7ca11906",
       "executable": false
     },
     {
@@ -185,7 +185,7 @@
     {
       "path": ".codex/DELEGATION.md",
       "kind": "file",
-      "sha256": "99b15a574d652e1a98ab64424b53514bf8f99fe7d48b483f8164b855e2bed699",
+      "sha256": "92af568c6db1476493a0b299a705f1612f0b6ec5c4c20bcb11e8bb5170a88969",
       "executable": false
     },
     {
