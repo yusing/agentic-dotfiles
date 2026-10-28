@@ -1,0 +1,12 @@
+# skills-mgr-base-sha256 1382cfb7108b05e500b82af93c04fd7b694430d3908039bd92d634f01c1e7181
+# skills-mgr-result-sha256 3ece6a49d21f95ab82e53f67cf5c7f84ee438c4ed1f8b481e635e3e4017c849f
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: archify
+-description: "Create validated architecture, workflow, sequence, data-flow, lifecycle/state, ERD, class, tree, timeline, and waterfall diagrams as explorable standalone HTML with dark/light themes, motion and image/SVG/WebM export. Accept requirements or Mermaid; inspect repository evidence for code-backed diagrams. Use when visualizing systems, API calls, pipelines, schemas, histories, timings, or everyday steps, parts, relationships and states. Also turn an answer into a one-page explainer, with the conclusion first, structured panels, native diagrams and charts, when the user asks for a page, an explainer or an answer to share (做成一页, 用页面讲), or proactively when the user's rules opt in with an [archify explainer: ...] line. Not for dashboards."
++description: Create explorable standalone HTML diagrams (architecture, workflow, sequence, data-flow, state, ERD, class, timeline) with theme and image export, from requirements, Mermaid, or repository evidence. Use when the user asks for a diagram or a one-page visual explainer; not for dashboards.
+ license: Apache-2.0
+ metadata:
+   version: "3.2"

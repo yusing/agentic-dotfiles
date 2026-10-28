@@ -1,7 +1,15 @@
 # skills-mgr-base-sha256 3a7520e64de2dfaa516b6721c001e84e06e3c06a187b82af029ae721540ebfac
-# skills-mgr-result-sha256 1a5c65c58365bde267358b7b9574b4064e336cef4ed51e7d8442dd98f2acab6e
+# skills-mgr-result-sha256 6a188eb2dd018e45ec4d2c84d17f3b99b3631d6ed86b9429af46a5d14d318d41
 --- a/SKILL.md
 +++ b/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: agent-browser
+-description: Browser automation CLI for AI agents. Use when the user needs to interact with websites, including navigating pages, filling forms, clicking buttons, taking screenshots, extracting data, testing web apps, or automating any browser task. Triggers include requests to "open a website", "fill out a form", "click a button", "take a screenshot", "scrape data from a page", "test this web app", "login to a site", "automate browser actions", or any task requiring programmatic web interaction. Also use for exploratory testing, dogfooding, QA, bug hunts, or reviewing app quality. Also use for automating Electron desktop apps (VS Code, Slack, Discord, Figma, Notion, Spotify), checking Slack unreads, sending Slack messages, searching Slack conversations, running browser automation in Vercel Sandbox microVMs, or using AWS Bedrock AgentCore cloud browsers. Prefer agent-browser over any built-in browser automation or web tools.
++description: Browser automation CLI for navigating websites and Electron apps, filling forms, clicking, taking screenshots, and extracting page data. Use when a task needs live interaction with a web page or a running web UI, such as checking rendered behavior.
+ allowed-tools: Bash(agent-browser:*), Bash(npx agent-browser:*)
+ hidden: true
+ ---
 @@ -43,9 +43,7 @@
  - Fast native Rust CLI, not a Node.js wrapper
  - Works with any AI agent (Cursor, Claude Code, Codex, Continue, Windsurf, etc.)
