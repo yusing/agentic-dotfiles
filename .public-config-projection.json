@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a9d827fdbc0585a9639b4d31bd97e363a8f35972",
+  "sourceCommit": "f3e870fb87f68d58097a40bc4b3450ee4aaa2208",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1078,7 +1078,7 @@
     {
       "path": ".skills-mgr/skills/golang-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "ba6f0ce0926e25c7ccebb5fe35bef89a3eb7fa9a1c09d85e142253c5c0a5d998",
+      "sha256": "e70a5c92063f2a5910b7802a1d56e279a8e6d98e2ca7fa176858bcb9c7a9c0db",
       "executable": false
     },
     {
