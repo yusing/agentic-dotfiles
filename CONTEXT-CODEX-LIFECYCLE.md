@@ -38,8 +38,7 @@
    The managed handoff standard defines caller-neutral content for file handoffs and for a
    runtime that explicitly selects it. Its interruption and continuation rules do not establish
    delivery by the current runtime.
-   After handoff, the base prompt rereads named skills or, when that section is absent, selects
-   them again from the current operation. The reloaded shared instructions recover the active
+   After handoff, the base prompt selects skills again from the current operation. The reloaded shared instructions recover the active
    scope and reread only the guidance needed for remaining work. Routine local work does not
    require task-size documents; substantive changes and reviews use the implementation guidance.
    No hook-specific state rotation runs at compaction.

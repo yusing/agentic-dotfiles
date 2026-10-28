@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7a6066e448bc065012058418484e6b86606a8a7f",
+  "sourceCommit": "a9d827fdbc0585a9639b4d31bd97e363a8f35972",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -365,7 +365,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "d5a401d6ebee83eea812ded0d61b4859a94026ccde11168b721e9d8a5d44e7d6",
+      "sha256": "d1e30dedc86f01253cb48d9e814b66171735dcf05c2fe4a7927d8ea80d5dbf30",
       "executable": false
     },
     {
@@ -1479,7 +1479,7 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "dc3af3e79efe17420cbad754f2bd8c5e30298e85842d19ade240a7bbffacf4f8",
+      "sha256": "29899a295020ab2d6c12cfc70d07035a2ac9a34ed305260ec38667eb693995ab",
       "executable": false
     },
     {

@@ -47,7 +47,7 @@ report progress and remaining work. After failure, preserve unaffected requireme
 the failing operation. An explicit cancellation stops that operation until the user asks to resume;
 report any underlying process still running.
 
-After compaction, reread the handoff's `Active skills to reread` and recover guidance
-needed for unfinished work; delegates load only their assignment's skills.
+After compaction, recover guidance needed for unfinished work; delegates load only their
+assignment's skills.
 Use the injected catalog and shared AGENTS.md skill rules. Load only next-operation
 skills.
