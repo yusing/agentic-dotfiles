@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f3e870fb87f68d58097a40bc4b3450ee4aaa2208",
+  "sourceCommit": "536af172cf14a92b49b5a8741aafb7a3df8e5a84",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -353,7 +353,7 @@
     {
       "path": ".codex/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "621d9af4da1183b558318065ea256fa16afaff3eff59227e0cc8c7388df4b2a5",
+      "sha256": "2f6db8180c0e7c0beefb7ec0a5a7d8b16b25d6e9c3ebdbb8727c2168e63906ef",
       "executable": false
     },
     {
@@ -1509,7 +1509,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "32ac8e3e2c638c0c6b5f01af296ea8acaa7700d07d948ef4005349ad2221f87a",
+      "sha256": "d087fa6049c82e792291389e997c9e036c0863fae5d4b0356fa817af9d216bec",
       "executable": false
     },
     {

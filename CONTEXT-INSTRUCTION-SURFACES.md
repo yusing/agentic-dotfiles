@@ -40,6 +40,7 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `.codex/FRONTEND.md` (client-neutral; `.claude/instructions/FRONTEND.md` symlinks to it)
 - `.codex/MAIN.md`
 - `.codex/DELEGATION.md`
+- `.codex/MODEL-ROUTING.md`
 - `.codex/REVIEW.md`
 - `.codex/SUBAGENT.md`
 - `.codex/IMPLEMENTATION.md`

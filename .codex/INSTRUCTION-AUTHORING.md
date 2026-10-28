@@ -37,8 +37,9 @@ Trace affected main/delegate paths, applicable instructions, pointers, and gener
 For renames, align paths, references, metadata, selection, tests, and allowlists; preserve historical
 names in records. Regenerate authorized consumers from authoritative sources. Shared ownership,
 port mappings, and drift checks do not authorize changes to another client's settings. Propagate
-shared instruction changes to affected consumers; keep model, effort, and other client-specific
-changes within the requested client. Report excluded consumer drift without changing that consumer.
+shared instruction changes to affected consumers that do not already receive the owning layer; keep
+model, effort, and other client-specific changes within the requested client. Report excluded
+consumer drift without changing that consumer.
 Check actual inheritance, fresh/no-history assembly, and client capabilities before assuming
 isolation or redundancy.
 
