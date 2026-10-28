@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+Use Go quality 1.0.6 with native workspace and linter JSON envelopes.
+
 ## 1.2.1
 
 Use shell scanner 1.0.6 and subagent guard 1.1.4 for the in-process Codex policies.

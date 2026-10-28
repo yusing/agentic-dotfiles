@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "22324ec7fbd18bacefada9e012da831a6518634b",
+  "sourceCommit": "325cf02b870066f7c32f0185c09387dc60c3dfa8",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -233,13 +233,13 @@
     {
       "path": ".codex/hooks/go_quality.changelog.md",
       "kind": "file",
-      "sha256": "63da972058e5ec7c57d873c1a71a1577b4034bf177769a65cfa5d395e8d153af",
+      "sha256": "8f034732c401fff3e8f6003c3c3356397e6c8485796144f7a165594005c7754b",
       "executable": false
     },
     {
       "path": ".codex/hooks/go_quality.ts",
       "kind": "file",
-      "sha256": "f70fc1b0ce320f1f80a1bfc3b2c024c46a30566f680c20622c57a919464b39d0",
+      "sha256": "bfb3d2ab3d760cbfadfcd87d4a18bd0d0bf85bcc32bedff09d24650dd9ed8f2d",
       "executable": false
     },
     {
@@ -311,13 +311,13 @@
     {
       "path": ".codex/hooks/session_start_context.changelog.md",
       "kind": "file",
-      "sha256": "e674b70c042820103628a51fb732920227364a1355864182539a07f5b3676eab",
+      "sha256": "4e220a201d007fe2c2d3137a7f154810249405da739de44b3176b7f0a6bda33f",
       "executable": false
     },
     {
       "path": ".codex/hooks/session_start_context.ts",
       "kind": "file",
-      "sha256": "2baf1541d5de4b574822a93acb080ded6680ebf0e6f7682727ed382f350c7888",
+      "sha256": "ceee6f4345b5cd2b0c9f9395df5f19b8b68f71b985bf34523fc6b2b8f5c26329",
       "executable": false
     },
     {
@@ -695,13 +695,13 @@
     {
       "path": ".grok/hooks/adapt_codex_hook.changelog.md",
       "kind": "file",
-      "sha256": "624063baf55cb745a7c20faa04aaba4891772e8a7b8d5195ed0528cbb83b91a4",
+      "sha256": "fa4968f22886a2397815b1034149ea74a8241d13beccbe2b747f3d507a863bef",
       "executable": false
     },
     {
       "path": ".grok/hooks/adapt_codex_hook.ts",
       "kind": "file",
-      "sha256": "3170d931785ecb1212dbf393ed53b5d3b1700a143fdaeba6f43325917ca6cf84",
+      "sha256": "93bb5278c2fe1183804ce92367abb6898b5941edf2a4e7d229ff0d8ab83ccfd5",
       "executable": false
     },
     {

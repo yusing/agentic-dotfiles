@@ -10,7 +10,7 @@ import { responseFor as generatedGuardResponse } from "./generated_code_guard.ts
 import { responseFor as subagentGuardResponse } from "./subagent_exec_guard.ts";
 import { asString, at, handleVersion, isRecord, readEvent, runCommand, runMain, writeJson } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.5";
+export const VERSION = "1.0.6";
 
 type Snapshot = Record<string, string>;
 type Baseline = { files: Snapshot; findings: Record<string, string[]> };
@@ -230,7 +230,6 @@ function manifestTargets(event: Record<string, unknown>, cwd: string): string[] 
         if (redirect < 0 || /[-=]>/.test(token)) continue;
         add(directory, redirect === token.length - 1 ? at(tokens, index + 1) ?? "" : token.slice(redirect + 1));
       }
-      // scriptc aborts on an out-of-bounds index, so reads go through `at`.
       const executable = at(tokens, 0);
       const args = tokens.slice(1);
       if (executable === "cd") {
@@ -435,7 +434,7 @@ function moduleRoots(root: string): string[] {
     const result = runCommand(["go", "work", "edit", "-json"], { cwd: root });
     if (result.status === 0) {
       try {
-        const work = JSON.parse(result.stdout) as unknown;
+        const work = JSON.parse(result.stdout) as { Use?: unknown[] };
         if (isRecord(work) && Array.isArray(work.Use)) {
           const modules: string[] = [];
           for (const entry of work.Use) {
@@ -530,7 +529,7 @@ function findings(tool: string, output: string): Finding[] {
   }
   if (tool === "golangci-lint") {
     try {
-      const parsed = JSON.parse(output) as unknown;
+      const parsed = JSON.parse(output) as { Issues?: unknown[] };
       if (!isRecord(parsed) || !Array.isArray(parsed.Issues)) return [];
       const issues: Finding[] = [];
       for (const issue of parsed.Issues) {

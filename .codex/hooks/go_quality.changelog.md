@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.6
+
+Decode workspace and linter JSON envelopes with native array containers while
+preserving malformed-entry skipping, field defaults, and root-module fallback.
+Remove the outdated claim that every out-of-range array read aborts.
+
 ## 1.0.5
 
 Use shell scanner 1.0.6 and subagent guard 1.1.4: quoted heredoc bodies are data unless

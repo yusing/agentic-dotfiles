@@ -8,7 +8,7 @@ import {
   runCommand,
 } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.1.0";
+export const VERSION = "1.1.1";
 const MAX_TRANSCRIPT_BYTES = 256 * 1024;
 
 function inheritedStartup(event: unknown): boolean {
@@ -90,12 +90,12 @@ function retainedOutput(event: unknown, output: string): boolean {
     if (!raw.endsWith("\n")) return false;
     const lines = raw.trimEnd().split("\n");
     if (lines.length === 0) return false;
-    const first: unknown = JSON.parse(lines[0]);
+    const first = JSON.parse(lines[0]) as { type: string; payload: unknown };
     if (!isRecord(first) || first.type !== "session_meta" || !isRecord(first.payload) ||
         !asString(first.payload.forked_from_id)) return false;
     let retained = false;
     for (let index = 1; index < lines.length; index++) {
-      const record: unknown = JSON.parse(lines[index]);
+      const record = JSON.parse(lines[index]) as { type: string; payload: unknown };
       if (!isRecord(record) || typeof record.type !== "string" || !isRecord(record.payload)) return false;
       const payload = record.payload;
       if (record.type === "response_item") {
@@ -104,7 +104,7 @@ function retainedOutput(event: unknown, output: string): boolean {
         // Replacement history, not the discarded prefix, owns the surviving context.
         retained = false;
         if (!Array.isArray(payload.replacement_history)) return false;
-        for (const item of payload.replacement_history) {
+        for (const item of payload.replacement_history as unknown[]) {
           retained = retained || containsHookOutput(item, output);
         }
       } else if (record.type === "event_msg") {
