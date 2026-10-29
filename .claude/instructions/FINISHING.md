@@ -93,8 +93,9 @@ evidence for corrections. Leave out repeated role rules. Impose no severity cuto
 reviewers apply one literally; you decide dispositions afterward. The correction owner receives the
 review; if that owner cannot spawn agents, its parent arranges the review for it.
 
-During a review, wait for the complete report before doing same-task work unless you are blocked,
-asked for help, or redirected.
+Keep reviewed source and interfaces stable; overlap required non-mutating checks and independent
+work. Wait when no independent work remains. Coordinate necessary changes so findings identify the
+version inspected.
 
 ### Corrections and convergence
 

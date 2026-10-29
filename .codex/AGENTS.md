@@ -35,7 +35,8 @@ choosing it. Preserve explicit limits; general applicability does not request ex
   quote, paraphrase, or refer to my prompts or other conversation content in them unless I supply
   text for that deliverable.
 
-Read these task documents directly, once per context, the moment when their operation applies:
+Load applicable sections of these task documents once per context when their operation applies.
+Complete text already supplied in context satisfies the read; a path or summary does not.
 
 ### In $HOME/.codex
 

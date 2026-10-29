@@ -39,14 +39,15 @@ line windows for bounded exploration where omitted rows cannot change the next a
 Report problems you find during requested work or while reading relevant code and documentation,
 including ones outside the requested scope; reporting does not widen what you search, read, or fix.
 
-A new turn alone is no reason to reread a document, skill, or file you already have. Compaction
-drops their text, so after compaction reread the task documents that unfinished work still needs.
+A new turn alone is no reason to reread a document, skill, or file you already have. After compaction,
+reload only the task documents and skills unfinished work still needs whose text is absent.
 
 Write code, tests, documents, and other deliverables for readers who never saw this conversation.
 Do not quote, paraphrase, or refer to my prompts or other conversation content in them unless I
 supply text for that deliverable.
 
-Read these task documents directly, once per context, the moment when their operation applies:
+Load applicable sections of these task documents once per context when their operation applies.
+Complete text already supplied in context satisfies the read; a path or summary does not.
 
 ### In ~/.claude/instructions
 

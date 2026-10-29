@@ -24,7 +24,7 @@ and questions, without suspected findings or expected conclusions. Use a `fork_t
 brief with complete task context.
 
 Native roles own workflows; `MODEL-ROUTING.md` owns model and effort, which the spawner sets for every
-role. Agents can load instruction files and skills themselves.
+role.
 The harness supplies shared instructions and discovers project guidance for the recipient.
 Keep shared, project, role, and skill policy at its owner rather than
 copying or paraphrasing it into task briefs. When an assignment needs a skill method the recipient

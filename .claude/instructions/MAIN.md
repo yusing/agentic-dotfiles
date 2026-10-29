@@ -27,7 +27,8 @@ Before implementation:
 
 - settle a viable end-to-end approach for the requested outcome, including the actual consumer
   integration
-- settle the workflow: sequencing, delegation, and validation
+- choose sequencing, delegation, and validation around the critical path; overlap independent work
+  when it saves more time and model work than startup, coordination, and integration cost
 - update affected specs and contracts for behavior or consequential decisions the implementation
   will rely on
 

@@ -92,8 +92,9 @@ evidence for corrections.
 The correction owner receives the review; if nesting is unavailable, the parent arranges it for
 that owner.
 
-During review, await the complete report before same-task work unless blocked, asked for help, or
-redirected.
+Keep reviewed source and interfaces stable; overlap required non-mutating checks and independent
+work. Wait when no independent work remains. Coordinate necessary changes so findings identify the
+version inspected.
 
 ### Corrections and convergence
 

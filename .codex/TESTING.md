@@ -6,6 +6,10 @@ consuming interface.
 A useful test fails when its intended behavior breaks. Avoid tautologies, incidental string checks,
 and synthetic inputs that bypass the changed producer/consumer.
 
+For mutations, derive invalid-input, stale-state, and ownership cases from the affected consumer
+contracts. Verify rejected changes preserve prior state and successful changes work through the
+normal consumer; a successful write alone does not establish usable output.
+
 - Keep test-only helpers/seams in tests, not production.
 - Do not introduce surfaces the user did not request merely to support tests.
 - When tests slow delivery, reduce their cost without weakening distinct coverage.
@@ -18,14 +22,17 @@ redundant cases; retain tests needed for distinct requested behavior regardless 
 
 ## When to run
 
-Test waits dominate task time, so run checks against a finished change, not around each edit:
+Run checks against coherent changes, ordered by their cost and the work their results can invalidate:
 
 - Run nothing before the change unless a reported failure needs reproducing to find its cause.
 - Finish production, tests, and affected behavioral contracts for a coherent working path, then
-  run its focused checks once. Use compilation or type checks earlier only when they are much cheaper.
+  run new tests and affected existing consumer checks together. Use compilation or type checks
+  earlier when they are much cheaper.
+- Run needed broader checks when the integrated change is ready and failure could invalidate the
+  next review or handoff. Overlap non-mutating checks with read-only review of the same snapshot;
+  defer expensive checks until their covered code is stable, not all checks until the end.
 - After a failure, rerun the failing tests. Rerun a passing check only when code it covers
   changed after it passed.
-- Run broader consumer or full-suite checks once, last, and only when the change reaches them.
 
 ## Regression evidence
 
