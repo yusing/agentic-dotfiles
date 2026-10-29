@@ -7,22 +7,19 @@ Run `.local/bin/sync-claude-agent-ports` after changing it; do not edit generate
 The compiled helper's source and changelog live in `.local/lib/sync-claude-agent-ports/`.
 Its `--check` mode reports drift without writing.
 
-Field mapping is the helper's concern. Codex roles omit `model` and `model_reasoning_effort`
-because the spawning agent chooses them through `.codex/MODEL-ROUTING.md`, so each Claude role's
-`model` and `effort` come from the helper's Claude metadata: Opus/medium for the investigator,
-Opus/high for correctness and UI review, and Sonnet/high for the explorer and simplification
-review. A Codex role that sets `model` or `model_reasoning_effort` makes generation fail.
-Council roles use `model: inherit` in the helper's metadata, omitting both generated fields so
-Claude continues to inherit its parent settings.
+Field mapping is the helper's concern. Both Codex and generated Claude roles omit model and
+reasoning-effort fields so the spawning agent chooses the budget. In Mekugi, Claude and Codex
+both use `.codex/MODEL-ROUTING.md`; Claude Code's native Agent tool uses
+`.claude/instructions/MODEL-ROUTING.md`. A Codex role that sets `model` or
+`model_reasoning_effort` makes generation fail.
 Claude subagents start from a fresh
 context. The Codex handoff fields `input_artifacts` and `result_artifact` are
 harness structure with no Claude equivalent, so each body states the same contract in terms of
 artifact paths the parent names in the task text.
 
 The helper copies each descriptive role summary from the TOML without adding invocation policy.
-Colors, tool allowlists, and the Codex-to-Claude model mapping live in the helper. A new Codex role
-or an unmapped model makes generation fail until that platform metadata is supplied, even when
-the role's Claude metadata overrides the model. Codex Terra maps to Claude Sonnet. The behavioral
+Colors and tool allowlists live in the helper. A new Codex role makes generation fail until
+that platform metadata is supplied. The behavioral
 prompt and task/result contract are read directly from the native TOML, so source edits
 cannot pass the focused test while generated ports are stale.
 

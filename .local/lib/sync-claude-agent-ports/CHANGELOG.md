@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.14
+
+- Leave model and effort unset in every Claude role so the spawning agent can route each assignment.
+
 ## 1.0.13
 
 - Take each role's Claude model and effort from Claude metadata, now that Codex roles leave model and effort to the spawning agent; remove the Codex model mapping and reject a Codex role that pins either.

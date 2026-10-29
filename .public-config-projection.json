@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6e939e46232a7758818224dce534a78a81c91c40",
+  "sourceCommit": "42d9265fef4f37e0e2d2e26046b5a7dc70c2a00e",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -35,37 +35,37 @@
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "a90a997809a0b000f50100b060b1982a1e3ef6f322996cc63008446b697a66bd",
+      "sha256": "868454bdbb6e527921b3b55221059f1d491eb78f49ae507e7314c6e2f9184481",
       "executable": false
     },
     {
       "path": ".claude/agents/investigator.md",
       "kind": "file",
-      "sha256": "f524829b15ca63203b113d51a1571bb435b21fb258537d548e27e24c197ead57",
+      "sha256": "5aea4665f8037fea78a775062001625b398423198cd00731060d223e2b72869f",
       "executable": false
     },
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "1b2af8474b5a3bcae97e7b74e6b446c9d22094ab2c80edbc7f9389eda4507d69",
+      "sha256": "2c229622015a7e5a7602965954b4e8765734f9b47b4de355cc96f8c2c82d504c",
       "executable": false
     },
     {
       "path": ".claude/agents/review-simplify.md",
       "kind": "file",
-      "sha256": "4ff1926dbf837d12bceffaabc590a4c09bea2af09b475c63d2ad83ef0d0f6528",
+      "sha256": "1818cc1652ef8bf5a9d5c68c80c7b911eeba3d7f136b23f2cc6ee6a94b23b6b5",
       "executable": false
     },
     {
       "path": ".claude/agents/ui-reviewer.md",
       "kind": "file",
-      "sha256": "9d497fcddc053bc2acc2f44e91725991bbbcb303cfca6851c46264d92d1c4843",
+      "sha256": "814ac3cae264cf153a013bcc526a3f1c378898fc16264037a52c40e0efd2df08",
       "executable": false
     },
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "2eef262f0d2163e2d0ddf904972ea17eac8d7a6b485a80730a97f19a3bf74713",
+      "sha256": "e7a5ce8e9fb4349895c6575b41e60e11b17005d8229ae2bc4e0b262b4a6d05a9",
       "executable": false
     },
     {
@@ -95,7 +95,7 @@
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "efc2a8be5f18fe47ec1e5fadd90be2ecd77891d5b4024c0df520f46ae7cca533",
+      "sha256": "83c11e6bcaf3a7effa8e5e101cc64ba68728d89733345491cf255de66c5c2eb3",
       "executable": false
     },
     {
@@ -832,13 +832,13 @@
     {
       "path": ".local/lib/sync-claude-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "bf7584ba8da62dc8e755a8fe6e05425423fdbc9faaeba717627b6f5a9982900e",
+      "sha256": "595fd05e5250f0b60adb0f606e0db208bf7e41fb00dbf8fee7644c1db4339657",
       "executable": false
     },
     {
       "path": ".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
       "kind": "file",
-      "sha256": "1f8cda71366cf3abecd7ca1dea1ed6cdb6d5808a43600f88f942b8037ddfd2d8",
+      "sha256": "6cfb2549de4e02a73826a1ea9cd1701e2df61dd47399b5a2a0d7b231981a74ba",
       "executable": false
     },
     {
@@ -1479,7 +1479,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "4fc3cc6433a4751bca9b8a7ad65ca281e473ad2e1abf2792bef418922bb2eb0c",
+      "sha256": "cebb32e73a98899db42b28a523ecc5f575151f0676e1f351323699c9ead45a05",
       "executable": false
     },
     {
@@ -1515,7 +1515,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "e663287bf7d2c1ad9fbb19bf2c12c0092acd06da41e3147e66240e1ec30815f0",
+      "sha256": "f45ba9d9fcbaa28661bdef1abc9470b7b3072009dbcc1819475d1cc34b444cf1",
       "executable": false
     },
     {

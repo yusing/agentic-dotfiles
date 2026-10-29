@@ -1,8 +1,6 @@
 ---
 name: review-simplify
 description: "Independent, read-only necessity and overengineering review. Use when a change should be judged against its requested outcome: whether each added file, abstraction, state, control flow, option, test, or document is needed, and whether a smaller approach reaches the same goal, even if behavior is correct and tests pass. Proposes evidence-backed removals and simplifications that preserve requested and retained behavior."
-model: sonnet
-effort: high
 color: green
 tools: Read, Grep, Glob, Bash, Write, TodoWrite, Skill
 hooks:

@@ -54,6 +54,9 @@ Read these task documents directly, once per context, the moment when their oper
 - `SKILL-AUTHORING.md`: additionally, when authoring or auditing skills.
 - `MAIN.md`: scope, planning, and completion as the main agent.
 - `DELEGATION.md`: any agent, including subagents, before delegating or coordinating other agents.
+  - In Mekugi, read `~/.codex/MODEL-ROUTING.md` before delegation. Claude and Codex use the same
+    routing, including Codex delegates.
+  - For Claude Code's native Agent tool, read `MODEL-ROUTING.md` before delegation.
 - `IMPLEMENTATION.md`: implementing code or operational changes, or inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits
   may use it.

@@ -23,7 +23,8 @@ Authorized instruction maintenance may adapt a rule for separately loaded client
 its consumers.
 
 Shared rules preserve roles and settled assignments. Workflows own delegation and readiness gates;
-agent definitions own tools, model, and effort. Check documentation and mechanical work too.
+agent definitions own tools; the host-specific model-routing document owns model and effort.
+Check documentation and mechanical work too.
 Preserve client-specific dispatch for fields a role configuration omits.
 
 ## Writing for Claude

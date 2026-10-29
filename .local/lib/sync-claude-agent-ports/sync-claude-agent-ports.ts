@@ -1,16 +1,16 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.13";
+export const VERSION = "1.0.14";
 const READ_TOOLS = "Read, Grep, Glob, Bash, Write, TodoWrite, Skill";
-const METADATA: Record<string, { color: string; tools: string; model: string; effort?: string }> = {
-  "council-investigator": { model: "inherit", color: "yellow", tools: "Read, Grep, Glob, Bash, Write, TodoWrite" },
-  "council-member": { model: "inherit", color: "orange", tools: "Read, Write, TodoWrite" },
-  explorer: { model: "sonnet", effort: "high", color: "pink", tools: READ_TOOLS },
-  investigator: { model: "opus", effort: "medium", color: "cyan", tools: READ_TOOLS },
-  "review-correctness": { model: "opus", effort: "high", color: "red", tools: READ_TOOLS },
-  "review-simplify": { model: "sonnet", effort: "high", color: "green", tools: READ_TOOLS },
-  "ui-reviewer": { model: "opus", effort: "high", color: "purple", tools: READ_TOOLS },
+const METADATA: Record<string, { color: string; tools: string }> = {
+  "council-investigator": { color: "yellow", tools: "Read, Grep, Glob, Bash, Write, TodoWrite" },
+  "council-member": { color: "orange", tools: "Read, Write, TodoWrite" },
+  explorer: { color: "pink", tools: READ_TOOLS },
+  investigator: { color: "cyan", tools: READ_TOOLS },
+  "review-correctness": { color: "red", tools: READ_TOOLS },
+  "review-simplify": { color: "green", tools: READ_TOOLS },
+  "ui-reviewer": { color: "purple", tools: READ_TOOLS },
 };
 
 export function adaptText(text: string): string {
@@ -41,7 +41,6 @@ export function renderRole(role: string, config: Record<string, unknown>, guard:
   if (config.model != null || config.model_reasoning_effort != null) {
     throw new Error(`${role}: Codex role must leave model and effort to the spawning agent`);
   }
-  if (metadata.model !== "inherit") fields.push(`model: ${metadata.model}`, `effort: ${metadata.effort}`);
   const hasBash = metadata.tools.split(", ").includes("Bash");
   fields.push(`color: ${metadata.color}`, `tools: ${metadata.tools}`);
   if (hasBash) {
