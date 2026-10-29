@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "72144b36f35e5e3588ccaf1afd76a28060469cc9",
+  "sourceCommit": "8315bdde3ad429414e4c5355f50219a330f62d75",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -419,7 +419,7 @@
     {
       "path": ".codex/SUBAGENT.md",
       "kind": "file",
-      "sha256": "b8d8f25f130811b5e4fe054948c68c10f38e8873fb70d2eb1b5db8c0fa4a62d1",
+      "sha256": "2ea97f5070330e4d99652314f51d3505ccd1b0668e2eb878440b9c669dd43a45",
       "executable": false
     },
     {
