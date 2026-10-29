@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { at, handleVersion, programArgs, runCommand } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.2.0";
+export const VERSION = "1.2.1";
 
 function languageFor(ext: string): string | undefined {
   switch (ext) {
@@ -445,7 +445,7 @@ function main(): number {
     return 0;
   }
   const args = programArgs();
-  let withoutGit = false;
+  let withoutGit = process.env.MEKUGI_ENVIRONMENT_FACTS === "1";
   const positional: string[] = [];
   for (let index = 0; index < args.length; index += 1) {
     const argument = at(args, index) ?? "";
@@ -495,7 +495,7 @@ function main(): number {
     `go_version: ${version}`,
   );
   const instructions: string[] = [];
-  if (kind !== "none" && reportVcs) {
+  if (kind !== "none") {
     instructions.push(
       "  ## Version control",
       "  - Treat detected VCS as read-only unless user authorizes writes.",

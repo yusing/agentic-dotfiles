@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "325cf02b870066f7c32f0185c09387dc60c3dfa8",
+  "sourceCommit": "b0d08786240cd4e1db5f424124f1957f7229f15d",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -209,13 +209,13 @@
     {
       "path": ".codex/hooks/check_project.changelog.md",
       "kind": "file",
-      "sha256": "2d0a65d54e534fedc7553bbc566b083ff40a09603079e6531238de9fdc128aac",
+      "sha256": "2a834bab4400d7ac4f6dd77e99a8f853f4f269deb07a2b751b4fbe6db933527e",
       "executable": false
     },
     {
       "path": ".codex/hooks/check_project.ts",
       "kind": "file",
-      "sha256": "2e84c7fb6dbf2fef7dcdb835ce48abc4780c8e924e54240a12270312edbe02cc",
+      "sha256": "0f232b430f564700a3db1c020ecf1b01ea61bca631c9b344f57f7de6bffa27eb",
       "executable": false
     },
     {
@@ -1509,7 +1509,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "ce29ad40764960195be55e954ed5638097832ca7fc7215c62359073c348473f0",
+      "sha256": "7df433f9adae41774eaadbc4f6309318d49adf70e698cc6dacf031d3e4874bc6",
       "executable": false
     },
     {

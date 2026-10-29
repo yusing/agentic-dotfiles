@@ -18,7 +18,10 @@
   `git@branch@<sha>+svn@r<revision>`. Detached checkouts omit the branch; unborn branches
   omit the SHA. Its `--without-git` option omits
   the plain Git or unversioned VCS line for a client that already reports that state, and still
-  lists those submodule commits; `.codex/hooks.json` injects root-session project
+  lists those submodule commits. Exact `MEKUGI_ENVIRONMENT_FACTS=1` enables the same
+  omission for a Mekugi process supplying environment facts. VCS write-authorization
+  instructions remain present for detected repositories independently of fact omission;
+  `.codex/hooks.json` injects root-session project
   context and direct `skills-mgr list` output at startup and after context
   compaction or clearing while excluding session resume. `.codex/hooks/bin/session_start_context`
   skips the project and skill context commands on fork startup when the transcript's first

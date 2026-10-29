@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+
+Honor exact `MEKUGI_ENVIRONMENT_FACTS=1` as `--without-git` when Mekugi
+supplies environment facts. Keep VCS write-authorization instructions even
+when the redundant Git fact line is omitted.
+
 ## 1.2.0
 
 Include the current branch in the existing Git VCS and submodule labels:
