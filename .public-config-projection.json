@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "833d4b01f9708ab5bfb5ceee54c4b436080bed51",
+  "sourceCommit": "c049d31d8bfcae0f2e76711f3b2aeccbe191d1e7",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -77,7 +77,7 @@
     {
       "path": ".claude/instructions/FINISHING.md",
       "kind": "file",
-      "sha256": "5afb6d972463a32e47857cdafaa7c17153f4f36429f90054735797aa3956eb5b",
+      "sha256": "cdd1f4c5fe1a5bfb67484089988a776c5c2e7d354a6d6d7ce5fa758838c6119f",
       "executable": false
     },
     {
@@ -101,7 +101,7 @@
     {
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
-      "sha256": "41597516a6c97a4e73b7ab8b28d3d96df2abe64c26e0794fb027c8a8c0c8b82b",
+      "sha256": "277b230c0de973ce8dbb96919f1688f764cedb63f386a0b7963a09d60c2cee90",
       "executable": false
     },
     {
@@ -119,7 +119,7 @@
     {
       "path": ".claude/instructions/TESTING.md",
       "kind": "file",
-      "sha256": "6a54909faa0a0109444ce7ff0535c9f1504eba7f37bbc77925645673c4ed11fd",
+      "sha256": "4fc92e18b0bffd26f98fbdce91d3f9459ad01ca3b78c2630a4a4191c05c7c7f0",
       "executable": false
     },
     {
@@ -185,7 +185,7 @@
     {
       "path": ".codex/DELEGATION.md",
       "kind": "file",
-      "sha256": "ede7822a98860edfd6ba1c553d0c5a4110419be33922b0cf8606de64c758e489",
+      "sha256": "4b74ba01383ed692131b07e0089a79ce65c8e6b541d663c931e3ee2436ca2ebb",
       "executable": false
     },
     {
@@ -197,7 +197,7 @@
     {
       "path": ".codex/FINISHING.md",
       "kind": "file",
-      "sha256": "0660c8adbddbb0b2eeeedd11fcc4860524de9b12ee81a01e7c6b8ca091791eab",
+      "sha256": "3fa7f18b4c91243f737987d05d6f6414dc44ca60bd7a08e1f269bf1732427c60",
       "executable": false
     },
     {
@@ -365,7 +365,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "0a0cbfe0b8c8d846b37f5780633ba50eddb3c0bc71277f642f0915d228d2ea26",
+      "sha256": "fc948d02d5583e308080920b88fc850ef839a4312d1ec1eb2502de9d33355752",
       "executable": false
     },
     {
@@ -425,7 +425,7 @@
     {
       "path": ".codex/TESTING.md",
       "kind": "file",
-      "sha256": "5b0bde29b9c08977272c73b533f849e8a3dfd2b8416b53812725cd65711ae810",
+      "sha256": "6625c292e85cd8f1f14839ff325c6daa43b33683cef7d6cc27c9c9d5f6117fa8",
       "executable": false
     },
     {
@@ -1258,7 +1258,7 @@
     {
       "path": ".skills-mgr/skills/shadowtree/RUNNING.md",
       "kind": "file",
-      "sha256": "1fc8b4c2b0d484acf05312d217167dc652cba002df1e57dc3817d881d1b9e63b",
+      "sha256": "7e668567c7c335e9b875aa295ce1ea10e30a98c34e52872a6c5159a56978ffb8",
       "executable": false
     },
     {

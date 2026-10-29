@@ -6,9 +6,11 @@ consuming interface.
 A useful test fails when its intended behavior breaks. Avoid tautologies, incidental string checks,
 and synthetic inputs that bypass the changed producer or consumer.
 
-For mutations, derive invalid-input, stale-state, and ownership cases from the affected consumer
-contracts. Verify rejected changes preserve prior state and successful changes work through the
-normal consumer; a successful write alone does not establish usable output.
+Derive checks from requested outcomes and existing consumer contracts, not implementation branches.
+Cover equivalent supported input forms and interacting states at changed boundaries; isolated
+cases do not establish their combined behavior. For mutations, check invalid-input, stale-state,
+and ownership cases. Rejection must preserve prior state; success must work through the normal
+consumer. Pair new input restrictions with checks that neighboring supported inputs still work.
 
 - Keep test-only helpers and seams in tests, out of production code.
 - Do not introduce surfaces the user did not request merely to support tests.

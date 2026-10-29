@@ -4,6 +4,13 @@ Run an existing recipe from the repository/module that owns the target paths. Th
 not request configuration edits. Shared lifecycle/persistence constraints live in [SKILL.md](SKILL.md).
 Use one operation and non-overlapping validation; reuse established invocation evidence.
 
+For checks in an already disposable, task-isolated environment, use the project's documented native
+command when the recipe adds only another workspace copy. Confirm equivalence once from its resolved
+plan: preserve arguments, cwd, environment, required stages, and output effects. Keep the recipe when
+it adds needed isolation or behavior, or the project explicitly requires it. Container membership
+alone does not establish isolation. An overlay fallback is a reason to assess this choice, not to
+retry the same unavailable mechanism.
+
 ## Invocation
 
 ```sh

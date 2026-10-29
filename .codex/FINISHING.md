@@ -61,8 +61,8 @@ or the review-fix loop; other delegates keep their assigned implementation or re
 
 ### Delivery check
 
-Check agreement between the accepted contract, documents, and verified outcome; correct concrete
-gaps now rather than defer document work to a separate final stage.
+Check each accepted outcome against the documents and consumer evidence. Close known gaps before
+review; identify missing coverage rather than treating a passing suite as complete acceptance.
 
 ### Review necessity
 
@@ -70,25 +70,22 @@ Decide correctness review and simplification review separately; neither decision
 Arrange each warranted review after implementation, focused validation, and any pending user
 decision that could change the design.
 
-Correctness: use prior exploration, diagnosis, validation, and reviews to identify a concrete
-post-change question or coverage gap that fresh inspection can resolve. Reuse current evidence; when
-it already answers the question, skip this review. A risk category or a completed change alone does
-not justify it. Routine wording/mechanical work needs none. UI acceptance needs rendered/runtime
-evidence appropriate to the change; source inspection is not runtime proof.
+Correctness: use current exploration, diagnosis, checks, and reviews to identify an unresolved
+consumer-contract or integration question for independent inspection. Skip review when that evidence
+already answers it; risk categories, completed changes, and routine wording/mechanical work do not
+justify another pass. UI acceptance needs rendered/runtime evidence, not source inspection alone.
 
-Simplification: identify a concrete necessity or complexity question that fresh inspection can
-resolve, independently of correctness. Test-heavy changes under TESTING.md or net additions above
-300 production lines or 500 total lines (excluding generated or vendored output) are signals to
-assess, not automatic review or completion gates. Arrange a simplification-role inspection when
-current evidence cannot settle that question; reuse evidence that already does. A correctness
-review does not replace a warranted simplification review.
+Simplification: main assesses necessity while implementing. Use a separate simplification-role
+inspection only for a distinct complexity question current evidence cannot settle. Test-heavy changes
+under TESTING.md or additions above 300 production or 500 total lines (excluding generated/vendor)
+prompt that assessment, not automatic review. Correctness review does not settle this decision.
 
 ### Briefing and waiting
 
 Unless a workflow supplies its own inputs, brief only the user's verbatim request and corrections,
 the unresolved inspection question, change context, approach, and checks/results.
-Re-review keeps all task changes in scope and includes prior finding dispositions and regression
-evidence for corrections.
+Re-review keeps all task changes in scope, reuses unchanged evidence, and inspects corrections and
+affected consumers with prior finding dispositions and regression results.
 The correction owner receives the review; if nesting is unavailable, the parent arranges it for
 that owner.
 
