@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8315bdde3ad429414e4c5355f50219a330f62d75",
+  "sourceCommit": "6e939e46232a7758818224dce534a78a81c91c40",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -77,7 +77,7 @@
     {
       "path": ".claude/instructions/FINISHING.md",
       "kind": "file",
-      "sha256": "dcb749f61a9d7f7704637b769c69ad9210c376134fbaa8883544e855b8ee4f91",
+      "sha256": "e769e1df30225901e99a93e78d32f762d6cc3b434afd24c150d02fb1ce300de8",
       "executable": false
     },
     {
@@ -197,7 +197,7 @@
     {
       "path": ".codex/FINISHING.md",
       "kind": "file",
-      "sha256": "666ba73d619e8b9f7fea776a4200316655777dfa252a7b4b296f369c1264adf8",
+      "sha256": "23d3dfe675ccce34b7dd4e932c4c07208fe693130168a6c72e7b931ebd4d93e8",
       "executable": false
     },
     {

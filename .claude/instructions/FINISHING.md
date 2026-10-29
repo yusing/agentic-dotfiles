@@ -13,6 +13,21 @@ behavior. Limit their guidance to the concerns the change touches.
 
 Apply these standards to code and operational changes within your role and scope.
 
+### Performance and reliability
+
+Deliver a performant and reliable solution on the paths the change touches:
+
+- Performant: minimize CPU and memory use. Do each piece of work once and reuse its result, such as
+  validated state, scans, encodings, buffers, and timers, instead of repeating it. Skip work whose
+  outcome is already decided or unused, return unchanged input as is, and avoid allocations that
+  callers discard, including copies that grow with each chunk or call.
+- Reliable: eliminate the conditions that produce an error rather than handling the error after it
+  occurs. Prefer designs, types, and ordering under which the failure cannot happen over added
+  checks, retries, fallbacks, or recovery paths, and keep error handling for failures the code
+  cannot prevent, such as I/O, external input, and remote services.
+
+Keep observable behavior and contracts unchanged while optimizing.
+
 ### Hygiene
 
 Inline sole-caller helpers unless they preserve shared policy, an invariant, or a nontrivial
