@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "70cbe5d91d0fcd5203c1161e866e7a7783d3da77",
+  "sourceCommit": "d9f899c8dcf218e80bdaf82b43d128cfd25c235a",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -988,7 +988,7 @@
     {
       "path": ".skills-mgr/skills/commit/SKILL.md",
       "kind": "file",
-      "sha256": "3dcc5ef128e60bff5fc0d0a7b64694179a28197321dcc0f721f43e3b5f0f8af5",
+      "sha256": "918d5f981ec129c2fb9be5f69e33538e4bf614170662a7d33bf80bc303d30f84",
       "executable": false
     },
     {
@@ -1132,7 +1132,7 @@
     {
       "path": ".skills-mgr/skills/js-ts-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "2b5a8b64bc13e5e6e13b3b29b9b88b21f24e5aae585be0182b6ea684a1159553",
+      "sha256": "e78075063502b0ed60d41d8c7805335caf43b129be3e9df36ad862e613daea4b",
       "executable": false
     },
     {

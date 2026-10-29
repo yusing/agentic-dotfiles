@@ -7,6 +7,9 @@ description: Apply local JavaScript and TypeScript conventions during implementa
 
 ## Rules
 
+- Run, test, and install with `bun` and `bunx`, including in shebangs, package scripts, and
+  documented commands, instead of `node`, `npm`, or `npx`, unless the project pins another
+  package manager or runtime.
 - Type inputs, outputs, shared shapes, and exported APIs. Let obvious locals infer.
 - Reuse existing utilities and patterns before adding helpers or indirection.
 - Keep control flow flat: early returns, optional chaining, nullish coalescing,

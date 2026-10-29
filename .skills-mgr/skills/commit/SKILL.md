@@ -63,7 +63,9 @@ user's explicit request. A local-only restriction on a ref stays until the user 
 - Breaking change: add `!` after the type or scope and a `BREAKING CHANGE: <description>`
   trailer describing the migration.
 - Trailers: `Fixes #123`, `Refs #123`, `Link: <url>`, `Co-authored-by:`, and any attribution
-  the client or project requires, each on its own line after a blank line.
+  the client or project requires, each on its own line after a blank line. In a public
+  repository, add no trailer or body link that points to a private resource, such as a
+  self-hosted tracker, because readers cannot open it.
 
 ### Body
 
@@ -128,7 +130,8 @@ user's request, is a correction to it.
 1. Find the commit that introduced the code being corrected: `git log --oneline <base>..HEAD`,
    `git blame`, or `git log -L <range>:<file>`.
 2. Stage only the hunks for that target. When a follow-up touches several earlier commits,
-   make one fixup per target.
+   make one fixup per target. A fixup must apply cleanly at its target's position, so a hunk
+   that depends on a later commit belongs to that later commit.
 3. Create the marker commit:
    - `git commit --fixup=<sha>` (`fixup!`): content change; keeps the target's message.
    - `git commit --fixup=amend:<sha>` (`amend!`): content change that also makes the target's
