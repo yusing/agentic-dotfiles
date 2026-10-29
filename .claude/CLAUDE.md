@@ -83,8 +83,8 @@ omit it; provide any required guidance explicitly when assigning work to those b
 
 During construction, defer automatic loading of best-practice and quality-enforcement skill bodies
 until `FINISHING.md`. Language/framework matches and descriptions such as "when implementing" identify
-relevant finishing skills, not Phase 1 reads. Load task-execution, API/tooling, and domain guidance
-needed for the working path. Explicit user skill invocations and explicit review/audit requests
+relevant finishing skills, not Phase 1 reads; `i-want` interprets the request and is not deferred.
+Load task-execution, API/tooling, and domain guidance needed for the working path. Explicit user skill invocations and explicit review/audit requests
 follow their requested operation.
 
 Select skills and resources that materially help the current operation. Explicit user and
