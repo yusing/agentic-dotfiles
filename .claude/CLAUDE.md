@@ -94,13 +94,16 @@ follow their requested operation.
 Select skills and resources that materially help the current operation. Explicit user and
 higher-priority requirements stay mandatory; follow the constraints of a selected tool or method.
 
-The `--- skills-mgr injected ---` inventory lists skills served by skills-mgr. Acquire them through
-`skills-mgr`, not through `Skill` tool or read the exposed placeholder files:
+Settings deny Claude's `Skill` tool, so skills-mgr is the only skill route. The
+`--- skills-mgr injected ---` inventory lists the skills available to you, including Claude project
+and enabled plugin skills. Acquire them through `skills-mgr`, not the exposed placeholder files:
 bodies with `skills-mgr get <skill> [start:end]`,
 references with `skills-mgr get <skill>/<path> [start:end]`, and scripts with
-`skills-mgr run <skill>/<script> [args...]` (ranges are optional, 1-based, inclusive). A name I
-invoke may be absent from the catalog; acquire its body and required references anyway, and load
-optional references only for the current operation. To change a skill, edit its maintained owner
+`skills-mgr run <skill>/<script> [args...]` (ranges are optional, 1-based, inclusive). Acquire a
+skill I invoke by name or as `/<skill>` the same way, even when the catalog omits it, with its
+required references; load optional references only for the current operation. Claude's built-in
+skills ship inside Claude Code and are unavailable; when a harness tool says to load one first,
+use the tool without it. To change a skill, edit its maintained owner
 under `SKILL-AUTHORING.md`. After compaction, reload the skills that unfinished work still needs;
 subagents load only the skills their assignment needs.
 

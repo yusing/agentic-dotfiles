@@ -24,6 +24,8 @@ prompt and task/result contract are read directly from the native TOML, so sourc
 cannot pass the focused test while generated ports are stale.
 
 Role tool allowlists omit `Agent`; main owns inspection dispatch through FINISHING.md.
+They also omit `Skill`: skills-mgr serves skill bodies, and `permissions.deny` in
+`.claude/settings.json` turns off Claude's native Skill tool for every agent.
 The allowlist omits `Edit` and `NotebookEdit` for the review and council roles. `Write` stays
 on every role for a relayed result artifact, and evidence-gathering roles also have `Bash`.
 These tool lists are not a filesystem sandbox. Native TOML role bodies bound authored changes

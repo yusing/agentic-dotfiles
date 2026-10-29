@@ -1,8 +1,8 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.14";
-const READ_TOOLS = "Read, Grep, Glob, Bash, Write, TodoWrite, Skill";
+export const VERSION = "1.0.15";
+const READ_TOOLS = "Read, Grep, Glob, Bash, Write, TodoWrite";
 const METADATA: Record<string, { color: string; tools: string }> = {
   "council-investigator": { color: "yellow", tools: "Read, Grep, Glob, Bash, Write, TodoWrite" },
   "council-member": { color: "orange", tools: "Read, Write, TodoWrite" },

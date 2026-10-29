@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.15
+
+- Remove `Skill` from every role's tool allowlist; roles acquire skills through skills-mgr, and settings deny the native Skill tool.
+
 ## 1.0.14
 
 - Leave model and effort unset in every Claude role so the spawning agent can route each assignment.
