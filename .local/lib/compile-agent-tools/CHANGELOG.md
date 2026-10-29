@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.16
+
+Build the optional private Plane helper with independently cached locked dependencies.
+
 ## 1.0.15
 
 Build git-diffstat alongside scc-prod, tracking their shared source inputs.

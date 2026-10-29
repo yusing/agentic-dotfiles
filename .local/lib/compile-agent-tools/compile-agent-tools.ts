@@ -16,7 +16,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.15";
+const VERSION = "1.0.16";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -201,8 +201,8 @@ function main(): void {
     saveDigest(state, digest);
   }
 
-  function ensureRewriteDependencies(directory: string): void {
-    const state = join(cacheRoot, "rewrite-home-paths.dependencies.digest");
+  function ensureHelperDependencies(directory: string): void {
+    const state = join(cacheRoot, `${basename(directory)}.dependencies.digest`);
     const digest = digestInputs(
       `bun=${bunIdentity} target=${target} flags=install--frozen-lockfile--ignore-scripts`,
       [join(directory, "package.json"), join(directory, "bun.lock"), bunConfig],
@@ -226,7 +226,7 @@ function main(): void {
     const state = join(cacheRoot, `${name}.digest`);
     if (isExecutable(output) && storedDigest(state) === digest) return;
 
-    if (name === "rewrite-home-paths") ensureRewriteDependencies(dirname(source));
+    if (existsSync(join(dirname(source), "package.json"))) ensureHelperDependencies(dirname(source));
     buildAtomically(output, bun, (temporary) => [
       "build",
       "--compile",
@@ -257,6 +257,7 @@ function main(): void {
     compileHelper(join(localLib, "rewrite-home-paths", "rewrite-home-paths.ts"), true);
   }
   for (const [directory, name] of [
+    ["plane", "plane"],
     ["tmp-clean", "tmp_clean"],
     ["scc-prod", "scc-prod"],
     ["scc-prod", "git-diffstat"],
