@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "c049d31d8bfcae0f2e76711f3b2aeccbe191d1e7",
+  "sourceCommit": "1f2d242c10a08686ba18042f0ff084bf7bc8e26d",
   "outputs": [
     {
       "path": ".bash_profile",
       "kind": "file",
-      "sha256": "71902df2faac2a7cd366b9544653fcfff8377b5360ec93c8979ad9eaec204102",
+      "sha256": "35f2b2de7e0c5d9d9e8782b7e743d6a5c89343159540052c341762343d261099",
       "executable": false
     },
     {
       "path": ".bashrc",
       "kind": "file",
-      "sha256": "9ea4a6bb3a33dd9ed07d7879767e4acbfb461d24f39acc042aa890e1b946543a",
+      "sha256": "3b73b6f16cd8d6a6c91e794a3d701b6eebdbe5b2ee607c2581dea6868b4b4781",
       "executable": false
     },
     {
@@ -443,7 +443,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "dee7da29a332b0ebe78511994a78a4c8290dc6b075bddd84b4c01787e6eabcb4",
+      "sha256": "18f7edc76ca08db39265dee8955fcc5769435f4ed48f5e8a6050d47598c5259c",
       "executable": false
     },
     {
@@ -1456,7 +1456,7 @@
     {
       "path": ".zsh/fish-mirror.zsh",
       "kind": "file",
-      "sha256": "d0c79e3b5cb377fb6a0ac511a476cd7748cfcf609ccb8d177f21d8340b833bfe",
+      "sha256": "a55457b57a1585bc40b623bf57c822b800e044207e3663cc75a2610d97ac1ea3",
       "executable": false
     },
     {

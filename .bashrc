@@ -6,7 +6,7 @@ for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linu
 done
 unset brew_bin
 
-export AGENT_BROWSER_ENGINE=lightpanda
+export AGENT_BROWSER_ENGINE=chrome
 
 export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.bun/bin:$PATH"
 command -v mise >/dev/null 2>&1 && eval "$(mise activate bash)"

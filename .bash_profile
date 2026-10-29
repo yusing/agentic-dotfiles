@@ -6,7 +6,7 @@ for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linu
 done
 unset brew_bin
 
-export AGENT_BROWSER_ENGINE=lightpanda
+export AGENT_BROWSER_ENGINE=chrome
 
 export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
 if [ -r "$HOME/.local/share/dotfiles-setup/brew-paths" ]; then
