@@ -5,7 +5,9 @@ parent. Keep delegated work within your existing role, scope, and authorization.
 
 ## Assignment
 
-Select roles using the native catalog's routing guidance.
+Select roles using the native catalog's routing guidance. Keep work you can finish in a few tool
+calls, such as integration fixes, conflict resolution, history rewrites, and few-line corrections,
+rather than delegating it; a delegate costs a fresh context and a full brief.
 
 - Documents: main by default; delegate a bounded document assignment when it speeds up delivery.
 - LLM-facing: main owns instructions, skills, workflow/task documents, model-facing templates, and
@@ -18,8 +20,8 @@ the settled outcome, owned files, inputs, task-specific constraints, and useful 
 Include what has changed so far and distinguish the changes for this spawn or follow-up.
 Omit earlier change context only when the recipient already retains it.
 Brief review, audit, or diagnosis with scope
-and questions, without suspected findings or expected conclusions. In Codex, use a
-`fork_turns="none"` brief with complete task context.
+and questions, without suspected findings or expected conclusions. Use a `fork_turns="none"`
+brief with complete task context.
 
 Native roles own workflows; `MODEL-ROUTING.md` owns model and effort, which the spawner sets for every
 role. Agents can load instruction files and skills themselves.
@@ -33,9 +35,8 @@ user requirements, and constraints in the brief; these are assignment context, n
 
 Keep edits off files/interfaces a running delegate depends on.
 
-Reuse a subagent under context window while its scope/context remain useful;
-start fresh for further work before compaction erases its focus, and for independent judgement or a
-different assignment.
+Continue a subagent while its scope and retained context stay useful. Start a fresh one before
+compaction would erase its focus, and for independent judgment or a different assignment.
 
 Messages cost turns: forward only actionable user-message context relevant to the recipient, and
 skip redundant follow-ups.

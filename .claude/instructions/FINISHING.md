@@ -41,7 +41,8 @@ Comment on non-obvious constraints and surprising behavior, not obvious operatio
 
 ## Main delivery and review
 
-Only main applies this section. Delegates keep their assigned implementation or review scope.
+Main applies this section. A delegate applies it only when its assignment gives it review dispatch
+or the review-fix loop; other delegates keep their assigned implementation or review scope.
 
 ### Delivery check
 

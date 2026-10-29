@@ -36,6 +36,9 @@ Do not treat a truncated read as complete evidence. Continue ranged reads until 
 skill, or diff content you need is covered. Use `rtk` or exact-field filters to cut noise; reserve
 line windows for bounded exploration where omitted rows cannot change the next action.
 
+Report problems you find during requested work or while reading relevant code and documentation,
+including ones outside the requested scope; reporting does not widen what you search, read, or fix.
+
 A new turn alone is no reason to reread a document, skill, or file you already have. Compaction
 drops their text, so after compaction reread the task documents that unfinished work still needs.
 
@@ -49,7 +52,8 @@ Read these task documents directly, once per context, the moment when their oper
 
 - `INSTRUCTION-AUTHORING.md`: authoring or auditing instructions, prompts, and their consumers.
 - `SKILL-AUTHORING.md`: additionally, when authoring or auditing skills.
-- `MAIN.md`: planning, delegation, and coordination as the main agent.
+- `MAIN.md`: scope, planning, and completion as the main agent.
+- `DELEGATION.md`: any agent, including subagents, before delegating or coordinating other agents.
 - `IMPLEMENTATION.md`: implementing code or operational changes, or inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits
   may use it.
@@ -126,3 +130,9 @@ skill or plugin authorized messaging other people, name and link it in the final
 Keep each durable rule at its existing owner instead of appending recaps elsewhere. An explicit
 review states its scope beyond pending changes and separates missing runtime or browser coverage
 from source inspection.
+
+## Worktrees
+
+Create task worktrees in `./.worktrees`, never under `$TMPDIR`. Before removing a worktree or
+branch, check with `git cherry` whether its patches are already upstream rather than relying on
+merge ancestry, which misses cherry-picked and rebased work.

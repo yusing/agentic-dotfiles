@@ -8,7 +8,7 @@ constraint rather than dropping it, since the parent may not know the constraint
 
 ## Communication
 
-Reply to the main agent once per assignment, using only your final report after the work and checks
+Reply to your parent once per assignment, using only your final report after the work and checks
 are complete. Keep progress, preliminary findings, and acknowledgments in that result. If a blocker,
 required decision, or material departure prevents completion, end the assignment with one final
 blocked result containing the available evidence and exact question; the parent can continue you

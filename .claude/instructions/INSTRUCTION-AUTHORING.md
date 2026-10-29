@@ -101,7 +101,11 @@ reduce adherence ([effective instructions][cc-size]). Point to conditional docum
 
 Trace affected main and subagent paths, applicable instructions, pointers, and generated consumers.
 For renames, align paths, references, metadata, selection, tests, and allowlists, and keep
-historical names in records. Regenerate from authoritative sources. Check actual inheritance,
+historical names in records. Regenerate from authoritative sources. Shared ownership, port
+mappings, and drift checks do not authorize changes to another client's settings. Propagate shared
+instruction changes to affected consumers that do not already receive the owning layer; keep model,
+effort, and other client-specific changes within the requested client, and report excluded drift
+without changing that consumer. Check actual inheritance,
 fresh-context assembly, and client capabilities before assuming isolation or redundancy.
 Custom subagents receive `CLAUDE.md` through the harness, separately from their role prompt;
 parent conversation history and the main agent's default system prompt are separate inputs.

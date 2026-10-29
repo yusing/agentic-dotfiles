@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "89bfd448aa5e1012be620361a180208031f78901",
+  "sourceCommit": "70cbe5d91d0fcd5203c1161e866e7a7783d3da77",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,19 +65,19 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "80c132120e55327465263c60bbab7f539c4b05eb586704bc55a7e7d74f3f9f1e",
+      "sha256": "cdc93150946a7283d44a1fa5156944aa6abba47632fedaf4b4cf61bf592b5d43",
       "executable": false
     },
     {
       "path": ".claude/instructions/DOCS.md",
       "kind": "file",
-      "sha256": "a935ffa18770c4e0a7641392915191a4f882d55a5160c24a02f036b63ee54a0a",
+      "sha256": "501024148ddff95c78fe7bb0a232d5815835eac7e5a0c89f0eec8b5d4dc8f554",
       "executable": false
     },
     {
       "path": ".claude/instructions/FINISHING.md",
       "kind": "file",
-      "sha256": "3a658a48c49a308dddd24ffb4699f0bd4143ae751beb736f25db8ebfcc8411c2",
+      "sha256": "dcb749f61a9d7f7704637b769c69ad9210c376134fbaa8883544e855b8ee4f91",
       "executable": false
     },
     {
@@ -89,19 +89,19 @@
     {
       "path": ".claude/instructions/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "730809b5031369e4a2ea266cf7857b46853e7c2310b4b4573adb0db9907f5761",
+      "sha256": "8cd5399de213a0587d20c21b2539e9ab75b50a16c7a1485a937fc2f96b091800",
       "executable": false
     },
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "996fcf6b62ebb8110a74b9191d9c6a10b7556c2b2e2c989ab36c143dd549c231",
+      "sha256": "efc2a8be5f18fe47ec1e5fadd90be2ecd77891d5b4024c0df520f46ae7cca533",
       "executable": false
     },
     {
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
-      "sha256": "87aced6bc738f84632c4ff1ef85130e9c44526c7385e40538f337752c30fc78b",
+      "sha256": "db4f2ae2a257e6e148b30a9982bd5011517fdc9ed91f35e26481fd86e87a1055",
       "executable": false
     },
     {
@@ -113,7 +113,7 @@
     {
       "path": ".claude/instructions/SUBAGENT.md",
       "kind": "file",
-      "sha256": "3d6d6d5a3aee40c48b1a12977a959760ee87314bf4acfc18f2495d5546800921",
+      "sha256": "77ba4ac65091d5388ebd675de4784ff8936550ff64f22506f5c4ea7e5110f190",
       "executable": false
     },
     {
@@ -131,7 +131,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "e3fe7701bfd45e19b68c9bb787459f88fef7b01cfe985c7ab258ac34e9d3bab4",
+      "sha256": "def16518d478b02a962b564fac85908549955ac211942b67c484929a34cd2123",
       "executable": false
     },
     {
@@ -185,7 +185,7 @@
     {
       "path": ".codex/DELEGATION.md",
       "kind": "file",
-      "sha256": "d0418abf2c7bb9b4056aa51f0d0eab6ccf1bfc39c891ad7bfa552b6c49d3c348",
+      "sha256": "6edea335eaf86cc224ebb2df275f137736c7334e19db85a77d2d9a2d11bedbf7",
       "executable": false
     },
     {
@@ -197,7 +197,7 @@
     {
       "path": ".codex/FINISHING.md",
       "kind": "file",
-      "sha256": "b6d975dbf67e8006b8370663e15f3b3d5ed3320bd9eb02f6206401b380d69b0e",
+      "sha256": "666ba73d619e8b9f7fea776a4200316655777dfa252a7b4b296f369c1264adf8",
       "executable": false
     },
     {
@@ -371,7 +371,7 @@
     {
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
-      "sha256": "d1e30dedc86f01253cb48d9e814b66171735dcf05c2fe4a7927d8ea80d5dbf30",
+      "sha256": "cdde66c386faf6eac900173d8c93c5adb01ae36406dedc3a9b5bf39f164525e1",
       "executable": false
     },
     {
@@ -1515,7 +1515,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "7846d12bbd15e3811388dcfd98846ab68681213fe09a5d232a023e5776486507",
+      "sha256": "e663287bf7d2c1ad9fbb19bf2c12c0092acd06da41e3147e66240e1ec30815f0",
       "executable": false
     },
     {

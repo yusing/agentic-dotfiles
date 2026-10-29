@@ -42,12 +42,7 @@ execute backticks/$(). Do not expose secrets through command substitution. Avoid
 warnings/checklists/approval gates and preference-only output redirection.
 
 Follow tool timing/retry guidance. Prefer completion notifications and interruptible waits sized
-to runtime/deadlines, not status-only polling. Reuse unchanged command results. At a limit or stall,
+to runtime/deadlines, not status-only polling. At a limit or stall,
 report progress and remaining work. After failure, preserve unaffected requirements and change only
 the failing operation. An explicit cancellation stops that operation until the user asks to resume;
 report any underlying process still running.
-
-After compaction, recover guidance needed for unfinished work; delegates load only their
-assignment's skills.
-Use the injected catalog and shared AGENTS.md skill rules. Load only next-operation
-skills.

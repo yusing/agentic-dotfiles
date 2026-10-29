@@ -29,5 +29,5 @@ structure, the affected topics, and their cross-references. Record coverage gaps
 that map.
 
 The main agent owns applicability, behavior, owner discovery, integration, and the timing and
-authorship policy in `MAIN.md`. Instructions, skills, workflow and task documents, and model-facing
-templates stay with the main agent.
+authorship policy in `DELEGATION.md`. Instructions, skills, workflow and task documents, and
+model-facing templates stay with the main agent.

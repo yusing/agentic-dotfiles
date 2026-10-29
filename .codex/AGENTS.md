@@ -85,10 +85,11 @@ minified, or generated data, extract exact fields/bounded bytes and reuse unchan
 
 ## Delegates
 
-Use native role capabilities within authorized scope.
 Keep durable rules at their existing owner instead of appending recaps. Explicit reviews state scope
 beyond pending changes and separate missing runtime/browser coverage from source inspection.
 
 ## Worktrees
 
-Worktrees lives in `./.worktrees`, never under `$TMPDIR`.
+Create task worktrees in `./.worktrees`, never under `$TMPDIR`. Before removing a worktree or
+branch, check with `git cherry` whether its patches are already upstream rather than relying on
+merge ancestry, which misses cherry-picked and rebased work.

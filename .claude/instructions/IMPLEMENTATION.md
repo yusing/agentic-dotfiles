@@ -13,6 +13,12 @@ a current shared responsibility, invariant, or necessary algorithm. Leave host o
 its owner, and add persistence, fallbacks, or compatibility only when the task or a supported
 contract needs them, because each one is a contract someone must maintain.
 
+Keep each behavioral definition at one owner across features. Producers and consumers share that
+definition rather than maintaining parallel case lists or recognition rules, which drift apart as
+new input shapes appear. When changing a producer, trace its consumers, including display and
+replay, and test the produced data through them. Separate operations can share definitions
+without sharing their side effects.
+
 For a simplification request, remove mechanisms or required decisions at the affected owner. Moving
 code or adding a replacement layer does not simplify it.
 
