@@ -1,6 +1,6 @@
 ---
 name: js-ts-best-practices
-description: Apply local JavaScript and TypeScript conventions when changing or reviewing code.
+description: Apply local JavaScript and TypeScript conventions during implementation finishing or explicit code-quality review.
 ---
 
 # JS/TS

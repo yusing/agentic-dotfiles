@@ -23,7 +23,7 @@ assuming the main agent's system prompt also reaches its subagents. A change to 
 | Codex base override | Selected by `.codex/config.toml`; replacement and priority are defined in `CONTEXT-CODEX-LIFECYCLE.md`. Claude does not consume it. |
 | Client standing guidance | The harness loads `.codex/AGENTS.md` or `.claude/CLAUDE.md` for main and custom subagents, independently of conversation-history inheritance. Claude's documented built-in Explore/Plan exception is described in its standing guidance. |
 | Repository guidance | Root `AGENTS.md` and its `CLAUDE.md` symlink route home-configuration maintenance, not independent projects below home. Discovery scope depends on the client; see `CONTEXT-CODEX-LIFECYCLE.md` and Claude's instruction-authoring guidance. Claude would load both files as ancestors in every project below home, and a `CLAUDE.md` above a project suppresses that project's `AGENTS.md`, so `claudeMdExcludes` in `.claude/settings.json` skips them and `.claude/CLAUDE.md` tells home-directory sessions to read `AGENTS.md` on demand. |
-| Task documents | Main reads `MAIN.md`; subagents read `SUBAGENT.md`. Any Codex agent, including a subagent coordinating children, reads `DELEGATION.md` before delegation or coordination. Claude retains dispatch guidance in its adapted `MAIN.md`. Any applicable role reads `DOCS.md`, `IMPLEMENTATION.md`, or `TESTING.md` when its operation triggers them. Other document triggers remain in the client standing file. |
+| Task documents | Main reads `MAIN.md`; subagents read `SUBAGENT.md`. Any Codex agent, including a subagent coordinating children, reads `DELEGATION.md` before delegation or coordination. Claude retains dispatch guidance in its adapted `MAIN.md`. Any applicable role reads `DOCS.md`, `IMPLEMENTATION.md`, or `TESTING.md` when its operation triggers them. `FINISHING.md` supplies deferred practices for implementation delivery/handback and explicit quality review, with a main-only section for delivery and review orchestration. Other document triggers remain in the client standing file. |
 | Native roles and skills | Role configuration supplies the selected role; skill metadata selects an on-demand body. Neither a catalog entry nor a parent's tool read establishes that a child has the body. |
 
 Instruction-authoring guidance owns changes to these layers. The maps describe maintained owners,
@@ -41,9 +41,9 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `.codex/MAIN.md`
 - `.codex/DELEGATION.md`
 - `.codex/MODEL-ROUTING.md`
-- `.codex/REVIEW.md`
 - `.codex/SUBAGENT.md`
 - `.codex/IMPLEMENTATION.md`
+- `.codex/FINISHING.md`
 - `.codex/TESTING.md`
 - `.codex/DOCS.md`
 - `.codex/INSTRUCTION-AUTHORING.md`

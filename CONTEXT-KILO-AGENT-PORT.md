@@ -23,7 +23,7 @@ Kilo custom agents are Markdown files with YAML frontmatter. The filename is
 the agent name. Generated roles use `mode: subagent` so they are invoked through
 Kilo's task tool or `@` mentions rather than replacing the user's primary
 agent. Colors and permission allowlists live in the helper. Main owns inspection dispatch
-through REVIEW.md. Read-only roles deny `edit` and `task`. `write` stays unspecified
+through FINISHING.md. Read-only roles deny `edit` and `task`. `write` stays unspecified
 on every role for a relayed result artifact, and evidence-gathering roles also
 allow `bash`. These permission lists are not a filesystem sandbox. Native TOML
 role bodies bound authored changes and result-artifact paths; validation-capable

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.25
+
+Publish the Codex and Claude finishing guidance used by implementation and review agents,
+replacing their separate review documents.
+
 ## 1.3.24
 
 Exclude the private Plane skill, its former plane-body-editing name, and their

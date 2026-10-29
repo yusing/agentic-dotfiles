@@ -10,8 +10,9 @@ base-to-head range against the accepted outcome, including cross-slice integrati
 
 ## Independent inspection
 
-Use a stable range and the delivery owner's current `RECOVERY.json` contents. Apply REVIEW.md's inspection
-and reuse guidance. This skill is read-only, including the recovery record and Git state.
+Use a stable range and the delivery owner's current `RECOVERY.json` contents. Apply FINISHING.md
+within your review scope and reuse supplied evidence. This skill is read-only, including the
+recovery record and Git state.
 
 A blocker needs evidence of a violated accepted requirement, contract, safety invariant,
 or required check. Missing required inspection is a gap, not a passing review.

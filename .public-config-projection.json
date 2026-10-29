@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d4bce833fa695941b46af177287e414f211fe241",
+  "sourceCommit": "e9f0bf7a2783ebd1da180eaaf677f6d6673b70db",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,13 +65,19 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "4892df72c3e50d1cf0dfae865eb4f6da9b5579324c2b941ae483f9086f7a764f",
+      "sha256": "80c132120e55327465263c60bbab7f539c4b05eb586704bc55a7e7d74f3f9f1e",
       "executable": false
     },
     {
       "path": ".claude/instructions/DOCS.md",
       "kind": "file",
       "sha256": "a935ffa18770c4e0a7641392915191a4f882d55a5160c24a02f036b63ee54a0a",
+      "executable": false
+    },
+    {
+      "path": ".claude/instructions/FINISHING.md",
+      "kind": "file",
+      "sha256": "3a658a48c49a308dddd24ffb4699f0bd4143ae751beb736f25db8ebfcc8411c2",
       "executable": false
     },
     {
@@ -83,19 +89,19 @@
     {
       "path": ".claude/instructions/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "b0266af12c085f7309f82f72b5e10c39aa6fc75d9d83621b7f7ff17177d8dbc0",
+      "sha256": "730809b5031369e4a2ea266cf7857b46853e7c2310b4b4573adb0db9907f5761",
       "executable": false
     },
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "2e39e57dcd7d92c65f4abad2f66f07d6849a411c72984ae55cd97b2d84c2df12",
+      "sha256": "996fcf6b62ebb8110a74b9191d9c6a10b7556c2b2e2c989ab36c143dd549c231",
       "executable": false
     },
     {
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
-      "sha256": "157cddbb737db5a1862917acf8f533654aaa62521740f33e64e0d9140eed9bbb",
+      "sha256": "87aced6bc738f84632c4ff1ef85130e9c44526c7385e40538f337752c30fc78b",
       "executable": false
     },
     {
@@ -113,7 +119,7 @@
     {
       "path": ".claude/instructions/TESTING.md",
       "kind": "file",
-      "sha256": "0f06698706a0980e24e7c9a3311bfb4c647da8cc85c692c4b168e462d96d2c4f",
+      "sha256": "65e1fe75b4ae53449418d8cfde54d684216738336b615d805d928bb40f6ef59c",
       "executable": false
     },
     {
@@ -125,7 +131,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "5bcb4cf50c33e8c854c282e9e3f9125ce752dd833f748dce4e0228fc17a310d2",
+      "sha256": "e5fe810b9c97812673ff5539a652cead82b11c0d3f1655ad782bd90c015e87d3",
       "executable": false
     },
     {
@@ -186,6 +192,12 @@
       "path": ".codex/DOCS.md",
       "kind": "file",
       "sha256": "106165d19af48c06d57e2682a5755ebdd3423b3ea98404881c2f4b2dabdd4585",
+      "executable": false
+    },
+    {
+      "path": ".codex/FINISHING.md",
+      "kind": "file",
+      "sha256": "b6d975dbf67e8006b8370663e15f3b3d5ed3320bd9eb02f6206401b380d69b0e",
       "executable": false
     },
     {
@@ -341,7 +353,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "13a861ba57aad62801948e62a13caa52a2fcd4aa3e94efbaf8eb4ebfdd2d9136",
+      "sha256": "5dc252d1f31602ccf239d8b0eb362193a23145c55cfa340e260261305f87b775",
       "executable": false
     },
     {
@@ -353,7 +365,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "2cb6f7069c32ed372e588f2feea178afd45e5ca7ba54485f751d576b9c744a67",
+      "sha256": "6e38db4f8b7eb508676873ed3af33cb04fc9ae5a849d70ff8b41eac4c50952ac",
       "executable": false
     },
     {
@@ -413,7 +425,7 @@
     {
       "path": ".codex/TESTING.md",
       "kind": "file",
-      "sha256": "f1d4e058d296a96635f3815fe3a2356a3d2a4853a1da6f8c9d6618029d6bf99e",
+      "sha256": "a9f51a2db43e54dc87faed305423ee931f2959a2da219262d4bdb33f0a88c95b",
       "executable": false
     },
     {
@@ -659,7 +671,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "9dca8ec3228e98520ed2f378491023b1a0499db7f66c70c91fa6b24979ebfbc2",
+      "sha256": "050c308222943b131f8feaa283173ba5141bc204a0067a7128b322561bd341e6",
       "executable": false
     },
     {
@@ -766,13 +778,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "671c3b751300313650755efcf7974314913db87613562256c73e4cf5dd899947",
+      "sha256": "eaff090b6d045d21594c4fecef8baa27b4f2211b0d91f66cd8d54b449c636b33",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "e96e3d4ed1b73b6d2984ac729522c71a64925a150c3475319e132c0305b9767a",
+      "sha256": "8c4236e03ffd6c41c23326059707fe7d59a56db56d21c69de5a604c695db7648",
       "executable": true
     },
     {
@@ -988,7 +1000,7 @@
     {
       "path": ".skills-mgr/skills/council/SKILL.md",
       "kind": "file",
-      "sha256": "515df6c6b2240b1194fb221e1cca42753e34a3360dbf35f646d74c511a6a341a",
+      "sha256": "92c68147a220547f1c5dbadb0eb57cd0e6dc35ad39a6be3411718a71d8619381",
       "executable": false
     },
     {
@@ -1000,7 +1012,7 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "7ded849e92c31db899665ea8ad25e58424623495b27bd8976b29cf986f1c9237",
+      "sha256": "74185691b256e216bda7835e36fd11d95ce1e4e1df8d99b8a2ed03e7ebfedbae",
       "executable": false
     },
     {
@@ -1018,7 +1030,7 @@
     {
       "path": ".skills-mgr/skills/final-review/SKILL.md",
       "kind": "file",
-      "sha256": "1d0eebaef8f4bc15099a0fb87cdb8434e121007d51466c657eeefcac1090b491",
+      "sha256": "34ff7e563ba3a3f93704ffc777fc967b4a2799e8f88623bb7b2b6f103e2a74f9",
       "executable": false
     },
     {
@@ -1072,7 +1084,7 @@
     {
       "path": ".skills-mgr/skills/golang-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "e70a5c92063f2a5910b7802a1d56e279a8e6d98e2ca7fa176858bcb9c7a9c0db",
+      "sha256": "1cd88ecfa64b1d9e6283319fc7cf396fdfd8909eb5f164a3a44cf3b35d6290ff",
       "executable": false
     },
     {
@@ -1120,7 +1132,7 @@
     {
       "path": ".skills-mgr/skills/js-ts-best-practices/SKILL.md",
       "kind": "file",
-      "sha256": "ef497fec175648f8d8856617e5cec8f5c3474fdf46e331477f57b8b958548661",
+      "sha256": "2b5a8b64bc13e5e6e13b3b29b9b88b21f24e5aae585be0182b6ea684a1159553",
       "executable": false
     },
     {
@@ -1467,13 +1479,13 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "aae1edcf28aca6c97f58a6e9552e0fd852b3ddab7bece9c304d2a8cfe36466b0",
+      "sha256": "49eb4666dbf6b37631a4072d87fff931e2fa6359b954f2b492d9210217a769b9",
       "executable": false
     },
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "29899a295020ab2d6c12cfc70d07035a2ac9a34ed305260ec38667eb693995ab",
+      "sha256": "3d95ff21cd30ceed732cfb5a33aade4c2a193e0d1070611e1dd199b14739a454",
       "executable": false
     },
     {
@@ -1503,13 +1515,13 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "e4edd7d76fed44661d053b1d902b1c7ef24689d56898a5d3171af6a7992c2b3e",
+      "sha256": "7846d12bbd15e3811388dcfd98846ab68681213fe09a5d232a023e5776486507",
       "executable": false
     },
     {
       "path": "CONTEXT-KILO-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "b80e7b93b790683a58399570e478bfa35d653f738dc629f775c737c3ace4ac9d",
+      "sha256": "260bf8af17d2efac1fef351294f874074fb6788bb5fedd2e74a1f9a7e8240f62",
       "executable": false
     },
     {

@@ -42,7 +42,7 @@ including only the UI, service, integration, and persistence work it needs. Remo
 stubs and routes without narrowing the accepted outcome.
 
 Validate the slice through its real entry point, affected contracts, and applicable build/typecheck.
-Then read REVIEW.md and apply its delivery check, inspection, and convergence rules to the stable
+Then apply FINISHING.md's practices, delivery check, inspection, and convergence rules to the stable
 slice; reuse coverage that still applies. Correct in-scope defects and revalidate their consuming
 behavior.
 
@@ -57,7 +57,7 @@ range, and the current `RECOVERY.json` contents. Record its findings and coverag
 Correct confirmed blockers in original slice
 order, validate and inspect the affected corrections, and create
 `git commit --fixup=<slice-commit>` against the checkpoint or slice each correction belongs to.
-Reread REVIEW.md before inspecting these corrections and apply its convergence limits; record
+Apply FINISHING.md's convergence limits when inspecting these corrections; record
 unresolved findings and missing coverage instead of repeating inspection indefinitely or claiming
 clearance.
 

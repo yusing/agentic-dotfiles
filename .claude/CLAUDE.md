@@ -50,11 +50,12 @@ Read these task documents directly, once per context, the moment when their oper
 - `INSTRUCTION-AUTHORING.md`: authoring or auditing instructions, prompts, and their consumers.
 - `SKILL-AUTHORING.md`: additionally, when authoring or auditing skills.
 - `MAIN.md`: planning, delegation, and coordination as the main agent.
-- `REVIEW.md`: as the main agent, once an authorized change is implemented and its focused
-  validation is done, before you report completion or commit a delivered slice.
 - `IMPLEMENTATION.md`: implementing code or operational changes, or inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits
   may use it.
+- `FINISHING.md`: main after an authorized change and focused validation, before completion or a
+  slice commit; implementing subagents before handback of focused-validated code or operational work;
+  also explicit implementation-quality reviews. Apply only the sections within the assigned role.
 - `TESTING.md`: writing tests or fixtures, or selecting validation. Projects supply runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
 - `GITHUB.md`: preparing pull-request, issue, or comment text.
@@ -75,6 +76,12 @@ The harness supplies this file to the main agent and custom subagents. Built-in 
 omit it; provide any required guidance explicitly when assigning work to those built-ins.
 
 ## Skills and tools
+
+During construction, defer automatic loading of best-practice and quality-enforcement skill bodies
+until `FINISHING.md`. Language/framework matches and descriptions such as "when implementing" identify
+relevant finishing skills, not Phase 1 reads. Load task-execution, API/tooling, and domain guidance
+needed for the working path. Explicit user skill invocations and explicit review/audit requests
+follow their requested operation.
 
 Select skills and resources that materially help the current operation. Explicit user and
 higher-priority requirements stay mandatory; follow the constraints of a selected tool or method.

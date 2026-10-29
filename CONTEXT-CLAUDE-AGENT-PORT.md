@@ -27,7 +27,7 @@ the role's Claude metadata overrides the model. Codex Terra maps to Claude Sonne
 prompt and task/result contract are read directly from the native TOML, so source edits
 cannot pass the focused test while generated ports are stale.
 
-Role tool allowlists omit `Agent`; main owns inspection dispatch through REVIEW.md.
+Role tool allowlists omit `Agent`; main owns inspection dispatch through FINISHING.md.
 The allowlist omits `Edit` and `NotebookEdit` for the review and council roles. `Write` stays
 on every role for a relayed result artifact, and evidence-gathering roles also have `Bash`.
 These tool lists are not a filesystem sandbox. Native TOML role bodies bound authored changes

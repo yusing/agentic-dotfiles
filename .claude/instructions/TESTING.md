@@ -22,8 +22,8 @@ Run checks against a finished change rather than around each edit, because waiti
 otherwise dominates task time:
 
 - Before the change, run tests only when a reported failure needs reproducing to find its cause.
-- Finish the production, test, and document edits for a coherent change, then run its focused
-  checks once. Use compilation or type checks earlier only when they are much cheaper.
+- Finish production, tests, and affected behavioral contracts for a coherent working path, then
+  run its focused checks once. Use compilation or type checks earlier only when they are much cheaper.
 - After a failure, rerun the failing tests. Rerun a passing check only when code it covers
   changed after it passed.
 - Run broader consumer or full-suite checks once, last, and only when the change reaches them.

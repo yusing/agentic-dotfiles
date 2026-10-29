@@ -17,6 +17,7 @@ __pycache__
 !/.claude/CLAUDE.md
 !/.claude/instructions/
 !/.claude/instructions/DOCS.md
+!/.claude/instructions/FINISHING.md
 !/.claude/instructions/GITHUB.md
 !/.claude/instructions/IMPLEMENTATION.md
 !/.claude/instructions/INSTRUCTION-AUTHORING.md
@@ -38,6 +39,7 @@ __pycache__
 !/.codex/config.toml
 !/.codex/DELEGATION.md
 !/.codex/DOCS.md
+!/.codex/FINISHING.md
 !/.codex/GITHUB.md
 !/.codex/hooks.json
 !/.codex/hooks/
