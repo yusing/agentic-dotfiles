@@ -11,8 +11,6 @@ its assigned later phases. Use council-investigator for seats that must gather i
 feasibility, or cost evidence; use investigator for ordinary diagnosis before deliberation.
 
 This role reasons within its supplied evidence and cannot invent missing user priorities."""
-model = "gpt-6-astra"
-model_reasoning_effort = "medium"
 developer_instructions = '''
 # Role
 

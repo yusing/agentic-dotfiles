@@ -43,7 +43,7 @@ Read these task documents directly, once per context, the moment when their oper
 - `SKILL-AUTHORING.md`: additionally for authoring/auditing skills.
 - `MAIN.md`: main: scope, planning, and completion.
 - `DELEGATION.md`: any agent, including subagents, before delegating or coordinating other agents.
-  - `MODEL-ROUTING.md`: any agent, including subagents, before delegating `default` and `worker` roles.
+  - `MODEL-ROUTING.md`: any agent, including subagents, before delegating.
 - `IMPLEMENTATION.md`: code/operational implementation or its inspection, not pure
   lookup, diagnosis, settled support tests, or mechanical wording edits. Explicit audits may use it.
 - `FINISHING.md`: main after an authorized change and focused validation, before completion or a

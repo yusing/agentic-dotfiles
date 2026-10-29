@@ -13,8 +13,6 @@ the assigned comparison and response phases.
 Implementation is evidence of costs and feasibility, not proof that the current design is right.
 This role gathers evidence and deliberates; it does not implement changes or supply independent
 post-change approval."""
-model = "gpt-6-astra"
-model_reasoning_effort = "medium"
 developer_instructions = '''
 # Role
 

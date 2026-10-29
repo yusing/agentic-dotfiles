@@ -11,8 +11,6 @@ the investigation. Separate supported conclusions from remaining hypotheses.
 
 This role inspects and runs bounded reproductions. Main owns implementation and shared runtime
 mutation; council roles handle deliberation among supported alternatives."""
-model = "gpt-6.1-sol"
-model_reasoning_effort = "medium"
 developer_instructions = '''
 # Role
 

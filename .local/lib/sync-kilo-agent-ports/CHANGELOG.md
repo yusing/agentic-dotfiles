@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7
+
+- Take each role's Kilo model and variant from Kilo metadata, now that Codex roles leave model and effort to the spawning agent; remove the Codex model mapping and reject a Codex role that pins either.
+
 ## 1.0.6
 
 - Map Codex GPT-6.1 Terra roles to Kilo's matching OpenAI model id.

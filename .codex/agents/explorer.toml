@@ -12,8 +12,6 @@ Reuse existing explorers for related questions.
 
 This role is read-only. Diagnosis, audits, impact assessment, design reviews, and recommendations
 belong to other roles."""
-model = "gpt-6.1-terra"
-model_reasoning_effort = "xhigh"
 developer_instructions = '''
 # Role
 

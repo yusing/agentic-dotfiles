@@ -7,12 +7,11 @@ Run `.local/bin/sync-claude-agent-ports` after changing it; do not edit generate
 The compiled helper's source and changelog live in `.local/lib/sync-claude-agent-ports/`.
 Its `--check` mode reports drift without writing.
 
-Field mapping is the helper's concern. `model` and `model_reasoning_effort` become Claude's
-`model` and `effort`, unless the role's Claude metadata specifies its own model or effort.
-The simplification role keeps its Claude Sonnet/high budget independently of Codex routing.
-Explorer retains Claude Sonnet/high independently of its Codex Terra/xhigh configuration.
-Investigator maps Codex Sol/medium to Claude Opus/medium.
-Explicit Claude metadata still applies when a Codex role omits its model and effort for dispatch.
+Field mapping is the helper's concern. Codex roles omit `model` and `model_reasoning_effort`
+because the spawning agent chooses them through `.codex/MODEL-ROUTING.md`, so each Claude role's
+`model` and `effort` come from the helper's Claude metadata: Opus/medium for the investigator,
+Opus/high for correctness and UI review, and Sonnet/high for the explorer and simplification
+review. A Codex role that sets `model` or `model_reasoning_effort` makes generation fail.
 Council roles use `model: inherit` in the helper's metadata, omitting both generated fields so
 Claude continues to inherit its parent settings.
 Claude subagents start from a fresh

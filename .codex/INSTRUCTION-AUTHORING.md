@@ -28,7 +28,7 @@ Authorized instruction maintenance may adapt a rule for separately loaded client
 its consumers.
 
 Shared rules preserve roles and settled assignments. Workflows own delegation/readiness gates;
-native roles own capabilities and model budgets. Check documentation and mechanical work too.
+native roles own capabilities; `MODEL-ROUTING.md` owns model budgets. Check documentation and mechanical work too.
 Preserve client-specific dispatch for fields omitted from role configuration.
 
 ## Consumer checks

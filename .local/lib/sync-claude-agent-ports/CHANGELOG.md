@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.13
+
+- Take each role's Claude model and effort from Claude metadata, now that Codex roles leave model and effort to the spawning agent; remove the Codex model mapping and reject a Codex role that pins either.
+
 ## 1.0.12
 
 - Map Codex GPT-6.1 Terra roles to Claude Sonnet.

@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.6";
+export const VERSION = "1.0.7";
 export const BUILTIN_ROLES = [
   "ask",
   "code",
@@ -11,25 +11,16 @@ export const BUILTIN_ROLES = [
   "orchestrator",
   "plan",
 ] as const;
-const MODEL_MAP: Record<string, string> = {
-  "gpt-6-luna": "kilo/deepseek/deepseek-v4.1-flash",
-  "gpt-6.1-terra": "kilo/openai/gpt-6.1-terra",
-  "gpt-6.1-sol": "kilo/openai/gpt-6.1-sol",
-  "gpt-6-astra": "kilo/openai/gpt-6-astra",
-};
-const MODEL_VARIANTS: Record<string, readonly string[]> = {
-  "kilo/deepseek/deepseek-v4.1-flash": ["none", "low", "high", "max"],
-};
 type Permission = "allow" | "deny";
 const READ_PERMISSION: Record<string, Permission> = { bash: "allow", edit: "deny", task: "deny" };
-const METADATA: Record<string, { color: string; model?: string; variant?: string; permission: Record<string, Permission> }> = {
+const METADATA: Record<string, { color: string; model: string; variant?: string; permission: Record<string, Permission> }> = {
   "council-investigator": { model: "inherit", color: "#EAB308", permission: READ_PERMISSION },
   "council-member": { model: "inherit", color: "#F97316", permission: { bash: "deny", edit: "deny", task: "deny" } },
-  explorer: { color: "#EC4899", permission: READ_PERMISSION },
-  investigator: { color: "#06B6D4", permission: READ_PERMISSION },
-  "review-correctness": { color: "#EF4444", permission: READ_PERMISSION },
-  "review-simplify": { color: "#22C55E", permission: READ_PERMISSION },
-  "ui-reviewer": { color: "#A855F7", permission: READ_PERMISSION },
+  explorer: { model: "kilo/openai/gpt-6.1-terra", variant: "xhigh", color: "#EC4899", permission: READ_PERMISSION },
+  investigator: { model: "kilo/openai/gpt-6.1-sol", variant: "medium", color: "#06B6D4", permission: READ_PERMISSION },
+  "review-correctness": { model: "kilo/openai/gpt-6.1-sol", variant: "high", color: "#EF4444", permission: READ_PERMISSION },
+  "review-simplify": { model: "kilo/openai/gpt-6.1-sol", variant: "high", color: "#22C55E", permission: READ_PERMISSION },
+  "ui-reviewer": { model: "kilo/openai/gpt-6-astra", variant: "high", color: "#A855F7", permission: READ_PERMISSION },
 };
 
 export function adaptText(text: string): string {
@@ -65,20 +56,10 @@ export function renderRole(role: string, config: Record<string, unknown>): strin
     throw new Error(`${role}: missing developer_instructions`);
   }
   const fields = ["---", `description: ${JSON.stringify(config.description.trim())}`, "mode: subagent"];
-  const mapped = config.model == null ? undefined : MODEL_MAP[String(config.model)];
-  if (config.model != null && !mapped) {
-    throw new Error(`${role}: no Kilo mapping for model ${JSON.stringify(config.model)}`);
+  if (config.model != null || config.model_reasoning_effort != null) {
+    throw new Error(`${role}: Codex role must leave model and effort to the spawning agent`);
   }
-  const model = metadata.model ?? mapped;
-  if (model && model !== "inherit") {
-    const variant = metadata.variant ?? config.model_reasoning_effort;
-    if (typeof variant !== "string" || !variant) throw new Error(`${role}: model has no model_reasoning_effort`);
-    const allowed = MODEL_VARIANTS[model];
-    if (allowed && !allowed.includes(variant)) {
-      throw new Error(`${role}: ${model} has no variant ${JSON.stringify(variant)}`);
-    }
-    fields.push(`model: ${model}`, `variant: ${variant}`);
-  }
+  if (metadata.model !== "inherit") fields.push(`model: ${metadata.model}`, `variant: ${metadata.variant}`);
   const hasBash = metadata.permission.bash === "allow";
   fields.push(`color: ${JSON.stringify(metadata.color)}`, ...yamlPermission(metadata.permission));
   const body = adaptText(config.developer_instructions);
