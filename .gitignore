@@ -21,7 +21,6 @@ __pycache__
 !/.claude/instructions/IMPLEMENTATION.md
 !/.claude/instructions/INSTRUCTION-AUTHORING.md
 !/.claude/instructions/MAIN.md
-!/.claude/instructions/REVIEW.md
 !/.claude/instructions/SKILL-AUTHORING.md
 !/.claude/instructions/SUBAGENT.md
 !/.claude/instructions/TESTING.md
@@ -70,7 +69,6 @@ __pycache__
 !/.codex/INSTRUCTION-AUTHORING.md
 !/.codex/MAIN.md
 !/.codex/overridden_base_instructions.md
-!/.codex/REVIEW.md
 !/.codex/SKILL-AUTHORING.md
 !/.codex/skills/
 !/.codex/skills/dump-last-response/

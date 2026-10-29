@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "82d0278f8aa88ed10a5e30a8d9d375ebf704ca27",
+  "sourceCommit": "d4bce833fa695941b46af177287e414f211fe241",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -96,12 +96,6 @@
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
       "sha256": "157cddbb737db5a1862917acf8f533654aaa62521740f33e64e0d9140eed9bbb",
-      "executable": false
-    },
-    {
-      "path": ".claude/instructions/REVIEW.md",
-      "kind": "file",
-      "sha256": "c3daad7354394339ba78d0ee1c4ebd074325a8d5b422b8084cdaa7377c646cd0",
       "executable": false
     },
     {
@@ -366,12 +360,6 @@
       "path": ".codex/overridden_base_instructions.md",
       "kind": "file",
       "sha256": "d1e30dedc86f01253cb48d9e814b66171735dcf05c2fe4a7927d8ea80d5dbf30",
-      "executable": false
-    },
-    {
-      "path": ".codex/REVIEW.md",
-      "kind": "file",
-      "sha256": "66a161ba99d9875699708dbb6fc9390e47aa4b4f9f7eb34d5e97a3e2739f0e06",
       "executable": false
     },
     {
@@ -671,7 +659,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "31c81c7b70ccb6e2dc36ac8ab888de5e28ae5b79b2a47e8d3578dc2faef81472",
+      "sha256": "9dca8ec3228e98520ed2f378491023b1a0499db7f66c70c91fa6b24979ebfbc2",
       "executable": false
     },
     {
