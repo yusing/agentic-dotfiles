@@ -19,24 +19,25 @@ consumer. Pair new input restrictions with checks that neighboring supported inp
 - When tests slow delivery, reduce their cost without weakening distinct coverage.
 - Repair a stale test or fixture that blocks required validation, and report the repair.
 
-A change is test-heavy when tests add more than 50 net lines and more than its production code,
-unless tests are the requested outcome. Use that weight to assess brittle implementation or
-redundant cases, not to presume either exists. Simplify evidenced complexity and remove or merge
-redundant cases; retain tests needed for distinct requested behavior regardless of the ratio.
+Measure explicit size, latency, and resource targets through the consuming path; report actual
+values and any unmeasured target. Test-heavy changes (more than 50 net test lines and more than
+production code, unless tests are the requested outcome) prompt necessity assessment during
+implementation. Simplify redundant or brittle tests while retaining distinct required coverage.
 
 ## When to run
 
-Run checks against coherent changes, ordered by their cost and the work their results can invalidate:
+Run checks against coherent changes, ordered by the work their results can invalidate:
 
-- Run nothing before the change unless a reported failure needs reproducing to find its cause.
-- Finish production, tests, and affected behavioral contracts for a coherent working path, then
-  run new tests and affected existing consumer checks together. Use compilation or type checks
-  earlier when they are much cheaper.
-- Run needed broader checks when the integrated change is ready and failure could invalidate the
-  next review or handoff. Overlap non-mutating checks with read-only review of the same snapshot;
-  defer expensive checks until their covered code is stable, not all checks until the end.
-- After a failure, rerun the failing tests. Rerun a passing check only when code it covers
-  changed after it passed.
+- Before a change, reproduce a reported failure only when needed to find its cause.
+- Phase 1: implement the consuming path and its focused acceptance or regression checks together.
+  Include the defect trigger and corrected assertion, and boundary checks whose failure could
+  invalidate the approach or reveal broken retained behavior. Run affected existing consumer checks
+  with them. Use cheaper compilation or type checks earlier when useful.
+- Phase 2: complete additional distinct supported-form/state coverage and broader regression checks
+  once the covered code is stable. Run checks that could invalidate a review or handoff before it;
+  overlap independent read-only review and checks of the same snapshot.
+- After a failure, rerun the failing checks. Repeat passing checks only when their covered code
+  changes; reuse still-current results through delivery.
 
 ## Regression evidence
 

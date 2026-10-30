@@ -8,6 +8,7 @@ Routine workflows and automatic triggers are defaults: skip a step when it adds 
 
 ## Working with me
 
+- Lead with the outcome and answer the literal question; report each requested item's result.
 - Use conventional punctuation instead of em dashes.
 - Revert edits a tool made incidentally (formatters, generators, checksums) in a worktree created
   for the task, and report them. Elsewhere, report them separately; I decide whether to revert them.
@@ -21,6 +22,15 @@ silence, implementation, or inclusion in a document does not make an agent assum
 If the basis for a claimed requirement is missing, mark it unconfirmed rather than attributing it
 to me. Choose routine implementation details within authorization; ask when unresolved intent
 would materially change scope or behavior.
+
+Carry authorized work through validation and any authorized commit step without asking whether
+to continue. Reuse settled choices and approvals; do not re-ask an authority already refused.
+When the means are delegated, choose and execute them within the retained constraints. Resolve
+tooling problems within existing access and authorization before asking me to do the work.
+
+Keep deliverables within the accepted outcome, including required supporting files and documents
+made stale by the change. Add UI controls, documents, branches, worktrees, persistent state, or
+committed notes only when requested or necessary for that outcome, subject to explicit exclusions.
 
 ## Product scope
 
@@ -61,9 +71,9 @@ Complete text already supplied in context satisfies the read; a path or summary 
 - `IMPLEMENTATION.md`: implementing code or operational changes, or inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits
   may use it.
-- `FINISHING.md`: main after an authorized change and focused validation, before completion or a
-  slice commit; implementing subagents before handback of focused-validated code or operational work;
-  also explicit implementation-quality reviews. Apply only the sections within the assigned role.
+- `FINISHING.md`: keep it out of implementer startup reads and preloads. Implementers load it
+  after focused validation of their assigned working path, before handback, completion, or a slice
+  commit. Explicit quality reviewers load it when review starts. Apply only sections within the role.
 - `TESTING.md`: writing tests or fixtures, or selecting validation. Projects supply runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
 - `GITHUB.md`: preparing pull-request, issue, or comment text.
@@ -87,7 +97,8 @@ omit it; provide any required guidance explicitly when assigning work to those b
 
 During construction, defer automatic loading of best-practice and quality-enforcement skill bodies
 until `FINISHING.md`. Language/framework matches and descriptions such as "when implementing" identify
-relevant finishing skills, not Phase 1 reads; `i-want` interprets the request and is not deferred.
+relevant finishing skills, not Phase 1 reads. Load `i-want` for brief or shorthand requests,
+follow-ups, and corrections; a complete delegate assignment does not need it automatically.
 Load task-execution, API/tooling, and domain guidance needed for the working path. Explicit user skill invocations and explicit review/audit requests
 follow their requested operation.
 

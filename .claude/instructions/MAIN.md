@@ -7,6 +7,9 @@ existing authorization.
 
 Choose the smallest coherent change that achieves the requested observable outcome through existing
 owners and preserves specified and unaffected behavior.
+Keep accepted behavior, retained capabilities, exclusions, and unresolved decisions in the task record.
+General standards constrain that change; they do not request new features, persistence, compatibility,
+configuration, or adjacent cleanup.
 
 Count the contracts a candidate mechanism newly engages
 (bounds, failure states, switching, concurrency, durable state) as part of its cost, and
@@ -23,32 +26,26 @@ load phase-specific guidance only when its operation begins.
 
 ### Phase 1: Make the intended thing work
 
-Before implementation:
+Settle a viable approach, the actual consumer, and observable acceptance. Sequence implementation,
+delegation, and focused checks around the critical path. Resolve feasibility questions with source
+evidence or bounded probes before building supporting machinery; resolve an unsupported approach
+before proceeding with a partial one.
 
-- settle a viable end-to-end approach, identifying the actual consumer and observable acceptance
-  for each requested outcome
-- choose sequencing, delegation, and validation around the critical path; overlap independent work
-  when it saves more time and model work than startup, coordination, and integration cost
-- update affected specs and contracts for behavior or consequential decisions the implementation
-  will rely on
+Settle behavior and interface decisions before coding. Update an authoritative contract immediately
+when implementation or coordination depends on its changed promise; defer other specification prose
+and reader-document integration to Phase 2. If evidence changes a decision, settle and record it at
+its existing owner before relying on it.
 
-Resolve critical feasibility questions with source evidence or bounded disposable probes before
-building supporting machinery. If the approach cannot meet the accepted requirements, report the
-limitation and resolve it before implementation; do not build a partial mechanism first and
-negotiate a narrower outcome afterward. When evidence changes a settled decision or exposes a
-contract gap, update its existing record and the affected documents before continuing against the
-changed behavior.
-
-For code or operational work, build the smallest working path through the actual consumer and
-complete its focused validation under `TESTING.md`. Apply the structural constraints in
-`IMPLEMENTATION.md` while building it.
+For code or operational work, build the smallest working consuming path under `IMPLEMENTATION.md`
+and run focused acceptance or regression checks under `TESTING.md`. For documentation-only work,
+write and check the document under `DOCS.md`. Keep construction guidance limited to this phase.
 
 ### Phase 2: Make it delivery-ready
 
-Apply `FINISHING.md` for applicable practices, delivery checks, and any warranted independent reviews;
-it owns their convergence. Finish affected reader documentation and remaining validation under
-`DOCS.md` and `TESTING.md`, reusing still-current evidence.
-The phase transition needs no separate user approval or task artifact.
+Load `FINISHING.md` for applicable practices, cleanup, delivery checks, and warranted reviews.
+Complete remaining distinct coverage and broader checks under `TESTING.md`, and integrate affected
+specifications and reader documentation under `DOCS.md`. Reuse still-current evidence.
+The transition needs no separate approval or task artifact.
 
 Ordinary questions, explanations, and read-only reviews keep their conversational flow and need no
 change-work artifacts.

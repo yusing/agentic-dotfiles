@@ -17,6 +17,7 @@ the native catalog's routing guidance.
 - Tests: the agent implementing a change updates the tests and fixtures it affects; do not assign
   tests to a separate delegate.
 
+Preload only sources needed to start the assigned phase; load later-phase guidance at its transition.
 Start with a complete brief rather than an immediate follow-up. Give each agent, as applicable,
 the settled outcome, owned files, inputs, task-specific constraints, and useful checks.
 Include what has changed so far and distinguish the changes for this spawn or follow-up.

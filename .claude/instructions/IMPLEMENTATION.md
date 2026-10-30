@@ -13,6 +13,10 @@ a current shared responsibility, invariant, or necessary algorithm. Leave host o
 its owner, and add persistence, fallbacks, or compatibility only when the task or a supported
 contract needs them, because each one is a contract someone must maintain.
 
+If the working path grows far beyond what the request warrants, revisit the approach rather than
+justify or trim it. Consider expected work, CPU, memory, I/O, and scaling when choosing the mechanism;
+deferred optimization does not justify an unsuitable approach.
+
 Keep each behavioral definition at one owner across features. Producers and consumers share that
 definition rather than maintaining parallel case lists or recognition rules, which drift apart as
 new input shapes appear. When changing a producer, trace its consumers, including display and

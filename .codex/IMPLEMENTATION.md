@@ -13,6 +13,10 @@ only for a current shared responsibility, invariant, or necessary algorithm, not
 use. Avoid duplicating host/provider policy or adding persistence, fallbacks, or compatibility the
 task and supported contracts do not need.
 
+If the working path grows far beyond what the request warrants, revisit the approach rather than
+justify or trim it. Consider expected work, CPU, memory, I/O, and scaling when choosing the mechanism;
+deferred optimization does not justify an unsuitable approach.
+
 Keep each behavioral definition at one owner across features. Producers and consumers must
 share that definition, not maintain parallel case lists or recognition rules. When changing a
 producer, trace its consumers, including display and replay, and test the produced data through

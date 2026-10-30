@@ -16,6 +16,15 @@ If the basis for a claimed requirement is missing, mark it unconfirmed rather th
 to the user. Choose routine implementation details within authorization; ask when unresolved intent
 would materially change scope or behavior.
 
+Carry authorized work through validation and any authorized commit step without asking whether
+to continue. Reuse settled choices and approvals; do not re-ask an authority already refused.
+When the means are delegated, choose and execute them within the retained constraints. Resolve
+tooling problems within existing access and authorization before asking the user to do the work.
+
+Keep deliverables within the accepted outcome, including required supporting files and documents
+made stale by the change. Add UI controls, documents, branches, worktrees, persistent state, or
+committed notes only when requested or necessary for that outcome, subject to explicit exclusions.
+
 ## Product scope
 
 For public-facing software, derive scope from user requirements and accepted product contracts.
@@ -26,6 +35,7 @@ choosing it. Preserve explicit limits; general applicability does not request ex
 
 ## Context and completion
 
+- Lead with the outcome and answer the literal question; report each requested item's result.
 - Report problems found during requested work or while reading relevant code and documentation,
   including those outside the requested scope. This reporting duty does not expand search, reading, or fix scope.
 - Reuse current reads. Do not reread previously read task documents, skills, or other files merely because a new turn
@@ -47,9 +57,9 @@ Complete text already supplied in context satisfies the read; a path or summary 
   - `MODEL-ROUTING.md`: any agent, including subagents, before delegating.
 - `IMPLEMENTATION.md`: code/operational implementation or its inspection, not pure
   lookup, diagnosis, settled support tests, or mechanical wording edits. Explicit audits may use it.
-- `FINISHING.md`: main after an authorized change and focused validation, before completion or a
-  slice commit; implementing delegates before handback of focused-validated code/operational work;
-  also explicit implementation-quality reviews. Apply only the sections within the assigned role.
+- `FINISHING.md`: keep it out of implementer startup reads and preloads. Implementers load it
+  after focused validation of their assigned working path, before handback, completion, or a slice
+  commit. Explicit quality reviewers load it when review starts. Apply only sections within the role.
 - `TESTING.md`: tests/fixtures or validation selection; project owners supply runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
 - `GITHUB.md`: preparing pull-request, issue, or comment text.
@@ -66,7 +76,8 @@ Complete text already supplied in context satisfies the read; a path or summary 
 
 During construction, defer automatic loading of best-practice and quality-enforcement skill bodies
 until `FINISHING.md`. Language/framework matches and descriptions such as "when implementing" identify
-relevant finishing skills, not Phase 1 reads; `i-want` interprets the request and is not deferred.
+relevant finishing skills, not Phase 1 reads. Load `i-want` for brief or shorthand requests,
+follow-ups, and corrections; a complete delegate assignment does not need it automatically.
 Load task-execution, API/tooling, and domain guidance needed for the working path. Explicit user skill invocations and explicit review/audit requests
 follow their requested operation.
 

@@ -75,10 +75,11 @@ consumer-contract or integration question for independent inspection. Skip revie
 already answers it; risk categories, completed changes, and routine wording/mechanical work do not
 justify another pass. UI acceptance needs rendered/runtime evidence, not source inspection alone.
 
-Simplification: main assesses necessity while implementing. Use a separate simplification-role
-inspection only for a distinct complexity question current evidence cannot settle. Test-heavy changes
-under TESTING.md or additions above 300 production or 500 total lines (excluding generated/vendor)
-prompt that assessment, not automatic review. Correctness review does not settle this decision.
+Simplification: assess the coherent change in this phase, reusing the implementation-time necessity
+assessment and TESTING.md's test-heavy signal. Additions above 300 production or 500 total lines
+(excluding generated/vendor) also prompt assessment, not automatic review. Retain distinct required
+coverage regardless of ratios. Use a separate simplification review only for a complexity question
+current evidence cannot settle. Correctness review does not settle this decision.
 
 ### Briefing and waiting
 
