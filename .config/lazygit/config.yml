@@ -54,3 +54,4 @@ git:
     - name: hunk
       colorArg: always
       command: hunk pager --mode stack
+  overrideGpg: true

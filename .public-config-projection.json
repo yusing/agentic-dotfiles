@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f303249f8ef6c8556076de82a287b442beaf1b77",
+  "sourceCommit": "aa0638de57192512d3ecb351af5754867c5df9a5",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -569,7 +569,7 @@
     {
       "path": ".config/lazygit/config.yml",
       "kind": "file",
-      "sha256": "831d9299bb2706dfeaf1d84f05601b8820b5e700cb033aa8ffa1abd73124db77",
+      "sha256": "5ce741546dd85fa7529ce91279de67d4e72acac0fe3bc012637a355587f49ae5",
       "executable": false
     },
     {
