@@ -16,7 +16,8 @@ covers the work of that request, not later ones.
 - Make each commit one coherent, independently valid change. Reuse checks for its unchanged
   tree/scope, not unrelated suites. Split unrelated edits; keep an enabling refactor separate
   from its behavior change.
-- Check `git status --short` once to establish working-tree and index scope. Reuse current
+- Establish working-tree and index scope from still-current supplied status; run
+  `git status --short` when that evidence is missing or stale. Reuse current
   reviews and validation; repeat only checks whose results a later edit, hook, failure, or
   concurrent change can invalidate.
 - Stage only intended paths or hunks, using explicit paths, interactive staging, or applying
