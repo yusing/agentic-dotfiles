@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "1ac535233de7f3ad3ca92390460b1c521ef96ee7",
+  "sourceCommit": "f303249f8ef6c8556076de82a287b442beaf1b77",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -916,7 +916,7 @@
     {
       "path": ".skills-mgr/skills/.remote-patches/3526df0eeaeff461a1cda85e1e1e47307e220c58d09dcb4924effc3a22d9cd67.patch",
       "kind": "file",
-      "sha256": "6378b333fdffc7cd9c81575400cd25a7224cfcf873768318c71d025d54385b7d",
+      "sha256": "dbb422b37dceaa7beb55f9569e9dc33b959954e6c9f0ba37436861d43bd4a7c0",
       "executable": false
     },
     {
