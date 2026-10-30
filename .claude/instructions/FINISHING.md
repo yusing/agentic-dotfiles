@@ -26,7 +26,9 @@ Deliver a performant and reliable solution on the paths the change touches:
   checks, retries, fallbacks, or recovery paths, and keep error handling for failures the code
   cannot prevent, such as I/O, external input, and remote services.
 
-Keep observable behavior and contracts unchanged while optimizing.
+Keep observable behavior and contracts unchanged while optimizing. Apply these to the code the
+change adds or modifies: fix repeated or wasted work you can identify there, and leave a working
+path alone when the gain is negligible at its expected scale.
 
 ### Hygiene
 
@@ -63,6 +65,8 @@ or the review-fix loop; other delegates keep their assigned implementation or re
 
 Check each accepted outcome against the documents and consumer evidence. Close known gaps before
 review; identify missing coverage rather than treating a passing suite as complete acceptance.
+Cover the inputs and states the accepted outcomes name, including rejection of invalid and unsafe
+ones; supporting further forms is new scope, not a gap.
 
 ### Review necessity
 

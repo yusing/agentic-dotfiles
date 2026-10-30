@@ -41,8 +41,12 @@ write and check the document under `DOCS.md`. Keep construction guidance limited
 ### Phase 2: Make it delivery-ready
 
 Load `FINISHING.md` for applicable practices, cleanup, delivery checks, and warranted reviews.
-Complete remaining distinct coverage and broader checks under `TESTING.md`, and integrate affected
-specifications and reader documentation under `DOCS.md`. Reuse still-current evidence.
+Review the complete change against it and the accepted outcomes in one read, then apply the
+corrections together; each separate find-and-fix round reprocesses the whole session and repeats
+checks. Phase 2 corrects and completes the accepted change; it adds no capabilities, input forms,
+or output the request did not ask for. Complete remaining distinct coverage and broader checks
+under `TESTING.md`, and integrate affected specifications and reader documentation under `DOCS.md`.
+Reuse still-current evidence.
 The transition needs no separate approval or task artifact.
 
 Ordinary questions, explanations, and read-only reviews keep their conversational flow and need no

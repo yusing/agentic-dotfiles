@@ -38,6 +38,8 @@ Failures in unrelated or nonessential work must not cause the intended behavior 
 Avoid expanding scope for theoretical robustness. Before adding complexity for a speculative or
 exceptionally unlikely race or security edge case, explain the concrete failure mode, its likelihood,
 and the complexity cost, and obtain the user's agreement before implementation.
+When an error becomes absence or a fallback, such as treating missing content as not yet cached,
+match only that not-found condition; validation, permission, and trust failures still fail.
 
 ## Ownership and boundaries
 
