@@ -1,7 +1,9 @@
 # Testing
 
-Validate layout and visual appearance through rendered output; validate text content at its
-consuming interface.
+Validate layout and visual appearance through rendered output, and text delivery through its
+consuming interface. Add a text check only when a change adds or moves a delivery path, and then
+reference the owning definition; a copied literal fails on every rewording without detecting a
+broken path. Rewording prompts, messages, or documents needs no new test.
 
 A useful test fails when its intended behavior breaks. Avoid tautologies, incidental string checks,
 and synthetic inputs that bypass the changed producer or consumer.
