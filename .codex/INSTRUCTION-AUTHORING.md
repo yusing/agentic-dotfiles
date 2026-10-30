@@ -33,6 +33,11 @@ Preserve client-specific dispatch for fields omitted from role configuration.
 
 ## Consumer checks
 
+For reported agent behavior, first compare the effective instructions and evidence available at
+the failing decision, reusing supplied context. Check for conflicting rules before assuming guidance
+is missing, and trace the supported cause to its owner before editing. If a fix fails or is rejected,
+revisit that causal explanation before moving or strengthening the same fix.
+
 Trace affected main/delegate paths, applicable instructions, pointers, and generated consumers.
 For renames, align paths, references, metadata, selection, tests, and allowlists; preserve historical
 names in records. Regenerate authorized consumers from authoritative sources. Shared ownership,
@@ -48,6 +53,7 @@ Check that required steps change behavior, serve the task, and do not cause redu
 tests, permission requests, or broader scope.
 Remove stale rules at their owner rather than append another correction beside them.
 
-Separate structural/drift checks from behavioral conclusions. Source inspection cannot prove live
+Separate delivery and structural/drift checks from evidence that the reported decision changes.
+Source inspection cannot prove live
 reload or better model outcomes. Treat rationale as a claim, not an approval checklist; observed
 behavior resolves disputes about defaults. Report concrete coverage gaps and remaining limitations.

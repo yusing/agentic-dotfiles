@@ -100,6 +100,11 @@ reduce adherence ([effective instructions][cc-size]). Point to conditional docum
 
 ## Consumer checks
 
+For reported agent behavior, first compare the effective instructions and evidence available at
+the failing decision, reusing supplied context. Check for conflicting rules before assuming guidance
+is missing, and trace the supported cause to its owner before editing. If a fix fails or is rejected,
+revisit that causal explanation before moving or strengthening the same fix.
+
 Trace affected main and subagent paths, applicable instructions, pointers, and generated consumers.
 For renames, align paths, references, metadata, selection, tests, and allowlists, and keep
 historical names in records. Regenerate from authoritative sources. Shared ownership, port
@@ -118,7 +123,8 @@ Check that each required step changes behavior, serves the task, and causes no r
 tests, permission prompts, or broader scope. Remove a stale rule at its owner rather than appending
 another correction beside it.
 
-Keep structural and drift checks separate from behavioral conclusions. Source inspection cannot
+Keep delivery and structural checks separate from evidence that the reported decision changes.
+Source inspection cannot
 prove live reload or better model outcomes. Treat a rationale as a claim, not an approval checklist;
 observed behavior settles disputes about defaults. Report concrete coverage gaps and remaining
 limitations.

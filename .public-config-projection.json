@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "0d024d884a8316e5bb04da2850289f6da5decdaf",
+  "sourceCommit": "5fed6d4ec70e4f2937219a788492d1c56eb886b6",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -95,7 +95,7 @@
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "83c11e6bcaf3a7effa8e5e101cc64ba68728d89733345491cf255de66c5c2eb3",
+      "sha256": "a7fece19fd602e0a98381e048601e0f7b723780361996b069d4e5ec439f72431",
       "executable": false
     },
     {
@@ -359,7 +359,7 @@
     {
       "path": ".codex/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "8a45ac050a1bd485f04cfcc77fce73b571d0e5e9f17fe55900dc9cf0fe00578a",
+      "sha256": "48f75dbbdc4a89832fe2bd2eb72cede4e5d3ff0637f2dea5ab8b4a013b259d0e",
       "executable": false
     },
     {
