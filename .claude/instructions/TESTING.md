@@ -13,6 +13,8 @@ and ownership cases. Rejection must preserve prior state; success must work thro
 consumer. Pair new input restrictions with checks that neighboring supported inputs still work.
 
 - Keep test-only helpers and seams in tests, out of production code.
+- Give fixture subprocesses test-owned configuration. Git fixtures disable inherited global/system
+  configuration before their first command, retaining fixture-local settings for behavior under test.
 - Do not introduce surfaces the user did not request merely to support tests.
 - When tests slow delivery, reduce their cost without weakening distinct coverage.
 - Repair a stale test or fixture that blocks required validation, and report the repair.

@@ -5,8 +5,8 @@ description: Run, inspect, author, or migrate workflows to Shadowtree recipes in
 
 # Shadowtree
 
-Use recipes for operations they own, not as a replacement for every shell command. Load only the
-reference for this operation:
+Choose the check runner through RUNNING.md before defaulting to recipe isolation. Use recipes for
+other operations they own, not every shell command. Load only the reference for this operation:
 
 | Operation | Reference |
 | --- | --- |

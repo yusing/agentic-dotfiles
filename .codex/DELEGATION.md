@@ -5,10 +5,11 @@ parent. Keep delegated work within your existing role, scope, and authorization.
 
 ## Assignment
 
-Delegate substantial consumer paths that can be implemented and validated independently. Keep
-small integration work and few-call corrections with the owner. Choose assignments that remove
-more main-thread work than their briefing, integration, and review add; avoid splitting one path
-across agents by implementation stage. Select roles using the native catalog's routing guidance.
+Delegate substantial consumer paths with their entry-point wiring and affected tests. Keep behavior
+sharing the same contracts with one owner rather than delegating helper APIs while main implements
+their consumer. Keep small independent fixes and integration with main. Choose assignments that
+remove more main-thread work than their briefing, integration, and review add. Select roles using
+the native catalog's routing guidance.
 
 - Documents: main by default; delegate a bounded document assignment when it speeds up delivery.
 - LLM-facing: main owns instructions, skills, workflow/task documents, model-facing templates, and
