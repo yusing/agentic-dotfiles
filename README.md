@@ -192,6 +192,34 @@ skills. Start with the skills needed for your project; each skill owns its usage
 instructions and conditions. Local sources live under
 [shared skills](.skills-mgr/skills/) and [Codex skills](.codex/skills/).
 
+### Automated maintenance
+
+`compile-agent-tools` builds [skills-maintenance](.local/lib/skills-maintenance/skills-maintenance.ts).
+It requires Git, skills-mgr, Mekugi, Codex authentication, and the normal commit-hook
+dependencies. It can launch paid model sessions with full local repair and commit permissions.
+For hourly maintenance, merge this entry into the user's existing cron schedule:
+
+```cron
+17 * * * * "$HOME/.local/bin/mise" exec -- "$HOME/.local/bin/skills-maintenance"
+```
+
+Run `mise exec -- skills-maintenance` for an immediate cycle.
+
+The worker uses skills-mgr's refresh runner and three-hour remote cache lifetime,
+then synchronizes placeholders and checks every globally registered remote patch,
+including conditionally enabled skills. Unavailable upstream manifests and stale patches
+start serial `gpt-6.1-terra` headless Mekugi sessions. A repair agent verifies the cause,
+preserves local customizations and activation conditions, validates its handling, and
+commits its authored changes. Network and authentication failures remain unresolved.
+
+Repair authors maintain one local newest-first, 100-entry rolling log at
+`.skills-mgr/MAINTENANCE.md`. The activity log stays outside the public projection.
+Generated remote placeholder changes are
+committed separately without log entries. Manual placeholder edits are preserved when sync
+would overwrite them; unrelated staged changes and staged placeholder edits stay outside
+automatic placeholder commits. Concurrent maintenance invocations skip
+while a cycle is running; errors go to the scheduler's normal output rather than new log files.
+
 The [agent-browser skill](https://github.com/vercel-labs/agent-browser) covers
 browser automation. Load `agent-browser skills get core` for the installed CLI's
 workflow; `agent-browser skills list` lists its specialized guides.

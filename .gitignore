@@ -182,6 +182,10 @@ __pycache__
 !/.local/lib/scc-prod/CHANGELOG.md
 !/.local/lib/scc-prod/git-diffstat.ts
 !/.local/lib/scc-prod/scc-prod.ts
+!/.local/lib/skills-maintenance/
+!/.local/lib/skills-maintenance/CHANGELOG.md
+!/.local/lib/skills-maintenance/repair-prompt.ts
+!/.local/lib/skills-maintenance/skills-maintenance.ts
 !/.local/lib/sync-claude-agent-ports/
 !/.local/lib/sync-claude-agent-ports/CHANGELOG.md
 !/.local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts

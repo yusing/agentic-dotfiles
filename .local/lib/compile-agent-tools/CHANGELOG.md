@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.17
+
+Build the remote skills maintenance worker.
+
 ## 1.0.16
 
 Build the optional private Plane helper with independently cached locked dependencies.

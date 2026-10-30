@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "45ab4fa21b63f1388c053aef7891308813181fb5",
+  "sourceCommit": "c0375fb85b68a494c59f2581444618e20f1544a7",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -671,7 +671,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "050c308222943b131f8feaa283173ba5141bc204a0067a7128b322561bd341e6",
+      "sha256": "7f4fe11f041cce946337d56bbeb821cd1b0be957589a91ce4f55b7d1507465c5",
       "executable": false
     },
     {
@@ -766,25 +766,25 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "2abec1784099ea3b83939dcf8d1afd034c447a440ef39fcfa0c1c011ad907efb",
+      "sha256": "0fc2ee8ca7400a8b0bd11e7fd61898e114bbea10186af96d35a422e3710a60be",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "7800d6153a5d00046318d07f74619554390adf39d0098008c8b8e4e1ccc1b6f0",
+      "sha256": "68d42a49fa352944afcb5f8f3b7c686c6659eaf029fd6d4189203c6e4ffbbf3a",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "eaff090b6d045d21594c4fecef8baa27b4f2211b0d91f66cd8d54b449c636b33",
+      "sha256": "b63ed61ad37c7fe9ac0f5b51ba37e2579979a2aa4f9189ed104513fd8bf76a9d",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "8c4236e03ffd6c41c23326059707fe7d59a56db56d21c69de5a604c695db7648",
+      "sha256": "755996491c3f6f38aef533c0f640b722ef0bb8f83d2525287c31a7ac6b734b2d",
       "executable": true
     },
     {
@@ -827,6 +827,24 @@
       "path": ".local/lib/scc-prod/scc-prod.ts",
       "kind": "file",
       "sha256": "3715041186c0f936033a3b055fced1c859bdd5953cea4c835f416258248d7a84",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/skills-maintenance/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "54c6962f0d71009dc1faa12718bc291f35466b91bad03ff8ecc461a06a1d08f5",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/skills-maintenance/repair-prompt.ts",
+      "kind": "file",
+      "sha256": "a3dfa942944c36ff7a85483cae48d674a0b7d73b40f2f2c7ddced66d0215f561",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/skills-maintenance/skills-maintenance.ts",
+      "kind": "file",
+      "sha256": "554f5ca313f62b2f4bd37b5f70df207bbfc5141d68e6efa0287b9319b85bb717",
       "executable": false
     },
     {
@@ -1539,7 +1557,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "1fb345e3d5f342edb3b276970a23794c72ee8c978e6ed5b8f2adc266e6bb2ebb",
+      "sha256": "bd9723276e158f780f175f59b050a5ea12616bf675ca9cc14c5595829e62cdb4",
       "executable": false
     },
     {

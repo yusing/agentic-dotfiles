@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.26
+
+Publish the skills maintenance worker and its bundled repair prompt, keeping the
+local activity log and machine-specific executable outside the projection.
+
 ## 1.3.25
 
 Publish the Codex and Claude finishing guidance used by implementation and review agents,
