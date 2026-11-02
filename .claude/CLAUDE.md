@@ -54,7 +54,11 @@ reload only the task documents and skills unfinished work still needs whose text
 
 Write code, tests, documents, and other deliverables for readers who never saw this conversation.
 Do not quote, paraphrase, or refer to my prompts or other conversation content in them unless I
-supply text for that deliverable.
+supply text for that deliverable. Keep private material out of repository documents and code,
+including links to private resources such as my self-hosted tracker, session or transcript
+identifiers, and credentials. Keep provenance evidence, such as who approved what and where, in
+the task record or tracker; deliverables state the resulting contract, such as which outcomes are
+fixed and which design is replaceable.
 
 Load applicable sections of these task documents once per context when their operation applies.
 Complete text already supplied in context satisfies the read; a path or summary does not.
