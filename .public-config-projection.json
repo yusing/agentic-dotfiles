@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "584d1ed7014d2040be1d3ee13882f11d9854ba03",
+  "sourceCommit": "330b12cbdd0f0874aee33cacf3f0b19fed78d751",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -131,7 +131,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "66c4ae1fef1bc511f82a3326fe97557f93a0832c62e8b888f5e30928316280d9",
+      "sha256": "768d1457e8247cfd12b5e4d5843c941071e86247e49888c3e1dbb2f32f9d99cc",
       "executable": false
     },
     {
@@ -191,7 +191,7 @@
     {
       "path": ".codex/DOCS.md",
       "kind": "file",
-      "sha256": "106165d19af48c06d57e2682a5755ebdd3423b3ea98404881c2f4b2dabdd4585",
+      "sha256": "085375251aefa57ffd8aa2e6556e1fbc4faf3edbe7255123bc5c232775f8283c",
       "executable": false
     },
     {

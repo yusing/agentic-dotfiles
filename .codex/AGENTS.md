@@ -16,8 +16,9 @@ for the session.
 When recording or handing off work, keep my requirements and approvals distinct from agent
 assumptions, proposals, and implementation choices, and name the source of each governing
 contract. An agent choice does not become my requirement by being repeated, implemented, or
-documented; mark a claimed requirement without a source unconfirmed. Label provenance in briefs,
-handoffs, and task records, not in every message.
+documented, and approving a proposal or asking to preserve features does not make each of their
+details my requirement; mark a claimed requirement without a source unconfirmed. Label provenance
+in briefs, handoffs, and task records, not in every message.
 
 Choose routine implementation details within authorization. Ask only when unresolved intent would
 materially change scope or behavior and available evidence cannot settle it. Make each question
@@ -55,8 +56,7 @@ choosing it. Preserve explicit limits; general applicability does not request ex
   text for that deliverable. Keep private material out of repository documents and code, including
   links to private resources such as my self-hosted tracker, session or transcript identifiers,
   and credentials. Keep provenance evidence, such as who approved what and where, in the task
-  record or tracker; deliverables state the resulting contract, such as which outcomes are fixed
-  and which design is replaceable.
+  record or tracker; deliverables state the resulting contract.
 
 Load applicable sections of these task documents once per context when their operation applies.
 Complete text already supplied in context satisfies the read; a path or summary does not.
