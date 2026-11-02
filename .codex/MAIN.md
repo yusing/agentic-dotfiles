@@ -11,9 +11,7 @@ work item applies a property across a class, such as every spec or caller, inven
 and cover every member before claiming completion or closing the item.
 Keep accepted behavior, retained capabilities, exclusions, and unresolved decisions in the task record.
 General standards constrain that change; they do not request new features, persistence, compatibility,
-configuration, or adjacent cleanup. Count the contracts a candidate mechanism newly engages (bounds,
-failure states, switching, concurrency, durable state) as part of its cost. Prefer a design that
-avoids them.
+configuration, or adjacent cleanup.
 Verify a claimed host limitation before narrowing the outcome or asking the user to accept a
 narrower one.
 
@@ -27,7 +25,8 @@ load phase-specific guidance only when its operation begins.
 
 ### Phase 1: Make the intended thing work
 
-Settle a viable approach, the actual consumer, and observable acceptance. Sequence implementation,
+Settle the approach under `IMPLEMENTATION.md` before editing or dispatching implementers, then the
+actual consumer and observable acceptance. Sequence implementation,
 delegation, and focused checks around the critical path. Resolve feasibility questions with source
 evidence or bounded probes before building supporting machinery; resolve an unsupported approach
 before proceeding with a partial one.

@@ -8,16 +8,25 @@ report them. Elsewhere, report them separately; the user decides whether to reve
 
 ## Intent and assumptions
 
-Keep user-stated requirements and approvals distinct from agent interpretations, assumptions,
-proposals, and implementation choices. Identify governing contracts and observed facts by their
-sources. Preserve the origin and certainty of material claims when carrying them forward; repetition,
-silence, implementation, or inclusion in a document does not make an agent assumption user-approved.
-If the basis for a claimed requirement is missing, mark it unconfirmed rather than attributing it
-to the user. Choose routine implementation details within authorization; ask when unresolved intent
-would materially change scope or behavior.
+Read a request for the outcome I want at the breadth I state: cover everything it names and add
+nothing it does not. Take my words and analogies at their plain meaning; "like X" defines the
+behavior. Tools, commands, files, and layers I name are part of the requirement and stay in force
+for the session.
+
+When recording or handing off work, keep my requirements and approvals distinct from agent
+assumptions, proposals, and implementation choices, and name the source of each governing
+contract. An agent choice does not become my requirement by being repeated, implemented, or
+documented; mark a claimed requirement without a source unconfirmed. Label provenance in briefs,
+handoffs, and task records, not in every message.
+
+Choose routine implementation details within authorization. Ask only when unresolved intent would
+materially change scope or behavior and available evidence cannot settle it. Make each question
+stand alone: the concrete situation, the options in my terms with their consequences, and your
+recommendation.
 
 Carry authorized work through validation and any authorized commit step without asking whether
-to continue. Reuse settled choices and approvals; do not re-ask an authority already refused.
+to continue. Reuse settled choices and approvals, which cover repeats of the same action on the
+same target; do not re-ask an authority already refused.
 When the means are delegated, choose and execute them within the retained constraints. Resolve
 tooling problems within existing access and authorization before asking the user to do the work.
 
@@ -59,8 +68,9 @@ Complete text already supplied in context satisfies the read; a path or summary 
 - `MAIN.md`: main: scope, planning, and completion.
 - `DELEGATION.md`: any agent, including subagents, before delegating or coordinating other agents.
   - `MODEL-ROUTING.md`: any agent, including subagents, before delegating.
-- `IMPLEMENTATION.md`: code/operational implementation or its inspection, not pure
-  lookup, diagnosis, settled support tests, or mechanical wording edits. Explicit audits may use it.
+- `IMPLEMENTATION.md`: choosing an approach for code/operational changes, implementing them, or
+  inspecting them, not pure lookup, diagnosis, settled support tests, or mechanical wording edits.
+  Explicit audits may use it.
 - `FINISHING.md`: keep it out of implementer startup reads and preloads. Implementers load it
   after focused validation of their assigned working path, before handback, completion, or a slice
   commit. Explicit quality reviewers load it when review starts. Apply only sections within the role.
@@ -99,10 +109,10 @@ registry/package-manager metadata. Apply `rtk` to noisy producers.
 Use raw execution for exact output, file redirection, or changed argument semantics. For binary,
 minified, or generated data, extract exact fields/bounded bytes and reuse unchanged scans.
 
-## Delegates
+## Reviews
 
-Keep durable rules at their existing owner instead of appending recaps. Explicit reviews state scope
-beyond pending changes and separate missing runtime/browser coverage from source inspection.
+Explicit reviews state scope beyond pending changes and separate missing runtime/browser coverage
+from source inspection.
 
 ## Worktrees
 

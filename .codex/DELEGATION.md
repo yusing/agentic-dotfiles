@@ -19,7 +19,9 @@ the native catalog's routing guidance.
 
 Preload only sources needed to start the assigned phase; load later-phase guidance at its transition.
 Start with a complete brief rather than an immediate follow-up. Give each agent, as applicable,
-the settled outcome, owned files, inputs, task-specific constraints, and useful checks.
+the settled outcome, chosen approach, owned files, inputs, task-specific constraints, and useful
+checks. Constraints are those the user stated or the approach requires; listing properties the
+change does not touch invites the recipient to build machinery for them.
 Include what has changed so far and distinguish the changes for this spawn or follow-up.
 Omit earlier change context only when the recipient already retains it.
 Brief review, audit, or diagnosis with scope
