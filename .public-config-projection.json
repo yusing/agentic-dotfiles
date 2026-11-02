@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "74b063759e3aeb0cf3c71e21c0d5549f90cfbc52",
+  "sourceCommit": "fc0ee6a6d3891d259e1ed504e1ab7ce74561eb37",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -489,12 +489,6 @@
       "executable": false
     },
     {
-      "path": ".config/kilo/agent/code.md",
-      "kind": "file",
-      "sha256": "dcd9478ccb7b04570a857bec0dd2defec2b1efc2f0994b78cb50eb6c7bf2bd03",
-      "executable": false
-    },
-    {
       "path": ".config/kilo/agent/council-investigator.md",
       "kind": "file",
       "sha256": "a159f322877353715520a93631e06d1e0af9a6d55bf2743d03464630fd0a8c94",
@@ -671,7 +665,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "7f4fe11f041cce946337d56bbeb821cd1b0be957589a91ce4f55b7d1507465c5",
+      "sha256": "389dff524ad0ac17f2f2d190ddd879ef9fac27e893264914d8f519ff30ac6ee7",
       "executable": false
     },
     {

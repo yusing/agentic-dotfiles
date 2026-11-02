@@ -107,7 +107,6 @@ __pycache__
 !/.config/kilo/
 !/.config/kilo/agent/
 !/.config/kilo/agent/ask.md
-!/.config/kilo/agent/code.md
 !/.config/kilo/agent/council-investigator.md
 !/.config/kilo/agent/council-member.md
 !/.config/kilo/agent/debug.md
