@@ -1,7 +1,7 @@
-import { lstatSync, readdirSync, readFileSync, readlinkSync, rmSync } from "node:fs";
+import { lstatSync, readdirSync, readFileSync, readlinkSync, rmSync, statfsSync } from "node:fs";
 import { join } from "node:path";
 
-const VERSION = "1.0.0";
+const VERSION = "1.0.1";
 const recognized = /^(go-build\d+|gopls-tempmod\d+|mekugi-tools-\d+-[a-f0-9]+|mekugi-native-trace-\d+|mekugi-proxy-tests-\d+|mekugi-exec-test-\d+|mekugi-test-state-\d+|TestNativeExecResultFinalizesAfterReplayProxyReconstruction\d+)$/;
 
 function vanished(error: unknown): boolean {
@@ -51,6 +51,8 @@ export function clean(root: string, refs: string[], dryRun: boolean): { count: n
   const uid = process.getuid!();
   const cutoff = Date.now() - 2 * 60 * 60 * 1000;
   let count = 0, bytes = 0, failures = 0;
+  const initial = dryRun ? null : statfsSync(root);
+  const before = initial ? initial.bfree * initial.bsize : 0;
   for (const name of readdirSync(root)) {
     if (!recognized.test(name)) continue;
     const path = join(root, name);
@@ -69,6 +71,10 @@ export function clean(root: string, refs: string[], dryRun: boolean): { count: n
       console.error(`Could not clean ${path}: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
+  if (!dryRun) {
+    const after = statfsSync(root);
+    bytes = after.bfree * after.bsize - before;
+  }
   return { count, bytes, failures };
 }
 
@@ -86,7 +92,7 @@ if (import.meta.main) {
       const refs = processReferences();
       const dryRun = args.includes("--dry-run");
       const result = clean("/tmp", refs, dryRun);
-      console.log(`${dryRun ? "Eligible" : "Removed"}: ${result.count} directories, ${(result.bytes / 1024 ** 3).toFixed(2)} GiB${dryRun ? "" : " freed"}; ${result.failures} failures.`);
+      console.log(`${dryRun ? "Eligible" : "Removed"}: ${result.count} directories, ${(result.bytes / 1024 ** 3).toFixed(2)} GiB${dryRun ? " estimated" : " freed (net mount change)"}; ${result.failures} failures.`);
       if (result.failures) process.exitCode = 1;
     } catch (error) {
       console.error(error instanceof Error ? error.message : String(error));
