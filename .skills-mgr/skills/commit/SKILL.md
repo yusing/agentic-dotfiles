@@ -7,7 +7,7 @@ disable-model-invocation: false
 # Commit
 
 A documented project convention (contributing guide, commitlint or similar config) takes
-precedence over the message format below. This skill does not authorize committing, rewriting
+precedence over the message format below. This skill does not authorize rewriting
 history, or pushing; those follow the existing request and authorization. A commit or push request
 covers the work of that request, not later ones.
 
@@ -16,10 +16,6 @@ covers the work of that request, not later ones.
 - Make each commit one coherent, independently valid change. Reuse checks for its unchanged
   tree/scope, not unrelated suites. Split unrelated edits; keep an enabling refactor separate
   from its behavior change.
-- Establish working-tree and index scope from still-current supplied status; run
-  `git status --short` when that evidence is missing or stale. Reuse current
-  reviews and validation; repeat only checks whose results a later edit, hook, failure, or
-  concurrent change can invalidate.
 - Stage only intended paths or hunks, using explicit paths, interactive staging, or applying
   a reviewed patch to the index. If the index was empty and staging adds exactly the reviewed
   change, commit directly; otherwise review the relevant staged changes once. Keep unrelated
@@ -117,8 +113,7 @@ matching reference: [fix](references/fix.md), [perf](references/perf.md),
 
 Pass a multi-line message as real lines through a quoted heredoc, `git commit -F - <<'EOF'`.
 Git and the shell keep a `\n` escape inside `-m` quotes as a literal backslash and `n`, including
-when a tool-call string supplies the command. If message formatting is uncertain, inspect the
-stored message with `git log -1 --format=%B`.
+when a tool-call string supplies the command.
 
 ## Follow-up fixes
 
@@ -128,8 +123,7 @@ contains it (`git branch -r --contains <sha>` prints nothing) and no one else bu
 when it sits on the local default branch. Replacing the target's approach, including at the
 user's request, is a correction to it.
 
-1. Find the commit that introduced the code being corrected: `git log --oneline <base>..HEAD`,
-   `git blame`, or `git log -L <range>:<file>`.
+1. Locate the commit that introduced the code being corrected.
 2. Stage only the hunks for that target. When a follow-up touches several earlier commits,
    make one fixup per target. A fixup must apply cleanly at its target's position, so a hunk
    that depends on a later commit belongs to that later commit.
@@ -146,10 +140,8 @@ user's request, is a correction to it.
    paragraphs are the replacement message (e.g. `feat(parser): add streaming parser` and its
    body). Add `--allow-empty` for a message-only correction.
 4. Squash the markers only when the user asks or the workflow requires a clean branch:
-   `git rebase --autosquash <base>` (Git 2.44+), or
-   `GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash <base>` on older Git. Squashing rewrites
-   history; force-pushing the result needs `--force-with-lease` and authorization to rewrite
-   the remote branch.
+   `git rebase --autosquash --autostash <base>`. Squashing rewrites history; force-pushing the result needs
+   `--force-with-lease` and authorization to rewrite the remote branch.
 
 Make a regular commit (usually `fix`) instead when the target is published, or when the change
 is a distinct change worth its own history entry rather than a revision of the target. Also make a
