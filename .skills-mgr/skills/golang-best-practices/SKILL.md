@@ -1,13 +1,7 @@
 ---
 name: golang-best-practices
-description: Apply version-aware Go guidance and local conventions during implementation finishing or explicit Go quality review. Retrieve it in the same call as `skills-mgr run use-modern-go/scripts/run-tool.sh list --go-version VERSION` with the reported version.
+description: Apply go local conventions during implementation finishing or explicit Go quality review.
 ---
-
-# Modern Go by Version
-
-Use idioms supported by the project's target Go version. When an unresolved idiom or API question
-needs version-specific guidance, load only the relevant IDs from that list for details or examples
-with `skills-mgr run use-modern-go/scripts/run-tool.sh explain <ID> [<ID> ...]`.
 
 ## Local conventions
 

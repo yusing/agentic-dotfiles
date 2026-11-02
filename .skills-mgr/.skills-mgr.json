@@ -251,7 +251,7 @@
       }
     },
     "use-modern-go": {
-      "enabled": "lang go",
+      "enabled": false,
       "remote": {
         "provider": "skills.sh",
         "id": "jetbrains/go-modern-guidelines/use-modern-go",
