@@ -1,5 +1,5 @@
-# skills-mgr-base-sha256 ea087c341bfb5b23195c7302027268ede86da802554c18a5c4896a6017b439f9
-# skills-mgr-result-sha256 9d0e119d1d3525ab51af0cfe0c2a22fb8bccef4b06ccb7be97dfda50198d4c95
+# skills-mgr-base-sha256 1bdfb422c97d5e813768af422750882b71ff1554978da0b8a43c95de242765f7
+# skills-mgr-result-sha256 46b39cbf37d57055c1e1dec8b44a3b3b316b086994c7322f3628c17750fde866
 --- a/SKILL.md
 +++ b/SKILL.md
 @@ -15,7 +15,7 @@
@@ -39,7 +39,7 @@
  
  ## Workflow
  
-@@ -75,14 +75,14 @@
+@@ -77,14 +77,14 @@
  Use `--design-system` when the task needs a coherent product-wide visual direction:
  
  ```bash
@@ -56,7 +56,7 @@
  ```
  
  ### Step 2b: Persist Design System (Master + Overrides Pattern)
-@@ -90,7 +90,7 @@
+@@ -92,7 +92,7 @@
  To save the design system for retrieval across sessions, add `--persist` **and always pass `--output-dir` pointed at the project root** — without it, files are written relative to whatever directory the tool happens to run from:
  
  ```bash
@@ -65,7 +65,7 @@
  ```
  
  This creates:
-@@ -113,7 +113,7 @@
+@@ -115,7 +115,7 @@
  Three optional 1-10 sliders that tune `--design-system` output without changing your query. Add any combination of them to the same command:
  
  ```bash
@@ -74,7 +74,7 @@
  ```
  
  | Dial | Low (1-3) | Mid (4-7) | High (8-10) |
-@@ -128,13 +128,13 @@
+@@ -130,13 +130,13 @@
  
  **Example:**
  ```bash
@@ -90,7 +90,7 @@
  ```
  
  | Need | Domain | Example |
-@@ -157,7 +157,7 @@
+@@ -160,7 +160,7 @@
  ### Step 4: Stack Guidelines
  
  ```bash
@@ -99,7 +99,7 @@
  ```
  
  **Available stacks:** `react`, `nextjs`, `vue`, `svelte`, `astro`, `nuxtjs`, `nuxt-ui`, `angular`, `laravel`, `swiftui`, `react-native`, `flutter`, `jetpack-compose`, `html-tailwind`, `shadcn`, `threejs`, `javafx`, `wpf`, `winui`, `avalonia`, `uno`, `uwp`. Use the stack detected in Step 1.
-@@ -177,13 +177,13 @@
+@@ -180,13 +180,13 @@
  
  ```bash
  # Step 2: design system
@@ -116,7 +116,7 @@
  ```
  
  Then synthesize the design system + detailed searches and implement.
-@@ -202,13 +202,13 @@
+@@ -205,13 +205,13 @@
  | Problem | What to Do |
  |---------|------------|
  | Can't decide on style/color | Re-run `--design-system` with different keywords |
