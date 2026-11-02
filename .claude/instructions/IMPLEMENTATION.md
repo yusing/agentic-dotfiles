@@ -5,17 +5,22 @@ accepted contract; consult history only when intent remains unclear.
 
 ## Behavior
 
-Reuse existing owners and mechanisms for the smallest change that delivers the request. Fix a defect
-at its established cause, and keep the fix to that mechanism even when a similar module solved
-the problem with a wider change. Use a dependency's supported capability before writing a narrower replacement.
-Add an abstraction only for
-a current shared responsibility, invariant, or necessary algorithm. Leave host or provider policy to
-its owner, and add persistence, fallbacks, or compatibility only when the task or a supported
-contract needs them, because each one is a contract someone must maintain.
-
-If the working path grows far beyond what the request warrants, revisit the approach rather than
-justify or trim it. Consider expected work, CPU, memory, I/O, and scaling when choosing the mechanism;
+Choose the approach before editing. Find how the codebase already does the nearest thing and
+extend that path; add new machinery only when that path cannot serve, and state why. Prefer
+removing a failure's cause over handling the failure. Fix a defect at its established cause, and
+keep the fix to that mechanism even when a similar module solved the problem with a wider change.
+Use a dependency's supported capability before writing a narrower replacement. Count the contracts
+a candidate newly engages (bounds, failure states, switching, concurrency, durable state) as part
+of its cost, and prefer one that avoids them. Consider expected work, CPU, memory, I/O, and scaling;
 deferred optimization does not justify an unsuitable approach.
+
+Add an abstraction only for a current shared responsibility, invariant, or necessary algorithm.
+Leave host or provider policy to its owner, and add guards, validation, fallbacks, options,
+persistence, or compatibility only when the task or a supported contract needs them, because each
+one is a contract someone must maintain.
+
+Estimate the change's size from the request before editing. When the working diff outgrows that
+estimate, re-choose the approach rather than justify or trim it.
 
 Keep each behavioral definition at one owner across features. Producers and consumers share that
 definition rather than maintaining parallel case lists or recognition rules, which drift apart as

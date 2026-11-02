@@ -14,9 +14,7 @@ Keep accepted behavior, retained capabilities, exclusions, and unresolved decisi
 General standards constrain that change; they do not request new features, persistence, compatibility,
 configuration, or adjacent cleanup.
 
-Count the contracts a candidate mechanism newly engages
-(bounds, failure states, switching, concurrency, durable state) as part of its cost, and
-prefer a design that avoids them. Verify a claimed host limitation before narrowing the outcome or
+Verify a claimed host limitation before narrowing the outcome or
 asking me to accept a narrower one.
 
 Treat a challenge to a design ("why X, not Y?") as a correction: evaluate its premise
@@ -29,7 +27,8 @@ load phase-specific guidance only when its operation begins.
 
 ### Phase 1: Make the intended thing work
 
-Settle a viable approach, the actual consumer, and observable acceptance. Sequence implementation,
+Settle the approach under `IMPLEMENTATION.md` before editing or dispatching implementers, then the
+actual consumer and observable acceptance. Sequence implementation,
 delegation, and focused checks around the critical path. Resolve feasibility questions with source
 evidence or bounded probes before building supporting machinery; resolve an unsupported approach
 before proceeding with a partial one.

@@ -15,16 +15,25 @@ Routine workflows and automatic triggers are defaults: skip a step when it adds 
 
 ## Intent and assumptions
 
-Keep my stated requirements and approvals distinct from agent interpretations, assumptions,
-proposals, and implementation choices. Identify governing contracts and observed facts by their
-sources. Preserve the origin and certainty of material claims when carrying them forward; repetition,
-silence, implementation, or inclusion in a document does not make an agent assumption user-approved.
-If the basis for a claimed requirement is missing, mark it unconfirmed rather than attributing it
-to me. Choose routine implementation details within authorization; ask when unresolved intent
-would materially change scope or behavior.
+Read a request for the outcome I want at the breadth I state: cover everything it names and add
+nothing it does not. Take my words and analogies at their plain meaning; "like X" defines the
+behavior. Tools, commands, files, and layers I name are part of the requirement and stay in force
+for the session.
+
+When recording or handing off work, keep my requirements and approvals distinct from agent
+assumptions, proposals, and implementation choices, and name the source of each governing
+contract. An agent choice does not become my requirement by being repeated, implemented, or
+documented; mark a claimed requirement without a source unconfirmed. Label provenance in briefs,
+handoffs, and task records, not in every message, where the labels only add noise.
+
+Choose routine implementation details within authorization. Ask only when unresolved intent would
+materially change scope or behavior and available evidence cannot settle it. Make each question
+stand alone: the concrete situation, the options in my terms with their consequences, and your
+recommendation.
 
 Carry authorized work through validation and any authorized commit step without asking whether
-to continue. Reuse settled choices and approvals; do not re-ask an authority already refused.
+to continue. Reuse settled choices and approvals, which cover repeats of the same action on the
+same target; do not re-ask an authority already refused.
 When the means are delegated, choose and execute them within the retained constraints. Resolve
 tooling problems within existing access and authorization before asking me to do the work.
 
@@ -72,7 +81,8 @@ Complete text already supplied in context satisfies the read; a path or summary 
   - In Mekugi, read `~/.codex/MODEL-ROUTING.md` before delegation. Claude and Codex use the same
     routing, including Codex delegates.
   - For Claude Code's native Agent tool, read `MODEL-ROUTING.md` before delegation.
-- `IMPLEMENTATION.md`: implementing code or operational changes, or inspecting them. Pure lookup,
+- `IMPLEMENTATION.md`: choosing an approach for code or operational changes, implementing them, or
+  inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits
   may use it.
 - `FINISHING.md`: keep it out of implementer startup reads and preloads. Implementers load it
@@ -147,11 +157,10 @@ with their recovery status. Artifacts superseded by an accepted change are cover
 Keep task state in task-specific variables and paths, never in HOME, for the same reason. When a
 skill or plugin authorized messaging other people, name and link it in the final response.
 
-## Delegates
+## Reviews
 
-Keep each durable rule at its existing owner instead of appending recaps elsewhere. An explicit
-review states its scope beyond pending changes and separates missing runtime or browser coverage
-from source inspection.
+An explicit review states its scope beyond pending changes and separates missing runtime or browser
+coverage from source inspection.
 
 ## Worktrees
 
