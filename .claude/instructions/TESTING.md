@@ -19,7 +19,11 @@ consumer. Pair new input restrictions with checks that neighboring supported inp
   configuration before their first command, retaining fixture-local settings for behavior under test.
 - Do not introduce surfaces the user did not request merely to support tests.
 - When tests slow delivery, reduce their cost without weakening distinct coverage.
-- Repair a stale test or fixture that blocks required validation, and report the repair.
+- Expected values, including snapshots and golden files, record intended behavior, not current
+  output. When one differs, decide from the request and the owning design which side is wrong
+  before changing either. Update it only for a change the task intends, after judging the new
+  output as its user would see it; a difference outside the intended change is a regression to
+  fix, not a baseline to refresh. Report each updated expected value with its reason.
 
 Measure explicit size, latency, and resource targets through the consuming path; report actual
 values and any unmeasured target. Test-heavy changes (more than 50 net test lines and more than
