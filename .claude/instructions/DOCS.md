@@ -19,10 +19,14 @@ instead of restating it. Remove superseded duplication, and keep summaries, Feat
 indexes, and navigation consistent without compressing away meaningful capabilities.
 
 Write from the settled intended contract, retained capabilities, limits, and source evidence, not
-from the diff alone. Specs and contracts define intended behavior; reader guidance distinguishes
-planned capabilities from available ones where that affects use. Claims about validation and
-measured behavior require evidence. When implementation evidence changes a decision, update the
-existing topic.
+from the diff alone. Specs and contracts state as required only the outcomes, capabilities, and
+constraints that a user requirement or accepted specification establishes, whether or not they have
+shipped. They present architecture, interfaces, algorithms, limits, defaults, and UX chosen during
+design or implementation as current design that can be replaced while those outcomes hold, so
+readers know what they may change; a capability whose origin cannot be established is current
+capability or design. Reader guidance distinguishes planned capabilities from available ones where
+that affects use. Claims about validation and measured behavior require evidence. When
+implementation evidence changes a decision, update the existing topic.
 
 Read manageable affected documents completely before editing. For large documents, inspect the full
 structure, the affected topics, and their cross-references. Record coverage gaps in the task record. Search mapped owners for conflicts, expanding only for a dependency across
