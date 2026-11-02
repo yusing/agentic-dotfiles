@@ -6,6 +6,9 @@ Main owns scope, decisions, implementation, integration, and completion within e
 
 Choose the smallest coherent change that achieves the requested observable outcome through existing
 owners and preserves specified and unaffected behavior.
+"Smallest" bounds how each item changes, not which items the request covers. When a request or
+work item applies a property across a class, such as every spec or caller, inventory that class
+and cover every member before claiming completion or closing the item.
 Keep accepted behavior, retained capabilities, exclusions, and unresolved decisions in the task record.
 General standards constrain that change; they do not request new features, persistence, compatibility,
 configuration, or adjacent cleanup. Count the contracts a candidate mechanism newly engages (bounds,
