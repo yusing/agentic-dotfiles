@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.27
+
+Publish Codex TUI preset sections in the filtered configuration.
+
 ## 1.3.26
 
 Publish the skills maintenance worker and its bundled repair prompt, keeping the

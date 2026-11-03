@@ -30,6 +30,208 @@
 screen_reader_detection_done = true
 fullscreen_transcript = true
 
+["tui".presets.1]
+input = """
+$i-want you to resolve the listed items through delegates, using $commit for all commits.
+
+Every section is addressed to you as main, except "Delegate brief", which you include verbatim in each implementation delegate's assignment after its item-specific context.
+
+## Planning and dispatch
+
+* Fetch each item's Plane body, comments, and labels yourself. Understand its intent, scope, dependencies, and likely edit overlap well enough to judge grouping, model choice, and task directions, and to evaluate the work delegates return. Pass the fetched content to the delegate so it does not fetch it again.
+
+* Settle what the item, its comments, linked items, and session history can answer. When an item's scope, intent, expected behavior, or acceptance is still unclear, ask me once before dispatch, with all remaining questions for every item. Do not widen an item's scope on your own; bring proposed expansions to me.
+
+* In each brief, quote the item's requirement text verbatim.
+
+* Speed up delivery:
+
+  * Run independent groups in parallel.
+
+  * Group tightly coupled items under one delegate; split them when scope allows.
+
+  * Keep each delegate's scope small enough that parallel work pays off.
+
+* Choose a shared workspace or separate worktrees based on concurrent-edit risk. Sequence conflicting work when isolation alone cannot resolve the dependency.
+
+  * Each delegate works only in its own worktree; for a different task, spawn another delegate rather than giving one a second worktree.
+
+* Before relaying a delegate's request to narrow or change scope, check its evidence, and include that evidence when you ask me.
+
+## Delegate brief (save and reuse with `store`)
+
+The user explicitly requires the following of you, the delegate owning the items above.
+
+* Own your items through implementation, tests, validation, proof of work (why the change works, how it works, and whether it works the way the user requested), review, fixes, and commits with $commit.
+
+* When a review is needed, spawn nested reviewer delegates by reviewer role for one review pass under FINISHING.md, and fix its findings.
+
+* Own intermediate Plane status changes and activity updates. Leave final statuses (Pending QA, Done) to main.
+
+* Record the chosen approach and why, briefly, in activity updates.
+
+* Correct a Plane title or body only from confirmed evidence, and assign correct labels.
+
+* Hand off committed work briefly with commit SHAs, validation results, review outcomes, unresolved blockers, and integration notes. If you are resumed after handing off, end with the complete handoff again, not a reference to the earlier one.
+
+## Main-thread ownership
+
+* Settle and hand over high-level implementation directions, including the existing path each change extends and an estimated size. A delegate whose diff outgrows the estimate re-chooses the approach and reports it.
+
+* Coordinate delegates and integrate their completed work. Wait for results with wait_agent.
+
+* Handle small work yourself, even when a delegate owns the affected code: integration fixes, history rewrites, rewording a commit, few-line corrections, documentation lines, or owner pointers.
+
+* Return substantial rework and review needs to the owning delegate. If that delegate can no longer take follow-ups, start a fresh delegate for the same items with its last handoff, instead of routing the fix through another owner.
+
+* Spawn no reviewers, except one final integration review after all groups are integrated. Delegates own all other reviewer dispatch and review-fix loops. Integration reviewer review for:
+
+  * behavior conflicts (commits implemented the opposite/conflicting mechanisms without code conflicts)
+
+  * duplicated logic (commits implemented the same mechanism with different approaches without code conflicts)
+
+  * any code or approach simplification opportunities
+
+  * changed UI snapshots whose rendering looks wrong to a user, even when consistent with the code
+
+* After all groups are integrated, run the full test suite on the integrated tree, meanwhile run the final integration review yourself or through a reviewer delegate. Return its findings to the owning delegates.
+
+* Set each item's final Plane status, Pending QA or Done, only after the integrated tree passes the full suite and the final review's findings are resolved.
+
+* After final statuses are set, remove task-created worktrees and branches whose commits are on the integrated branch (check with git cherry). Preserve uncommitted or unintegrated work and report it.
+
+## User followups
+
+* User may report a newly found issue. When no item ID is provided, create an item after confirming the issue and its cause.
+
+## Tasks
+
+"""
+label = "Orchestrate plane items"
+
+["tui".presets.2]
+input = """
+$i-want you to sweep the target below for removable complexity, overhead, and avoidable failures, then fix what you confirm. Use $commit for all commits.
+
+## Sweep
+
+* Run the sweep through background subagents, split by area or aspect, so they cover the target in parallel while you continue. Brief them with the target and categories, not your suspicions, so their findings stay independent.
+
+* Look for:
+
+  * Dead code: static dead-code analysis plus code reading for unused or unreachable logic.
+
+  * Stale support: legacy, compatibility, and migration code with no remaining consumer, the docs and tests that exist only for it, and leftovers from earlier removals.
+
+  * Slop: what $deslop targets, in implementations and tests.
+
+  * Overhead in every phase the target runs through (such as setup, run, grading, teardown): CPU, memory, allocations, disk, wall time, and repeated work.
+
+  * Avoidable failures: errors that are handled, retried, or masked when their source could be removed.
+
+* Alongside the code, use any evidence sources the target names, such as agent session transcripts or Plane FIXME items.
+
+## Findings
+
+* Confirm each finding against its callers and contracts, and each overhead finding with a measurement or profile. Drop what you cannot confirm.
+
+* In projects tracked in Plane, record each confirmed finding as its own item with $plane. Record findings outside the target in a FIXME item instead of fixing them.
+
+* If the target says read-only, stop after recording and report.
+
+## Fixes
+
+* Resolve every confirmed in-scope finding in this session.
+
+* Remove before optimizing, so no effort goes into code that is about to go.
+
+* Simplify with $deslop.
+
+* Optimize for lower CPU and memory use, fewer allocations, and no repeated work. Fix an error at its source rather than handling it.
+
+* Report before-and-after measurements for each optimization.
+
+## Target
+
+"""
+label = "Sweep, deslop, optimize"
+
+["tui".presets.3]
+input = """
+$i-want you to diagnose the agent behavior in the evidence below and fix its causes. Use $commit for all commits.
+
+## Diagnose
+
+* Read the named sessions, transcripts, URLs, and reports yourself.
+
+* Trace each symptom, such as stalls, extra requests or tokens, longer wall time, unrequested work, instruction violations, or noisy output, to the cause that produces it: project code, global or project instructions, skills, hooks, or tool output.
+
+* Check other recent sessions for the same causes and for related frictions the evidence did not name.
+
+* Confirm causes with transcript evidence. Keep unconfirmed hypotheses separate.
+
+## Fix
+
+* Fix each confirmed cause at its owner, including preexisting ones, so the symptom cannot recur.
+
+* Record causes outside the target project in a FIXME item.
+
+* Report each symptom with its cause, evidence, and fix.
+
+## Evidence
+
+"""
+label = "Diagnose sessions"
+
+["tui".presets.4]
+input = """
+$i-want you to review my unpushed work and fix what the review confirms.
+
+* Review unpushed commits and uncommitted changes against their intent through reviewer delegates by role, including slop and unrequested changes.
+
+* Fold each fix into the commit it belongs to as a fixup! or amend! commit with $commit, then autosquash.
+
+* Run the tests the range affects on the final tree.
+
+* Report each finding with its outcome, and the rewritten commit SHAs.
+
+## Focus
+
+"""
+label = "Review and fixup unpushed"
+
+["tui".presets.5]
+input = """
+$i-want you to refresh the README with $writing-readme. Use $commit for the commit.
+
+* Find what shipped since the README was last updated, including notable additions worth mentioning, and add what readers need from it.
+
+* Remove stale, duplicated, and low-value content. Cleaning up means less: keep the result no longer than before unless new features require it, and report line counts before and after.
+
+## Notes
+
+"""
+label = "Refresh README"
+
+["tui".presets.6]
+input = """
+$i-want you to review and polish the UI below until it holds up next to mainstream apps. Use $commit for all commits.
+
+* Run the real UI and judge it from the rendered result, not the source.
+
+* Fix the known issues listed below, then sweep every view and state for glitches, inconsistent rendering of the same data across views, unclear labels, misalignment, and wasted space.
+
+* Check the layout on laptop (16") and large desktop (27"+) screens, plus any other sizes listed below.
+
+* Get an independent UI review of the final rendered result and resolve its findings.
+
+* Report each fix with before and after screenshots.
+
+## Known issues
+
+"""
+label = "UI review pass"
+
 ["features"]
 "responses_websockets_v2" = true
 "terminal_resize_reflow" = true

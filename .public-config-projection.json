@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d2bcd4a9d3d8ab1674b4413a3ca0e40c6022289f",
+  "sourceCommit": "6ebd4014d5d5dca9f6a2a166c4a8dc0050aef818",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -179,7 +179,7 @@
     {
       "path": ".codex/config.toml",
       "kind": "file",
-      "sha256": "e5f414731a3ac7648660b700aae25d96f11e58202e8e4d1fc1d6d8b4bf72bf7f",
+      "sha256": "178e0e8b3e0fdb38e8902b95d68f8675ec756be9bd9a99d0f65b300cfeb38e83",
       "executable": false
     },
     {
@@ -772,13 +772,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "b63ed61ad37c7fe9ac0f5b51ba37e2579979a2aa4f9189ed104513fd8bf76a9d",
+      "sha256": "cdba45630ad03cce13e771e395df68fb942163c863de9f45ae159673ce1de226",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "755996491c3f6f38aef533c0f640b722ef0bb8f83d2525287c31a7ac6b734b2d",
+      "sha256": "f2c9b9cedfcef47eab09bb5da05680616a73c2b39cbb9b65c3e654f704763a96",
       "executable": true
     },
     {

@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.26";
+export const VERSION = "1.3.27";
 
 type TreeEntry = {
 	mode: string;
@@ -539,7 +539,7 @@ function projectCodexConfig(text: string): string {
 		"skills",
 		"tui",
 	]);
-	return projectToml(text, topLevel, section => sections.has(section));
+	return projectToml(text, topLevel, section => sections.has(section) || section.startsWith("tui.presets."));
 }
 
 function projectGrokConfig(text: string): string {
