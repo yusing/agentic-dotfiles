@@ -1,9 +1,10 @@
 # Continuation content standard
 
 Give a fresh session the state that determines its next action, not a history of the session.
-Assume the handoff consumer has none of the prior conversation, tool results or session state,
-but can read durable workspace files and query Git. Self-contained means preserving the
-necessary context and decisions that cannot be recovered there, not copying retrievable content.
+Assume the file handoff consumer has none of the prior conversation, tool results or session state,
+but can read durable workspace files and query Git. For runtime compaction, assume the consumer
+can also read retained user messages. Self-contained means preserving the necessary context and
+decisions that cannot be recovered there, not copying retrievable content.
 
 ## Caller boundary
 
@@ -11,6 +12,9 @@ The caller supplies the cutoff, destination, delivery, and response format. This
 content for runtime compaction or a file handoff; it requires neither a file nor a path-only reply.
 Use context already held at the cutoff. Do not investigate, validate, or continue implementation
 while composing; name gaps instead.
+
+For runtime compaction, do not summarize or repeat the user's messages in the compaction summary.
+Apply the remaining content rules only to information not already present in those messages.
 
 Handoff invocation, instruction reads, composition, delivery, and acknowledgements are control
 flow, not unfinished user work. A new caller that takes over an undelivered handoff inherits the
@@ -37,10 +41,11 @@ workstream only when it is a direct dependency. A runtime-compaction handoff sti
 preserves the unfinished work covered by its caller's scope.
 
 After any recovery-document reference, state the outcome, acceptance criteria, scope, and
-still-binding constraints not already covered there. Consolidate
-repeated requests without losing distinct unfinished outcomes. Apply corrections only to the
-affected requirement and retain compatible approvals. Preserve exact wording when paraphrasing
-would erase a distinction. Attribute a decision to the user only when explicitly stated.
+still-binding constraints not already covered there or present in retained user messages for
+runtime compaction. For a file handoff, consolidate repeated requests without losing distinct
+unfinished outcomes. Apply corrections only to the affected requirement and retain compatible
+approvals. Preserve exact wording when paraphrasing would erase a distinction, subject to the
+runtime-compaction boundary above. Attribute a decision to the user only when explicitly stated.
 Separate user requirements and governing contracts from inferred intent, working assumptions,
 agent-selected decisions, and proposals. Keep authorized implementation choices actionable.
 An interruption records that work stopped; it does not establish a new prohibition or revoke

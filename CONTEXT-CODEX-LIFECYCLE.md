@@ -35,9 +35,9 @@
 4. **Turn end.** All matching hooks from active configuration sources run for their lifecycle
    event. Inspect effective enabled plugin manifests alongside `.codex/hooks.json`.
 5. **Compaction.** The runtime owns the compaction cutoff, prompt selection, and delivery.
-   The managed handoff standard defines caller-neutral content for file handoffs and for a
-   runtime that explicitly selects it. Its interruption and continuation rules do not establish
-   delivery by the current runtime.
+   The managed handoff standard defines shared content rules for file handoffs and for a
+   runtime that explicitly selects it, with a runtime-specific user-message boundary. Its
+   interruption and continuation rules do not establish delivery by the current runtime.
    After handoff, the base prompt selects skills again from the current operation. The reloaded shared instructions recover the active
    scope and reread only the guidance needed for remaining work. `MAIN.md` sequences working-path
    implementation and delivery. `IMPLEMENTATION.md` supplies early structural constraints;
