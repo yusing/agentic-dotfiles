@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f48bd0b1b46e4552cea2d4ef2701a7affd8f0f80",
+  "sourceCommit": "833d2aec88811a9324acdeed1903932263c1f6ea",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1000,7 +1000,7 @@
     {
       "path": ".skills-mgr/skills/commit/SKILL.md",
       "kind": "file",
-      "sha256": "253de7daeb71558df79ee215f5587ca037797552e23fddb3bc1e3a0f741a0ab3",
+      "sha256": "1a69f0807a8dbc1b521dcd9fb762314695cc62fcabb1df33cab482931b8e3f0d",
       "executable": false
     },
     {

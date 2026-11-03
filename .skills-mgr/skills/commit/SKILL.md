@@ -7,9 +7,10 @@ disable-model-invocation: false
 # Commit
 
 A documented project convention (contributing guide, commitlint or similar config) takes
-precedence over the message format below. This skill does not authorize rewriting
-history, or pushing; those follow the existing request and authorization. A commit or push request
-covers the work of that request, not later ones.
+precedence over the message format below. An authorized commit workflow includes the
+unpublished marker folding required below; other history rewrites and pushing follow the
+existing request and authorization. A commit or push request covers the work of that request,
+not later ones.
 
 ## Shape commits
 
@@ -139,8 +140,12 @@ user's request, is a correction to it.
    `amend! <exact target subject>` (e.g. `amend! feat: add parser`), and the remaining
    paragraphs are the replacement message (e.g. `feat(parser): add streaming parser` and its
    body). Add `--allow-empty` for a message-only correction.
-4. Squash the markers only when the user asks or the workflow requires a clean branch:
-   `git rebase --autosquash --autostash <base>`. Squashing rewrites history; force-pushing the result needs
+4. Before recording or finalizing commit SHAs, handing off, or declaring completion, fold all
+   pending `fixup!`/`amend!` commits in the authorized scope into their unpublished targets:
+   `git rebase --autosquash --autostash <base>`. Choose a base before both markers and targets,
+   preserve unrelated work, and verify that the resulting tree is unchanged and no markers
+   remain in scope. Record the resulting SHAs. If a target is published or someone else builds
+   on it, obtain history-rewrite authorization before folding it. Force-pushing the result needs
    `--force-with-lease` and authorization to rewrite the remote branch.
 
 Make a regular commit (usually `fix`) instead when the target is published, or when the change
