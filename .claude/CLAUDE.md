@@ -164,6 +164,10 @@ coverage from source inspection.
 
 ## Worktrees
 
-Create task worktrees in `./.worktrees`, never under `$TMPDIR`. Before removing a worktree or
-branch, check with `git cherry` whether its patches are already upstream rather than relying on
-merge ancestry, which misses cherry-picked and rebased work.
+Create every worktree in `./.worktrees`, including test, review, and experimental worktrees.
+Never create a worktree under `$TMPDIR` or other temporary directories such as `/tmp`.
+Dependencies such as `node_modules` and build intermediates can grow large and exhaust RAM when
+temporary storage is memory-backed.
+
+Before removing a worktree or branch, check with `git cherry` whether its patches are already
+upstream rather than relying on merge ancestry, which misses cherry-picked and rebased work.
