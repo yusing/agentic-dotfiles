@@ -17,13 +17,27 @@ flow, not unfinished user work. A new caller that takes over an undelivered hand
 original task cutoff and supersedes its delivery obligations. Resume the underlying task, not
 an abandoned handoff or acknowledgement step.
 
+## Recovery documents
+
+When a recovery document is used, identify its path and direct the recipient to read it before
+resuming. Treat it as part of the handoff: do not repeat or summarize its content or recreate its
+sections, regardless of format or location. Carry only needed information absent from it or changed
+since it was written, as additions or updates that supersede stale entries without restating them.
+Apply this throughout the handoff, including the request, constraints, evidence, status, and
+continuation.
+
+Use the context already held at the cutoff to assess coverage. If the document's availability or
+coverage is uncertain, name the uncertainty instead of copying possibly covered material; do not
+inspect or validate it while composing.
+
 ## Current request
 
 Honor the caller's transfer scope. In a focused task handoff, carry another
 workstream only when it is a direct dependency. A runtime-compaction handoff still
 preserves the unfinished work covered by its caller's scope.
 
-Start with the outcome, acceptance criteria, scope, and still-binding constraints. Consolidate
+After any recovery-document reference, state the outcome, acceptance criteria, scope, and
+still-binding constraints not already covered there. Consolidate
 repeated requests without losing distinct unfinished outcomes. Apply corrections only to the
 affected requirement and retain compatible approvals. Preserve exact wording when paraphrasing
 would erase a distinction. Attribute a decision to the user only when explicitly stated.
@@ -71,7 +85,8 @@ when it is not recoverable from those sources; identify conversation-only eviden
 not freshly verified. Omit session-scoped identifiers and handles, including mchanges ranges,
 tool-result IDs and agent roster IDs. They are not portable evidence for a fresh session.
 
-Use relative paths inside the workspace. Preserve essential conclusions when a temporary artifact is their only source.
+Use relative paths inside the workspace. Preserve essential conclusions when a temporary artifact is
+their only source, unless it is the recovery document used for the handoff.
 For a completed review, point to its durable report and preserve only an unresolved decision
 not already recorded there. Carry findings inline only when no durable report exists.
 Name missing/unverified availability; a dead path is not an instruction to recreate irrelevant work.
@@ -92,12 +107,15 @@ build settings, or install steps.
 Use headings suited to the state. State each fact once; omit preambles, empty templates, mandatory
 last-action sections, and change history.
 
-Each next action must identify the work and its inputs without session-only references.
+For actions carried in the handoff, identify the work and its inputs without session-only
+references; refer to the recovery document for details it already covers.
 
-Put Continuation last when work remains: `Next:` names the first unfinished action and `Then:`
-later obligations. Order prerequisite hooks first, then unfinished asides newest first, then
-standing work in request order. Reference an incomplete hook's owner without copying its rules.
+Without a recovery document, put Continuation last when work remains: `Next:` names the first
+unfinished action and `Then:` later obligations. With one, carry only action additions or changes
+and their order relative to the actions it records. Order prerequisite hooks first, then unfinished
+asides newest first, then standing work in request order. Reference an incomplete hook's owner
+without copying its rules.
 
-Completion includes required validation, documents, reporting, and external obligations. If none
-remain, say so. For a blocker, name the concrete missing decision/dependency and preserve
-independent work that can still proceed.
+Completion includes required validation, documents, reporting, and external obligations. Where a
+used recovery document does not already do so, say if none remain; for a blocker, name the concrete
+missing decision/dependency and preserve independent work that can still proceed.
