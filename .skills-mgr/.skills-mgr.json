@@ -53,7 +53,7 @@
       "enabled": true
     },
     "design-taste-frontend": {
-      "enabled": "lang tsx || lang jsx || lang html || lang css",
+      "enabled": "lang tsx || lang jsx || lang html || lang css || [ \"$PWD\" == \"$HOME\" ]",
       "remote": {
         "provider": "repository",
         "id": "https://github.com/Leonxlnx/taste-skill#design-taste-frontend",
@@ -128,7 +128,7 @@
       "enabled": true
     },
     "js-ts-best-practices": {
-      "enabled": "lang js || lang ts"
+      "enabled": "lang js || lang ts || [ \"$PWD\" == \"$HOME\" ]"
     },
     "juststore-rendering-optimizer": {
       "enabled": "(lang js || lang ts) && has_dependency juststore"
@@ -188,7 +188,7 @@
       "enabled": true
     },
     "shadcn": {
-      "enabled": "lang node && [ -f components.json ]",
+      "enabled": "lang node",
       "remote": {
         "provider": "skills.sh",
         "id": "shadcn/ui/shadcn",
