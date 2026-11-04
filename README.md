@@ -91,7 +91,7 @@ curl -fsSL https://raw.githubusercontent.com/yusing/agentic-dotfiles/main/setup.
 Linux and macOS use native installation. After setup, upgrade managed tools with:
 
 ```sh
-agent-tools pull
+bash setup.sh --upgrade
 ```
 
 ### Tool sources
@@ -104,12 +104,10 @@ checksummed prebuilt archives.
 npm packages retain their npm source through Mise, including agent-browser and
 markdownlint-cli. Bun performs npm installation. Mise also supplies tools
 without a compatible current Brew source, including gh-dash and go-swagger,
-plus pinned scriptc 0.4.5 and Lightpanda 1.0.0. The shells select Lightpanda as
+plus pinned scriptc 0.4.5 and Lightpanda 1.0.0. The shells select Chrome as
 agent-browser's default engine.
 
-Brew rustup supplies stable Rust and `wasm32-wasip2`.
-Normal native reruns retain installed Rust;
-full upgrades refresh it. Both platforms install these environments locally. Cargo downloads and project output remain writable.
+Brew supplies rustup. Manage Rust toolchains and targets separately with rustup.
 
 Linux uses GNU netcat and Brew Chromium/WebKitGTK 4.1 libraries. WebKitGTK 6 and
 Bazelisk are excluded. macOS uses its system netcat and WebKit framework.
@@ -126,30 +124,22 @@ helpers. Open a new terminal after installation.
 
 ```sh
 bash setup.sh                      # install missing tools
-agent-tools pull                   # upgrade managed tools
+bash setup.sh --upgrade            # upgrade managed tools
 bash setup.sh --upgrade git-agent   # upgrade only a named Mise tool
 ```
 
 Normal setup retains installed versions. Full upgrades refresh declared Brew,
-Mise, vendor, and Rust tools. Named upgrades accept a Mise identifier or command
-name and skip Brew, vendors, helpers, configuration, and cleanup.
+Mise, and vendor tools. Named upgrades accept a Mise identifier or command
+name and skip Brew, vendors, helpers, and final verification.
 Full upgrades skip the Mosh source build when its installed commands identify
 the fork's latest commit. Missing or unrecognized builds run the installer.
 
 ### Stale-tool cleanup
 
-After replacements validate, setup retires eligible old installations using
-explicit ownership declarations and exact Mise receipts. Current native tools,
-unrelated dependencies, host shells, active installations, services, databases,
-and configuration data remain. Cleanup can require sudo for process inspection
-or system package removal. Close retained active tools and rerun the upgrade to
-finish retirement. Broad autoremove is not used.
-
-For an existing image installation, first run the updated `bash setup.sh` from a
-host terminal, then `~/.local/bin/agent-tools pull`. The old image launcher remains
-available until the native upgrade succeeds and the login shell uses native Fish.
-Inactive images are removed; running image commands retain their release until
-they exit. Close old image sessions and rerun pull to reclaim that space.
+Setup leaves superseded packages and old image installations in place. Validate
+their native replacements before retiring old copies manually. Legacy clipboard
+push services and helpers follow the [image-paste retirement](#image-paste-in-remote-sessions)
+described above.
 
 ## Adapting the Agent Setup
 

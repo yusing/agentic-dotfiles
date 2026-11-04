@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.7
+# version: 2.10.8
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -344,7 +344,7 @@ have_logical() {
     if [ -z "$cmd" ]; then
       while IFS= read -r pkg; do
         [ -n "$pkg" ] || continue
-        (PM=brew; installed_pm_package "$pkg") >/dev/null && return 0
+        PM=brew installed_pm_package "$pkg" >/dev/null && return 0
       done < <(mapped_pkgs "$name")
       return 1
     fi
@@ -834,7 +834,7 @@ install_configured_packages() {
   install_packages "${native_names[@]}" || return 1
   if [ "${#brew_names[@]}" -gt 1 ]; then
     ensure_brew || return 1
-    (PM=brew; install_packages "${brew_names[@]}") || return 1
+    (PM=brew install_packages "${brew_names[@]}") || return 1
   fi
 }
 
@@ -857,7 +857,7 @@ upgrade_configured_packages() {
     candidates="$(mapped_pkgs "$name")" || return 1
     while IFS= read -r pkg; do
       [ -n "$pkg" ] || continue
-      installed="$(PM="$manager"; installed_pm_package "$pkg")" || continue
+      installed="$(PM="$manager" installed_pm_package "$pkg")" || continue
       [ -n "$installed" ] || continue
       if [ "$manager" = brew ]; then
         in_list "$pkg" ${brew_packages[@]+"${brew_packages[@]}"} || brew_packages+=("$pkg")
@@ -1103,7 +1103,7 @@ setup_home_repo() {
 
   # Require a home repository, not an enclosing repository discovered by Git.
   if { [ -e .git ] || [ -L .git ]; } \
-    && git rev-parse --verify --quiet HEAD^{commit} >/dev/null 2>&1; then
+    && git rev-parse --verify --quiet 'HEAD^{commit}' >/dev/null 2>&1; then
     info "git repository already present at $HOME; skipping git setup"
     return 0
   fi
@@ -1747,7 +1747,7 @@ upgrade_named_tools() {
 }
 
 # ---------------------------------------------------------------------------
-# Legacy source cleanup
+# Installed native packages
 # ---------------------------------------------------------------------------
 
 installed_pm_package() {
@@ -1904,7 +1904,7 @@ ensure_fish_login_shell() {
 # Retire the push implementation on both source and receiver machines. Keep
 # recoverable copies, and do not revoke shared Tailscale operator/linger settings.
 configure_image_paste() {
-  local path backup= service state units_changed=0
+  local path backup="" service state units_changed=0
   if [ "$OS" = Darwin ]; then
     if launchctl print "gui/$(id -u)/local.clip-watch" >/dev/null 2>&1; then
       launchctl bootout "gui/$(id -u)/local.clip-watch" >/dev/null 2>&1 || true
@@ -1998,8 +1998,8 @@ verify_setup() {
     fi
   done < <(mise_tool_records)
   if [ "$OS" = Darwin ] && [ "$PM" = brew ]; then
-    local align_any=0 align_tool align_name align_flag align_command align_pkg
-    while IFS='|' read -r align_tool align_name align_flag align_command align_pkg; do
+    local align_any=0 align_name align_flag _
+    while IFS='|' read -r _ align_name align_flag _ _; do
       [ "$align_flag" = 1 ] || continue
       setup_config native-enabled "$align_name" || continue
       align_any=1
@@ -2027,7 +2027,7 @@ usage() {
   cat <<'EOF'
 Usage: setup.sh [--upgrade [TOOL...]] [--config PATH] [--check-config]
 
-Linux and macOS install tools natively. Run agent-tools pull for full upgrades.
+Linux and macOS install tools natively. Run bash setup.sh --upgrade for full upgrades.
 Homebrew confirmation is disabled. Setup installs a root-owned sudo helper;
 its first installation or update may require authentication, then reruns reuse it.
 
@@ -2037,16 +2037,16 @@ Mise declarations also live in setup.json; .config/mise/config.toml is generated
 --check-config validates JSON only, without downloads, installs, or checkout changes.
 Removing an entry stops managing it; it does not uninstall existing software.
 
-Install missing native and locked cross-platform tools, reconcile each tool to
-its declared owner, then check the agentic-dotfiles repository out into $HOME
+Install missing native and locked cross-platform tools, then check the
+agentic-dotfiles repository out into $HOME
 unless the home repository already has a commit at HEAD, which skips Git setup.
 
 Without --upgrade, added or changed declarations refresh their lock entries;
-unchanged tools retain their locked versions without a full remote refresh. Packages from legacy Brew, APT, Pacman, and direct-install
-sources are removed only after the replacement validates. --upgrade advances the
+unchanged tools retain their locked versions without a full remote refresh.
+Existing legacy installations remain in place. --upgrade advances the
 tracked multi-platform mise lock, installs it, and upgrades installed native
 packages declared in setup.json (including optional packages). Package managers
-may also update required dependencies. Full upgrades are also available through agent-tools pull.
+may also update required dependencies.
 --upgrade TOOL... re-resolves only the named mise tools (identifier or command
 name, such as git-agent) and installs the lock after a completed setup. It skips
 native packages, vendors, checkout, helper compilation, and verification.
@@ -2196,7 +2196,7 @@ main() {
   STEP="install additional tools"
   run_additional_installs
 
-  STEP="reconcile tool ownership"
+  STEP="refresh Homebrew command paths"
   load_brew_prefix_env
 
   STEP="compile user-owned helpers and hooks"

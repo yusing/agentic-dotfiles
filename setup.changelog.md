@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.10.8
+
+Align shell smoke checks and browser-engine guidance with the configured Chrome
+engine. Document full upgrades through setup itself and separate manual Rust
+provisioning and stale-tool retirement from setup's current responsibilities.
+Clear ShellCheck findings while preserving package-manager scoping, repository
+detection, clipboard retirement, and Homebrew alignment checks.
+
 ## 2.10.7
 
 Disable Homebrew install and upgrade confirmation. Install a root-owned internal
