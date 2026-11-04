@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "02e58661bb2a2c551b6330aecf7dbe44fb483ea2",
+  "sourceCommit": "c843fa56322254e7e0dc3620cb1505245cfb684e",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -826,19 +826,19 @@
     {
       "path": ".local/lib/skills-maintenance/CHANGELOG.md",
       "kind": "file",
-      "sha256": "54c6962f0d71009dc1faa12718bc291f35466b91bad03ff8ecc461a06a1d08f5",
+      "sha256": "cfe4c4473ed91d4c0b70e37c3199465b28bb6029c7198519553f33bc0e95cf9e",
       "executable": false
     },
     {
       "path": ".local/lib/skills-maintenance/repair-prompt.ts",
       "kind": "file",
-      "sha256": "a3dfa942944c36ff7a85483cae48d674a0b7d73b40f2f2c7ddced66d0215f561",
+      "sha256": "526739b3f3f2f43829434b25052ad2b80ca6fd3cbb96d3867bd7c7c04ff6ef39",
       "executable": false
     },
     {
       "path": ".local/lib/skills-maintenance/skills-maintenance.ts",
       "kind": "file",
-      "sha256": "554f5ca313f62b2f4bd37b5f70df207bbfc5141d68e6efa0287b9319b85bb717",
+      "sha256": "fbe7b8774adf28219349fb5e5f8907ea284a217fb9097d120890a42d4881a851",
       "executable": false
     },
     {
@@ -1551,7 +1551,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "bd9723276e158f780f175f59b050a5ea12616bf675ca9cc14c5595829e62cdb4",
+      "sha256": "fa2c8edcaf34130a41a543d901b15a884d9d8b2062be3eba8cbaee20c50f3a7f",
       "executable": false
     },
     {

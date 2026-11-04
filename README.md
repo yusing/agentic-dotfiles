@@ -212,9 +212,16 @@ start serial `gpt-6.1-terra` headless Mekugi sessions. A repair agent verifies t
 preserves local customizations and activation conditions, validates its handling, and
 commits its authored changes. Network and authentication failures remain unresolved.
 
+When the managed OpenAI Docs override is installed, each cycle also checks its directory
+in [openai/codex](https://github.com/openai/codex/tree/main/codex-rs/skills/src/assets/samples/openai-docs)
+using the GitHub CLI (`gh`). A changed upstream tree starts a Terra update session to merge
+the complete skill while retaining local-first guidance and adapted references. The agent
+validates and commits the skill with its upstream baseline. Uncommitted skill edits defer
+that update; upstream failures leave independent remote maintenance running.
+
 Repair authors maintain one local newest-first, 100-entry rolling log at
 `.skills-mgr/MAINTENANCE.md`. The activity log stays outside the public projection.
-Generated remote placeholder changes are
+Generated remote and managed OpenAI Docs placeholder changes are
 committed separately without log entries. Manual placeholder edits are preserved when sync
 would overwrite them; unrelated staged changes and staged placeholder edits stay outside
 automatic placeholder commits. Concurrent maintenance invocations skip

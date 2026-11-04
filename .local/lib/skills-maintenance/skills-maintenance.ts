@@ -5,9 +5,9 @@ import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { createInterface } from "node:readline";
 import type { Readable } from "node:stream";
-import { repairPrompt } from "./repair-prompt";
+import { openaiDocsUpdatePrompt, repairPrompt } from "./repair-prompt";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.1.0";
 const roots = [".agents/skills", ".claude/skills"];
 const disappeared = /does not contain skill|0 matching skills|remote skill name .+ does not match SKILL\.md name|remote skill .+ (?:is missing|has invalid) SKILL\.md|repository not found|repository .+ not found|\b(?:404|410)\b/i;
 const stalePatch = /remote skill patch no longer applies/i;
@@ -137,6 +137,38 @@ async function commitPlaceholders(cwd: string, env: NodeJS.ProcessEnv, names: Se
 	console.log(`Committed ${selected.length} remote placeholder file(s).`);
 }
 
+async function updateOpenaiDocs(cwd: string, env: NodeJS.ProcessEnv): Promise<boolean> {
+	const owner = ".skills-mgr/skills/openai-docs";
+	const marker = `${owner}/.upstream-tree`;
+	if (!await Bun.file(join(cwd, owner, "SKILL.md")).exists()) return false;
+	const previous = (await readOptional(join(cwd, marker))).trim();
+	if (!/^[a-f0-9]{40}$/.test(previous)) throw new Error(`Missing or invalid upstream baseline: ${marker}`);
+	const dirty = await run(cwd, env, ["git", "status", "--porcelain=v1", "--untracked-files=all", "--", owner]);
+	if (dirty.status) throw new Error(dirty.stderr);
+	if (dirty.stdout) throw new Error("Managed openai-docs has local working-tree or index changes; finish them before updating.");
+	console.log("Checking managed openai-docs upstream tree on GitHub.");
+	const upstream = await run(cwd, env, ["gh", "api", "repos/openai/codex/contents/codex-rs/skills/src/assets/samples?ref=main",
+		"--jq", '.[] | select(.name == "openai-docs" and .type == "dir") | .sha']);
+	if (upstream.status) throw new Error(`openai-docs upstream lookup failed: ${upstream.stderr}`);
+	const target = upstream.stdout.trim();
+	if (!/^[a-f0-9]{40}$/.test(target)) throw new Error("openai-docs upstream directory missing or invalid; preserving managed skill.");
+	if (target !== previous) {
+		console.log(`Starting gpt-6.1-terra upstream update for openai-docs (${previous.slice(0, 12)} -> ${target.slice(0, 12)}).`);
+		const result = await run(cwd, env, ["mekugi", "codex", "headless", "--yolo", "-m", "gpt-6.1-terra"],
+			`${openaiDocsUpdatePrompt}\nPrevious upstream tree: ${previous}\nTarget upstream tree: ${target}\n`);
+		if (result.status || !result.completed) throw new Error(`openai-docs update failed (exit ${result.status}, completed=${result.completed}). ${result.stderr}`);
+		const committed = await run(cwd, env, ["git", "show", `HEAD:${marker}`]);
+		const pending = await run(cwd, env, ["git", "status", "--porcelain=v1", "--untracked-files=all", "--", owner]);
+		if (committed.status || committed.stdout.trim() !== target || pending.status || pending.stdout) {
+			throw new Error("openai-docs update did not commit the complete skill and validated upstream baseline.");
+		}
+	}
+	const checked = await run(cwd, env, ["skills-mgr", "check", "openai-docs"]);
+	if (checked.status) throw new Error(`Updated openai-docs resource check failed: ${checked.stderr || checked.stdout}`);
+	console.log(target === previous ? "Managed openai-docs is current and checked." : "Managed openai-docs upstream update committed and checked.");
+	return true;
+}
+
 export async function maintain(cwd = homedir()): Promise<void> {
 	const env = schedulerEnvironment();
 	const cache = join(process.platform === "darwin" ? join(homedir(), "Library/Caches") : process.env.XDG_CACHE_HOME || join(homedir(), ".cache"), "skills-mgr");
@@ -172,6 +204,12 @@ export async function maintain(cwd = homedir()): Promise<void> {
 		}
 		const registry = JSON.parse(await readFile(join(cwd, ".skills-mgr/.skills-mgr.json"), "utf8"));
 		const names = Object.entries(registry.skills).filter(([, selection]) => (selection as { remote?: unknown }).remote).map(([name]) => name);
+		let failed = false;
+		let managedReady = false;
+		try { managedReady = await updateOpenaiDocs(cwd, env); } catch (error) {
+			failed = true;
+			console.error(`Managed upstream update unresolved: ${(error as Error).message}`);
+		}
 		console.log("Refreshing remote skills (skills-mgr owns cache expiry).");
 		const started = Date.now();
 		const refresh = await run(cwd, env, ["skills-mgr", "refresh-runner"]);
@@ -205,7 +243,6 @@ export async function maintain(cwd = homedir()): Promise<void> {
 			const error = await inspectPatch(name);
 			if (error) failures.set(name, [failures.get(name), error].filter(Boolean).join("\n"));
 		}
-		let failed = false;
 		for (const [name, diagnostic] of failures) {
 			console.log(`Starting gpt-6.1-terra repair for ${name}.`);
 			const result = await run(cwd, env, ["mekugi", "codex", "headless", "--yolo", "-m", "gpt-6.1-terra"], `${repairPrompt}\nSkill: ${JSON.stringify(name)}\nDiagnostic: ${JSON.stringify(diagnostic)}\n`);
@@ -223,9 +260,9 @@ export async function maintain(cwd = homedir()): Promise<void> {
 		if (!finalSync.status) {
 			const updated = JSON.parse(await readFile(join(cwd, ".skills-mgr/.skills-mgr.json"), "utf8"));
 			const updatedNames = Object.entries(updated.skills).filter(([, selection]) => (selection as { remote?: unknown }).remote).map(([name]) => name);
-			await commitPlaceholders(cwd, env, new Set([...names, ...updatedNames]), protectedDirectories);
+			await commitPlaceholders(cwd, env, new Set([...names, ...updatedNames, ...(managedReady ? ["openai-docs"] : [])]), protectedDirectories);
 		}
-		if (failed || finalSync.status) throw new Error(finalSync.stderr || "A repair agent failed; see diagnostics above.");
+		if (failed || finalSync.status) throw new Error(finalSync.stderr || "Skills maintenance remains unresolved; see diagnostics above.");
 		console.log("Skills maintenance complete.");
 	} finally {
 		try { await restore(); } finally { await release(); }
