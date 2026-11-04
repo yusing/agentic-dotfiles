@@ -1,6 +1,6 @@
 "model" = "gpt-6-astra"
 "model_reasoning_summary" = "auto"
-"model_context_window" = 350000
+"model_context_window" = 320000
 "experimental_compact_prompt_file" = "$HOME/.skills-mgr/skills/handoff/STANDARD.md"
 "personality" = "none"
 "plan_mode_reasoning_effort" = "ultra"
@@ -33,12 +33,13 @@ fullscreen_transcript = true
 ["tui".presets.1]
 input = """
 $i-want you to resolve the listed items through delegates, using $commit for all commits.
+Phase 0 still applies under it's conditions.
 
 Every section is addressed to you as main, except "Delegate brief", which you include verbatim in each implementation delegate's assignment after its item-specific context.
 
 ## Planning and dispatch
 
-* Fetch each item's Plane body, comments, and labels yourself. Understand its intent, scope, dependencies, and likely edit overlap well enough to judge grouping, model choice, and task directions, and to evaluate the work delegates return. Pass the fetched content to the delegate so it does not fetch it again.
+* Fetch each item's $plane body, comments, and labels yourself. Understand its intent, scope, dependencies, and likely edit overlap well enough to judge grouping, model choice, and task directions, and to evaluate the work delegates return. Pass the fetched content to the delegate so it does not fetch it again.
 
 * Settle what the item, its comments, linked items, and session history can answer. When an item's scope, intent, expected behavior, or acceptance is still unclear, ask me once before dispatch, with all remaining questions for every item. Do not widen an item's scope on your own; bring proposed expansions to me.
 
@@ -80,6 +81,8 @@ The user explicitly requires the following of you, the delegate owning the items
 
 * Coordinate delegates and integrate their completed work. Wait for results with wait_agent.
 
+* Name delegates in `<category>-<topic>-<id>` format, like `sql-syntax_error-456`.
+
 * Handle small work yourself, even when a delegate owns the affected code: integration fixes, history rewrites, rewording a commit, few-line corrections, documentation lines, or owner pointers.
 
 * Return substantial rework and review needs to the owning delegate. If that delegate can no longer take follow-ups, start a fresh delegate for the same items with its last handoff, instead of routing the fix through another owner.
@@ -98,11 +101,15 @@ The user explicitly requires the following of you, the delegate owning the items
 
 * Set each item's final Plane status, Pending QA or Done, only after the integrated tree passes the full suite and the final review's findings are resolved.
 
+* Make no activity update.
+
 * After final statuses are set, remove task-created worktrees and branches whose commits are on the integrated branch (check with git cherry). Preserve uncommitted or unintegrated work and report it.
 
-## User followups
+## User followups and issues found along the work
 
-* User may report a newly found issue. When no item ID is provided, create an item after confirming the issue and its cause.
+* Follows `# Planning and dispatch`
+
+* User/Agent may report a newly found issue. When no item ID is provided, create an item after confirming the issue and its cause, then resolve it.
 
 ## Tasks
 

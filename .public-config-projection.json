@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "427e6148f5169ab3139c3dcbb658ac83f30e44df",
+  "sourceCommit": "79386f99a7947f79a5d0e6b69144570a1665cde9",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -179,7 +179,7 @@
     {
       "path": ".codex/config.toml",
       "kind": "file",
-      "sha256": "178e0e8b3e0fdb38e8902b95d68f8675ec756be9bd9a99d0f65b300cfeb38e83",
+      "sha256": "daa43b681785987434d2707e734854635b5ed6c761ada81f0b3cf84816e0665f",
       "executable": false
     },
     {
