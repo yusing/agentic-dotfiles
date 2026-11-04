@@ -3,27 +3,27 @@
 lockfile_version = 3
 
 [[tools."aqua:go-swagger/go-swagger"]]
-version = "0.36.6"
+version = "0.36.7"
 backend = "aqua:go-swagger/go-swagger"
 specifiers = ["latest"]
 
 [tools."aqua:go-swagger/go-swagger"."platforms.linux-arm64"]
-checksum = "sha256:32cf8d22d6291f65fbcbb769577b15d345c4c0a6d0dc6211e992384fa714a779"
+checksum = "sha256:f842ecdef842c716cc48f2c9b435da921855e96a98d4107f056279abc7f1b1e6"
 checksum_source = "mise-versions"
-url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.6/swagger_0.36.6_Linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/554544618"
+url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagger_0.36.7_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050695"
 
 [tools."aqua:go-swagger/go-swagger"."platforms.linux-x64"]
-checksum = "sha256:57771dffc04ec5bcfb6b63a4ae071822717cc5b0a5d026a36b211c0ea0884fd5"
+checksum = "sha256:7d3704481cd8b82c1738550ae19a86cb59f9446ac5a2ec535b63d6120c85798c"
 checksum_source = "mise-versions"
-url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.6/swagger_0.36.6_Linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/554544567"
+url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagger_0.36.7_Linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050691"
 
 [tools."aqua:go-swagger/go-swagger"."platforms.macos-arm64"]
-checksum = "sha256:78c5f2c60819d58dfa1adbc1f4986c572cd338b087f70312bd9f18b7fb45994a"
+checksum = "sha256:a5f55b6cc7a7431979a75a827e1c9f2578f71ca34a652b187f52ca697079e244"
 checksum_source = "mise-versions"
-url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.6/swagger_0.36.6_Darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/554544568"
+url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagger_0.36.7_Darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050832"
 
 [[tools."github:dlvhdr/gh-dash"]]
 version = "4.26.2"
@@ -134,7 +134,7 @@ backend = "npm:@kilocode/cli"
 specifiers = ["latest"]
 
 [[tools."npm:@tailwindcss/cli"]]
-version = "4.3.3"
+version = "4.3.4"
 backend = "npm:@tailwindcss/cli"
 specifiers = ["latest"]
 
@@ -144,17 +144,17 @@ backend = "npm:@trunkio/launcher"
 specifiers = ["latest"]
 
 [[tools."npm:agent-browser"]]
-version = "0.40.0"
+version = "0.41.2"
 backend = "npm:agent-browser"
 specifiers = ["latest"]
 
 [[tools."npm:ccstatusline"]]
-version = "2.2.32"
+version = "2.2.33"
 backend = "npm:ccstatusline"
 specifiers = ["latest"]
 
 [[tools."npm:ctx7"]]
-version = "0.8.2"
+version = "0.9.0"
 backend = "npm:ctx7"
 specifiers = ["latest"]
 
