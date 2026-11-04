@@ -86,8 +86,7 @@ that the runtime selects the managed handoff standard.
   `.local/bin/sync-kilo-agent-ports`; `CONTEXT-KILO-AGENT-PORT.md` owns the
   port map and drift check.
 - `.codex/skills/.system/` is imported Codex system content, excluded from the repository.
-  OpenAI Docs is served from `.codex/skills/.system/openai-docs/SKILL.md`; do not treat it as
-  a missing managed skill or edit the imported copy to change its upstream policy.
+  Keep local overrides at their managed owner; imported files remain upstream-owned.
 - Context7's served plugin body is under
   `.codex/plugins/cache/context7-marketplace/context7/<version>/skills/context7-mcp/SKILL.md`.
   Plugin cache files are imported consumers, not maintained prompt owners.

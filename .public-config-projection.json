@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "83c3e0e4defe156fd251f5164c960f43ea231d6b",
+  "sourceCommit": "7b0096fecea09bf5cd6c1e8544d9af9212d5b160",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1527,7 +1527,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "694bb6808d7aeaa2d9c3eb17de6ed4c99462a0dbb88070d518329dc7ff11f1ce",
+      "sha256": "d9419b4c7473bdb58ddd6008fb0c0b1ae9cf82c1082fbffab37d8dfe1ac26540",
       "executable": false
     },
     {
