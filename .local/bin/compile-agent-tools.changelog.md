@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+
+Use Bun's executable identity rather than its PATH spelling in the bootstrap
+digest, reusing the engine across setup and Git-hook environments.
+
 ## 1.1.0
 
 Keep a content-keyed compiled build engine current, then use it to rebuild missing,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "4ef50f57a83cb0fc38fed21ff49df622bc72da7e",
+  "sourceCommit": "beede9c4e075da4b97f845773ccfb18ae07a2b31",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -742,13 +742,13 @@
     {
       "path": ".local/bin/compile-agent-tools",
       "kind": "file",
-      "sha256": "84fc2cd4c94da816c20c533585db7686ec055ddd08a91085fb1776697b00c130",
+      "sha256": "de946a375da14b7db1078049f286767d4e070a36a1adc47e28186356698df5d5",
       "executable": true
     },
     {
       "path": ".local/bin/compile-agent-tools.changelog.md",
       "kind": "file",
-      "sha256": "00dc4be631741336d95f95f20279f24f1c665d2fff00a19656af1cd397d8822e",
+      "sha256": "0d2fd3d6c974a5ebbdba92cd73dd14d38a18b13907ce0cd51029c207bddf31df",
       "executable": false
     },
     {
@@ -760,13 +760,13 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "0fc2ee8ca7400a8b0bd11e7fd61898e114bbea10186af96d35a422e3710a60be",
+      "sha256": "d53edbd80a862116484d259237945f14f647d560187e430196c43e15664c0e8e",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "68d42a49fa352944afcb5f8f3b7c686c6659eaf029fd6d4189203c6e4ffbbf3a",
+      "sha256": "4f87ef7f260de76c1c324d45cbf0b210576519a39c135b695eaa4631f1b98da4",
       "executable": false
     },
     {
@@ -1551,13 +1551,13 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "fa2c8edcaf34130a41a543d901b15a884d9d8b2062be3eba8cbaee20c50f3a7f",
+      "sha256": "e1b96590647ba4439db8d70c2803083a4dcbfbf0ef492a0db25d4ace5620264f",
       "executable": false
     },
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "14a47038c6df304eb3b004f7c02823fdf23e36d32be3ed7c76422318b8d84718",
+      "sha256": "8400f58efaec33a9380f34f5fd86d9fdbfc9098c34784837553c3ea7f2f5034f",
       "executable": false
     },
     {
@@ -1569,7 +1569,7 @@
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "638c5c00691a1f18f101cff048629284f965211b2b9c691fb4b677d7d551aece",
+      "sha256": "99a4094b3abba95ef3e86220a563de34bb39c523c3123c910b6e8ab6792480f8",
       "executable": true
     }
   ]

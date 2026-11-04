@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.18
+
+Resolve compiler symlinks for build identities so setup and Git pulls reuse
+unchanged helpers and hooks when PATH selects aliases of the same compiler.
+
 ## 1.0.17
 
 Build the remote skills maintenance worker.

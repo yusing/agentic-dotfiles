@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.6
+# version: 2.10.7
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -21,6 +21,7 @@ MISE_SHIMS="${HOME}/.local/share/mise/shims"
 MISE_CONFIG="${MISE_CONFIG:-${HOME}/.config/mise/config.toml}"
 MISE_LOCK_PLATFORMS="linux-arm64,linux-x64,macos-arm64"
 UPGRADE=0
+SETUP_ROOT_HELPER=""
 # Tool names given to --upgrade; resolved to mise tool identifiers.
 UPGRADE_NAMES=()
 UPGRADE_TOOLS=()
@@ -52,6 +53,8 @@ in_list() {
 run_root() {
   if [ "$(id -u)" -eq 0 ]; then
     "$@"
+  elif [ -n "${SETUP_ROOT_HELPER:-}" ]; then
+    "$SETUP_ROOT_HELPER" "$@"
   else
     sudo "$@"
   fi
@@ -64,6 +67,7 @@ run_root() {
 export PATH="${MISE_SHIMS}:${LOCAL_BIN}:${HOME}/.grok/bin:${HOME}/.bun/bin:${PATH}"
 export DEBIAN_FRONTEND=noninteractive
 export NONINTERACTIVE=1
+export HOMEBREW_NO_ASK=1
 export GIT_TERMINAL_PROMPT=0
 
 
@@ -200,20 +204,91 @@ ensure_yay() {
   have yay || die "yay is required on Arch"
 }
 
-ensure_sudo() {
-  [ "$PM" = brew ] && return 0
-  if [ "$(id -u)" -eq 0 ]; then
-    return 0
-  fi
-  have sudo || die "sudo is required to install packages"
-  sudo -v
-  (
-    while true; do
-      sudo -n true
-      sleep 60
-      kill -0 "$$" || exit
+# Installed outside user-writable directories. Never authorize a home-checkout
+# script or an arbitrary command through NOPASSWD.
+write_root_helper() {
+  cat <<'HELPER'
+#!/bin/sh
+# version: 1.0.0 (changelog: setup.changelog.md)
+set -eu
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+export PATH
+[ "$(id -u)" -eq 0 ] || exec /usr/bin/sudo -n /etc/agentic-dotfiles-setup-root "$@"
+reject() { printf 'setup root helper: unsupported operation\n' >&2; exit 1; }
+case "${1:-}" in
+  --version|-v) [ "$#" -eq 1 ] || reject; printf '1.0.0\n'; exit ;;
+  apt-get|/usr/bin/apt-get)
+    shift
+    case "${1:-}" in update|install) ;; *) reject ;; esac
+    for arg do
+      case "$arg" in
+        update|install|-y|--no-install-recommends|--no-install-suggests|--only-upgrade|--no-remove) ;;
+        ''|-*|*[!a-zA-Z0-9+._:=@-]*) reject ;;
+      esac
     done
-  ) 2>/dev/null &
+    exec env -i PATH="$PATH" DEBIAN_FRONTEND=noninteractive /usr/bin/apt-get "$@"
+    ;;
+  pacman|/usr/bin/pacman)
+    shift
+    # yay and makepkg also use -U for built archives and -D for install reasons.
+    config=0
+    for arg do
+      if [ "$config" -eq 1 ]; then
+        [ "$arg" = /etc/pacman.conf ] || reject; config=0; continue
+      fi
+      case "$arg" in
+        --config) config=1 ;;
+        -S|-Su|-Sy|-Syu|-y|-u|-U|-D|-R|-Rs|-Rns|-s|-n|--sync|--refresh|--sysupgrade|--upgrade|--database|--remove|--recursive|--nosave|--noconfirm|--needed|--asdeps|--asexplicit|--) ;;
+        ''|-*|*[!a-zA-Z0-9+._:=@/-]*) reject ;;
+      esac
+    done
+    [ "$config" -eq 0 ] || reject
+    exec env -i PATH="$PATH" /usr/bin/pacman "$@"
+    ;;
+  add-shell)
+    [ "$#" -eq 2 ] && [ -x "$2" ] || reject
+    case "$2" in /*) ;; *) reject ;; esac
+    case "$2" in *[!a-zA-Z0-9/._+-]*) reject ;; esac
+    grep -qxF "$2" /etc/shells || printf '%s\n' "$2" >>/etc/shells
+    ;;
+  chsh)
+    [ "$#" -eq 4 ] && [ "$2" = -s ] && [ "$4" = "${SUDO_USER:?}" ] || reject
+    grep -qxF "$3" /etc/shells || reject
+    exec /usr/bin/chsh -s "$3" "$4"
+    ;;
+  *) reject ;;
+esac
+HELPER
+}
+
+ensure_sudo() {
+  [ "$(id -u)" -ne 0 ] || return 0
+  have sudo || die "sudo is required to configure passwordless setup operations"
+  local helper=/etc/agentic-dotfiles-setup-root tmp uid
+  uid="$(id -u)"
+  tmp="$(mktemp -d "${TMPDIR:-/tmp}/setup-sudo.XXXXXX")"
+  write_root_helper >"$tmp/helper"
+  if ! cmp -s "$tmp/helper" "$helper" || ! sudo -n "$helper" --version >/dev/null 2>&1; then
+    info "installing the setup sudo helper (one-time authentication may be required)"
+    printf '#%s ALL=(root) NOPASSWD: %s\n' "$uid" "$helper" >"$tmp/sudoers"
+    if ! sudo /bin/sh -s -- "$tmp" "$uid" <<'INSTALL'
+set -eu
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+export PATH
+visudo -cf "$1/sudoers"
+install -o 0 -g 0 -m 755 "$1/helper" /etc/agentic-dotfiles-setup-root
+install -d -o 0 -g 0 -m 755 /etc/sudoers.d
+install -o 0 -g 0 -m 440 "$1/sudoers" "/etc/sudoers.d/agentic-dotfiles-setup-$2"
+INSTALL
+    then
+      rm -rf "$tmp"
+      die "could not install the setup sudo helper"
+    fi
+  fi
+  rm -rf "$tmp"
+  SETUP_ROOT_HELPER="$helper"
+  # Both yay and makepkg support this privilege-elevation command.
+  export PACMAN_AUTH="$helper"
 }
 
 # ---------------------------------------------------------------------------
@@ -801,7 +876,7 @@ upgrade_configured_packages() {
   if [ "${#brew_packages[@]}" -gt 0 ]; then
     info "upgrading setup-owned Homebrew packages: ${brew_packages[*]}"
     brew update || return 1
-    HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade "${brew_packages[@]}" || return 1
+    HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade --no-ask "${brew_packages[@]}" || return 1
   fi
 }
 
@@ -1608,7 +1683,7 @@ upgrade_aligned_brew() {
     [ "$align" = 1 ] || continue
     setup_config native-enabled "$name" || continue
     info "upgrading Homebrew $pkg to the locked version"
-    brew upgrade "$pkg" || brew install --no-ask "$pkg"
+    brew upgrade --no-ask "$pkg" || brew install --no-ask "$pkg"
   done < <(setup_config mise-native)
 }
 
@@ -1803,12 +1878,17 @@ ensure_fish_login_shell() {
   if [ -w /etc/shells ]; then
     grep -qxF "$shell_path" /etc/shells || printf '%s\n' "$shell_path" >>/etc/shells
   elif ! grep -qxF "$shell_path" /etc/shells 2>/dev/null; then
-    printf '%s\n' "$shell_path" | run_root tee -a /etc/shells >/dev/null
+    if [ -n "${SETUP_ROOT_HELPER:-}" ]; then
+      run_root add-shell "$shell_path"
+    else
+      printf '%s\n' "$shell_path" | run_root tee -a /etc/shells >/dev/null
+    fi
   fi
 
   info "changing login shell to $shell_path"
   if have chsh; then
-    if chsh -s "$shell_path" "$(id -un)" \
+    if { [ -n "${SETUP_ROOT_HELPER:-}" ] && run_root chsh -s "$shell_path" "$(id -un)"; } \
+      || chsh -s "$shell_path" "$(id -un)" \
       || chsh -s "$shell_path" \
       || run_root chsh -s "$shell_path" "$(id -un)"; then
       return 0
@@ -1948,6 +2028,8 @@ usage() {
 Usage: setup.sh [--upgrade [TOOL...]] [--config PATH] [--check-config]
 
 Linux and macOS install tools natively. Run agent-tools pull for full upgrades.
+Homebrew confirmation is disabled. Setup installs a root-owned sudo helper;
+its first installation or update may require authentication, then reruns reuse it.
 
 Package choices and vendor installers live in setup.json beside this script.
 Mise declarations also live in setup.json; .config/mise/config.toml is generated.

@@ -1,5 +1,5 @@
 #!/bin/sh
-# version: 1.1.0
+# version: 1.1.1
 # Rebuild changed user-owned helper and hook binaries for this machine.
 
 set -eu
@@ -19,7 +19,7 @@ if ! command -v bun >/dev/null 2>&1 || ! command -v scriptc >/dev/null 2>&1; the
 	export PATH
 fi
 bun_path=$(command -v bun)
-bun_identity=$bun_path:$("$bun_path" --version)
+bun_identity=$("$bun_path" -p 'process.execPath'):$("$bun_path" --version)
 target_identity=$(uname -s)-$(uname -m)
 mkdir -p "$cache_root"
 state=$cache_root/bootstrap.digest

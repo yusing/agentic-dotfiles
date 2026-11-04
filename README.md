@@ -70,7 +70,11 @@ linger settings unchanged because other tools may use them.
 ## Install and upgrade
 
 Review [setup.json](setup.json) before running setup. It installs tools and
-configures this home checkout. Run as a regular user; setup can request sudo.
+configures this home checkout. Run as a regular user. Setup installs a root-owned
+helper and a per-user passwordless sudo rule for package and login-shell operations.
+The first installation or a helper update may request authentication; subsequent
+runs reuse the authorization. These files remain installed under `/etc/`.
+Homebrew installation and upgrade confirmations are disabled.
 Checkout collisions are backed up under `~/.local/share/dotfiles-setup/`.
 Copy selected files instead if you want to retain your own dotfiles.
 

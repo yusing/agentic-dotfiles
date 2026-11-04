@@ -8,6 +8,7 @@ import {
   mkdirSync,
   readFileSync,
   readdirSync,
+  realpathSync,
   renameSync,
   statSync,
   unlinkSync,
@@ -16,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.17";
+const VERSION = "1.0.18";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -174,8 +175,8 @@ function main(): void {
     `SCRIPTC_TARGET=${process.env.SCRIPTC_TARGET ?? ""}`,
     `SCRIPTC_CC=${process.env.SCRIPTC_CC ?? ""}`,
   ].join(" ");
-  const scriptcIdentity = `${scriptc}:${commandVersion(scriptc)} linker=${process.env.SCRIPTC_LINKER ?? ""}`;
-  const bunIdentity = `${bun}:${commandVersion(bun)}`;
+  const scriptcIdentity = `${realpathSync(scriptc)}:${commandVersion(scriptc)} linker=${process.env.SCRIPTC_LINKER ?? ""}`;
+  const bunIdentity = `${realpathSync(bun)}:${commandVersion(bun)}`;
   const sharedHookInputs = join(codexHooks, "lib");
   const sharedHookDigest = digestInputs("shared-hook-inputs", [sharedHookInputs]);
   const sharedUsesFfi = usesFfi([sharedHookInputs]);

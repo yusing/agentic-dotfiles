@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.10.7
+
+Disable Homebrew install and upgrade confirmation. Install a root-owned internal
+helper and a per-user NOPASSWD rule for setup package and login-shell operations.
+Initial installation or helper updates may require sudo authentication; unchanged
+reruns reuse the rule, including yay and makepkg elevation on Arch.
+
+The embedded root helper starts at version 1.0.0, validates supported operations,
+and runs package managers with a clean environment.
+
 ## 2.10.6
 
 Skip rebuilding the Mosh fork during full upgrades when the installed launcher,
