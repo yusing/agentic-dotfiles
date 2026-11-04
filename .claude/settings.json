@@ -272,7 +272,8 @@
       "Bash(rtk markdownlint *)",
       "Bash(rtk bash -n *)",
       "Bash(rtk zsh -n *)",
-      "Bash(rtk fish -n *)"
+      "Bash(rtk fish -n *)",
+      "Bash(plane *)"
     ]
   },
   "skillOverrides": {},
