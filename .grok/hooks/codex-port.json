@@ -2,17 +2,6 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "^(apply_patch|Edit|Write|search_replace|MultiEdit|write_file)$",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.grok/hooks/bin/adapt_codex_hook generated_code_guard",
-            "timeout": 5,
-            "statusMessage": "Checking for generated Go files"
-          }
-        ]
-      },
-      {
         "matcher": "^(Bash|run_terminal_command)$",
         "hooks": [
           {

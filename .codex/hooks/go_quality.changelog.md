@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.7
+
+Retain generated-Go identification locally for automatic-fix exclusions and restoration.
+Remove the retired generated-file edit guard from writer-gate coordination.
+
 ## 1.0.6
 
 Decode workspace and linter JSON envelopes with native array containers while

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.3
+
+Remove the retired generated-file edit guard policy. Use Go quality 1.0.7.
+
 ## 1.2.2
 
 Use Go quality 1.0.6 with native workspace and linter JSON envelopes.

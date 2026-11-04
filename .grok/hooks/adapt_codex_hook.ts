@@ -1,12 +1,11 @@
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { responseFor as generatedCodeResponse } from "../../.codex/hooks/generated_code_guard.ts";
 import { responseFor as goQualityResponse } from "../../.codex/hooks/go_quality.ts";
 import { responseFor as subagentExecResponse } from "../../.codex/hooks/subagent_exec_guard.ts";
 import { asString, handleVersion, isRecord, readEvent, runCommand } from "../../.codex/hooks/lib/hook_runtime.ts";
 
-export const VERSION = "1.2.2";
+export const VERSION = "1.2.3";
 
 type PolicyFn = (event: unknown, args: string[]) => Record<string, unknown> | undefined;
 
@@ -294,9 +293,6 @@ function resolveCommand(argv: string[]): string[] {
 }
 
 function policyFor(id: string): PolicyFn | undefined {
-  if (id === "generated_code_guard") {
-    return (event, _args) => generatedCodeResponse(event);
-  }
   if (id === "subagent_exec_guard") {
     return (event, _args) => subagentExecResponse(event);
   }

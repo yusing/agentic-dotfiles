@@ -1,18 +1,6 @@
 {
   "hooks": {
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "$HOME/.codex/hooks/bin/generated_code_guard",
-            "statusMessage": "Checking for generated Go files",
-            "timeout": 5,
-            "type": "command"
-          }
-        ],
-        "matcher": "^(apply_patch|Edit|Write)$"
-      }
-    ],
+    "PreToolUse": [],
     "SessionStart": [
       {
         "hooks": [

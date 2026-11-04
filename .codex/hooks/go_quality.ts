@@ -5,12 +5,119 @@ import * as path from "path";
 import { digest, eventSessionId, pruneOldEntries } from "./lib/session_scope.ts";
 import { withLockedDir } from "./lib/locked_state.ts";
 import { commandSubstitutions, isSeparatorToken, shellSegments, shellTokens, stripLeadingShellPrefix } from "./lib/shell_command.ts";
-import { isGeneratedGoFile } from "./generated_code_guard.ts";
-import { responseFor as generatedGuardResponse } from "./generated_code_guard.ts";
 import { responseFor as subagentGuardResponse } from "./subagent_exec_guard.ts";
 import { asString, at, handleVersion, isRecord, readEvent, runCommand, runMain, writeJson } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.0.6";
+export const VERSION = "1.0.7";
+
+const MARKER_GENERATED = "Code generated";
+const MARKER_DO_NOT_EDIT = "DO NOT EDIT";
+
+function isGeneratedGoSource(source: string): boolean {
+  if (!source.includes(MARKER_GENERATED) || !source.includes(MARKER_DO_NOT_EDIT)) {
+    return false;
+  }
+  let index = 0;
+  let inBlockComment = false;
+  let inDoubleQuote = false;
+  let inRawString = false;
+  let inRune = false;
+  let escaped = false;
+
+  while (index < source.length) {
+    const character = source[index] ?? "";
+    const following = source[index + 1] ?? "";
+
+    if (inBlockComment) {
+      const end = source.indexOf("*/", index);
+      const commentEnd = end < 0 ? source.length : end;
+      const comment = source.slice(index, commentEnd);
+      if (comment.includes(MARKER_GENERATED) && comment.includes(MARKER_DO_NOT_EDIT)) {
+        return true;
+      }
+      if (end < 0) {
+        return false;
+      }
+      inBlockComment = false;
+      index = end + 2;
+      continue;
+    }
+
+    if (inDoubleQuote || inRune) {
+      if (escaped) {
+        escaped = false;
+      } else if (character === "\\") {
+        escaped = true;
+      } else if ((inDoubleQuote && character === '"') || (inRune && character === "'")) {
+        inDoubleQuote = false;
+        inRune = false;
+      }
+      index += 1;
+      continue;
+    }
+
+    if (inRawString) {
+      if (character === "`") {
+        inRawString = false;
+      }
+      index += 1;
+      continue;
+    }
+
+    if (character === "/" && following === "/") {
+      const end = source.indexOf("\n", index + 2);
+      const commentEnd = end < 0 ? source.length : end;
+      const comment = source.slice(index + 2, commentEnd);
+      if (comment.includes(MARKER_GENERATED) && comment.includes(MARKER_DO_NOT_EDIT)) {
+        return true;
+      }
+      index = commentEnd;
+      continue;
+    }
+    if (character === "/" && following === "*") {
+      inBlockComment = true;
+      index += 2;
+      continue;
+    }
+    if (/[A-Za-z_]/.test(character)) {
+      let end = index + 1;
+      while (end < source.length && /[A-Za-z0-9_]/.test(source[end] ?? "")) {
+        end += 1;
+      }
+      if (source.slice(index, end) === "package") {
+        return false;
+      }
+      index = end;
+      continue;
+    }
+
+    if (character === '"') {
+      inDoubleQuote = true;
+    } else if (character === "'") {
+      inRune = true;
+    } else if (character === "`") {
+      inRawString = true;
+    }
+    index += 1;
+  }
+  return false;
+}
+
+function isGeneratedGoFile(filePath: string): boolean {
+  if (path.extname(filePath) !== ".go") {
+    return false;
+  }
+  try {
+    const stat = fs.statSync(filePath);
+    if (!stat.isFile()) {
+      return false;
+    }
+    const source = fs.readFileSync(filePath, "utf8");
+    return isGeneratedGoSource(source);
+  } catch {
+    return false;
+  }
+}
 
 type Snapshot = Record<string, string>;
 type Baseline = { files: Snapshot; findings: Record<string, string[]> };
@@ -969,7 +1076,7 @@ export function responseFor(event: unknown, action: string): Record<string, unkn
   const root = projectRoot(cwd);
   if (!root) {
     if (action === "fence" && createsGoProject(event)) {
-      if (generatedGuardResponse(event) || (event.tool_name === "Bash" && subagentGuardResponse(event))) return undefined;
+      if (event.tool_name === "Bash" && subagentGuardResponse(event)) return undefined;
       const pendingRoot = path.resolve(cwd);
       const absentDirectory = stateDir(event, pendingRoot);
       if (!absentDirectory) return undefined;
@@ -1023,7 +1130,7 @@ export function responseFor(event: unknown, action: string): Record<string, unkn
   if (action === "baseline") baseline(root, directory);
   else if (action === "fence") {
     if (!potentialWrite(event)) return undefined;
-    if (generatedGuardResponse(event) || (event.tool_name === "Bash" && subagentGuardResponse(event))) return undefined;
+    if (event.tool_name === "Bash" && subagentGuardResponse(event)) return undefined;
     let ready = false;
     try {
       if (!fs.existsSync(path.join(directory, "baseline.json"))) {

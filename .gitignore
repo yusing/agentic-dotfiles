@@ -45,8 +45,6 @@ __pycache__
 !/.codex/hooks/
 !/.codex/hooks/check_project.changelog.md
 !/.codex/hooks/check_project.ts
-!/.codex/hooks/generated_code_guard.changelog.md
-!/.codex/hooks/generated_code_guard.ts
 !/.codex/hooks/go_quality.changelog.md
 !/.codex/hooks/go_quality.ts
 !/.codex/hooks/lib/

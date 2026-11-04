@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.28
+
+Remove the retired generated-file edit guard source and changelog from the public
+projection.
+
 ## 1.3.27
 
 Publish Codex TUI preset sections in the filtered configuration.

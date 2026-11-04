@@ -318,17 +318,6 @@
             "command": "rtk hook claude"
           }
         ]
-      },
-      {
-        "matcher": "^(Edit|Write|MultiEdit|NotebookEdit)$",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.codex/hooks/bin/generated_code_guard",
-            "timeout": 5,
-            "statusMessage": "Checking for generated Go files"
-          }
-        ]
       }
     ]
   }

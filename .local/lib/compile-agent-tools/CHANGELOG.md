@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.19
+
+Stop building the retired generated-file edit guard and remove it from the Grok
+adapter build inputs.
+
 ## 1.0.18
 
 Resolve compiler symlinks for build identities so setup and Git pulls reuse
