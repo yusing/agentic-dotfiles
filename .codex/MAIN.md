@@ -20,18 +20,53 @@ redesign when it holds, rather than defending or trimming the original.
 
 ## Task workflow
 
-Use two phases for authorized changes. The accepted contract and shared guidance apply throughout;
-load phase-specific guidance only when its operation begins.
+For feature work and risky bug fixes, complete Phase 0 before Phase 1. Other authorized changes
+start at Phase 1. The accepted contract and shared guidance apply throughout; load phase-specific
+guidance only when its operation begins.
+Resolve feasibility questions with source evidence or bounded probes before settling an approach
+or building supporting machinery; resolve an unsupported approach before proceeding with a partial one.
+
+### Phase 0: Settle the outcome and design
+
+Main finalizes the following before implementation or dispatching implementers:
+
+- **Problem and outcome:** What is being solved, for whom, and what observable result counts as
+  success. Separate user requirements and accepted contracts from agent assumptions.
+  Resolve whether inherited proposals and unconfirmed requirements belong in the current scope.
+- **Superseded specification:** Identify the existing specification or design decisions being
+  replaced, the exact promises that change, and what remains binding. State explicitly when none
+  are superseded. Existing implementation alone does not establish a requirement or authorize
+  overturning an accepted contract.
+- **Design and approach:** State the chosen behavior, design decisions, and implementation
+  approach, with material tradeoffs. Label agent choices as choices, distinct from requirements,
+  and identify their source or rationale.
+- **Outcome justification:** Explain how the proposed approach satisfies the outcome while
+  preserving retained contracts, and name the observable checks that will establish it.
+
+Treat a bug fix as risky when it may change an accepted contract or materially affect data
+integrity, security, compatibility, or recovery.
+
+Present this concise decision brief to the user and retain it in the existing task record when
+one exists; create no separate artifact by default. Reuse a still-current brief and settled
+decisions rather than repeating Phase 0.
+
+When available evidence cannot settle an intent question that materially changes scope or
+behavior, Main asks the user and waits for the decision before implementing or dispatching the
+affected work. Obtain authorization for changed requirements or scope. Existing accepted contracts
+and delegated design authority remain valid; implementation choices within that authority go in
+the brief and proceed without extra approval. A contract established by user approval or an accepted
+specification needs no renewed approval merely because a direct user quotation is unavailable;
+an item whose acceptance remains unconfirmed still requires scope resolution.
+
+Phase 1 begins only when all four points are settled.
 
 ### Phase 1: Make the intended thing work
 
-Settle the approach under `IMPLEMENTATION.md` before editing or dispatching implementers, then the
-actual consumer and observable acceptance. Sequence implementation,
-delegation, and focused checks around the critical path. Resolve feasibility questions with source
-evidence or bounded probes before building supporting machinery; resolve an unsupported approach
-before proceeding with a partial one.
+For work that skips Phase 0, settle behavior, interfaces, and the approach under `IMPLEMENTATION.md`
+before editing or dispatching implementers. For all work, identify the actual consumer and observable
+acceptance, then sequence implementation, delegation, and focused checks around the critical path.
 
-Settle behavior and interface decisions before coding. Update an authoritative contract immediately
+Update an authoritative contract immediately
 when implementation or coordination depends on its changed promise; defer other specification prose
 and reader-document integration to Phase 2. If evidence changes a decision, settle and record it at
 its existing owner before relying on it.
