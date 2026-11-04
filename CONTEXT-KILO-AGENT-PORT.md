@@ -43,9 +43,9 @@ and must not shadow these roles with a third copy.
 
 
 The helper also writes `disable: true` stubs for Kilo's user-facing built-in
-agents: `ask`, `code`, `debug`, `explore`, `general`, `orchestrator`, and
+agents: `ask`, `debug`, `explore`, `general`, `orchestrator`, and
 `plan`. Those names are not Codex roles, so a stub removes the native catalog
-entry instead of replacing it. `title`, `summary`, and `compaction` stay
-enabled; Kilo uses them as session machinery rather than user-selectable
-roles. A Codex role that later reuses a built-in name fails generation until
-that collision is resolved in the helper metadata.
+entry instead of replacing it. The built-in `code` agent stays enabled; synchronization removes
+its former generated disable stub and preserves authored code profiles. `title`, `summary`, and
+`compaction` also stay enabled as session machinery. A Codex role that later reuses a built-in name
+fails generation until that collision is resolved in the helper metadata.

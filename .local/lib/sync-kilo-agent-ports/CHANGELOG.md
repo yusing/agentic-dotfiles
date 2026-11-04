@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.8
+
+- Keep Kilo's built-in code agent enabled. Remove its former generated disable stub during synchronization while preserving authored code profiles; check mode reports the obsolete stub without deleting it.
+
 ## 1.0.7
 
 - Take each role's Kilo model and variant from Kilo metadata, now that Codex roles leave model and effort to the spawning agent; remove the Codex model mapping and reject a Codex role that pins either.

@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.7";
+export const VERSION = "1.0.8";
 export const BUILTIN_ROLES = [
   "ask",
   "code",
@@ -93,7 +93,7 @@ export function expectedPorts(home: string): Map<string, string> {
     if (METADATA[role]) {
       throw new Error(`${role}: built-in name collides with a Codex role`);
     }
-    ports.set(join(output, `${role}.md`), renderDisabled());
+    if (role !== "code") ports.set(join(output, `${role}.md`), renderDisabled());
   }
   return ports;
 }
@@ -117,13 +117,16 @@ function atomicWrite(path: string, text: string): void {
 export function syncPorts(home: string, check: boolean): number {
   const expected = expectedPorts(home);
   const output = join(home, ".config", "kilo", "agent");
-  const extra = roleNames(output, ".md").filter(role => !expected.has(join(output, `${role}.md`)));
+  const extra = roleNames(output, ".md").filter(role => role !== "code" && !expected.has(join(output, `${role}.md`)));
   if (extra.length) throw new Error(`unexpected Kilo role files: ${extra.join(", ")}`);
+  const codePath = join(output, "code.md");
+  const obsoleteCodeStub = existsSync(codePath) && readFileSync(codePath, "utf8") === renderDisabled();
   const stale = [...expected].filter(([path, content]) => !existsSync(path) || readFileSync(path, "utf8") !== content);
   if (check) {
-    if (stale.length) {
+    if (stale.length || obsoleteCodeStub) {
       console.log("Kilo agent ports are stale; run sync-kilo-agent-ports:");
       for (const [path] of stale) console.log(path);
+      if (obsoleteCodeStub) console.log(codePath);
       return 1;
     }
     console.log("Kilo agent ports are current");
@@ -134,7 +137,11 @@ export function syncPorts(home: string, check: boolean): number {
     atomicWrite(path, content);
     console.log(`updated ${path}`);
   }
-  if (!stale.length) console.log("Kilo agent ports are already current");
+  if (obsoleteCodeStub) {
+    unlinkSync(codePath);
+    console.log(`removed ${codePath}`);
+  }
+  if (!stale.length && !obsoleteCodeStub) console.log("Kilo agent ports are already current");
   return 0;
 }
 

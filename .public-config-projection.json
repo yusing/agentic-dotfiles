@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7b0096fecea09bf5cd6c1e8544d9af9212d5b160",
+  "sourceCommit": "02e58661bb2a2c551b6330aecf7dbe44fb483ea2",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -856,13 +856,13 @@
     {
       "path": ".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "1d962e9a242a83ce70f705590fccab8f8bd3fb14b81b2696e68e3bc0c956173e",
+      "sha256": "d889f43d8d54ad9bdadbc3d277118f37b756c60eb8771f6800d5edec83b93e20",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
       "kind": "file",
-      "sha256": "ca99aaa6fddfaeddab8173b1af1824a450dd828760151e0a6690845afd927e28",
+      "sha256": "ec714830a7f87904c299bccd2d077652e4a43ca0a2fd96694eabf344c5063ff6",
       "executable": false
     },
     {
@@ -1533,7 +1533,7 @@
     {
       "path": "CONTEXT-KILO-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "a6d89643e714b230be95c2aa4421ed81de4925909a73e3f4ae9ab85d12add22e",
+      "sha256": "91928af000367e1e102afaa344fc039eb19a71448ebab9fdbdc65d2bd90c5b60",
       "executable": false
     },
     {
