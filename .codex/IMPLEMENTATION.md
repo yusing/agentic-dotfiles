@@ -7,16 +7,20 @@ conflicts; consult history only when intent remains unclear.
 
 Choose the approach before editing. Find how the codebase already does the nearest thing and
 extend that path; add new machinery only when that path cannot serve, and state why. Prefer
-removing a failure's cause over handling the failure. Fix a defect at its established cause, and
-keep the fix to that mechanism even when a similar module solved the problem with a wider change.
+designs, types, and ordering that prevent a failure over added checks, retries, fallbacks, or
+recovery paths. Keep error handling for failures the code cannot prevent, such as I/O, external
+input, and remote services. Fix a defect at its established cause, and keep the fix to that mechanism
+even when a similar module solved the problem with a wider change.
 Use a dependency's supported capability before writing a narrower replacement. Count the contracts
 a candidate newly engages (bounds, failure states, switching, concurrency, durable state) as part
 of its cost, and prefer one that avoids them. Consider expected work, CPU, memory, I/O, and scaling;
 deferred optimization does not justify an unsuitable approach.
 
 Add an abstraction only for a current shared responsibility, invariant, or necessary algorithm, not
-possible future use. Add guards, validation, fallbacks, options, persistence, or compatibility only
-when the task or a supported contract needs them, and do not duplicate host/provider policy.
+possible future use. A sole-caller helper may also isolate complex validation so its caller reads
+as the happy path. Inline sole-caller helpers that serve none of these purposes, and keep supporting
+helpers close to their callers. Add guards, validation, fallbacks, options, persistence, or compatibility
+only when the task or a supported contract needs them, and do not duplicate host/provider policy.
 
 Estimate the change's size from the request before editing. When the working diff outgrows that
 estimate, re-choose the approach rather than justify or trim it.

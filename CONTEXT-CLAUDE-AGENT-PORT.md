@@ -70,12 +70,9 @@ command boundary rests on the role body alone.
 `[compat.claude] hooks = false` in `.grok/config.toml`, and Grok's copies live in
 `.grok/hooks/codex-port.json`.
 
-The Codex Go hooks, `go_quality` and `generated_code_guard`, run directly: Claude's envelope
-already uses Codex's snake_case fields and `Bash` tool name, and `go_quality`'s baseline uses
-Claude's `async` option. Claude runs `PreToolUse` hooks in parallel, so the fence calls the
-generated-code guard itself rather than relying on order. Subagents share the parent's session
-id, so concurrent subagent writers can blur per-tool diff attribution; the `Stop` check still
-compares the whole project with its baseline.
+`generated_code_guard` runs directly through Claude's edit-tool registration and uses Claude's
+native hook envelope. `go_quality` has no active registration; its implementation remains available
+for re-enabling.
 
 ## Session start
 
@@ -84,10 +81,10 @@ Two static session-start hooks inject context.
 `.codex/hooks/bin/check_project` runs with `--without-git`, and with no adapter, because its
 plain-text report needs none. Claude's own session context already states the working
 directory, whether it is a Git repository, the branch, the working-tree status, and recent
-commits, so the flag drops the hook's `vcs:` field and its version-control instruction for a
-plain Git repository or an unversioned directory. Subversion and mixed `git+svn` checkouts are
-still reported, because no client reports those. The task runner, language mix, and Go version
-have no harness equivalent, which is what makes the registration worth having.
+commits, so the flag drops the hook's plain Git or unversioned `vcs:` field. The version-control
+authorization instruction remains present for detected repositories. Subversion and mixed
+`git+svn` checkouts are still reported, because no client reports those. The task runner, language mix,
+and Go version have no harness equivalent, which is what makes the registration worth having.
 
 `.codex/hooks/bin/skills_mgr_inventory` is the shared inventory hook. It owns the
 `--- skills-mgr injected ---` heading so the injected list is not mistaken for Claude's own

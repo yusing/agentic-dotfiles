@@ -87,7 +87,9 @@ Complete text already supplied in context satisfies the read; a path or summary 
   may use it.
 - `FINISHING.md`: keep it out of implementer startup reads and preloads. Implementers load it
   after focused validation of their assigned working path, before handback, completion, or a slice
-  commit. Explicit quality reviewers load it when review starts. Apply only sections within the role.
+  commit. Code or operational quality reviewers load only the applicable practices and implementation
+  finish sections when review starts. Documentation-only reviews use their document guidance.
+  Apply only sections within the role; review orchestration belongs to agents assigned that work.
 - `TESTING.md`: writing tests or fixtures, or selecting validation. Projects supply runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
 - `GITHUB.md`: preparing pull-request, issue, or comment text.

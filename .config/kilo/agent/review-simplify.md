@@ -51,8 +51,7 @@ concurrency, and cleanup. Report unproven equivalence instead of proposing a mer
 
 Look for needless abstractions/indirection, speculative generality, duplicate validation/state,
 parameter sprawl, raw strings replacing domain types, and repeated path/type/environment logic.
-A sole-caller helper is useful only for a real invariant, shared policy, or necessary algorithm.
-Preserve non-obvious reasons and workarounds; remove comments that merely narrate code.
+Preserve non-obvious reasons and workarounds.
 
 Check duplicate work, hot-path/startup costs, unchanged-state updates, leaked/unbounded resources,
 and time-of-check/use gaps. Preserve host no-change signals and concurrency semantics. Distinct

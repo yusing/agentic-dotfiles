@@ -7,14 +7,19 @@ accepted contract; consult history only when intent remains unclear.
 
 Choose the approach before editing. Find how the codebase already does the nearest thing and
 extend that path; add new machinery only when that path cannot serve, and state why. Prefer
-removing a failure's cause over handling the failure. Fix a defect at its established cause, and
-keep the fix to that mechanism even when a similar module solved the problem with a wider change.
+designs, types, and ordering that prevent a failure over added checks, retries, fallbacks, or
+recovery paths. Keep error handling for failures the code cannot prevent, such as I/O, external
+input, and remote services. Fix a defect at its established cause, and keep the fix to that mechanism
+even when a similar module solved the problem with a wider change.
 Use a dependency's supported capability before writing a narrower replacement. Count the contracts
 a candidate newly engages (bounds, failure states, switching, concurrency, durable state) as part
 of its cost, and prefer one that avoids them. Consider expected work, CPU, memory, I/O, and scaling;
 deferred optimization does not justify an unsuitable approach.
 
 Add an abstraction only for a current shared responsibility, invariant, or necessary algorithm.
+Do not add one for possible future use. A sole-caller helper may also isolate complex validation so
+its caller reads as the happy path. Inline sole-caller helpers that serve none of these purposes,
+and keep supporting helpers close to their callers.
 Leave host or provider policy to its owner, and add guards, validation, fallbacks, options,
 persistence, or compatibility only when the task or a supported contract needs them, because each
 one is a contract someone must maintain.

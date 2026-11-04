@@ -41,8 +41,9 @@
    After handoff, the base prompt selects skills again from the current operation. The reloaded shared instructions recover the active
    scope and reread only the guidance needed for remaining work. `MAIN.md` sequences working-path
    implementation and delivery. `IMPLEMENTATION.md` supplies early structural constraints;
-   `FINISHING.md` supplies deferred practices at implementation delivery/handback or explicit quality
-   review, and main's delivery/review orchestration. Standing guidance gates automatic best-practice
+   `FINISHING.md` supplies deferred practices at implementation delivery/handback, applicable standards
+   for code or operational quality review, and main's delivery/review orchestration. Documentation-only
+   reviewers use their document guidance. Standing guidance gates automatic best-practice
    skill loading by phase; catalog availability alone does not trigger a body read.
    Routine local work does not require task-size documents.
    No hook-specific state rotation runs at compaction.

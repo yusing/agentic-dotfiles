@@ -1,6 +1,7 @@
 # Finishing
 
-Use after focused validation of an authorized change, or for an explicit quality review.
+Use after focused validation of an authorized change, or for an explicit code or operational
+quality review.
 Implementers and reviewers apply the practice and implementation sections within their assignment;
 main also applies the delivery and review section. `MAIN.md` owns task-wide sequencing.
 
@@ -21,10 +22,7 @@ Deliver a performant and reliable solution on the paths the change touches:
   validated state, scans, encodings, buffers, and timers, instead of repeating it. Skip work whose
   outcome is already decided or unused, return unchanged input as is, and avoid allocations that
   callers discard, including copies that grow with each chunk or call.
-- Reliable: eliminate the conditions that produce an error rather than handling the error after it
-  occurs. Prefer designs, types, and ordering under which the failure cannot happen over added
-  checks, retries, fallbacks, or recovery paths, and keep error handling for failures the code
-  cannot prevent, such as I/O, external input, and remote services.
+- Reliable: apply the failure-prevention rule in `IMPLEMENTATION.md`.
 
 Keep observable behavior and contracts unchanged while optimizing. Apply these to the code the
 change adds or modifies: fix repeated or wasted work you can identify there, and leave a working
@@ -32,11 +30,9 @@ path alone when the gain is negligible at its expected scale.
 
 ### Hygiene
 
-Inline sole-caller helpers unless they preserve shared policy, an invariant, or a nontrivial
-algorithm, or isolate complex validation so the caller reads as the happy path. Keep supporting
-helpers close to their callers. After a refactor, remove superseded forwarding wrappers and update
-their callers to use the retained owner directly, unless a retained supported contract or explicit
-user requirement needs the compatibility wrapper.
+Use `IMPLEMENTATION.md`'s abstraction and helper criteria. After a refactor, remove superseded
+forwarding wrappers and update their callers to use the retained owner directly, unless a retained
+supported contract or explicit user requirement needs the compatibility wrapper.
 
 Remove behavior and artifacts superseded by the accepted change. Remove tests for superseded behavior
 rather than invert their assertions merely to retain them. Preserve compatibility required by retained

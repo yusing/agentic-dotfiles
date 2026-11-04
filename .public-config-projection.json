@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "79386f99a7947f79a5d0e6b69144570a1665cde9",
+  "sourceCommit": "83c3e0e4defe156fd251f5164c960f43ea231d6b",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -53,7 +53,7 @@
     {
       "path": ".claude/agents/review-simplify.md",
       "kind": "file",
-      "sha256": "cdbc6505ac817c11fd7b431b4edfc3ec58c36396a0ec8db8b6f54f0440cc5fda",
+      "sha256": "4dcb7183a62fb0936d49f7853f1fa86f46a047304731f389d355b9415d5eab6f",
       "executable": false
     },
     {
@@ -65,19 +65,19 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "3138f50a819b048b66969e329351f6ff9e98f7ccb4bd88066c7f3cfeb6474c75",
+      "sha256": "164d5d517e343b28bb70fe2020fcc96af127639642c287d1f8b05321fe55594f",
       "executable": false
     },
     {
       "path": ".claude/instructions/DOCS.md",
       "kind": "file",
-      "sha256": "0023b601d05298e11a9595eb2bd3213a4d35b64238884325f7f647fe4a9437a3",
+      "sha256": "085375251aefa57ffd8aa2e6556e1fbc4faf3edbe7255123bc5c232775f8283c",
       "executable": false
     },
     {
       "path": ".claude/instructions/FINISHING.md",
       "kind": "file",
-      "sha256": "6eec68bf8154204aa740376473c56a5d76e284e796621b4defc4972df7f4d03b",
+      "sha256": "ff07aa6a9feeccd4e58d6a466fe2f5f8c49d1e0a195763315d6d9902816ce654",
       "executable": false
     },
     {
@@ -89,7 +89,7 @@
     {
       "path": ".claude/instructions/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "0f811c1e0e5046c7005d37d9ef9075d53ec7e3ac0e8bc6ec71ea0ef11ff1677d",
+      "sha256": "d3aff092755245862f2b99d001d6d2d0bae8c4659a9df3242995d62ffc876f68",
       "executable": false
     },
     {
@@ -131,7 +131,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "0531435d7c54b5edc9df5a70cebadbac487897055d7361716aaf69c7aa6621c5",
+      "sha256": "2bc51f38ddaefa6233ef61e4fc1b64244b4d98044a13011afe1ec6694a80a340",
       "executable": false
     },
     {
@@ -167,7 +167,7 @@
     {
       "path": ".codex/agents/review-simplify.toml",
       "kind": "file",
-      "sha256": "a1eebe8d1bbf6723798b6fcb0707da57f7160795629fb109845871b5ff4adb3e",
+      "sha256": "1f2c30cca7b53c8bb272479e02697c90315038f85b709a61c4b47ba6d1f4b5f0",
       "executable": false
     },
     {
@@ -197,7 +197,7 @@
     {
       "path": ".codex/FINISHING.md",
       "kind": "file",
-      "sha256": "1bce01fcbcb7af8ea3323c60f1805602d2613c1e646f1d2724a149ebada8ae5d",
+      "sha256": "7d67f726a6354e2e88b7179ca813e0617eb769b91bbe2e3ee8ddad136290a8cd",
       "executable": false
     },
     {
@@ -353,7 +353,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "77ddeed7cb0c28c383bdf429dfa4f9994d983346aab7d2cafc4c1d461488c8a3",
+      "sha256": "ddf7aac8623e15abbbaa80b8db51805f32d4cb4eed17d3b3b88320031f52f362",
       "executable": false
     },
     {
@@ -551,7 +551,7 @@
     {
       "path": ".config/kilo/agent/review-simplify.md",
       "kind": "file",
-      "sha256": "ab5fcb1a3c15be189117ded83d240edbcf813bad9c5138611de14fd2a3b65cda",
+      "sha256": "7faefcbd842c3f7db816c43c52d4dde23b4597c4ed40cb7036d25ea7283c923f",
       "executable": false
     },
     {
@@ -1491,13 +1491,13 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "84ddf0ec46a80dbffd759bfc6594342eef3605496b2a467bbeba3ffc853a2dee",
+      "sha256": "4abfa878cddb40398d24e80dde7ae798dec51ee2eb53872e9d5d1afe1c952ae6",
       "executable": false
     },
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "6c5242370b352b388c5ed41b4035b5d62408dafe0c35095443f662f90ed070d9",
+      "sha256": "bb383eea64b95c664bcfb94d318f573e18898cdd2b1c284da815de0fccbfc206",
       "executable": false
     },
     {
@@ -1527,7 +1527,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "f45ba9d9fcbaa28661bdef1abc9470b7b3072009dbcc1819475d1cc34b444cf1",
+      "sha256": "694bb6808d7aeaa2d9c3eb17de6ed4c99462a0dbb88070d518329dc7ff11f1ce",
       "executable": false
     },
     {
