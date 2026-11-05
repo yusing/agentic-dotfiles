@@ -22,9 +22,6 @@
     "authoring-skill": {
       "enabled": true
     },
-    "build-code-skeleton": {
-      "enabled": true
-    },
     "code-review": {
       "enabled": false
     },
@@ -43,7 +40,7 @@
     "commit": {
       "enabled": true
     },
-    "context7-mcp": {
+    "context7-docs": {
       "enabled": true
     },
     "council": {
@@ -65,9 +62,6 @@
       "enabled": true
     },
     "dump-last-response": {
-      "enabled": true
-    },
-    "final-review": {
       "enabled": true
     },
     "find-skills": {
@@ -144,9 +138,6 @@
     },
     "instruction-audit": {
       "enabled": true
-    },
-    "js-ts-best-practices": {
-      "enabled": "lang js || lang ts || [ \"$PWD\" == \"$HOME\" ]"
     },
     "juststore-rendering-optimizer": {
       "enabled": "(lang js || lang ts) && has_dependency juststore"
@@ -241,15 +232,6 @@
     "teardown": {
       "enabled": true
     },
-    "thermo-nuclear-code-quality-review": {
-      "enabled": true,
-      "remote": {
-        "provider": "skills.sh",
-        "id": "cursor/plugins/thermo-nuclear-code-quality-review",
-        "name": "thermo-nuclear-code-quality-review",
-        "locator": "cursor/plugins/thermo-nuclear-code-quality-review"
-      }
-    },
     "typesafe-ai": {
       "enabled": true,
       "remote": {
@@ -297,9 +279,6 @@
         "name": "vercel-react-native-skills",
         "locator": "vercel-labs/agent-skills/vercel-react-native-skills"
       }
-    },
-    "visualize": {
-      "enabled": true
     },
     "web-design-guidelines": {
       "enabled": false,

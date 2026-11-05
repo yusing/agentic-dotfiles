@@ -87,8 +87,11 @@ that the runtime selects the managed handoff standard.
   port map and drift check.
 - `.codex/skills/.system/` is imported Codex system content, excluded from the repository.
   Keep local overrides at their managed owner; imported files remain upstream-owned.
-- Context7's served plugin body is under
-  `.codex/plugins/cache/context7-marketplace/context7/<version>/skills/context7-mcp/SKILL.md`.
-  Plugin cache files are imported consumers, not maintained prompt owners.
+- Context7's maintained skill is `.skills-mgr/skills/context7-docs/SKILL.md`. The distinct name keeps
+  it visible in skills-mgr's inventory despite the installed native plugin skill. The bundled skill
+  under `.codex/plugins/cache/context7-marketplace/context7/<version>/skills/context7-mcp/SKILL.md`
+  is disabled by path in `.codex/config.toml`; the plugin remains enabled for its MCP tools.
+  Keep that selector aligned with the installed plugin version. Plugin cache files remain imported
+  consumers, not maintained prompt owners.
 - Hook-delivered instructions are mapped in `CONTEXT-HOOK-ARCHITECTURE.md` and
   `CONTEXT-HOOK-OWNERS.md`; this static index does not establish hook coverage.

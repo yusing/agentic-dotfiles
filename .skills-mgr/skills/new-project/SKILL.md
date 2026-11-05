@@ -20,9 +20,8 @@ without a prescribed document layout.
 
 - **Direct:** implement and validate the complete usable outcome under standing task guidance.
 - **Staged:** use `deliver-vertical-slice` when intermediate end-to-end capabilities help
-  delivery, not simply because the project has many files or layers. Use `build-code-skeleton`
-  first only when proving shared wiring separately materially helps; otherwise establish
-  the wiring in the first usable slice.
+  delivery, not simply because the project has many files or layers. That workflow includes an
+  optional wiring checkpoint when proving shared wiring separately materially helps.
 
 Before staged work begins, establish the base revision and authorization for its commits,
 fixups, and autosquash under `deliver-vertical-slice`'s invocation rules. Establish the single

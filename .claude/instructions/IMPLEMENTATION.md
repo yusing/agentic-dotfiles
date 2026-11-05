@@ -5,6 +5,12 @@ accepted contract; consult history only when intent remains unclear.
 
 ## Behavior
 
+For JavaScript and TypeScript, run, test, and install with Bun and Bunx unless the project pins
+another package manager or runtime. Use the same choice in scripts, including shebangs, and
+documented commands. Keep inputs, outputs, and shared shapes typed; let obvious locals infer.
+Prefer precise unions and domain types over loose strings. Use template literals for interpolation,
+string APIs for literal text operations, and regular expressions for pattern matching.
+
 Choose the approach before editing. Find how the codebase already does the nearest thing and
 extend that path; add new machinery only when that path cannot serve, and state why. Prefer
 designs, types, and ordering that prevent a failure over added checks, retries, fallbacks, or

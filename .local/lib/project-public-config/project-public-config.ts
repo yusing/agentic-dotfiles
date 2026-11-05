@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.29";
+export const VERSION = "1.3.30";
 
 type TreeEntry = {
 	mode: string;
@@ -220,20 +220,18 @@ const EXACT_PATHS = new Set([
 
 const PROJECTED_SKILL_NAMES = [
 	"authoring-skill",
-	"build-code-skeleton",
 	"codebase-review",
 	"commit",
+	"context7-docs",
 	"council",
 	"deliver-vertical-slice",
 	"deslop",
-	"final-review",
 	"go-json-v2",
 	"go-microoptimizations",
 	"golang-best-practices",
 	"handoff",
 	"human-flavoured-writing",
 	"instruction-audit",
-	"js-ts-best-practices",
 	"juststore-rendering-optimizer",
 	"new-agent-session",
 	"new-project",

@@ -1,5 +1,0 @@
-interface:
-  display_name: "Review Delivered Outcome"
-  short_description: "Independently assess the complete committed change"
-  default_prompt: "Use $final-review to independently inspect the complete delivered outcome and return findings or clearance with coverage and unresolved gaps."
-

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.30
+
+Remove the retired skeleton, final-review, and JavaScript/TypeScript practice skills
+from the public projection; their retained guidance lives with delivery and implementation.
+Publish the maintained Context7 documentation-lookup skill.
+
 ## 1.3.29
 
 Remove the retired user-experience skill from the public projection.

@@ -9,6 +9,8 @@ A README helps readers judge the project and reach a useful outcome without
 session history. Its quality depends on useful, accurate content, not its length.
 Preserve explanations and examples that serve those decisions.
 
+A minimal README is not permission to expand it beyond the requested change.
+
 ## Reader and evidence
 
 Identify the reader, the software's operator, and the scope of each action. They

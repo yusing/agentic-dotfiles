@@ -37,6 +37,12 @@ is needed.
 
 ## Deliver each slice
 
+For a new project, use a separate wiring checkpoint only when it materially helps the first slice.
+Wire its real entry point and necessary modules and types; make any stubs visibly unavailable.
+Build or typecheck it and run the entry point far enough to prove the wiring, then validate and
+finish it under standing guidance. Create its authorized checkpoint commit, record the result,
+and continue to the first usable slice. Otherwise establish wiring within that slice.
+
 Implement the slice's accepted behavior through the real entry point and authoritative owners,
 including only the UI, service, integration, and persistence work it needs. Remove superseded
 stubs and routes without narrowing the accepted outcome.
@@ -52,8 +58,13 @@ Continue until every accepted item has implementation and validation evidence.
 
 ## Final review and closure
 
-Give a fresh independent reviewer the `final-review` skill, the exact original-base-to-current-head
-range, and the current `RECOVERY.json` contents. Record its findings and coverage.
+Give a fresh independent reviewer the exact original-base-to-current-head range, accepted outcome,
+and current `RECOVERY.json` contents. Ask for a read-only review of the complete outcome, including
+cross-slice integration, agreement with affected documents, and required validation, applying
+FINISHING.md within that scope. Blockers need evidence of a violated accepted requirement,
+retained contract, safety invariant, or required check; missing required inspection is a gap, not
+clearance. Report findings or clearance for that range, inspection coverage, and unresolved gaps.
+Record its findings and coverage.
 Correct confirmed blockers in original slice
 order, validate and inspect the affected corrections, and create
 `git commit --fixup=<slice-commit>` against the checkpoint or slice each correction belongs to.

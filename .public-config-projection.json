@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "283edeae8e841c231d95c6d39beb2b2d01100288",
+  "sourceCommit": "080946c1d2ed05c22871a7d297f0ef3d037c297e",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -89,7 +89,7 @@
     {
       "path": ".claude/instructions/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "685012064362f656c252ddca724e285fe87af002e8d9f729711a3060f12cfb26",
+      "sha256": "9df90745c30689c82836ac883f6a34d89c5f75ffbcf5fa791166ebad9cd8b8e9",
       "executable": false
     },
     {
@@ -341,7 +341,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "491b634d39866a0edffa9a3a65c409d740dd8b54a0d58848a7086a64c3fc44ab",
+      "sha256": "f1bacdc48cc54ba7c3fa62a77a431af8698c6200324af14023d7d0afd2f180c9",
       "executable": false
     },
     {
@@ -653,7 +653,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "eaed1c2cb060b2606a7b645993253691c7f3e106971e6419d3b16f79c42ab8ff",
+      "sha256": "be0b8fee9d31c5afe45ccac7a5d3700a3098ac3fe1e4969259d5270ea819df9d",
       "executable": false
     },
     {
@@ -760,13 +760,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "bb68ec6e23c99084d7b31820c4c005380e063d0c891f3bdd5e9703279842997d",
+      "sha256": "344b4936cef372369529329a45b483d172087facbeb7aa3964ab6a6392dd5965",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "6497d8495a790d631e1e1b43ec8cc418cd13dd27db8c9022c667316d7705c6c6",
+      "sha256": "19a2c31e8140c231637c10d9298d1aa92a5d13191c151fd082cfb076cb9db595",
       "executable": true
     },
     {
@@ -880,13 +880,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "dee83f439acda726240bdd5ef94cfa92242352d7c56f84e28fe0babc710c250b",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/.remote-patches/0787507ea76e87810062f9037779ef3b3d2af1e703eed4cee1bd1242b84bce1a.patch",
-      "kind": "file",
-      "sha256": "2094d3aa115537105affcec6ec09acbe7a89f06349ccaa5d1dbfde745219fd6e",
+      "sha256": "9a5158fedb8cd3bc1969cb814411a7e1947f6c36857e7e2a1f3a6dcaa6ae1732",
       "executable": false
     },
     {
@@ -926,6 +920,12 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/.remote-patches/706edd682a54a4e1a78633f5272e871e83959ef7237316c3b30990af85f60124.patch",
+      "kind": "file",
+      "sha256": "2d9782fb8e0237e3a5f0cad50054e37e3717449ed4d97d3736f3afe17c3e5a06",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/.remote-patches/72af4d9e0d00c4e4a9e66bbe2525a6b029fc1bedc63ea0eceb54d4d8e29888de.patch",
       "kind": "file",
       "sha256": "675205f322a06022055194cf9c439834deebb7596f6a8870e159fb038b47a680",
@@ -935,18 +935,6 @@
       "path": ".skills-mgr/skills/authoring-skill/SKILL.md",
       "kind": "file",
       "sha256": "017f0974611e976674275cd8a4ee689af20b637d90249591973065ca835e3353",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/build-code-skeleton/agents/openai.yaml",
-      "kind": "file",
-      "sha256": "eba9dc681f41eecf5e89fe58567a97cb5497e913bc518933eb4c36de8a39698e",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/build-code-skeleton/SKILL.md",
-      "kind": "file",
-      "sha256": "8b42529c6e13b7571cf7cf91c291e83dab65e88319f7af1b27530cf4cf200e63",
       "executable": false
     },
     {
@@ -998,6 +986,12 @@
       "executable": false
     },
     {
+      "path": ".skills-mgr/skills/context7-docs/SKILL.md",
+      "kind": "file",
+      "sha256": "bb972373d44bf531f0af929112ae30515d9bd9895b826a96e086df3d96f8aa1e",
+      "executable": false
+    },
+    {
       "path": ".skills-mgr/skills/council/agents/openai.yaml",
       "kind": "file",
       "sha256": "25a263b247cfd004d33a26f350bda790e57bbbc6889d17e94717a0785d25fa4c",
@@ -1018,25 +1012,13 @@
     {
       "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
       "kind": "file",
-      "sha256": "74185691b256e216bda7835e36fd11d95ce1e4e1df8d99b8a2ed03e7ebfedbae",
+      "sha256": "99c4b859325ac37b6720d898bfc14fe791d414eef2c215378347a493032de400",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/deslop/SKILL.md",
       "kind": "file",
       "sha256": "1f9c8fff56aabdd2b1fc70fbacfa4689076d98c5c0d59098fcbaa1d9f6dfe23b",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/final-review/agents/openai.yaml",
-      "kind": "file",
-      "sha256": "4e8004acf1e58b4b1e6a7376485c9c6dc29b00877a5099960c05a6e1a6b7e48d",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/final-review/SKILL.md",
-      "kind": "file",
-      "sha256": "34ff7e563ba3a3f93704ffc777fc967b4a2799e8f88623bb7b2b6f103e2a74f9",
       "executable": false
     },
     {
@@ -1136,12 +1118,6 @@
       "executable": false
     },
     {
-      "path": ".skills-mgr/skills/js-ts-best-practices/SKILL.md",
-      "kind": "file",
-      "sha256": "e78075063502b0ed60d41d8c7805335caf43b129be3e9df36ad862e613daea4b",
-      "executable": false
-    },
-    {
       "path": ".skills-mgr/skills/juststore-rendering-optimizer/references/juststore-rendering-patterns.md",
       "kind": "file",
       "sha256": "5e02a198887ead22152e1499a15d81bb7408a15f4390a6d38e219d1172763162",
@@ -1180,7 +1156,7 @@
     {
       "path": ".skills-mgr/skills/new-project/SKILL.md",
       "kind": "file",
-      "sha256": "bf1a063bf54b6e18cb08e35a34feb2a8e4a565e92a74c5d63c50f737fcd89879",
+      "sha256": "f4bc269e0fd6a3f1dbf776395c05264a7c9b80f84055198975b5f7c1e73dd92d",
       "executable": false
     },
     {
@@ -1432,7 +1408,7 @@
     {
       "path": ".skills-mgr/skills/writing-readme/SKILL.md",
       "kind": "file",
-      "sha256": "30036e290d99a8fd88ee9c850736fc26e7ae846ee50155cfc13dd00d6b64756f",
+      "sha256": "cf962082b13179940098504f9d7bb0bd222aed089bd58c8cd56adc211a016a10",
       "executable": false
     },
     {
@@ -1509,7 +1485,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "d9419b4c7473bdb58ddd6008fb0c0b1ae9cf82c1082fbffab37d8dfe1ac26540",
+      "sha256": "9509764094eb04afff5b9237994038dd5e8ca28f00bd4cb5b21efd3a0674ce4d",
       "executable": false
     },
     {
