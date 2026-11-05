@@ -35,15 +35,15 @@ input = """
 $i-want you to resolve the listed items through delegates, using $commit for all commits.
 Phase 0 still applies under it's conditions.
 
-Every section is addressed to you as main, except "Delegate brief", which you include verbatim in each implementation delegate's assignment after its item-specific context.
+Every section is addressed to you as main, except "Delegate brief", which you supply verbatim to each implementation delegate through preload.
 
 ## Planning and dispatch
 
-* Fetch each item's $plane body, comments, and labels yourself. Understand its intent, scope, dependencies, and likely edit overlap well enough to judge grouping, model choice, and task directions, and to evaluate the work delegates return. Pass the fetched content to the delegate so it does not fetch it again.
+* Fetch each item's $plane body, comments, and labels yourself. Understand its intent, scope, dependencies, and likely edit overlap well enough to judge grouping, model choice, and task directions, and to evaluate the work delegates return. Export the fetched content for each delegate and supply it through preload so it does not fetch it again.
 
 * Settle what the item, its comments, linked items, and session history can answer. When an item's scope, intent, expected behavior, or acceptance is still unclear, ask me once before dispatch, with all remaining questions for every item. Do not widen an item's scope on your own; bring proposed expansions to me.
 
-* In each brief, quote the item's requirement text verbatim.
+* Preserve each item's requirement text verbatim in the preloaded export. Export the Delegate brief once and preload it for each implementation delegate. In spawn messages, identify the preloaded sources and provide assignment-specific directions without repeating their contents.
 
 * Speed up delivery:
 
@@ -59,7 +59,7 @@ Every section is addressed to you as main, except "Delegate brief", which you in
 
 * Before relaying a delegate's request to narrow or change scope, check its evidence, and include that evidence when you ask me.
 
-## Delegate brief (save and reuse with `store`)
+## Delegate brief
 
 The user explicitly requires the following of you, the delegate owning the items above.
 
