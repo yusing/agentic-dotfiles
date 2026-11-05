@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.29
+
+Remove the retired user-experience skill from the public projection.
+
 ## 1.3.28
 
 Remove the retired generated-file edit guard source and changelog from the public

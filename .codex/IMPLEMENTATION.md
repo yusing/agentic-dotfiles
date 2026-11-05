@@ -38,6 +38,10 @@ completion through the owning interface, reusing host progress, logging, or job-
 Start/finish notices alone are insufficient. Progress must remain auxiliary and must not determine
 or interfere with successful core behavior.
 
+Keep machine-readable stdout clean: send CLI progress to stderr unless the interface explicitly
+says otherwise. Make redirected progress newline-delimited; keep interactive progress transient
+and clear it before results or errors.
+
 ## No surprises
 
 Do not introduce safeguards that block intended behavior. When a required safeguard rejects an operation,

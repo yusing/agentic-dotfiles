@@ -277,9 +277,6 @@
         "locator": "jetbrains/go-modern-guidelines/use-modern-go"
       }
     },
-    "user-experience": {
-      "enabled": true
-    },
     "using-pjdoc": {
       "enabled": false
     },

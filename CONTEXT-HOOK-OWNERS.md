@@ -54,8 +54,6 @@
   are reported with their purpose and passing evidence in the assigned result format.
   `.codex/TESTING.md` owns validation requirements; `.codex/IMPLEMENTATION.md` owns
   implementation craft.
-- User experience: `.skills-mgr/skills/user-experience/SKILL.md` owns proportional UX and
-  operability guidance when a user-facing workflow or interface changes.
 - Go quality is disabled: no registrations remain in `.codex/hooks.json`,
   `.claude/settings.json`, or `.grok/hooks/codex-port.json`; OMP inherits the
   Codex registrations. The `.codex/hooks/bin/go_quality` implementation and

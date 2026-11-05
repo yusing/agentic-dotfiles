@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "27995d5de96626a9f9103e68a05a71961f2e8ac6",
+  "sourceCommit": "dce9250a432166c01df3112584a3125112c389d9",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -89,7 +89,7 @@
     {
       "path": ".claude/instructions/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "d3aff092755245862f2b99d001d6d2d0bae8c4659a9df3242995d62ffc876f68",
+      "sha256": "685012064362f656c252ddca724e285fe87af002e8d9f729711a3060f12cfb26",
       "executable": false
     },
     {
@@ -341,7 +341,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "ddf7aac8623e15abbbaa80b8db51805f32d4cb4eed17d3b3b88320031f52f362",
+      "sha256": "491b634d39866a0edffa9a3a65c409d740dd8b54a0d58848a7086a64c3fc44ab",
       "executable": false
     },
     {
@@ -760,13 +760,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "12dcde42017f65b742689eb80e50fc6f7e99bbd05380e511cf09e98fb9ca8b7c",
+      "sha256": "bb68ec6e23c99084d7b31820c4c005380e063d0c891f3bdd5e9703279842997d",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "a27bf82e1fc3c0ad992a1c3752c5832aee0b4c490d8fbdd13d3b6234deb0233e",
+      "sha256": "6497d8495a790d631e1e1b43ec8cc418cd13dd27db8c9022c667316d7705c6c6",
       "executable": true
     },
     {
@@ -880,7 +880,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "29ea1e1903472ad24e3bbdc49a0d2134576bcb6a938e2234714a44a1362e945f",
+      "sha256": "dee83f439acda726240bdd5ef94cfa92242352d7c56f84e28fe0babc710c250b",
       "executable": false
     },
     {
@@ -1503,7 +1503,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "88b8768f241ecbe2a66bf728971ac7227f98c5009d527a2e68e0d7fb0d237145",
+      "sha256": "08f83288d63a0f5e3cbe361d8eed9d23541c1686dc308290dd9726f4977c12bb",
       "executable": false
     },
     {

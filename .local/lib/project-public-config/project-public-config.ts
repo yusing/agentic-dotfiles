@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.28";
+export const VERSION = "1.3.29";
 
 type TreeEntry = {
 	mode: string;
@@ -243,7 +243,6 @@ const PROJECTED_SKILL_NAMES = [
 	"shadowtree",
 	"supabase-postgres-best-practices",
 	"teardown",
-	"user-experience",
 	"using-pjdoc",
 	"writing-readme",
 ];
