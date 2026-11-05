@@ -106,6 +106,24 @@
         "locator": "https://github.com/yusing/goutils"
       }
     },
+    "gpui-kit": {
+      "enabled": "[ \"$PWD\" == \"$HOME\" ] || has_dependency gpui-kit",
+      "remote": {
+        "provider": "repository",
+        "id": "https://github.com/longbridge/gpui-kit#gpui-kit",
+        "name": "gpui-kit",
+        "locator": "https://github.com/longbridge/gpui-kit"
+      }
+    },
+    "gpui-kit-design-guides": {
+      "enabled": "[ \"$PWD\" == \"$HOME\" ] || has_dependency gpui-kit",
+      "remote": {
+        "provider": "repository",
+        "id": "https://github.com/longbridge/gpui-kit#gpui-kit-design-guides",
+        "name": "gpui-kit-design-guides",
+        "locator": "https://github.com/longbridge/gpui-kit"
+      }
+    },
     "handoff": {
       "enabled": true
     },
