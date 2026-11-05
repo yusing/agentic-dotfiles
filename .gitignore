@@ -323,10 +323,6 @@ __pycache__
 !/.skills-mgr/skills/teardown/scripts/render.mjs
 !/.skills-mgr/skills/teardown/scripts/validate.mjs
 !/.skills-mgr/skills/teardown/SKILL.md
-!/.skills-mgr/skills/user-experience/
-!/.skills-mgr/skills/user-experience/agents/
-!/.skills-mgr/skills/user-experience/agents/openai.yaml
-!/.skills-mgr/skills/user-experience/SKILL.md
 !/.skills-mgr/skills/using-pjdoc/
 !/.skills-mgr/skills/using-pjdoc/agents/
 !/.skills-mgr/skills/using-pjdoc/agents/openai.yaml

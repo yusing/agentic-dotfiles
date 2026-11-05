@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "9d95ced9b50284953ac7622321f51e0c6c33ed5a",
+  "sourceCommit": "27995d5de96626a9f9103e68a05a71961f2e8ac6",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -653,7 +653,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "516ae6ee1a300ecdc6dd7e1dd41c142bb81811df11823164a33e8ac6789d267a",
+      "sha256": "eaed1c2cb060b2606a7b645993253691c7f3e106971e6419d3b16f79c42ab8ff",
       "executable": false
     },
     {
@@ -1349,18 +1349,6 @@
       "path": ".skills-mgr/skills/teardown/SKILL.md",
       "kind": "file",
       "sha256": "c91516ecfac16b83a112596e43955aa15ab40126e52757589c50fb848db4aba4",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/user-experience/agents/openai.yaml",
-      "kind": "file",
-      "sha256": "de762c7d1c56c6ba17ebdf67f3f023a5cf6417d43bb0875b658056e01b9cf23b",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/user-experience/SKILL.md",
-      "kind": "file",
-      "sha256": "ad7ac8b6245d6bd706ec8a7c22c04f0743b8f254fca94c86763ccd1a372826c8",
       "executable": false
     },
     {
