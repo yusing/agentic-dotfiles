@@ -78,7 +78,7 @@ Complete text already supplied in context satisfies the read; a path or summary 
   Apply only sections within the role; review orchestration belongs to agents assigned that work.
 - `TESTING.md`: tests/fixtures or validation selection; project owners supply runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
-- `GITHUB.md`: preparing pull-request, issue, or comment text.
+- `GITHUB.md`: preparing GitHub text, or publishing and merging pull requests.
 - `FRONTEND.md`: building, restyling, or reviewing a web UI.
 
 - `SUBAGENT.md`: FOR SUBAGENTS ONLY: delegate assignment, messages, and result delivery, not dispatch policy.
