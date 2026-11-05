@@ -1,0 +1,17 @@
+# skills-mgr-base-sha256 fbd9d502767f7dff29c211505a0bd9ba34e980ed4cc456247e2adc1642883984
+# skills-mgr-result-sha256 9d274aacbf15275eb6b3231ad046acbf4301eb9170d2d8969cd4d002950c8c65
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -1,9 +1,11 @@
+ ---
+ name: herdr
+-description: "Control Herdr, a terminal multiplexer for coding agents. Use only when the user explicitly mentions Herdr or asks to use Herdr to inspect or control panes, tabs, workspaces, commands, or another agent. Do not use merely because a task could benefit from a background terminal, delegation, or parallel work. Requires HERDR_ENV=1."
++description: "Use only for the Herdr TUI (the herdr terminal multiplexer), when the user explicitly asks to use it. For the separate Herdr app, use herdr-app --skill; for herdr-core, use hc --skill. TUI control requires HERDR_ENV=1."
+ ---
+ 
+ # Herdr
++
++For the separate Herdr app, use `herdr-app --skill`. For herdr-core, use `hc --skill`. The instructions below are for the Herdr TUI.
+ 
+ Herdr organizes terminals into workspaces, tabs, and panes, recognizes coding agents running inside panes, and exposes the current session through the `herdr` CLI.
+ 
