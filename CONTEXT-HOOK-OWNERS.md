@@ -35,9 +35,7 @@
   for Claude, and its `--subagent-start` option emits the `SubagentStart` additional-context
   envelope; it is not the command currently registered by Codex.
   `CONTEXT-GROK-HOOK-PORT.md` records Grok's missing subagent-start delivery.
-- Tool guards: `.codex/hooks/bin/generated_code_guard` blocks direct generated-Go edits.
-  Codex registers it for `apply_patch|Edit|Write`; `.claude/settings.json` registers it for
-  Claude's edit tools. `.codex/hooks/bin/subagent_exec_guard` implements the container and
+- Tool guards: `.codex/hooks/bin/subagent_exec_guard` implements the container and
   orchestration command boundary for spawned agents, keyed on the event's `agent_type`.
   It has no Codex registration. Claude registers it through Bash-capable role frontmatter,
   and Grok through its explicit port configuration. These matcher strings alone do not prove

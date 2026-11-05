@@ -70,8 +70,7 @@ command boundary rests on the role body alone.
 `[compat.claude] hooks = false` in `.grok/config.toml`, and Grok's copies live in
 `.grok/hooks/codex-port.json`.
 
-`generated_code_guard` runs directly through Claude's edit-tool registration and uses Claude's
-native hook envelope. `go_quality` has no active registration; its implementation remains available
+`go_quality` has no active registration; its implementation remains available
 for re-enabling.
 
 ## Session start

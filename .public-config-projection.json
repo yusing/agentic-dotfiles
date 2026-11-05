@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "095d87fb1fff52bf09c22f3a36d105abdba898aa",
+  "sourceCommit": "ada3ba077d69ab9428c0792fae5acd0165fa5916",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1479,7 +1479,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "4abfa878cddb40398d24e80dde7ae798dec51ee2eb53872e9d5d1afe1c952ae6",
+      "sha256": "757cc6f571218bd972bbc9941ccd3fc06d8050f9d7573cce0714b10ccd7d4c83",
       "executable": false
     },
     {
@@ -1509,7 +1509,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "7df433f9adae41774eaadbc4f6309318d49adf70e698cc6dacf031d3e4874bc6",
+      "sha256": "88b8768f241ecbe2a66bf728971ac7227f98c5009d527a2e68e0d7fb0d237145",
       "executable": false
     },
     {
