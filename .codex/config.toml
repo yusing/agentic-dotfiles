@@ -33,7 +33,6 @@ fullscreen_transcript = true
 ["tui".presets.1]
 input = """
 $i-want you to resolve the listed items through delegates, using $commit for all commits.
-Phase 0 still applies under it's conditions.
 
 Every section is addressed to you as main, except "Delegate brief", which you supply verbatim to each implementation delegate through preload.
 
@@ -69,7 +68,7 @@ The user explicitly requires the following of you, the delegate owning the items
 
 * Own intermediate Plane status changes and activity updates. Leave final statuses (Pending QA, Done) to main.
 
-* Record the chosen approach and why, briefly, in activity updates.
+* Record (which ever is applicable) in comments: what was trying to solve, what design choices was made, what was the approach, how was the problem solved.
 
 * Correct a Plane title or body only from confirmed evidence, and assign correct labels.
 
@@ -238,6 +237,10 @@ $i-want you to review and polish the UI below until it holds up next to mainstre
 
 """
 label = "UI review pass"
+
+["tui".presets.7]
+input = "Review every PR, explain each: what it was trying to solve, what was the design choice, what was the approach, whether the PR is implemented correctly (correct approach and correct code), whether it is merge ready."
+label = "Review and Explain PRs"
 
 ["features"]
 "responses_websockets_v2" = true
