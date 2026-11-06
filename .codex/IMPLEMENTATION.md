@@ -4,11 +4,11 @@ Use the accepted contract to resolve code/test conflicts; consult history only w
 
 ## Ownership and design
 
-Extend the owner already delivering the nearest behavior. At a shared boundary, distinguish changed
-consumers from those retaining existing semantics; preserve the shared default when only a subset
-changes. Adapt existing resolvers and transactions through narrow entry points rather than copying
-their decisions or publication steps. Share definitions across production, display, and replay;
-separate operations may share definitions without sharing side effects.
+Extend the owner already delivering the nearest behavior. Change or remove behavior where it is
+produced and update its consumers; downstream rewriting or a replacement layer leaves the defect at
+its source. Adapt existing resolvers and transactions through narrow entry points rather than
+copying their decisions or publication steps. Share definitions across production, display, and
+replay; separate operations may share definitions without sharing side effects.
 
 Route and validate by domain meaning. Decode each representation at its owner, preserving distinctions
 needed for identity, trust, and ownership; pass typed results inward rather than reinterpret transformed
@@ -22,7 +22,7 @@ Count new bounds, failure states, switching, concurrency, and durable state as d
 abstractions for current shared responsibilities, invariants, or necessary algorithms; a sole-caller
 helper may isolate complex validation, otherwise inline it. Keep helpers near callers and host/provider
 policy at its owner. Add guards, fallbacks, options, persistence, and compatibility only for supported
-contracts. Simplification removes mechanisms or decisions at their owner.
+contracts.
 
 Consider material CPU, memory, I/O, and scaling costs while building. Reuse state, inventories, parsed
 results, scans, encodings, buffers, and timers while their guarantees hold for the operation. Skip

@@ -5,7 +5,7 @@ Shared intent and authorization belong to the standing guidance.
 
 ## Plan and build
 
-Settle the outcome, changed and retained promises, existing owners, and normal consuming path.
+Settle the outcome, changed and retained promises, and the owners producing the affected behavior.
 Resolve feasibility with source evidence or bounded probes before building supporting machinery.
 Reuse settled decisions and the existing task record; no separate artifact is needed by default.
 
