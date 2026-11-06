@@ -38,9 +38,12 @@ Preserve client-specific dispatch for fields omitted from role configuration.
 ## Consumer checks
 
 For reported agent behavior, first compare the effective instructions and evidence available at
-the failing decision, reusing supplied context. Check for conflicting rules before assuming guidance
-is missing, and trace the supported cause to its owner before editing. If a fix fails or is rejected,
-revisit that causal explanation before moving or strengthening the same fix.
+the failing decision, reusing supplied context. When behavior persists after an instruction fix,
+find that fix in recent history of every owner composing the session's instructions, including the
+workspace project, confirm it reached the session, and locate where the session repeated the
+behavior it targeted. Check for conflicting rules before assuming guidance is missing, and trace
+the supported cause to its owner before editing. If a fix fails or is rejected, revisit that causal
+explanation before moving or strengthening the same fix.
 
 Trace affected main/delegate paths, applicable instructions, pointers, and generated consumers.
 For renames, align paths, references, metadata, selection, tests, and allowlists; preserve historical
