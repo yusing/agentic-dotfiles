@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6516cb1beaad3835ff8d1a7c974ecf7463602272",
+  "sourceCommit": "a0e11ccd69b7c56278107d4a3bf8b04466827b54",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -215,13 +215,13 @@
     {
       "path": ".codex/hooks/check_project.changelog.md",
       "kind": "file",
-      "sha256": "2a834bab4400d7ac4f6dd77e99a8f853f4f269deb07a2b751b4fbe6db933527e",
+      "sha256": "f55ed47056b9e1ef8e259985ed8a92e93de8e81e50bb94175a38a119cfb54332",
       "executable": false
     },
     {
       "path": ".codex/hooks/check_project.ts",
       "kind": "file",
-      "sha256": "0f232b430f564700a3db1c020ecf1b01ea61bca631c9b344f57f7de6bffa27eb",
+      "sha256": "8d05ef08919d3c2af4d18ca9f1f0206bf178e79022d048821669694edada607b",
       "executable": false
     },
     {

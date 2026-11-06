@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { at, handleVersion, programArgs, runCommand } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.2.1";
+export const VERSION = "1.3.0";
 
 function languageFor(ext: string): string | undefined {
   switch (ext) {
@@ -427,10 +427,11 @@ function submoduleLines(entries: SubmoduleHead[]): string[] {
   return lines;
 }
 
-function goVersion(directory: string): string {
-  const manifest = path.join(directory, "go.mod");
-  if (!isFile(manifest)) {
-    return "unknown";
+// Workspace roots often have only go.work, which declares the same go directive.
+function goVersion(directory: string): string | null {
+  const manifest = ["go.mod", "go.work"].map(name => path.join(directory, name)).find(isFile);
+  if (manifest === undefined) {
+    return null;
   }
   const match = /^go (.+)$/m.exec(fs.readFileSync(manifest, "utf8"));
   if (match === null || match.length < 2) {
@@ -489,11 +490,10 @@ function main(): number {
       lines.push(...submoduleLines(submodules));
     }
   }
-  lines.push(
-    `task_runner: ${taskRunner}`,
-    `languages: ${languages}`,
-    `go_version: ${version}`,
-  );
+  lines.push(`task_runner: ${taskRunner}`, `languages: ${languages}`);
+  if (version !== null) {
+    lines.push(`go_version: ${version}`);
+  }
   const instructions: string[] = [];
   if (kind !== "none") {
     instructions.push(

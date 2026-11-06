@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0
+
+Read `go_version` from `go.work` when the directory has no `go.mod`, so Go
+workspace roots report their version instead of `unknown`. Omit the line when
+neither manifest exists.
+
 ## 1.2.1
 
 Honor exact `MEKUGI_ENVIRONMENT_FACTS=1` as `--without-git` when Mekugi
