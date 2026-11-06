@@ -2,6 +2,26 @@
 
 lockfile_version = 3
 
+[[tools."aqua:awslabs/git-secrets"]]
+version = "1.3.0"
+backend = "aqua:awslabs/git-secrets"
+specifiers = ["latest"]
+
+[tools."aqua:awslabs/git-secrets"."platforms.linux-arm64"]
+checksum = "sha256:df9a5d2beeda1c83e23105f46efe464bb4c97f8328e1e66754d7daacfaf7272b"
+url = "https://raw.githubusercontent.com/awslabs/git-secrets/1.3.0/git-secrets"
+url_api = "https://api.github.com/repos/awslabs/git-secrets/contents/git-secrets?ref=1.3.0"
+
+[tools."aqua:awslabs/git-secrets"."platforms.linux-x64"]
+checksum = "sha256:df9a5d2beeda1c83e23105f46efe464bb4c97f8328e1e66754d7daacfaf7272b"
+url = "https://raw.githubusercontent.com/awslabs/git-secrets/1.3.0/git-secrets"
+url_api = "https://api.github.com/repos/awslabs/git-secrets/contents/git-secrets?ref=1.3.0"
+
+[tools."aqua:awslabs/git-secrets"."platforms.macos-arm64"]
+checksum = "sha256:df9a5d2beeda1c83e23105f46efe464bb4c97f8328e1e66754d7daacfaf7272b"
+url = "https://raw.githubusercontent.com/awslabs/git-secrets/1.3.0/git-secrets"
+url_api = "https://api.github.com/repos/awslabs/git-secrets/contents/git-secrets?ref=1.3.0"
+
 [[tools."aqua:go-swagger/go-swagger"]]
 version = "0.36.7"
 backend = "aqua:go-swagger/go-swagger"
@@ -24,6 +44,29 @@ checksum = "sha256:a5f55b6cc7a7431979a75a827e1c9f2578f71ca34a652b187f52ca697079e
 checksum_source = "mise-versions"
 url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagger_0.36.7_Darwin_arm64.tar.gz"
 url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050832"
+
+[[tools."aqua:trufflesecurity/trufflehog"]]
+version = "3.99.8"
+backend = "aqua:trufflesecurity/trufflehog"
+specifiers = ["latest"]
+
+[tools."aqua:trufflesecurity/trufflehog"."platforms.linux-arm64"]
+checksum = "sha256:a0382d83dd58c967af5dd0175cc732c62c836ab1d15dc9ae71b01a2d3f0911b2"
+checksum_source = "mise-versions"
+url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.8/trufflehog_3.99.8_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/702807617"
+
+[tools."aqua:trufflesecurity/trufflehog"."platforms.linux-x64"]
+checksum = "sha256:7c3b02f160f28929a467e29e20fba98746e0729f6e37c3c25761e4f8789abe08"
+checksum_source = "mise-versions"
+url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.8/trufflehog_3.99.8_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/702807616"
+
+[tools."aqua:trufflesecurity/trufflehog"."platforms.macos-arm64"]
+checksum = "sha256:85724f221bc390f6e0bdf65df245468c8426350de85aa9290ea5491c6d4ec35a"
+checksum_source = "mise-versions"
+url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.8/trufflehog_3.99.8_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/702807615"
 
 [[tools."github:dlvhdr/gh-dash"]]
 version = "4.26.2"
@@ -182,3 +225,4 @@ specifiers = ["0.4.5"]
 version = "8.3.5"
 backend = "npm:vite"
 specifiers = ["latest"]
+

@@ -20,6 +20,8 @@
 "npm:scriptc" = { "version" = "0.4.5", "postinstall" = "cd \"$MISE_TOOL_INSTALL_PATH\" && bun pm trust scriptc" }
 "npm:vite" = "latest"
 "aqua:go-swagger/go-swagger" = "latest"
+"aqua:trufflesecurity/trufflehog" = "latest"
+"aqua:awslabs/git-secrets" = "latest"
 "github:dlvhdr/gh-dash" = { "version" = "latest", "bin" = "gh-dash", "matching_regex" = "^gh-dash_.*_(linux|darwin)-(amd64|arm64)$" }
 "github:tonistiigi/binfmt" = { "version" = "latest", "os" = ["linux"], "version_prefix" = "deploy/v", "matching_regex" = "^binfmt_linux-(amd64|arm64)\\.tar\\.gz$", "bin" = "binfmt" }
 "go:golang.org/x/tools/cmd/deadcode" = "latest"
