@@ -27,6 +27,10 @@ trigger. Do not create a layer merely to move the same complexity elsewhere.
 Authorized instruction maintenance may adapt a rule for separately loaded clients or regenerate
 its consumers.
 
+Skill descriptions own applicability. Keep specific skill names and trigger rules out of standing
+instructions and role prompts; those instructions must work when no skills are available.
+`FRONTEND.md` is the exception and may own named frontend skill routing.
+
 Shared rules preserve roles and settled assignments. Workflows own delegation/readiness gates;
 native roles own capabilities; `MODEL-ROUTING.md` owns model budgets. Check documentation and mechanical work too.
 Preserve client-specific dispatch for fields omitted from role configuration.

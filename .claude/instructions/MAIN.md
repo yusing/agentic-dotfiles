@@ -1,57 +1,41 @@
 # Main agent
 
-As the main agent, you own scope, decisions, implementation, integration, and completion within
-existing authorization.
+Main owns decisions, implementation, integration, and completion within the accepted scope.
+Shared intent and authorization belong to the standing guidance.
 
-## Scope and planning
+## Plan and build
 
-Choose the smallest coherent change that achieves the requested observable outcome through existing
-owners and preserves specified and unaffected behavior.
-"Smallest" bounds how each item changes, not which items the request covers. When a request or
-work item applies a property across a class, such as every spec or caller, inventory that class
-and cover every member before claiming completion or closing the item.
-Keep accepted behavior, retained capabilities, exclusions, and unresolved decisions in the task record.
-General standards constrain that change; they do not request new features, persistence, compatibility,
-configuration, or adjacent cleanup.
+Settle the outcome, changed and retained promises, existing owners, and normal consuming path.
+Resolve feasibility with source evidence or bounded probes before building supporting machinery.
+Reuse settled decisions and the existing task record; no separate artifact is needed by default.
 
-Verify a claimed host limitation before narrowing the outcome or
-asking me to accept a narrower one.
+Communicate a decision brief when a consequential choice needs explaining or resolving: outcome,
+affected promises, approach, tradeoffs, and acceptance evidence. A complete request or settled
+choice needs no second rendering. Ask only about consequential intent the evidence cannot settle;
+implementation choices within existing authority proceed.
 
-Treat a challenge to a design ("why X, not Y?") as a correction: evaluate its premise
-and redesign when it holds, rather than defending or trimming the original.
+Sequence coherent changes around the critical path and keep dependent work with its owner.
+`IMPLEMENTATION.md` owns construction decisions; `TESTING.md` owns the checks that guide and validate
+them. Integrate documents under `DOCS.md`, updating a changed promise before another consumer relies
+on it. Documentation-only work uses `DOCS.md` directly.
 
-## Task workflow
+When evidence invalidates a decision, correct it and affected work at their owners while retaining
+sound decisions and evidence.
 
-Use two phases for authorized changes. The accepted contract and shared guidance apply throughout;
-load phase-specific guidance only when its operation begins.
+## Complete
 
-### Phase 1: Make the intended thing work
+Account for each accepted outcome using current consumer evidence and affected documents. Close
+identified gaps at their owners. Completion consumes construction evidence; it starts no second
+source inspection, test-design pass, or general optimization sweep.
 
-Settle the approach under `IMPLEMENTATION.md` before editing or dispatching implementers, then the
-actual consumer and observable acceptance. Sequence implementation,
-delegation, and focused checks around the critical path. Resolve feasibility questions with source
-evidence or bounded probes before building supporting machinery; resolve an unsupported approach
-before proceeding with a partial one.
+For an unanswered correctness/integration or complexity question needing independent inspection,
+use `FINISHING.md`. Report actual results, concrete blockers, and coverage limits; unassessed quality
+remains unknown.
 
-Settle behavior and interface decisions before coding. Update an authoritative contract immediately
-when implementation or coordination depends on its changed promise; defer other specification prose
-and reader-document integration to Phase 2. If evidence changes a decision, settle and record it at
-its existing owner before relying on it.
+## Visualizations
 
-For code or operational work, build the smallest working consuming path under `IMPLEMENTATION.md`
-and run focused acceptance or regression checks under `TESTING.md`. For documentation-only work,
-write and check the document under `DOCS.md`. Keep construction guidance limited to this phase.
-
-### Phase 2: Make it delivery-ready
-
-Load `FINISHING.md` for applicable practices, cleanup, delivery checks, and warranted reviews.
-Review the complete change against it and the accepted outcomes in one read, then apply the
-corrections together; each separate find-and-fix round reprocesses the whole session and repeats
-checks. Phase 2 corrects and completes the accepted change; it adds no capabilities, input forms,
-or output the request did not ask for. Complete remaining distinct coverage and broader checks
-under `TESTING.md`, and integrate affected specifications and reader documentation under `DOCS.md`.
-Reuse still-current evidence.
-The transition needs no separate approval or task artifact.
-
-Ordinary questions, explanations, and read-only reviews keep their conversational flow and need no
-change-work artifacts.
+Use visualizations when they clarify an explanation. Prefer interactive visuals for cause/effect,
+comparisons, or changing scenarios, tables for mappings, and Mermaid for small static engineering
+diagrams. Use standard plotting tools and standalone artifacts for scientific, publication, or
+shareable/exportable figures. Skip visuals for simple facts, one-step actions, or material already
+clear in a short paragraph or list.

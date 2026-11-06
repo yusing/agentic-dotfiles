@@ -1,80 +1,58 @@
 # Implementation
 
-Apply these standards within your role and scope. Use the accepted contract to resolve code/test
-conflicts; consult history only when intent remains unclear.
+Use the accepted contract to resolve code/test conflicts; consult history only when intent is unclear.
 
-## Behavior
+## Ownership and design
 
-For JavaScript and TypeScript, run, test, and install with Bun and Bunx unless the project pins
-another package manager or runtime. Use the same choice in scripts, including shebangs, and
-documented commands. Keep inputs, outputs, and shared shapes typed; let obvious locals infer.
-Prefer precise unions and domain types over loose strings. Use template literals for interpolation,
-string APIs for literal text operations, and regular expressions for pattern matching.
+Extend the owner already delivering the nearest behavior. At a shared boundary, distinguish changed
+consumers from those retaining existing semantics; preserve the shared default when only a subset
+changes. Adapt existing resolvers and transactions through narrow entry points rather than copying
+their decisions or publication steps. Share definitions across production, display, and replay;
+separate operations may share definitions without sharing side effects.
 
-Choose the approach before editing. Find how the codebase already does the nearest thing and
-extend that path; add new machinery only when that path cannot serve, and state why. Prefer
-designs, types, and ordering that prevent a failure over added checks, retries, fallbacks, or
-recovery paths. Keep error handling for failures the code cannot prevent, such as I/O, external
-input, and remote services. Fix a defect at its established cause, and keep the fix to that mechanism
-even when a similar module solved the problem with a wider change.
-Use a dependency's supported capability before writing a narrower replacement. Count the contracts
-a candidate newly engages (bounds, failure states, switching, concurrency, durable state) as part
-of its cost, and prefer one that avoids them. Consider expected work, CPU, memory, I/O, and scaling;
-deferred optimization does not justify an unsuitable approach.
+Route and validate by domain meaning. Decode each representation at its owner, preserving distinctions
+needed for identity, trust, and ownership; pass typed results inward rather than reinterpret transformed
+content. For mutations, establish ownership and validate new input and retained metadata before
+publication. Rejection preserves prior state. Classify recoverable conditions at the boundary that
+knows their meaning; permission, validation, and trust failures do not become absence.
 
-Add an abstraction only for a current shared responsibility, invariant, or necessary algorithm, not
-possible future use. A sole-caller helper may also isolate complex validation so its caller reads
-as the happy path. Inline sole-caller helpers that serve none of these purposes, and keep supporting
-helpers close to their callers. Add guards, validation, fallbacks, options, persistence, or compatibility
-only when the task or a supported contract needs them, and do not duplicate host/provider policy.
+Prefer failure prevention through types, ownership, and ordering. Keep error handling where external
+input, I/O, or services fail. Use supported dependency/schema capabilities before replacements.
+Count new bounds, failure states, switching, concurrency, and durable state as design costs. Add
+abstractions for current shared responsibilities, invariants, or necessary algorithms; a sole-caller
+helper may isolate complex validation, otherwise inline it. Keep helpers near callers and host/provider
+policy at its owner. Add guards, fallbacks, options, persistence, and compatibility only for supported
+contracts. Simplification removes mechanisms or decisions at their owner.
 
-Estimate the change's size from the request before editing. When the working diff outgrows that
-estimate, re-choose the approach rather than justify or trim it.
+Consider material CPU, memory, I/O, and scaling costs while building. Reuse state, inventories, parsed
+results, scans, encodings, buffers, and timers while their guarantees hold for the operation. Skip
+known or unused work. Keep working designs settled unless a concrete contract or material cost
+requires correction; negligible gains and style preferences do not reopen them.
 
-Keep each behavioral definition at one owner across features. Producers and consumers must
-share that definition, not maintain parallel case lists or recognition rules. When changing a
-producer, trace its consumers, including display and replay, and test the produced data through
-them. Separate operations can share definitions without sharing their side effects.
+## Construction
 
-For simplification requests, remove mechanisms or required decisions at the affected owner.
-Moving code or adding replacement layers does not satisfy that request.
+Edit authoritative sources and regenerate consumers. Trace references before changing shared
+interfaces. Remove superseded paths and artifacts, preserving compatibility retained contracts need.
+Trust validated types inward; keep synchronous parsing and option construction synchronous. Catch
+errors where recovery or useful context belongs. Event-sourced systems persist irreducible facts
+and derive redundant state.
 
-For operations whose silence would obscure progress, expose meaningful milestones or measurable
-completion through the owning interface, reusing host progress, logging, or job-state facilities.
-Start/finish notices alone are insufficient. Progress must remain auxiliary and must not determine
-or interfere with successful core behavior.
+For JavaScript/TypeScript, use Bun/Bunx for execution, tests, installs, scripts, and documented commands
+unless the project pins another runtime/package manager. Keep shared/public shapes typed; let clear
+locals infer. Prefer precise unions, string APIs for literal text, and regular expressions for patterns.
+Prefer immutable bindings, early returns, named imports, and simple conditionals. Preserve qualified
+access when it aids clarity, inline unhelpful single-use names, and load heavy conditional modules
+where needed. Comment on non-obvious constraints.
 
-Keep machine-readable stdout clean: send CLI progress to stderr unless the interface explicitly
-says otherwise. Make redirected progress newline-delimited; keep interactive progress transient
-and clear it before results or errors.
+## Observable behavior
 
-## No surprises
+Explain required rejections through the owning interface. Unrelated or nonessential failures must
+not fail the intended operation. Before adding complexity for a speculative or exceptionally unlikely
+race/security case, explain its concrete failure, likelihood, and cost and obtain agreement.
 
-Do not introduce safeguards that block intended behavior. When a required safeguard rejects an operation,
-explain why through the owning interface rather than failing silently.
-Failures in unrelated or nonessential work must not cause the intended behavior to fail.
-Avoid expanding scope for theoretical robustness. Before adding complexity for a speculative or
-exceptionally unlikely race or security edge case, explain the concrete failure mode, its likelihood,
-and the complexity cost, and obtain the user's agreement before implementation.
-When an error becomes absence or a fallback, such as treating missing content as not yet cached,
-match only that not-found condition; validation, permission, and trust failures still fail.
+Keep machine-readable stdout clean. Use owner progress/job-state facilities for meaningful milestones
+or measurable completion. Keep progress auxiliary, CLI progress on stderr, redirected progress newline-delimited, and transient
+interactive progress cleared before results/errors.
 
-## Ownership and boundaries
-
-Edit authoritative sources and regenerate their consumers, not generated, vendored, or minified outputs.
-
-Validate unknown input at its owning boundary, then pass typed values inward. Trust guarantees
-already established by schemas, constructors, or internal types. Prefer supported schema decoders
-to hand-written parsing and repeated checks.
-
-Avoid types that bypass checking.
-
-Keep synchronous parsing, validation, and option construction synchronous. Catch failures where
-recovery or useful context belongs rather than wrapping every call.
-
-For themed interfaces, select tokens by semantic role rather than current appearance. Add a
-missing role at the theme owner instead of borrowing an unrelated token; check supported themes
-and custom-theme fallbacks when changing that contract.
-
-For event-sourced systems, persist irreducible facts and derive redundant state in projections
-or read models rather than duplicating it in durable events.
+Use theme tokens by semantic role; add missing roles at the owner and preserve supported themes
+and custom-theme fallbacks.

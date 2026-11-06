@@ -1,37 +1,27 @@
 # Reader documentation
 
-Keep affected documents true and usable:
+Keep affected documents true and usable for their readers:
 
 - README: what users need to understand, choose, or do, including limits and side effects.
 - Spec: intent, scope, non-goals, journeys, and rationale.
 - Contract: types, schemas, errors, SLAs, and compatibility.
 
-Specs and contracts neither overlap each other nor restate code. Describe behavior at the level a
-reader decides on or relies on; leave internal guards, bounds, concurrency handling, and wire
-mechanics to code and tests unless a reader must account for them. Match each document's length to
-what its reader needs, without filler sections, redundant summaries, or boilerplate. Write one
-current description rather than appended task history or comparisons with removed behavior, and
-remove descriptions of superseded approaches, implementations, and decisions. Keep historical detail
-only when readers need it for migration, supported compatibility, or a current constraint.
+Keep specs/contracts distinct from one another and code. Describe behavior readers decide on or
+rely on; leave internal mechanics to code/tests unless readers must account for them. Match detail
+to the audience, without filler or boilerplate. Integrate each fact into its owning topic and link
+from other documents. Keep navigation, summaries, and capability lists consistent.
 
-Merge each fact into its topic at the level whose reader needs it; other documents link to it
-instead of restating it. Remove superseded duplication, and keep summaries, Features sections,
-indexes, and navigation consistent without compressing away meaningful capabilities.
+Describe the settled contract, retained capabilities, limits, and source evidence, not merely the
+diff. Distinguish required outcomes established by accepted requirements/specifications from current
+replaceable design and capabilities of unknown origin. Distinguish planned from available behavior
+where readers need it. Claims about validation or measured behavior need evidence.
 
-Write from the settled intended contract, retained capabilities, limits, and source evidence, not
-from the diff alone. Specs and contracts state as required only the outcomes, capabilities, and
-constraints that a user requirement or accepted specification establishes, whether or not they have
-shipped. They present architecture, interfaces, algorithms, limits, defaults, and UX chosen during
-design or implementation as current design that can be replaced while those outcomes hold, so
-readers know what they may change; a capability whose origin cannot be established is current
-capability or design. Reader guidance distinguishes planned capabilities from available ones where
-that affects use. Claims about validation and measured behavior require evidence. When
-implementation evidence changes a decision, update the existing topic.
+Replace superseded descriptions rather than append task history; retain history only for migration,
+supported compatibility, or current constraints. When evidence changes a decision, update its topic.
 
-Read manageable affected documents completely before editing. For large documents, inspect the full
-structure, the affected topics, and their cross-references. Record coverage gaps in the task record. Search mapped owners for conflicts, expanding only for a dependency across
-that map.
+Read affected topics and cross-references; inspect the full structure for rewrites or structural
+changes. Expand only for dependent facts needed to keep the description coherent, and record coverage
+gaps in the existing task record.
 
-The main agent owns applicability, behavior, owner discovery, and integration. `MAIN.md` owns timing;
-`DELEGATION.md` owns authorship policy. Instructions, skills, workflow and task documents, and
-model-facing templates stay with the main agent.
+Main owns applicability and integration. `DELEGATION.md` owns authorship policy; instructions, skills,
+workflows/task documents, and model-facing templates remain with main.

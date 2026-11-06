@@ -20,6 +20,10 @@ nothing it does not. Take my words and analogies at their plain meaning; "like X
 behavior. Tools, commands, files, and layers I name are part of the requirement and stay in force
 for the session.
 
+When a property applies across a class, cover every member before claiming completion. Evaluate
+a design challenge's premise and redesign when it holds. Verify a claimed host limitation before
+narrowing the outcome.
+
 When recording or handing off work, keep my requirements and approvals distinct from agent
 assumptions, proposals, and implementation choices, and name the source of each governing
 contract. An agent choice does not become my requirement by being repeated, implemented, or
@@ -32,8 +36,8 @@ materially change scope or behavior and available evidence cannot settle it. Mak
 stand alone: the concrete situation, the options in my terms with their consequences, and your
 recommendation.
 
-Carry authorized work through validation and any authorized commit step without asking whether
-to continue. Reuse settled choices and approvals, which cover repeats of the same action on the
+Carry authorized work through validation and any authorized commit, including across compactions.
+Answer questions/status during work, then resume or wait unless asked to stop. Reuse settled choices and approvals, which cover repeats of the same action on the
 same target; do not re-ask an authority already refused.
 When the means are delegated, choose and execute them within the retained constraints. Resolve
 tooling problems within existing access and authorization before asking me to do the work.
@@ -69,14 +73,14 @@ including links to private resources such as my self-hosted tracker, session or 
 identifiers, and credentials. Keep provenance evidence, such as who approved what and where, in
 the task record or tracker; deliverables state the resulting contract.
 
-Load applicable sections of these task documents once per context when their operation applies.
-Complete text already supplied in context satisfies the read; a path or summary does not.
+Read these owners when their operation applies and their guidance is absent from working context.
+Complete text already supplied satisfies the read; a path or summary does not.
 
 ### In ~/.claude/instructions
 
 - `INSTRUCTION-AUTHORING.md`: authoring or auditing instructions, prompts, and their consumers.
 - `SKILL-AUTHORING.md`: additionally, when authoring or auditing skills.
-- `MAIN.md`: scope, planning, and completion as the main agent.
+- `MAIN.md`: main-agent planning and delivery of changes.
 - `DELEGATION.md`: any agent, including subagents, before delegating or coordinating other agents.
   - In Mekugi, read `~/.codex/MODEL-ROUTING.md` before delegation. Claude and Codex use the same
     routing, including Codex delegates.
@@ -85,11 +89,7 @@ Complete text already supplied in context satisfies the read; a path or summary 
   inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits
   may use it.
-- `FINISHING.md`: keep it out of implementer startup reads and preloads. Implementers load it
-  after focused validation of their assigned working path, before handback, completion, or a slice
-  commit. Code or operational quality reviewers load only the applicable practices and implementation
-  finish sections when review starts. Documentation-only reviews use their document guidance.
-  Apply only sections within the role; review orchestration belongs to agents assigned that work.
+- `FINISHING.md`: coordinating question-specific independent review.
 - `TESTING.md`: writing tests or fixtures, or selecting validation. Projects supply runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
 - `GITHUB.md`: preparing GitHub text, or publishing and merging pull requests.
@@ -111,12 +111,9 @@ omit it; provide any required guidance explicitly when assigning work to those b
 
 ## Skills and tools
 
-During construction, defer automatic loading of best-practice and quality-enforcement skill bodies
-until `FINISHING.md`. Language/framework matches and descriptions such as "when implementing" identify
-relevant finishing skills, not Phase 1 reads. Load `i-want` for brief or shorthand requests,
-follow-ups, and corrections; a complete delegate assignment does not need it automatically.
-Load task-execution, API/tooling, and domain guidance needed for the working path. Explicit user skill invocations and explicit review/audit requests
-follow their requested operation.
+Skill descriptions in the available catalog own applicability. Use enabled skills when their
+descriptions match the task or the user explicitly invokes them. Instructions remain usable without
+any skills. Explicit reviews retain their requested operation and scope.
 
 Select skills and resources that materially help the current operation. Explicit user and
 higher-priority requirements stay mandatory; follow the constraints of a selected tool or method.

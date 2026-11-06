@@ -1,62 +1,49 @@
 # Testing
 
-Validate layout and visual appearance through rendered output, and text delivery through its
-consuming interface. Add a text check only when a change adds or moves a delivery path, and then
-reference the owning definition; a copied literal fails on every rewording without detecting a
-broken path. Rewording prompts, messages, or documents needs no new test.
+Derive assertions from requested outcomes and existing consumer contracts. Before changing shared
+behavior, select its retained-consumer assertions and author missing ones in existing tests. Use
+them to guide the coherent owner/interface change, then validate it with new-behavior checks before
+dependent work. Batch coupled behavior, not gates per function or command. New behavior needs no
+ceremonial failing run; run unchanged behavior first only to resolve an uncertain expected outcome.
 
-A useful test fails when its intended behavior breaks. Avoid tautologies, incidental string checks,
-and synthetic inputs that bypass the changed producer/consumer.
+## Coverage
 
-Derive checks from requested outcomes and existing consumer contracts, not implementation branches.
-Cover equivalent supported input forms and interacting states at changed boundaries; isolated
-cases do not establish their combined behavior. For mutations, check invalid-input, stale-state,
-and ownership cases. Rejection must preserve prior state; success must work through the normal
-consumer. Pair new input restrictions with checks that neighboring supported inputs still work.
+Drive the changed producer through its normal consumer. Reuse existing coverage and fixtures;
+add distinct checks for affected supported forms and interacting states, including equivalent
+representations at changed parsing/routing boundaries. Retained behavior keeps its supported fixture
+state. Interfaces that must agree use that same state; assertions follow their contract rather than
+configuration adjusted to accommodate implementation.
 
-- Keep test-only helpers/seams in tests, not production.
-- Give fixture subprocesses test-owned configuration. Git fixtures disable inherited global/system
-  configuration before their first command, retaining fixture-local settings for behavior under test.
-- Do not introduce surfaces the user did not request merely to support tests.
-- When tests slow delivery, reduce their cost without weakening distinct coverage.
-- Expected values, including snapshots and golden files, record intended behavior, not current
-  output. When one differs, decide from the request and the owning design which side is wrong
-  before changing either. Update it only for a change the task intends, after judging the new
-  output as its user would see it; a difference outside the intended change is a regression to
-  fix, not a baseline to refresh. Report each updated expected value with its reason.
+For mutations, cover invalid input, stale state, ownership, and neighboring supported inputs:
+rejection preserves state and success works through the consumer. A defect fix covers its trigger
+and affected contracts, not every surrounding state. Avoid tautologies, copied-message assertions,
+and synthetic inputs bypassing the changed path.
 
-Measure explicit size, latency, and resource targets through the consuming path; report actual
-values and any unmeasured target. Test-heavy changes (more than 50 net test lines and more than
-production code, unless tests are the requested outcome) prompt necessity assessment during
-implementation. Simplify redundant or brittle tests while retaining distinct required coverage.
+Keep test helpers and configuration in tests. Git fixtures disable inherited global/system settings
+before their first command, retaining fixture-local settings under test. Add no production surface
+just for tests. Expected values record intended behavior; resolve differences against the owning
+contract before updating snapshots/goldens, and report each update's reason.
 
-## When to run
+Validate visual appearance through rendering and text delivery through its consuming interface.
+Only added/moved delivery paths need new text checks, referencing their owner; rewording alone does
+not. Measure explicit size, latency, and resource targets through the consumer and report actual
+values and unmeasured targets.
 
-Run checks against coherent changes, ordered by the work their results can invalidate:
+## Execution and evidence
 
-- Before a change, reproduce a reported failure only when needed to find its cause.
-- Phase 1: implement the consuming path and its focused acceptance or regression checks together.
-  Include the defect trigger and corrected assertion, and boundary checks whose failure could
-  invalidate the approach or reveal broken retained behavior. Run affected existing consumer checks
-  with them. Use cheaper compilation or type checks earlier when useful.
-- Phase 2: complete additional distinct supported-form/state coverage and broader regression checks
-  once the covered code is stable. Run checks that could invalidate a review or handoff before it;
-  overlap independent read-only review and checks of the same snapshot.
-- After a failure, rerun the failing checks. Repeat passing checks only when their covered code
-  changes; reuse still-current results through delivery.
+Choose the least costly checks supplying distinct required coverage, including the project's
+regression suite. Use source inspection for invariants it establishes and bounded execution for
+uncertain reach or behavior. Resolve compilation failures before expensive checks. Use race, stress,
+or specialized checks when changed behavior or the project contract warrants them.
 
-## Regression evidence
+Run broader checks when covered code is stable. After failure, rerun failed checks and passing checks
+whose behavior changed; unchanged results remain evidence through delivery. Finish known corrections
+before final broad checks. Reduce redundant or brittle tests without weakening distinct coverage.
 
-A defect fix covers the reported failure and the retained contracts the fix affects, not a matrix
-of every state the surrounding code handles.
-
-Establish a regression test's fault sensitivity by inspection: it drives the defect's trigger
-through the changed path and asserts the corrected outcome. Run it against old code only when
-inspection cannot show that, such as timing- or environment-dependent reach, or when the user asks.
-Use the project's existing old-code check, leaving the live worktree/index untouched; without one,
-report the inspection argument rather than build a mechanism. One failure on the intended assertion
-settles it; setup, compilation, timeout, or unrelated failures prove nothing. Later edits that keep
-the trigger and assertion do not reopen it.
-
-New APIs, new behavior, and behavior-preserving refactors need consuming acceptance, not old-code
-failure.
+Establish regression sensitivity by inspecting the trigger, changed path, and assertion. Run against
+old code only when inspection cannot establish reach, such as timing/environment-dependent defects,
+or when requested. Use an existing old-code check without changing the live worktree/index; absent
+one, report the inspection argument rather than build a mechanism. One intended-assertion failure
+settles it; setup, compilation, timeout, or unrelated failures do not. Edits retaining that trigger
+and assertion do not reopen the evidence. New behavior and preserving refactors need acceptance,
+not old-code failure.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.31
+
+Exclude the private intent-resolution skill from public registry entries as well as skill bodies.
+
 ## 1.3.30
 
 Remove the retired skeleton, final-review, and JavaScript/TypeScript practice skills

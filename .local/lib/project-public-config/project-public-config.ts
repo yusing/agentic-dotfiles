@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.30";
+export const VERSION = "1.3.31";
 
 type TreeEntry = {
 	mode: string;
@@ -743,7 +743,7 @@ function transformText(path: string, text: string, privateHomes: string[]): stri
 		if (registry.skills !== undefined) {
 			const skills = objectValue(registry.skills, `${path} skills`);
 			registry.skills = Object.fromEntries(
-				Object.entries(skills).filter(([name]) => name !== "plane" && name !== "plane-body-editing"),
+				Object.entries(skills).filter(([name]) => !["plane", "plane-body-editing", "i-want"].includes(name)),
 			);
 		}
 		projected = encodeJson(registry);

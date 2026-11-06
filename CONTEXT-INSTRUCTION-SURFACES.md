@@ -23,7 +23,7 @@ assuming the main agent's system prompt also reaches its subagents. A change to 
 | Codex base override | Selected by `.codex/config.toml`; replacement and priority are defined in `CONTEXT-CODEX-LIFECYCLE.md`. Claude does not consume it. |
 | Client standing guidance | The harness loads `.codex/AGENTS.md` or `.claude/CLAUDE.md` for main and custom subagents, independently of conversation-history inheritance. Claude's documented built-in Explore/Plan exception is described in its standing guidance. |
 | Repository guidance | Root `AGENTS.md` and its `CLAUDE.md` symlink route home-configuration maintenance, not independent projects below home. Discovery scope depends on the client; see `CONTEXT-CODEX-LIFECYCLE.md` and Claude's instruction-authoring guidance. Claude would load both files as ancestors in every project below home, and a `CLAUDE.md` above a project suppresses that project's `AGENTS.md`, so `claudeMdExcludes` in `.claude/settings.json` skips them and `.claude/CLAUDE.md` tells home-directory sessions to read `AGENTS.md` on demand. |
-| Task documents | Main reads `MAIN.md`; subagents read `SUBAGENT.md`. Any agent, including a subagent coordinating children, reads `DELEGATION.md` before delegation or coordination; Claude reads its adapted copy. Mekugi agents of either provider read `.codex/MODEL-ROUTING.md`; Claude Code native dispatch reads `.claude/instructions/MODEL-ROUTING.md`. Any applicable role reads `DOCS.md`, `IMPLEMENTATION.md`, or `TESTING.md` when its operation triggers them. `FINISHING.md` supplies deferred practices for implementation delivery/handback and applicable standards for code or operational quality review. Documentation-only reviewers use their document guidance. Main applies its delivery and review orchestration section; delegates apply that section only when assigned review dispatch. Other document triggers remain in the client standing file. |
+| Task documents | Main reads `MAIN.md`; subagents read `SUBAGENT.md`. Any agent, including a subagent coordinating children, reads `DELEGATION.md` before delegation or coordination; Claude reads its adapted copy. Mekugi agents of either provider read `.codex/MODEL-ROUTING.md`; Claude Code native dispatch reads `.claude/instructions/MODEL-ROUTING.md`. Any applicable role reads `DOCS.md`, `IMPLEMENTATION.md`, or `TESTING.md` when its operation triggers them. `FINISHING.md` supplies question-specific review orchestration for main or an assigned coordinator. Catalog descriptions own skill applicability; construction and completion reuse their existing evidence without a separate finishing load. Native roles own review methods; documentation-only reviewers use their document guidance. Other document triggers remain in the client standing file. |
 | Native roles and skills | Role configuration supplies the selected role; skill metadata selects an on-demand body. Neither a catalog entry nor a parent's tool read establishes that a child has the body. |
 
 Instruction-authoring guidance owns changes to these layers. The maps describe maintained owners,
@@ -50,8 +50,7 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `.codex/SKILL-AUTHORING.md`
 - `.codex/overridden_base_instructions.md`
 - `.skills-mgr/.skills-mgr.json` (managed skill registry)
-- `.skills-mgr/skills/handoff/SKILL.md`
-- `.skills-mgr/skills/handoff/STANDARD.md`
+- `.skills-mgr/skills/*/SKILL.md` and their resource files
 - `.codex/agents/*.toml`
 - `.grok/AGENTS.md` (standalone Grok additions)
 - `.grok/rules/AGENTS.md` (symlink to `.codex/AGENTS.md`)
@@ -69,12 +68,9 @@ Do not edit the fetched cache or generated placeholders. Verify the layered body
 Uninstall a remote skill with the selection interface's `u` action (`skills-mgr -g` for a global
 entry). It removes the registry entry, remote patch, cached record and override, and placeholders;
 removing only the registry entry leaves the cached skill discoverable through get.
-For example, `golang-best-practices` is owned by
-`.skills-mgr/skills/golang-best-practices/SKILL.md`; its `lang go` activation can make
-`skills-mgr get` report it disabled from this home-directory repository. Skill authoring
-can read that owning file directly without searching other skill stores. `.codex/config.toml`
-also owns runtime compaction-prompt selection; the file-handoff route alone does not establish
-that the runtime selects the managed handoff standard.
+Registry metadata identifies each maintained body and its activation. Skill authoring can read that
+owner directly without searching other stores. `.codex/config.toml` owns runtime compaction-prompt
+selection; an available resource alone does not establish that the runtime selects it.
 
 
 ## Generated and imported surfaces
@@ -87,11 +83,5 @@ that the runtime selects the managed handoff standard.
   port map and drift check.
 - `.codex/skills/.system/` is imported Codex system content, excluded from the repository.
   Keep local overrides at their managed owner; imported files remain upstream-owned.
-- Context7's maintained skill is `.skills-mgr/skills/context7-docs/SKILL.md`. The distinct name keeps
-  it visible in skills-mgr's inventory despite the installed native plugin skill. The bundled skill
-  under `.codex/plugins/cache/context7-marketplace/context7/<version>/skills/context7-mcp/SKILL.md`
-  is disabled by path in `.codex/config.toml`; the plugin remains enabled for its MCP tools.
-  Keep that selector aligned with the installed plugin version. Plugin cache files remain imported
-  consumers, not maintained prompt owners.
 - Hook-delivered instructions are mapped in `CONTEXT-HOOK-ARCHITECTURE.md` and
   `CONTEXT-HOOK-OWNERS.md`; this static index does not establish hook coverage.
