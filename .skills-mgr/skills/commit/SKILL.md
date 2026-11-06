@@ -142,10 +142,11 @@ user's request, is a correction to it.
    body). Add `--allow-empty` for a message-only correction.
 4. Before recording or finalizing commit SHAs, handing off, or declaring completion, fold all
    pending `fixup!`/`amend!` commits in the authorized scope into their unpublished targets:
-   `git rebase --autosquash --autostash <base>`. Choose a base before both markers and targets,
-   preserve unrelated work, and verify that the resulting tree is unchanged and no markers
-   remain in scope. Record the resulting SHAs. If a target is published or someone else builds
-   on it, obtain history-rewrite authorization before folding it. Force-pushing the result needs
+   `git rebase --autosquash --autostash <base>`. Choose a base before both markers and targets
+   and preserve unrelated work. A rebase that completes without conflicts has folded them;
+   inspect further only when it stops or reports conflicts. Record the resulting SHAs. If a target
+   is published or someone else builds on it, obtain history-rewrite authorization before folding
+   it. Force-pushing the result needs
    `--force-with-lease` and authorization to rewrite the remote branch.
 
 Make a regular commit (usually `fix`) instead when the target is published, or when the change
