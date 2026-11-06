@@ -107,7 +107,7 @@ only dependent work; reuse substitution/install approval or ask. Missing automat
 not block routine work.
 
 Honor explicit dependency versions; otherwise verify the latest compatible stable release from
-registry/package-manager metadata. Apply `rtk` to noisy producers.
+registry/package-manager metadata. `rtk` is installed; apply it to noisy producers.
 Use raw execution for exact output, file redirection, or changed argument semantics. For binary,
 minified, or generated data, extract exact fields/bounded bytes and reuse unchanged scans.
 
