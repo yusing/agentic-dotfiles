@@ -96,9 +96,10 @@ bash setup.sh --upgrade
 
 ### Tool sources
 
-Both platforms use Homebrew for compatible native tools, including Go, Bun,
-Node.js, Fish, LLVM, SwiftLint, Python, and rustup. Formulae follow Brew's stable
-channel. Brew uses available prebuilt bottles; mcdu uses its upstream tap's
+Arch uses pacman for declared native packages, including Go, Bun, Node.js,
+Fish, LLVM/Clang, Python, and rustup. Homebrew remains the fallback for tools
+without a declared Arch package. Other platforms retain their Homebrew sources.
+Formulae follow Brew's stable channel. Brew uses available prebuilt bottles; mcdu uses its upstream tap's
 checksummed prebuilt archives.
 
 npm packages retain their npm source through Mise, including agent-browser and
@@ -107,18 +108,21 @@ without a compatible current Brew source, including gh-dash and go-swagger,
 plus pinned scriptc 0.4.5 and Lightpanda 1.0.0. The shells select Chrome as
 agent-browser's default engine.
 
-Brew supplies rustup. Manage Rust toolchains and targets separately with rustup.
+Pacman supplies rustup on Arch; Brew supplies it on other platforms. Manage Rust toolchains and targets separately with rustup.
 
-Linux uses GNU netcat and Brew Chromium/WebKitGTK 4.1 libraries. WebKitGTK 6 and
+Arch uses OpenBSD netcat and system Chromium/WebKitGTK 4.1 libraries.
+Other Linux distributions retain GNU netcat and Brew browser libraries. WebKitGTK 6 and
 Bazelisk are excluded. macOS uses its system netcat and WebKit framework.
-PostgreSQL 18 has a separate Brew data directory; setup leaves its server stopped
-and does not migrate or delete existing databases. Mosh and the agent clients
+Arch uses the distribution PostgreSQL package; other platforms use PostgreSQL 18
+with a separate Brew data directory. Setup does not migrate or delete existing
+databases. Switching package sources requires a separate database migration. Mosh and the agent clients
 use their declared vendor installers.
 
 ### Native installation
 
-Homebrew supplies compatible native tools on both platforms. Linux needs a
-supported host package manager for bootstrap prerequisites; macOS needs Xcode
+Arch prefers explicitly mapped pacman packages, using Homebrew for remaining
+tools. Other Linux distributions use Homebrew plus host bootstrap prerequisites;
+macOS needs Xcode
 Command Line Tools. Setup configures the host Fish shell and compiles managed
 helpers. Open a new terminal after installation.
 

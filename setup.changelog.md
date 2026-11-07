@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.10.9
+
+Prefer declared pacman packages on Arch over Homebrew fallbacks, including
+Python, LLVM/Clang, WebKitGTK and native CLI tools. Verify pacman ownership
+instead of accepting a Brew executable. Prune inactive mise-owned native
+command shims after tool reconciliation when a system replacement exists.
+
 ## 2.10.8
 
 Align shell smoke checks and browser-engine guidance with the configured Chrome

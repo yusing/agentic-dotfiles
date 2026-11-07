@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.8
+# version: 2.10.9
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -338,6 +338,13 @@ have_logical() {
   setup_config native-enabled "$name" || return 1
   prefix="$(setup_config native-prefix "$name")" || return 1
   manager="$(setup_config native-manager "$name")" || return 1
+  if [ "$manager" = pacman ]; then
+    while IFS= read -r pkg; do
+      [ -n "$pkg" ] || continue
+      pacman -Q "$pkg" >/dev/null 2>&1 && return 0
+    done < <(mapped_pkgs "$name")
+    return 1
+  fi
   if [ "$manager" = brew ] && [ -n "$prefix" ]; then
     prefix="$(brew --prefix "$prefix" 2>/dev/null || true)"
     cmd="$(pkg_cmd "$name")"
@@ -663,8 +670,11 @@ try:
             pass
         elif query_action.startswith("native-"):
             native = native_map()
+            def manager(entry):
+                # Arch packages take precedence over the cross-platform Brew fallback.
+                return "pacman" if pm == "pacman" and entry["packages"].get("pacman") else entry.get("manager", pm)
             def selected(entry):
-                return entry["packages"].get(entry.get("manager", pm), []) if platform in entry.get("os", ["linux", "macos"]) else []
+                return entry["packages"].get(manager(entry), []) if platform in entry.get("os", ["linux", "macos"]) else []
             if query_action in ("native-required", "native-optional"):
                 output = [key for key, entry in native.items()
                           if selected(entry) and entry.get("optional", False) == (query_action == "native-optional")]
@@ -675,7 +685,7 @@ try:
                 if query_action == "native-packages":
                     output = selected(entry)
                 elif query_action == "native-manager":
-                    output = [entry.get("manager", pm)]
+                    output = [manager(entry)]
                 elif query_action == "native-command":
                     output = entry.get("commands", [])[:1]
                 elif query_action == "native-commands":
@@ -1151,6 +1161,25 @@ mise_cmd() {
   "$MISE_BIN" "$@"
 }
 
+prune_inactive_native_shims() {
+  [ "$PM" = pacman ] || return 0
+  local name cmd shim
+  while IFS= read -r name; do
+    [ "$(setup_config native-manager "$name")" = pacman ] || continue
+    have_logical "$name" || continue
+    while IFS= read -r cmd; do
+      [ -n "$cmd" ] || continue
+      shim="$MISE_SHIMS/$cmd"
+      [ -L "$shim" ] && [ "$(readlink "$shim")" = "$MISE_BIN" ] || continue
+      [ -x "/usr/bin/$cmd" ] || continue
+      mise_cmd which "$cmd" >/dev/null 2>&1 && continue
+      info "removing inactive mise shim for system $cmd"
+      rm -- "$shim"
+      hash -r
+    done < <(setup_config native-commands "$name")
+  done < <(setup_config native-required; setup_config native-optional)
+}
+
 install_mise() {
   local installed=0 staged
   mkdir -p "$LOCAL_BIN"
@@ -1255,6 +1284,7 @@ for tool, versions in json.load(sys.stdin).items():
     [ -x "$MISE_SHIMS/$cmd" ] || changed=1
   done < <(mise_tool_records)
   [ "$changed" -eq 0 ] || mise_cmd reshim
+  prune_inactive_native_shims
 }
 
 validate_mise_lock() {
@@ -1728,6 +1758,7 @@ install_named_mise_tools() {
     fi
   done < <(mise_tool_records)
   mise_cmd reshim
+  prune_inactive_native_shims
 }
 
 # Named upgrades assume a completed setup and touch only the mise lock and installs.
