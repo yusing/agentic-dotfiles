@@ -1,5 +1,5 @@
-# skills-mgr-base-sha256 9aa50bd44076db28624ea976056d915905ab9357748f90263a004fa0ef087147
-# skills-mgr-result-sha256 a9d57cc6e5f8db4bb9220475133546616be51509b49d92e07d50759d4a624789
+# skills-mgr-base-sha256 14f43337edfbf7822e091428e4ae0c6f92f86e3353deda6a30f6613121e2cf2d
+# skills-mgr-result-sha256 1b7f1fc4ce337e6d9be8f812257007dbb57d511dd2fdc927b532c8163f84807d
 --- a/SKILL.md
 +++ b/SKILL.md
 @@ -15,7 +15,7 @@
@@ -15,8 +15,8 @@
  | 9 | Navigation Patterns | HIGH | `ux` | Predictable back, Bottom nav ≤5, Deep linking | Overloaded nav, Broken back behavior, No deep links |
  | 10 | Charts & Data | LOW | `chart` | Legends, Tooltips, Accessible colors | Relying on color alone to convey meaning |
  
--For the full rule list per category (all 119 UX guidelines with rationale), read `references/quick-reference.md`. For app-specific polish rules (icons, touch feedback, dark mode contrast, safe areas) and the canonical pre-delivery checklist, read `references/pro-rules.md`.
-+For the full rule list per category (all 119 UX guidelines with rationale), use `skills-mgr get ui-ux-pro-max/references/quick-reference.md`. For app-specific polish rules (icons, touch feedback, dark mode contrast, safe areas) and the canonical pre-delivery checklist, use `skills-mgr get ui-ux-pro-max/references/pro-rules.md`. Resolve skill-relative paths named inside references with `skills-mgr get ui-ux-pro-max/<path>`.
+-For the full rule list per category (all 120 UX guidelines with rationale), read `references/quick-reference.md`. For app-specific polish rules (icons, touch feedback, dark mode contrast, safe areas) and the canonical pre-delivery checklist, read `references/pro-rules.md`.
++For the full rule list per category (all 120 UX guidelines with rationale), use `skills-mgr get ui-ux-pro-max/references/quick-reference.md`. For app-specific polish rules (icons, touch feedback, dark mode contrast, safe areas) and the canonical pre-delivery checklist, use `skills-mgr get ui-ux-pro-max/references/pro-rules.md`. Resolve skill-relative paths named inside references with `skills-mgr get ui-ux-pro-max/<path>`.
  
  ---
  
