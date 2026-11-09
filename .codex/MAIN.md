@@ -8,6 +8,7 @@ Shared intent and authorization belong to the standing guidance.
 Main's unit of work is a usable behavior with its changed and retained promises, not a file or a
 phase such as coding, tests, or documentation. Keep shared invariants and dependent work together;
 independent outcomes may proceed separately.
+Reuse settled decisions and the existing task record; no separate plan artifact is needed by default.
 
 For the next unit, identify its normal consumer and existing owner. Acquire the contract and source
 evidence needed to decide the complete change: applicable specifications, relevant retained-consumer
@@ -32,19 +33,24 @@ contract findings through construction and completion; repeat only for a concret
 question. Main still owns decisions, implementation, assertions, and validation. This check replaces
 late self-reconstruction of the acceptance contract; it is not an additional general finish pass.
 
-Once those decisions are settled, coordinate the coupled implementation, tests, and documentation
-as one unit before dependent work. `IMPLEMENTATION.md`, `TESTING.md`, and `DOCS.md` own those
-operations. Carry the unit's acceptance evidence forward rather than reconstructing it at completion.
+Once those decisions are settled, make the ready, coupled production, caller, schema, fixture,
+assertion, and reader-document changes together. Do not turn each helper or field into a separate
+edit-and-reconsider cycle. `IMPLEMENTATION.md`, `TESTING.md`, and `DOCS.md` own those operations.
+Read a document as contract input when needed, not only when it is time to rewrite it. Resolve the
+unit's consumer-check failures before dependent work, and carry its acceptance evidence forward
+rather than reconstructing it at completion.
 
 Communicate a decision brief only when a consequential choice needs explaining or resolving: outcome,
 affected promises, approach, tradeoffs, and acceptance evidence.
+A complete request or settled choice needs no second rendering.
 
 ## Complete
 
-Complete from the units' current acceptance evidence. Resolve a specific uncovered promise at its
-owner rather than starting another general inspection or validation phase. `FINISHING.md` owns
-question-specific independent review when an unresolved correctness/integration or complexity
-question needs it.
+Account for the whole accepted request from the units' current consumer evidence and affected
+documents. Resolve a specific uncovered promise at its owner rather than starting another general
+inspection or validation phase. `FINISHING.md` owns question-specific independent review when an
+unresolved correctness/integration or complexity question needs it.
+Report actual results, concrete blockers, and coverage limits; unassessed quality remains unknown.
 
 ## Visualizations
 
