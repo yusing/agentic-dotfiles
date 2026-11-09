@@ -46,7 +46,7 @@ Every section addresses main except "Delegate brief", which you export once and 
 
 * Group tightly coupled items under one developer and run independent groups in parallel. Give each group high-level directions, the existing path to extend, acceptance checks, and a rough size. Name delegates `<category>-<topic>-<id>`, like `sql-syntax_error-456`.
 
-* Give each developer its own worktree per changed repository. Sequence conflicting work when isolation cannot resolve the dependency. Keep the owner for corrections to its group; use a fresh owner for a different task.
+* Give each developer its own worktree per changed repository. Sequence conflicting work when isolation cannot resolve the dependency. Spawn a fresh delegate for every new task; never reuse a delegate for a new task. Follow up with a completed agent only to correct its assigned work.
 
 * Preload the Delegate brief and exported evidence. Spawn messages identify those sources and give assignment-specific directions without repeating their contents.
 
