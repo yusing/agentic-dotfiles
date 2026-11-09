@@ -600,7 +600,7 @@ prefix_ram() {
 }
 
 usage() {
-	printf 'usage: %s application|codex|grok|claude|cpu|ram|net\n' "${0##*/}" >&2
+	printf 'usage: %s application|codex|grok|claude|cpu|ram|net|metrics\n' "${0##*/}" >&2
 	return 2
 }
 
@@ -626,6 +626,16 @@ ram)
 	;;
 net)
 	mod_net
+	;;
+metrics)
+	# Named rows retain empty samples without shifting the other values.
+	printf 'cpu\t'
+	prefix_cpu
+	printf '\nram\t'
+	prefix_ram
+	printf '\nnet\t'
+	mod_net
+	printf '\n'
 	;;
 '' | -h | --help)
 	usage
