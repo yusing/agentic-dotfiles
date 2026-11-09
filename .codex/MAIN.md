@@ -10,12 +10,13 @@ phase such as coding, tests, or documentation. Keep shared invariants and depend
 independent outcomes may proceed separately.
 Reuse settled decisions and the existing task record; no separate plan artifact is needed by default.
 
-For the next unit, identify its normal consumer and existing owner. Acquire the contract and source
-evidence needed to decide the complete change: applicable specifications, relevant retained-consumer
-assertions, and the producing path. Follow references for affected shared interfaces. Expand inspection
-when an unresolved dependency, compatibility promise, or concrete failure needs it, rather than
-inventorying a subsystem in anticipation of unspecified later work. Resolve feasibility before
-building supporting machinery. A source location or outline is not evidence of its behavior.
+For the next unit, identify its normal consumer, existing owner, and next unresolved decision.
+Acquire the contract and behavior-bearing source ranges needed to decide the complete change:
+applicable specifications, relevant retained-consumer assertions, and the producing path. Use
+outlines to locate those bodies, not as evidence of their behavior. Carry read ranges forward;
+on return to an owner, acquire only missing or changed evidence. Follow references for affected
+shared interfaces. Expand for an unresolved dependency, compatibility promise, or concrete failure,
+not an anticipatory subsystem inventory. Resolve feasibility before building supporting machinery.
 
 For a multi-part implementation whose public entry points must agree or whose mutations must retain
 existing state, obtain one independent contract check before the first shared-owner change. Main
