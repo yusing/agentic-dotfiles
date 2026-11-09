@@ -1,7 +1,6 @@
 # GitHub
 
-Read when preparing GitHub text or publishing and merging pull requests. Follow the commit skill
-for commit shaping, push targets, and history-rewrite authorization.
+Read when preparing GitHub text or publishing and merging pull requests.
 
 ## Pull request publication
 

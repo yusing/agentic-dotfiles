@@ -6,9 +6,11 @@ Use the accepted contract to resolve code/test conflicts; consult history only w
 
 Extend the owner already delivering the nearest behavior. Change or remove behavior where it is
 produced and update its consumers; downstream rewriting or a replacement layer leaves the defect at
-its source. Adapt existing resolvers and transactions through narrow entry points rather than
-copying their decisions or publication steps. Share definitions across production, display, and
-replay; separate operations may share definitions without sharing side effects.
+its source. At a shared boundary, distinguish changed consumers from those retaining existing
+semantics; preserve the shared default when only a subset changes. Adapt existing resolvers and
+transactions through narrow entry points rather than copying their decisions or publication steps.
+Share definitions across production, display, and replay; separate operations may share definitions
+without sharing side effects.
 
 Route and validate by domain meaning. Decode each representation at its owner, preserving distinctions
 needed for identity, trust, and ownership; pass typed results inward rather than reinterpret transformed

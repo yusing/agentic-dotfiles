@@ -81,6 +81,7 @@ Complete text already supplied satisfies the read; a path or summary does not.
 - `INSTRUCTION-AUTHORING.md`: authoring or auditing instructions, prompts, and their consumers.
 - `SKILL-AUTHORING.md`: additionally, when authoring or auditing skills.
 - `MAIN.md`: main-agent planning and delivery of changes.
+  Main delegates the independent contract checks specified there to a read-only reviewer.
 - `DELEGATION.md`: any agent, including subagents, before delegating or coordinating other agents.
   - In Mekugi, read `~/.codex/MODEL-ROUTING.md` before delegation. Claude and Codex use the same
     routing, including Codex delegates.
