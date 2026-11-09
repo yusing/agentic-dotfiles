@@ -34,81 +34,61 @@ fullscreen_transcript = true
 input = """
 $i-want you to resolve the listed items through delegates, using $commit for all commits.
 
-Every section is addressed to you as main, except "Delegate brief", which you supply verbatim to each implementation delegate through preload.
+Main acts as PM and QA; delegates are developers. No review delegates or separate review-only stage.
+
+Every section addresses main except "Delegate brief", which you export once and preload verbatim for each developer.
 
 ## Planning and dispatch
 
-* Fetch each item's $plane body, comments, and labels yourself. Understand its intent, scope, dependencies, and likely edit overlap well enough to judge grouping, model choice, and task directions, and to evaluate the work delegates return. Export the fetched content for each delegate and supply it through preload so it does not fetch it again.
+* Fetch each item's $plane body, comments, labels, and relevant attachments. Understand the outcome, acceptance, dependencies, and edit overlap. Export the original requirement text verbatim and preload relevant evidence for each developer so it does not fetch it again. Retain these sources for your own QA.
 
-* Settle what the item, its comments, linked items, and session history can answer. When an item's scope, intent, expected behavior, or acceptance is still unclear, ask me once before dispatch, with all remaining questions for every item. Do not widen an item's scope on your own; bring proposed expansions to me.
+* Settle what available evidence and authorized engineering judgment can answer. Ask me together for remaining user decisions before dispatching affected work; independent settled groups can proceed. Bring proposed scope expansions to me.
 
-* Preserve each item's requirement text verbatim in the preloaded export. Export the Delegate brief once and preload it for each implementation delegate. In spawn messages, identify the preloaded sources and provide assignment-specific directions without repeating their contents.
+* Group tightly coupled items under one developer and run independent groups in parallel. Give each group high-level directions, the existing path to extend, acceptance checks, and a rough size. Name delegates `<category>-<topic>-<id>`, like `sql-syntax_error-456`.
 
-* Speed up delivery:
+* Give each developer its own worktree per changed repository. Sequence conflicting work when isolation cannot resolve the dependency. Keep the owner for corrections to its group; use a fresh owner for a different task.
 
-  * Run independent groups in parallel.
+* Preload the Delegate brief and exported evidence. Spawn messages identify those sources and give assignment-specific directions without repeating their contents.
 
-  * Group tightly coupled items under one delegate; split them when scope allows.
-
-  * Keep each delegate's scope small enough that parallel work pays off.
-
-* Choose a shared workspace or separate worktrees based on concurrent-edit risk. Sequence conflicting work when isolation alone cannot resolve the dependency.
-
-  * Each delegate works only in its own worktree; for a different task, spawn another delegate rather than giving one a second worktree.
-
-* Before relaying a delegate's request to narrow or change scope, check its evidence, and include that evidence when you ask me.
+* Check the evidence behind a delegate's proposed scope change before relaying it to me, and include that evidence in the question.
 
 ## Delegate brief
 
-The user explicitly requires the following of you, the delegate owning the items above.
+The user explicitly requires the following of you, the developer owning the assigned items.
 
-* Own your items through implementation, tests, validation, proof of work (why the change works, how it works, and whether it works the way the user requested), review, fixes, and commits with $commit.
+* Own implementation, tests, validation, self-checks, fixes, and commits with $commit. Main owns acceptance and integration QA; return work directly to main without spawning reviewers.
 
-* When a review is needed, spawn nested reviewer delegates by reviewer role for one review pass under FINISHING.md, and fix its findings.
+* Demonstrate how the change meets the original requirements and corrections through affected consumers. For visual changes, supply the rendered result for comparison with the reported state; passing snapshots alone are not proof.
 
-* Own intermediate Plane status changes and activity updates. Leave final statuses (Pending QA, Done) to main.
+* If work materially outgrows the estimate, reconsider the approach and report the reason and revised size rather than silently expanding it.
 
-* Record (which ever is applicable) in comments: what was trying to solve, what design choices was made, what was the approach, how was the problem solved.
+* Own intermediate Plane statuses and activity updates, recording the problem, chosen approach, reasons, and result concisely. Correct titles/bodies only from confirmed evidence and assign correct labels. Leave final statuses (Pending QA, Done) to main.
 
-* Correct a Plane title or body only from confirmed evidence, and assign correct labels.
+* Hand off briefly with commit SHAs, explicit mchanges IDs/ranges, requirement-to-evidence pointers, checks run, coverage limits, blockers, and integration notes. After follow-ups, return the complete current handoff, not a reference to an earlier one.
 
-* Hand off committed work briefly with commit SHAs, validation results, review outcomes, unresolved blockers, and integration notes. If you are resumed after handing off, end with the complete handoff again, not a reference to the earlier one.
+## Main acceptance and integration
 
-## Main-thread ownership
+* As each group returns, inspect its actual changes and affected consumers against the original requirements, corrections, and attachments. Verify that its evidence exercises the reported problem. A handoff or passing test count is not acceptance evidence by itself.
 
-* Settle and hand over high-level implementation directions, including the existing path each change extends and an estimated size. A delegate whose diff outgrows the estimate re-chooses the approach and reports it.
+* Check requirement fit, conflicting behavior, duplicated mechanisms, unnecessary complexity, and rendered UI/snapshot regressions. Check cross-group interactions as changes land, including semantic conflicts that merge cleanly. This is your QA responsibility.
 
-* Coordinate delegates and integrate their completed work. Wait for results with wait_agent.
+* Reuse sound developer validation; run focused checks to close evidence gaps or exercise integration. Integrate accepted groups as they become ready. Consolidate actionable findings for the owner rather than sending piecemeal review rounds.
 
-* Name delegates in `<category>-<topic>-<id>` format, like `sql-syntax_error-456`.
+* Handle small integration fixes, history rewrites, commit wording, few-line corrections, documentation, and owner pointers yourself. Defer edits to files or interfaces a running delegate depends on until its work is integrated.
 
-* Handle small work yourself, even when a delegate owns the affected code: integration fixes, history rewrites, rewording a commit, few-line corrections, documentation lines, or owner pointers.
+* Return substantial rework to its owner. If unavailable, start a fresh owner for the same items with its last handoff and your findings. After fixes, revisit changed or unverified behavior, not completed QA of unchanged work.
 
-* Return substantial rework and review needs to the owning delegate. If that delegate can no longer take follow-ups, start a fresh delegate for the same items with its last handoff, instead of routing the fix through another owner.
+* Once related groups are integrated, run the full suite on their integrated tree. Reuse completed acceptance and cross-group QA, without a separate final review stage. After corrections, rerun failed and affected checks, retaining unchanged results.
 
-* Spawn no reviewers, except one final integration review after all groups are integrated. Delegates own all other reviewer dispatch and review-fix loops. Integration reviewer review for:
+* Independent repositories or follow-ups must not hold a ready batch's delivery. Changes affecting its shared contracts need scoped integration checks. Set each item's final Plane status, Pending QA or Done, after its affected integrated tree passes the suite and your findings are resolved; report remaining coverage limits.
 
-  * behavior conflicts (commits implemented the opposite/conflicting mechanisms without code conflicts)
+* Wait with wait_agent when no independent work remains. Make no Plane activity updates yourself.
 
-  * duplicated logic (commits implemented the same mechanism with different approaches without code conflicts)
+* After final statuses are set, remove task-created worktrees and branches whose patches are integrated, checking with git cherry. Preserve uncommitted or unintegrated work and report it.
 
-  * any code or approach simplification opportunities
+## Follow-ups and discovered issues
 
-  * changed UI snapshots whose rendering looks wrong to a user, even when consistent with the code
-
-* After all groups are integrated, run the full test suite on the integrated tree, meanwhile run the final integration review yourself or through a reviewer delegate. Return its findings to the owning delegates.
-
-* Set each item's final Plane status, Pending QA or Done, only after the integrated tree passes the full suite and the final review's findings are resolved.
-
-* Make no activity update.
-
-* After final statuses are set, remove task-created worktrees and branches whose commits are on the integrated branch (check with git cherry). Preserve uncommitted or unintegrated work and report it.
-
-## User followups and issues found along the work
-
-* Follows `# Planning and dispatch`
-
-* User/Agent may report a newly found issue. When no item ID is provided, create an item after confirming the issue and its cause, then resolve it.
+* Apply Planning and dispatch without restarting unaffected work or completed QA. For a newly reported issue without an item ID, confirm the issue and cause, create an item, then resolve it within the accepted scope.
 
 ## Tasks
 
