@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.19";
+const VERSION = "1.0.20";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -265,7 +265,6 @@ function main(): void {
     ["claude-config-helper", "claude-config-helper"],
     ["patch-bitwarden-cli-fast-exit", "patch-bitwarden-cli-fast-exit"],
     ["svn-merge", "svn-merge"],
-    ["open-file-in-herdr", "open-file-in-herdr"],
     ["deltapath-wifi-routes", "deltapath-wifi-routes"],
     ["update-oh-my-posh-theme", "update-oh-my-posh-theme"],
     ["skills-maintenance", "skills-maintenance"],

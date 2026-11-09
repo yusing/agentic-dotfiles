@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.20
+
+Remove the retired Open File in Herdr helper from the build list.
+
 ## 1.0.19
 
 Stop building the retired generated-file edit guard and remove it from the Grok
