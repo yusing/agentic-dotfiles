@@ -17,7 +17,8 @@ the native catalog's routing guidance.
 - Tests: the agent implementing a change updates the tests and fixtures it affects; do not assign
   tests to a separate delegate.
 
-Preload only sources needed to start the assigned phase; load later-phase guidance at its transition.
+Preload known, complete applicable instructions, skills, and owner evidence needed to start the
+assigned phase; load later-phase sources at their transition.
 Start with a complete brief rather than an immediate follow-up. Give each agent, as applicable,
 the settled outcome, chosen approach, owned files, inputs, task-specific constraints, and useful
 checks. Constraints are those the user stated or the approach requires; listing properties the
@@ -32,8 +33,8 @@ Native roles own workflows; `MODEL-ROUTING.md` owns model and effort, which the 
 role.
 The harness supplies shared instructions and discovers project guidance for the recipient.
 Keep shared, project, role, and skill policy at its owner rather than
-copying or paraphrasing it into task briefs. When an assignment needs a skill method the recipient
-does not have, name the applicable skill or reference for it to load. Preserve task-specific scope,
+copying or paraphrasing it into task briefs. When a needed skill cannot be preloaded, name the
+applicable skill or reference for the recipient to load. Preserve task-specific scope,
 user requirements, and constraints in the brief; these are assignment context, not policy recaps.
 
 ## Coordination
@@ -42,6 +43,10 @@ Keep edits off files/interfaces a running delegate depends on.
 
 Continue a subagent while its scope and retained context stay useful. Start a fresh one before
 compaction would erase its focus, and for independent judgment or a different assignment.
+Before a same-task follow-up carrying substantial obsolete context, use current context/window
+evidence to choose fresh context or ask the agent to compact at a safe checkpoint. Reuse available
+metrics; inspect only missing or stale facts. Preserve the correction evidence and applicable
+guidance in the selected sources.
 
 Messages cost turns: forward only actionable user-message context relevant to the recipient, and
 skip redundant follow-ups.

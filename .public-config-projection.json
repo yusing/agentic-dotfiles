@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "570f27ef36fb6d559285655c50c9589e2c5148cc",
+  "sourceCommit": "a20c90c5c3377eaab519da936f794215bc4888aa",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -185,7 +185,7 @@
     {
       "path": ".codex/DELEGATION.md",
       "kind": "file",
-      "sha256": "37c7b68c123543d3e628b902b742bcd347fab34e26150784067a83fc95dd5f07",
+      "sha256": "fe3cde868cbd7cf139994337457f376d926f0608e3daf138f1315dbf408507f0",
       "executable": false
     },
     {
