@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3f0d64476945f2c451728e1ce8a50383aef738e2",
+  "sourceCommit": "7d528aac608713dc9a73eaba495789858d73d3a8",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -23,25 +23,25 @@
     {
       "path": ".claude/agents/council-investigator.md",
       "kind": "file",
-      "sha256": "91d447da3ddc49b6b7e84b49d6c85d3385261072265c6837524100a30645fbe4",
+      "sha256": "8061d25d72159c2dec9fdde15fe0bd0373e633889ad69569b6370e5e165844a1",
       "executable": false
     },
     {
       "path": ".claude/agents/council-member.md",
       "kind": "file",
-      "sha256": "bdbf8d66c4c46dd9a3e69538b14de407888ba311acd27fb0ac93fc86f426dd9b",
+      "sha256": "9516048e7ec8b489f75519b633cc3aaf78cdef0f4313391bf4fb21cf462c6795",
       "executable": false
     },
     {
       "path": ".claude/agents/explorer.md",
       "kind": "file",
-      "sha256": "85bb13d82876710686ddf90e108612918a21009f137ed4263964a4afb520bf19",
+      "sha256": "f6912e4f19406e811acee49c1f18a46c53e26db3ce9460cd0dc1b6001809b855",
       "executable": false
     },
     {
       "path": ".claude/agents/investigator.md",
       "kind": "file",
-      "sha256": "19a329e90e988986dad61cb092005fb558ea1b441ae200e5ea8fe0e98c3340c8",
+      "sha256": "9a1c9714e88242e3d4916fa73d66c4ba0fd22662e59185c0eaa8bfb75a298663",
       "executable": false
     },
     {
@@ -137,31 +137,31 @@
     {
       "path": ".codex/agents/council-investigator.toml",
       "kind": "file",
-      "sha256": "300ed82ce5dd2e27b3687384e61d9fe88d04e6b7933f8765bc222c32d041bc96",
+      "sha256": "612bbb8ce8427f8e735288b17bde728b58e18b2b2c575e6fb28a88ed2a729da7",
       "executable": false
     },
     {
       "path": ".codex/agents/council-member.toml",
       "kind": "file",
-      "sha256": "42e7c85106f7105fe2160ccafe55c0074ce287048231f647fdc0d1b2f00ce117",
+      "sha256": "3d04b5c48083247465566e7fbae5671d2254ecefac3d085cac3d165c41c1df76",
       "executable": false
     },
     {
       "path": ".codex/agents/explorer.toml",
       "kind": "file",
-      "sha256": "862e9eb2c6493a033a48ee106c129f74990df9261a21050b0cd09372e27f223b",
+      "sha256": "d4a5ed8387fed8741a8878380e4a2260e59f9f394e10ab528e49da79e4f0abde",
       "executable": false
     },
     {
       "path": ".codex/agents/investigator.toml",
       "kind": "file",
-      "sha256": "0a82b956ecf9226530b9ae8d10ad10db1d03386f383f96355de3c16cbcba16ff",
+      "sha256": "2257ce47170509e9e726515fba72d122774d37d668b86bb312674dd6ef376aa0",
       "executable": false
     },
     {
       "path": ".codex/agents/review-correctness.toml",
       "kind": "file",
-      "sha256": "0ff2c2a05e730d50df6ba13e20417f0f108d871c37d3c0d03f2f0db80713e559",
+      "sha256": "e8078381c82c65688f7d5c3af4fdee4b50a1a8a106935831a6188dc690a740d6",
       "executable": false
     },
     {
@@ -479,13 +479,13 @@
     {
       "path": ".config/kilo/agent/council-investigator.md",
       "kind": "file",
-      "sha256": "fff5c677c635f099428ff90d785d1aac2d1cbb3459d59b830a311ebf8a7d6f28",
+      "sha256": "9d7bacb29b5239a42bc1db5dd6d05fa2dbe5d0b63a669879e9be441a96e910a4",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/council-member.md",
       "kind": "file",
-      "sha256": "8359df30703a85405cd43aab3f2373431e9d131418ef0af7f8eb34658055da6c",
+      "sha256": "900951a23a280113d8a71fefe7913b1ccadf9f0ae0362d27b015aea52fd23628",
       "executable": false
     },
     {
@@ -503,7 +503,7 @@
     {
       "path": ".config/kilo/agent/explorer.md",
       "kind": "file",
-      "sha256": "55d31455f7f6795143e9a0e1bc2c80c6ce1d2c4469a815e0d6f075ed4e0f4bbf",
+      "sha256": "7dcd799f5262e46b0ce369feb40e0af0491e10bb1df1d085dc4d615e7a7f0a18",
       "executable": false
     },
     {
@@ -515,7 +515,7 @@
     {
       "path": ".config/kilo/agent/investigator.md",
       "kind": "file",
-      "sha256": "410f97cdad7f15d8aff457c4810b33e31e7b5ebea5fe8b20afefec0ca0913a02",
+      "sha256": "9657d430865e08e57ec7aa8f3484de9b60eb8c1e084bb605e29e4e01189a305b",
       "executable": false
     },
     {

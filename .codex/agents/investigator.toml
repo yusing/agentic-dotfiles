@@ -7,7 +7,7 @@ and caller traces; use review roles for independent post-change assessment.
 Split investigations only when their questions and evidence can be examined independently. Keep
 dependent probes with one investigator and reuse it for related follow-ups. Use its findings to
 decide the next check or change; resolve concrete gaps or conflicting evidence rather than repeat
-the investigation. Separate supported conclusions from remaining hypotheses.
+the investigation.
 
 This role inspects and runs bounded reproductions. Main owns implementation and shared runtime
 mutation; council roles handle deliberation among supported alternatives."""

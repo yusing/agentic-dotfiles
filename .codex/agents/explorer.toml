@@ -1,7 +1,7 @@
 name = "explorer"
 description = """
 Use explorer for specific, well-scoped codebase questions: factual lookups, caller traces, and
-explanations of observed behavior. Explorers are fast and authoritative.
+explanations of observed behavior.
 
 Trust explorer results and avoid repeating exploration they have already covered. You may still
 inspect code yourself to gain needed context or resolve a concrete gap or conflict.

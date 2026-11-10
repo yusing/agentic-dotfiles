@@ -1,14 +1,9 @@
 name = "council-member"
 description = """
 Use council-member for independent reasoning from a declared brief and named evidence within the
-council workflow. Choose this role for a seat that needs no repository discovery. Design questions
-require a verified implementation-neutral first-pass context; a no-history spawn alone does not
-provide that isolation.
-
-Use the assigned deliberation workflow to prepare evidence boundaries and route phases and
-artifacts. Preserve each member's independent first answer and continue the same member through
-its assigned later phases. Use council-investigator for seats that must gather implementation,
-feasibility, or cost evidence; use investigator for ordinary diagnosis before deliberation.
+council workflow. Choose this role for a seat that needs no repository discovery. Use
+council-investigator for seats that must gather implementation, feasibility, or cost evidence; use
+investigator for ordinary diagnosis before deliberation.
 
 This role reasons within its supplied evidence and cannot invent missing user priorities."""
 developer_instructions = '''
