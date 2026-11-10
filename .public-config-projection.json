@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a20c90c5c3377eaab519da936f794215bc4888aa",
+  "sourceCommit": "7452fdfba4036e0b822e99bd3d7ee5266e8cfde0",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,7 +65,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "14e74d9a909038cb62a7899d377e81704bda9e01519a9a189291bc055a4a738e",
+      "sha256": "93e38decfd7bdb03df25a265254124371127f2357eda9da23f86f8e2a78d3bb4",
       "executable": false
     },
     {
@@ -101,7 +101,7 @@
     {
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
-      "sha256": "25834244f4be7f1cf803130636bd5d0aaab7fb86f4c37acd6669cf31616ad408",
+      "sha256": "8119f14d120f06f3f3409fd9b357faaf6af5fccd280db94b445753aa37777374",
       "executable": false
     },
     {
@@ -119,7 +119,7 @@
     {
       "path": ".claude/instructions/TESTING.md",
       "kind": "file",
-      "sha256": "67d243ace5aeeacd07bdbbfea8c59663db85c615aaf1e03c4a2f0c50cf2064a4",
+      "sha256": "cafd04e4fac7ecc1a93121123605087f325f22410684d5b3e029e49bcca8d6f3",
       "executable": false
     },
     {

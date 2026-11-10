@@ -32,13 +32,16 @@ values and unmeasured targets.
 ## Execution and evidence
 
 Choose the least costly checks supplying distinct required coverage, including the project's
-regression suite. Use source inspection for invariants it establishes and bounded execution for
-uncertain reach or behavior. Resolve compilation failures before expensive checks. Use race, stress,
-or specialized checks when changed behavior or the project contract warrants them.
+regression suite. A runner wrapper and its equivalent underlying command supply the same coverage;
+do not run both unless explicitly required or they exercise different behavior or environments.
+Use source inspection for invariants it establishes and bounded execution for uncertain reach or
+behavior. Resolve compilation failures before expensive checks. Use race, stress, or specialized
+checks when changed behavior or the project contract warrants them.
 
-Run broader checks when covered code is stable. After failure, rerun failed checks and passing checks
-whose behavior changed; unchanged results remain evidence through delivery. Finish known corrections
-before final broad checks. Reduce redundant or brittle tests without weakening distinct coverage.
+While known corrections or a pending review can still change covered code, run focused affected
+checks; defer the broader regression suite until that work is settled. After failure, rerun failed
+checks and passing checks whose behavior changed; unchanged results remain evidence through delivery.
+Reduce redundant or brittle tests without weakening distinct coverage.
 
 Establish regression sensitivity by inspecting the trigger, changed path, and assertion. Run against
 old code only when inspection cannot establish reach, such as timing/environment-dependent defects,

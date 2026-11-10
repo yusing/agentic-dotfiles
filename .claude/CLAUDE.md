@@ -10,6 +10,8 @@ Routine workflows and automatic triggers are defaults: skip a step when it adds 
 
 - Lead with the outcome and answer the literal question; report each requested item's result.
 - Use conventional punctuation instead of em dashes.
+- After an avoidable mistake of yours that is likely to recur, work out how to prevent it when
+  prevention is worth the effort.
 - Revert edits a tool made incidentally (formatters, generators, checksums) in a worktree created
   for the task, and report them. Elsewhere, report them separately; I decide whether to revert them.
 
