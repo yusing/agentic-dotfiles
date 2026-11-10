@@ -63,5 +63,4 @@ supporting mechanism, name the narrower alternative.
 Account for the reviewed scope and unverified acceptance. On re-review, assess the cumulative
 changes, including corrections and their interactions; mark findings resolved/open/superseded
 and retain the complete current result.
-Use the owner's regression evidence; repeat a reproduction only if that evidence misses its trigger.
 Reopen a settled finding only when new evidence changes its disposition.

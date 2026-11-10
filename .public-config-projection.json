@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "353c77e5dcf7fe9b7e4b0c162e6728de6dd6a729",
+  "sourceCommit": "3f0d64476945f2c451728e1ce8a50383aef738e2",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -47,7 +47,7 @@
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "9e2e1b335773364c71ffa50d09dfdf51e462c707f3107bb1d133f290c3640d0e",
+      "sha256": "424a53ed4f40d989de054e4dfc91152970357dedb7541dcc28e808262318dc2a",
       "executable": false
     },
     {
@@ -533,7 +533,7 @@
     {
       "path": ".config/kilo/agent/review-correctness.md",
       "kind": "file",
-      "sha256": "09c55406533ea254de4b6f18a0df533c090d074414efa7c51182aa10948c8e35",
+      "sha256": "ee598330f9a498c98f8455d1a316f7dfc09e6e59f83d3433da38615870bf51bb",
       "executable": false
     },
     {
