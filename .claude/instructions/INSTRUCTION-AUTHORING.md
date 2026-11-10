@@ -28,7 +28,7 @@ instructions and role prompts; those instructions must work when no skills are a
 
 Shared rules preserve roles and settled assignments. Workflows own delegation and readiness gates;
 agent definitions own tools; the host-specific model-routing document owns model and effort.
-Check documentation and mechanical work too.
+Check that operation triggers also cover documentation and mechanical work.
 Preserve client-specific dispatch for fields a role configuration omits.
 
 ## Writing for Claude
@@ -51,10 +51,10 @@ differ from the general guide, they take precedence. Each bullet links the secti
   notes that Opus 4.5 and 4.6 may overtrigger on aggressive emphasis ([tool usage][bp-tools]).
   Strengthen wording only for a rule observed being ignored; Anthropic shows stronger wording as one
   option after such an observation ([iterating on skills][sk-iterate]).
-- Leave out generic re-check or double-check steps and verification subagents beyond the review
-  policy in `FINISHING.md`: Opus 5 verifies and corrects its own work unprompted, so such instructions
-  add cost without improving results ([over-verification][o5-scope],
-  [self-correction][o5-selfcorr]).
+- Leave out generic re-check or double-check steps and verification subagents beyond the contract
+  check in `MAIN.md` and the review policy in `FINISHING.md`: Opus 5 verifies and corrects its own
+  work unprompted, so such instructions add cost without improving results
+  ([over-verification][o5-scope], [self-correction][o5-selfcorr]).
 - Control thinking depth with effort rather than prompt wording ([calibrate effort][o55-effort]); in
   chat prompts, Anthropic found removing "think carefully" lines made replies start sooner with no
   clear quality loss ([chat thinking][o55-chat]).
@@ -77,7 +77,10 @@ Claude Code loads `~/.claude/CLAUDE.md` and the `CLAUDE.md` files in the working
 directory above it at launch ([how CLAUDE.md files load][cc-load]), expands their `@` imports at
 launch too ([imports][cc-imports]), and loads `.claude/rules/*.md` at launch unless `paths`
 frontmatter scopes a rule to matching files ([rules][cc-rules-setup], [path-specific
-rules][cc-rules]). Anthropic recommends keeping each `CLAUDE.md` under 200 lines, since longer files
+rules][cc-rules]). Where no project `CLAUDE.md` sits at or above the working directory, it also
+loads `AGENTS.md` files at launch and a subdirectory's `AGENTS.md` when it reads a file there, so
+another client's instruction file reaches Claude unless `claudeMdExcludes` lists it
+([AGENTS.md][cc-agents]). Anthropic recommends keeping each `CLAUDE.md` under 200 lines, since longer files
 reduce adherence ([effective instructions][cc-size]). Point to conditional documents by path, as
 `CLAUDE.md` does for `~/.claude/instructions/`.
 
@@ -100,6 +103,7 @@ reduce adherence ([effective instructions][cc-size]). Point to conditional docum
 [cc-imports]: https://code.claude.com/docs/en/memory#import-additional-files
 [cc-rules-setup]: https://code.claude.com/docs/en/memory#set-up-rules
 [cc-rules]: https://code.claude.com/docs/en/memory#path-specific-rules
+[cc-agents]: https://code.claude.com/docs/en/memory#when-claude-code-reads-agents-md
 [cc-size]: https://code.claude.com/docs/en/memory#write-effective-instructions
 
 ## Consumer checks
@@ -118,12 +122,12 @@ historical names in records. Regenerate from authoritative sources. Shared owner
 mappings, and drift checks do not authorize changes to another client's settings. Propagate shared
 instruction changes to affected consumers that do not already receive the owning layer; keep model,
 effort, and other client-specific changes within the requested client, and report excluded drift
-without changing that consumer. Check actual inheritance,
-fresh-context assembly, and client capabilities before assuming isolation or redundancy.
+without changing that consumer.
 Custom subagents receive `CLAUDE.md` through the harness, separately from their role prompt;
 parent conversation history and the main agent's default system prompt are separate inputs.
 The documented built-in Explore and Plan behavior differs ([what loads at startup][cc-subagents]).
-Check the actual recipient's delivered context before deciding that a rule is duplicated or missing.
+Check the actual recipient's delivered context, inheritance, and client capabilities before deciding
+that a rule is duplicated, missing, or isolated.
 
 Compare before-and-after decisions for matching, adjacent nonmatching, and exception cases.
 Check that each required step changes behavior, serves the task, and causes no redundant reads,

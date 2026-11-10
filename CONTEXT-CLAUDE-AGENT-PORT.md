@@ -26,8 +26,10 @@ cannot pass the focused test while generated ports are stale.
 Role tool allowlists omit `Agent`; main owns inspection dispatch through FINISHING.md.
 They also omit `Skill`: skills-mgr serves skill bodies, and `permissions.deny` in
 `.claude/settings.json` turns off Claude's native Skill tool for every agent.
-The allowlist omits `Edit` and `NotebookEdit` for the review and council roles. `Write` stays
+The allowlist omits `Edit` and `NotebookEdit` for every role. `Write` stays
 on every role for a relayed result artifact, and evidence-gathering roles also have `Bash`.
+Claude Code on Linux and macOS supplies no `Grep`, `Glob`, or `TodoWrite`, so those entries take
+effect only on a client that provides the tools.
 These tool lists are not a filesystem sandbox. Native TOML role bodies bound authored changes
 and result-artifact paths; validation-capable roles also permit ordinary test caches and temporary
 artifacts, with authored reproduction fixtures outside the repository. The generator does not
@@ -73,6 +75,10 @@ command boundary rests on the role body alone.
 `go_quality` has no active registration; its implementation remains available
 for re-enabling.
 
+A `PreToolUse` hook on `Bash` runs `rtk hook claude`, which rewrites supported commands to their
+`rtk` form. Under auto mode a rewritten call can be refused until the agent resubmits it, which is
+why `.claude/CLAUDE.md` tells agents to write the `rtk` form themselves.
+
 ## Session start
 
 Two static session-start hooks inject context.
@@ -91,8 +97,8 @@ visible skills. `skills-mgr list` scopes itself from the session environment. Cl
 stdout to context for `SessionStart`, whose `*` matcher also covers compaction, but ignores it for
 `SubagentStart`; the `SubagentStart` registration therefore passes `--subagent-start`, which wraps
 the list in the `additionalContext` envelope. `PostCompact` output never reaches context, so it
-has no registration. Claude also fires `SubagentStart` when a subagent is resumed, so a continued
-subagent receives the list again.
+has no registration. Claude also fires `SubagentStart` when a subagent is resumed, but injects the
+list again only after compaction has dropped the earlier copy.
 
 `.claude/hooks/` remains Herdr-managed and untracked. The shared hook is covered by the existing
 `.codex/hooks/*` allowlist entry. The `SessionStart` group that reports the session to Herdr stays

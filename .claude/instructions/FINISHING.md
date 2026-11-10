@@ -8,7 +8,7 @@ does not require loading this document or reassessing established results.
 
 Arrange review for a concrete unanswered correctness/integration or complexity question. Decide
 these questions separately using current evidence. A completed change, size threshold, or risk
-category alone does not require review. Explicit user-requested reviews retain their scope.
+category alone does not require review.
 
 Dispatch after focused validation and decisions that could change the design. Brief the reviewer
 with the user's request and corrections, unresolved question, change context, approach, and existing

@@ -18,7 +18,8 @@ completion. Evaluate a design challenge's premise and redesign when it holds.
 Keep user requirements and approvals distinct from agent assumptions, proposals, and choices in
 briefs, handoffs, and existing task records, with their governing sources. Approval of a proposal
 or preservation of its capabilities does not make every detail a user requirement. Mark a claimed
-requirement without a source unconfirmed.
+requirement without a source unconfirmed. When relaying a user correction, quote the user's words
+and mark anything you add as your proposal.
 
 Choose routine details within authorization. Ask only when evidence cannot settle intent that
 materially changes scope or behavior. Make each question stand alone with the concrete situation,

@@ -28,9 +28,9 @@ asking a member to ignore received evidence does not restore independence.
 ## Member configuration
 
 Select native council roles with unique names and self-contained, no-history briefs
-(Codex: `fork_turns: "none"`). Omit `model`; the role/client owns it. Omit `reasoning_effort`
-by default. An allowed override may use `high` for complex questions or `xhigh`/`max` for exceptional
-ones supported by the model; fixed role settings remain authoritative.
+(Codex: `fork_turns: "none"`). Set model and effort from the client's model-routing document where
+the client accepts them. Raise effort to `high` for complex questions, or to `xhigh`/`max` for
+exceptional ones the model supports.
 
 ## Artifacts and phases
 

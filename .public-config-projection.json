@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "9b0acac09298b920c581f57b1d10be69d7986e3a",
+  "sourceCommit": "353c77e5dcf7fe9b7e4b0c162e6728de6dd6a729",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,7 +65,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "93e38decfd7bdb03df25a265254124371127f2357eda9da23f86f8e2a78d3bb4",
+      "sha256": "3f51bca4b00a0c06bc9d3efe1e6d0968fa0ab65ff615f45e5e998719dc533e47",
       "executable": false
     },
     {
@@ -77,31 +77,31 @@
     {
       "path": ".claude/instructions/FINISHING.md",
       "kind": "file",
-      "sha256": "a814ddab6391fe259dfff22e6da5bfdf7cd019e1b54cb909773fad21307b2525",
+      "sha256": "668c513d78e09e39fc4c67e2b51fc3ccc579ddd37132afd9b2c5fae2bb2a5da7",
       "executable": false
     },
     {
       "path": ".claude/instructions/GITHUB.md",
       "kind": "file",
-      "sha256": "3c6e367776c399599c4595bfd9395b2334f25ff823777a3b2ebe8ab421588369",
+      "sha256": "a945d852effcf0ae1e8829e2fdbd23589b316a1919398e650b0d0d85b99212a4",
       "executable": false
     },
     {
       "path": ".claude/instructions/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "bc305272e71a3232340e39a07ba00bfdab5dbdf45c461df0070b0b4067ba99c6",
+      "sha256": "ab8e800d31081d55d6e9e4917830dce7a804260fc544ea2778d833c8dc111476",
       "executable": false
     },
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "71725d5e61a3220266fea7e072e9b31a31f8712e9b6584393064afa256e2f546",
+      "sha256": "72390e2397cd7de6b3e08f9f469f1f287782b8e4fde0f6974eae954568868d31",
       "executable": false
     },
     {
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
-      "sha256": "8119f14d120f06f3f3409fd9b357faaf6af5fccd280db94b445753aa37777374",
+      "sha256": "8b3502d37cff72e69b993dc5915d5c16d9801fff98cc9ac42cb54f2b65a63200",
       "executable": false
     },
     {
@@ -131,7 +131,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "36fbff5c0fbfa8d4c5e2ada30f3d90985cb50020d47e4365dfda48630d331162",
+      "sha256": "f6bcd5a40e01e744b4a46bd85fb48fa8b050cbe92f2aa5a02683b1395461208d",
       "executable": false
     },
     {
@@ -347,7 +347,7 @@
     {
       "path": ".codex/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "33bd5e545ca6cf10b5339cbb4cd461ad121b55a995d86b65ac31f1167449615e",
+      "sha256": "162d01d6500ad3b4058174853a7506c653b9d598aab29d44e2a97bd0d38e74eb",
       "executable": false
     },
     {
@@ -934,7 +934,7 @@
     {
       "path": ".skills-mgr/skills/authoring-skill/SKILL.md",
       "kind": "file",
-      "sha256": "017f0974611e976674275cd8a4ee689af20b637d90249591973065ca835e3353",
+      "sha256": "c37cb070bf015698c7b67e617902c2a1ac09197ed542e99db8db051d7dde3ec5",
       "executable": false
     },
     {
@@ -1000,7 +1000,7 @@
     {
       "path": ".skills-mgr/skills/council/SKILL.md",
       "kind": "file",
-      "sha256": "92c68147a220547f1c5dbadb0eb57cd0e6dc35ad39a6be3411718a71d8619381",
+      "sha256": "a598d92845bda859f0134cd7a4cb9703883977691c444a0f8cadc2d6d4152ab6",
       "executable": false
     },
     {
@@ -1449,7 +1449,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "757cc6f571218bd972bbc9941ccd3fc06d8050f9d7573cce0714b10ccd7d4c83",
+      "sha256": "8f8df054b61c9f4e69c9f4abc3b9781836e35d9447eda6630af1eef8b6436479",
       "executable": false
     },
     {
@@ -1485,7 +1485,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "d8cc8d98c0a202835d7bad6ac92d74a70ae6e21a49db26f959f34a31ca37b3e6",
+      "sha256": "f98f6c3673537c1ee4120cc0d2810d1af7c9796e5b1756be7f65e857d61bbf59",
       "executable": false
     },
     {

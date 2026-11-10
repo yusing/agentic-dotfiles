@@ -6,8 +6,9 @@ disable-model-invocation: false
 
 # Authoring skill
 
-Use for skill maintenance in any project. Design/consumer guidance lives in
-`$HOME/.codex/INSTRUCTION-AUTHORING.md` and `$HOME/.codex/SKILL-AUTHORING.md`.
+Use for skill maintenance in any project. Design/consumer guidance lives in your client's
+`INSTRUCTION-AUTHORING.md` and `SKILL-AUTHORING.md`: under `$HOME/.claude/instructions/` for
+Claude Code, otherwise under `$HOME/.codex/`.
 Global availability of this authoring skill does not make the edited skill global.
 
 ## Owners

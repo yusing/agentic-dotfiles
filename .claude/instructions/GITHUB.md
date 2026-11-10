@@ -1,7 +1,5 @@
 # GitHub
 
-Read when preparing GitHub text or publishing and merging pull requests.
-
 ## Pull request publication
 
 Choose the landing strategy before publishing. Follow the user's or repository's specified

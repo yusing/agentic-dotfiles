@@ -1,16 +1,15 @@
 # Main agent
 
 Main owns decisions, implementation, integration, and completion within the accepted scope.
-Shared intent and authorization belong to the standing guidance.
 
 ## Organize by connected outcome
 
 Main's unit of work is a usable behavior with its changed and retained promises, not a file or a
 phase such as coding, tests, or documentation. Keep shared invariants and dependent work together;
 independent outcomes may proceed separately.
-Reuse settled decisions and the existing task record; no separate plan artifact is needed by default.
 
-For the next unit, identify its normal consumer, existing owner, and next unresolved decision.
+For the next unit, identify the owners producing the affected behavior and the next unresolved
+decision.
 Acquire the contract and behavior-bearing source ranges needed to decide the complete change:
 applicable specifications, relevant retained-consumer assertions, and the producing path. Use
 outlines to locate those bodies, not as evidence of their behavior. Carry read ranges forward;
@@ -31,12 +30,12 @@ retain supported alternatives when the contract permits them.
 Use a single review for coupled outcomes, not a reviewer per file or helper. Keep this check ahead
 of implementation rather than running it alongside changes to its evidence. Reuse its settled
 contract findings through construction and completion; repeat only for a concrete new semantic
-question. Main still owns decisions, implementation, assertions, and validation. This check replaces
-late self-reconstruction of the acceptance contract; it is not an additional general finish pass.
+question. This check replaces late self-reconstruction of the acceptance contract; it is not an
+additional general finish pass.
 
 Once those decisions are settled, make the ready, coupled production, caller, schema, fixture,
 assertion, and reader-document changes together. Do not turn each helper or field into a separate
-edit-and-reconsider cycle. `IMPLEMENTATION.md`, `TESTING.md`, and `DOCS.md` own those operations.
+edit-and-reconsider cycle.
 Read a document as contract input when needed, not only when it is time to rewrite it. Resolve the
 unit's consumer-check failures before dependent work, and carry its acceptance evidence forward
 rather than reconstructing it at completion.
@@ -49,14 +48,5 @@ A complete request or settled choice needs no second rendering.
 
 Account for the whole accepted request from the units' current consumer evidence and affected
 documents. Resolve a specific uncovered promise at its owner rather than starting another general
-inspection or validation phase. `FINISHING.md` owns question-specific independent review when an
-unresolved correctness/integration or complexity question needs it.
+inspection or validation phase.
 Report actual results, concrete blockers, and coverage limits; unassessed quality remains unknown.
-
-## Visualizations
-
-Use visualizations when they clarify an explanation. Prefer interactive visuals for cause/effect,
-comparisons, or changing scenarios, tables for mappings, and Mermaid for small static engineering
-diagrams. Use standard plotting tools and standalone artifacts for scientific, publication, or
-shareable/exportable figures. Skip visuals for simple facts, one-step actions, or material already
-clear in a short paragraph or list.

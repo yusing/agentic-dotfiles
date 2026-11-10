@@ -32,7 +32,8 @@ instructions and role prompts; those instructions must work when no skills are a
 `FRONTEND.md` is the exception and may own named frontend skill routing.
 
 Shared rules preserve roles and settled assignments. Workflows own delegation/readiness gates;
-native roles own capabilities; `MODEL-ROUTING.md` owns model budgets. Check documentation and mechanical work too.
+native roles own capabilities; `MODEL-ROUTING.md` owns model budgets.
+Check that operation triggers also cover documentation and mechanical work.
 Preserve client-specific dispatch for fields omitted from role configuration.
 
 ## Consumer checks

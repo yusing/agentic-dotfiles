@@ -30,7 +30,8 @@ When recording or handing off work, keep my requirements and approvals distinct 
 assumptions, proposals, and implementation choices, and name the source of each governing
 contract. An agent choice does not become my requirement by being repeated, implemented, or
 documented, and approving a proposal or asking to preserve features does not make each of their
-details my requirement; mark a claimed requirement without a source unconfirmed. Label provenance
+details my requirement; mark a claimed requirement without a source unconfirmed. When relaying a
+correction of mine, quote my words and mark anything you add as your proposal. Label provenance
 in briefs, handoffs, and task records, not in every message, where the labels only add noise.
 
 Choose routine implementation details within authorization. Ask only when unresolved intent would
@@ -83,7 +84,6 @@ Complete text already supplied satisfies the read; a path or summary does not.
 - `INSTRUCTION-AUTHORING.md`: authoring or auditing instructions, prompts, and their consumers.
 - `SKILL-AUTHORING.md`: additionally, when authoring or auditing skills.
 - `MAIN.md`: main-agent planning and delivery of changes.
-  Main delegates the independent contract checks specified there to a read-only reviewer.
 - `DELEGATION.md`: any agent, including subagents, before delegating or coordinating other agents.
   - In Mekugi, read `~/.codex/MODEL-ROUTING.md` before delegation. Claude and Codex use the same
     routing, including Codex delegates.
@@ -109,14 +109,11 @@ Complete text already supplied satisfies the read; a path or summary does not.
   configuration repository. Settings exclude it from automatic loading so that projects below
   home neither receive it nor lose their own `AGENTS.md`.
 
-The harness supplies this file to the main agent and custom subagents. Built-in Explore and Plan
-omit it; provide any required guidance explicitly when assigning work to those built-ins.
-
 ## Skills and tools
 
 Skill descriptions in the available catalog own applicability. Use enabled skills when their
-descriptions match the task or the user explicitly invokes them. Instructions remain usable without
-any skills. Explicit reviews retain their requested operation and scope.
+descriptions match the task or the user explicitly invokes them. Explicit reviews retain their
+requested operation and scope.
 
 Select skills and resources that materially help the current operation. Explicit user and
 higher-priority requirements stay mandatory; follow the constraints of a selected tool or method.
@@ -131,16 +128,17 @@ skill I invoke by name or as `/<skill>` the same way, even when the catalog omit
 required references; load optional references only for the current operation. Claude's built-in
 skills ship inside Claude Code and are unavailable; when a harness tool says to load one first,
 use the tool without it. To change a skill, edit its maintained owner
-under `SKILL-AUTHORING.md`. After compaction, reload the skills that unfinished work still needs;
-subagents load only the skills their assignment needs.
+under `SKILL-AUTHORING.md`. Subagents load only the skills their assignment needs.
 
 If a required tool or method is unavailable, explain and stop only the work that depends on it;
 reuse an approval I already gave for a substitute or install, or ask. A missing automatic skill
 alone does not block routine work.
 
 Honor explicit dependency versions. Otherwise, verify the latest compatible stable release from
-registry or package-manager metadata, since remembered versions go stale. A hook already routes
-supported Bash commands through `rtk`, which can summarize or hide lines. When you need exact output,
+registry or package-manager metadata, since remembered versions go stale. A hook rewrites
+supported Bash commands to their `rtk` form, which can summarize or hide lines. Auto mode can refuse
+a call the hook rewrote until it is resubmitted, so write `rtk` yourself before each command it
+handles, such as `git`, `ls`, `grep`, `find`, and `wc`. When you need exact output,
 run `rtk bypass <command>` or fetch elided lines with the printed `rtk recall` id. For binary,
 minified, or generated data, extract exact fields or bounded bytes, and reuse unchanged scans.
 
