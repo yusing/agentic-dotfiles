@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "455c37947a23dd10867316b7f80672f5d51a9871",
+  "sourceCommit": "9b0acac09298b920c581f57b1d10be69d7986e3a",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -455,7 +455,7 @@
     {
       "path": ".config/herdr/status.sh",
       "kind": "file",
-      "sha256": "585edae34011e1fddf7a15923324072f7ad279911c902f706661abae4ad7f453",
+      "sha256": "b0744222aadd6dcccc5acf74697dfd6748c12bc0892c261639a347be02b64a32",
       "executable": true
     },
     {
@@ -748,25 +748,25 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "b9a3e4939704a828f3cc9945691f2c43061086fcd20b2474b9788ab87f571731",
+      "sha256": "b6bf48a3b95d70525fa3c4590bd1f9c95028b6787a65d9e50abff76167e7544a",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "bd790aabba943a07f5a2eb89b351c0fb179e8757b2224b29fa320fce1fab6a9c",
+      "sha256": "6577b1bc47671974f52af2e9671f2453146da28f98421a90df33b7987d1dce50",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "51256d772d9c8c297be782838b17ede5d0a74d519eb1da38cacc2d2fc07599fb",
+      "sha256": "ec59bff77228ca1fdb19e288cdf86c0bcf18e61cfda256244328842b03a965b4",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "1d7d289812eeed5877422d34f1ba68a37a15bad9411ffab63a795c7cb17621e0",
+      "sha256": "09d864ab9217ed6ba692f0f6dc5c9f64cf67cc0b25cf35bdd237f7a582b6e63f",
       "executable": true
     },
     {

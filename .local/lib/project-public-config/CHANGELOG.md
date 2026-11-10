@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.32
+
+Publish the compiled AI usage helper sources required by the Herdr status entry point.
+
 ## 1.3.31
 
 Exclude the private intent-resolution skill from public registry entries as well as skill bodies.

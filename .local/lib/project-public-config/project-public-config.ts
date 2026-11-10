@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.31";
+export const VERSION = "1.3.32";
 
 type TreeEntry = {
 	mode: string;
@@ -169,6 +169,9 @@ const EXACT_PATHS = new Set([
 	".config/kaku/kaku.lua",
 	".config/herdr/config.toml",
 	".config/herdr/status.sh",
+	".config/herdr/status.changelog.md",
+	".local/lib/herdr-ai-usage/herdr-ai-usage.ts",
+	".local/lib/herdr-ai-usage/CHANGELOG.md",
 	".config/hunk/config.toml",
 	".config/lazygit/config.yml",
 	".config/micro/bindings.json",

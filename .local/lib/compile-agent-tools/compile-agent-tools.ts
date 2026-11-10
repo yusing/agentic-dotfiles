@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.20";
+const VERSION = "1.0.21";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -257,6 +257,7 @@ function main(): void {
   }
   for (const [directory, name] of [
     ["plane", "plane"],
+    ["herdr-ai-usage", "herdr-ai-usage"],
     ["tmp-clean", "tmp_clean"],
     ["scc-prod", "scc-prod"],
     ["scc-prod", "git-diffstat"],

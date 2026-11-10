@@ -1,6 +1,7 @@
 #!/bin/sh
 # Tab-bar modules matching tmux status-right: application, AI usage, cpu, ram, net.
-# AI usage modules print remaining weekly percent as plain text. Herdr tab-bar commands
+# version: 1.0.0
+# AI usage modules print remaining capacity as plain text. Herdr tab-bar commands
 # drop ESC and keep the CSI body, which hides the whole status area once it is too wide.
 set -u
 
@@ -276,6 +277,12 @@ mod_application() {
 }
 
 mod_ai_usage() {
+	case "$1" in
+	codex | claude)
+		"$HOME/.local/bin/herdr-ai-usage" "$1" 2>/dev/null || true
+		return
+		;;
+	esac
 	command -v python3 >/dev/null 2>&1 || return 0
 	ensure_state_dir
 	python3 - "$1" "$state_dir" 2>/dev/null <<'PY' || return 0
@@ -290,7 +297,6 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-WEEK_SECONDS = 7 * 24 * 60 * 60
 provider = sys.argv[1]
 state_dir = Path(sys.argv[2])
 now = float(os.environ.get("HERDR_STATUS_NOW", time.time()))
@@ -384,50 +390,6 @@ def cache_record(name, credential_path, fetch):
         raise
 
 
-def codex_usage():
-    codex_home = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex"))
-    auth_path = Path(os.environ.get("HERDR_STATUS_CODEX_AUTH", codex_home / "auth.json"))
-
-    def fetch():
-        auth = read_json(auth_path)
-        tokens = auth.get("tokens") or {}
-        token = auth.get("access_token") or tokens.get("access_token")
-        account_id = auth.get("account_id") or tokens.get("account_id")
-        payload = request_json(
-            os.environ.get(
-                "HERDR_STATUS_CODEX_USAGE_URL",
-                "https://chatgpt.com/backend-api/wham/usage",
-            ),
-            {
-                "Authorization": f"Bearer {token}",
-                "ChatGPT-Account-Id": account_id,
-                "User-Agent": "herdr-status/1",
-            },
-        )
-
-        rate_limit = payload.get("rate_limit") or {}
-        weekly = next(
-            window
-            for window in (
-                rate_limit.get("primary_window"),
-                rate_limit.get("secondary_window"),
-            )
-            if isinstance(window, dict)
-            and window.get("limit_window_seconds") == WEEK_SECONDS
-        )
-        seconds = weekly.get("reset_after_seconds")
-        reset_at = now + float(seconds) if seconds is not None else float(weekly["reset_at"])
-        return {
-            "used": weekly["used_percent"],
-            "reset_at": reset_at,
-            "banked": (payload.get("rate_limit_reset_credits") or {}).get(
-                "available_count"
-            ),
-        }
-
-    return cache_record("codex", auth_path, fetch)
-
-
 def grok_access_token(auth_path):
     # xAI rotates refresh tokens, so share Grok's lock and persist each replacement.
     lock_path = auth_path.with_name(f"{auth_path.name}.lock")
@@ -497,50 +459,6 @@ def grok_usage():
     return cache_record("grok", auth_path, fetch)
 
 
-def claude_usage():
-    claude_home = Path(os.environ.get("CLAUDE_CONFIG_DIR", Path.home() / ".claude"))
-    auth_path = Path(
-        os.environ.get("HERDR_STATUS_CLAUDE_AUTH", claude_home / ".credentials.json")
-    )
-
-    ccstatusline_cache = Path(
-        os.environ.get(
-            "HERDR_STATUS_CLAUDE_USAGE_CACHE",
-            Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache"))
-            / "ccstatusline"
-            / "usage.json",
-        )
-    )
-
-    def fetch():
-        try:
-            auth = read_json(auth_path)["claudeAiOauth"]
-            payload = request_json(
-                os.environ.get(
-                    "HERDR_STATUS_CLAUDE_USAGE_URL",
-                    "https://api.anthropic.com/api/oauth/usage",
-                ),
-                {
-                    "Authorization": f"Bearer {auth['accessToken']}",
-                    "anthropic-beta": "oauth-2025-04-20",
-                    "anthropic-version": "2023-06-01",
-                    "User-Agent": "claude-code/2",
-                },
-            )
-            weekly = payload["seven_day"]
-            used = weekly["utilization"]
-            reset_at = parse_timestamp(weekly["resets_at"])
-        except Exception:
-            cached = read_json(ccstatusline_cache)
-            used = cached["weeklyUsage"]
-            reset_at = parse_timestamp(cached["weeklyResetAt"])
-        return {
-            "used": used,
-            "reset_at": reset_at,
-        }
-
-    return cache_record("claude", auth_path, fetch)
-
 def remaining_percent(used):
     remaining = 100 - used
     if remaining < 0:
@@ -551,14 +469,7 @@ def remaining_percent(used):
 
 
 try:
-    if provider == "codex":
-        record = codex_usage()
-    elif provider == "grok":
-        record = grok_usage()
-    elif provider == "claude":
-        record = claude_usage()
-    else:
-        raise ValueError
+    record = grok_usage()
     used = record["used"]
     if not isinstance(used, (int, float)) or isinstance(used, bool):
         raise ValueError

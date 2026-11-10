@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.21
+
+Build the Codex and Claude AI usage status helper.
+
 ## 1.0.20
 
 Remove the retired Open File in Herdr helper from the build list.
