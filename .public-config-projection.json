@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7452fdfba4036e0b822e99bd3d7ee5266e8cfde0",
+  "sourceCommit": "455c37947a23dd10867316b7f80672f5d51a9871",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -257,13 +257,13 @@
     {
       "path": ".codex/hooks/lib/hook_runtime.changelog.md",
       "kind": "file",
-      "sha256": "a9d790ab2af39d7406b0f3b1bb6d936458f399cf93a7a643aaa6e40cfff2c7ac",
+      "sha256": "abb2b2b5a9cb87f22984bfc390875d86ed61976bfa0a0848403bb868cf3034d1",
       "executable": false
     },
     {
       "path": ".codex/hooks/lib/hook_runtime.ts",
       "kind": "file",
-      "sha256": "7ecc40d8aa287a408603d6df1d3bf679b415ec2cc3fda2c3a400e9832f1d53f9",
+      "sha256": "f57958aa1731a336e9666f53e5321e17e8cc7cffec6f5a92b118b4640935e844",
       "executable": false
     },
     {
@@ -599,13 +599,13 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "013898d763d353a4170979a5618e24ca8a3739330040f30fdf0ead58e275c136",
+      "sha256": "81b5fc9aa41bdf9e88340024bec77d9428cf65eea6d031b9ae544d9dedd6d1fd",
       "executable": false
     },
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "f25f94729d180c4d9763d15fc018d255d26c26726309d7408df00e75182c1530",
+      "sha256": "9495a8d79f6d9b786426d12153a17e450ed91faa94e0e993243a7b2dad4c2dfd",
       "executable": false
     },
     {
@@ -1198,25 +1198,25 @@
     {
       "path": ".skills-mgr/skills/scriptc-compiler/references/cli.md",
       "kind": "file",
-      "sha256": "15c6b102c85575083e8961bcf107273d909b2993715e301f3200b9bfae59de53",
+      "sha256": "990b05a5454a15a9c3a8b49f72f2baa4bf202ead337a5444e981bc64cf314b74",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/scriptc-compiler/references/ffi.md",
       "kind": "file",
-      "sha256": "539d8327a251a5cdfa13a8bc714164d0a905e56b2237de081f536d5ac302dd28",
+      "sha256": "d0231dcfcdc6c767939469f369468755dd618c648275cb741184331b25d848fe",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/scriptc-compiler/references/limitations.md",
       "kind": "file",
-      "sha256": "090a1431aed65a482f30c4049a7413f16b6a77a18771717676229c536d90557a",
+      "sha256": "93db4d932352fea992d51c6bd6b961020694b807a0c67015ff03b78ac452208e",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/scriptc-compiler/SKILL.md",
       "kind": "file",
-      "sha256": "b17b8c3358c95976fcb735b78d3673d3187161170891cd7f597554323d5202f7",
+      "sha256": "6e7a847f7580427dde823db048cc60ace07421b98a57df30d928a74bb0cde2b3",
       "executable": false
     },
     {
@@ -1521,7 +1521,7 @@
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "44c77023bc2032237c61a4979cde2817cb12574c6322c4d30332967f1df2b8cf",
+      "sha256": "54e2c6441f2b13537e6b768e3719dce7cf333b1406ec865486d7af4a159d0401",
       "executable": false
     },
     {

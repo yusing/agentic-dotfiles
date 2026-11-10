@@ -1,6 +1,6 @@
 # scriptc limitations
 
-Contract: scriptc 0.4.5. Sources: [version-tagged limitations](https://github.com/vercel-labs/scriptc/blob/v0.4.5/docs/content/docs/limitations.mdx) and its [included sections](https://github.com/vercel-labs/scriptc/tree/v0.4.5/docs/content/limitations). Use `scriptc coverage` and a compiled reproduction for the concrete entry; support is operation-specific.
+Contract: scriptc 0.4.10. Sources: [version-tagged limitations](https://github.com/vercel-labs/scriptc/blob/v0.4.10/docs/content/docs/limitations.mdx) and its [included sections](https://github.com/vercel-labs/scriptc/tree/v0.4.10/docs/content/limitations). Use `scriptc coverage` and a compiled reproduction for the concrete entry; support is operation-specific.
 
 ## Compile fences
 
@@ -21,14 +21,16 @@ Contract: scriptc 0.4.5. Sources: [version-tagged limitations](https://github.co
 - Key enumeration follows source creation order where tracked. `SC6002` flags cases where only declaration order can be retained, including untracked spreads or too many possible orders. Checked JSON records retain extra keys; copying to another record layout can discard them.
 - Strings use UTF-16 semantics, including relational comparisons and lone surrogates. String-pattern split/replace does not match half a surrogate pair; encoded output substitutes U+FFFD for lone surrogates.
 - `sort` / `toSorted` use stable natural merge sort; explicit comparator call order may differ from Node. `localeCompare` supports default root collation for Latin-script text and falls back to code-point order outside it; locales/options are unsupported (`SC6003` warns for relevant literals).
-- `process.argv[0]` is `"scriptc"`, `argv[1]` is the executable path. Uncaught errors print `Uncaught <value>` without Node stack frames. Runtime errors expose typed `message` and `code`; additional Node error properties are available through an untyped view.
+- `process.argv[0]` is `"scriptc"`, `argv[1]` is the executable path. Uncaught errors start with `Uncaught <value>`. Release programs reading `Error.stack` retain function/file frames; unstripped `dev` builds also retain source positions in functions that can raise errors. Async/generator frames stop at that function, not its awaiters. Runtime errors expose typed `message` and `code`; additional Node error properties are available through an untyped view.
 - Memory is reference-counted. Do not infer garbage-collector behavior from Node.
 
 ## Packages and runtime evaluation
 
-All compiled application and package code is native. `--dynamic` and the embedded quickjs-ng engine were removed in 0.3. Unsupported packages need changes or replacement; report-only Node-island diagnostics do not supply a fallback.
+Native-compiled code uses no embedded engine. `--dynamic` and the quickjs-ng engine were removed in 0.3, but Node islands introduced in 0.4.6 can load Node.js in-process for unsupported modules. This changes startup and deployment assumptions. Installed 0.4.10 help retains stale report-only labels; verify the concrete package through build and execution. Coverage describes the islands a build proves, and `--native=<package>` requires native compilation.
 
-Runtime source evaluation (`eval`, `Function`) throws a catchable `EvalError`; `vm` is refused. Build-time evaluation is a separate experimental facility. npm native addons require supported static bindings or replacement, not ordinary dynamic loading.
+In native-compiled code, runtime source evaluation (`eval`, `Function`) throws a catchable `EvalError`; `vm` is refused. Build-time evaluation is a separate experimental facility. npm native addons require supported static bindings or replacement, not ordinary dynamic loading.
+
+Across native/island boundaries, event ordering, timer turns, object conversions and machine-dependent module initialization have documented differences. Inspect the [version-tagged boundary limits](https://github.com/vercel-labs/scriptc/tree/v0.4.10/docs/content/limitations/runtime-differences-from-node-js) before depending on shared identity or scheduling.
 
 ## WASI
 

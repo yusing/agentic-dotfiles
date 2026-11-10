@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4
+
+Use scriptc 0.4.10 native spawnSync input and cwd options. Remove the stdin
+temporary file, shell redirect, and process-wide directory changes. Spawn
+failures, including unavailable child directories, return normalized results.
+
 ## 1.0.3
 
 `runCommand` stdin uses POSIX `sh` so dash `/bin/sh` can exec the child

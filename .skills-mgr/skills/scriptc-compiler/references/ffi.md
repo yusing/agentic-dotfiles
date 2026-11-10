@@ -1,6 +1,6 @@
 # scriptc native FFI
 
-Contract: scriptc 0.4.5. Source: [version-tagged FFI documentation](https://github.com/vercel-labs/scriptc/blob/v0.4.5/docs/content/docs/ffi.mdx).
+Contract: scriptc 0.4.10. Source: [version-tagged FFI documentation](https://github.com/vercel-labs/scriptc/blob/v0.4.10/docs/content/docs/ffi.mdx).
 
 Outbound FFI is a link-time C ABI. A JSON manifest names a signature-only TypeScript `declare function`, a C `symbol`, and archives/objects to link. No runtime `dlopen`. The binding applies only to a direct call of that exact declaration.
 

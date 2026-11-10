@@ -1,6 +1,5 @@
 import { spawnSync } from "child_process";
 import * as fs from "fs";
-import * as os from "os";
 import * as path from "path";
 
 export function readEvent(): unknown | null {
@@ -104,54 +103,20 @@ export type CommandResult = {
   error?: Error;
 };
 
-export const posixStdinExec = 'cmd="$1"; shift; exec "$cmd" "$@" < "$0"';
-
 export function runCommand(
   command: string[],
   options: { stdin?: string; cwd?: string } = {},
 ): CommandResult {
-  const executable = command[0] ?? "";
-  const args = command.slice(1);
-  const previous = options.cwd !== undefined ? process.cwd() : undefined;
-  let payloadPath: string | undefined;
-  try {
-    if (options.cwd !== undefined) {
-      process.chdir(options.cwd);
-    }
-    if (options.stdin !== undefined) {
-      payloadPath = path.join(os.tmpdir(), `hook-stdin-${process.pid}-${Date.now()}`);
-      fs.writeFileSync(payloadPath, options.stdin, { mode: 0o600 });
-      // scriptc spawnSync has no `input`. POSIX sh redirects the temp payload
-      // as `$0`; `/bin/sh` may be dash, so this cannot use bash expansions.
-      const result = spawnSync(
-        "/bin/sh",
-        ["-c", posixStdinExec, payloadPath, executable, ...args],
-        { encoding: "utf8" },
-      );
-      return {
-        status: result.status ?? 1,
-        stdout: result.stdout ?? "",
-        stderr: result.stderr ?? "",
-        error: result.error,
-      };
-    }
-    const result = spawnSync(executable, args, { encoding: "utf8" });
-    return {
-      status: result.status ?? 1,
-      stdout: result.stdout ?? "",
-      stderr: result.stderr ?? "",
-      error: result.error,
-    };
-  } finally {
-    if (previous !== undefined) {
-      process.chdir(previous);
-    }
-    if (payloadPath !== undefined) {
-      try {
-        fs.unlinkSync(payloadPath);
-      } catch {
-        // best-effort
-      }
-    }
-  }
+  // Concrete defaults avoid scriptc checked conversions of absent option values.
+  const result = spawnSync(command[0] ?? "", command.slice(1), {
+    encoding: "utf8",
+    input: options.stdin ?? "",
+    cwd: options.cwd ?? process.cwd(),
+  });
+  return {
+    status: result.status ?? 1,
+    stdout: result.stdout ?? "",
+    stderr: result.stderr ?? "",
+    error: result.error,
+  };
 }
