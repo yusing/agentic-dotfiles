@@ -76,7 +76,7 @@ prepare publication but do not publish uncommitted skill content.
 Use `skills-mgr check <name> [<required-skill> ...] [<name>/<reference-or-script> ...]` from a
 matching project. It checks the served body and Markdown links; list required dependencies/scripts
 explicitly. Scripts are read, not run. Unresolved, stale-overlay, and placeholder bodies fail.
-Home's mapped maintenance checks are in `$HOME/CONTEXT-VALIDATION.md`.
+
 
 Verify matching selection/get and adjacent nonmatching conditions without changing selection just
 for the check. `list --claude` shows model-visible descriptions; user-invoked skills remain omitted.

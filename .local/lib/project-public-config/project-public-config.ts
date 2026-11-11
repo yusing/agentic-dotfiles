@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.32";
+export const VERSION = "1.3.33";
 
 type TreeEntry = {
 	mode: string;
@@ -44,7 +44,10 @@ type OutputManifest = {
 };
 
 type Options = {
-	destination: string;
+	destination?: string;
+	check: boolean;
+	staged: boolean;
+	newMissingOnly: boolean;
 	revision: string;
 	source: string;
 };
@@ -82,6 +85,7 @@ const TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS = new Set([
 	".config/ghostty/config",
 	".config/skhd/skhdrc",
 	".config/kaku/kaku.lua",
+	".config/wezterm/wezterm.lua",
 ]);
 
 const EXACT_PATHS = new Set([
@@ -119,6 +123,9 @@ const EXACT_PATHS = new Set([
 	".claude/instructions/IMPLEMENTATION.md",
 	".claude/instructions/INSTRUCTION-AUTHORING.md",
 	".claude/instructions/MAIN.md",
+	".claude/instructions/MODEL-ROUTING.md",
+	".claude/instructions/DELEGATION.md",
+	".claude/instructions/FRONTEND.md",
 	".claude/instructions/SKILL-AUTHORING.md",
 	".claude/instructions/SUBAGENT.md",
 	".claude/instructions/TESTING.md",
@@ -132,6 +139,8 @@ const EXACT_PATHS = new Set([
 	".codex/INSTRUCTION-AUTHORING.md",
 	".codex/SKILL-AUTHORING.md",
 	".codex/MAIN.md",
+	".codex/MODEL-ROUTING.md",
+	".codex/FRONTEND.md",
 	".codex/SUBAGENT.md",
 	".codex/TESTING.md",
 	".codex/config.toml",
@@ -167,6 +176,7 @@ const EXACT_PATHS = new Set([
 	".config/gh/config.yml",
 	".config/ghostty/config",
 	".config/kaku/kaku.lua",
+	".config/wezterm/wezterm.lua",
 	".config/herdr/config.toml",
 	".config/herdr/status.sh",
 	".config/herdr/status.changelog.md",
@@ -321,7 +331,7 @@ so do not treat edits made only in this repository as authoritative.
 `;
 
 function usage(): never {
-	console.error("usage: project-public-config [--source <repo>] [--revision <commit>] <destination>");
+	console.error("usage: project-public-config [--source <repo>] [--revision <commit>] <destination> | --check [--staged [--new-missing-only]] [--source <repo>]");
 	process.exit(2);
 }
 
@@ -329,9 +339,15 @@ function parseArgs(argv: string[]): Options {
 	let source = process.cwd();
 	let revision = "HEAD";
 	let destination: string | undefined;
+	let check = false;
+	let staged = false;
+	let newMissingOnly = false;
 
 	for (let index = 0; index < argv.length; index++) {
 		const argument = argv[index];
+		if (argument === "--check") { check = true; continue; }
+		if (argument === "--staged") { staged = true; continue; }
+		if (argument === "--new-missing-only") { newMissingOnly = true; continue; }
 		if (argument === "--source" || argument === "--revision") {
 			const value = argv[++index];
 			if (!value) usage();
@@ -344,9 +360,12 @@ function parseArgs(argv: string[]): Options {
 		destination = argument;
 	}
 
-	if (!destination) usage();
+	if ((newMissingOnly && !staged) || (check && destination) || (!check && !destination) || (staged && (!check || revision !== "HEAD"))) usage();
 	return {
-		destination: resolve(destination),
+		destination: destination ? resolve(destination) : undefined,
+		check,
+		staged,
+		newMissingOnly,
 		revision,
 		source: resolve(source),
 	};
@@ -364,7 +383,15 @@ function git(source: string, args: string[]): Buffer {
 	return Buffer.from(result.stdout);
 }
 
-function listTree(source: string, commit: string): TreeEntry[] {
+function listTree(source: string, commit: string, staged = false): TreeEntry[] {
+	if (staged) {
+		return git(source, ["ls-files", "--stage", "-z"]).toString("utf8").split("\0").filter(Boolean).map(record => {
+			const separator = record.indexOf("\t");
+			const [mode, oid, stage] = record.slice(0, separator).split(" ");
+			if (separator < 0 || stage !== "0") throw new Error("cannot check projection with unmerged index entries");
+			return { mode, oid, path: record.slice(separator + 1) };
+		});
+	}
 	const paths = [...EXACT_PATHS, ...TREE_PREFIXES].sort();
 	const raw = git(source, ["ls-tree", "-rz", "--full-tree", commit, "--", ...paths]);
 	return raw
@@ -814,16 +841,17 @@ function symlinkStaysInside(path: string, target: string): boolean {
 	return resolved === root || resolved.startsWith(`${root}${sep}`);
 }
 
-function buildProjection(source: string, commit: string): Map<string, ProjectedEntry> {
+function buildProjection(source: string, commit: string, staged = false): Map<string, ProjectedEntry> {
 	const projection = new Map<string, ProjectedEntry>();
 	const userName = basename(homedir());
 	const privateHomes = [...new Set([source, homedir(), join("/Users", userName)])]
 		.filter(path => path !== resolve("/"))
 		.sort((left, right) => right.length - left.length);
-	for (const entry of listTree(source, commit)) {
+	for (const entry of listTree(source, commit, staged)) {
 		if (!isIncludedPath(entry.path) || isExcludedPath(entry.path)) continue;
 		assertRelativePath(entry.path);
 		const content = git(source, ["cat-file", "blob", entry.oid]);
+		if (!["100644", "100755", "120000"].includes(entry.mode)) throw new Error(`unsupported projection mode: ${entry.path}`);
 		if (entry.mode === "120000") {
 			projection.set(entry.path, { kind: "symlink", target: content.toString("utf8") });
 			continue;
@@ -848,12 +876,78 @@ function buildProjection(source: string, commit: string): Map<string, ProjectedE
 	return projection;
 }
 
-function validateProjection(projection: Map<string, ProjectedEntry>): void {
+// Check instruction routes after transformation, so private omission blocks are not dependencies.
+function missingPublicReferences(projection: Map<string, ProjectedEntry>): Set<string> {
+	const ownerName = /^[A-Za-z0-9_-]+\.md$/;
+	const missing = new Set<string>();
+	for (const [path, entry] of projection) {
+		if (entry.kind !== "file" || !path.endsWith(".md")) continue;
+		const ownerDirectory = /^\.codex\/[^/]+\.md$/.test(path) ? ".codex"
+			: (path === ".claude/CLAUDE.md" || /^\.claude\/instructions\/[^/]+\.md$/.test(path)) ? ".claude/instructions" : undefined;
+		for (const match of entry.content.toString("utf8").matchAll(/`([^`\n]+)`/g)) {
+			const reference = match[1].replace(/^(?:\$HOME|~)\//, "");
+			let target: string | undefined;
+			if (/^(?:\.codex\/|\.claude\/instructions\/)[A-Za-z0-9_-]+\.md$/.test(reference)
+				|| /^CONTEXT-[A-Z-]+\.md$/.test(reference)) target = reference;
+			else if (ownerDirectory && ownerName.test(reference)
+				&& !["HANDOFF.md", "DESIGN.md", "README.md", "SKILL.md", "AGENTS.md", "CLAUDE.md"].includes(reference)) {
+				target = `${ownerDirectory}/${reference}`;
+			}
+			if (target && !projection.has(target)) missing.add(`${path} references missing projected instruction: ${target}`);
+		}
+	}
+	const readme = projection.get("README.md");
+	if (readme?.kind === "file") {
+		for (const match of readme.content.toString("utf8").matchAll(/\]\(([^\s)]+)\)/g)) {
+			const target = match[1].split("#")[0].replace(/^\.\//, "").replace(/\/$/, "");
+			if (!target || /^[a-z][a-z0-9+.-]*:/i.test(target)) continue;
+			if (!projection.has(target) && ![...projection.keys()].some(path => path.startsWith(`${target}/`))) {
+				missing.add(`README.md links to missing projected path: ${target}`);
+			}
+		}
+	}
+	return missing;
+}
+
+function validateSymlink(projection: Map<string, ProjectedEntry>, path: string): void {
+	let pending = path.split("/");
+	const resolved: string[] = [];
+	let links = 0;
+	while (pending.length) {
+		const component = pending.shift()!;
+		if (!component || component === ".") continue;
+		if (component === "..") {
+			if (!resolved.length) throw new Error(`symlink escapes projection: ${path}`);
+			resolved.pop();
+			continue;
+		}
+		resolved.push(component);
+		const current = resolved.join("/");
+		const entry = projection.get(current);
+		if (entry?.kind === "symlink") {
+			// Match the filesystem traversal bound, allowing finite repeated directory links.
+			if (++links > 40) throw new Error(`symlink cycle or excessive chain in projection: ${path}`);
+			if (isAbsolute(entry.target)) throw new Error(`symlink escapes projection: ${path}`);
+			resolved.pop();
+			pending = [...entry.target.split("/"), ...pending];
+			continue;
+		}
+		if (!entry && ![...projection.keys()].some(candidate => candidate.startsWith(`${current}/`))) {
+			throw new Error(`dangling symlink in projection: ${path} (missing ${current})`);
+		}
+		if (entry?.kind === "file" && pending.length) throw new Error(`symlink traverses a file in projection: ${path}`);
+	}
+}
+
+function validateProjection(projection: Map<string, ProjectedEntry>, previousMissing = new Set<string>()): void {
+	const missing = [...missingPublicReferences(projection)].filter(failure => !previousMissing.has(failure));
+	if (missing.length) throw new Error(missing.join("\n"));
 	for (const [path, entry] of projection) {
 		assertRelativePath(path);
 		if (isExcludedPath(path)) throw new Error(`excluded test or evaluation path reached projection: ${path}`);
 		if (entry.kind === "symlink") {
-			if (!symlinkStaysInside(path, entry.target)) throw new Error(`symlink escapes projection: ${path} -> ${entry.target}`);
+			if (!symlinkStaysInside(path, entry.target)) throw new Error(`symlink escapes projection: ${path}`);
+			validateSymlink(projection, path);
 			continue;
 		}
 		if (!isTextPath(path)) continue;
@@ -1095,16 +1189,29 @@ async function main(): Promise<void> {
 	}
 	const options = parseArgs(process.argv.slice(2));
 	if (options.source === options.destination) throw new Error("source and destination must be different directories");
-	if ([resolve("/"), resolve(homedir())].includes(options.destination)) {
+	if (options.destination && [resolve("/"), resolve(homedir())].includes(options.destination)) {
 		throw new Error("destination must not be the filesystem root or home directory");
 	}
 
 	console.error(`Resolving ${options.revision} in ${options.source}`);
-	const commit = git(options.source, ["rev-parse", "--verify", `${options.revision}^{commit}`]).toString("utf8").trim();
-	const projection = buildProjection(options.source, commit);
-	validateProjection(projection);
+	const commit = options.staged ? "index" : git(options.source, ["rev-parse", "--verify", `${options.revision}^{commit}`]).toString("utf8").trim();
+	const projection = buildProjection(options.source, commit, options.staged);
+	let previousMissing = new Set<string>();
+	if (options.newMissingOnly) {
+		const head = Bun.spawnSync(["git", "-C", options.source, "rev-parse", "--verify", "--quiet", "HEAD"]);
+		if (head.exitCode !== 0 && head.exitCode !== 1) throw new Error(head.stderr.toString().trim() || "cannot resolve projection baseline");
+		if (head.exitCode === 0) {
+			const policyChange = Bun.spawnSync(["git", "-C", options.source, "diff", "--cached", "--quiet", "HEAD", "--", COMMAND_PATH]);
+			if (policyChange.exitCode !== 0 && policyChange.exitCode !== 1) throw new Error(policyChange.stderr.toString().trim() || "cannot compare projector policy");
+			// A staged policy update must close every dependency, including filter regressions.
+			if (policyChange.exitCode === 0) previousMissing = missingPublicReferences(buildProjection(options.source, head.stdout.toString().trim()));
+		}
+	}
+	validateProjection(projection, previousMissing);
 	console.error(`Projected and validated ${projection.size} paths from ${commit.slice(0, 12)}`);
 
+	if (options.check) return;
+	if (!options.destination) usage();
 	await mkdir(dirname(options.destination), { recursive: true });
 	const stage = await mkdtemp(join(tmpdir(), "project-public-config-"));
 	try {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "0eb3f3978f77c93f290fe39a82f47200ea3870fa",
+  "sourceCommit": "35852d9fbe9d5c25b5c4c36524531f5500d14f70",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -69,6 +69,12 @@
       "executable": false
     },
     {
+      "path": ".claude/instructions/DELEGATION.md",
+      "kind": "file",
+      "sha256": "fd728c135fb3e17d5e55a0c8d3ccc71d90e7f87e5b06593b2451ea6cfbf54821",
+      "executable": false
+    },
+    {
       "path": ".claude/instructions/DOCS.md",
       "kind": "file",
       "sha256": "1172edc51199e57dd2413aa7b5a2bdea9c833a26f18d3cd727c043500a48b20d",
@@ -79,6 +85,11 @@
       "kind": "file",
       "sha256": "668c513d78e09e39fc4c67e2b51fc3ccc579ddd37132afd9b2c5fae2bb2a5da7",
       "executable": false
+    },
+    {
+      "path": ".claude/instructions/FRONTEND.md",
+      "kind": "symlink",
+      "target": "../../.codex/FRONTEND.md"
     },
     {
       "path": ".claude/instructions/GITHUB.md",
@@ -102,6 +113,12 @@
       "path": ".claude/instructions/MAIN.md",
       "kind": "file",
       "sha256": "8b3502d37cff72e69b993dc5915d5c16d9801fff98cc9ac42cb54f2b65a63200",
+      "executable": false
+    },
+    {
+      "path": ".claude/instructions/MODEL-ROUTING.md",
+      "kind": "file",
+      "sha256": "b85fe5dc94c02f18ad42f9474ebf8f41721bf17ac3dfdb3df49118325b042fc6",
       "executable": false
     },
     {
@@ -143,7 +160,7 @@
     {
       "path": ".codex/agents/council-member.toml",
       "kind": "file",
-      "sha256": "3d04b5c48083247465566e7fbae5671d2254ecefac3d085cac3d165c41c1df76",
+      "sha256": "81419402d90055495bd6141c9e2eaba635fdadfa4702935fe80177ad24cd4433",
       "executable": false
     },
     {
@@ -198,6 +215,12 @@
       "path": ".codex/FINISHING.md",
       "kind": "file",
       "sha256": "a814ddab6391fe259dfff22e6da5bfdf7cd019e1b54cb909773fad21307b2525",
+      "executable": false
+    },
+    {
+      "path": ".codex/FRONTEND.md",
+      "kind": "file",
+      "sha256": "4e01373611b2dd40f02a56655ba76a70b1a590b932d6d9cc07a42f6f336ac6ce",
       "executable": false
     },
     {
@@ -354,6 +377,12 @@
       "path": ".codex/MAIN.md",
       "kind": "file",
       "sha256": "8119f14d120f06f3f3409fd9b357faaf6af5fccd280db94b445753aa37777374",
+      "executable": false
+    },
+    {
+      "path": ".codex/MODEL-ROUTING.md",
+      "kind": "file",
+      "sha256": "07ef67608e9a020ea3fac093f087c6bbea604212386c79769353ae52b11b75e3",
       "executable": false
     },
     {
@@ -633,6 +662,12 @@
       "executable": false
     },
     {
+      "path": ".config/wezterm/wezterm.lua",
+      "kind": "file",
+      "sha256": "e7d158390415c834bae36c9ca1431860dcc785c3cfee69e543f1ea291289d37a",
+      "executable": false
+    },
+    {
       "path": ".config/zed/keymap.json",
       "kind": "file",
       "sha256": "eea1ba3e7b1fe33449a8ac2279b12e307e2bf8407f089fc254caa80724417f09",
@@ -659,7 +694,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "83e998c07f8ddf5e533cb09df7d39ce9703d986ffee0de32129fe6b1c5c1ef9d",
+      "sha256": "089b77f42b0d5e8d746c2abcc2f6aea639a0e87bef9d232c69237adab5a07d1a",
       "executable": false
     },
     {
@@ -778,13 +813,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "ec59bff77228ca1fdb19e288cdf86c0bcf18e61cfda256244328842b03a965b4",
+      "sha256": "64e14be73fcc00d1e97ca71dd05bd8ba35e0f3eda6be1274f1d776a83127b517",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "09d864ab9217ed6ba692f0f6dc5c9f64cf67cc0b25cf35bdd237f7a582b6e63f",
+      "sha256": "6b9d6c9f61fe8d8e89547d6ad883381adbc68f521c7ab444937ca9ca9be1b215",
       "executable": true
     },
     {
@@ -952,7 +987,7 @@
     {
       "path": ".skills-mgr/skills/authoring-skill/SKILL.md",
       "kind": "file",
-      "sha256": "c37cb070bf015698c7b67e617902c2a1ac09197ed542e99db8db051d7dde3ec5",
+      "sha256": "a8f9feddb45f86ca621b0f2b9644dd8cd53f06824697969d0d1d7073a5c4a228",
       "executable": false
     },
     {
@@ -1012,13 +1047,13 @@
     {
       "path": ".skills-mgr/skills/council/agents/openai.yaml",
       "kind": "file",
-      "sha256": "25a263b247cfd004d33a26f350bda790e57bbbc6889d17e94717a0785d25fa4c",
+      "sha256": "39892c98bd14de06b44b766a2527cc9f4236861760ab27e67320426dddf0e96e",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/council/SKILL.md",
       "kind": "file",
-      "sha256": "a598d92845bda859f0134cd7a4cb9703883977691c444a0f8cadc2d6d4152ab6",
+      "sha256": "fd2a027a41c8550a9e9847463bb306cfc888210f75cb1da3c0b4734d66971b82",
       "executable": false
     },
     {
@@ -1485,7 +1520,7 @@
     {
       "path": "CONTEXT-HELPER-HOOKS.md",
       "kind": "file",
-      "sha256": "a24c95ba0c9c7665a062abb0f919c826e93211f2fd1a85e44f33b95065f2473f",
+      "sha256": "911a6d293aae120f26a02d55c89f63873aeb65a40f287e9075c46cb5848e8d61",
       "executable": false
     },
     {
@@ -1527,7 +1562,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "25a01f2f6b927dcfe199296b637015ea1ef31b251345c7f2f381dd7daf890d0e",
+      "sha256": "97f93ccfb6e15bb1f54ca272aefcac8266642c3e31f64d1791a08484ef66a07e",
       "executable": false
     },
     {

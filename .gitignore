@@ -16,12 +16,15 @@ __pycache__
 !/.claude/agents/ui-reviewer.md
 !/.claude/CLAUDE.md
 !/.claude/instructions/
+!/.claude/instructions/DELEGATION.md
 !/.claude/instructions/DOCS.md
 !/.claude/instructions/FINISHING.md
+!/.claude/instructions/FRONTEND.md
 !/.claude/instructions/GITHUB.md
 !/.claude/instructions/IMPLEMENTATION.md
 !/.claude/instructions/INSTRUCTION-AUTHORING.md
 !/.claude/instructions/MAIN.md
+!/.claude/instructions/MODEL-ROUTING.md
 !/.claude/instructions/SKILL-AUTHORING.md
 !/.claude/instructions/SUBAGENT.md
 !/.claude/instructions/TESTING.md
@@ -40,6 +43,7 @@ __pycache__
 !/.codex/DELEGATION.md
 !/.codex/DOCS.md
 !/.codex/FINISHING.md
+!/.codex/FRONTEND.md
 !/.codex/GITHUB.md
 !/.codex/hooks.json
 !/.codex/hooks/
@@ -68,6 +72,7 @@ __pycache__
 !/.codex/IMPLEMENTATION.md
 !/.codex/INSTRUCTION-AUTHORING.md
 !/.codex/MAIN.md
+!/.codex/MODEL-ROUTING.md
 !/.codex/overridden_base_instructions.md
 !/.codex/SKILL-AUTHORING.md
 !/.codex/skills/
@@ -137,6 +142,8 @@ __pycache__
 !/.config/skhd/
 !/.config/skhd/move-window.sh
 !/.config/skhd/skhdrc
+!/.config/wezterm/
+!/.config/wezterm/wezterm.lua
 !/.config/zed/
 !/.config/zed/keymap.json
 !/.config/zed/settings.json

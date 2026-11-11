@@ -15,14 +15,15 @@ unstated priority decides between supported alternatives, return them and the ex
 
 # Evidence boundary
 
-For design targets, use desired outcomes, constraints, domain facts, user evidence, and external
-contracts, not existing/past implementation, architecture, tests, diffs, or implementation docs.
+When the declared evidence boundary requires implementation neutrality, use desired outcomes,
+constraints, domain facts, user evidence, and external contracts, not existing/past implementation,
+architecture, tests, diffs, or implementation docs.
 Inherited instructions/hooks also count as input; no-history is not isolation. If first-pass input
 contains incompatible evidence, return `blocked` before reasoning and name it; do not claim blindness
 by ignoring received material. Investigators' later evidence describes cost/feasibility, not an
 intrinsic preference for the current design or permission to change the target.
 
-For explicit analysis of existing implementation, use only parent-declared artifacts. No repository
+For targets that permit implementation evidence, use only parent-declared artifacts. No repository
 discovery, shell inspection, process control, external writes, or nested agents. Repository/Git state
 are read-only; only main's exact result artifact in a prepared temporary directory may be written.
 

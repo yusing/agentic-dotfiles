@@ -65,7 +65,15 @@ Tests are not helpers or hooks.
 
 `.local/lib/project-public-config/project-public-config.ts` owns the filtered output of
 `.local/bin/project-public-config`. The helper reads a committed revision, defaulting to
-`HEAD`; working-tree edits are not projection inputs.
+`HEAD`; working-tree edits are not projection inputs. `--check` validates without writing a
+destination; `--check --staged` validates index blobs, including an unborn index, without
+rewriting the index. The pre-commit hook compiles the current projector source, matching
+the publication policy, and checks indexed content alongside the staged secret scan.
+The projector update need not be staged first. The hook uses `--new-missing-only` to
+allow unchanged broken references on unrelated commits; staging the projector itself
+requires all references to resolve. Ordinary projection/check commands remain strict.
+Public instruction routes, README links, and symlink targets
+must resolve within the filtered output.
 
 Keep source-only Markdown guidance in complete paragraphs or sections between standalone
 `<!-- public-config:omit -->` and `<!-- /public-config:omit -->` lines. The helper removes

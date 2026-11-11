@@ -156,7 +156,7 @@ Start with the instruction stack before copying client settings:
 - [`AGENTS.md`](AGENTS.md) is this checkout's repository-level agent file, not the
   shared client workflow.
 - [`.codex/MAIN.md`](.codex/MAIN.md) covers coordination and delegation;
-  [`.codex/REVIEW.md`](.codex/REVIEW.md) covers delivery checks and review after implementation;
+  [`.codex/FINISHING.md`](.codex/FINISHING.md) covers question-specific independent review;
   [`.codex/IMPLEMENTATION.md`](.codex/IMPLEMENTATION.md) covers implementation craft,
   [`.codex/TESTING.md`](.codex/TESTING.md) covers validation and regression evidence,
   and [`.codex/DOCS.md`](.codex/DOCS.md) covers reader-document purpose and consistency.
