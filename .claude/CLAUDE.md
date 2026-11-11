@@ -109,6 +109,7 @@ Complete text already supplied satisfies the read; a path or summary does not.
   configuration repository. Settings exclude it from automatic loading so that projects below
   home neither receive it nor lose their own `AGENTS.md`.
 
+
 ## Skills and tools
 
 Assume all my machines have identical setups and all tools mentioned or expected by the project

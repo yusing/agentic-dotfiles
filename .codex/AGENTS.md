@@ -72,6 +72,7 @@ Read these owners when their operation applies and their guidance is absent from
 - `HANDOFF.md`: read when mentioned. Only main resuming its task deletes it after consumption;
   delegates retain assigned handoffs.
 
+
 ## Skills and tools
 
 Assume all my machines have identical setups and all tools mentioned or expected by the project

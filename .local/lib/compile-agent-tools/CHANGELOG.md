@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.22
+
+Build the project-scoped Herdr work-board CLI.
+
 ## 1.0.21
 
 Build the Codex and Claude AI usage status helper.
