@@ -160,32 +160,8 @@
         "locator": "mattpocock/skills/retro"
       }
     },
-    "rust-async-patterns": {
-      "enabled": "lang rust",
-      "remote": {
-        "provider": "skills.sh",
-        "id": "wshobson/agents/rust-async-patterns",
-        "name": "rust-async-patterns",
-        "locator": "wshobson/agents/rust-async-patterns"
-      }
-    },
-    "rust-best-practices": {
-      "enabled": "lang rust",
-      "remote": {
-        "provider": "skills.sh",
-        "id": "apollographql/skills/rust-best-practices",
-        "name": "rust-best-practices",
-        "locator": "apollographql/skills/rust-best-practices"
-      }
-    },
-    "rust-patterns": {
-      "enabled": "lang rust",
-      "remote": {
-        "provider": "SkillsMP",
-        "id": "affaan-m-ecc-docs-es-skills-rust-patterns-skill-md",
-        "name": "rust-patterns",
-        "locator": "https://github.com/affaan-m/ECC/tree/main/docs/es/skills/rust-patterns"
-      }
+    "rust-reliability": {
+      "enabled": "lang rust"
     },
     "scriptc-compiler": {
       "enabled": "lang ts"

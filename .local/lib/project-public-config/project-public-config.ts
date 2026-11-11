@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.33";
+export const VERSION = "1.3.34";
 
 type TreeEntry = {
 	mode: string;
@@ -249,6 +249,7 @@ const PROJECTED_SKILL_NAMES = [
 	"new-agent-session",
 	"new-project",
 	"postgres-17-18-features",
+	"rust-reliability",
 	"scriptc-compiler",
 	"shadcn",
 	"shadowtree",

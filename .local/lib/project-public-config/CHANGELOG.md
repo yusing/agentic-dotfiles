@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.34
+
+Publish the curated local Rust reliability skill and its conditional selection.
+
 ## 1.3.33
 
 Publish missing Codex and Claude routing/frontend instruction owners and the README-linked WezTerm configuration. Validate public instruction routes, README links, and symlink targets; add read-only revision and index check modes for pre-commit, including reference-regression checks for unrelated commits.

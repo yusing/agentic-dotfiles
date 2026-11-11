@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "061f7015c5c08e1c9bb1d0f988d84e6857715298",
+  "sourceCommit": "3100ccf618e5e6ba479d533a32319d9114312161",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -694,7 +694,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "089b77f42b0d5e8d746c2abcc2f6aea639a0e87bef9d232c69237adab5a07d1a",
+      "sha256": "2521a2f838ba6230beaf1e538253fab6af87e9f6ed21f58a2846da033e489fe2",
       "executable": false
     },
     {
@@ -813,13 +813,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "64e14be73fcc00d1e97ca71dd05bd8ba35e0f3eda6be1274f1d776a83127b517",
+      "sha256": "d8b2cd4d3eb4c69d223965325115cfc3b3c6dfa9b2fadf45e6fef89e26bba786",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "6b9d6c9f61fe8d8e89547d6ad883381adbc68f521c7ab444937ca9ca9be1b215",
+      "sha256": "74e49d162820215481325190721c7968834492dc5cea0ca77462da98a975330b",
       "executable": true
     },
     {
@@ -933,7 +933,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "9912fe71ed3df7b8ded9a5c7ba96a8d16f7b6b3c2f46900f75aef2b7a70c769c",
+      "sha256": "637ed480a0a60219857af9f3c7686656138cc945420f12fcc9b31d877d6cc826",
       "executable": false
     },
     {
@@ -1240,6 +1240,12 @@
       "path": ".skills-mgr/skills/postgres-17-18-features/SKILL.md",
       "kind": "file",
       "sha256": "85fe1a997d7af6c19f4132675b69bdffc4138849ef004ba6d278e5fc6e29cf93",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/rust-reliability/SKILL.md",
+      "kind": "file",
+      "sha256": "bb5f7de1b9d6a4a46d3da750c0f6bb5c12fca818d7c1227c2ea70b6dc6e84dc3",
       "executable": false
     },
     {
