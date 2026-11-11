@@ -24,6 +24,7 @@ For component-only changes, match the surrounding design.
 
 ## Unaccepted UI approaches
 
+- Refresh buttons: Keep displayed data up to date automatically; do not make users click to refresh.
 - "Load More": Loading should be automatic when near the edge.
 - "Loading" text: Use skeleton to represent loading instead.
 - Periodic fetch (polling): UI states should be server-pushed, not client pulled.
