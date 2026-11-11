@@ -22,6 +22,8 @@ the two never compete for the same decision.
 
 For component-only changes, match the surrounding design.
 
+Prefer elevation and visual separation without borders or large gaps.
+
 ## Unaccepted UI approaches
 
 - Refresh buttons: Keep displayed data up to date automatically; do not make users click to refresh.
