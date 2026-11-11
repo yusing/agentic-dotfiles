@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.34";
+export const VERSION = "1.3.35";
 
 type TreeEntry = {
 	mode: string;
@@ -209,6 +209,11 @@ const EXACT_PATHS = new Set([
 	".local/lib/compile-agent-tools/CHANGELOG.md",
 	".local/lib/tmp-clean/tmp_clean.ts",
 	".local/lib/tmp-clean/CHANGELOG.md",
+	".local/lib/disk-clean/disk-clean.ts",
+	".local/lib/disk-clean/rust-cache.ts",
+	".local/lib/disk-clean/go-cache.ts",
+	".local/lib/disk-clean/CHANGELOG.md",
+	".local/lib/disk-clean/README.md",
 	".local/lib/skills-maintenance/skills-maintenance.ts",
 	".local/lib/skills-maintenance/repair-prompt.ts",
 	".local/lib/skills-maintenance/CHANGELOG.md",

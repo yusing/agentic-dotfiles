@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.22";
+const VERSION = "1.0.23";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -222,7 +222,7 @@ function main(): void {
     const output = join(localBin, name);
     const digest = digestInputs(
       `bun=${bunIdentity} target=${target} flags=build--compile`,
-      [dirname(source), bunConfig],
+      [dirname(source), bunConfig, ...(name === "disk-clean" ? [join(localLib, "tmp-clean")] : [])],
     );
     const state = join(cacheRoot, `${name}.digest`);
     if (isExecutable(output) && storedDigest(state) === digest) return;
@@ -260,6 +260,7 @@ function main(): void {
     ["herdr-ai-usage", "herdr-ai-usage"],
     ["herdr-work-board", "herdr-work-board"],
     ["tmp-clean", "tmp_clean"],
+    ["disk-clean", "disk-clean"],
     ["scc-prod", "scc-prod"],
     ["scc-prod", "git-diffstat"],
     ["sync-claude-agent-ports", "sync-claude-agent-ports"],

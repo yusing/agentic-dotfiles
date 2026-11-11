@@ -289,40 +289,7 @@ disk-usage() {
 }
 
 disk-clean() {
-    local before after
-    before=$(disk-usage)
-    # Prefer a three-day cutoff where the cleaner supports age filtering.
-    _zfm_command_exists docker && docker builder prune --all --force --filter until=72h
-    if _zfm_command_exists find && _zfm_command_exists bun; then
-        find "$HOME/projects" -type f -name package.json 2>/dev/null \
-            | grep -v node_modules \
-            | xargs -r -n1 dirname \
-            | xargs -r -I {} bun pm --cwd {} cache rm >/dev/null 2>&1
-        bun pm -g cache rm
-    fi
-    _zfm_command_exists uv && uv cache clean
-    _zfm_command_exists pip && pip cache purge
-    _zfm_command_exists npm && npm cache clean --force
-    _zfm_command_exists deno && deno clean
-    _zfm_command_exists dotslash && dotslash -- clean
-    _zfm_command_exists golangci-lint && golangci-lint cache clean
-    _zfm_command_exists tldr && tldr --clean-cache
-    _zfm_command_exists oh-my-posh && oh-my-posh cache clear
-    if _zfm_command_exists go; then
-        local go_cache
-        go_cache=$(go env GOCACHE)
-        if [[ -d "$go_cache" ]]; then
-            # Entry mtimes track use with up to one hour of lag, including executable directories.
-            find -H "$go_cache" -mindepth 2 -maxdepth 2 \( -name '*-a' -o -name '*-d' \) \
-                -mmin +4380 -exec rm -rf -- {} +
-        fi
-        go clean -fuzzcache
-    fi
-    _zfm_command_exists journalctl && sudo journalctl --vacuum-size=500M --vacuum-time=3d >/dev/null 2>&1
-    _zfm_command_exists yay && yes | yay -Sc >/dev/null 2>&1
-    _zfm_command_exists brew && brew cleanup --prune=3
-    after=$(disk-usage)
-    print -- "$before -> $after"
+    command disk-clean "$@"
 }
 
 mkcd() {

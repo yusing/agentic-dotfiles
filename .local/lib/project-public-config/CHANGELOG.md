@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.35
+
+Publish the shared disk-clean helper sources and usage contract required by the
+Fish and Zsh entry points.
+
 ## 1.3.34
 
 Publish the curated local Rust reliability skill and its conditional selection.

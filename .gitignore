@@ -175,6 +175,12 @@ __pycache__
 !/.local/lib/compile-agent-tools/
 !/.local/lib/compile-agent-tools/CHANGELOG.md
 !/.local/lib/compile-agent-tools/compile-agent-tools.ts
+!/.local/lib/disk-clean/
+!/.local/lib/disk-clean/CHANGELOG.md
+!/.local/lib/disk-clean/disk-clean.ts
+!/.local/lib/disk-clean/go-cache.ts
+!/.local/lib/disk-clean/README.md
+!/.local/lib/disk-clean/rust-cache.ts
 !/.local/lib/herdr-ai-usage/
 !/.local/lib/herdr-ai-usage/CHANGELOG.md
 !/.local/lib/herdr-ai-usage/herdr-ai-usage.ts

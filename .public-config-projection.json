@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b1d9bc869a40296a2c2c682e29b6a062a9916a23",
+  "sourceCommit": "bec2071d8eb1b755f16ab5f9d480d217e0b84d1a",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -460,7 +460,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "18f7edc76ca08db39265dee8955fcc5769435f4ed48f5e8a6050d47598c5259c",
+      "sha256": "156a414a44a34cee93f9b6af728cf637178b9ff86540e705e4a08a3766c795ca",
       "executable": false
     },
     {
@@ -694,7 +694,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "2521a2f838ba6230beaf1e538253fab6af87e9f6ed21f58a2846da033e489fe2",
+      "sha256": "329b1d625e14d84320b2a2c8743189ce6f1d5f763429d093ebfb31676289ffdf",
       "executable": false
     },
     {
@@ -789,13 +789,43 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "eca4a57b164ece3e12b8436e7b3d1c778e71abfd6f4f8c68e695da0609a966a0",
+      "sha256": "dc09d068211c886fd53716f0fb221f7fb8b34df150614360d85b131ac731f7c8",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "18759e1e53b9a05f4b525fdabe8dd5bbea63d8e2615444a1955717f7bd3bc39a",
+      "sha256": "43abfa92abaa149e52365f38411ecd968aec04e9c3fd16dd978d47d6acc588f9",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/disk-clean/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "9a4d4ded84d940292ea41226a0ab6bafd378d30f2186ef91056eb88f0837b159",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/disk-clean/disk-clean.ts",
+      "kind": "file",
+      "sha256": "b9826770c24e45c1dbba1ccb153c9fa731de25cd908339796e32c89cfadaffce",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/disk-clean/go-cache.ts",
+      "kind": "file",
+      "sha256": "0e37de669d72d0da9bb9a0407a3cb287e90e0e876b94c19a4ab8198dd0766a34",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/disk-clean/README.md",
+      "kind": "file",
+      "sha256": "d538c6c7d51c4e6f2ee033b74c8985b07fbd73e8170b917baa793e97f1c1d789",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/disk-clean/rust-cache.ts",
+      "kind": "file",
+      "sha256": "ca1aae48a0d3c19717d3c95932ba10cea67022f4dfea86475140037830814ae9",
       "executable": false
     },
     {
@@ -813,13 +843,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "d8b2cd4d3eb4c69d223965325115cfc3b3c6dfa9b2fadf45e6fef89e26bba786",
+      "sha256": "d13f902afb0270b3bccccdb9d355c74e4575543dfbfb9025a69a07cc92fe0f83",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "74e49d162820215481325190721c7968834492dc5cea0ca77462da98a975330b",
+      "sha256": "b5e53340ac82f918e6220648ea7dea433bc8dea78f139b1c4ae2c2b4b687c312",
       "executable": true
     },
     {
@@ -909,13 +939,13 @@
     {
       "path": ".local/lib/tmp-clean/CHANGELOG.md",
       "kind": "file",
-      "sha256": "f17fcead785cda3116c85315ee7c86e853515620b92ac7a11137584f1815fd9e",
+      "sha256": "76e275ea7b63763d5b101fd65a1ca6d5dbdc14d213d8388e343af22e53bf9321",
       "executable": false
     },
     {
       "path": ".local/lib/tmp-clean/tmp_clean.ts",
       "kind": "file",
-      "sha256": "c5eab3bccf3f463865660cd0500f973e0a00f589a6a6eea6fad025e2909fe63a",
+      "sha256": "59da2d0d07f6a4e8718304c414d16848236647c04fe53bc32ef2982f95d438a8",
       "executable": false
     },
     {
@@ -1485,7 +1515,7 @@
     {
       "path": ".zsh/fish-mirror.zsh",
       "kind": "file",
-      "sha256": "a55457b57a1585bc40b623bf57c822b800e044207e3663cc75a2610d97ac1ea3",
+      "sha256": "508727187948ddd640a5f6b7a24ad4f9e9ffddc6f29d6178cef34ec89aed0ff6",
       "executable": false
     },
     {

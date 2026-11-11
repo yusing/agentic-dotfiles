@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.23
+
+Build the shared disk-clean helper alongside its temporary-cleanup dependency.
+Track the shared mount guard's source when rebuilding disk-clean.
+
 ## 1.0.22
 
 Build the project-scoped Herdr work-board CLI.
