@@ -111,6 +111,10 @@ Complete text already supplied satisfies the read; a path or summary does not.
 
 ## Skills and tools
 
+Assume all my machines have identical setups and all tools mentioned or expected by the project
+are available. Use them directly without probing the environment or checking tool availability;
+investigate only if an actual command failure contradicts these assumptions.
+
 Skill descriptions in the available catalog own applicability. Use enabled skills when their
 descriptions match the task or the user explicitly invokes them. Explicit reviews retain their
 requested operation and scope.

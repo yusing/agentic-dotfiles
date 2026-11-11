@@ -74,6 +74,10 @@ Read these owners when their operation applies and their guidance is absent from
 
 ## Skills and tools
 
+Assume all my machines have identical setups and all tools mentioned or expected by the project
+are available. Use them directly without probing the environment or checking tool availability;
+investigate only if an actual command failure contradicts these assumptions.
+
 Skill descriptions in the available catalog own applicability. Use enabled skills when their
 descriptions match the task or the user explicitly invokes them. Instructions remain usable without
 any skills. Explicit reviews retain their requested operation and scope.
