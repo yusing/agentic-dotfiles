@@ -172,12 +172,12 @@ backend = "go:golang.org/x/tools/cmd/deadcode"
 specifiers = ["latest"]
 
 [[tools."npm:@kilocode/cli"]]
-version = "7.8.18"
+version = "7.8.27"
 backend = "npm:@kilocode/cli"
 specifiers = ["latest"]
 
 [[tools."npm:@tailwindcss/cli"]]
-version = "4.3.4"
+version = "4.3.5"
 backend = "npm:@tailwindcss/cli"
 specifiers = ["latest"]
 
@@ -187,17 +187,17 @@ backend = "npm:@trunkio/launcher"
 specifiers = ["latest"]
 
 [[tools."npm:agent-browser"]]
-version = "0.41.2"
+version = "0.42.0"
 backend = "npm:agent-browser"
 specifiers = ["latest"]
 
 [[tools."npm:ccstatusline"]]
-version = "2.2.33"
+version = "2.2.34"
 backend = "npm:ccstatusline"
 specifiers = ["latest"]
 
 [[tools."npm:ctx7"]]
-version = "0.9.0"
+version = "0.11.0"
 backend = "npm:ctx7"
 specifiers = ["latest"]
 
@@ -207,7 +207,7 @@ backend = "npm:markdownlint-cli"
 specifiers = ["latest"]
 
 [[tools."npm:oxlint-tsgolint"]]
-version = "7.0.2005"
+version = "7.0.2006"
 backend = "npm:oxlint-tsgolint"
 specifiers = ["latest"]
 
@@ -222,7 +222,6 @@ backend = "npm:scriptc"
 specifiers = ["0.4.10"]
 
 [[tools."npm:vite"]]
-version = "8.3.5"
+version = "8.3.7"
 backend = "npm:vite"
 specifiers = ["latest"]
-
