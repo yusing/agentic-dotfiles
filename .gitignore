@@ -97,6 +97,7 @@ __pycache__
 !/.config/ghostty/config
 !/.config/herdr/
 !/.config/herdr/config.toml
+!/.config/herdr/status.changelog.md
 !/.config/herdr/status.sh
 !/.config/hunk/
 !/.config/hunk/config.toml
@@ -167,6 +168,9 @@ __pycache__
 !/.local/lib/compile-agent-tools/
 !/.local/lib/compile-agent-tools/CHANGELOG.md
 !/.local/lib/compile-agent-tools/compile-agent-tools.ts
+!/.local/lib/herdr-ai-usage/
+!/.local/lib/herdr-ai-usage/CHANGELOG.md
+!/.local/lib/herdr-ai-usage/herdr-ai-usage.ts
 !/.local/lib/project-public-config/
 !/.local/lib/project-public-config/CHANGELOG.md
 !/.local/lib/project-public-config/project-public-config.ts

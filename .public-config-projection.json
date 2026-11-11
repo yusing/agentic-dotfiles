@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7d528aac608713dc9a73eaba495789858d73d3a8",
+  "sourceCommit": "f63db8169472dd35053c9e6552aa946336e40dfa",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -453,6 +453,12 @@
       "executable": false
     },
     {
+      "path": ".config/herdr/status.changelog.md",
+      "kind": "file",
+      "sha256": "83013547fe641a3506bb97ba9f619c3c3a1d1b50888d998a503826da91b62e6c",
+      "executable": false
+    },
+    {
       "path": ".config/herdr/status.sh",
       "kind": "file",
       "sha256": "b0744222aadd6dcccc5acf74697dfd6748c12bc0892c261639a347be02b64a32",
@@ -653,7 +659,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "be0b8fee9d31c5afe45ccac7a5d3700a3098ac3fe1e4969259d5270ea819df9d",
+      "sha256": "83e998c07f8ddf5e533cb09df7d39ce9703d986ffee0de32129fe6b1c5c1ef9d",
       "executable": false
     },
     {
@@ -755,6 +761,18 @@
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
       "sha256": "6577b1bc47671974f52af2e9671f2453146da28f98421a90df33b7987d1dce50",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/herdr-ai-usage/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "c187d575122090ead28512ca358e5f12684a2c267fd5a845a7866aa57d5f92aa",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/herdr-ai-usage/herdr-ai-usage.ts",
+      "kind": "file",
+      "sha256": "92348dede18c88a997afde28ccc6f40ac266244d2aa957e46589402f43d5de86",
       "executable": false
     },
     {
