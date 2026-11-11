@@ -30,4 +30,16 @@ Prefer elevation and visual separation without borders or large gaps.
 - "Load More": Loading should be automatic when near the edge.
 - "Loading" text: Use skeleton to represent loading instead.
 - Periodic fetch (polling): UI states should be server-pushed, not client pulled.
-- Descriptive texts everywhere: Let the layout express itself. It is wrong if it can't.
+
+## Content discipline
+
+- Center each screen on the user's task, data, and actions. Do not turn implementation notes,
+  validation caveats, or absent features into prominent UI sections.
+- Keep copy that helps users decide or act. Remove narration of obvious interface structure,
+  redundant headings, and unsolicited lists of what the app does not require or support.
+- Put detailed methodology and assumptions behind a clearly named disclosure or documentation
+  link. Keep material limitations visible beside the affected result, stated briefly.
+- Place explanations at the relevant interaction: file-handling information by the file picker,
+  metric definitions by the metric, and errors by the failed action.
+- Size sections to their content and importance. A report name or one-line status belongs in a
+  compact row, not a large introductory panel.

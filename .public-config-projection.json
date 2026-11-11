@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "cc83e7cdd77092dd3e6d0ec125427d6f3435edb7",
+  "sourceCommit": "b1d9bc869a40296a2c2c682e29b6a062a9916a23",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -220,7 +220,7 @@
     {
       "path": ".codex/FRONTEND.md",
       "kind": "file",
-      "sha256": "90070b35ad6ce607da2037e171615f378acffe24b99e4d4ecb2839ecd37278b9",
+      "sha256": "86abe9922943527c5422a9fcf19dffcf0c44e270ad0556bf744b33c6265b414d",
       "executable": false
     },
     {
