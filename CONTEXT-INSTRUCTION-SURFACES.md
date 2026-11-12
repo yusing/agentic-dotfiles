@@ -36,9 +36,9 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `CONTEXT-*.md`
 - `.codex/config.toml` (base prompt, compaction prompt, and client settings)
 - `.codex/AGENTS.md`
-- `.codex/GITHUB.md`
+- `.codex/GITHUB.md` (client-neutral; `.claude/instructions/GITHUB.md` symlinks to it)
 - `.codex/FRONTEND.md` (client-neutral; `.claude/instructions/FRONTEND.md` symlinks to it)
-- `.codex/MAIN.md`
+- `.codex/MAIN.md` (client-neutral; `.claude/instructions/MAIN.md` symlinks to it)
 - `.codex/DELEGATION.md`
 - `.codex/MODEL-ROUTING.md`
 - `.codex/SUBAGENT.md`
@@ -46,7 +46,7 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `.codex/TASK-FILE.md` (client-neutral; `.claude/instructions/TASK-FILE.md` symlinks to it)
 - `.codex/FINISHING.md` (client-neutral; `.claude/instructions/FINISHING.md` symlinks to it)
 - `.codex/TESTING.md` (client-neutral; `.claude/instructions/TESTING.md` symlinks to it)
-- `.codex/DOCS.md`
+- `.codex/DOCS.md` (client-neutral; `.claude/instructions/DOCS.md` symlinks to it)
 - `.codex/INSTRUCTION-AUTHORING.md`
 - `.codex/SKILL-AUTHORING.md`
 - `.codex/overridden_base_instructions.md`

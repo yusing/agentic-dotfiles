@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "26bd220f2805312c733f2a043770854cd49ad662",
+  "sourceCommit": "e50be769589ca1bdb0f92a3fb228db41a67a4ea0",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -71,14 +71,13 @@
     {
       "path": ".claude/instructions/DELEGATION.md",
       "kind": "file",
-      "sha256": "fd728c135fb3e17d5e55a0c8d3ccc71d90e7f87e5b06593b2451ea6cfbf54821",
+      "sha256": "dd72c440641afe7f6aa9f1b6eb75096ceb040eafbcdf9277d97921539088ae10",
       "executable": false
     },
     {
       "path": ".claude/instructions/DOCS.md",
-      "kind": "file",
-      "sha256": "1172edc51199e57dd2413aa7b5a2bdea9c833a26f18d3cd727c043500a48b20d",
-      "executable": false
+      "kind": "symlink",
+      "target": "../../.codex/DOCS.md"
     },
     {
       "path": ".claude/instructions/FINISHING.md",
@@ -92,9 +91,8 @@
     },
     {
       "path": ".claude/instructions/GITHUB.md",
-      "kind": "file",
-      "sha256": "a945d852effcf0ae1e8829e2fdbd23589b316a1919398e650b0d0d85b99212a4",
-      "executable": false
+      "kind": "symlink",
+      "target": "../../.codex/GITHUB.md"
     },
     {
       "path": ".claude/instructions/IMPLEMENTATION.md",
@@ -104,14 +102,13 @@
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "72390e2397cd7de6b3e08f9f469f1f287782b8e4fde0f6974eae954568868d31",
+      "sha256": "d80dd7e403b6911b0cbb3ed32930f2ef5d37b1d901c2d430d1e4caaebd67d62f",
       "executable": false
     },
     {
       "path": ".claude/instructions/MAIN.md",
-      "kind": "file",
-      "sha256": "8b3502d37cff72e69b993dc5915d5c16d9801fff98cc9ac42cb54f2b65a63200",
-      "executable": false
+      "kind": "symlink",
+      "target": "../../.codex/MAIN.md"
     },
     {
       "path": ".claude/instructions/MODEL-ROUTING.md",
@@ -128,7 +125,7 @@
     {
       "path": ".claude/instructions/SUBAGENT.md",
       "kind": "file",
-      "sha256": "77ba4ac65091d5388ebd675de4784ff8936550ff64f22506f5c4ea7e5110f190",
+      "sha256": "c728cbfde8beec7c7ac66c80140c87da0098aa8043bbe2797d5268cf20c364c1",
       "executable": false
     },
     {
@@ -1570,7 +1567,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "e90bac0b3dd70d556fcc795503b6d6e7a06b2cf562f6d2bd66d6121f59dbdc88",
+      "sha256": "6ee1426cea7daa2b12ace748fbb9930dcd2e451a4af9f938510d70bd82b7de8d",
       "executable": false
     },
     {

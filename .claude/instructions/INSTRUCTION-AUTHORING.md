@@ -118,7 +118,7 @@ explanation before moving or strengthening the same fix.
 
 Trace affected main and subagent paths, applicable instructions, pointers, and generated consumers.
 For renames, align paths, references, metadata, selection, tests, and allowlists, and keep
-historical names in records. Regenerate from authoritative sources. Shared ownership, port
+historical names in records. Regenerate authorized consumers from authoritative sources. Shared ownership, port
 mappings, and drift checks do not authorize changes to another client's settings. Propagate shared
 instruction changes to affected consumers that do not already receive the owning layer; keep model,
 effort, and other client-specific changes within the requested client, and report excluded drift
