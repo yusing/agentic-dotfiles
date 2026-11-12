@@ -88,8 +88,7 @@ methods. If a required tool/method is unavailable, stop only dependent work; reu
 install approval, or ask. Missing automatic skills alone do not block routine work.
 
 Honor pinned dependencies; otherwise verify the latest compatible stable release from registry or
-package-manager metadata. `rtk` is installed; apply it to noisy producers; use raw execution for exact output,
-redirection, or changed argument semantics. Extract fields or bounded bytes from binary, minified,
+package-manager metadata. Extract fields or bounded bytes from binary, minified,
 or generated data and reuse unchanged scans.
 
 Explicit reviews state scope beyond pending changes and distinguish source inspection from missing

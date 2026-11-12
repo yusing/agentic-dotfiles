@@ -1,6 +1,17 @@
 {
   "hooks": {
-    "PreToolUse": [],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "rtk hook codex",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "^Bash$"
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [

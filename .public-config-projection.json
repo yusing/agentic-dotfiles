@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6e83c6064c7a86da7502217b6a10ad8f3d0d0276",
+  "sourceCommit": "38a0d54487b3e648e152244b8d1bf910416eafc0",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,7 +65,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "a5cf835a4477e7ae455c895aed41222d71eccc029642d2094478f8b3dd7ed48d",
+      "sha256": "c07a1194bece4c4c8f4d7edd76e85305c0f224fbccfdbb84fc6c487a3fc21266",
       "executable": false
     },
     {
@@ -147,7 +147,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "f582d5788e5280325139739b8def032c49e6baaf52134dfc7bb36c545f9909d6",
+      "sha256": "f72fcb43c5f11af4dd2c713829b8b7c855bb4d7e90410a54dc210dbad0b85487",
       "executable": false
     },
     {
@@ -231,7 +231,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "d13ae89f4d0f9c55dc5bfd45c545864b3d1e76f3bc03b82dc90a04985b4d10e5",
+      "sha256": "6635ae652fff12a809530677b7dd471a99c352f0573506719f92c691db56e9b3",
       "executable": false
     },
     {
@@ -1531,7 +1531,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "c06045c09a615337352b23dc61b6910366888752551618901c83fe65954f39f8",
+      "sha256": "ce502763a164b267b7c60eb0bc8ffbccc96ef249189b4fee62213706aa5e4722",
       "executable": false
     },
     {
@@ -1561,7 +1561,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "08f83288d63a0f5e3cbe361d8eed9d23541c1686dc308290dd9726f4977c12bb",
+      "sha256": "8d67a7af8d4435967d71bd00bdc1bd01a110c3da8349ab2fdfb54addb6b51d94",
       "executable": false
     },
     {

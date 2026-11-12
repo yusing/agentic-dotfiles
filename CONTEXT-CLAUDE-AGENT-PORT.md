@@ -76,8 +76,9 @@ command boundary rests on the role body alone.
 for re-enabling.
 
 A `PreToolUse` hook on `Bash` runs `rtk hook claude`, which rewrites supported commands to their
-`rtk` form. Under auto mode a rewritten call can be refused until the agent resubmits it, which is
-why `.claude/CLAUDE.md` tells agents to write the `rtk` form themselves.
+`rtk` form. Codex registers the equivalent `rtk hook codex` in `.codex/hooks.json`. The hook owns
+the rewrite; standing guidance carries no `rtk` usage rule. Under auto mode a rewritten call can be
+refused until the agent resubmits it.
 
 ## Session start
 

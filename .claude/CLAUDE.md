@@ -60,8 +60,8 @@ choosing it. Preserve explicit limits; general applicability does not request ex
 ## Context and completion
 
 Do not treat a truncated read as complete evidence. Continue ranged reads until the instruction,
-skill, or diff content you need is covered. Use `rtk` or exact-field filters to cut noise; reserve
-line windows for bounded exploration where omitted rows cannot change the next action.
+skill, or diff content you need is covered. Use exact-field filters to cut noise; reserve line
+windows for bounded exploration where omitted rows cannot change the next action.
 
 Report problems you find during requested work or while reading relevant code and documentation,
 including ones outside the requested scope; reporting does not widen what you search, read, or fix.
@@ -137,11 +137,7 @@ reuse an approval I already gave for a substitute or install, or ask. A missing 
 alone does not block routine work.
 
 Honor explicit dependency versions. Otherwise, verify the latest compatible stable release from
-registry or package-manager metadata, since remembered versions go stale. A hook rewrites
-supported Bash commands to their `rtk` form, which can summarize or hide lines. Auto mode can refuse
-a call the hook rewrote until it is resubmitted, so write `rtk` yourself before each command it
-handles, such as `git`, `ls`, `grep`, `find`, and `wc`. When you need exact output,
-run `rtk bypass <command>` or fetch elided lines with the printed `rtk recall` id. For binary,
+registry or package-manager metadata, since remembered versions go stale. For binary,
 minified, or generated data, extract exact fields or bounded bytes, and reuse unchanged scans.
 
 Shell text is code: quote it for the shell that runs it, and keep secrets out of command

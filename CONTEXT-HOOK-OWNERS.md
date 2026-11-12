@@ -58,3 +58,7 @@
   `.claude/settings.json`, or `.grok/hooks/codex-port.json`; OMP inherits the
   Codex registrations. The `.codex/hooks/bin/go_quality` implementation and
   Grok adapter support remain available for re-enabling.
+- Command compression: `.codex/hooks.json` registers `rtk hook codex` on `^Bash$`
+  `PreToolUse`, and `.claude/settings.json` registers `rtk hook claude` on `Bash`. The
+  external `rtk` binary owns which commands it rewrites; standing guidance carries no `rtk`
+  usage rule.
