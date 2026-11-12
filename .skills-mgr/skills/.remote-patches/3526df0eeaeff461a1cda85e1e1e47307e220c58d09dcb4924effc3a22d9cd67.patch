@@ -1,5 +1,5 @@
-# skills-mgr-base-sha256 ef7c2da16e25e86b78396bd9a2fd112e23c42cdd2de435197a920b9fc646d1c2
-# skills-mgr-result-sha256 9083a7871a048fe7d1011c468f1cc9a950c0014016f9804d90597274c95a47bd
+# skills-mgr-base-sha256 60b28db5b700320c51d2b9f69f101631b753156fccee99f57af7c3a37aeaf9f8
+# skills-mgr-result-sha256 68e2e716de2c3095d308cddff529089ef3561dc29b21cc5260af9aa1d8c4551f
 --- a/SKILL.md
 +++ b/SKILL.md
 @@ -1,6 +1,6 @@
@@ -10,7 +10,7 @@
  allowed-tools: Bash(agent-browser:*)
  hidden: true
  ---
-@@ -45,6 +45,4 @@
+@@ -46,6 +46,4 @@
  - Fast native Rust CLI, not a Node.js wrapper
  - Works with any AI agent (Cursor, Claude Code, Codex, Continue, Windsurf, etc.)
  - Chrome/Chromium via CDP with no Playwright or Puppeteer dependency
