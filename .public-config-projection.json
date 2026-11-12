@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "405ac548b5141c9ad79f75ab45fd3618ffdf2d59",
+  "sourceCommit": "4cd7959545a4e799e3be11294dbd7a7639e2aab8",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -706,7 +706,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "2002f27b128fdf0d5e82b1ed39efb4fa63f41e3ff3240b752fc25303a04f94ee",
+      "sha256": "ae137a9f1731235d190554aa36f5882a7215dc3de54d4f2f5f2561dc64d207d8",
       "executable": false
     },
     {
@@ -975,7 +975,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "ba4f8a143cc0826f2f2bc56484dc2cd8804d05b7d47499506802b333da836ebf",
+      "sha256": "9ab40e15cb7bcd3a98ae925da1dfc58935828f7f22439ef47eac6c9de46e048c",
       "executable": false
     },
     {
@@ -1096,18 +1096,6 @@
       "path": ".skills-mgr/skills/council/SKILL.md",
       "kind": "file",
       "sha256": "fd2a027a41c8550a9e9847463bb306cfc888210f75cb1da3c0b4734d66971b82",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/deliver-vertical-slice/agents/openai.yaml",
-      "kind": "file",
-      "sha256": "21db7b9c54016c26afd0f773ccad6ec379f84d79ef17ba94298b1935a0d7cc74",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/deliver-vertical-slice/SKILL.md",
-      "kind": "file",
-      "sha256": "99c4b859325ac37b6720d898bfc14fe791d414eef2c215378347a493032de400",
       "executable": false
     },
     {
@@ -1240,18 +1228,6 @@
       "path": ".skills-mgr/skills/new-agent-session/SKILL.md",
       "kind": "file",
       "sha256": "ba29a28c96bd687d543c42161a95b074aecf35eff509b232a42a4fffde8bc54f",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/new-project/agents/openai.yaml",
-      "kind": "file",
-      "sha256": "29c4e51059ea4b8c5ec467462d6f19c28be72361a7eaf93e41092beef6b62be6",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/new-project/SKILL.md",
-      "kind": "file",
-      "sha256": "f4bc269e0fd6a3f1dbf776395c05264a7c9b80f84055198975b5f7c1e73dd92d",
       "executable": false
     },
     {

@@ -46,9 +46,6 @@
     "council": {
       "enabled": true
     },
-    "deliver-vertical-slice": {
-      "enabled": true
-    },
     "design-taste-frontend": {
       "enabled": "lang tsx || lang jsx || lang html || lang css || [ \"$PWD\" == \"$HOME\" ]",
       "remote": {
@@ -143,9 +140,6 @@
       "enabled": "(lang js || lang ts) && has_dependency juststore"
     },
     "new-agent-session": {
-      "enabled": true
-    },
-    "new-project": {
       "enabled": true
     },
     "openai-docs": {

@@ -249,10 +249,6 @@ __pycache__
 !/.skills-mgr/skills/council/agents/
 !/.skills-mgr/skills/council/agents/openai.yaml
 !/.skills-mgr/skills/council/SKILL.md
-!/.skills-mgr/skills/deliver-vertical-slice/
-!/.skills-mgr/skills/deliver-vertical-slice/agents/
-!/.skills-mgr/skills/deliver-vertical-slice/agents/openai.yaml
-!/.skills-mgr/skills/deliver-vertical-slice/SKILL.md
 !/.skills-mgr/skills/deslop/
 !/.skills-mgr/skills/deslop/SKILL.md
 !/.skills-mgr/skills/go-json-v2/
@@ -292,10 +288,6 @@ __pycache__
 !/.skills-mgr/skills/new-agent-session/scripts/preflight.py
 !/.skills-mgr/skills/new-agent-session/scripts/test_preflight.py
 !/.skills-mgr/skills/new-agent-session/SKILL.md
-!/.skills-mgr/skills/new-project/
-!/.skills-mgr/skills/new-project/agents/
-!/.skills-mgr/skills/new-project/agents/openai.yaml
-!/.skills-mgr/skills/new-project/SKILL.md
 !/.skills-mgr/skills/postgres-17-18-features/
 !/.skills-mgr/skills/postgres-17-18-features/agents/
 !/.skills-mgr/skills/postgres-17-18-features/agents/openai.yaml
