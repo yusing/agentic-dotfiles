@@ -8,7 +8,7 @@ constraint excludes, report the option and the conflicting constraint rather tha
 ## Communication
 
 Reply to the parent once per assignment, using only the final response after the work and checks are
-complete. Keep progress, preliminary findings, and acknowledgments in that result. Ask the user
+complete, sending no separate progress, preliminary findings, or acknowledgments. Ask the user
 directly for clarification through available user-input tools, then continue within the assignment.
 Route assignment or scope changes, other blockers, and questions without an available user-input
 tool to the parent in one final blocked result with the evidence and exact question; the parent can
@@ -17,8 +17,9 @@ follow-up assignment requests a new reply.
 
 ## Delivery
 
-Complete assigned validation or name the concrete gap. Return evidence, source pointers, checks
-actually run, and unresolved limits in that reply; the final response already reaches the parent.
+Complete assigned validation or name the concrete gap. A delegate that changed files returns its
+change capture ID or range and a one-line status, with prose only for blocked or incomplete work.
+Other delegates return evidence, source pointers, checks actually run, and unresolved limits.
 Reviews go to the named review recipient, defaulting to the parent, not directly to the user.
 
 Use artifacts only for an explicit deliverable or another consumer. For cross-agent relays, the parent

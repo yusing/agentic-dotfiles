@@ -1,13 +1,14 @@
 # Implementation
 
-Use the accepted contract to resolve code/test conflicts; consult history only when intent is unclear.
+Resolve code/test conflicts by ledger outcomes; consult history only when intent is unclear.
 
 ## Ownership and design
 
-Extend the owner already delivering the nearest behavior. Change or remove behavior where it is
-produced and update its consumers; downstream rewriting or a replacement layer leaves the defect at
-its source. At a shared boundary, distinguish changed consumers from those retaining existing
-semantics; preserve the shared default when only a subset changes. Adapt existing resolvers and
+Place each outcome at the owner it belongs to. Change or remove behavior where it is produced and
+update its consumers; downstream rewriting or a replacement layer leaves the defect at its source.
+When replacing a workaround, build on the native or destination owner's facilities, not the
+workaround's states, control flow, or fixtures. At a shared boundary, change only the consumers
+whose ledger outcomes change, keeping the shared default for the rest. Adapt existing resolvers and
 transactions through narrow entry points rather than copying their decisions or publication steps.
 Share definitions across production, display, and replay; separate operations may share definitions
 without sharing side effects.
@@ -23,18 +24,18 @@ input, I/O, or services fail. Use supported dependency/schema capabilities befor
 Count new bounds, failure states, switching, concurrency, and durable state as design costs. Add
 abstractions for current shared responsibilities, invariants, or necessary algorithms; a sole-caller
 helper may isolate complex validation, otherwise inline it. Keep helpers near callers and host/provider
-policy at its owner. Add guards, fallbacks, options, persistence, and compatibility only for supported
-contracts.
+policy at its owner. Add guards, fallbacks, options, persistence, compatibility, and other machinery
+only for sourced outcomes.
 
 Consider material CPU, memory, I/O, and scaling costs while building. Reuse state, inventories, parsed
 results, scans, encodings, buffers, and timers while their guarantees hold for the operation. Skip
-known or unused work. Keep working designs settled unless a concrete contract or material cost
+known or unused work. Keep this task's settled designs unless a ledger outcome or material cost
 requires correction; negligible gains and style preferences do not reopen them.
 
 ## Construction
 
 Edit authoritative sources and regenerate consumers. Trace references before changing shared
-interfaces. Remove superseded paths and artifacts, preserving compatibility retained contracts need.
+interfaces. Remove superseded paths and artifacts, keeping only compatibility a ledger line requires.
 Trust validated types inward; keep synchronous parsing and option construction synchronous. Catch
 errors where recovery or useful context belongs. Event-sourced systems persist irreducible facts
 and derive redundant state.

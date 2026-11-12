@@ -1,18 +1,18 @@
 # Testing
 
-Derive assertions from requested outcomes and existing consumer contracts. Before changing shared
-behavior, select its retained-consumer assertions and author missing ones in existing tests. Use
-them to guide the coherent owner/interface change, then validate it with new-behavior checks before
-dependent work. Batch coupled behavior, not gates per function or command. New behavior needs no
-ceremonial failing run; run unchanged behavior first only to resolve an uncertain expected outcome.
+Derive assertions from ledger outcomes; existing tests and fixtures show the current means. Before
+changing shared behavior, select assertions for its other sourced consumers and author missing ones
+in existing tests. Use them to guide the coherent owner/interface change, then validate it with
+new-behavior checks before dependent work. Batch coupled behavior, not gates per function or
+command. New behavior needs no ceremonial failing run; run unchanged behavior first only to resolve
+an uncertain expected outcome.
 
 ## Coverage
 
 Drive the changed producer through its normal consumer. Reuse existing coverage and fixtures;
 add distinct checks for affected supported forms and interacting states, including equivalent
-representations at changed parsing/routing boundaries. Retained behavior keeps its supported fixture
-state. Interfaces that must agree use that same state; assertions follow their contract rather than
-configuration adjusted to accommodate implementation.
+representations at changed parsing/routing boundaries. Interfaces that must agree share fixture
+state; assertions follow ledger lines rather than configuration adjusted to fit implementation.
 
 For mutations, cover invalid input, stale state, ownership, and neighboring supported inputs:
 rejection preserves state and success works through the consumer. A defect fix covers its trigger
@@ -21,8 +21,9 @@ and synthetic inputs bypassing the changed path.
 
 Keep test helpers and configuration in tests. Git fixtures disable inherited global/system settings
 before their first command, retaining fixture-local settings under test. Add no production surface
-just for tests. Expected values record intended behavior; resolve differences against the owning
-contract before updating snapshots/goldens, and report each update's reason.
+just for tests. Cite the ledger line behind each new or changed expected value, snapshot, or golden
+in the task record or handoff, not in test code; change an existing one only for a ledger line that
+changed it.
 
 Validate visual appearance through rendering and text delivery through its consuming interface.
 Only added/moved delivery paths need new text checks, referencing their owner; rewording alone does

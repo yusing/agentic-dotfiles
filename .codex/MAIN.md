@@ -5,28 +5,34 @@ Shared intent and authorization belong to the standing guidance.
 
 ## Organize by connected outcome
 
-Main's unit of work is a usable behavior with its changed and retained promises, not a file or a
+Keep an outcome ledger in the task record: one line per observable outcome, citing its source.
+Briefs, implementation, tests, reviews, and handoffs consume the ledger, not the current code.
+Apply a correction by editing the ledger lines it changes, not by adding a general rule. Reuse
+settled ledger lines and decisions; no separate plan artifact is needed by default.
+
+Main's unit of work is a usable behavior delivering connected ledger outcomes, not a file or a
 phase such as coding, tests, or documentation. Keep shared invariants and dependent work together;
 independent outcomes may proceed separately.
-Reuse settled decisions and the existing task record; no separate plan artifact is needed by default.
 
-For the next unit, identify its normal consumer, existing owner, and next unresolved decision.
+For the next unit, order its outcomes by dependency and identify their normal consumer, the owner
+each outcome belongs at, and the next unresolved decision.
 Acquire the contract and behavior-bearing source ranges needed to decide the complete change:
-applicable specifications, relevant retained-consumer assertions, and the producing path. Use
+applicable specifications, consumer assertions for sourced promises, and the producing path. Use
 outlines to locate those bodies, not as evidence of their behavior. Carry read ranges forward;
 on return to an owner, acquire only missing or changed evidence. Follow references for affected
-shared interfaces. Expand for an unresolved dependency, compatibility promise, or concrete failure,
-not an anticipatory subsystem inventory. Resolve feasibility before building supporting machinery.
+shared interfaces. Expand for an unresolved dependency, sourced compatibility promise, or concrete
+failure, not an anticipatory subsystem inventory. Before building supporting machinery for a new or
+disputed design, prove its premise through the smallest real consumer path.
 
-For a multi-part implementation whose public entry points must agree or whose mutations must retain
-existing state, obtain one independent contract check before the first shared-owner change. Main
-proposes concrete observable cases for the connected outcomes, including what may change and what
-must remain unchanged. Give a read-only reviewer the original request, those cases, and the relevant
-baseline sources and tests. Ask it to find a wrong expected result, omitted supported case, or
-preservation claim checked through the wrong observation. It reviews the proposed behavior, not a
-preferred design, and does not author the implementation or tests. A green existing suite does not
-answer this contract question. Resolve established discrepancies before building on the cases;
-retain supported alternatives when the contract permits them.
+For a multi-part implementation whose public entry points must agree or whose mutations reach
+stored data, obtain one independent contract check before the first shared-owner change. Main
+proposes concrete observable cases, each citing its ledger line. Give a read-only reviewer the
+request sources, the ledger, and those cases. Ask it to find a wrong expected result, a case
+without a ledger line, an omitted ledger outcome, or a case checked through the wrong observation.
+It reviews the proposed behavior, not a preferred design, and does not author the implementation or
+tests. A green existing suite does not answer this contract question. Resolve established
+discrepancies before building on the cases; retain supported alternatives when the contract permits
+them.
 
 Use a single review for coupled outcomes, not a reviewer per file or helper. Keep this check ahead
 of implementation rather than running it alongside changes to its evidence. Reuse its settled
@@ -42,13 +48,13 @@ unit's consumer-check failures before dependent work, and carry its acceptance e
 rather than reconstructing it at completion.
 
 Communicate a decision brief only when a consequential choice needs explaining or resolving: outcome,
-affected promises, approach, tradeoffs, and acceptance evidence.
+affected ledger lines, approach, tradeoffs, and acceptance evidence.
 A complete request or settled choice needs no second rendering.
 
 ## Complete
 
-Account for the whole accepted request from the units' current consumer evidence and affected
-documents. Resolve a specific uncovered promise at its owner rather than starting another general
+Account for every ledger outcome from the units' current consumer evidence and affected documents.
+Resolve a specific undelivered outcome at its owner rather than starting another general
 inspection or validation phase. `FINISHING.md` owns question-specific independent review when an
 unresolved correctness/integration or complexity question needs it.
 Report actual results, concrete blockers, and coverage limits; unassessed quality remains unknown.

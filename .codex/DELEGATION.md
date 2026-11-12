@@ -20,22 +20,22 @@ the native catalog's routing guidance.
 Preload known, complete applicable instructions, skills, and owner evidence needed to start the
 assigned phase; load later-phase sources at their transition.
 Start with a complete brief rather than an immediate follow-up. Give each agent, as applicable,
-the settled outcome, chosen approach, owned files, inputs, task-specific constraints, and useful
-checks. Constraints are those the user stated or the approach requires; listing properties the
-change does not touch invites the recipient to build machinery for them.
+its ledger lines with sources, the chosen approach, owned files, inputs, and useful checks.
+Constraints come only from ledger lines or the approach; listing properties the change does not
+touch invites the recipient to build machinery for them.
 Include what has changed so far and distinguish the changes for this spawn or follow-up.
 Omit earlier change context only when the recipient already retains it.
-Brief review, audit, or diagnosis with scope
-and questions, without suspected findings or expected conclusions. Use a `fork_turns="none"`
-brief with complete task context.
+Brief review, audit, or diagnosis with scope, questions, and the ledger, without the approach,
+suspected findings, or expected conclusions. Use a `fork_turns="none"` brief with complete task
+context.
 
 Native roles own workflows; `MODEL-ROUTING.md` owns model and effort, which the spawner sets for every
 role.
 The harness supplies shared instructions and discovers project guidance for the recipient.
 Keep shared, project, role, and skill policy at its owner rather than
 copying or paraphrasing it into task briefs. When a needed skill cannot be preloaded, name the
-applicable skill or reference for the recipient to load. Preserve task-specific scope,
-user requirements, and constraints in the brief; these are assignment context, not policy recaps.
+applicable skill or reference for the recipient to load. Preserve task-specific scope
+and ledger lines in the brief; these are assignment context, not policy recaps.
 
 ## Coordination
 

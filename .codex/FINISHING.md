@@ -11,9 +11,9 @@ these questions separately using current evidence. A completed change, size thre
 category alone does not require review. Explicit user-requested reviews retain their scope.
 
 Dispatch after focused validation and decisions that could change the design. Brief the reviewer
-with the user's request and corrections, unresolved question, change context, approach, and existing
-checks/results. Native roles own review methods; `TESTING.md` owns validation evidence. Keep sources
-stable, overlap independent non-mutating work, and wait when none remains.
+with the request sources and corrections, the ledger, the diff, and the unresolved question, not the
+implementer's approach. Native roles own review methods; `TESTING.md` owns validation evidence.
+Keep sources stable, overlap independent non-mutating work, and wait when none remains.
 
 ## Findings
 
