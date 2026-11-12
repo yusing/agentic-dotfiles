@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6bb844bd4699da41fa0d3999c2cfdf62acfc5abf",
+  "sourceCommit": "26bd220f2805312c733f2a043770854cd49ad662",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -82,9 +82,8 @@
     },
     {
       "path": ".claude/instructions/FINISHING.md",
-      "kind": "file",
-      "sha256": "668c513d78e09e39fc4c67e2b51fc3ccc579ddd37132afd9b2c5fae2bb2a5da7",
-      "executable": false
+      "kind": "symlink",
+      "target": "../../.codex/FINISHING.md"
     },
     {
       "path": ".claude/instructions/FRONTEND.md",
@@ -99,9 +98,8 @@
     },
     {
       "path": ".claude/instructions/IMPLEMENTATION.md",
-      "kind": "file",
-      "sha256": "ab8e800d31081d55d6e9e4917830dce7a804260fc544ea2778d833c8dc111476",
-      "executable": false
+      "kind": "symlink",
+      "target": "../../.codex/IMPLEMENTATION.md"
     },
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
@@ -140,9 +138,8 @@
     },
     {
       "path": ".claude/instructions/TESTING.md",
-      "kind": "file",
-      "sha256": "cafd04e4fac7ecc1a93121123605087f325f22410684d5b3e029e49bcca8d6f3",
-      "executable": false
+      "kind": "symlink",
+      "target": "../../.codex/TESTING.md"
     },
     {
       "path": ".claude/settings.json",
@@ -1573,7 +1570,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "7c02595f3a90707bcdf4ca3251d2840892e9fe2b77876be9d399ea99a79d7e68",
+      "sha256": "e90bac0b3dd70d556fcc795503b6d6e7a06b2cf562f6d2bd66d6121f59dbdc88",
       "executable": false
     },
     {

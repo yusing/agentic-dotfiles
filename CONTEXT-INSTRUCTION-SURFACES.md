@@ -42,10 +42,10 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `.codex/DELEGATION.md`
 - `.codex/MODEL-ROUTING.md`
 - `.codex/SUBAGENT.md`
-- `.codex/IMPLEMENTATION.md`
+- `.codex/IMPLEMENTATION.md` (client-neutral; `.claude/instructions/IMPLEMENTATION.md` symlinks to it)
 - `.codex/TASK-FILE.md` (client-neutral; `.claude/instructions/TASK-FILE.md` symlinks to it)
-- `.codex/FINISHING.md`
-- `.codex/TESTING.md`
+- `.codex/FINISHING.md` (client-neutral; `.claude/instructions/FINISHING.md` symlinks to it)
+- `.codex/TESTING.md` (client-neutral; `.claude/instructions/TESTING.md` symlinks to it)
 - `.codex/DOCS.md`
 - `.codex/INSTRUCTION-AUTHORING.md`
 - `.codex/SKILL-AUTHORING.md`
