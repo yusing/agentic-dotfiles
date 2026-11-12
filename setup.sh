@@ -2250,6 +2250,11 @@ main() {
   STEP="resolve home paths in configuration"
   rewrite_home_paths
 
+  STEP="apply git filters"
+  git config --local filter.home.clean 'bun "$HOME/.local/lib/rewrite-home-paths/git-home-filter.ts" clean "%f"'
+  git config --local filter.home.smudge 'bun "$HOME/.local/lib/rewrite-home-paths/git-home-filter.ts" smudge "%f"'
+  git config --local filter.home.required true
+
   STEP="set login shell"
   ensure_fish_login_shell
 
