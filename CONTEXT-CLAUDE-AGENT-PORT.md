@@ -81,7 +81,7 @@ why `.claude/CLAUDE.md` tells agents to write the `rtk` form themselves.
 
 ## Session start
 
-Two static session-start hooks inject context.
+Static session-start hooks inject project context, the skill inventory, and the role documents.
 
 `.codex/hooks/bin/check_project` runs with `--without-git`, and with no adapter, because its
 plain-text report needs none. Claude's own session context already states the working
@@ -100,6 +100,12 @@ the list in the `additionalContext` envelope. `PostCompact` output never reaches
 has no registration. Claude also fires `SubagentStart` when a subagent is resumed, but injects the
 list again only after compaction has dropped the earlier copy.
 
+The role documents follow the Codex registrations in `.codex/hooks.json`. The `*` `SessionStart`
+group runs `cat` on `.claude/instructions/MAIN.md`, so main receives it at startup, resume,
+clearing, and compaction. `SubagentStart` wraps `.claude/instructions/SUBAGENT.md` in the
+`additionalContext` envelope with `jq`. Because the hooks deliver both documents,
+`.claude/CLAUDE.md` has no routing line for either.
+
 `.claude/hooks/` remains Herdr-managed and untracked. The shared hook is covered by the existing
 `.codex/hooks/*` allowlist entry. The `SessionStart` group that reports the session to Herdr stays
-separate from the two static session-start hooks because Herdr rewrites its own group.
+separate from the static session-start hooks because Herdr rewrites its own group.

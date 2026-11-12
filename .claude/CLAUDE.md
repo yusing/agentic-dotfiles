@@ -83,7 +83,6 @@ Complete text already supplied satisfies the read; a path or summary does not.
 
 - `INSTRUCTION-AUTHORING.md`: authoring or auditing instructions, prompts, and their consumers.
 - `SKILL-AUTHORING.md`: additionally, when authoring or auditing skills.
-- `MAIN.md`: main-agent planning and delivery of changes.
 - `DELEGATION.md`: any agent, including subagents, before delegating or coordinating other agents.
   - In Mekugi, read `~/.codex/MODEL-ROUTING.md` before delegation. Claude and Codex use the same
     routing, including Codex delegates.
@@ -99,9 +98,6 @@ Complete text already supplied satisfies the read; a path or summary does not.
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
 - `GITHUB.md`: preparing GitHub text, or publishing and merging pull requests.
 - `FRONTEND.md`: building, restyling, or reviewing a web UI.
-
-- `SUBAGENT.md`: only when you are a subagent, never as the main agent: assignment, messages, and
-  result delivery, not dispatch policy.
 
 ### In workdir
 

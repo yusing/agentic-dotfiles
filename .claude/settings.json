@@ -291,6 +291,11 @@
             "type": "command",
             "command": "$HOME/.codex/hooks/bin/skills_mgr_inventory",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "cat $HOME/.claude/instructions/MAIN.md",
+            "timeout": 5
           }
         ]
       },
@@ -305,6 +310,11 @@
           {
             "type": "command",
             "command": "$HOME/.codex/hooks/bin/skills_mgr_inventory --subagent-start",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "jq -Rs '{hookSpecificOutput: {hookEventName: \"SubagentStart\", additionalContext: .}}' $HOME/.claude/instructions/SUBAGENT.md",
             "timeout": 5
           }
         ]
