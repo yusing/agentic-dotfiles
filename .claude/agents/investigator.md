@@ -16,7 +16,8 @@ hooks:
 Diagnose the assigned failure, test competing explanations, assess impact, and recommend an
 evidence-backed next step. Trace authoritative owners through consuming interfaces using source,
 contracts, history, and runtime evidence. Stop when decisive facts or the evidence limit are clear.
-Use accepted behavior to resolve code/test conflicts; history matters only when intent is unclear.
+Resolve code/test conflicts and assess impact by sourced outcomes, not current behavior; history
+matters only when intent is unclear.
 
 Separate observations, source-derived mechanisms, supported conclusions, and hypotheses. Current
 code does not prove an unrecorded historical cause. Name missing evidence and the smallest check

@@ -14,9 +14,10 @@ hooks:
 # Role
 
 Try to falsify correctness in the exact handed-off scope, independently of its decomposition.
-Map the requested outcome and affected retained contracts to consuming evidence. Review source,
-tests, callers, interfaces, and relevant history; do not invent features or acceptance requirements
-from general ideals. The execution owner owns validation and decisions on findings.
+Map each ledger outcome and sourced promise to consuming evidence. Review source, tests, callers,
+interfaces, and relevant history as evidence of the current means; do not invent features or
+acceptance requirements from them or from general ideals. The execution owner owns validation and
+decisions on findings.
 
 # Inspection boundary
 
@@ -47,7 +48,7 @@ when its evidence contract is needed. Flag tautologies, bypassed behavior, dupli
 appearance checks, obsolete tests, needless fixtures/waits, and test-only production seams.
 Check that regression evidence reaches the trigger; rerun old/current states only for a concrete gap.
 
-Compare user-facing output with existing host presentation and lifecycle. Inspect documents within
+Compare user-facing output with the host's native presentation and lifecycle. Inspect documents within
 the handed-off scope under DOCS.md: stale claims, duplication, bloat, misleading summaries, and
 purpose/contract overlap. Identify the authoritative side of a code/doc mismatch.
 
@@ -56,9 +57,10 @@ purpose/contract overlap. Identify the authoritative side of a code/doc mismatch
 Report every established defect, including small ones, with trigger, impact, pointers, evidence,
 and smallest correction. Give each reproduction's location, trigger, and outcome so the owner can
 adopt it.
-Separate requested-behavior failures, introduced regressions, supporting-mechanism defects, and
-pre-existing issues. Keep hypotheses in coverage limits with a confirming check. For a flawed
-supporting mechanism, name the narrower alternative.
+Separate undelivered ledger outcomes, broken sourced promises, added mechanisms, states, or
+branches with no ledger line, supporting-mechanism defects, and pre-existing issues. Keep
+hypotheses in coverage limits with a confirming check. For a flawed supporting mechanism, name the
+narrower alternative.
 
 Account for the reviewed scope and unverified acceptance. On re-review, assess the cumulative
 changes, including corrections and their interactions; mark findings resolved/open/superseded

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "48e39e04c2bd0c157482b85827f25c1362aa4ab0",
+  "sourceCommit": "6e83c6064c7a86da7502217b6a10ad8f3d0d0276",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -29,7 +29,7 @@
     {
       "path": ".claude/agents/council-member.md",
       "kind": "file",
-      "sha256": "9516048e7ec8b489f75519b633cc3aaf78cdef0f4313391bf4fb21cf462c6795",
+      "sha256": "bf87ebbf3893d3737b7ef5dfa66e41c68f2f310d8cfff7835e7c4948a0bb53a7",
       "executable": false
     },
     {
@@ -41,19 +41,19 @@
     {
       "path": ".claude/agents/investigator.md",
       "kind": "file",
-      "sha256": "9a1c9714e88242e3d4916fa73d66c4ba0fd22662e59185c0eaa8bfb75a298663",
+      "sha256": "604d2767f6daf93f2a8a215c7da221ea5ecad04444864764b562206465407468",
       "executable": false
     },
     {
       "path": ".claude/agents/review-correctness.md",
       "kind": "file",
-      "sha256": "424a53ed4f40d989de054e4dfc91152970357dedb7541dcc28e808262318dc2a",
+      "sha256": "3536d1ad383bb3a592d6f14be3043ebce239a335ec184e55622001ffe47d1fcc",
       "executable": false
     },
     {
       "path": ".claude/agents/review-simplify.md",
       "kind": "file",
-      "sha256": "4dcb7183a62fb0936d49f7853f1fa86f46a047304731f389d355b9415d5eab6f",
+      "sha256": "a0d60e212075d4e290e972358b221f31f995f8a9e467b65a2b1ee1c751443892",
       "executable": false
     },
     {
@@ -525,7 +525,7 @@
     {
       "path": ".config/kilo/agent/council-member.md",
       "kind": "file",
-      "sha256": "900951a23a280113d8a71fefe7913b1ccadf9f0ae0362d27b015aea52fd23628",
+      "sha256": "88df3ccd3e726c6b80fe402750be506bd421b05dd8081435d816c7090f27d0c7",
       "executable": false
     },
     {
@@ -555,7 +555,7 @@
     {
       "path": ".config/kilo/agent/investigator.md",
       "kind": "file",
-      "sha256": "9657d430865e08e57ec7aa8f3484de9b60eb8c1e084bb605e29e4e01189a305b",
+      "sha256": "b97d64ce5a9e88436686424dc69507ce3f4ffc73bc2456355a1aa6e676e04443",
       "executable": false
     },
     {
@@ -573,13 +573,13 @@
     {
       "path": ".config/kilo/agent/review-correctness.md",
       "kind": "file",
-      "sha256": "ee598330f9a498c98f8455d1a316f7dfc09e6e59f83d3433da38615870bf51bb",
+      "sha256": "93f3bbf30e33a99d4b8b53da5d8549ba737bf8fa7a409ab010e6f4861a749a80",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/review-simplify.md",
       "kind": "file",
-      "sha256": "7faefcbd842c3f7db816c43c52d4dde23b4597c4ed40cb7036d25ea7283c923f",
+      "sha256": "0aeac0fce4e2a65eebfe1e485ef5ed06a1a18cbd88887ebc10cd9a72bc70b973",
       "executable": false
     },
     {
