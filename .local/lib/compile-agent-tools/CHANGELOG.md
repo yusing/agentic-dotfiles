@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.24
+
+Build agent-work-watch for the Herdr Work pane in place of the retired
+herdr-work-board CLI.
+
 ## 1.0.23
 
 Build the shared disk-clean helper alongside its temporary-cleanup dependency.

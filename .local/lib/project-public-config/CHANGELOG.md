@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.36
+
+Publish the shared task-file guidance for Codex and its Claude symlink.
+
 ## 1.3.35
 
 Publish the shared disk-clean helper sources and usage contract required by the

@@ -92,6 +92,8 @@ Complete text already supplied satisfies the read; a path or summary does not.
   inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits
   may use it.
+- `TASK-FILE.md`: main, for project work including documentation and reviews; not answer-only
+  exchanges.
 - `FINISHING.md`: coordinating question-specific independent review.
 - `TESTING.md`: writing tests or fixtures, or selecting validation. Projects supply runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
@@ -108,7 +110,6 @@ Complete text already supplied satisfies the read; a path or summary does not.
 - `AGENTS.md`: when the working directory is the home directory, read it before maintaining that
   configuration repository. Settings exclude it from automatic loading so that projects below
   home neither receive it nor lose their own `AGENTS.md`.
-
 
 ## Skills and tools
 

@@ -1,10 +1,7 @@
 # Implementation
 
-Keep the outcome ledger at `/tmp/codex-ledger/$CODEX_SESSION_ID.json`: a JSON array with one
-entry (ledger line) per observable outcome, shaped
-`{"id": "L1", "outcome": "...", "source": "...", "e2e": "...", "active": true}`. `source` cites the
-user's words, a project document, or a tracker item. `e2e` is an optional shell command, run from
-the session directory, that proves the outcome; mark the entry under delivery `"active": true`.
+The task file's `lines` (`TASK-FILE.md`) are the outcome ledger. A line may add `"e2e"`, a shell
+command run from the task's `cwd` that proves the outcome; the line under delivery is `active`.
 Briefs, implementation, tests, reviews, and handoffs consume the ledger, not the current code.
 Apply a correction by editing the ledger lines it changes, not by adding a general rule.
 

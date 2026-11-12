@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.23";
+const VERSION = "1.0.24";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -258,7 +258,7 @@ function main(): void {
   for (const [directory, name] of [
     ["plane", "plane"],
     ["herdr-ai-usage", "herdr-ai-usage"],
-    ["herdr-work-board", "herdr-work-board"],
+    ["agent-work", "agent-work-watch"],
     ["tmp-clean", "tmp_clean"],
     ["disk-clean", "disk-clean"],
     ["scc-prod", "scc-prod"],

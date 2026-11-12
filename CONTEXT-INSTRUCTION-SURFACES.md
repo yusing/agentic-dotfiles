@@ -43,6 +43,7 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `.codex/MODEL-ROUTING.md`
 - `.codex/SUBAGENT.md`
 - `.codex/IMPLEMENTATION.md`
+- `.codex/TASK-FILE.md` (client-neutral; `.claude/instructions/TASK-FILE.md` symlinks to it)
 - `.codex/FINISHING.md`
 - `.codex/TESTING.md`
 - `.codex/DOCS.md`

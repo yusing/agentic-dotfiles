@@ -58,6 +58,8 @@ Read these owners when their operation applies and their guidance is absent from
 - `IMPLEMENTATION.md`: choosing or implementing code/operational changes; explicit quality audits
   use applicable sections. Pure lookup, diagnosis, settled support tests, and mechanical wording
   edits do not need it.
+- `TASK-FILE.md`: main, for project work including documentation and reviews; not
+  answer-only exchanges.
 - `FINISHING.md`: coordinating question-specific independent review.
 - `TESTING.md`: tests, fixtures, and validation selection; projects own runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
@@ -68,7 +70,6 @@ Read these owners when their operation applies and their guidance is absent from
 
 - `HANDOFF.md`: read when mentioned. Only main resuming its task deletes it after consumption;
   delegates retain assigned handoffs.
-
 
 ## Skills and tools
 

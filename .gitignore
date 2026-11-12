@@ -27,6 +27,7 @@ __pycache__
 !/.claude/instructions/MODEL-ROUTING.md
 !/.claude/instructions/SKILL-AUTHORING.md
 !/.claude/instructions/SUBAGENT.md
+!/.claude/instructions/TASK-FILE.md
 !/.claude/instructions/TESTING.md
 !/.claude/settings.json
 !/.codex/
@@ -88,6 +89,7 @@ __pycache__
 !/.codex/skills/session-usage/scripts/session_usage.py
 !/.codex/skills/session-usage/SKILL.md
 !/.codex/SUBAGENT.md
+!/.codex/TASK-FILE.md
 !/.codex/TESTING.md
 !/.config/
 !/.config/atuin/
