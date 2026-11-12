@@ -118,6 +118,9 @@
         "locator": "https://github.com/longbridge/gpui-kit"
       }
     },
+    "graphify": {
+      "enabled": true
+    },
     "handoff": {
       "enabled": true
     },

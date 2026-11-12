@@ -136,6 +136,11 @@ __pycache__
 !/.config/micro/settings.json
 !/.config/mise/
 !/.config/mise/config.toml
+!/.config/mise/locks/
+!/.config/mise/locks/pipx-graphifyy/
+!/.config/mise/locks/pipx-graphifyy/0.9.107~a3ac51e6/
+!/.config/mise/locks/pipx-graphifyy/0.9.107~a3ac51e6/pyproject.toml
+!/.config/mise/locks/pipx-graphifyy/0.9.107~a3ac51e6/uv.lock
 !/.config/mise/mise.lock
 !/.config/oh-my-posh/
 !/.config/oh-my-posh/catppuccin_macchiato.omp.json

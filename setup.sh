@@ -760,6 +760,12 @@ try:
                 or not lock_matches(tool, value, old_tools[tool][0])
             }
             retained = set(tools) - changed
+            # Mise records a selected pipx interpreter as a dependency, without
+            # requiring Python to become a globally active tool.
+            python_users = {tool for tool, value in tools.items()
+                            if tool.startswith("pipx:") and isinstance(value, dict) and value.get("python")}
+            if python_users and "python" not in tools and not (python_users & changed) and "python" in old_tools:
+                retained.add("python")
             (root / "retained.json").write_text(json.dumps(sorted(retained)))
             # Preserve retained records verbatim; remove an entire tool record,
             # including its platform subtables, for deletions and option changes.
@@ -776,7 +782,7 @@ try:
             # Pin unchanged declarations so their latest selectors do not advance.
             resolution = dict(desired)
             resolution["tools"] = dict(tools)
-            for tool in retained:
+            for tool in retained & set(tools):
                 value = tools[tool]
                 version = old_tools[tool][0]["version"]
                 resolution["tools"][tool] = dict(value, version=version) if isinstance(value, dict) else version
@@ -795,7 +801,7 @@ try:
                     mode = "locked" if runtime in old_tools and runtime in previous.get("tools", {}) else "unlocked"
                     bootstrap.append(f"{runtime}|{mode}\n")
             (root / "bootstrap-tools").write_text("".join(bootstrap))
-            print(f"mise lock: {len(changed)} added/changed, {len(set(old_tools) - set(tools))} removed, {len(retained)} retained")
+            print(f"mise lock: {len(changed)} added/changed, {len(set(old_tools) - set(tools) - retained)} removed, {len(retained)} retained")
     elif action == "cache-build":
         cache = Path(arguments[0])
         require(not cache.exists(), "setup config cache already exists")
@@ -1305,6 +1311,10 @@ except ImportError:
 config = tomllib.loads(Path(os.environ["MISE_CONFIG_PATH"]).read_text())
 configured_tools = config.get("tools", {})
 configured = set(configured_tools)
+python_users = [value for tool, value in configured_tools.items()
+                if tool.startswith("pipx:") and isinstance(value, dict) and value.get("python")]
+if python_users:
+    configured.add("python")
 lock_text = Path(os.environ["MISE_LOCK_PATH"]).read_text()
 locked = {
     quoted or bare
@@ -1340,6 +1350,8 @@ tool_platforms = {
     tool: value.get("os", ["linux", "macos"]) if isinstance(value, dict) else ["linux", "macos"]
     for tool, value in configured_tools.items()
 }
+if python_users and "python" not in tool_platforms:
+    tool_platforms["python"] = sorted({os for value in python_users for os in value.get("os", ["linux", "macos"])})
 for tool in locked:
     # Rust delegates downloads to rustup; package-manager backends also lock
     # versions rather than release artifacts.

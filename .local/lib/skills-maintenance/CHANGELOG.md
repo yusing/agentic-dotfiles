@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+Keep the local Graphify skill in step with its locked graphifyy CLI version.
+Dispatch updates and validate their committed baseline and resources.
+
 ## 1.1.0
 
 Track the managed OpenAI Docs skill's upstream directory in openai/codex. Dispatch changed

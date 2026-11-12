@@ -170,6 +170,7 @@
       "npm:pyright": "latest",
       "npm:scriptc": {"version": "0.4.10", "postinstall": "cd \"$MISE_TOOL_INSTALL_PATH\" && bun pm trust scriptc"},
       "npm:vite": "latest",
+      "pipx:graphifyy": {"version": "latest", "python": "3.14"},
       "aqua:go-swagger/go-swagger": "latest",
       "aqua:trufflesecurity/trufflehog": "latest",
       "aqua:awslabs/git-secrets": "latest",
@@ -184,6 +185,7 @@
     }
   },
   "mise_commands": {
+    "pipx:graphifyy": "graphify",
     "aqua:go-swagger/go-swagger": "swagger",
     "github:lightpanda-io/browser": "lightpanda",
     "npm:@kilocode/cli": "kilocode",

@@ -5,9 +5,9 @@ import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { createInterface } from "node:readline";
 import type { Readable } from "node:stream";
-import { openaiDocsUpdatePrompt, repairPrompt } from "./repair-prompt";
+import { graphifyUpdatePrompt, openaiDocsUpdatePrompt, repairPrompt } from "./repair-prompt";
 
-export const VERSION = "1.1.0";
+export const VERSION = "1.2.0";
 const roots = [".agents/skills", ".claude/skills"];
 const disappeared = /does not contain skill|0 matching skills|remote skill name .+ does not match SKILL\.md name|remote skill .+ (?:is missing|has invalid) SKILL\.md|repository not found|repository .+ not found|\b(?:404|410)\b/i;
 const stalePatch = /remote skill patch no longer applies/i;
@@ -169,6 +169,33 @@ async function updateOpenaiDocs(cwd: string, env: NodeJS.ProcessEnv): Promise<bo
 	return true;
 }
 
+
+async function updateGraphify(cwd: string, env: NodeJS.ProcessEnv): Promise<boolean> {
+	const owner = ".skills-mgr/skills/graphify";
+	if (!await Bun.file(join(cwd, owner, "SKILL.md")).exists()) return false;
+	const marker = `${owner}/.upstream-version`;
+	const previous = (await readOptional(join(cwd, marker))).trim();
+	if (!/^\d+\.\d+\.\d+$/.test(previous)) throw new Error(`Invalid Graphify baseline: ${marker}`);
+	const dirty = await run(cwd, env, ["git", "status", "--porcelain=v1", "--untracked-files=all", "--", owner]);
+	if (dirty.status || dirty.stdout) throw new Error("Managed graphify has local changes or its status is unavailable.");
+	const lock = Bun.TOML.parse(await Bun.file(join(cwd, ".config/mise/mise.lock")).text()) as { tools?: Record<string, { version: string }[]> };
+	const entries = lock.tools?.["pipx:graphifyy"];
+	if (!entries || entries.length !== 1 || !/^\d+\.\d+\.\d+$/.test(entries[0].version)) throw new Error("Missing or invalid locked graphifyy version.");
+	const target = entries[0].version;
+	if (target !== previous) {
+		const result = await run(cwd, env, ["mekugi", "codex", "headless", "--yolo", "-m", "gpt-6.1-terra"],
+			`${graphifyUpdatePrompt}\nPrevious version: ${previous}\nTarget version: ${target}\n`);
+		if (result.status || !result.completed) throw new Error("Graphify update agent did not complete successfully.");
+		const committed = await run(cwd, env, ["git", "show", `HEAD:${marker}`]);
+		const pending = await run(cwd, env, ["git", "status", "--porcelain=v1", "--untracked-files=all", "--", owner]);
+		if (committed.status || committed.stdout.trim() !== target || pending.status || pending.stdout) throw new Error("Graphify update did not commit a clean target baseline.");
+	}
+	const checked = await run(cwd, env, ["skills-mgr", "check", "graphify"]);
+	if (checked.status) throw new Error(`Graphify resource check failed: ${checked.stderr || checked.stdout}`);
+	console.log(`Managed graphify ${target} is current and checked.`);
+	return true;
+}
+
 export async function maintain(cwd = homedir()): Promise<void> {
 	const env = schedulerEnvironment();
 	const cache = join(process.platform === "darwin" ? join(homedir(), "Library/Caches") : process.env.XDG_CACHE_HOME || join(homedir(), ".cache"), "skills-mgr");
@@ -206,6 +233,11 @@ export async function maintain(cwd = homedir()): Promise<void> {
 		const names = Object.entries(registry.skills).filter(([, selection]) => (selection as { remote?: unknown }).remote).map(([name]) => name);
 		let failed = false;
 		let managedReady = false;
+		let graphifyReady = false;
+		try { graphifyReady = await updateGraphify(cwd, env); } catch (error) {
+			failed = true;
+			console.error(`Managed Graphify update unresolved: ${(error as Error).message}`);
+		}
 		try { managedReady = await updateOpenaiDocs(cwd, env); } catch (error) {
 			failed = true;
 			console.error(`Managed upstream update unresolved: ${(error as Error).message}`);
@@ -260,7 +292,7 @@ export async function maintain(cwd = homedir()): Promise<void> {
 		if (!finalSync.status) {
 			const updated = JSON.parse(await readFile(join(cwd, ".skills-mgr/.skills-mgr.json"), "utf8"));
 			const updatedNames = Object.entries(updated.skills).filter(([, selection]) => (selection as { remote?: unknown }).remote).map(([name]) => name);
-			await commitPlaceholders(cwd, env, new Set([...names, ...updatedNames, ...(managedReady ? ["openai-docs"] : [])]), protectedDirectories);
+			await commitPlaceholders(cwd, env, new Set([...names, ...updatedNames, ...(managedReady ? ["openai-docs"] : []), ...(graphifyReady ? ["graphify"] : [])]), protectedDirectories);
 		}
 		if (failed || finalSync.status) throw new Error(finalSync.stderr || "Skills maintenance remains unresolved; see diagnostics above.");
 		console.log("Skills maintenance complete.");
