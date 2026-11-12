@@ -17,7 +17,39 @@
         ],
         "matcher": "^(startup|compact|clear)$"
       },
+      {
+        "hooks": [
+          {
+            "command": "$HOME/.codex/hooks/bin/session_start_context cat $HOME/.codex/MAIN.md",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "^(startup|resume|clear|compact)$"
+      },
       {}
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "$HOME/.codex/hooks/bin/ledger_stop_gate",
+            "timeout": 600,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "command": "$HOME/.codex/hooks/bin/capture_result_gate",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      }
     ],
     "SubagentStart": [
       {
@@ -29,6 +61,11 @@
           },
           {
             "command": "$HOME/.codex/hooks/bin/session_start_context skills-mgr list",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "$HOME/.codex/hooks/bin/session_start_context cat $HOME/.codex/SUBAGENT.md",
             "timeout": 5,
             "type": "command"
           }

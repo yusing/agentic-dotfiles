@@ -53,8 +53,6 @@ Read these owners when their operation applies and their guidance is absent from
 
 - `INSTRUCTION-AUTHORING.md`: authoring/auditing instructions and their consumers.
 - `SKILL-AUTHORING.md`: additionally, authoring/auditing skills.
-- `MAIN.md`: main-agent planning and delivery of changes.
-  Main delegates the independent contract checks specified there to a read-only reviewer.
 - `DELEGATION.md`: any agent before delegating or coordinating agents.
   - `MODEL-ROUTING.md`: before delegation.
 - `IMPLEMENTATION.md`: choosing or implementing code/operational changes; explicit quality audits
@@ -65,7 +63,6 @@ Read these owners when their operation applies and their guidance is absent from
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
 - `GITHUB.md`: preparing GitHub text, or publishing and merging pull requests.
 - `FRONTEND.md`: building, restyling, or reviewing a web UI.
-- `SUBAGENT.md`: subagents only: assignment, messages, and result delivery.
 
 ### In workdir
 

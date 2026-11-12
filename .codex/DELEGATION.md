@@ -14,8 +14,9 @@ the native catalog's routing guidance.
 - Documents: main by default; delegate a bounded document assignment when it speeds up delivery.
 - LLM-facing: main owns instructions, skills, workflow/task documents, model-facing templates, and
   delivery hooks; delegates return findings/proposals for them.
-- Tests: the agent implementing a change updates the tests and fixtures it affects; do not assign
-  tests to a separate delegate.
+- Tests: the agent implementing a change updates the tests and fixtures it affects, changing
+  expected values only for ledger lines that changed them; do not assign tests to a separate
+  delegate.
 
 Preload known, complete applicable instructions, skills, and owner evidence needed to start the
 assigned phase; load later-phase sources at their transition.

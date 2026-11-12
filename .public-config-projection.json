@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "4cd7959545a4e799e3be11294dbd7a7639e2aab8",
+  "sourceCommit": "4e6fc3fd3db2a3c08a282f9f427476afba72d36c",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -148,7 +148,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "175e7cff9a084b8d54e1e5c69d11414d0ddacf1bfc1d587fb1a08d42554aeb23",
+      "sha256": "b2a3e69f5c56b580908dae2406053383ea38c3944e8e07bb35cbe79ce6df5121",
       "executable": false
     },
     {
@@ -202,7 +202,7 @@
     {
       "path": ".codex/DELEGATION.md",
       "kind": "file",
-      "sha256": "569e882b8de4234da02c28da442a1b377e0ad6801a960e7a8f0447bb53297a42",
+      "sha256": "0a8ac13ab8dbd414615c2217f95c336b566f242215e977e0c8539881d38a80f8",
       "executable": false
     },
     {
@@ -232,7 +232,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "6f2568d59a4788d7a56d45ebb519e0b59a02aa3b3e6733bd1b3cffa920dd2bdd",
+      "sha256": "d13ae89f4d0f9c55dc5bfd45c545864b3d1e76f3bc03b82dc90a04985b4d10e5",
       "executable": false
     },
     {
@@ -364,7 +364,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "d37e6ca9fa972cdb5ba2f1b09cd40db2ca3fd42509190fa6a8abc99c02d5b01d",
+      "sha256": "bccb8e1b67f99288a64061b20421aaa154a2fb909be86075514fae4aaae06448",
       "executable": false
     },
     {
@@ -376,7 +376,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "68c1493c683d6e2f42e450c96abb65638c29fdd20fa7f2b2cd2b2cf9a741104b",
+      "sha256": "2c15c47fed003264650bce78da06bd4f3e36939e1846186ec2ec97fe12584561",
       "executable": false
     },
     {

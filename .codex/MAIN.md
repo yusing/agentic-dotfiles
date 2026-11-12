@@ -5,10 +5,8 @@ Shared intent and authorization belong to the standing guidance.
 
 ## Organize by connected outcome
 
-Keep an outcome ledger in the task record: one line per observable outcome, citing its source.
-Briefs, implementation, tests, reviews, and handoffs consume the ledger, not the current code.
-Apply a correction by editing the ledger lines it changes, not by adding a general rule. Reuse
-settled ledger lines and decisions; no separate plan artifact is needed by default.
+Implementation work keeps the outcome ledger defined in `IMPLEMENTATION.md`. Reuse settled ledger
+lines and decisions; no separate plan artifact is needed by default.
 
 Main's unit of work is a usable behavior delivering connected ledger outcomes, not a file or a
 phase such as coding, tests, or documentation. Keep shared invariants and dependent work together;
@@ -22,7 +20,8 @@ outlines to locate those bodies, not as evidence of their behavior. Carry read r
 on return to an owner, acquire only missing or changed evidence. Follow references for affected
 shared interfaces. Expand for an unresolved dependency, sourced compatibility promise, or concrete
 failure, not an anticipatory subsystem inventory. Before building supporting machinery for a new or
-disputed design, prove its premise through the smallest real consumer path.
+disputed design, set the active ledger line's `e2e` command to its smallest real consumer path and
+make it pass.
 
 For a multi-part implementation whose public entry points must agree or whose mutations reach
 stored data, obtain one independent contract check before the first shared-owner change. Main
