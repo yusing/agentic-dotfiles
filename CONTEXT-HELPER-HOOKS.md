@@ -58,7 +58,6 @@ and whether the `flock` FFI is linked, so an omitted policy leaves a stale adapt
 or one that fails at runtime with `flock is not defined`. `.grok/hooks/smoke_test.py`
 checks the imports against the list.
 
-
 Tests are not helpers or hooks.
 
 ## Public projection

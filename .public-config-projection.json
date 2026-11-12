@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "38a0d54487b3e648e152244b8d1bf910416eafc0",
+  "sourceCommit": "73ff13047efab144a6ec7d4511c640fbed2f2552",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1549,7 +1549,7 @@
     {
       "path": "CONTEXT-HELPER-HOOKS.md",
       "kind": "file",
-      "sha256": "911a6d293aae120f26a02d55c89f63873aeb65a40f287e9075c46cb5848e8d61",
+      "sha256": "0d9c9b00cfce2091737928a912ff46a2866a43a603a34df22bf3e8d0df1d8491",
       "executable": false
     },
     {
@@ -1561,7 +1561,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "8d67a7af8d4435967d71bd00bdc1bd01a110c3da8349ab2fdfb54addb6b51d94",
+      "sha256": "99b49a8338e0e2c8c7d8207910ff12db3d8db27925d321657e38c1d9b1da44dd",
       "executable": false
     },
     {
