@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "57ea4a57fbd4d11c1e1f6b24d1d4cb266ddbc317",
+  "sourceCommit": "33f37da626af39399c72d109b85ce37056b620e6",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -654,21 +654,21 @@
       "executable": false
     },
     {
-      "path": ".config/mise/locks/pipx-graphifyy/0.9.107~a3ac51e6/pyproject.toml",
+      "path": ".config/mise/locks/pipx-graphifyy/0.9.108~a3ac51e6/pyproject.toml",
       "kind": "file",
-      "sha256": "834792c9f2cf7fd2b189e523db97d721adba39f0c3119e8c34ae5793263a08db",
+      "sha256": "8309ac0634d0896ee80c58a9b36a3481f672f46a7127faf4628f97c0329c78e3",
       "executable": false
     },
     {
-      "path": ".config/mise/locks/pipx-graphifyy/0.9.107~a3ac51e6/uv.lock",
+      "path": ".config/mise/locks/pipx-graphifyy/0.9.108~a3ac51e6/uv.lock",
       "kind": "file",
-      "sha256": "72707a3372072a003dfb6b6ad46af3e955c9db770a2795b14fe764a904bfaa37",
+      "sha256": "e734bfd731b01223100342530248a23b23a9748ab93c0be612d238ff602a56b6",
       "executable": false
     },
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "3366aab1d71f2c07c213960012a4b99f67998639686b2abf248c14d65f817128",
+      "sha256": "a7b634e6480b05c74df4e3c523ff4055b048346799e680393b0fc912e6ec43dd",
       "executable": false
     },
     {
@@ -722,7 +722,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "06068919f390e4d866dff15543e77af45f7500d5f8908d57f886684abf62ae9b",
+      "sha256": "55d19233b8459b792ccc6c444733337c3d0c91a3a6a972d06199c5fd64035b7b",
       "executable": false
     },
     {

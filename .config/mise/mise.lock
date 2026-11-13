@@ -46,27 +46,27 @@ url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagge
 url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050832"
 
 [[tools."aqua:trufflesecurity/trufflehog"]]
-version = "3.99.8"
+version = "3.99.9"
 backend = "aqua:trufflesecurity/trufflehog"
 specifiers = ["latest"]
 
 [tools."aqua:trufflesecurity/trufflehog"."platforms.linux-arm64"]
-checksum = "sha256:a0382d83dd58c967af5dd0175cc732c62c836ab1d15dc9ae71b01a2d3f0911b2"
+checksum = "sha256:778b1913196dc9b9234e8fd366f64387efeb08c01930a1d2110dcb2ffd07e68b"
 checksum_source = "mise-versions"
-url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.8/trufflehog_3.99.8_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/702807617"
+url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.9/trufflehog_3.99.9_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/741127612"
 
 [tools."aqua:trufflesecurity/trufflehog"."platforms.linux-x64"]
-checksum = "sha256:7c3b02f160f28929a467e29e20fba98746e0729f6e37c3c25761e4f8789abe08"
+checksum = "sha256:12050095c8063bf4d34f9f6cbce6ba9fa8d0deea9d503d0570364feba093658e"
 checksum_source = "mise-versions"
-url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.8/trufflehog_3.99.8_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/702807616"
+url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.9/trufflehog_3.99.9_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/741127614"
 
 [tools."aqua:trufflesecurity/trufflehog"."platforms.macos-arm64"]
-checksum = "sha256:85724f221bc390f6e0bdf65df245468c8426350de85aa9290ea5491c6d4ec35a"
+checksum = "sha256:1d85e5c9c7eddbf12ae2714eb89317ba2cbbbf59be4e161e4b2ff396adbaa3a8"
 checksum_source = "mise-versions"
-url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.8/trufflehog_3.99.8_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/702807615"
+url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.9/trufflehog_3.99.9_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/741127610"
 
 [[tools."github:dlvhdr/gh-dash"]]
 version = "4.26.2"
@@ -162,7 +162,7 @@ backend = "go:github.com/yusing/shadowtree/cmd/shadowtree-lsp"
 specifiers = ["latest"]
 
 [[tools."go:github.com/yusing/skills-mgr"]]
-version = "d129bb05c4b2e6b1a3c004f2ab1898deadec0b60"
+version = "0.0.0-20261111122147-d129bb05c4b2"
 backend = "go:github.com/yusing/skills-mgr"
 specifiers = ["latest"]
 
@@ -187,7 +187,7 @@ backend = "npm:@trunkio/launcher"
 specifiers = ["latest"]
 
 [[tools."npm:agent-browser"]]
-version = "0.42.0"
+version = "0.43.0"
 backend = "npm:agent-browser"
 specifiers = ["latest"]
 
@@ -197,7 +197,7 @@ backend = "npm:ccstatusline"
 specifiers = ["latest"]
 
 [[tools."npm:ctx7"]]
-version = "0.11.0"
+version = "0.11.1"
 backend = "npm:ctx7"
 specifiers = ["latest"]
 
@@ -207,7 +207,7 @@ backend = "npm:markdownlint-cli"
 specifiers = ["latest"]
 
 [[tools."npm:oxlint-tsgolint"]]
-version = "7.0.2006"
+version = "7.0.2007"
 backend = "npm:oxlint-tsgolint"
 specifiers = ["latest"]
 
@@ -222,15 +222,15 @@ backend = "npm:scriptc"
 specifiers = ["0.4.10"]
 
 [[tools."npm:vite"]]
-version = "8.3.7"
+version = "8.3.8"
 backend = "npm:vite"
 specifiers = ["latest"]
 
 [[tools."pipx:graphifyy"]]
-version = "0.9.107"
+version = "0.9.108"
 backend = "pipx:graphifyy"
 specifiers = ["latest"]
-uv = { path = "locks/pipx-graphifyy/0.9.107~a3ac51e6", digest = "sha256:72707a3372072a003dfb6b6ad46af3e955c9db770a2795b14fe764a904bfaa37" }
+uv = { path = "locks/pipx-graphifyy/0.9.108~a3ac51e6", digest = "sha256:e734bfd731b01223100342530248a23b23a9748ab93c0be612d238ff602a56b6" }
 
 [tools."pipx:graphifyy".options]
 python = "3.14"
