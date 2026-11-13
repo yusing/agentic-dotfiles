@@ -22,7 +22,8 @@ authority, exceptions, and required behavior, not just the topic or supported ca
 
 Give each rule one owner: base communication/safety, shared authorization, main orchestration,
 delegate delivery, native role methods, project facts, or skill-specific methods. Link instead of
-copying. Put universally needed context inline and conditional detail behind a precise operation
+copying, and point each link one way: from the document that routes to or loads another, never
+back. Put universally needed context inline and conditional detail behind a precise operation
 trigger. Do not create a layer merely to move the same complexity elsewhere.
 Authorized instruction maintenance may adapt a rule for separately loaded clients or regenerate
 its consumers.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3189232d9471c7b82126c11612b08172e4204a16",
+  "sourceCommit": "d8f92ff5039a822ed732bad039f3901aefc5d856",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,13 +65,13 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "c07a1194bece4c4c8f4d7edd76e85305c0f224fbccfdbb84fc6c487a3fc21266",
+      "sha256": "bf5ed9751dfed38741d7192fe9b981ab95ed52c299eb6377cf53b8ecebca5254",
       "executable": false
     },
     {
       "path": ".claude/instructions/DELEGATION.md",
       "kind": "file",
-      "sha256": "dd72c440641afe7f6aa9f1b6eb75096ceb040eafbcdf9277d97921539088ae10",
+      "sha256": "07f8ec09084e7424bd64d0628a9f09586daa77dcd0400dd4b0c2c5b32db9b87e",
       "executable": false
     },
     {
@@ -102,7 +102,7 @@
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "d80dd7e403b6911b0cbb3ed32930f2ef5d37b1d901c2d430d1e4caaebd67d62f",
+      "sha256": "231b559ebfecfde1784d0af0909186c161950db3f12fd6edf1503aefa2630d42",
       "executable": false
     },
     {
@@ -117,9 +117,14 @@
       "executable": false
     },
     {
+      "path": ".claude/instructions/REFACTOR.md",
+      "kind": "symlink",
+      "target": "../../.codex/REFACTOR.md"
+    },
+    {
       "path": ".claude/instructions/SKILL-AUTHORING.md",
       "kind": "file",
-      "sha256": "80d259125446ce715b189fa65409524ce66c91f1d482190bf4cfe0f676422508",
+      "sha256": "871069c8549bfbd0902539f02ba849cdc820f9c63567fd625ac5e4d00481c5b4",
       "executable": false
     },
     {
@@ -147,7 +152,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "f72fcb43c5f11af4dd2c713829b8b7c855bb4d7e90410a54dc210dbad0b85487",
+      "sha256": "39b28ac807e84150192ff04f764f757364b07ce4769a7f8df464f7386ec2cc35",
       "executable": false
     },
     {
@@ -219,7 +224,7 @@
     {
       "path": ".codex/FRONTEND.md",
       "kind": "file",
-      "sha256": "86abe9922943527c5422a9fcf19dffcf0c44e270ad0556bf744b33c6265b414d",
+      "sha256": "6dd426143e1914b0fe9f1287b12a68e49ef89a6dae5920db385a434cf2489c42",
       "executable": false
     },
     {
@@ -363,13 +368,13 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "78751902bda6170e774d22127b00fa3ec3628b0a8e34b335df86aa34175d4948",
+      "sha256": "d10d726d0041ad8f406d9d3c5f7f75882ef5162ebbac26a11bfd91e29b0c4376",
       "executable": false
     },
     {
       "path": ".codex/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "162d01d6500ad3b4058174853a7506c653b9d598aab29d44e2a97bd0d38e74eb",
+      "sha256": "4676a7f05227a0c697012acc673bbc3c1df56b8abe1e28660e4b4fe36c66418f",
       "executable": false
     },
     {
@@ -391,9 +396,15 @@
       "executable": false
     },
     {
+      "path": ".codex/REFACTOR.md",
+      "kind": "file",
+      "sha256": "03340c8765c2f88320e17d2e1b1c34c90d086fb4940dc33f7f8e65f2964f27fd",
+      "executable": false
+    },
+    {
       "path": ".codex/SKILL-AUTHORING.md",
       "kind": "file",
-      "sha256": "8b3b42d411abcd4b0839f757d91ba918270884aaec17e53b043fab0fab490859",
+      "sha256": "4751a342f7deffbe2d532f551a8a61aed209af53539e6e917522f5de2197cde7",
       "executable": false
     },
     {
@@ -711,7 +722,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "536d2bf3acc6ec090089241eb660622705976bf1d86cdd6c9d94b8d0b6a78309",
+      "sha256": "06068919f390e4d866dff15543e77af45f7500d5f8908d57f886684abf62ae9b",
       "executable": false
     },
     {
@@ -860,13 +871,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "df453c6d39837d18e436492d2292a7260be7083ef3caf39a40e847f34fd47a16",
+      "sha256": "5bbe0cd3a386d4360552bce8a86b6509c2305cd9708afdca289bbc5fbb421764",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "e144c148352a758e4d0ab21b824ac87eba2ffd96db9c23b8103df775feb68d57",
+      "sha256": "be0f500493050f338e7ad3e268825a537d550a5e94fd5e6d345f23f1c0e93de4",
       "executable": true
     },
     {
@@ -1561,7 +1572,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "d389cf455d9aa5a291bac0e6990e3adc3ce6aeeaa9c4177441fa0a3e0ce5b237",
+      "sha256": "6e698669773bb8156c1bb9fa0b8a59705f210ab5a48a28c2129860ef355de8ca",
       "executable": false
     },
     {
@@ -1585,7 +1596,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "97f93ccfb6e15bb1f54ca272aefcac8266642c3e31f64d1791a08484ef66a07e",
+      "sha256": "ab98655d28b16708f450526475ba6b76062c45e267dbffeb8d3c460161fb8f43",
       "executable": false
     },
     {

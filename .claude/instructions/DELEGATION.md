@@ -33,8 +33,8 @@ With the native Agent tool, use a `fork` only for support work when the retained
 concretely helps and no named role fits, and state in its prompt that it is a delegate under
 `SUBAGENT.md`, since a fork otherwise inherits your position as main.
 
-Native roles own workflows; the routing document chosen by `CLAUDE.md` owns model and effort, which
-the spawner sets for every non-fork role.
+Native roles own workflows; the applicable model-routing document owns model and effort, which the
+spawner sets for every non-fork role.
 The harness gives custom subagents `CLAUDE.md`; built-in Explore and Plan omit it, so state any
 guidance they need in the brief.
 Keep shared, project, role, and skill policy at its owner rather than

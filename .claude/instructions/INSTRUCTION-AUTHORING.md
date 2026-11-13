@@ -17,7 +17,8 @@ gotchas; leave discoverable commands, layout, and configuration with their owner
 
 Give each rule one owner: base communication and safety, shared authorization, main orchestration,
 delegate delivery, agent role methods, project facts, or skill-specific methods. Link instead of
-copying. Put universally needed context inline and conditional detail behind a precise operation
+copying, and point each link one way: from the document that routes to or loads another, never
+back. Put universally needed context inline and conditional detail behind a precise operation
 trigger. Do not add a layer that only moves the same complexity elsewhere.
 Authorized instruction maintenance may adapt a rule for separately loaded clients or regenerate
 its consumers.
@@ -81,8 +82,8 @@ rules][cc-rules]). Where no project `CLAUDE.md` sits at or above the working dir
 loads `AGENTS.md` files at launch and a subdirectory's `AGENTS.md` when it reads a file there, so
 another client's instruction file reaches Claude unless `claudeMdExcludes` lists it
 ([AGENTS.md][cc-agents]). Anthropic recommends keeping each `CLAUDE.md` under 200 lines, since longer files
-reduce adherence ([effective instructions][cc-size]). Point to conditional documents by path, as
-`CLAUDE.md` does for `~/.claude/instructions/`.
+reduce adherence ([effective instructions][cc-size]). Reference conditional documents by path rather
+than `@` import, so they load only when read.
 
 [bp-direct]: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#be-clear-and-direct
 [bp-context]: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#add-context-to-improve-performance

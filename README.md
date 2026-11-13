@@ -158,6 +158,7 @@ Start with the instruction stack before copying client settings:
 - [`.codex/MAIN.md`](.codex/MAIN.md) covers coordination and delegation;
   [`.codex/FINISHING.md`](.codex/FINISHING.md) covers question-specific independent review;
   [`.codex/IMPLEMENTATION.md`](.codex/IMPLEMENTATION.md) covers implementation craft,
+  [`.codex/REFACTOR.md`](.codex/REFACTOR.md) covers code hygiene and removal of superseded code,
   [`.codex/TESTING.md`](.codex/TESTING.md) covers validation and regression evidence,
   and [`.codex/DOCS.md`](.codex/DOCS.md) covers reader-document purpose and consistency.
 - [`.codex/hooks.json`](.codex/hooks.json) activates lifecycle-specific policies

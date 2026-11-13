@@ -1,11 +1,21 @@
 # Implementation
 
-The task file's `lines` (`TASK-FILE.md`) are the outcome ledger. A line may add `"e2e"`, a shell
-command run from the task's `cwd` that proves the outcome; the line under delivery is `active`.
+This codebase is yours to keep building on: how it is built is your call, and what it is for comes
+from the ledger.
+
+The task file's `lines` (`TASK-FILE.md`) are the outcome ledger; the line under delivery is `active`.
 Briefs, implementation, tests, reviews, and handoffs consume the ledger, not the current code.
 Apply a correction by editing the ledger lines it changes, not by adding a general rule.
 
 Resolve code/test conflicts by ledger outcomes; consult history only when intent is unclear.
+
+## Workflow
+
+Change the workflow when tests, builds, polling, or other non-implementation work consume most of
+the task's time and resources. A common cause is an edit-test-edit-test loop that validates each
+small change before making the next: settle the coupled changes, make them together, and validate
+the batch. Continue independent work while long checks or delegates run, and wait for their
+completion signal rather than polling them. `TESTING.md` owns check selection.
 
 ## Ownership and design
 
@@ -40,17 +50,14 @@ requires correction; negligible gains and style preferences do not reopen them.
 ## Construction
 
 Edit authoritative sources and regenerate consumers. Trace references before changing shared
-interfaces. Remove superseded paths and artifacts, keeping only compatibility a ledger line requires.
-Trust validated types inward; keep synchronous parsing and option construction synchronous. Catch
-errors where recovery or useful context belongs. Event-sourced systems persist irreducible facts
-and derive redundant state.
+interfaces. Trust validated types inward; keep synchronous parsing and option construction
+synchronous. Catch errors where recovery or useful context belongs. Event-sourced systems persist
+irreducible facts and derive redundant state. `REFACTOR.md` owns code hygiene, including removal of
+superseded code and tests.
 
 For JavaScript/TypeScript, use Bun/Bunx for execution, tests, installs, scripts, and documented commands
-unless the project pins another runtime/package manager. Keep shared/public shapes typed; let clear
-locals infer. Prefer precise unions, string APIs for literal text, and regular expressions for patterns.
-Prefer immutable bindings, early returns, named imports, and simple conditionals. Preserve qualified
-access when it aids clarity, inline unhelpful single-use names, and load heavy conditional modules
-where needed. Comment on non-obvious constraints.
+unless the project pins another runtime/package manager, and load heavy conditional modules where
+needed.
 
 ## Observable behavior
 

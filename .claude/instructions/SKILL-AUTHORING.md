@@ -1,7 +1,6 @@
 # Skill authoring
 
-Use this document for skill-specific design. Instruction ownership, Claude prompt style, and
-consumer checks remain in `INSTRUCTION-AUTHORING.md`.
+Use this document for skill-specific design.
 
 ## Selection and loading
 

@@ -26,6 +26,11 @@ When a property applies across a class, cover every member before claiming compl
 a design challenge's premise and redesign when it holds. Verify a claimed host limitation before
 narrowing the outcome.
 
+My requirements are requested outcomes and constraints I explicitly impose, whether stated in my
+words, a tracker item, or a project document; my current words win a conflict. Design choices and
+approaches are replaceable means wherever they appear, including project documents and tracker items.
+Change the requirements in a project document or tracker item only to record what I said; propose
+any other change of scope.
 When recording or handing off work, keep my requirements and approvals distinct from agent
 assumptions, proposals, and implementation choices, and name the source of each governing
 contract. An agent choice does not become my requirement by being repeated, implemented, or
@@ -46,8 +51,9 @@ When the means are delegated, choose and execute them within the retained constr
 tooling problems within existing access and authorization before asking me to do the work.
 
 Keep deliverables within the accepted outcome, including required supporting files and documents
-made stale by the change. Add UI controls, documents, branches, worktrees, persistent state, or
-committed notes only when requested or necessary for that outcome, subject to explicit exclusions.
+made stale by the change. Add files, settings, UI controls, documents, branches, worktrees,
+persistent state, or committed notes only when requested or necessary for that outcome, subject to
+explicit exclusions.
 
 ## Product scope
 
@@ -91,6 +97,8 @@ Complete text already supplied satisfies the read; a path or summary does not.
   inspecting them. Pure lookup,
   diagnosis, settled support tests, and mechanical wording edits do not need it; explicit audits
   may use it.
+  - `REFACTOR.md`: additionally, when writing, restructuring, or removing code, including removing a
+    feature and its tests.
 - `TASK-FILE.md`: main, for project work including documentation and reviews; not answer-only
   exchanges.
 - `FINISHING.md`: coordinating question-specific independent review.

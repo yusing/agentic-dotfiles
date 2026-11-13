@@ -13,13 +13,18 @@ separately; I decide whether to revert.
 Read the requested outcome at its stated breadth: cover everything it names and add nothing it does
 not. Take words and analogies at their plain meaning. Named tools, commands, files, and layers stay
 binding for the session. When a property applies across a class, cover every member before claiming
-completion. Evaluate a design challenge's premise and redesign when it holds.
+completion. Evaluate a design challenge's premise and redesign when it holds. Verify a claimed host
+limitation before narrowing the outcome.
 
-A requirement's source is the user's words, a project document, or a tracker item. Existing code,
-workarounds, states, lifecycles, tests, and fixtures are evidence of the current means, never a
-source. Anything unsourced, including an approved proposal's details, is a replaceable means;
-briefs, handoffs, and task records cite each requirement's source. When relaying a user
-correction, quote the user's words and mark anything you add as your proposal.
+A requirement is a requested outcome or a constraint the user explicitly imposes, stated in the
+user's words, a tracker item, or a project document; the user's current words win a conflict. Design
+choices and approaches are replaceable means wherever they appear, including approved proposals,
+project documents, and tracker items. Existing code, configuration, workarounds, states, lifecycles,
+tests, and fixtures are evidence of the current means, never a source. Anything unsourced is a
+replaceable means; briefs, handoffs, and task records cite each requirement's source.
+Change the requirements in a project document or tracker item only to record what the user said;
+propose any other change of scope.
+When relaying a user correction, quote the user's words and mark anything you add as your proposal.
 
 Choose routine details within authorization. Ask only when evidence cannot settle intent that
 materially changes scope or behavior. Make each question stand alone with the concrete situation,
@@ -29,11 +34,12 @@ Carry authorized work through validation and any authorized commit, including ac
 Answer questions/status during work, then resume or wait unless asked to stop. Resolve tooling within
 existing access and authorization. When blocked, report the concrete blocker and complete independent
 authorized work. Keep deliverables within the accepted outcome, including supporting files and
-stale documents; add controls, state, branches, worktrees, or notes only when requested or necessary.
+stale documents; add files, settings, controls, state, branches, worktrees, or notes only when
+requested or necessary.
 
 For public-facing software, derive scope from requirements and accepted contracts, separately from
-local implementation and validation conditions. Verify a claimed host limitation before narrowing
-the outcome. Preserve explicit limits; general applicability requests no extra features.
+local implementation and validation conditions. Preserve explicit limits; general applicability
+requests no extra features.
 
 ## Context and delivery
 
@@ -58,6 +64,8 @@ Read these owners when their operation applies and their guidance is absent from
 - `IMPLEMENTATION.md`: choosing or implementing code/operational changes; explicit quality audits
   use applicable sections. Pure lookup, diagnosis, settled support tests, and mechanical wording
   edits do not need it.
+  - `REFACTOR.md`: additionally, when writing, restructuring, or removing code, including removing a
+    feature and its tests.
 - `TASK-FILE.md`: main, for project work including documentation and reviews; not
   answer-only exchanges.
 - `FINISHING.md`: coordinating question-specific independent review.

@@ -30,11 +30,17 @@ Prefer elevation and visual separation without borders or large gaps.
 - "Load More": Loading should be automatic when near the edge.
 - "Loading" text: Use skeleton to represent loading instead.
 - Periodic fetch (polling): UI states should be server-pushed, not client pulled.
+- UI clutter: small secondary text scattered across a screen, and sentences that describe what the
+  screen is or is not ("These are", "are not", "does not"). Use one body text size, and add a
+  label, badge, or caveat only where the user acts on it.
+- Implementation details in the UI: internal names, pipeline stages, and data-source mechanics.
 
 ## Content discipline
 
 - Center each screen on the user's task, data, and actions. Do not turn implementation notes,
   validation caveats, or absent features into prominent UI sections.
+- A result view states what happened, how well or badly it went, and why, with the supporting
+  evidence beside it. Figures alone leave the user to work that out.
 - Keep copy that helps users decide or act. Remove narration of obvious interface structure,
   redundant headings, and unsolicited lists of what the app does not require or support.
 - Put detailed methodology and assumptions behind a clearly named disclosure or documentation

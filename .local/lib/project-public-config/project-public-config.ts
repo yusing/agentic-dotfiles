@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.36";
+export const VERSION = "1.3.37";
 
 type TreeEntry = {
 	mode: string;
@@ -124,6 +124,7 @@ const EXACT_PATHS = new Set([
 	".claude/instructions/INSTRUCTION-AUTHORING.md",
 	".claude/instructions/MAIN.md",
 	".claude/instructions/MODEL-ROUTING.md",
+	".claude/instructions/REFACTOR.md",
 	".claude/instructions/DELEGATION.md",
 	".claude/instructions/FRONTEND.md",
 	".claude/instructions/SKILL-AUTHORING.md",
@@ -141,6 +142,7 @@ const EXACT_PATHS = new Set([
 	".codex/SKILL-AUTHORING.md",
 	".codex/MAIN.md",
 	".codex/MODEL-ROUTING.md",
+	".codex/REFACTOR.md",
 	".codex/FRONTEND.md",
 	".codex/SUBAGENT.md",
 	".codex/TASK-FILE.md",
