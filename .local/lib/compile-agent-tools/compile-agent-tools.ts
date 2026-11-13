@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.24";
+const VERSION = "1.0.25";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -243,6 +243,8 @@ function main(): void {
     "check_project",
     "session_start_context",
     "go_quality",
+    "ledger_stop_gate",
+    "capture_result_gate",
   ]) {
     compileHook(join(codexHooks, `${name}.ts`), codexBin);
   }

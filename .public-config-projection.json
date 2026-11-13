@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "652e97440b96c2859902c4caf55e81ace4e5942b",
+  "sourceCommit": "3189232d9471c7b82126c11612b08172e4204a16",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -806,13 +806,13 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "b74dc5f1eafb86ced943e1423cc36879a1cce1f4e6c6bdc9a940249e4efab98e",
+      "sha256": "437d91075eb577435b57c7f418e53bcaf60f88d1f6a343ea1dd2feb076db41f7",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "6dbbc489f1af982a992b88fbceb9706172b43cee05f58b9d2e7b530169785c8c",
+      "sha256": "156c92b283c08fa3a3d144330bbd5884e9ad87a3ce1ce3e4a7735bd204d2a1c2",
       "executable": false
     },
     {

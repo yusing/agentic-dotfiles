@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.25
+
+Build the registered ledger_stop_gate and capture_result_gate hooks, which
+were left to manual builds.
+
 ## 1.0.24
 
 Build agent-work-watch for the Herdr Work pane in place of the retired
