@@ -40,6 +40,7 @@
     "unzip": {"packages": {"apt": ["unzip"], "pacman": ["unzip"], "brew": ["unzip"]}, "commands": ["unzip"], "manager": "brew", "brew_prefix": "unzip"},
     "python3": {"packages": {"apt": ["python3"], "pacman": ["python"], "brew": ["python"]}, "commands": ["python3", "python"], "manager": "brew", "brew_prefix": "python", "legacy_mise": ["python"]},
     "rustup": {"packages": {"brew": ["rustup"], "pacman": ["rustup"]}, "commands": ["rustup", "rustc", "cargo"], "manager": "brew", "brew_prefix": "rustup", "legacy_mise": ["rust", "aqua:rust-lang/rustup"]},
+    "rust-analyzer": {"packages": {"brew": ["rust-analyzer"], "pacman": ["rust-analyzer"]}, "commands": ["rust-analyzer"], "manager": "brew", "brew_prefix": "rust-analyzer"},
     "sccache": {"packages": {"brew": ["sccache"], "pacman": ["sccache"]}, "commands": ["sccache"], "manager": "brew", "brew_prefix": "sccache"},
     "ca-certificates": {"packages": {"apt": ["ca-certificates"], "pacman": ["ca-certificates"], "brew": []}, "commands": []},
     "make": {"packages": {"brew": ["make"], "pacman": ["make"]}, "commands": ["make"], "manager": "brew", "brew_prefix": "make"},
