@@ -20,8 +20,7 @@ outlines to locate those bodies, not as evidence of their behavior. Carry read r
 on return to an owner, acquire only missing or changed evidence. Follow references for affected
 shared interfaces. Expand for an unresolved dependency, sourced compatibility promise, or concrete
 failure, not an anticipatory subsystem inventory. Before building supporting machinery for a new or
-disputed design, set the active ledger line's `e2e` command to its smallest real consumer path and
-make it pass.
+disputed design, make its smallest real consumer path pass.
 
 For a multi-part implementation whose public entry points must agree or whose mutations reach
 stored data, obtain one independent contract check before the first shared-owner change. Main
