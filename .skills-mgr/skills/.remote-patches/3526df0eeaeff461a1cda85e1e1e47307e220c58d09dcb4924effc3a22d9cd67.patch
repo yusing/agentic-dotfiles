@@ -1,5 +1,5 @@
-# skills-mgr-base-sha256 60b28db5b700320c51d2b9f69f101631b753156fccee99f57af7c3a37aeaf9f8
-# skills-mgr-result-sha256 68e2e716de2c3095d308cddff529089ef3561dc29b21cc5260af9aa1d8c4551f
+# skills-mgr-base-sha256 7d46deeb0101e84f8d70fd2e5cd18e3b6017edfb973607ff23e95e22c92ce73e
+# skills-mgr-result-sha256 c7b07719beeb04284c9318f86189c9b3e9dc383d18c8b6145c312ea92c32ea6d
 --- a/SKILL.md
 +++ b/SKILL.md
 @@ -1,6 +1,6 @@
@@ -10,6 +10,15 @@
  allowed-tools: Bash(agent-browser:*)
  hidden: true
  ---
+@@ -35,7 +35,7 @@
+ agent-browser skills get webmcp-gen        # Build and validate WebMCP tools for a page
+ agent-browser skills get modern-web-guidance  # Apply Modern Web Guidance, then verify the page
+ agent-browser skills get vercel-sandbox    # agent-browser inside Vercel Sandbox microVMs
+-agent-browser skills get vercel  # Protected Vercel deployments and flag overrides
++agent-browser skills list                  # Find the protected Vercel deployments guide for this version
+ agent-browser skills get agentcore         # AWS Bedrock AgentCore cloud browsers
+ ```
+ 
 @@ -46,6 +46,4 @@
  - Fast native Rust CLI, not a Node.js wrapper
  - Works with any AI agent (Cursor, Claude Code, Codex, Continue, Windsurf, etc.)
