@@ -121,15 +121,6 @@
     "handoff": {
       "enabled": true
     },
-    "herdr": {
-      "enabled": "command -v herdr && [ \"$PWD\" == \"$HOME\" ]",
-      "remote": {
-        "provider": "skills.sh",
-        "id": "herdrdev/herdr/herdr",
-        "name": "herdr",
-        "locator": "herdrdev/herdr/herdr"
-      }
-    },
     "human-flavoured-writing": {
       "enabled": true
     },
