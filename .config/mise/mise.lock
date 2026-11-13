@@ -29,19 +29,16 @@ specifiers = ["latest"]
 
 [tools."aqua:go-swagger/go-swagger"."platforms.linux-arm64"]
 checksum = "sha256:f842ecdef842c716cc48f2c9b435da921855e96a98d4107f056279abc7f1b1e6"
-checksum_source = "mise-versions"
 url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagger_0.36.7_Linux_arm64.tar.gz"
 url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050695"
 
 [tools."aqua:go-swagger/go-swagger"."platforms.linux-x64"]
 checksum = "sha256:7d3704481cd8b82c1738550ae19a86cb59f9446ac5a2ec535b63d6120c85798c"
-checksum_source = "mise-versions"
 url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagger_0.36.7_Linux_x86_64.tar.gz"
 url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050691"
 
 [tools."aqua:go-swagger/go-swagger"."platforms.macos-arm64"]
 checksum = "sha256:a5f55b6cc7a7431979a75a827e1c9f2578f71ca34a652b187f52ca697079e244"
-checksum_source = "mise-versions"
 url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagger_0.36.7_Darwin_arm64.tar.gz"
 url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050832"
 
@@ -52,19 +49,16 @@ specifiers = ["latest"]
 
 [tools."aqua:trufflesecurity/trufflehog"."platforms.linux-arm64"]
 checksum = "sha256:778b1913196dc9b9234e8fd366f64387efeb08c01930a1d2110dcb2ffd07e68b"
-checksum_source = "mise-versions"
 url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.9/trufflehog_3.99.9_linux_arm64.tar.gz"
 url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/741127612"
 
 [tools."aqua:trufflesecurity/trufflehog"."platforms.linux-x64"]
 checksum = "sha256:12050095c8063bf4d34f9f6cbce6ba9fa8d0deea9d503d0570364feba093658e"
-checksum_source = "mise-versions"
 url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.9/trufflehog_3.99.9_linux_amd64.tar.gz"
 url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/741127614"
 
 [tools."aqua:trufflesecurity/trufflehog"."platforms.macos-arm64"]
 checksum = "sha256:1d85e5c9c7eddbf12ae2714eb89317ba2cbbbf59be4e161e4b2ff396adbaa3a8"
-checksum_source = "mise-versions"
 url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.9/trufflehog_3.99.9_darwin_arm64.tar.gz"
 url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/741127610"
 
@@ -78,19 +72,16 @@ matching_regex = "^gh-dash_.*_(linux|darwin)-(amd64|arm64)$"
 
 [tools."github:dlvhdr/gh-dash"."platforms.linux-arm64"]
 checksum = "sha256:67e55fe550e86dc7555979f8e0d05b88e1ba086b022a6e19e071dfc67369ec50"
-checksum_source = "mise-versions"
 url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.2/gh-dash_v4.26.2_linux-arm64"
 url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/647120648"
 
 [tools."github:dlvhdr/gh-dash"."platforms.linux-x64"]
 checksum = "sha256:565d7dbfafc568c06441ab49d31c7059b7ade7cbba12490fa7f12f9bb71dc1b5"
-checksum_source = "mise-versions"
 url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.2/gh-dash_v4.26.2_linux-amd64"
 url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/647120492"
 
 [tools."github:dlvhdr/gh-dash"."platforms.macos-arm64"]
 checksum = "sha256:591cfe85838c3459b56b4a08bcdf0ce11a5c59a92d466ab312cca0c4ad0d163f"
-checksum_source = "mise-versions"
 url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.2/gh-dash_v4.26.2_darwin-arm64"
 url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/647120754"
 
@@ -104,19 +95,16 @@ matching_regex = "^lightpanda-(aarch64|x86_64)-(linux|macos)$"
 
 [tools."github:lightpanda-io/browser"."platforms.linux-arm64"]
 checksum = "sha256:69791924bcee43b13b224af4c845622c5fe66fdbc1b8143bfaa39ca8f85244f5"
-checksum_source = "mise-versions"
 url = "https://github.com/lightpanda-io/browser/releases/download/1.0.0/lightpanda-aarch64-linux"
 url_api = "https://api.github.com/repos/lightpanda-io/browser/releases/assets/605340458"
 
 [tools."github:lightpanda-io/browser"."platforms.linux-x64"]
 checksum = "sha256:aa5a4b8ed53d1e38b3c73f5b2647d0a84a82e6744557f45f9a9c85858aa031c3"
-checksum_source = "mise-versions"
 url = "https://github.com/lightpanda-io/browser/releases/download/1.0.0/lightpanda-x86_64-linux"
 url_api = "https://api.github.com/repos/lightpanda-io/browser/releases/assets/605343099"
 
 [tools."github:lightpanda-io/browser"."platforms.macos-arm64"]
 checksum = "sha256:955440053a84754dd64c62f970449a56a2b350cdf43ea5f2e809a73047b8173d"
-checksum_source = "mise-versions"
 url = "https://github.com/lightpanda-io/browser/releases/download/1.0.0/lightpanda-aarch64-macos"
 url_api = "https://api.github.com/repos/lightpanda-io/browser/releases/assets/605336160"
 
@@ -131,13 +119,11 @@ version_prefix = "deploy/v"
 
 [tools."github:tonistiigi/binfmt"."platforms.linux-arm64"]
 checksum = "sha256:f34d842ae7df0018c1e66ff06066da6c66c41e9e6788caa76916a07250286ac0"
-checksum_source = "mise-versions"
 url = "https://github.com/tonistiigi/binfmt/releases/download/deploy/v10.2.3-68/binfmt_linux-arm64.tar.gz"
 url_api = "https://api.github.com/repos/tonistiigi/binfmt/releases/assets/441599085"
 
 [tools."github:tonistiigi/binfmt"."platforms.linux-x64"]
 checksum = "sha256:9f955e980acb29986365766db7d36383a1dbbf2159f30b532a74474f6f5dd75d"
-checksum_source = "mise-versions"
 url = "https://github.com/tonistiigi/binfmt/releases/download/deploy/v10.2.3-68/binfmt_linux-amd64.tar.gz"
 url_api = "https://api.github.com/repos/tonistiigi/binfmt/releases/assets/441599094"
 
@@ -230,10 +216,7 @@ specifiers = ["latest"]
 version = "0.9.108"
 backend = "pipx:graphifyy"
 specifiers = ["latest"]
-uv = { path = "locks/pipx-graphifyy/0.9.108~a3ac51e6", digest = "sha256:e734bfd731b01223100342530248a23b23a9748ab93c0be612d238ff602a56b6" }
-
-[tools."pipx:graphifyy".options]
-python = "3.14"
+uv = { path = "locks/pipx-graphifyy/0.9.108", digest = "sha256:1abd25ad257dcbaba1b9bf50951d38e88fc73a7a6ee1266ae642a0a1f83d46f6" }
 
 [[tools.python]]
 version = "3.14.10"
