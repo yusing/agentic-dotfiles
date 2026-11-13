@@ -9,6 +9,10 @@ disable-model-invocation: false
 
 - Commit only the authorized work. Make each commit one coherent, independently valid change;
   split unrelated changes and keep enabling refactors separate from behavior changes.
+- Commit at the boundaries the user named. Keep intermediate steps uncommitted until a boundary is
+  complete, and drop a failed attempt together with its revert from unpublished history.
+- Commit generated code and artifacts separately from handwritten changes so crafted commits are
+  easy to review.
 - Keep unrelated working-tree and staged changes out of the commit. Ask before tracking files
   that were untracked before the task.
 - Reuse environment facts, recent inspection, and validation while they remain current for the
