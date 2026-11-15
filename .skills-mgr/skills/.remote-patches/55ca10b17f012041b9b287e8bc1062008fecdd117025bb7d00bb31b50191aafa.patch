@@ -1,5 +1,5 @@
-# skills-mgr-base-sha256 d1a161e4beb1054c91a75b12d1420f6d46ea4b9fd9a5d23372da8687cb1a6ab5
-# skills-mgr-result-sha256 c437f8f49805a943a506a7dfcef204f31a94572933549c69aa691bcc973da0e0
+# skills-mgr-base-sha256 af9cf89efd1eac29495fb44f25b3fae8b96bf9ddbaaa2a47c6e835d9aa568a6f
+# skills-mgr-result-sha256 f6d8ccc5595b8ea8f09bda702b808583d7767f99721d2e20742ed4958ddfa10f
 --- a/SKILL.md
 +++ b/SKILL.md
 @@ -15,7 +15,7 @@
@@ -65,7 +65,36 @@
  ```
  
  This creates:
-@@ -123,7 +123,7 @@
+@@ -104,7 +104,7 @@
+ To render the generated system as a static page, add `--preview` (only valid with `--design-system`):
+ 
+ ```bash
+-python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<query>" --design-system --persist --preview -p "Project Name" --output-dir "<project-root>"
++skills-mgr run ui-ux-pro-max/scripts/search.py "<query>" --design-system --persist --preview -p "Project Name" --output-dir "<project-root>"
+ ```
+ 
+ With `--persist`, this writes `design-system/<project-slug>/preview.html` next to Master. Without `--persist`, pass `--output-dir` to write `preview.html` there, or omit it to get a temp file whose path is printed. Existing `preview.html` files are skipped unless `--force` is set.
+@@ -118,8 +118,8 @@
+ `--tokens` is valid only with `--design-system`. It prints a machine-readable token document so hex values and font names do not have to be copied by hand:
+ 
+ ```bash
+-python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<query>" --design-system --tokens dtcg
+-python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<query>" --design-system --tokens css
++skills-mgr run ui-ux-pro-max/scripts/search.py "<query>" --design-system --tokens dtcg
++skills-mgr run ui-ux-pro-max/scripts/search.py "<query>" --design-system --tokens css
+ ```
+ 
+ - `dtcg` prints W3C Design Tokens Community Group JSON (`$value` / `$type`, `color`, `font`, and a `semantic` layer such as `color.primary`, `color.on-primary`, `color.background`, `font.heading`).
+@@ -128,7 +128,7 @@
+ - With `--persist`, also write `tokens.json` next to `MASTER.md` (and `tokens.css` when `--tokens css`). Existing files follow the same `--force` / skip-if-exists rules. Token files are master-level only; `--page` overrides do not emit page-specific tokens.
+ 
+ ```bash
+-python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<query>" --design-system --persist --tokens dtcg -p "Project Name" --output-dir "<project-root>"
++skills-mgr run ui-ux-pro-max/scripts/search.py "<query>" --design-system --persist --tokens dtcg -p "Project Name" --output-dir "<project-root>"
+ ```
+ 
+ **Retrieval when building a specific page:**
+@@ -141,7 +141,7 @@
  Three optional 1-10 sliders that tune `--design-system` output without changing your query. Add any combination of them to the same command:
  
  ```bash
@@ -74,7 +103,7 @@
  ```
  
  | Dial | Low (1-3) | Mid (4-7) | High (8-10) |
-@@ -138,13 +138,13 @@
+@@ -156,13 +156,13 @@
  
  **Example:**
  ```bash
@@ -90,7 +119,7 @@
  ```
  
  | Need | Domain | Example |
-@@ -168,7 +168,7 @@
+@@ -186,7 +186,7 @@
  ### Step 4: Stack Guidelines
  
  ```bash
@@ -99,7 +128,7 @@
  ```
  
  **Available stacks:** `react`, `nextjs`, `vue`, `svelte`, `astro`, `nuxtjs`, `nuxt-ui`, `angular`, `laravel`, `swiftui`, `react-native`, `flutter`, `jetpack-compose`, `html-tailwind`, `shadcn`, `threejs`, `javafx`, `wpf`, `winui`, `avalonia`, `uno`, `uwp`. Use the stack detected in Step 1.
-@@ -188,13 +188,13 @@
+@@ -206,13 +206,13 @@
  
  ```bash
  # Step 2: design system
@@ -116,7 +145,7 @@
  ```
  
  Then synthesize the design system + detailed searches and implement.
-@@ -213,13 +213,13 @@
+@@ -231,13 +231,13 @@
  | Problem | What to Do |
  |---------|------------|
  | Can't decide on style/color | Re-run `--design-system` with different keywords |
