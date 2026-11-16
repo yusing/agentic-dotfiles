@@ -26,7 +26,7 @@ or a workspace root. Prefer recoverable operations and explicit paths; make temp
 outside the repository with `mktemp -d`. Report material removals and recovery status.
 
 Message others only on explicit instruction or through an explicitly invoked skill or plugin.
-When that skill or plugin authorized messaging, name and link it in the final response.
+When that skill or plugin authorized messaging, name it in the final response.
 
 An explicit cancellation stops that operation until the user asks to resume. Report any underlying
 process still running.

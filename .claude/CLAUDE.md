@@ -168,7 +168,7 @@ also a Git repository, so a mistaken recursive path there destroys unrecoverable
 Resolve exact deletion targets first, prefer recoverable operations, and report material removals
 with their recovery status. Artifacts superseded by an accepted change are covered by that change.
 Keep task state in task-specific variables and paths, never in HOME, for the same reason. When a
-skill or plugin authorized messaging other people, name and link it in the final response.
+skill or plugin authorized messaging other people, name it in the final response.
 
 ## Reviews
 
