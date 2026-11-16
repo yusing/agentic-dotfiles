@@ -105,6 +105,4 @@ clearing, and compaction. `SubagentStart` wraps `.claude/instructions/SUBAGENT.m
 `additionalContext` envelope with `jq`. Because the hooks deliver both documents,
 `.claude/CLAUDE.md` has no routing line for either.
 
-`.claude/hooks/` remains Herdr-managed and untracked. The shared hook is covered by the existing
-`.codex/hooks/*` allowlist entry. The `SessionStart` group that reports the session to Herdr stays
-separate from the static session-start hooks because Herdr rewrites its own group.
+The shared hook is covered by the existing `.codex/hooks/*` allowlist entry.

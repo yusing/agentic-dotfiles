@@ -25,8 +25,7 @@
           }
         ],
         "matcher": "^(startup|resume|clear|compact)$"
-      },
-      {}
+      }
     ],
     "Stop": [
       {
