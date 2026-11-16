@@ -127,6 +127,15 @@
     "juststore-rendering-optimizer": {
       "enabled": "(lang js || lang ts) && has_dependency juststore"
     },
+    "modern-web-guidance": {
+      "enabled": "lang tsx | lang jsx | lang html | lang css",
+      "remote": {
+        "provider": "skills.sh",
+        "id": "googlechrome/modern-web-guidance/modern-web-guidance",
+        "name": "modern-web-guidance",
+        "locator": "googlechrome/modern-web-guidance/modern-web-guidance"
+      }
+    },
     "new-agent-session": {
       "enabled": true
     },
