@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.9
+# version: 2.10.10
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1355,7 +1355,7 @@ if python_users and "python" not in tool_platforms:
 for tool in locked:
     # Rust delegates downloads to rustup; package-manager backends also lock
     # versions rather than release artifacts.
-    if tool == "rust" or tool.startswith(("go:", "npm:", "pipx:")):
+    if tool == "rust" or tool.startswith(("cargo:", "go:", "npm:", "pipx:")):
         continue
     tool_required = {
         platform for platform in required

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.10.10
+
+Accept version-only Cargo backend locks during setup validation, including
+cargo-sweep, without requiring platform download artifacts.
+
 ## 2.10.9
 
 Prefer declared pacman packages on Arch over Homebrew fallbacks, including
