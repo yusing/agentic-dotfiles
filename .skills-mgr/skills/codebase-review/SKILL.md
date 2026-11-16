@@ -30,7 +30,7 @@ tests, configuration, dependencies, generated files, and Git state unchanged.
 ## Result
 
 Lead with findings ordered Critical, High, Medium, Low. Each needs a title, `path:line`, impact,
-concrete evidence, and smallest viable correction. If none qualify, say `No findings.`
+concrete evidence, and viable correction. If none qualify, say `No findings.`
 
 Then report reviewed areas and tests, exact checks and outcomes (or why none ran), blind spots,
 and a ship/block/follow-up recommendation. Finish when the whole requested surface is accounted

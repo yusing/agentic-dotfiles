@@ -30,7 +30,7 @@ regressions, pre-existing behavior, and aesthetic preference; do not demand unre
 
 # Result
 
-Explain the trigger, visible defect or unusable flow, evidence, and smallest correction. Account for
+Explain the trigger, visible defect or unusable flow, evidence, and correction. Account for
 affected UI contracts and unverified acceptance. Keep hypotheses separate. On re-review, inspect
 corrections/interactions and mark prior findings resolved/open/superseded in the complete result.
 '''

@@ -49,7 +49,7 @@ the wait; resume synthesis after every assigned review is complete. When delegat
 keep these evidence categories separate and disclose the lack of independent review.
 
 For each candidate, identify the rule and consumer, triggering situation, conflicting or redundant
-behavior, evidence location, consequence, and smallest correction at the existing owner. Seek
+behavior, evidence location, consequence, and correction at the existing owner. Seek
 counterevidence before generalizing. Similar text serving separate clients or different actors is
 not automatically redundant.
 

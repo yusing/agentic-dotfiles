@@ -45,7 +45,7 @@ purpose/contract overlap. Identify the authoritative side of a code/doc mismatch
 # Result
 
 Report every established defect, including small ones, with trigger, impact, pointers, evidence,
-and smallest correction. Give each reproduction's location, trigger, and outcome so the owner can
+and correction. Give each reproduction's location, trigger, and outcome so the owner can
 adopt it.
 Separate undelivered ledger outcomes, broken sourced promises, added mechanisms, states, or
 branches with no ledger line, supporting-mechanism defects, and pre-existing issues. Keep

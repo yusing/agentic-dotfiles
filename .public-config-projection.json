@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "508e66ca98755f0b664bdcdd0584bea590476d67",
+  "sourceCommit": "e4d0420971cc98fe9fb54eb3231784184e9f3187",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -182,19 +182,19 @@
     {
       "path": ".codex/agents/review-correctness.toml",
       "kind": "file",
-      "sha256": "1c4f52cd54d386b244cd33797d5348537b70eee7ab287728244a96404c324704",
+      "sha256": "9e0029c5229bc83db89ca6c6dc90b84e99d754d112ab1c39187d23b5b9131925",
       "executable": false
     },
     {
       "path": ".codex/agents/review-simplify.toml",
       "kind": "file",
-      "sha256": "033ba145741789031eec7e0a096aa8bcdf7cc9a82f8f5c5497592a55f59a111b",
+      "sha256": "76a09af4a3806e9bce76659540aac0986a16d6d7d5b2b3b1f2caaa9b899034fb",
       "executable": false
     },
     {
       "path": ".codex/agents/ui-reviewer.toml",
       "kind": "file",
-      "sha256": "90fa64d516f5bb469a43049184f374f221ef2a499477e7feed9b653550aa4607",
+      "sha256": "8caa14cd4f5cd9a1dbfd71fc456296e2a8364ecfd66ff7c10135b546f477b904",
       "executable": false
     },
     {
@@ -1051,7 +1051,7 @@
     {
       "path": ".skills-mgr/skills/codebase-review/SKILL.md",
       "kind": "file",
-      "sha256": "9804409b4fa7c0b6e088ce1318721f9f6934958cdb384eb889aaa4ed0fe1fecb",
+      "sha256": "b735fce82b22b8c631f8a5f0f7938c4169f23726ee8e83b163b936a24ab7bc5d",
       "executable": false
     },
     {
@@ -1207,7 +1207,7 @@
     {
       "path": ".skills-mgr/skills/instruction-audit/SKILL.md",
       "kind": "file",
-      "sha256": "325685d624a8d32ad245deac4ef571d469bc5f11499d85064849937e80702235",
+      "sha256": "62335ad6485669e047c58e324084af966caba9427c94257a46f315af616de16f",
       "executable": false
     },
     {
