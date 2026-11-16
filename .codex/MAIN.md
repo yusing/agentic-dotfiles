@@ -49,6 +49,26 @@ Communicate a decision brief only when a consequential choice needs explaining o
 affected ledger lines, approach, tradeoffs, and acceptance evidence.
 A complete request or settled choice needs no second rendering.
 
+## Messages during work
+
+A message the user sends while a unit is unfinished adds to the work; it does not replace or
+reorder it. This covers a question, complaint, observation, idea, issue report, new request, and an
+instruction for a later step. Unless the user asks for the new item now or it blocks the active
+unit:
+
+- Keep the active unit going in the same turn and keep its line `active`. Answer or acknowledge
+  the message without making it the current task.
+- Give the new item an owner instead of working on it inline. Record it as a `pending` task-file
+  line citing the user's words, placed in delivery order. When it needs investigation, assign that
+  to an independent delegate that runs while main continues. When the result returns, assign the
+  fix to an independent worker if it touches no file or interface the active work depends on;
+  otherwise take the line up in its order. Where delegation is unavailable, the recorded line waits
+  for its turn.
+- Agreement that an item belongs in the work settles its place in the order, not an immediate
+  start. An instruction for a later step, such as how to test, applies when that step arrives.
+
+A correction to the active unit's own outcome is part of that unit and is handled in place.
+
 ## Complete
 
 Account for every ledger outcome from the units' current consumer evidence and affected documents.
