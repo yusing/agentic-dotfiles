@@ -138,7 +138,9 @@ bodies with `skills-mgr get <skill> [start:end]`,
 references with `skills-mgr get <skill>/<path> [start:end]`, and scripts with
 `skills-mgr run <skill>/<script> [args...]` (ranges are optional, 1-based, inclusive). Acquire a
 skill I invoke by name or as `/<skill>` the same way, even when the catalog omits it, with its
-required references; load optional references only for the current operation. Claude's built-in
+required references; load optional references only for the current operation. The inventory lists
+each skill's references, so a reference whose name matches the current operation needs no routing
+from the skill body: read it in the same shell call as the body. Claude's built-in
 skills ship inside Claude Code and are unavailable; when a harness tool says to load one first,
 use the tool without it. To change a skill, edit its maintained owner
 under `SKILL-AUTHORING.md`. Subagents load only the skills their assignment needs.

@@ -94,7 +94,9 @@ any skills. Explicit reviews retain their requested operation and scope.
 
 Acquire bodies with `skills-mgr get <skill> [start:end]`, references with
 `skills-mgr get <skill>/<path> [start:end]`, and scripts with
-`skills-mgr run <skill>/<script> [args...]`. Ranges are optional, 1-based, inclusive. Follow selected
+`skills-mgr run <skill>/<script> [args...]`. Ranges are optional, 1-based, inclusive. The skill
+inventory lists each skill's references, so a reference whose name matches the current operation
+needs no routing from the skill body: read it in the same shell call as the body. Follow selected
 methods. If a required tool/method is unavailable, stop only dependent work; reuse substitution or
 install approval, or ask. Missing automatic skills alone do not block routine work.
 
