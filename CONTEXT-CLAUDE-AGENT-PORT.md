@@ -75,10 +75,8 @@ command boundary rests on the role body alone.
 `go_quality` has no active registration; its implementation remains available
 for re-enabling.
 
-A `PreToolUse` hook on `Bash` runs `rtk hook claude`, which rewrites supported commands to their
-`rtk` form. Codex registers the equivalent `rtk hook codex` in `.codex/hooks.json`. The hook owns
-the rewrite; standing guidance carries no `rtk` usage rule. Under auto mode a rewritten call can be
-refused until the agent resubmits it.
+Command compression is instructed by `.claude/CLAUDE.md`, with shared guidance in
+`.codex/AGENTS.md` for Codex. Neither client registers an `rtk` rewrite hook.
 
 ## Session start
 

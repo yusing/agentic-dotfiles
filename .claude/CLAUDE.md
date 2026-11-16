@@ -117,6 +117,9 @@ Complete text already supplied satisfies the read; a path or summary does not.
 
 ## Skills and tools
 
+`rtk` is installed; apply it to noisy producers; use raw execution for exact output,
+redirection, or changed argument semantics.
+
 Assume all my machines have identical setups and all tools mentioned or expected by the project
 are available. Use them directly without probing the environment or checking tool availability;
 investigate only if an actual command failure contradicts these assumptions.
