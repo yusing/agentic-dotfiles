@@ -53,7 +53,8 @@ Write deliverables for readers without session history. Include conversation tex
 for that deliverable. Keep private resources, session identifiers, and credentials out of repository
 deliverables. Keep approval/provenance evidence in the task record or tracker.
 
-Read these owners when their operation applies and their guidance is absent from working context:
+Read these owners right before their operation applies EXACTLY AS DESCRIBED BELOW.
+AND you have not been read before from working context:
 
 ### In $HOME/.codex
 
