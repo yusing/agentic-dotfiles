@@ -3,7 +3,7 @@ import { resolve, extname } from "node:path";
 import { parseTOML, type AST } from "toml-eslint-parser";
 import { parseTree, createScanner, SyntaxKind, type Node, type ParseError } from "jsonc-parser";
 
-export const VERSION = "1.0.1";
+export const VERSION = "1.0.2";
 type Value = { raw: string } | Map<string, Value> | Value[];
 type Edit = { start: number; end: number; text: string };
 const quote = (s: string) => JSON.stringify(s).replaceAll("\x7f", "\\u007f");
@@ -178,7 +178,7 @@ export function rewriteConfig(text: string, format: string, home: string, expand
 }
 
 function isRuntimeConfig(name: string): boolean {
-  if ([".claude/settings.json", ".codex/config.toml", ".codex/hooks.json", ".config/fish/config.fish", ".gitconfig", ".grok/config.toml", ".bashrc", ".zsh/fish-mirror.zsh", ".zshrc"].includes(name)) return true;
+  if ([".cargo/config.toml", ".claude/settings.json", ".codex/config.toml", ".codex/hooks.json", ".config/fish/config.fish", ".gitconfig", ".grok/config.toml", ".bashrc", ".zsh/fish-mirror.zsh", ".zshrc"].includes(name)) return true;
   if (name.startsWith(".claude/agents/")) return extname(name) === ".md";
   if (name.startsWith(".codex/agents/")) return extname(name) === ".toml";
   return (name.startsWith(".grok/hooks/") || name.startsWith(".config/")) && [".json", ".toml", ".yaml", ".yml"].includes(extname(name));
@@ -205,7 +205,7 @@ if (import.meta.main) {
         if (!stat.isFile() || stat.isSymbolicLink()) continue;
         const text = readFileSync(path, "utf8");
         let output;
-        try { output = rewriteConfig(text, extname(name), home, /^\.(claude|codex|grok)\//.test(name)); }
+        try { output = rewriteConfig(text, extname(name), home, /^\.(cargo|claude|codex|grok)\//.test(name)); }
         catch { throw new Error(`cannot rewrite ${name}: invalid configuration`); }
         if (output !== text) changes.push([path, output]);
       }

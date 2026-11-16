@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+Resolve shared Cargo configuration home paths during setup and Git checkout.
+
 ## 1.0.1
 
 Preserve `/home/linuxbrew` and its descendants when rewriting user home paths.
