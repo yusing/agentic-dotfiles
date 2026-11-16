@@ -209,9 +209,17 @@ function make
     end
 end
 
+# Unlock explicitly when vault access is needed, never during shell startup.
+function bw-unlock --description 'Unlock Bitwarden and export its session to this shell'
+    if test $status -ne 0; or test -z "$session"
+        printf '%s\n' 'bitwarden unlock failed' >&2
+        return 1
+    end
+    set -gx BW_SESSION "$session"
+end
+
 # initialize interactive sessions
 if status is-interactive
-    # Commands to run in interactive sessions can go here
     check-command oh-my-posh; and oh-my-posh init fish --config "$HOME/.config/oh-my-posh/catppuccin_macchiato.omp.json" | source
     if command -q oh-my-posh; and command -q update-oh-my-posh-theme
         command update-oh-my-posh-theme >/dev/null 2>&1 &
@@ -220,13 +228,7 @@ if status is-interactive
     check-command atuin; and atuin init fish | source
     check-command fzf; and fzf --fish | source
     check-command zoxide; and zoxide init fish | source
-    check-command golangci-lint; and golangci-lint completion fish | source
-    check-command codex; and codex completion fish | source
-    check-command grok; and grok completions fish | source
-    check-command gh; and gh completion --shell fish | source
-    check-command herdr; and herdr completion fish | source
-    check-command shadowtree; and shadowtree completion fish | source
-    check-command skills-mgr; and skills-mgr completion fish | source
+    # CLI completions are generated on demand by completions/<command>.fish.
     # live cwd from Herdr. Load it only outside Herdr panes.
     # if test "$HERDR_ENV" != 1
     # end

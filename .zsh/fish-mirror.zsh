@@ -199,6 +199,12 @@ make() {
     fi
 }
 
+# Unlock explicitly when vault access is needed, never during shell startup.
+bw-unlock() {
+    local session
+    export BW_SESSION="$session"
+}
+
 if [[ -o interactive ]]; then
     _zfm_command_exists oh-my-posh && eval "$(oh-my-posh init zsh --config "$HOME/.config/oh-my-posh/catppuccin_macchiato.omp.json")"
     if _zfm_command_exists oh-my-posh && _zfm_command_exists update-oh-my-posh-theme; then
