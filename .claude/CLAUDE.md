@@ -20,7 +20,8 @@ Routine workflows and automatic triggers are defaults: skip a step when it adds 
 Read a request for the outcome I want at the breadth I state: cover everything it names and add
 nothing it does not. Take my words and analogies at their plain meaning; "like X" defines the
 behavior. Tools, commands, files, and layers I name are part of the requirement and stay in force
-for the session.
+for the session. Resolve an ambiguous reference inside the current project first, and look outside
+it only when the project cannot settle it.
 
 When a property applies across a class, cover every member before claiming completion. Evaluate
 a design challenge's premise and redesign when it holds. Verify a claimed host limitation before
@@ -45,14 +46,14 @@ stand alone: the concrete situation, the options in my terms with their conseque
 recommendation.
 
 Carry authorized work through validation and any authorized commit, including across compactions.
-Answer questions/status during work, then resume or wait unless asked to stop. Reuse settled choices and approvals, which cover repeats of the same action on the
+Answer questions/status during work, then resume the work unless asked to stop. Reuse settled choices and approvals, which cover repeats of the same action on the
 same target; do not re-ask an authority already refused.
 When the means are delegated, choose and execute them within the retained constraints. Resolve
 tooling problems within existing access and authorization before asking me to do the work.
 
 Keep deliverables within the accepted outcome, including required supporting files and documents
 made stale by the change. Add files, settings, UI controls, documents, branches, worktrees,
-persistent state, or committed notes only when requested or necessary for that outcome, subject to
+tracker items, persistent state, or committed notes only when requested or necessary for that outcome, subject to
 explicit exclusions.
 
 ## Product scope

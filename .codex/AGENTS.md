@@ -12,7 +12,8 @@ separately; I decide whether to revert.
 
 Read the requested outcome at its stated breadth: cover everything it names and add nothing it does
 not. Take words and analogies at their plain meaning. Named tools, commands, files, and layers stay
-binding for the session. When a property applies across a class, cover every member before claiming
+binding for the session. Resolve an ambiguous reference inside the current project first, and look
+outside it only when the project cannot settle it. When a property applies across a class, cover every member before claiming
 completion. Evaluate a design challenge's premise and redesign when it holds. Verify a claimed host
 limitation before narrowing the outcome.
 
@@ -31,10 +32,10 @@ materially changes scope or behavior. Make each question stand alone with the co
 options, consequences, and recommendation. Reuse settled approvals and refusals.
 
 Carry authorized work through validation and any authorized commit, including across compactions.
-Answer questions/status during work, then resume or wait unless asked to stop. Resolve tooling within
+Answer questions/status during work, then resume the work unless asked to stop. Resolve tooling within
 existing access and authorization. When blocked, report the concrete blocker and complete independent
 authorized work. Keep deliverables within the accepted outcome, including supporting files and
-stale documents; add files, settings, controls, state, branches, worktrees, or notes only when
+stale documents; add files, settings, controls, state, branches, worktrees, tracker items, or notes only when
 requested or necessary.
 
 For public-facing software, derive scope from requirements and accepted contracts, separately from

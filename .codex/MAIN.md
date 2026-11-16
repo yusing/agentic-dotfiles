@@ -68,6 +68,9 @@ unit:
   start. An instruction for a later step, such as how to test, applies when that step arrives.
 
 A correction to the active unit's own outcome is part of that unit and is handled in place.
+A request to stop or reassess an action redirects that action: apply it and carry on with the
+remaining work unless the user stops the work itself. Work main comes across on its own that lies
+outside the active unit's outcomes is reported or recorded the same way, not pursued.
 
 ## Complete
 
