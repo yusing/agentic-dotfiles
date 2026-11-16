@@ -136,6 +136,9 @@ if _zfm_command_exists brew; then
     [[ -n $llvm_prefix ]] && _zfm_path_prepend "$llvm_prefix/bin"
 fi
 
+# Claude Code's Bash tool runs this bash instead of detecting zsh.
+export CLAUDE_CODE_SHELL="$(which bash)"
+
 if ! _zfm_command_exists go; then
     echo-error "go is not installed or not in PATH"
 fi

@@ -12,3 +12,7 @@
 - `.bash_profile` makes local binaries and Mise shims available to login Bash,
   including Codex commands. `.bashrc` is independent Bash-specific interactive
   setup and is not a complete Fish mirror.
+- `.config/fish/config.fish` and `.zsh/fish-mirror.zsh` export `CLAUDE_CODE_SHELL` as
+  `which bash`, after their `PATH` setup, so Claude Code's Bash tool runs that bash instead
+  of falling back to zsh. Claude Code snapshots `.bashrc` for that shell at startup, so
+  `.bashrc` changes reach the tool after a restart.

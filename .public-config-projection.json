@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "fef26c51aa399c66d39366306cef4a98fa152055",
+  "sourceCommit": "90af83c7bcd85303d5fad58a5d287cde11428580",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,7 +65,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "bf5ed9751dfed38741d7192fe9b981ab95ed52c299eb6377cf53b8ecebca5254",
+      "sha256": "1b8f4ec0c1d30cacf580cce83191a157cd33bc28199f42a68d67a98ded5cfe0e",
       "executable": false
     },
     {
@@ -476,7 +476,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "156a414a44a34cee93f9b6af728cf637178b9ff86540e705e4a08a3766c795ca",
+      "sha256": "a3b298cb44cddedc2a231e64e7cea0e9bc4481e5ad78aedbdceeac6bdcce2d97",
       "executable": false
     },
     {
@@ -1525,7 +1525,7 @@
     {
       "path": ".zsh/fish-mirror.zsh",
       "kind": "file",
-      "sha256": "508727187948ddd640a5f6b7a24ad4f9e9ffddc6f29d6178cef34ec89aed0ff6",
+      "sha256": "e9c190621d551e3f2163529239394f604bf6af94124b83bf7ec28a3e4f2d051a",
       "executable": false
     },
     {
@@ -1596,7 +1596,7 @@
     {
       "path": "CONTEXT-SHELL.md",
       "kind": "file",
-      "sha256": "be6abf85e736028adf97eb1ac0deafe9c2775a54efefd107f7679bd65933238b",
+      "sha256": "73dd1f15359112c483169a38603a0a7198142ca3b06b9e270d1cd722c67dd299",
       "executable": false
     },
     {

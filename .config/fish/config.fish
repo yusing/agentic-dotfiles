@@ -142,6 +142,9 @@ if test -r $HOME/.local/share/dotfiles-setup/brew-paths
     end <$HOME/.local/share/dotfiles-setup/brew-paths
 end
 
+# Claude Code's Bash tool runs this bash instead of detecting zsh.
+set -gx CLAUDE_CODE_SHELL (which bash)
+
 
 if not set -q GOPATH
     set -l gopath (go env GOPATH 2>/dev/null)

@@ -149,10 +149,12 @@ registry or package-manager metadata, since remembered versions go stale. For bi
 minified, or generated data, extract exact fields or bounded bytes, and reuse unchanged scans.
 
 Shell text is code: quote it for the shell that runs it, and keep secrets out of command
-substitution and output. The Bash tool can run zsh rather than bash; there an unquoted variable
-does not word-split, an unmatched glob aborts the command, and a word starting with `=` (such as an
-`echo =====` separator) expands as a command path and aborts it. Pass lists through arrays or
-`xargs`, and quote globs meant for the called program (`--include='*.ts'`) and `=`-leading words.
+substitution and output. The Bash tool runs the bash that the user's Fish and Zsh configs export
+as `CLAUDE_CODE_SHELL` (`which bash`). A Claude Code started without that variable falls back to
+zsh, where an unquoted variable does not word-split, an unmatched glob aborts the command, and a
+word starting with `=` (such as an `echo =====` separator) expands as a command path and aborts it.
+Pass lists through arrays or `xargs`, and quote globs meant for the called program
+(`--include='*.ts'`) and `=`-leading words.
 
 ## Destructive actions
 
