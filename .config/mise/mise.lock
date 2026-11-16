@@ -68,6 +68,11 @@ checksum_source = "mise-versions"
 url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.9/trufflehog_3.99.9_darwin_arm64.tar.gz"
 url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/741127610"
 
+[[tools."cargo:cargo-sweep"]]
+version = "0.8.0"
+backend = "cargo:cargo-sweep"
+specifiers = ["latest"]
+
 [[tools."github:dlvhdr/gh-dash"]]
 version = "4.26.3"
 backend = "github:dlvhdr/gh-dash"

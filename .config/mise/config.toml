@@ -7,6 +7,7 @@
 "go" = { "set_gobin" = false }
 
 [tools]
+"cargo:cargo-sweep" = "latest"
 "github:lightpanda-io/browser" = { "version" = "1.0.0", "matching_regex" = "^lightpanda-(aarch64|x86_64)-(linux|macos)$", "bin" = "lightpanda" }
 "npm:@kilocode/cli" = "latest"
 "npm:@tailwindcss/cli" = "latest"
