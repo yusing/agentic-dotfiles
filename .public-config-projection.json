@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b8cf92c8c1d981bb66eada64afd10f26f02e6652",
+  "sourceCommit": "1f0b09e0cbb7dd5bbe9a002bc084755babbe5407",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1554,7 +1554,7 @@
     {
       "path": "CONTEXT-HELPER-HOOKS.md",
       "kind": "file",
-      "sha256": "0d9c9b00cfce2091737928a912ff46a2866a43a603a34df22bf3e8d0df1d8491",
+      "sha256": "bf36e67693ab38a3fc8488841b1411fe22dc9a3ad70a5c49fd9fa6f4324d514f",
       "executable": false
     },
     {
@@ -1572,7 +1572,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "6e698669773bb8156c1bb9fa0b8a59705f210ab5a48a28c2129860ef355de8ca",
+      "sha256": "69f541447b9f576ba0dd94eb2c68e4d4b30fb4cca9f93741aff6b0b8df2555a5",
       "executable": false
     },
     {

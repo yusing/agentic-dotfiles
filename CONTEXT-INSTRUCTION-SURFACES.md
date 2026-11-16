@@ -74,6 +74,12 @@ Registry metadata identifies each maintained body and its activation. Skill auth
 owner directly without searching other stores. `.codex/config.toml` owns runtime compaction-prompt
 selection; an available resource alone does not establish that the runtime selects it.
 
+Managed-skill update automation lives in `.local/lib/skills-maintenance/skills-maintenance.ts`;
+its per-skill update prompts live in the adjacent `repair-prompt.ts`. These are additional
+consumers when removing or replacing a managed skill, alongside selection and placeholders.
+Remove a retired skill's dedicated updater and prompt with its owner, while retaining historical
+maintenance records.
+
 
 ## Generated and imported surfaces
 

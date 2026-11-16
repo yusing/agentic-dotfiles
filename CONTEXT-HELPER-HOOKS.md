@@ -46,6 +46,7 @@ Helper and hook source lives beside its changelog. The runnable form is the comp
 binary under `.codex/hooks/bin/` or `.grok/hooks/bin/` for hooks, and the helper's
 path under `.local/bin/` for helpers.
 
+
 `.grok/hooks/bin/adapt_codex_hook` is a user-owned hook command: it adapts
 the Grok envelope and runs TypeScript Codex policy in-process so startup
 stays inside the 10ms budget. Spawn remains for commands that have no
@@ -59,6 +60,7 @@ or one that fails at runtime with `flock is not defined`. `.grok/hooks/smoke_tes
 checks the imports against the list.
 
 Tests are not helpers or hooks.
+
 
 ## Public projection
 
