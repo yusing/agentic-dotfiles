@@ -89,7 +89,7 @@
     "glow": {"packages": {"brew": ["glow"], "pacman": ["glow"]}, "commands": ["glow"], "manager": "brew", "brew_prefix": "glow"},
     "apprise": {"packages": {"brew": ["apprise"], "pacman": ["apprise"]}, "commands": ["apprise"], "manager": "brew", "brew_prefix": "apprise"},
     "7zip": {"packages": {"brew": ["sevenzip"], "pacman": ["7zip"]}, "commands": ["7zz", "7z"], "manager": "brew", "brew_prefix": "sevenzip"},
-    "bitwarden-cli": {"packages": {"brew": ["bitwarden-cli"], "pacman": ["bitwarden-cli"]}, "commands": ["bw"], "manager": "brew", "brew_prefix": "bitwarden-cli"},
+    "bitwarden-cli": {"packages": {"brew": ["bitwarden-cli"]}, "commands": ["bw"], "manager": "brew", "brew_prefix": "bitwarden-cli"},
     "bubblewrap": {"packages": {"brew": ["bubblewrap"], "pacman": ["bubblewrap"]}, "commands": ["bwrap"], "manager": "brew", "brew_prefix": "bubblewrap", "os": ["linux"]},
     "tree": {"packages": {"brew": ["tree"], "pacman": ["tree"]}, "commands": ["tree"], "manager": "brew", "brew_prefix": "tree"},
     "luacheck": {"packages": {"brew": ["luacheck"], "pacman": ["luacheck"]}, "commands": ["luacheck"], "manager": "brew", "brew_prefix": "luacheck"},
