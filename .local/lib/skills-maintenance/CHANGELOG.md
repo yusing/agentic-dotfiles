@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0
+
+Remove update dispatch, version tracking, and placeholder handling for the uninstalled
+Graphify skill. Keep remote skills and OpenAI Docs maintenance unchanged.
+
 ## 1.2.0
 
 Keep the local Graphify skill in step with its locked graphifyy CLI version.

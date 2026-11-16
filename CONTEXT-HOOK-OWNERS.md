@@ -54,6 +54,14 @@
   are reported with their purpose and passing evidence in the assigned result format.
   `.codex/TESTING.md` owns validation requirements; `.codex/IMPLEMENTATION.md` owns
   implementation craft.
+- Graph navigation: `.codex/hooks/bin/graphify_update` creates and refreshes Graphify code
+  graphs and navigation reports after edit and command tools through `PostToolUse` in Codex
+  and Claude. It resolves the nearest graph from the tool file/workdir or event cwd, creating
+  the initial graph at the Git boundary when none exists. Graphify owns incremental change
+  detection and writer locking; missing reports are repaired through its LLM-free clustering
+  command. Paths outside Git without an existing graph stay untouched. Shell commands that
+  change to a different repository internally are outside this cwd-based coverage.
+  `.codex/hooks/tests/graphify_update_test.py` checks dispatch, boundaries and report lifecycle.
 - Go quality is disabled: no registrations remain in `.codex/hooks.json`,
   `.claude/settings.json`, or `.grok/hooks/codex-port.json`. The
   `.codex/hooks/bin/go_quality` implementation and

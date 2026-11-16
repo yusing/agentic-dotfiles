@@ -81,6 +81,15 @@ AND you have not been read before from working context:
 - `HANDOFF.md`: read when mentioned. Only main resuming its task deletes it after consumption;
   delegates retain assigned handoffs.
 
+## Codebase navigation
+
+Before running broad `grep` or file searches across the repo, read `graphify-out/GRAPH_REPORT.md`
+to identify relevant communities, god nodes, and entry points.
+Use Graphify's existing graph for codebase navigation: `graphify query "<question>" --budget 1500`,
+`graphify path "<from>" "<to>"`, or `graphify explain "<symbol>"`. Verify relevant source before
+editing; graph edges are navigation hints, not complete caller coverage. If the graph is missing
+or stale, use targeted source search. Hooks own graph rebuilds; do not rebuild as part of navigation.
+
 ## Skills and tools
 
 `rtk` is installed; apply it to noisy producers; use raw execution for exact output,

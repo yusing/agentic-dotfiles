@@ -12,3 +12,6 @@ RECOVERY.md
 RECOVERY.json
 
 **/.claude/settings.local.json
+
+# Generated Graphify graphs, reports, caches, and visualizations.
+graphify-out/

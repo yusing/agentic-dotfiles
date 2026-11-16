@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.26
+
+Build the Graphify post-edit update hook.
+
 ## 1.0.25
 
 Build the registered ledger_stop_gate and capture_result_gate hooks, which

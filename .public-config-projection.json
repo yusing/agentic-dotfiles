@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "13d4f9a9eaaad37b6cf7c068d41a530dd3c7e9c8",
+  "sourceCommit": "b8cf92c8c1d981bb66eada64afd10f26f02e6652",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,7 +65,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "06c33b43202df8f9e0864a9ce16b7099e13f8421642a4e4c78663bce830fa7f6",
+      "sha256": "b4d56b061ef6fcc9690b15958410720f8d6483eb10f95deed0014278b0e9b207",
       "executable": false
     },
     {
@@ -146,13 +146,13 @@
     {
       "path": ".claude/settings.json",
       "kind": "file",
-      "sha256": "589f6def4f62e27b9410514669c980f912d09cb545022372b73c8074665fe741",
+      "sha256": "d10c4c77b25b3b8d5b9a699ac1c0e6f0dc4506d40371a688d5c531dffd2a3d84",
       "executable": false
     },
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "d1a05de9535fa4ef7929b361a7ad079dcbdd32a85adc43eeeedd33873b0d6760",
+      "sha256": "81dc742c0502d941470ae8913cb07710e8b1d3d1fb4ee6ed3f9f015736f53564",
       "executable": false
     },
     {
@@ -236,7 +236,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "f7e9070264d82e928a6280927fc2b8844416b1e9d6912327caf78e33ad9c2b2b",
+      "sha256": "c5f1bd594d1cba4ac6d3f56690c3177a629383214e1e5027a36f800581b508ff",
       "executable": false
     },
     {
@@ -728,7 +728,7 @@
     {
       "path": ".gitignore_global",
       "kind": "file",
-      "sha256": "d563c5aa809aac249ad4f887d55ce3c669f019670df4966f1467fd753faffe39",
+      "sha256": "ca0433170f597fd75a93ff96bfbfe44bd792742cf7d1982693604ec1fb18607e",
       "executable": false
     },
     {
@@ -817,13 +817,13 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "437d91075eb577435b57c7f418e53bcaf60f88d1f6a343ea1dd2feb076db41f7",
+      "sha256": "794dd754a4337ed49c411554c309466ca631f1c149cfbc3753d56d4b766fafd1",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "156c92b283c08fa3a3d144330bbd5884e9ad87a3ce1ce3e4a7735bd204d2a1c2",
+      "sha256": "70ab1e7a6ad971187fdf132e0858a5caa1409510c1244e81a36ec5b4c9ea173f",
       "executable": false
     },
     {
@@ -925,19 +925,19 @@
     {
       "path": ".local/lib/skills-maintenance/CHANGELOG.md",
       "kind": "file",
-      "sha256": "13bfe0cdf6a80e5a9b055fdddb05449a04d0325f3353a51757bd4e3177ec1b6b",
+      "sha256": "c496fa9edf77d590311719fdfdf7d33e04e8e606cafc51afc83dd1583ad2b4e0",
       "executable": false
     },
     {
       "path": ".local/lib/skills-maintenance/repair-prompt.ts",
       "kind": "file",
-      "sha256": "03b12d61f84515d3228e0365bbd86536f4a9f02d6d99add8aac3e23b3af2b660",
+      "sha256": "526739b3f3f2f43829434b25052ad2b80ca6fd3cbb96d3867bd7c7c04ff6ef39",
       "executable": false
     },
     {
       "path": ".local/lib/skills-maintenance/skills-maintenance.ts",
       "kind": "file",
-      "sha256": "60a62fe406e52f00d16621b7f3c8097d40251f211a1458855ebc806e179c1344",
+      "sha256": "fa4568c26c6a22777483d2902364d9bc73586ae255cafd4e4b70a7b4bb8b163c",
       "executable": false
     },
     {
@@ -991,7 +991,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "e2ec16aa966932f9cb712cc0889338668a9afc637d87503a3c0028de478ec7ac",
+      "sha256": "3dcba16393a67187b306631cd237c4dfac47a418e6076c9cbd3c6ff2cbb30442",
       "executable": false
     },
     {
@@ -1566,7 +1566,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "192f4e70250f2a5f9930eee56bb09a71f13ee25ecd4b89b5292ce29acc1a5731",
+      "sha256": "21fbdf6082ca8e0f6014289ddf4863d080c93203e2b0c3c2233e6e253a6265c7",
       "executable": false
     },
     {
