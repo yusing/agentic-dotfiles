@@ -3,10 +3,14 @@ import { resolve, extname } from "node:path";
 import { parseTOML, type AST } from "toml-eslint-parser";
 import { parseTree, createScanner, SyntaxKind, type Node, type ParseError } from "jsonc-parser";
 
-export const VERSION = "1.0.2";
+export const VERSION = "1.0.3";
 type Value = { raw: string } | Map<string, Value> | Value[];
 type Edit = { start: number; end: number; text: string };
 const quote = (s: string) => JSON.stringify(s).replaceAll("\x7f", "\\u007f");
+
+export function expandsHome(name: string): boolean {
+  return name === ".gitconfig" || /^\.(cargo|claude|codex|grok)\//.test(name);
+}
 
 export function homeReplacer(home: string, expandHome: boolean) {
   const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -205,7 +209,7 @@ if (import.meta.main) {
         if (!stat.isFile() || stat.isSymbolicLink()) continue;
         const text = readFileSync(path, "utf8");
         let output;
-        try { output = rewriteConfig(text, extname(name), home, /^\.(cargo|claude|codex|grok)\//.test(name)); }
+        try { output = rewriteConfig(text, extname(name), home, expandsHome(name)); }
         catch { throw new Error(`cannot rewrite ${name}: invalid configuration`); }
         if (output !== text) changes.push([path, output]);
       }

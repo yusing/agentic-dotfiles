@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+Expand portable `$HOME` paths in Git configuration during setup and checkout so Git
+can load global excludes and other configured paths. Share expansion selection between
+the helper and clean/smudge filter; keep the clean representation portable.
+
 ## 1.0.2
 
 Resolve shared Cargo configuration home paths during setup and Git checkout.
