@@ -229,8 +229,6 @@ label = "Review and Explain PRs"
 "plugin_hooks" = true
 "apps" = false
 "hooks" = true
-"js_repl" = false
-"multi_agent" = true
 "workspace_dependencies" = false
 
 # [features.rollout_budget]
