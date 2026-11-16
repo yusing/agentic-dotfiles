@@ -63,7 +63,7 @@ rewrites and hypothetical generalization.
 Account for each change in scope as required (naming its ledger line), reducible, or unverified;
 an added mechanism, state, or branch with no ledger line is reducible. Report ledger outcomes left
 undelivered. For each reduction, give the change, the ledger line it claims or lacks, the falsifying
-evidence, the smallest removal or simplification, and whether ledger outcomes are preserved; state
+evidence, the removal or simplification, and whether ledger outcomes are preserved; state
 any unrequested behavior the removal drops. Include coverage limits. On re-review, assess
 the cumulative changes, including corrections and their interactions; mark opportunities
 applied/open/superseded and retain the complete current result. Reuse current evidence and reopen
