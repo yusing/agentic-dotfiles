@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "9692316a410eb7b111212281daadff18858a0741",
+  "sourceCommit": "6415b536a642290a511f639279845106db1e20d2",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -650,7 +650,7 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "38ff777e51ff600d6bcacb472628cf7582d9a309dbd096a80f21663d5aa319db",
+      "sha256": "45182718760ee5b6a3e7ad0d9e443efaa9be4fdfc9c9ce87cd2467c0dbf0adbb",
       "executable": false
     },
     {
