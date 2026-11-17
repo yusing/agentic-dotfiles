@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.38
+
+Publish the standalone Graphify report producer, its workspace-exclusion policy,
+and its changelog, not its binary.
+
 ## 1.3.37
 
 Publish the shared refactoring guidance for Codex and its Claude symlink.

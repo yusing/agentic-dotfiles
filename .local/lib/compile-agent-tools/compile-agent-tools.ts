@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.26";
+const VERSION = "1.0.27";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -266,6 +266,7 @@ function main(): void {
     ["disk-clean", "disk-clean"],
     ["scc-prod", "scc-prod"],
     ["scc-prod", "git-diffstat"],
+    ["graphify-report", "graphify-report"],
     ["sync-claude-agent-ports", "sync-claude-agent-ports"],
     ["sync-kilo-agent-ports", "sync-kilo-agent-ports"],
     ["claude-config-helper", "claude-config-helper"],

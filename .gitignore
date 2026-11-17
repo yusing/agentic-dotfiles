@@ -190,6 +190,10 @@ __pycache__
 !/.local/lib/disk-clean/go-cache.ts
 !/.local/lib/disk-clean/README.md
 !/.local/lib/disk-clean/rust-cache.ts
+!/.local/lib/graphify-report/
+!/.local/lib/graphify-report/CHANGELOG.md
+!/.local/lib/graphify-report/graphify-report.ts
+!/.local/lib/graphify-report/workspace.ts
 !/.local/lib/herdr-ai-usage/
 !/.local/lib/herdr-ai-usage/CHANGELOG.md
 !/.local/lib/herdr-ai-usage/herdr-ai-usage.ts

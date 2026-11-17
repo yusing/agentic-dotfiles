@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.27
+
+Build and incrementally reuse the standalone graphify-report helper.
+
 ## 1.0.26
 
 Build the Graphify post-edit update hook.

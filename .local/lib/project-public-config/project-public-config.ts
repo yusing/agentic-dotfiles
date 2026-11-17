@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.37";
+export const VERSION = "1.3.38";
 
 type TreeEntry = {
 	mode: string;
@@ -224,6 +224,9 @@ const EXACT_PATHS = new Set([
 	".local/lib/scc-prod/scc-prod.ts",
 	".local/lib/scc-prod/git-diffstat.ts",
 	".local/lib/scc-prod/CHANGELOG.md",
+	".local/lib/graphify-report/graphify-report.ts",
+	".local/lib/graphify-report/workspace.ts",
+	".local/lib/graphify-report/CHANGELOG.md",
 	".local/lib/update-oh-my-posh-theme/update-oh-my-posh-theme.ts",
 	".local/lib/update-oh-my-posh-theme/CHANGELOG.md",
 	".local/bin/compile-agent-tools",

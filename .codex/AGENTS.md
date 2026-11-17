@@ -84,11 +84,15 @@ AND you have not been read before from working context:
 ## Codebase navigation
 
 Before running broad `grep` or file searches across the repo, read `graphify-out/GRAPH_REPORT.md`
-to identify relevant communities, god nodes, and entry points.
+to identify relevant communities, god nodes, and entry points. Each report covers its own worktree
+or submodule, excluding other worktrees/submodules and Cargo `workspace.exclude` packages;
+`default-members` does not disable packages. Consult the report inside the checkout being changed.
 Use Graphify's existing graph for codebase navigation: `graphify query "<question>" --budget 1500`,
 `graphify path "<from>" "<to>"`, or `graphify explain "<symbol>"`. Verify relevant source before
 editing; graph edges are navigation hints, not complete caller coverage. If the graph is missing
-or stale, use targeted source search. Hooks own graph rebuilds; do not rebuild as part of navigation.
+or stale, use targeted source search. Do not rebuild as part of navigation. When explicitly refreshing a graph, run
+`graphify-report --update [PROJECT_ROOT]` to apply checkout/workspace scope before extraction
+and regenerate the compact Production/Tests report; source ignore files stay unchanged.
 
 ## Skills and tools
 

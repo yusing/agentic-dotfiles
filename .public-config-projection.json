@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "0130f2bbbace569922c24bf657202732ec5c6263",
+  "sourceCommit": "faaf053ccd3c5631a342ab3d3cd9b2be1bf478c7",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,7 +65,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "b4d56b061ef6fcc9690b15958410720f8d6483eb10f95deed0014278b0e9b207",
+      "sha256": "384773193b9a292471c05c7576b9134eb95490833cdbe1514800c2a838f82101",
       "executable": false
     },
     {
@@ -152,7 +152,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "81dc742c0502d941470ae8913cb07710e8b1d3d1fb4ee6ed3f9f015736f53564",
+      "sha256": "0505aec3d407fa803189f0e2028923709f1127d74377df58231bc63c505755b2",
       "executable": false
     },
     {
@@ -722,7 +722,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "5e14efdaebc0ab3b5226d98513f15e857e3071aa167c532d1651a9572ad5e8b5",
+      "sha256": "15b69f743b2d83ebc03239ff43879848beb5daba2e21efd2156ec7155573f2e8",
       "executable": false
     },
     {
@@ -817,13 +817,13 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "794dd754a4337ed49c411554c309466ca631f1c149cfbc3753d56d4b766fafd1",
+      "sha256": "59a0f35bd1e550147c05282d83e4b47e8fae909290c265a22e262866973723c8",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "70ab1e7a6ad971187fdf132e0858a5caa1409510c1244e81a36ec5b4c9ea173f",
+      "sha256": "727387d9ceea014838ad391124a1e60325593fe860c7fed1809cc9ece79b6ff1",
       "executable": false
     },
     {
@@ -857,6 +857,24 @@
       "executable": false
     },
     {
+      "path": ".local/lib/graphify-report/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "3aaa06667251d3a7d747d125e7dbc2b44760f408fb8b915164422f3315f1170a",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/graphify-report/graphify-report.ts",
+      "kind": "file",
+      "sha256": "cd4cc28fd3cba1d2d4df38aa8b960836edd22708a4341ac9c34960904722d523",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/graphify-report/workspace.ts",
+      "kind": "file",
+      "sha256": "7e57626f8668c2a37b400c20b0a2b544ed84fb442e9fbc47edf9202b835cb331",
+      "executable": false
+    },
+    {
       "path": ".local/lib/herdr-ai-usage/CHANGELOG.md",
       "kind": "file",
       "sha256": "c187d575122090ead28512ca358e5f12684a2c267fd5a845a7866aa57d5f92aa",
@@ -871,13 +889,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "5bbe0cd3a386d4360552bce8a86b6509c2305cd9708afdca289bbc5fbb421764",
+      "sha256": "98f28144393c1d4845d84aebf14b2f520ac5695f6d00c2ebf4dc8c945a7980a5",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "be0f500493050f338e7ad3e268825a537d550a5e94fd5e6d345f23f1c0e93de4",
+      "sha256": "20c12e3d055ef1772b922b72b94a2753a26e61b23df2b9f38428c344131a635c",
       "executable": true
     },
     {
@@ -1566,7 +1584,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "21fbdf6082ca8e0f6014289ddf4863d080c93203e2b0c3c2233e6e253a6265c7",
+      "sha256": "be49551fbd70c36e433d96912ba49363c28beabaee32ca229f488b1d81142e3c",
       "executable": false
     },
     {
