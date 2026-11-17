@@ -123,7 +123,9 @@ to identify relevant communities, god nodes, and entry points. Each report cover
 or submodule, excluding other worktrees/submodules and Cargo `workspace.exclude` packages;
 `default-members` does not disable packages. Consult the report inside the checkout being changed.
 Use Graphify's existing graph for codebase navigation: `graphify query "<question>" --budget 1500`,
-`graphify path "<from>" "<to>"`, or `graphify explain "<symbol>"`. Verify relevant source before
+`graphify path "<from>" "<to>"`, or `graphify explain "<symbol>"`. Run each command from the root
+of the worktree or submodule being investigated so it uses that checkout's graph, not the
+superproject's or another checkout's graph. Verify relevant source before
 editing; graph edges are navigation hints, not complete caller coverage. If the graph is missing
 or stale, use targeted source search. Do not rebuild as part of navigation. When explicitly refreshing a graph, run
 `graphify-report --update [PROJECT_ROOT]` to apply checkout/workspace scope before extraction
