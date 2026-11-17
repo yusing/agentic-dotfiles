@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6415b536a642290a511f639279845106db1e20d2",
+  "sourceCommit": "95530d3c7ac91eace7980ee90087f46565e2c08c",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -859,13 +859,13 @@
     {
       "path": ".local/lib/graphify-report/CHANGELOG.md",
       "kind": "file",
-      "sha256": "3aaa06667251d3a7d747d125e7dbc2b44760f408fb8b915164422f3315f1170a",
+      "sha256": "8b60a440a900b8a409745f20aa3c0d37fb299eeb73d84a86d7e5648011338d2f",
       "executable": false
     },
     {
       "path": ".local/lib/graphify-report/graphify-report.ts",
       "kind": "file",
-      "sha256": "cd4cc28fd3cba1d2d4df38aa8b960836edd22708a4341ac9c34960904722d523",
+      "sha256": "578674b38cf9eb2fa27fd59b1ccdae8cc02dab8ed5476df147697f4d3ebbb5c5",
       "executable": false
     },
     {

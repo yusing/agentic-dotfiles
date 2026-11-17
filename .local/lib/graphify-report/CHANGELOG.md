@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0
+
+Add `--update --queue` for background refreshes. Requests for one root coalesce:
+one update runs at a time and repeats while requests arrive, while later requests
+return at once. Graphify output goes to `graphify-out/.graphify-report.log`; a
+failure is recorded in `graphify-out/.graphify-report.error` until an update
+succeeds. Plain `--update` stays synchronous.
+
 ## 1.0.0
 
 Generate a compact navigation report directly from Graphify JSON, without changing

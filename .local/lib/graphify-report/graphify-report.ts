@@ -1,8 +1,16 @@
-import { readFileSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
+import { dlopen, FFIType } from "bun:ffi";
+import { closeSync, existsSync, mkdirSync, openSync, readFileSync, renameSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
 import { basename, isAbsolute, join, resolve } from "node:path";
 import { exclusionMatcher, syncBuildExclusions, workspaceExclusions } from "./workspace";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.1.0";
+
+// Queued refreshes of one root coordinate through these graphify-out files. The
+// graphify_update hook reads and clears the error record, so keep the names in step.
+const QUEUE_LOCK = ".graphify-report.lock";
+const QUEUE_PENDING = ".graphify-report.pending";
+const QUEUE_LOG = ".graphify-report.log";
+const QUEUE_ERROR = ".graphify-report.error";
 
 type Node = {
   id: string;
@@ -164,6 +172,18 @@ function renderGraph(graph: Graph, project: string): string {
   return lines.join("\n");
 }
 
+function writeAtomic(target: string, content: string): void {
+  const temporary = `${target}.tmp.${process.pid}`;
+  try {
+    writeFileSync(temporary, content);
+    renameSync(temporary, target);
+  } finally {
+    try { unlinkSync(temporary); } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    }
+  }
+}
+
 export function writeReport(root: string, rules = workspaceExclusions(root)): string {
   const directory = join(resolve(root), "graphify-out");
   const graph = decodeGraph(JSON.parse(readFileSync(join(directory, "graph.json"), "utf8")));
@@ -172,39 +192,81 @@ export function writeReport(root: string, rules = workspaceExclusions(root)): st
   const ids = new Set(nodes.map(node => node.id));
   const links = graph.links.filter(link => ids.has(link.source) && ids.has(link.target));
   const report = renderGraph({ ...graph, nodes, links }, basename(resolve(root)));
-  const target = join(directory, "GRAPH_REPORT.md");
-  const temporary = `${target}.tmp.${process.pid}`;
-  try {
-    writeFileSync(temporary, report);
-    renameSync(temporary, target);
-  } finally {
-    try { unlinkSync(temporary); } catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-    }
-  }
+  writeAtomic(join(directory, "GRAPH_REPORT.md"), report);
   return report;
 }
+
+function updateReport(root: string, output: "inherit" | number): string {
+  const rules = workspaceExclusions(root);
+  const changed = syncBuildExclusions(root, rules);
+  const result = Bun.spawnSync(["graphify", "update", root, ...(changed ? ["--force"] : [])],
+    { cwd: root, stdout: output, stderr: output });
+  if (result.exitCode !== 0) throw new Error(`graphify update failed (exit ${result.exitCode})`);
+  return writeReport(root, rules);
+}
+
+// Non-blocking exclusive flock; the kernel releases it when the descriptor closes or the process exits.
+function tryLock(path: string): number | undefined {
+  const libc = dlopen(process.platform === "darwin" ? "libSystem.B.dylib" : "libc.so.6",
+    { flock: { args: [FFIType.i32, FFIType.i32], returns: FFIType.i32 } });
+  const descriptor = openSync(path, "a");
+  if (libc.symbols.flock(descriptor, 2 /* LOCK_EX */ | 4 /* LOCK_NB */) === 0) return descriptor;
+  closeSync(descriptor);
+  return undefined;
+}
+
+// Record a refresh request and return when another process holds the root: that
+// holder repeats its refresh until no request remains, so a burst costs at most
+// one extra refresh. The request is written before locking, and rechecked after
+// release, so a request racing the holder's exit is never stranded.
+function queueUpdate(root: string): void {
+  const directory = join(root, "graphify-out");
+  mkdirSync(directory, { recursive: true });
+  const pending = join(directory, QUEUE_PENDING);
+  const failure = join(directory, QUEUE_ERROR);
+  const logPath = join(directory, QUEUE_LOG);
+  do {
+    writeFileSync(pending, "");
+    const lock = tryLock(join(directory, QUEUE_LOCK));
+    if (lock === undefined) return;
+    try {
+      while (existsSync(pending)) {
+        unlinkSync(pending);
+        const log = openSync(logPath, "w");
+        try {
+          updateReport(root, log);
+          rmSync(failure, { force: true });
+        } catch (error) {
+          writeAtomic(failure, `graphify-report: ${error instanceof Error ? error.message : String(error)}; see ${logPath}\n`);
+        } finally {
+          closeSync(log);
+        }
+      }
+    } finally {
+      closeSync(lock);
+    }
+  } while (existsSync(pending));
+}
+
+const USAGE = "Usage: graphify-report [--update [--queue]] [PROJECT_ROOT]";
 
 if (import.meta.main) {
   try {
     const args = process.argv.slice(2);
     if (args.length === 1 && args[0] === "--version") console.log(VERSION);
     else if (args.length === 1 && args[0] === "--help") {
-      console.log("Usage: graphify-report [--update] [PROJECT_ROOT]\nRender a compact Production/Tests report from the existing graph.\n--update: apply checkout boundaries and Cargo workspace.exclude through generated Graphify build metadata before extraction. Source ignore files are untouched; default-members are not exclusions.");
+      console.log(`${USAGE}\nRender a compact Production/Tests report from the existing graph.\n--update: apply checkout boundaries and Cargo workspace.exclude through generated Graphify build metadata before extraction. Source ignore files are untouched; default-members are not exclusions.\n--queue: coalesce with other queued updates of the same root and return at once while one is running; the running update repeats until no request remains. Graphify output goes to graphify-out/${QUEUE_LOG}, and a failure is recorded in graphify-out/${QUEUE_ERROR} until an update succeeds.`);
     } else {
       const update = args[0] === "--update";
-      const positional = update ? args.slice(1) : args;
-      if (positional.length > 1 || positional[0]?.startsWith("-")) throw new Error("Usage: graphify-report [--update] [PROJECT_ROOT]");
+      const queue = update && args[1] === "--queue";
+      const positional = args.slice(Number(update) + Number(queue));
+      if (positional.length > 1 || positional[0]?.startsWith("-")) throw new Error(USAGE);
       const root = resolve(positional[0] ?? process.cwd());
-      const rules = workspaceExclusions(root);
-      if (update) {
-        const changed = syncBuildExclusions(root, rules);
-        const result = Bun.spawnSync(["graphify", "update", root, ...(changed ? ["--force"] : [])],
-          { cwd: root, stdout: "inherit", stderr: "inherit" });
-        if (result.exitCode !== 0) throw new Error(`graphify update failed (exit ${result.exitCode})`);
+      if (queue) queueUpdate(root);
+      else {
+        const report = update ? updateReport(root, "inherit") : writeReport(root);
+        console.log(`${join(root, "graphify-out", "GRAPH_REPORT.md")} (${report.trimEnd().split("\n").length} lines)`);
       }
-      const report = writeReport(root, rules);
-      console.log(`${join(root, "graphify-out", "GRAPH_REPORT.md")} (${report.trimEnd().split("\n").length} lines)`);
     }
   } catch (error) {
     console.error(`graphify-report: ${error instanceof Error ? error.message : String(error)}`);
