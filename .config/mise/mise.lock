@@ -235,9 +235,10 @@ specifiers = ["latest"]
 version = "0.9.111"
 backend = "pipx:graphifyy"
 specifiers = ["latest"]
-uv = { path = "locks/pipx-graphifyy/0.9.111~a3ac51e6", digest = "sha256:8f2f27ad604cd70780244ea02d2dc68b6cf013ef263480288386543552527829" }
+uv = { path = "locks/pipx-graphifyy/0.9.111~9b8b8ad0", digest = "sha256:da362f0e2c56c067431e10b5af233458fe4fae02ef9d2681e47fb1e1c5bb9beb" }
 
 [tools."pipx:graphifyy".options]
+extras = "sql"
 python = "3.14"
 
 [[tools.python]]
