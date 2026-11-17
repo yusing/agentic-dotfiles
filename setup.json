@@ -184,7 +184,8 @@
       "go:github.com/yusing/git-agent/cmd/git-agent": "latest",
       "go:github.com/yusing/shadowtree/cmd/shadowtree": "latest",
       "go:github.com/yusing/shadowtree/cmd/shadowtree-lsp": "latest",
-      "go:github.com/icholy/gomajor": "latest"
+      "go:github.com/icholy/gomajor": "latest",
+      "python": "3.14"
     }
   },
   "mise_commands": {
