@@ -19,12 +19,13 @@ completion signal rather than polling them. `TESTING.md` owns check selection.
 
 ## Ownership and design
 
-Place each outcome at the owner it belongs to. Change or remove behavior where it is produced and
-update its consumers; downstream rewriting or a replacement layer leaves the defect at its source.
-When replacing a workaround, build on the native or destination owner's facilities, not the
-workaround's states, control flow, or fixtures. At a shared boundary, change only the consumers
-whose ledger outcomes change, keeping the shared default for the rest. Adapt existing resolvers and
-transactions through narrow entry points rather than copying their decisions or publication steps.
+Choose the owner by responsibility, not filename, language, or where execution happens. Compare the
+required outcome with that owner's existing behavior and implement the missing behavior there,
+reusing its implementation rather than building a parallel mechanism around shared infrastructure.
+Edit maintained source and deliver through the normal installation or generation path; an installed
+copy is not the maintenance owner. At shared boundaries, change only consumers whose ledger outcomes
+change, keeping the default for the rest. Adapt existing resolvers and transactions through narrow
+entry points rather than copying their decisions or publication steps.
 Share definitions across production, display, and replay; separate operations may share definitions
 without sharing side effects.
 
@@ -44,16 +45,15 @@ only for sourced outcomes.
 
 Consider material CPU, memory, I/O, and scaling costs while building. Reuse state, inventories, parsed
 results, scans, encodings, buffers, and timers while their guarantees hold for the operation. Skip
-known or unused work. Keep this task's settled designs unless a ledger outcome or material cost
-requires correction; negligible gains and style preferences do not reopen them.
+known or unused work. Reuse decisions while their supporting evidence holds. Reopen a decision when
+new evidence invalidates its rationale, not for negligible gains or style preferences.
 
 ## Construction
 
-Edit authoritative sources and regenerate consumers. Trace references before changing shared
-interfaces. Trust validated types inward; keep synchronous parsing and option construction
-synchronous. Catch errors where recovery or useful context belongs. Event-sourced systems persist
-irreducible facts and derive redundant state. `REFACTOR.md` owns code hygiene, including removal of
-superseded code and tests.
+Trace references before changing shared interfaces. Trust validated types inward; keep synchronous
+parsing and option construction synchronous. Catch errors where recovery or useful context belongs.
+Event-sourced systems persist irreducible facts and derive redundant state. `REFACTOR.md` owns code
+hygiene, including removal of superseded code and tests.
 
 For JavaScript/TypeScript, use Bun/Bunx for execution, tests, installs, scripts, and documented commands
 unless the project pins another runtime/package manager, and load heavy conditional modules where

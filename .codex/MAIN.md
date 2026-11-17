@@ -38,12 +38,11 @@ contract findings through construction and completion; repeat only for a concret
 question. Main still owns decisions, implementation, assertions, and validation. This check replaces
 late self-reconstruction of the acceptance contract; it is not an additional general finish pass.
 
-Once those decisions are settled, make the ready, coupled production, caller, schema, fixture,
-assertion, and reader-document changes together. Do not turn each helper or field into a separate
-edit-and-reconsider cycle. `IMPLEMENTATION.md`, `TESTING.md`, and `DOCS.md` own those operations.
-Read a document as contract input when needed, not only when it is time to rewrite it. Resolve the
-unit's consumer-check failures before dependent work, and carry its acceptance evidence forward
-rather than reconstructing it at completion.
+Once those decisions are settled, make the necessary, coupled changes together at their owners.
+`IMPLEMENTATION.md`, `TESTING.md`, and `DOCS.md` determine which changes are needed. Do not turn each
+helper or field into a separate edit-and-reconsider cycle. Read relevant documents as contract input
+before implementation. Resolve the unit's consumer-check failures before dependent work, and carry
+its acceptance evidence forward rather than reconstructing it at completion.
 
 Communicate a decision brief only when a consequential choice needs explaining or resolving: outcome,
 affected ledger lines, approach, tradeoffs, and acceptance evidence.
