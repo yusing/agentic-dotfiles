@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "95530d3c7ac91eace7980ee90087f46565e2c08c",
+  "sourceCommit": "39e43e4beee3c07cf0de297cee7a58bc108621d3",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1584,7 +1584,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "be49551fbd70c36e433d96912ba49363c28beabaee32ca229f488b1d81142e3c",
+      "sha256": "8b60c30d55b266bdf9ca51ad5754b59973e224e4b3a8ea49eaffa97733867903",
       "executable": false
     },
     {

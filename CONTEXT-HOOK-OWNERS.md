@@ -54,12 +54,20 @@
   are reported with their purpose and passing evidence in the assigned result format.
   `.codex/TESTING.md` owns validation requirements; `.codex/IMPLEMENTATION.md` owns
   implementation craft.
-- Graph navigation: `.codex/hooks/bin/graphify_update` is available to refresh Graphify code
-  graphs and navigation reports after tools, but is not currently registered in Codex
-  or Claude. Refresh manually with `.local/bin/graphify-report --update [PROJECT_ROOT]`.
+- Graph navigation: `.codex/hooks/bin/graphify_update` refreshes Graphify code graphs and
+  navigation reports after edit and command tools in Codex and Claude (PostToolUse).
+  Refresh manually and synchronously with `.local/bin/graphify-report --update [PROJECT_ROOT]`.
   The hook resolves the nearest graph from the tool file/workdir or event cwd, creating
-  the initial graph at the Git boundary when none exists. Graphify owns incremental change
-  detection and writer locking. The compiled `.local/bin/graphify-report --update`
+  the initial graph at the Git boundary when none exists. It never waits for Graphify: it
+  starts a detached `graphify-report --update --queue` in its own session and returns, so
+  the graph trails the agent's latest edits until that refresh finishes. Queued refreshes
+  of one root coalesce through a lock and request marker in `graphify-out/`: one runs at a
+  time and repeats while requests arrive. Graphify output goes to
+  `graphify-out/.graphify-report.log`; a failed refresh writes
+  `graphify-out/.graphify-report.error`, which the next hook call reports once and clears.
+  Graphify owns incremental change detection and writer locking. Graphify is installed with
+  its `sql` extra (`setup.json`), because a `.sql` file it cannot extract stays unstamped and
+  turns every later update into a full rebuild. The compiled `.local/bin/graphify-report --update`
   applies worktree/submodule boundaries and Cargo workspace exclusions through generated
   Graphify build metadata before extraction, without editing source ignore files, then
   reads graph JSON after each successful update, including unchanged graphs, and produces the compact
@@ -67,7 +75,8 @@
   `.local/lib/graphify-report/graphify-report.ts`; Graphify itself stays unmodified.
   Paths outside Git without an existing graph stay untouched. Shell commands that
   change to a different repository internally are outside this cwd-based coverage.
-  `.codex/hooks/tests/graphify_update_test.py` checks dispatch, boundaries and report lifecycle.
+  `.codex/hooks/tests/graphify_update_test.py` checks dispatch, boundaries, non-blocking
+  return, failure reporting, and report lifecycle.
 - Go quality is disabled: no registrations remain in `.codex/hooks.json`,
   `.claude/settings.json`, or `.grok/hooks/codex-port.json`. The
   `.codex/hooks/bin/go_quality` implementation and
