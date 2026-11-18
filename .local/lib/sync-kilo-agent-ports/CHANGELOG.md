@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.9
+
+- Route Kilo Sol and Astra roles to GPT-6.2 while preserving their reasoning variants.
+
 ## 1.0.8
 
 - Keep Kilo's built-in code agent enabled. Remove its former generated disable stub during synchronization while preserving authored code profiles; check mode reports the obsolete stub without deleting it.

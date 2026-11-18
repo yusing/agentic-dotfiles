@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "39e43e4beee3c07cf0de297cee7a58bc108621d3",
+  "sourceCommit": "77a11576a4552d93f233fabef4c094aa82f2178d",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -386,7 +386,7 @@
     {
       "path": ".codex/MODEL-ROUTING.md",
       "kind": "file",
-      "sha256": "07ef67608e9a020ea3fac093f087c6bbea604212386c79769353ae52b11b75e3",
+      "sha256": "8e7ed7428675c1b9f7bdc1498498ffc82ad51d4524bd17289ac8af8e27feda40",
       "executable": false
     },
     {
@@ -704,7 +704,7 @@
     {
       "path": ".config/zed/settings.json",
       "kind": "file",
-      "sha256": "8ad84ac3f3746d8c06a164fb9de3cd77cd137dc337d93ed9bbf9ed36d77a414e",
+      "sha256": "1562c9a4b66238b1d0e688b1b59f9bb73a27f31b5885595662dd1e2f3f08ccb2",
       "executable": false
     },
     {
@@ -973,13 +973,13 @@
     {
       "path": ".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "d889f43d8d54ad9bdadbc3d277118f37b756c60eb8771f6800d5edec83b93e20",
+      "sha256": "35d6211800deccf0e88d594ee21807e5d898d054aee248b8be2bd047f7f80e47",
       "executable": false
     },
     {
       "path": ".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
       "kind": "file",
-      "sha256": "ec714830a7f87904c299bccd2d077652e4a43ca0a2fd96694eabf344c5063ff6",
+      "sha256": "80d9100788e213a7c0d36c27632cc0e02fa1fa38f5cfd82c186dfb23fd9f6cdc",
       "executable": false
     },
     {

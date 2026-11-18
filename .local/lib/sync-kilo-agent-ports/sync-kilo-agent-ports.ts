@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "1.0.8";
+export const VERSION = "1.0.9";
 export const BUILTIN_ROLES = [
   "ask",
   "code",
@@ -17,10 +17,10 @@ const METADATA: Record<string, { color: string; model: string; variant?: string;
   "council-investigator": { model: "inherit", color: "#EAB308", permission: READ_PERMISSION },
   "council-member": { model: "inherit", color: "#F97316", permission: { bash: "deny", edit: "deny", task: "deny" } },
   explorer: { model: "kilo/openai/gpt-6.1-terra", variant: "xhigh", color: "#EC4899", permission: READ_PERMISSION },
-  investigator: { model: "kilo/openai/gpt-6.1-sol", variant: "medium", color: "#06B6D4", permission: READ_PERMISSION },
-  "review-correctness": { model: "kilo/openai/gpt-6.1-sol", variant: "high", color: "#EF4444", permission: READ_PERMISSION },
-  "review-simplify": { model: "kilo/openai/gpt-6.1-sol", variant: "high", color: "#22C55E", permission: READ_PERMISSION },
-  "ui-reviewer": { model: "kilo/openai/gpt-6-astra", variant: "high", color: "#A855F7", permission: READ_PERMISSION },
+  investigator: { model: "kilo/openai/gpt-6.2-sol", variant: "medium", color: "#06B6D4", permission: READ_PERMISSION },
+  "review-correctness": { model: "kilo/openai/gpt-6.2-sol", variant: "high", color: "#EF4444", permission: READ_PERMISSION },
+  "review-simplify": { model: "kilo/openai/gpt-6.2-sol", variant: "high", color: "#22C55E", permission: READ_PERMISSION },
+  "ui-reviewer": { model: "kilo/openai/gpt-6.2-astra", variant: "high", color: "#A855F7", permission: READ_PERMISSION },
 };
 
 export function adaptText(text: string): string {
