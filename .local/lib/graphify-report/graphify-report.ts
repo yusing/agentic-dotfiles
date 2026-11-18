@@ -3,7 +3,7 @@ import { closeSync, existsSync, mkdirSync, openSync, readFileSync, renameSync, r
 import { basename, isAbsolute, join, resolve } from "node:path";
 import { exclusionMatcher, syncBuildExclusions, workspaceExclusions } from "./workspace";
 
-export const VERSION = "1.1.0";
+export const VERSION = "1.2.0";
 
 // Queued refreshes of one root coordinate through these graphify-out files. The
 // graphify_update hook reads and clears the error record, so keep the names in step.
@@ -130,7 +130,7 @@ function renderGraph(graph: Graph, project: string): string {
     `- ${eligible.length} substantial communities; ${communityIds.size - eligible.length} thin communities omitted.`,
     "- Test-file paths determine the split; inline tests stay with their source file. Other sources, including docs/config, appear under Production.",
     "- Mixed communities can appear in both sections. Degree includes all connections, including production/test links.",
-    "- Source links are navigation leads, not verified runtime entry points.",
+    "- Use the God Nodes lists to find cleanup candidates; degree alone does not establish a design problem.",
   ];
   for (const isTest of [false, true]) {
     const groups = eligible.map(([cid, members]) => [cid, members.filter(entry => entry.test === isTest)
@@ -151,7 +151,7 @@ function renderGraph(graph: Graph, project: string): string {
       `### Communities and entry points (${selected.length} of ${groups.length})`,
       ...(selected.length ? selected : ["- None in substantial communities."]), "", "### God Nodes (most connected)");
     const gods = entries.filter(entry => entry.test === isTest && entry.node.file_type === "code"
-      && !/\.(json|ya?ml|toml)$/i.test(entry.node.source_file ?? "")).slice(0, 3);
+      && !/\.(json|ya?ml|toml)$/i.test(entry.node.source_file ?? "")).slice(0, 10);
     for (const [i, entry] of gods.entries()) {
       lines.push(`${i + 1}. \`${text(entry.node.label ?? entry.node.id)}\` - ${entry.degree} edges - ${sourceLink(entry.node)}`);
     }

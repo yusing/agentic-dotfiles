@@ -118,10 +118,6 @@ Complete text already supplied satisfies the read; a path or summary does not.
 
 ## Codebase navigation
 
-Before running broad `grep` or file searches across the repo, read `graphify-out/GRAPH_REPORT.md`
-to identify relevant communities, god nodes, and entry points. Each report covers its own worktree
-or submodule, excluding other worktrees/submodules and Cargo `workspace.exclude` packages;
-`default-members` does not disable packages. Consult the report inside the checkout being changed.
 Use Graphify's existing graph for codebase navigation: `graphify query "<question>" --budget 1500`,
 `graphify path "<from>" "<to>"`, or `graphify explain "<symbol>"`. Run each command from the root
 of the worktree or submodule being investigated so it uses that checkout's graph, not the

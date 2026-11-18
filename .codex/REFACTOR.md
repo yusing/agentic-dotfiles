@@ -2,6 +2,12 @@
 
 Apply this to code you write, restructure, or remove. `TESTING.md` owns coverage and validation.
 
+For code cleanup, use the current checkout's `graphify-out/GRAPH_REPORT.md`, when available,
+to find highly connected production or test code in scope. Inspect the source before deciding
+whether a node has responsibilities worth separating; connection count alone is not a defect.
+Each report covers one worktree or submodule. The superproject report omits other worktrees,
+submodules, and Cargo `workspace.exclude` packages; `default-members` does not exclude packages.
+
 ## Removal
 
 Remove superseded paths and artifacts, along with the helpers, options, branches, configuration,

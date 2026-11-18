@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+Show up to ten god nodes each for production and tests to aid code cleanup.
+
 ## 1.1.0
 
 Add `--update --queue` for background refreshes. Requests for one root coalesce:
