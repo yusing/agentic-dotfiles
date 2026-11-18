@@ -146,6 +146,29 @@ checksum_source = "mise-versions"
 url = "https://github.com/tonistiigi/binfmt/releases/download/deploy/v10.2.3-68/binfmt_linux-amd64.tar.gz"
 url_api = "https://api.github.com/repos/tonistiigi/binfmt/releases/assets/441599094"
 
+[[tools."github:yusing/skills-mgr"]]
+version = "0.3.0"
+backend = "github:yusing/skills-mgr"
+specifiers = ["latest"]
+
+[tools."github:yusing/skills-mgr"."platforms.linux-arm64"]
+checksum = "sha256:61d8e18b689558c55775762bd8ccec84b9d0837508d49e4a7428fe411e2c8100"
+checksum_source = "mise-versions"
+url = "https://github.com/yusing/skills-mgr/releases/download/v0.3.0/skills-mgr-linux-aarch64.tar.gz"
+url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/762232996"
+
+[tools."github:yusing/skills-mgr"."platforms.linux-x64"]
+checksum = "sha256:e8620d4c9ec751df25d16a1965493083d7b52a14fc3562494c3ac4060fd88eb1"
+checksum_source = "mise-versions"
+url = "https://github.com/yusing/skills-mgr/releases/download/v0.3.0/skills-mgr-linux-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/762232994"
+
+[tools."github:yusing/skills-mgr"."platforms.macos-arm64"]
+checksum = "sha256:fdd93f4787943e798e511d3af3f3159a034452f71dffe4ed92afb223428932a0"
+checksum_source = "mise-versions"
+url = "https://github.com/yusing/skills-mgr/releases/download/v0.3.0/skills-mgr-darwin-aarch64.tar.gz"
+url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/762233003"
+
 [[tools."go:github.com/icholy/gomajor"]]
 version = "0.15.0"
 backend = "go:github.com/icholy/gomajor"
@@ -164,11 +187,6 @@ specifiers = ["latest"]
 [[tools."go:github.com/yusing/shadowtree/cmd/shadowtree-lsp"]]
 version = "0.0.0-20261026030315-dbb4af1d7033"
 backend = "go:github.com/yusing/shadowtree/cmd/shadowtree-lsp"
-specifiers = ["latest"]
-
-[[tools."go:github.com/yusing/skills-mgr"]]
-version = "0.0.0-20261111122147-d129bb05c4b2"
-backend = "go:github.com/yusing/skills-mgr"
 specifiers = ["latest"]
 
 [[tools."go:golang.org/x/tools/cmd/deadcode"]]

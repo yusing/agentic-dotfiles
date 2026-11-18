@@ -27,7 +27,7 @@
 "github:dlvhdr/gh-dash" = { "version" = "latest", "bin" = "gh-dash", "matching_regex" = "^gh-dash_.*_(linux|darwin)-(amd64|arm64)$" }
 "github:tonistiigi/binfmt" = { "version" = "latest", "os" = ["linux"], "version_prefix" = "deploy/v", "matching_regex" = "^binfmt_linux-(amd64|arm64)\\.tar\\.gz$", "bin" = "binfmt" }
 "go:golang.org/x/tools/cmd/deadcode" = "latest"
-"go:github.com/yusing/skills-mgr" = "latest"
+"github:yusing/skills-mgr" = "latest"
 "go:github.com/yusing/git-agent/cmd/git-agent" = "latest"
 "go:github.com/yusing/shadowtree/cmd/shadowtree" = "latest"
 "go:github.com/yusing/shadowtree/cmd/shadowtree-lsp" = "latest"
