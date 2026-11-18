@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ddc1beb3653bffd20c64d653f810e585e2405907",
+  "sourceCommit": "d1ba530acc4b177f62599e15b2b05ce2290e7f32",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -200,7 +200,7 @@
     {
       "path": ".codex/config.toml",
       "kind": "file",
-      "sha256": "132f95db7343de2ffc0f4240f71c06d09101b2c65cffa9d82d263c121eb2aca2",
+      "sha256": "5ff7de07e3c8330dbd01083e0d91255f81a5cfa2e9cdd9a77b2ccde6337fe9d4",
       "executable": false
     },
     {
@@ -236,7 +236,7 @@
     {
       "path": ".codex/hooks.json",
       "kind": "file",
-      "sha256": "d175c498bf1c83b90e37ac6fe4f6e58366fceb91992364e233c8367a9c8699f7",
+      "sha256": "2ae8f95d4b02a1ec4d6866cfc4becf58f75f2995ce22eced078497ad3a9a9e88",
       "executable": false
     },
     {

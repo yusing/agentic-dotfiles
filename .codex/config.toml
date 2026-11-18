@@ -1,19 +1,15 @@
-"model" = "gpt-6-astra"
+"model" = "gpt-6.2-sol"
 "model_reasoning_summary" = "auto"
-"model_context_window" = 320000
+"model_context_window" = 272000
 "experimental_compact_prompt_file" = "$HOME/.skills-mgr/skills/handoff/STANDARD.md"
 "personality" = "none"
-"plan_mode_reasoning_effort" = "ultra"
 "hide_agent_reasoning" = false
 "service_tier" = "default"
 "approval_policy" = "on-request"
 "approvals_reviewer" = "auto_review"
 "model_instructions_file" = "$HOME/.codex/overridden_base_instructions.md"
-"model_reasoning_effort" = "ultra"
+"model_reasoning_effort" = "medium"
 "sandbox_mode" = "danger-full-access"
-["skills"]
-"include_instructions" = false
-
 ["analytics"]
 "enabled" = false
 
