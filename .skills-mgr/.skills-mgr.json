@@ -128,7 +128,7 @@
       "enabled": "(lang js || lang ts) && has_dependency juststore"
     },
     "modern-web-guidance": {
-      "enabled": "lang tsx | lang jsx | lang html | lang css",
+      "enabled": "lang tsx || lang jsx || lang html || lang css",
       "remote": {
         "provider": "skills.sh",
         "id": "googlechrome/modern-web-guidance/modern-web-guidance",
