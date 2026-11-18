@@ -17,6 +17,9 @@ small change before making the next: settle the coupled changes, make them toget
 the batch. Continue independent work while long checks or delegates run, and wait for their
 completion signal rather than polling them. `TESTING.md` owns check selection.
 
+Defer source formatting until the code changes are settled, before final checks that depend on
+it. Run a formatter earlier only when its changes are needed to unblock the next step.
+
 ## Ownership and design
 
 Choose the owner by responsibility, not filename, language, or where execution happens. Compare the
