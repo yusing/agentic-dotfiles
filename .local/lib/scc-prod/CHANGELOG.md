@@ -1,5 +1,9 @@
 # Changelog
 
+## git-diffstat 1.0.1
+
+Keep unstaged deletions visible while including untracked files.
+
 ## git-diffstat 1.0.0
 
 Show per-file Git diff statistics and totals, retaining commit, staged, path, and

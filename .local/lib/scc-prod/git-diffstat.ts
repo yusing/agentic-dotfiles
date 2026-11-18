@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { extname, join, resolve } from "node:path";
 import { excludedPath, generatedHeader, SOURCE_EXTENSIONS } from "./scc-prod";
 
-const VERSION = "1.0.0";
+const VERSION = "1.0.1";
 const extensions = new Set(SOURCE_EXTENSIONS.split(","));
 
 function main(): void {
@@ -16,8 +16,8 @@ function main(): void {
   }
   const cwd = resolve(process.cwd(), process.env.GIT_PREFIX || ".");
   const env = { ...process.env };
-  function git(args: string[], directory = cwd, allowDifference = false): string {
-    const child = Bun.spawnSync(["git", ...args], { cwd: directory, env, stdout: "pipe", stderr: "pipe" });
+  function git(args: string[], directory = cwd, allowDifference = false, stdin?: Uint8Array): string {
+    const child = Bun.spawnSync(["git", ...args], { cwd: directory, env, stdin, stdout: "pipe", stderr: "pipe" });
     if (child.exitCode !== 0 && !(allowDifference && child.exitCode === 1)) {
       throw new Error(child.stderr.toString().trim() || `git exited with status ${child.exitCode}`);
     }
@@ -34,7 +34,9 @@ function main(): void {
   }
   const revisions = git(["rev-parse", "--revs-only", ...args]).trim().split("\n").filter(Boolean);
   const leadingCommit = args[0] && Bun.spawnSync(["git", "rev-parse", "--verify", "--end-of-options", `${args[0]}^{commit}`], { cwd, env, stdout: "ignore", stderr: "ignore" }).exitCode === 0;
-  const show = leadingCommit && revisions.length === 1 && !options.some(arg => arg === "--cached" || arg === "--staged");
+  const staged = options.some(arg => arg === "--cached" || arg === "--staged");
+  const show = leadingCommit && revisions.length === 1 && !staged;
+  const comparesWorktree = !show && !staged && revisions.length < 2;
   const command = show ? ["show", "--format="] : ["diff"];
   let temporary: string | undefined;
   try {
@@ -44,7 +46,7 @@ function main(): void {
       env.GIT_INDEX_FILE = join(temporary, "index");
       if (existsSync(index)) copyFileSync(index, env.GIT_INDEX_FILE);
       else git(["read-tree", "--empty"], root);
-      git(["add", "-N", "--", "."], root);
+      git(["add", "-N", "--ignore-removal", "--", "."], root);
     }
     const exclusions = new Set<string>();
     if (production) {
@@ -59,15 +61,24 @@ function main(): void {
         const path = /^[RC]/.test(status) ? raw[i++] : oldPath;
         let excluded = excludedPath(path) || !extensions.has(extname(path).slice(1).toLowerCase());
         if (!excluded) {
-          const oid = /^D+$/.test(status) ? fields.at(-3)! : fields.at(-2)!;
-          let source: string;
-          if (/^0+$/.test(oid)) {
+          const deleted = /^D+$/.test(status);
+          const oid = deleted ? fields.at(-3)! : fields.at(-2)!;
+          let source: string | undefined;
+          if (!/^0+$/.test(oid)) {
+            if (comparesWorktree && !deleted) {
+              // Rename detection can hash worktree files without storing the blob.
+              const blob = git(["cat-file", "--batch=%(objecttype)"], cwd, false, Buffer.from(oid + "\n"));
+              if (blob.startsWith("blob\n")) source = blob.slice(5, -1).slice(0, 16384);
+              else if (blob !== oid + " missing\n") throw new Error(`expected a blob at ${oid}`);
+            } else source = git(["cat-file", "blob", oid]).slice(0, 16384);
+          }
+          if (source === undefined) {
             const file = openSync(join(root, path), "r");
             try {
               const buffer = Buffer.alloc(16384);
               source = buffer.subarray(0, readSync(file, buffer, 0, buffer.length, 0)).toString("utf8");
             } finally { closeSync(file); }
-          } else source = git(["cat-file", "blob", oid]).slice(0, 16384);
+          }
           excluded = generatedHeader(source);
         }
         if (excluded) {
