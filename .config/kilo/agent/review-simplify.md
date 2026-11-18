@@ -1,7 +1,7 @@
 ---
 description: "Independent, read-only necessity and overengineering review. Use when a change should be judged against its requested outcome: whether each added file, abstraction, state, control flow, option, test, or document is needed, and whether a smaller approach reaches the same goal, even if behavior is correct and tests pass. Proposes evidence-backed removals and simplifications that preserve sourced outcomes."
 mode: subagent
-model: kilo/openai/gpt-6.1-sol
+model: kilo/openai/gpt-6.2-sol
 variant: high
 color: "#22C55E"
 permission:

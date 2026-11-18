@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "77a11576a4552d93f233fabef4c094aa82f2178d",
+  "sourceCommit": "a8ca5f578ff9458a40b137f000665e7f80b09ee0",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -566,7 +566,7 @@
     {
       "path": ".config/kilo/agent/investigator.md",
       "kind": "file",
-      "sha256": "b97d64ce5a9e88436686424dc69507ce3f4ffc73bc2456355a1aa6e676e04443",
+      "sha256": "97d9555205a38011db564db740488897a93e785625c291ed9330ae97a885bc82",
       "executable": false
     },
     {
@@ -584,19 +584,19 @@
     {
       "path": ".config/kilo/agent/review-correctness.md",
       "kind": "file",
-      "sha256": "cabca22b2b3cd9d4004bf5ed68657a28288f5ffad918e6f178e9140c4298e77e",
+      "sha256": "d800eb5d53ff1f08e8d5e42a6e35ecdfb09717d447f63a45017bcaef956540ff",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/review-simplify.md",
       "kind": "file",
-      "sha256": "a5b4874e326d6f1cb8db11a33832e2ebd06c5ca6b527cc48c35529e20d8b0a1c",
+      "sha256": "94c44b95a9d718b55db32754b7587cc740c52ad1647b410ec1bb961a78a2a5db",
       "executable": false
     },
     {
       "path": ".config/kilo/agent/ui-reviewer.md",
       "kind": "file",
-      "sha256": "97f0a74a94c06d916e8cacefd5f25fe8af41ae48b1a4735b841066bf3bbffed9",
+      "sha256": "39dcdc4e1e24eb75d8d950bcd3e87ee926115da0f62e1132d1325b801013da8c",
       "executable": false
     },
     {
