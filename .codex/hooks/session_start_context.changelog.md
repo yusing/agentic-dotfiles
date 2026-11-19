@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+Deliver project facts and the skills inventory through Antigravity's native
+SessionStart context envelope. Keep role guidance out of the shared hook.
+
 ## 1.1.1
 
 Decode transcript envelopes with native fields while keeping payloads and

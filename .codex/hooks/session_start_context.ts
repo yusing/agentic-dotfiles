@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import { isAbsolute, join } from "path";
 import {
   asString,
   handleVersion,
@@ -6,9 +7,10 @@ import {
   programArgs,
   readEvent,
   runCommand,
+  writeJson,
 } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.1.1";
+export const VERSION = "1.2.0";
 const MAX_TRANSCRIPT_BYTES = 256 * 1024;
 
 function inheritedStartup(event: unknown): boolean {
@@ -119,9 +121,34 @@ function retainedOutput(event: unknown, output: string): boolean {
   }
 }
 
+function antigravityContext(event: unknown): number {
+  const home = process.env.HOME;
+  const paths = isRecord(event) ? event.workspacePaths : undefined;
+  const cwd = Array.isArray(paths) ? asString(paths[0]) : undefined;
+  const messages: string[] = [];
+  if (home && cwd && isAbsolute(cwd)) {
+    const bin = join(home, ".codex/hooks/bin");
+    for (const name of ["check_project", "skills_mgr_inventory"]) {
+      const result = runCommand([join(bin, name)], { cwd });
+      process.stderr.write(result.stderr);
+      if (result.error) process.stderr.write(`${name}: ${result.error.message}\n`);
+      if (result.status === 0 && result.stdout.trim()) {
+        messages.push(result.stdout);
+      }
+    }
+  }
+  writeJson({
+    injectSteps: messages.map(message => ({
+      systemMessage: { systemMessage: message },
+    })),
+  });
+  return 0;
+}
+
 function main(): number {
   if (handleVersion(VERSION)) return 0;
   const command = programArgs();
+  if (command[0] === "--antigravity") return antigravityContext(readEvent());
   if (command.length === 0) {
     process.stderr.write("session_start_context: expected a context command\n");
     return 2;

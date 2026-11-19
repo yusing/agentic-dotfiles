@@ -123,6 +123,7 @@ Arch uses the distribution PostgreSQL package; other platforms use PostgreSQL 18
 with a separate Brew data directory. Setup does not migrate or delete existing
 databases. Switching package sources requires a separate database migration. Mosh and the agent clients
 use their declared vendor installers.
+Antigravity CLI installs as `agy` and prompts for Google sign-in on first run.
 
 ### Native installation
 
