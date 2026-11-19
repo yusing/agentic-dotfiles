@@ -54,8 +54,12 @@ Write deliverables for readers without session history. Include conversation tex
 for that deliverable. Keep private resources, session identifiers, and credentials out of repository
 deliverables. Keep approval/provenance evidence in the task record or tracker.
 
-Read these owners right before their operation applies EXACTLY AS DESCRIBED BELOW.
-AND you have not been read before from working context:
+Time instruction-file, skill-body, and reference reads to the operation they govern. Naming a
+later step or its guidance schedules it; read what's missing from working context just before
+that step. Batch the read with the last preceding action when its result isn't needed to choose
+the guidance. An explicit request to read now is itself the current operation.
+
+Instruction-file triggers:
 
 ### In $HOME/.codex
 
@@ -101,8 +105,8 @@ Assume all my machines have identical setups and all tools mentioned or expected
 are available. Use them directly without probing the environment or checking tool availability;
 investigate only if an actual command failure contradicts these assumptions.
 
-Skill descriptions in the available catalog own applicability. Use enabled skills when their
-descriptions match the task or the user explicitly invokes them. Instructions remain usable without
+Skill descriptions in the available catalog own applicability. Use enabled skills for the
+operations their descriptions match or the user invokes them for. Instructions remain usable without
 any skills. Explicit reviews retain their requested operation and scope.
 
 Acquire bodies with `skills-mgr get <skill> [start:end]`, references with

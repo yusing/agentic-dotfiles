@@ -83,8 +83,13 @@ including links to private resources such as my self-hosted tracker, session or 
 identifiers, and credentials. Keep provenance evidence, such as who approved what and where, in
 the task record or tracker; deliverables state the resulting contract.
 
-Read these owners when their operation applies and their guidance is absent from working context.
+Time instruction-file, skill-body, and reference reads to the operation they govern. Naming a
+later step or its guidance schedules it; read what's missing from working context just before
+that step. Batch the read with the last preceding action when its result isn't needed to choose
+the guidance. An explicit request to read now is itself the current operation.
 Complete text already supplied satisfies the read; a path or summary does not.
+
+Instruction-file triggers:
 
 ### In ~/.claude/instructions
 
@@ -136,8 +141,8 @@ Assume all my machines have identical setups and all tools mentioned or expected
 are available. Use them directly without probing the environment or checking tool availability;
 investigate only if an actual command failure contradicts these assumptions.
 
-Skill descriptions in the available catalog own applicability. Use enabled skills when their
-descriptions match the task or the user explicitly invokes them. Explicit reviews retain their
+Skill descriptions in the available catalog own applicability. Use enabled skills for the
+operations their descriptions match or the user invokes them for. Explicit reviews retain their
 requested operation and scope.
 
 Select skills and resources that materially help the current operation. Explicit user and
