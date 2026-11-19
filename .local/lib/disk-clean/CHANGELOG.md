@@ -1,5 +1,10 @@
 # Changelog
 
+## cargo-worktree 1.0.1
+
+Resolve the primary source checkout when Git stores its directory separately,
+and return the prepared target as a Cargo configuration argument.
+
 ## 1.2.0
 
 Clean registered Cargo target caches after their worktree path disappears.
