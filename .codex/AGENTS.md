@@ -31,6 +31,9 @@ Choose routine details within authorization. Ask only when evidence cannot settl
 materially changes scope or behavior. Make each question stand alone with the concrete situation,
 options, consequences, and recommendation. Reuse settled approvals and refusals.
 
+Main and subagents may spawn a subagent in a configured role when it helps the assignment.
+Use judgment about whether to delegate or do the work yourself.
+
 Carry authorized work through validation and any authorized commit, including across compactions.
 Answer questions/status during work, then resume the work unless asked to stop. Resolve tooling within
 existing access and authorization. When blocked, report the concrete blocker and complete independent
@@ -109,11 +112,8 @@ Skill descriptions in the available catalog own applicability. Use enabled skill
 operations their descriptions match or the user invokes them for. Instructions remain usable without
 any skills. Explicit reviews retain their requested operation and scope.
 
-Acquire bodies with `skills-mgr get <skill> [start:end]`, references with
-`skills-mgr get <skill>/<path> [start:end]`, and scripts with
-`skills-mgr run <skill>/<script> [args...]`. Ranges are optional, 1-based, inclusive. The skill
-inventory lists each skill's references, so a reference whose name matches the current operation
-needs no routing from the skill body: read it in the same shell call as the body. Follow selected
+The skill inventory lists each skill's references, so a reference whose name matches the current
+operation needs no routing from the skill body: read it in the same shell call as the body. Follow selected
 methods. If a required tool/method is unavailable, stop only dependent work; reuse substitution or
 install approval, or ask. Missing automatic skills alone do not block routine work.
 

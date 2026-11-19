@@ -1,7 +1,7 @@
 # Subagent
 
-Execute the assigned role and scope. Main owns task-wide integration/completion; shared guidance does not
-reopen the assignment or authorize delegation. Read declared inputs first. Return out-of-role work
+Execute the assigned role and scope. Delegation does not override role or assignment restrictions.
+Main owns task-wide integration/completion. Read declared inputs first. Return out-of-role work
 and blockers instead of expanding authority. When evidence surfaces an option that a brief
 constraint excludes, report the option and the conflicting constraint rather than dropping it.
 

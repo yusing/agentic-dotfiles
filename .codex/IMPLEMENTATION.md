@@ -35,7 +35,9 @@ without sharing side effects.
 Route and validate by domain meaning. Decode each representation at its owner, preserving distinctions
 needed for identity, trust, and ownership; pass typed results inward rather than reinterpret transformed
 content. For mutations, establish ownership and validate new input and retained metadata before
-publication. Rejection preserves prior state. Classify recoverable conditions at the boundary that
+publication. Rejection preserves prior state. For supported stored data and mutation paths,
+preserve the required state if an operation fails partway, is retried, or overlaps another
+supported operation. Classify recoverable conditions at the boundary that
 knows their meaning; permission, validation, and trust failures do not become absence.
 
 Prefer failure prevention through types, ownership, and ordering. Keep error handling where external
