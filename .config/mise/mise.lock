@@ -147,27 +147,27 @@ url = "https://github.com/tonistiigi/binfmt/releases/download/deploy/v10.2.3-68/
 url_api = "https://api.github.com/repos/tonistiigi/binfmt/releases/assets/441599094"
 
 [[tools."github:yusing/skills-mgr"]]
-version = "0.3.0"
+version = "0.4.0"
 backend = "github:yusing/skills-mgr"
 specifiers = ["latest"]
 
 [tools."github:yusing/skills-mgr"."platforms.linux-arm64"]
-checksum = "sha256:61d8e18b689558c55775762bd8ccec84b9d0837508d49e4a7428fe411e2c8100"
+checksum = "sha256:00ea190d3c106a5c336bd73cd2d45eabdfcf455a8f215e751f5c1b2c90d5da47"
 checksum_source = "mise-versions"
-url = "https://github.com/yusing/skills-mgr/releases/download/v0.3.0/skills-mgr-linux-aarch64.tar.gz"
-url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/762232996"
+url = "https://github.com/yusing/skills-mgr/releases/download/v0.4.0/skills-mgr-linux-aarch64.tar.gz"
+url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/763010488"
 
 [tools."github:yusing/skills-mgr"."platforms.linux-x64"]
-checksum = "sha256:e8620d4c9ec751df25d16a1965493083d7b52a14fc3562494c3ac4060fd88eb1"
+checksum = "sha256:684f50b85c31c0521d2069d52bcc9644d5fd95cb9f7232fe2779386956c221fe"
 checksum_source = "mise-versions"
-url = "https://github.com/yusing/skills-mgr/releases/download/v0.3.0/skills-mgr-linux-x86_64.tar.gz"
-url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/762232994"
+url = "https://github.com/yusing/skills-mgr/releases/download/v0.4.0/skills-mgr-linux-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/763010486"
 
 [tools."github:yusing/skills-mgr"."platforms.macos-arm64"]
-checksum = "sha256:fdd93f4787943e798e511d3af3f3159a034452f71dffe4ed92afb223428932a0"
+checksum = "sha256:fbe3311b5edf37b76dbd031ee2b8145710e0f5b148c3658cfd4812894c300c61"
 checksum_source = "mise-versions"
-url = "https://github.com/yusing/skills-mgr/releases/download/v0.3.0/skills-mgr-darwin-aarch64.tar.gz"
-url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/762233003"
+url = "https://github.com/yusing/skills-mgr/releases/download/v0.4.0/skills-mgr-darwin-aarch64.tar.gz"
+url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/763010489"
 
 [[tools."go:github.com/icholy/gomajor"]]
 version = "0.15.0"
