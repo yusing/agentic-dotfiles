@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d951c8ce7d6258359cd6d184adef49aa0e1d43b4",
+  "sourceCommit": "ce673af75b729f18d23733fc6763ca39b64dfd03",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1566,13 +1566,13 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "bb383eea64b95c664bcfb94d318f573e18898cdd2b1c284da815de0fccbfc206",
+      "sha256": "0171e9a8b6b94583109af17298f954fa9619af8c680c2cec6b5e570483818424",
       "executable": false
     },
     {
       "path": "CONTEXT-GROK-HOOK-PORT.md",
       "kind": "file",
-      "sha256": "ab5bfa2ffcd78c6f497ce035d07b717b045efb54b654c121f99ef72006d61b52",
+      "sha256": "715974137ed7a5e47efab2e2cffc4d587e360502c17173ede0f998e54b769f73",
       "executable": false
     },
     {
@@ -1590,7 +1590,7 @@
     {
       "path": "CONTEXT-HOOK-OWNERS.md",
       "kind": "file",
-      "sha256": "8b60c30d55b266bdf9ca51ad5754b59973e224e4b3a8ea49eaffa97733867903",
+      "sha256": "eb8aba77add638ce083d6515834df2972ca8e0f4cc07e7be78aaffd863dd46e6",
       "executable": false
     },
     {

@@ -22,12 +22,12 @@
   omission for a Mekugi process supplying environment facts. VCS write-authorization
   instructions remain present for detected repositories independently of fact omission;
   `.codex/hooks.json` injects root-session project
-  context and direct `skills-mgr list` output at startup and after context
+  context at startup and after context
   compaction or clearing while excluding session resume. `.codex/hooks/bin/session_start_context`
-  skips the project and skill context commands on fork startup when the transcript's first
-  `session_meta` record has `forked_from_id`; unavailable metadata keeps the commands enabled.
+  skips the project check on fork startup when the transcript's first
+  `session_meta` record has `forked_from_id`; unavailable metadata keeps the check enabled.
   Compaction and clearing still refresh root context. SubagentStart uses the same wrapper to
-  deliver project context and skill inventory, comparing each command's output with retained hook
+  deliver project context and role guidance, comparing each command's output with retained hook
   context in the child transcript. It suppresses only proven identical output from a complete
   transcript of at most 256 KiB. Missing, oversized,
   malformed, rolled-back, or unsupported history keeps delivery. The separate

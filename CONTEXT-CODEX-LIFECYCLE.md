@@ -18,14 +18,12 @@
    Role files do not use `model_instructions_file`. Active hooks are assembled from
    `.codex/hooks.json`, any inline hook configuration, and manifests for enabled plugins.
 2. **Session start.** At startup and after context compaction or clearing,
-   `.codex/hooks.json` runs `.codex/hooks/bin/check_project` and `skills-mgr list`.
-   Resuming an existing session does not run these project and skill context commands.
-   The project and inventory commands run through `.codex/hooks/bin/session_start_context`.
-   Thread-spawn startup runs SubagentStart instead of root SessionStart and delivers project context and inventory
-   through the same wrapper. `CONTEXT-HOOK-OWNERS.md` owns the fork and retained-context
+   `.codex/hooks.json` runs `.codex/hooks/bin/check_project` through
+   `.codex/hooks/bin/session_start_context`. Resume skips this project check.
+   Thread-spawn startup runs SubagentStart instead of root SessionStart and delivers project context
+   through the same wrapper. The skill catalog comes from the host, not these hooks.
+   `CONTEXT-HOOK-OWNERS.md` owns the fork and retained-context
    suppression rules. Hook refresh is separate from the cached static `AGENTS.md` discovery.
-   Matched events receive project context and current skill metadata without
-   selecting implementation or validation work.
 3. **Tool loop.** Before matched tools run, Codex's registered generated-code guard may reject
    direct generated-Go edits. Codex does not register `subagent_exec_guard`; role prompts still
    state the spawned-agent container and orchestration command boundary. Role guidance is
