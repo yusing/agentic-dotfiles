@@ -30,8 +30,7 @@ Brief review, audit, or diagnosis with scope, questions, and the ledger, without
 suspected findings, or expected conclusions. Use a `fork_turns="none"` brief with complete task
 context.
 
-Native roles own workflows; `MODEL-ROUTING.md` owns model and effort, which the spawner sets for every
-role.
+Native roles own workflows; `MODEL-ROUTING.md` owns model and effort selection.
 The harness supplies shared instructions and discovers project guidance for the recipient.
 Keep shared, project, role, and skill policy at its owner rather than
 copying or paraphrasing it into task briefs. When a needed skill cannot be preloaded, name the

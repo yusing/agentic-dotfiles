@@ -10,7 +10,7 @@ Keep specs/contracts distinct from one another and code. Describe behavior reade
 rely on; leave internal mechanics to code/tests unless readers must account for them. Match detail
 to the reader's next decision or action, and assess the complete output against that purpose. A
 navigation overview helps readers choose where to look; exhaustive inventory belongs in linked or
-queryable detail. Correct entries alone do not establish usability. Integrate each fact into its
+queryable detail. Integrate each fact into its
 owning topic and link from other documents. Keep navigation, summaries, and capability lists consistent.
 
 Update documents when the change alters what their readers must understand, decide, or rely on.
@@ -25,6 +25,3 @@ update its topic.
 Read affected topics and cross-references; inspect the full structure for rewrites or structural
 changes. Expand only for dependent facts needed to keep the description coherent, and record coverage
 gaps in the existing task record.
-
-Main owns applicability and integration. `DELEGATION.md` owns authorship policy; instructions, skills,
-workflows/task documents, and model-facing templates remain with main.

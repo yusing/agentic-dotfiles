@@ -11,9 +11,10 @@ the lookup. Reuse current evidence for questions it already answers.
 
 ## Resolve and query
 
-1. Call `resolve-library-id` with the library name and the concrete question. Prefer the official
+1. Resolve the library name and concrete question with `ctx7 library <name> <query>` in Codex
+   or the `resolve-library-id` tool in other clients. Prefer the official
    library and a version-specific result when the task names a version.
-2. Call `query-docs` with that library ID and the unresolved question. Keep each query focused on
+2. Use `ctx7 docs <libraryId> <query>` in Codex or `query-docs` in other clients. Keep each query focused on
    one concept; combine concepts only when their interaction is the question. Reuse the resolved
    library ID for subsequent queries about the same library.
 3. Apply the documented contract to the task. Identify the relevant version and cite the source

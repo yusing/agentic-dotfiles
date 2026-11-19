@@ -117,8 +117,8 @@ references; refer to the recovery document for details it already covers.
 
 Without a recovery document, put Continuation last when work remains: `Next:` names the first
 unfinished action and `Then:` later obligations. With one, carry only action additions or changes
-and their order relative to the actions it records. Order prerequisite hooks first, then unfinished
-asides newest first, then standing work in request order. Reference an incomplete hook's owner
+and their order relative to the actions it records. Preserve the active work and settled delivery
+order, including explicit reprioritization and prerequisites. Reference an incomplete hook's owner
 without copying its rules.
 
 Completion includes required validation, documents, reporting, and external obligations. Where a

@@ -6,10 +6,9 @@ components, and control patterns. The skills below fill only what the guide and 
 a skill's advice conflicts with them, follow the project. Generic taste applied to an established
 app replaces its conventions with averages, which is the slop a guide exists to prevent.
 
-Each remaining concern has one owning skill. During construction, use the project guide and kit;
-defer automatic visual-design and UI best-practice skill loading until a working UI path exists. Explicit design
-or quality-review tasks and user-invoked skills follow their requested operation. A change that
-leaves a concern alone skips its skill.
+Use applicable visual direction before building or redesigning a page. Consult technical guidance
+when it can change an implementation decision; defer finished-UI review until there is a UI to
+review. Explicit review requests keep their scope.
 
 | Concern | Owning skill |
 | --- | --- |

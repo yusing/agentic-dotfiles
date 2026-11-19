@@ -24,8 +24,7 @@
    through the same wrapper. The skill catalog comes from the host, not these hooks.
    `CONTEXT-HOOK-OWNERS.md` owns the fork and retained-context
    suppression rules. Hook refresh is separate from the cached static `AGENTS.md` discovery.
-3. **Tool loop.** Before matched tools run, Codex's registered generated-code guard may reject
-   direct generated-Go edits. Codex does not register `subagent_exec_guard`; role prompts still
+3. **Tool loop.** Codex does not register `subagent_exec_guard`; role prompts still
    state the spawned-agent container and orchestration command boundary. Role guidance is
    separate from runtime permissions and enforcement. Registrations and supported command
    forms bound hook coverage.
@@ -36,13 +35,11 @@
    The managed handoff standard defines shared content rules for file handoffs and for a
    runtime that explicitly selects it, with a runtime-specific user-message boundary. Its
    interruption and continuation rules do not establish delivery by the current runtime.
-   After handoff, the base prompt selects skills again from the current operation. The reloaded shared instructions recover the active
+   After handoff, the reloaded shared instructions recover the active
    scope and reread only the guidance needed for remaining work. `MAIN.md` sequences working-path
    implementation and delivery. `IMPLEMENTATION.md` supplies early structural constraints;
-   `FINISHING.md` supplies deferred practices at implementation delivery/handback, applicable standards
-   for code or operational quality review, and main's delivery/review orchestration. Documentation-only
-   reviewers use their document guidance. Standing guidance gates automatic best-practice
-   skill loading by phase; catalog availability alone does not trigger a body read.
+   main or an assigned coordinator reads `FINISHING.md` for an unresolved question needing
+   independent review, not for routine delivery.
    Routine local work does not require task-size documents.
    No hook-specific state rotation runs at compaction.
 

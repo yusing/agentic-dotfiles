@@ -3,9 +3,10 @@
 This codebase is yours to keep building on: how it is built is your call, and what it is for comes
 from the ledger.
 
-The task file's `lines` (`TASK-FILE.md`) are the outcome ledger; the line under delivery is `active`.
-Briefs, implementation, tests, reviews, and handoffs consume the ledger, not the current code.
-Apply a correction by editing the ledger lines it changes, not by adding a general rule.
+The ledger is the accepted outcomes and their sources. Main keeps it in the task file on clients
+that use one; elsewhere use the current request and settled decisions without creating another
+artifact. Delegates work from the assigned outcomes and report changes to main. A correction
+changes only the affected outcomes.
 
 Resolve code/test conflicts by ledger outcomes; consult history only when intent is unclear.
 

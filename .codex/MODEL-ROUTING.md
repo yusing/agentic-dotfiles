@@ -1,6 +1,7 @@
 # Model and reasoning routing
 
-Native roles fix no model or effort, so set both on every spawn. Default: gpt-6.2-astra, low.
+Full-history forks inherit their budget. For other spawns, set model and effort only when
+permitted by the host and supported by the invocation. Default selectable budget: gpt-6.2-astra, low.
 
 Select for the current subtask's unresolved difficulty. Treat the following
 as starting points; use observed results to adjust.

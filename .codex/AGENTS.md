@@ -32,7 +32,6 @@ materially changes scope or behavior. Make each question stand alone with the co
 options, consequences, and recommendation. Reuse settled approvals and refusals.
 
 Main and subagents may spawn a subagent in a configured role when it helps the assignment.
-Use judgment about whether to delegate or do the work yourself.
 
 Carry authorized work through validation and any authorized commit, including across compactions.
 Answer questions/status during work, then resume the work unless asked to stop. Resolve tooling within
@@ -75,7 +74,7 @@ Instruction-file triggers:
   edits do not need it.
   - `REFACTOR.md`: additionally, when writing, restructuring, or removing code, including removing a
     feature and its tests.
-- `TASK-FILE.md`: main, for project work including documentation and reviews; not
+- `TASK-FILE.md`: Codex main, for project work including documentation and reviews; not
   answer-only exchanges.
 - `FINISHING.md`: coordinating question-specific independent review.
 - `TESTING.md`: tests, fixtures, and validation selection; projects own runner details.

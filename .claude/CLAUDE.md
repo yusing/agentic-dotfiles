@@ -117,8 +117,8 @@ Instruction-file triggers:
 
 - `HANDOFF.md`: when mentioned, read it. Only the main agent resuming its task deletes it after
   consumption; subagents read assigned handoffs without deleting them.
-- `AGENTS.md`: when the working directory is the home directory, read it before maintaining that
-  configuration repository. Settings exclude it from automatic loading so that projects below
+- `AGENTS.md`: when maintaining the home configuration repository, read its root guidance
+  even if the session starts in a subdirectory. Settings exclude it from automatic loading so that projects below
   home neither receive it nor lose their own `AGENTS.md`.
 
 ## Codebase navigation

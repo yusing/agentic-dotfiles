@@ -58,7 +58,7 @@
   navigation reports after edit and command tools in Codex and Claude (PostToolUse).
   Refresh manually and synchronously with `.local/bin/graphify-report --update [PROJECT_ROOT]`.
   The hook resolves the nearest graph from the tool file/workdir or event cwd, creating
-  the initial graph at the Git boundary when none exists. It never waits for Graphify: it
+  the initial graph at the Git boundary when none exists. Literal read-only inspection commands skip dispatch; ambiguous shell calls remain covered. It never waits for Graphify: it
   starts a detached `graphify-report --update --queue` in its own session and returns, so
   the graph trails the agent's latest edits until that refresh finishes. Queued refreshes
   of one root coalesce through a lock and request marker in `graphify-out/`: one runs at a

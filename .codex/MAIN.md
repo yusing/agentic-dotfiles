@@ -23,26 +23,15 @@ failure, not an anticipatory subsystem inventory. Before building supporting mac
 disputed design, make its smallest real consumer path pass.
 
 For a multi-part implementation whose public entry points must agree or whose mutations reach
-stored data, obtain one independent contract check before the first shared-owner change. Main
-proposes concrete observable cases, each citing its ledger line. Give a read-only reviewer the
-request sources, the ledger, and those cases. Ask it to find a wrong expected result, a case
-without a ledger line, an omitted ledger outcome, or a case checked through the wrong observation.
-It reviews the proposed behavior, not a preferred design, and does not author the implementation or
-tests. A green existing suite does not answer this contract question. Resolve established
-discrepancies before building on the cases; retain supported alternatives when the contract permits
-them.
-
-Use a single review for coupled outcomes, not a reviewer per file or helper. Keep this check ahead
-of implementation rather than running it alongside changes to its evidence. Reuse its settled
-contract findings through construction and completion; repeat only for a concrete new semantic
-question. Main still owns decisions, implementation, assertions, and validation. This check replaces
-late self-reconstruction of the acceptance contract; it is not an additional general finish pass.
+stored data, obtain one independent contract check before the first shared-owner change.
+Give the reviewer the request sources, ledger, and proposed observable cases, each citing its
+ledger line. Ask which expected results are wrong, which cases lack a ledger line, which outcomes
+are missing, and which cases check the wrong observation. If independent review is unavailable
+or not permitted, check the cases locally and report that limitation. If the user required
+independence, ask before substituting. Reuse settled results unless new evidence reopens the question.
 
 Once those decisions are settled, make the necessary, coupled changes together at their owners.
-`IMPLEMENTATION.md`, `TESTING.md`, and `DOCS.md` determine which changes are needed. Do not turn each
-helper or field into a separate edit-and-reconsider cycle. Read relevant documents as contract input
-before implementation. Resolve the unit's consumer-check failures before dependent work, and carry
-its acceptance evidence forward rather than reconstructing it at completion.
+`IMPLEMENTATION.md`, `TESTING.md`, and `DOCS.md` determine which changes are needed.
 
 Communicate a decision brief only when a consequential choice needs explaining or resolving: outcome,
 affected ledger lines, approach, tradeoffs, and acceptance evidence.
@@ -55,14 +44,11 @@ reorder it. This covers a question, complaint, observation, idea, issue report, 
 instruction for a later step. Unless the user asks for the new item now or it blocks the active
 unit:
 
-- Keep the active unit going in the same turn and keep its line `active`. Answer or acknowledge
-  the message without making it the current task.
-- Give the new item an owner instead of working on it inline. Record it as a `pending` task-file
-  line citing the user's words, placed in delivery order. When it needs investigation, assign that
-  to an independent delegate that runs while main continues. When the result returns, assign the
-  fix to an independent worker if it touches no file or interface the active work depends on;
-  otherwise take the line up in its order. Where delegation is unavailable, the recorded line waits
-  for its turn.
+- Answer the message and resume the active unit; keep its line `active`.
+- If the message leaves work to do, record that obligation in delivery order as a `pending`
+  line citing the user's words. Delegate independent investigation or fixes when permitted and worthwhile;
+  keep changes off files and interfaces the active unit depends on. Otherwise take up the item
+  in delivery order.
 - Agreement that an item belongs in the work settles its place in the order, not an immediate
   start. An instruction for a later step, such as how to test, applies when that step arrives.
 

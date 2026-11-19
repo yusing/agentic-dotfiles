@@ -1,13 +1,21 @@
 # skills-mgr-base-sha256 bee6aa0382bc15099715ad8f0b11fdb224932eb516a4ea9134a2d7d38f5fcde4
-# skills-mgr-result-sha256 e4360528d4a4601deb1f4a03767bcf8161251c64f825c7c4b89e183c29ecf80a
+# skills-mgr-result-sha256 b0f0e8f3943b53e04f76bb1a781ce1e20dd8811e1e6ef8145fadb72926f36622
 --- a/SKILL.md
 +++ b/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: ui-ux-pro-max
+-description: "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 80 searchable styles (51 active), 194 product palettes and reasoning profiles, 74 font pairings, 130 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks."
++description: "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation."
+ ---
+
+ # UI/UX Pro Max - Design Intelligence
 @@ -15,7 +15,7 @@
 
  ## Rule Categories by Priority
 
 -*Follow priority 1→10 to decide which category to focus on first; use `--domain <Domain>` to query full details. The full rule text for every category lives in `references/quick-reference.md` — read it on demand rather than loading it every time.*
-+*Follow priority 1→10 to decide which category to focus on first; use `--domain <Domain>` to query full details. Read the full rule text on demand with `skills-mgr get ui-ux-pro-max/references/quick-reference.md`.*
++*Follow priority 1→10 to decide which category to focus on first; use `--domain <Domain>` to query full details.*
 
  | Priority | Category | Impact | Domain | Key Checks (Must Have) | Anti-Patterns (Avoid) |
  |----------|----------|--------|--------|------------------------|------------------------|
