@@ -2107,7 +2107,7 @@ EOF
 # ---------------------------------------------------------------------------
 
 main() {
-  local check_config=0 explicit_config="${SETUP_CONFIG_EXPLICIT:-0}"
+  local check_config=0 explicit_config="${SETUP_CONFIG_EXPLICIT:-0}" sbx_path
   while [ "$#" -gt 0 ]; do
     case "$1" in
       -h|--help)
@@ -2260,6 +2260,15 @@ main() {
 
   STEP="configure image paste"
   configure_image_paste
+
+  STEP="configure Docker Sandboxes cloud SSH"
+  if mise_tool_applies github:docker/sbx-releases; then
+    info "$STEP"
+    if ! sbx_path="$(mise_tool_path github:docker/sbx-releases sbx)" ||
+       ! "$sbx_path" --cloud setup ssh </dev/null; then
+      warn "Docker Sandboxes cloud SSH setup failed; retry with sbx --cloud setup ssh"
+    fi
+  fi
 
   STEP="verify"
   hash -r 2>/dev/null || true

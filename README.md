@@ -141,6 +141,9 @@ bash setup.sh --upgrade git-agent   # upgrade only a named Mise tool
 Normal setup retains installed versions. Full upgrades refresh declared Brew,
 Mise, and vendor tools. Named upgrades accept a Mise identifier or command
 name and skip Brew, vendors, helpers, and final verification.
+Full setup configures the `sbx_cloud` SSH alias in your user SSH configuration
+when Docker Sandboxes is managed. If you upgrade only `sbx`, rerun
+`sbx --cloud setup ssh` to refresh the alias to use the new binary.
 Full upgrades skip the Mosh source build when its installed commands identify
 the fork's latest commit. Missing or unrecognized builds run the installer.
 
