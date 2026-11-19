@@ -40,7 +40,7 @@ Every section addresses main except "Delegate brief", which you export once and 
 
 * Settle what available evidence and authorized engineering judgment can answer. Ask me together for remaining user decisions before dispatching affected work; independent settled groups can proceed. Bring proposed scope expansions to me.
 
-* Group tightly coupled items under one developer and run independent groups in parallel. Give each group high-level directions, the existing path to extend, acceptance checks, and a rough size. Name delegates `<category>-<topic>-<id>`, like `sql-syntax_error-456`.
+* Group tightly coupled items under one developer and run independent groups in parallel. Give each group high-level directions, the existing path to extend, acceptance checks, and a rough size. Name delegates `<category>_<topic>_<id>`, like `sql_syntax_error_456`.
 
 * Give each developer its own worktree per changed repository. Sequence conflicting work when isolation cannot resolve the dependency. Spawn a fresh delegate for every new task; never reuse a delegate for a new task. Follow up with a completed agent only to correct its assigned work.
 
@@ -236,8 +236,7 @@ label = "Review and Explain PRs"
 
 ["features"."multi_agent_v2"]
 "enabled" = true
-"default_wait_timeout_ms" = 1500000
-"max_wait_timeout_ms" = 1500000
+"max_concurrent_threads_per_session" = 9
 
 ["feedback"]
 "enabled" = false
