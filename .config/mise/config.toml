@@ -25,6 +25,7 @@
 "aqua:trufflesecurity/trufflehog" = "latest"
 "aqua:awslabs/git-secrets" = "latest"
 "github:dlvhdr/gh-dash" = { "version" = "latest", "bin" = "gh-dash", "matching_regex" = "^gh-dash_.*_(linux|darwin)-(amd64|arm64)$" }
+"github:docker/sbx-releases" = { "version" = "latest", "os" = ["linux", "macos"], "matching_regex" = "^DockerSandboxes-(linux-(amd64|arm64)|darwin)\\.tar\\.gz$", "strip_components" = 0, "bin_path" = "bin", "postinstall" = "if [ \"$(uname -s)\" = Linux ]; then PREFIX=\"$MISE_TOOL_INSTALL_PATH\" sh \"$MISE_TOOL_INSTALL_PATH/docker-sbx/install.sh\"; fi" }
 "github:tonistiigi/binfmt" = { "version" = "latest", "os" = ["linux"], "version_prefix" = "deploy/v", "matching_regex" = "^binfmt_linux-(amd64|arm64)\\.tar\\.gz$", "bin" = "binfmt" }
 "go:golang.org/x/tools/cmd/deadcode" = "latest"
 "github:yusing/skills-mgr" = "latest"
