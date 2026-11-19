@@ -84,10 +84,10 @@ maintenance records.
 ## Generated and imported surfaces
 
 - `.claude/agents/*.md` is generated from `.codex/agents/*.toml` by
-  `.local/bin/sync-claude-agent-ports`; Grok also consumes these generated roles.
+  `.local/bin/sync-agent-ports claude`; Grok also consumes these generated roles.
   `CONTEXT-CLAUDE-AGENT-PORT.md` owns the port map and drift check.
 - `.config/kilo/agent/*.md` is generated from `.codex/agents/*.toml` by
-  `.local/bin/sync-kilo-agent-ports`; `CONTEXT-KILO-AGENT-PORT.md` owns the
+  `.local/bin/sync-agent-ports kilo`; `CONTEXT-KILO-AGENT-PORT.md` owns the
   port map and drift check.
 - `.codex/skills/.system/` is imported Codex system content, excluded from the repository.
   Keep local overrides at their managed owner; imported files remain upstream-owned.

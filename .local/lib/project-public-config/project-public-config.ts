@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.39";
+export const VERSION = "1.3.40";
 
 type TreeEntry = {
 	mode: string;
@@ -236,10 +236,8 @@ const EXACT_PATHS = new Set([
 	".local/lib/rewrite-home-paths/package.json",
 	".local/lib/rewrite-home-paths/bun.lock",
 	".local/lib/rewrite-home-paths/CHANGELOG.md",
-	".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
-	".local/lib/sync-claude-agent-ports/CHANGELOG.md",
-	".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
-	".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
+	".local/lib/sync-agent-ports/sync-agent-ports.ts",
+	".local/lib/sync-agent-ports/CHANGELOG.md",
 	".local/lib/project-public-config/CHANGELOG.md",
 	COMMAND_PATH,
 ]);

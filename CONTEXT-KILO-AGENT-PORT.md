@@ -3,9 +3,9 @@
 `.config/kilo/agent/*.md` ports the Codex native roles in `.codex/agents/*.toml`.
 Each TOML `developer_instructions` contains the complete role and task/result
 contract; the generated Markdown body carries that text with client-specific
-mappings. The TOML is the design owner. Run `.local/bin/sync-kilo-agent-ports`
+mappings. The TOML is the design owner. Run `.local/bin/sync-agent-ports kilo`
 after changing it; do not edit generated roles by hand. The compiled helper's
-source and changelog live in `.local/lib/sync-kilo-agent-ports/`. Its `--check`
+source and changelog live in `.local/lib/sync-agent-ports/`. Its `--check`
 mode reports drift without writing.
 
 Field mapping is the helper's concern. Codex roles omit `model` and

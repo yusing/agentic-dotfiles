@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.30
+
+Build one agent port generator in place of the Claude and Kilo helpers.
+
 ## 1.0.29
 
 Build the Cargo worktree target initializer alongside disk-clean.

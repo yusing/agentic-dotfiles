@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.40
+
+Project the consolidated agent port generator and its changelog.
+
 ## 1.3.39
 
 Publish the Linux safety utilities shared by the two standalone cleanup helpers.

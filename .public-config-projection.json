@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ac8b0c244e077b511fd546c713c2dcd01ac9849e",
+  "sourceCommit": "19a4a3c4d56a52475c6f89d7e35e83dfcf2b082d",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -722,7 +722,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "26f87c8eb0f05190807585db23f2243e49207f383cd84184652bc50c20b88818",
+      "sha256": "89b4c072bc086f0ff967f76c7a3e7b7a4ac74032c8c2967ec0ef3997dcbb0323",
       "executable": false
     },
     {
@@ -823,13 +823,13 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "2e87662c2decbec580be7d030f25270d73184f824de54839c6292f213e3db6a1",
+      "sha256": "67608933b4ff64750836e96db73ffbf6913749ef8aba460c5aa13d4aa6cc5b14",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "27ce40b58762662d2e760c0769bdedb4f5d60aaef3968a402d92e99d8e8f4f87",
+      "sha256": "48452e896e5848d8d95ff6fabe0cbdaf0e76602ee862132c977a4c163d61a5b7",
       "executable": false
     },
     {
@@ -895,13 +895,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "ab8907a73613555e1789506bfea64c58c5a76fe94dccd2f386898fb26be33ce6",
+      "sha256": "6ff26b8301ec9407efc2300980bc2fc938e1fa3dcd5a3c7dccbcd43ba1d9a997",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "20e101fd3275e89dd56dfded7f7663cad132946a2c39f9effc7e106c58c04196",
+      "sha256": "67f4a175b49805332d91cdb02f7c579c09f33c12f0b1aa40aeb5800470af1db7",
       "executable": true
     },
     {
@@ -962,6 +962,18 @@
       "path": ".local/lib/skills-maintenance/skills-maintenance.ts",
       "kind": "file",
       "sha256": "fa4568c26c6a22777483d2902364d9bc73586ae255cafd4e4b70a7b4bb8b163c",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/sync-agent-ports/CHANGELOG.md",
+      "kind": "file",
+      "sha256": "c63360614031c8b12571143faccaf1c7b6ab180916114c433d1bbfc1a40c2c27",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/sync-agent-ports/sync-agent-ports.ts",
+      "kind": "file",
+      "sha256": "a358c711aa5ebc9e2b98fd8c48fff0239bc86bab15228aa96d5cc754c21baa71",
       "executable": false
     },
     {
@@ -1536,7 +1548,7 @@
     {
       "path": "CONTEXT-CLAUDE-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "c759f8ab8810bc164ef5762ba08c1b5abde7037ddfd1b7bacd9a08350b11e45a",
+      "sha256": "6c43a3646066f82dea71352e34f8fb6bf9240ef001e383964bd4278481223bb2",
       "executable": false
     },
     {
@@ -1572,13 +1584,13 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "8de046696dad61ae9bf66447f99151b8059b77587a2794685b5b22956e83efa4",
+      "sha256": "60fdf33ddba18bc3e41899a72ed52ef3c05ace9586353ceee419cff2a04f0a29",
       "executable": false
     },
     {
       "path": "CONTEXT-KILO-AGENT-PORT.md",
       "kind": "file",
-      "sha256": "91928af000367e1e102afaa344fc039eb19a71448ebab9fdbdc65d2bd90c5b60",
+      "sha256": "51419d80e69144d8e869ad913da57338ba745152c4b3a98d4f4966333a19f954",
       "executable": false
     },
     {

@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.29";
+const VERSION = "1.0.30";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -268,8 +268,7 @@ function main(): void {
     ["scc-prod", "scc-prod"],
     ["scc-prod", "git-diffstat"],
     ["graphify-report", "graphify-report"],
-    ["sync-claude-agent-ports", "sync-claude-agent-ports"],
-    ["sync-kilo-agent-ports", "sync-kilo-agent-ports"],
+    ["sync-agent-ports", "sync-agent-ports"],
     ["claude-config-helper", "claude-config-helper"],
     ["patch-bitwarden-cli-fast-exit", "patch-bitwarden-cli-fast-exit"],
     ["svn-merge", "svn-merge"],
