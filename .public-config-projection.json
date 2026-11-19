@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a5ff03e044325021c7b663cd36a494f0bc312651",
+  "sourceCommit": "6c4ce3734d7a35ceac1ac3afc91838946e2ec738",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1632,7 +1632,7 @@
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "b1c4eff4c158fc2eb4ca7628b47a521a6aaee72ef07b929a8487c7da7d906f5c",
+      "sha256": "b5668818d2714de346c62d758d7a3530e43c67612aa9ed183448ad7f82bfd5c0",
       "executable": false
     },
     {
