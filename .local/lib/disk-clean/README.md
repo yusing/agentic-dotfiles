@@ -22,8 +22,10 @@ On Linux, the helper sweeps recognized artifacts in the retired shared target at
 skips profiles if their existing Cargo locks cannot be held or their layout
 cannot be safely inspected.
 Do not start new builds against this retired path or use its outputs during cleanup.
-The per-checkout targets under `~/.cache/rust/targets` and the shared sccache are
-not swept. Dry-runs acquire existing locks without creating lock files or deleting data.
+Under `~/.cache/rust/targets`, cleanup removes a registered worktree target only when
+its checkout path no longer exists and the wrapper is not using the target. A missing
+manifest inside a live checkout does not qualify. Old targets without a worktree
+record and the shared sccache are retained. Dry-runs acquire existing locks without creating lock files or deleting data.
 
 Go caches are retained by default. On Linux, after permanently retiring an older
 compiler release, preview and remove only its package archives:
@@ -46,7 +48,7 @@ modules stay intact. Using the retired release again requires rebuilding its cac
 Symlinked, foreign-owned and mounted paths are retained. Counts report allocated
 bytes, which can differ from physical space reclaimed.
 
-Outside the retired Cargo target, finalized Rust, Docker, other compiler, and
+Outside orphan worktree targets and the retired Cargo target, finalized Rust, Docker, other compiler, and
 downloaded dependency caches are retained. Neither
 age nor Docker's “reclaimable” label proves that a finalized entry belongs only to obsolete
 revisions. The helper also preserves installed Rust toolchains, Docker images,

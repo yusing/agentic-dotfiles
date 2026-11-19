@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+Clean registered Cargo target caches after their worktree path disappears.
+Add the cargo-worktree 1.0.0 launcher helper for seeding and recording these caches.
+
 ## 1.1.0
 
 Sweep recognized artifacts in the retired shared Cargo target regardless of age,

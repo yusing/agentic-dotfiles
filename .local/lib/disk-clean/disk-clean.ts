@@ -2,13 +2,13 @@ import { spawnSync } from "node:child_process";
 import { statfsSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { cleanRustWorkingSessions, discoverRustTargets, sweepLegacyCargoTarget } from "./rust-cache";
+import { cleanOrphanWorktrees, cleanRustWorkingSessions, discoverRustTargets, sweepLegacyCargoTarget } from "./rust-cache";
 import { cleanRetiredGoArchives, retiredGoCache } from "./go-cache";
 
-const VERSION = "1.1.0";
+const VERSION = "1.2.0";
 const help = `disk-clean [--dry-run] [--retired-go goX.Y.Z]
 Remove obsolete tool versions, garbage-collect npm's cache, and clean abandoned
-Rust working sessions and unused artifacts in the retired shared Cargo target.
+Rust working sessions, orphan worktree targets and unused legacy Cargo artifacts.
 --dry-run previews without changing caches or tools.
 --retired-go runs only Go archive cleanup for that older compiler release.
 Use only after retiring that release; keep its builds and cache consumers stopped.
@@ -79,6 +79,11 @@ function main(): number {
   run("mise", ["prune", "--tools", dryRun ? "--dry-run" : "--yes"]);
   if (dryRun) console.log("Would run: npm cache verify (no cache purge)");
   else run("npm", ["cache", "verify"]);
+  try { cleanOrphanWorktrees(join(homedir(), ".cache", "rust", "targets"), dryRun); }
+  catch (error) {
+    failures++;
+    console.error(`Cargo worktree cleanup failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
   if (process.platform === "linux") {
     try {
       for (const target of discoverRustTargets(join(homedir(), "projects"))) {

@@ -1,7 +1,16 @@
+import { createHash } from "node:crypto";
+import { dlopen, FFIType } from "bun:ffi";
 import { spawnSync } from "node:child_process";
 import { closeSync, constants, fstatSync, lstatSync, openSync, readFileSync, readdirSync, realpathSync, rmSync, statfsSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 import { intersectsMounts } from "../cleanup-safety";
+
+export const ownerFile = ".cargo-worktree-owner";
+export const targetKey = (manifest: string) => createHash("sha256").update(manifest).digest("hex");
+const libc = dlopen(process.platform === "darwin" ? "/usr/lib/libSystem.B.dylib" : "libc.so.6", {
+  flock: { args: [FFIType.i32, FFIType.i32], returns: FFIType.i32 },
+});
+export const targetFlock = (fd: number, operation: number) => libc.symbols.flock(fd, operation) === 0;
 
 const signature = "Signature: 8a477f597d28d172789f06886806bc55";
 const sessionName = /^s-[a-z0-9]+-[a-z0-9]+-working$/;
@@ -13,7 +22,7 @@ function hasCacheTag(path: string): boolean {
     && readFileSync(tag, "utf8").startsWith(signature);
 }
 
-function cargoTarget(path: string): boolean {
+export function cargoTarget(path: string): boolean {
   try {
     return lstatSync(join(path, ".rustc_info.json")).isFile()
       && hasCacheTag(path);
@@ -187,4 +196,42 @@ export function cleanRustWorkingSessions(target: string, dryRun: boolean): { rem
     }
   }
   return { removed, locked };
+}
+
+export function cleanOrphanWorktrees(root: string, dryRun: boolean): void {
+  if (!lstatSync(root, { throwIfNoEntry: false }) || realpathSync(root) !== root) return;
+  const uid = process.getuid!();
+  for (const target of directories(root)) {
+    const key = basename(target);
+    if (!/^[a-f0-9]{64}$/.test(key)) continue;
+    const marker = join(target, ownerFile);
+    const st = lstatSync(marker, { throwIfNoEntry: false });
+    if (!st?.isFile() || st.uid !== uid || st.size > 32768) continue;
+    const fd = openSync(target, constants.O_DIRECTORY | constants.O_NOFOLLOW);
+    try {
+      const dir = fstatSync(fd);
+      if (dir.uid !== uid || !targetFlock(fd, 2 | 4)) continue; // busy, including a build in a just-removed checkout
+      let owner;
+      try { owner = JSON.parse(readFileSync(marker, "utf8")); }
+      catch (error) { if (error instanceof SyntaxError) continue; throw error; }
+      if (!owner || typeof owner.worktree !== "string" || typeof owner.manifest !== "string"
+        || resolve(owner.worktree) !== owner.worktree || resolve(owner.manifest) !== owner.manifest
+        || !owner.manifest.startsWith(owner.worktree + "/") || basename(owner.manifest) !== "Cargo.toml"
+        || targetKey(owner.manifest) !== key) continue;
+      function gone(): boolean {
+        try { lstatSync(owner.worktree); return false; }
+        catch (error) { return (error as NodeJS.ErrnoException).code === "ENOENT"; }
+      }
+      if (!gone()) continue;
+      const safe = (path: string): boolean => readdirSync(path, { withFileTypes: true }).every(entry => {
+        const child = join(path, entry.name), stat = lstatSync(child);
+        return entry.name !== ".git" && stat.uid === uid && stat.dev === dir.dev
+          && (!stat.isDirectory() || safe(child));
+      });
+      const mounted = () => process.platform === "linux" && intersectsMounts(root, target, readFileSync("/proc/self/mountinfo", "utf8"));
+      if (dir.dev !== lstatSync(root).dev || mounted() || !safe(target) || !gone() || mounted()) continue;
+      if (!dryRun) rmSync(target, { recursive: true });
+      console.log(`${dryRun ? "Would remove" : "Removed"} orphan worktree target: ${target} (checkout: ${owner.worktree})`);
+    } finally { closeSync(fd); }
+  }
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.29
+
+Build the Cargo worktree target initializer alongside disk-clean.
+
 ## 1.0.28
 
 Track the neutral cleanup safety module for both cleaners without making either
