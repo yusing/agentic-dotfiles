@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import { closeSync, constants, fstatSync, lstatSync, openSync, readFileSync, readSync, readdirSync, realpathSync, unlinkSync } from "node:fs";
 import { isAbsolute, join, resolve } from "node:path";
-import { intersectsMounts } from "../tmp-clean/tmp_clean";
+import { intersectsMounts } from "../cleanup-safety";
 
 function release(version: string): number[] {
   const match = /^go([1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.exec(version);

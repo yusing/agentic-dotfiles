@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3d7e59866d60c0982fec6b04766fa49d59f656fc",
+  "sourceCommit": "432290fd7ad63b9921dd6cdf4bc3f09ea4691e08",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -722,7 +722,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "0bdee99da011b71efe9f92ca37a173ac0327f676b2660207b9a87aa7dac98f04",
+      "sha256": "e3677e6f39ee2cf267ad62a011902e650b07c394d3bee990be472619b2157378",
       "executable": false
     },
     {
@@ -815,45 +815,51 @@
       "executable": true
     },
     {
+      "path": ".local/lib/cleanup-safety.ts",
+      "kind": "file",
+      "sha256": "d0efb01c2ad6841dcf352e4f0fae99bfef45fd0e4cfdcd95f387f4a06fc0027f",
+      "executable": false
+    },
+    {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "59a0f35bd1e550147c05282d83e4b47e8fae909290c265a22e262866973723c8",
+      "sha256": "72ddd011bfaff7824e1cb5da4f466b458c46c2ff866c9ecea5f8622243862e34",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "727387d9ceea014838ad391124a1e60325593fe860c7fed1809cc9ece79b6ff1",
+      "sha256": "21dca5ac7a4877af0010e8ffae4ee23f92f0d287e099f9078d5bc3a4a294489f",
       "executable": false
     },
     {
       "path": ".local/lib/disk-clean/CHANGELOG.md",
       "kind": "file",
-      "sha256": "9a4d4ded84d940292ea41226a0ab6bafd378d30f2186ef91056eb88f0837b159",
+      "sha256": "03f7066f3908b53706daa797efdb044a9627836b4c7ff9d0ea13d17292cd2a45",
       "executable": false
     },
     {
       "path": ".local/lib/disk-clean/disk-clean.ts",
       "kind": "file",
-      "sha256": "b9826770c24e45c1dbba1ccb153c9fa731de25cd908339796e32c89cfadaffce",
+      "sha256": "bf248c6af21fff3cf524cee74e5726e9a9ec20b8b308579a543a83ab15f1d799",
       "executable": false
     },
     {
       "path": ".local/lib/disk-clean/go-cache.ts",
       "kind": "file",
-      "sha256": "0e37de669d72d0da9bb9a0407a3cb287e90e0e876b94c19a4ab8198dd0766a34",
+      "sha256": "0364f9cc2e2cc7c582689d4728303117767c1ab7b6780d22f34f5a3dd75f1f53",
       "executable": false
     },
     {
       "path": ".local/lib/disk-clean/README.md",
       "kind": "file",
-      "sha256": "d538c6c7d51c4e6f2ee033b74c8985b07fbd73e8170b917baa793e97f1c1d789",
+      "sha256": "455ac3ed7ede23dc61ceef03f1d9206f874845cdde29dc4e633e8a1e691cebb8",
       "executable": false
     },
     {
       "path": ".local/lib/disk-clean/rust-cache.ts",
       "kind": "file",
-      "sha256": "ca1aae48a0d3c19717d3c95932ba10cea67022f4dfea86475140037830814ae9",
+      "sha256": "b3a16a04c1579a8e344886577a58de3936e8a6eb920160c6ff0726673fba6ca3",
       "executable": false
     },
     {
@@ -889,13 +895,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "98f28144393c1d4845d84aebf14b2f520ac5695f6d00c2ebf4dc8c945a7980a5",
+      "sha256": "ab8907a73613555e1789506bfea64c58c5a76fe94dccd2f386898fb26be33ce6",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "20c12e3d055ef1772b922b72b94a2753a26e61b23df2b9f38428c344131a635c",
+      "sha256": "20e101fd3275e89dd56dfded7f7663cad132946a2c39f9effc7e106c58c04196",
       "executable": true
     },
     {
@@ -985,13 +991,13 @@
     {
       "path": ".local/lib/tmp-clean/CHANGELOG.md",
       "kind": "file",
-      "sha256": "76e275ea7b63763d5b101fd65a1ca6d5dbdc14d213d8388e343af22e53bf9321",
+      "sha256": "429ca04627a4a9ae6d85ac916176fce2b8c5938af61379f10e3421b8c3906517",
       "executable": false
     },
     {
       "path": ".local/lib/tmp-clean/tmp_clean.ts",
       "kind": "file",
-      "sha256": "59da2d0d07f6a4e8718304c414d16848236647c04fe53bc32ef2982f95d438a8",
+      "sha256": "5e90179e46ef2143546ec44594e3a2d7121f57b8daff2fa1548487b57a28eeab",
       "executable": false
     },
     {
@@ -1614,7 +1620,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "13f93959606460c04c30f831a808271627ef9e259f18257b4cc1e33aedb1f0cb",
+      "sha256": "3a96ac2a1eaebd545a4e847696c829724538486098796d039550c1b352e9fcf2",
       "executable": false
     },
     {

@@ -2,13 +2,13 @@ import { spawnSync } from "node:child_process";
 import { statfsSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { cleanRustWorkingSessions, discoverRustTargets } from "./rust-cache";
+import { cleanRustWorkingSessions, discoverRustTargets, sweepLegacyCargoTarget } from "./rust-cache";
 import { cleanRetiredGoArchives, retiredGoCache } from "./go-cache";
 
-const VERSION = "1.0.0";
+const VERSION = "1.1.0";
 const help = `disk-clean [--dry-run] [--retired-go goX.Y.Z]
-Remove obsolete tool versions, garbage-collect npm's cache, and clean recognized
-inactive temporary fixtures and abandoned Rust working sessions.
+Remove obsolete tool versions, garbage-collect npm's cache, and clean abandoned
+Rust working sessions and unused artifacts in the retired shared Cargo target.
 --dry-run previews without changing caches or tools.
 --retired-go runs only Go archive cleanup for that older compiler release.
 Use only after retiring that release; keep its builds and cache consumers stopped.
@@ -16,7 +16,8 @@ Current-toolchain archives, opaque Go data, indexes and executables stay intact.
 Otherwise retains finalized build caches, Cargo/Go dependencies, Docker storage,
 session history, and recovery data. Age alone cannot identify obsolete revisions.
 Mise protects tracked configurations and running tools, not ad-hoc future pins.
-Temporary cleanup requires Linux process inspection; stop build/test jobs first.`;
+On Linux, the legacy sweep skips busy profiles regardless of artifact age.
+Temporary cleanup is separate: tmp_clean --dry-run.`;
 
 function availableBytes(): bigint {
   const fs = statfsSync(homedir(), { bigint: true });
@@ -55,7 +56,6 @@ function main(): number {
   function run(command: string, commandArgs: string[]): void {
     if (!Bun.which(command)) {
       console.log(`Skipped unavailable tool: ${command}`);
-      if (command === "tmp_clean") failures++;
       return;
     }
     console.log(`\n${dryRun ? "Preview" : "Running"}: ${command} ${commandArgs.join(" ")}`);
@@ -89,9 +89,12 @@ function main(): number {
       failures++;
       console.error(`Rust cleanup failed: ${error instanceof Error ? error.message : String(error)}`);
     }
+    try { sweepLegacyCargoTarget(join(homedir(), ".cache", "cargo-target"), dryRun); }
+    catch (error) {
+      failures++;
+      console.error(`Legacy Cargo cleanup failed: ${error instanceof Error ? error.message : String(error)}`);
+    }
   }
-  if (process.platform === "linux") run("tmp_clean", dryRun ? ["--dry-run"] : []);
-  else console.log("Skipped temporary cleanup: Linux process inspection is required.");
   return finish();
 }
 

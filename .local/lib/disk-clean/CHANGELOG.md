@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+
+Sweep recognized artifacts in the retired shared Cargo target regardless of age,
+skipping profiles with held Cargo locks.
+Run temporary cleanup independently.
+
 ## 1.0.0
 
 Replace the duplicated Fish and Zsh cleaners with one compiled helper. Preserve

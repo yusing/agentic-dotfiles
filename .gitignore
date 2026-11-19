@@ -181,6 +181,7 @@ __pycache__
 !/.local/bin/compile-agent-tools.changelog.md
 !/.local/bin/svn-merge
 !/.local/lib/
+!/.local/lib/cleanup-safety.ts
 !/.local/lib/compile-agent-tools/
 !/.local/lib/compile-agent-tools/CHANGELOG.md
 !/.local/lib/compile-agent-tools/compile-agent-tools.ts

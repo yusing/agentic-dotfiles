@@ -268,12 +268,17 @@ failed checks keep the existing theme and retry on the next day. The daily check
 both shells and requires the helper installed by `compile-agent-tools`.
 This theme file is managed automatically, so updates replace local edits.
 
+### Temporary cleanup
+
 On Linux, `tmp_clean --dry-run` previews stale generated Go and agent/test
-artifacts in `/tmp`; `tmp_clean` permanently deletes them. Only owned recognized
+artifacts in both `/tmp` and `/var/tmp`; `tmp_clean` permanently deletes them.
+It runs separately from `disk-clean`. Only owned, recognized
 directories whose contents are at least two hours old are eligible. Repositories,
-recent artifacts, and paths referenced by your processes are preserved. Stop build
-jobs first: process checks are a snapshot, not a lock against new activity.
-Inaccessible processes are reported but cannot be checked.
+recent artifacts, mounted children, and paths referenced by your processes are
+preserved. Stop build and test jobs first: process checks are a snapshot, not a lock
+against new activity. If protected processes block inspection, rerun the preview
+with `sudo "$HOME/.local/bin/tmp_clean" --dry-run`. Under sudo, the helper inspects
+all processes but still cleans only the invoking user's fixtures.
 The command requires the compiled helper installed by `compile-agent-tools`.
 
 Do not replace your existing dotfiles wholesale. Compare each file with your

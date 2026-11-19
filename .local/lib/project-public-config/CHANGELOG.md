@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.39
+
+Publish the Linux safety utilities shared by the two standalone cleanup helpers.
+
 ## 1.3.38
 
 Publish the standalone Graphify report producer, its workspace-exclusion policy,

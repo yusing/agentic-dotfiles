@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.27";
+const VERSION = "1.0.28";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -222,7 +222,7 @@ function main(): void {
     const output = join(localBin, name);
     const digest = digestInputs(
       `bun=${bunIdentity} target=${target} flags=build--compile`,
-      [dirname(source), bunConfig, ...(name === "disk-clean" ? [join(localLib, "tmp-clean")] : [])],
+      [dirname(source), bunConfig, ...(["disk-clean", "tmp_clean"].includes(name) ? [join(localLib, "cleanup-safety.ts")] : [])],
     );
     const state = join(cacheRoot, `${name}.digest`);
     if (isExecutable(output) && storedDigest(state) === digest) return;

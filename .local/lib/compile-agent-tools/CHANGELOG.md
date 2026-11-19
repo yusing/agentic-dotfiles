@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.28
+
+Track the neutral cleanup safety module for both cleaners without making either
+cleaner's source a build dependency of the other.
+
 ## 1.0.27
 
 Build and incrementally reuse the standalone graphify-report helper.

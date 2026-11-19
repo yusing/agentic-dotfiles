@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3
+
+Keep temporary cleanup standalone with the same protections for both `/tmp` and
+`/var/tmp`. Use the neutral Linux inspection utilities shared with disk cleanup.
+
 ## 1.0.2
 
 Include recognized generated performance and agent-tools fixtures in `/var/tmp`.

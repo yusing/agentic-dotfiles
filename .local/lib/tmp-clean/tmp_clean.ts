@@ -1,7 +1,9 @@
 import { lstatSync, readdirSync, readFileSync, readlinkSync, rmSync, statfsSync } from "node:fs";
 import { join } from "node:path";
 
-const VERSION = "1.0.2";
+import { intersectsMounts } from "../cleanup-safety";
+
+const VERSION = "1.0.3";
 const recognized = /^(go-build\d+|gopls-tempmod\d+|mekugi-tools-\d+-[a-f0-9]+|mekugi-native-trace-\d+|mekugi-proxy-tests-\d+|mekugi-exec-test-\d+|mekugi-test-state-\d+|TestNativeExecResultFinalizesAfterReplayProxyReconstruction\d+|mekugi-host-perf\.[A-Za-z0-9]+|mekugi-sustained(?:-(?:before|after))?\.[A-Za-z0-9]+|agent-tools-(?:published-runtime|login-fixture)\.[A-Za-z0-9]+|sidebar-baseline-[A-Za-z0-9]+)$/;
 
 export function cleanupUid(): number {
@@ -13,16 +15,6 @@ export function cleanupUid(): number {
     throw new Error("Invalid SUDO_UID; temporary cleanup refused.");
   }
   return invokingUid;
-}
-
-export function intersectsMounts(target: string, path: string, mountInfo: string, includeTarget = true): boolean {
-  return mountInfo.trim().split("\n").some(line => {
-    const field = line.split(" ")[4];
-    if (!field) throw new Error("Invalid Linux mount information; cleanup refused.");
-    const mount = field.replace(/\\([0-7]{3})/g, (_, octal: string) => String.fromCharCode(parseInt(octal, 8)));
-    return ((includeTarget && mount === target) || mount.startsWith(`${target}/`))
-      && (mount === path || mount.startsWith(`${path}/`) || path.startsWith(`${mount}/`));
-  });
 }
 
 function vanished(error: unknown): boolean {
