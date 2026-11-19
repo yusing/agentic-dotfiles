@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "e1acb5ac4ff92e64ef4f45aba8b6aa56d5c434de",
+  "sourceCommit": "ac8b0c244e077b511fd546c713c2dcd01ac9849e",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -722,7 +722,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "e3677e6f39ee2cf267ad62a011902e650b07c394d3bee990be472619b2157378",
+      "sha256": "26f87c8eb0f05190807585db23f2243e49207f383cd84184652bc50c20b88818",
       "executable": false
     },
     {
@@ -962,30 +962,6 @@
       "path": ".local/lib/skills-maintenance/skills-maintenance.ts",
       "kind": "file",
       "sha256": "fa4568c26c6a22777483d2902364d9bc73586ae255cafd4e4b70a7b4bb8b163c",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/sync-claude-agent-ports/CHANGELOG.md",
-      "kind": "file",
-      "sha256": "2562d7e367f02571dcb16b7582be0356ef1ed2b3dbc1947909d3e94412f788a5",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/sync-claude-agent-ports/sync-claude-agent-ports.ts",
-      "kind": "file",
-      "sha256": "05ba035070ace73745a13b770922873644c6bdda2701e3e7022c2a234d76bce8",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/sync-kilo-agent-ports/CHANGELOG.md",
-      "kind": "file",
-      "sha256": "35d6211800deccf0e88d594ee21807e5d898d054aee248b8be2bd047f7f80e47",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/sync-kilo-agent-ports/sync-kilo-agent-ports.ts",
-      "kind": "file",
-      "sha256": "80d9100788e213a7c0d36c27632cc0e02fa1fa38f5cfd82c186dfb23fd9f6cdc",
       "executable": false
     },
     {
