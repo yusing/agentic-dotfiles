@@ -8,10 +8,13 @@ unset brew_bin
 
 export AGENT_BROWSER_ENGINE=chrome
 
-export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 if [ -r "$HOME/.local/share/dotfiles-setup/brew-paths" ]; then
   while IFS= read -r brew_path; do
     [ ! -d "$brew_path" ] || export PATH="$brew_path:$PATH"
   done <"$HOME/.local/share/dotfiles-setup/brew-paths"
 fi
 unset brew_bin brew_path
+
+# Keep the Cargo launcher ahead of Homebrew's rustup proxies.
+export PATH="$HOME/.local/bin:$PATH"

@@ -110,6 +110,10 @@ agent-browser's default engine.
 
 Pacman supplies rustup on Arch; Brew supplies it on other platforms. Manage Rust toolchains and targets separately with rustup.
 
+With the supplied shell configuration, Cargo keeps each workspace checkout's default build output
+under `~/.cache/rust/targets/`. Checkouts have separate build locks, and the default compiler cache
+is shared at `~/.cache/rust/sccache`. Explicit Cargo target directories still take precedence.
+
 Arch uses OpenBSD netcat and system Chromium/WebKitGTK 4.1 libraries.
 Other Linux distributions retain GNU netcat and Brew browser libraries. WebKitGTK 6 and
 Bazelisk are excluded. macOS uses its system netcat and WebKit framework.

@@ -124,6 +124,9 @@ if [ -r "$HOME/.local/share/dotfiles-setup/brew-paths" ]; then
 fi
 unset brew_bin brew_path
 
+# Keep the Cargo launcher ahead of Homebrew's rustup proxies.
+path=("$HOME/.local/bin" "${path[@]}")
+
 for zsh_plugin in zsh-autosuggestions zsh-syntax-highlighting; do
     zsh_plugin_path="${HOMEBREW_PREFIX:-}/share/$zsh_plugin/$zsh_plugin.zsh"
     [[ ! -r "$zsh_plugin_path" ]] || source "$zsh_plugin_path"

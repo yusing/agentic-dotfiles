@@ -141,6 +141,8 @@ if test -r $HOME/.local/share/dotfiles-setup/brew-paths
         end
     end <$HOME/.local/share/dotfiles-setup/brew-paths
 end
+# Keep the Cargo launcher ahead of Homebrew's rustup proxies.
+fish_add_path --path --move "$HOME/.local/bin"
 
 # Claude Code's Bash tool runs this bash instead of detecting zsh.
 set -gx CLAUDE_CODE_SHELL (which bash)
