@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.43
+
+Publish `.zshenv` and `.zprofile` alongside `.zshrc` and `.bash_profile`.
+
 ## 1.3.42
 
 Stop publishing the retired Codex base instruction override and

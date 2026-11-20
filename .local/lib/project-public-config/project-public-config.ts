@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.42";
+export const VERSION = "1.3.43";
 
 type TreeEntry = {
 	mode: string;
@@ -81,6 +81,8 @@ const TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS = new Set([
 	".gitignore_global",
 	".tmux.conf",
 	".yabairc",
+	".zshenv",
+	".zprofile",
 	".zshrc",
 	".config/ghostty/config",
 	".config/skhd/skhdrc",
@@ -115,6 +117,8 @@ const EXACT_PATHS = new Set([
 	".tmux.conf",
 	".yabairc",
 	".zsh/fish-mirror.zsh",
+	".zshenv",
+	".zprofile",
 	".zshrc",
 	".claude/CLAUDE.md",
 	".claude/instructions/DOCS.md",

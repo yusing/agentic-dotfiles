@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "9ce9317e58952bc92eaa0d26f450bbaa1cb7cfb7",
+  "sourceCommit": "3c7623d0202a8d499fd0c68ab94b96bb979dfe9d",
   "outputs": [
     {
       "path": ".bash_profile",
       "kind": "file",
-      "sha256": "79770966656bb95fcf73e8fbc02fa7cad6af6ff44a0a9531d8723afc3e62183c",
+      "sha256": "2093bebafab9ae75ba3ac6296def81556d1d4c0874e1f1cd33c8fdb51a667b1e",
       "executable": false
     },
     {
       "path": ".bashrc",
       "kind": "file",
-      "sha256": "c3c9fa51676b5965f1bc29048d1cfebaa46ecd60c16abf6e3343bae018e9d189",
+      "sha256": "45592abd01735a89f1071a0138f60ba1f2365a2b8922baacdf16bc45f5158d07",
       "executable": false
     },
     {
@@ -698,7 +698,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "0c25ce2f7435f1ae076bc1444033341dd575ea2fef778ffb8462827e348fa110",
+      "sha256": "c134e05a4862614a9db08525b0830ed5be26db7f665b5d54201572357166406b",
       "executable": false
     },
     {
@@ -859,13 +859,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "ad9dabe57b706a657aa8f739456c581b45b1983a6e683c05807d2fba72c8f095",
+      "sha256": "2a1a8ac8d344a3551b201a7e12c9a797630343e65cea437b34e0ecea4513756d",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "73fe403dd60519fd2c00cc4f9c86cd586ac09a8e5f2bdc2e7557710c13e9c99a",
+      "sha256": "14c0301d9174a026b9d4bdeb97a6c5a094041f8c00a40da81b122b19c594eb57",
       "executable": true
     },
     {
@@ -1469,15 +1469,27 @@
       "executable": true
     },
     {
+      "path": ".zprofile",
+      "kind": "file",
+      "sha256": "d92fe68183a31c0eb244cea57c67ddaf710b684e590920c67f23856839c22d4a",
+      "executable": false
+    },
+    {
       "path": ".zsh/fish-mirror.zsh",
       "kind": "file",
-      "sha256": "c707bb3f06522b5147065bede2b582e2ea37e6fb51cfaf8f4be4f4c6ca46eb73",
+      "sha256": "7e9d2b6843b390ed2c1ccf88d08ec25c995a1844d760e3aa8464e5e0617c440e",
+      "executable": false
+    },
+    {
+      "path": ".zshenv",
+      "kind": "file",
+      "sha256": "0a5d582ef7599fabd2b680b2ed6b356bb943d6a05d026d65df08243ebc720846",
       "executable": false
     },
     {
       "path": ".zshrc",
       "kind": "file",
-      "sha256": "ac22b324121d3cbd0763f1d62ad3fe615ddbac2e17a1e1a6b65a323d9a6d09b4",
+      "sha256": "aac98dae783397cbd56e66f9c243391bc02ded92b5618d9c0c8ad5c8742b58ae",
       "executable": false
     },
     {
@@ -1542,7 +1554,7 @@
     {
       "path": "CONTEXT-SHELL.md",
       "kind": "file",
-      "sha256": "73dd1f15359112c483169a38603a0a7198142ca3b06b9e270d1cd722c67dd299",
+      "sha256": "c3fd7337430f7e00b22a96dc6ecad243795d2684781f88be986ac8aecff384ce",
       "executable": false
     },
     {

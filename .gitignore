@@ -345,8 +345,10 @@ __pycache__
 !/.skills-mgr/skills/writing-readme/SKILL.md
 !/.tmux.conf
 !/.yabairc
+!/.zprofile
 !/.zsh/
 !/.zsh/fish-mirror.zsh
+!/.zshenv
 !/.zshrc
 !/AGENTS.md
 !/CLAUDE.md
