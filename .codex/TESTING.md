@@ -1,6 +1,6 @@
 # Testing
 
-Derive assertions from ledger outcomes; existing tests and fixtures show the current means. Before
+Derive required assertions from ledger outcomes; existing tests and fixtures show the current means. Before
 changing shared behavior, select assertions for its other sourced consumers and author missing ones
 in existing tests. Use them to guide the coherent owner/interface change, then validate it with
 new-behavior checks before dependent work. Batch coupled behavior, not gates per function or

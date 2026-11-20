@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.41";
+export const VERSION = "1.3.42";
 
 type TreeEntry = {
 	mode: string;
@@ -170,7 +170,6 @@ const EXACT_PATHS = new Set([
 	".codex/hooks/lib/session_scope.changelog.md",
 	".codex/hooks/lib/shell_command.ts",
 	".codex/hooks/lib/shell_command.changelog.md",
-	".codex/overridden_base_instructions.md",
 	".config/atuin/config.toml",
 	".config/ccstatusline/settings.json",
 	// ".config/fish/completions/bun.fish", // bun installed
@@ -546,7 +545,6 @@ function projectCodexConfig(text: string): string {
 		"model",
 		"model_auto_compact_token_limit",
 		"model_context_window",
-		"model_instructions_file",
 		"model_reasoning_effort",
 		"model_reasoning_summary",
 		"model_verbosity",

@@ -1,10 +1,9 @@
 # Codex instruction lifecycle
 
-1. **Bootstrap and static context.** `.codex/config.toml` selects
-   `.codex/overridden_base_instructions.md` for model-level communication, turn and tool-use
-   mechanics, and safety. This Codex-only file replaces the selected model's
-   `model_messages.instructions_template` from `.codex/models_cache.json`; the two bodies are
-   not appended together. The selected base is the highest-priority of these configurable
+1. **Bootstrap and static context.** Codex/Mekugi uses the selected model's built-in
+   `model_messages.instructions_template` from `.codex/models_cache.json` for model-level
+   communication, turn and tool-use mechanics, and safety; `.codex/config.toml` does not set
+   `model_instructions_file`. The selected base is the highest-priority of these configurable
    instruction layers; runtime and platform instructions remain separate inputs. The user-invoked
    `handoff` skill uses `.skills-mgr/skills/handoff/STANDARD.md` for document content while its
    `SKILL.md` owns the

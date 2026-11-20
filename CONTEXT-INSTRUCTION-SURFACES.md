@@ -20,7 +20,7 @@ assuming the main agent's system prompt also reaches its subagents. A change to 
 
 | Layer | Delivery and readers |
 | --- | --- |
-| Codex base override | Selected by `.codex/config.toml`; replacement and priority are defined in `CONTEXT-CODEX-LIFECYCLE.md`. Claude does not consume it. |
+| Codex base instructions | Codex/Mekugi uses the selected model's built-in base instructions; `.codex/config.toml` does not set `model_instructions_file`. Claude does not consume them. |
 | Client standing guidance | The harness loads `.codex/AGENTS.md` or `.claude/CLAUDE.md` for main and custom subagents, independently of conversation-history inheritance. Claude's documented built-in Explore/Plan exception is described in its delegation and instruction-authoring guidance. |
 | Repository guidance | Root `AGENTS.md` and its `CLAUDE.md` symlink route home-configuration maintenance, not independent projects below home. Discovery scope depends on the client; see `CONTEXT-CODEX-LIFECYCLE.md` and Claude's instruction-authoring guidance. Claude would load both files as ancestors in every project below home, and a `CLAUDE.md` above a project suppresses that project's `AGENTS.md`, so `claudeMdExcludes` in `.claude/settings.json` skips them and `.claude/CLAUDE.md` tells sessions maintaining the home repository to read `AGENTS.md` on demand. Claude also loads a subdirectory's `AGENTS.md` when it reads a file there, so the same setting lists the other clients' instruction files under home, which would otherwise put their standing guidance into a Claude session, and the `.claude/CLAUDE.md` copy inside a home worktree, which would load beside the user-level file. |
 | Task documents | Session-start hooks deliver `MAIN.md` to main and `SUBAGENT.md` to subagents in Codex and Claude; the client standing files carry no routing line for them. Any agent, including a subagent coordinating children, reads `DELEGATION.md` before delegation or coordination; Claude reads its adapted copy. Mekugi agents of either provider read `.codex/MODEL-ROUTING.md`; Claude Code native dispatch reads `.claude/instructions/MODEL-ROUTING.md`. Any applicable role reads `DOCS.md`, `IMPLEMENTATION.md`, or `TESTING.md` when its operation triggers them; `REFACTOR.md` is nested under the `IMPLEMENTATION.md` trigger and loads only with it. `FINISHING.md` supplies question-specific review orchestration for main or an assigned coordinator. Catalog descriptions own skill applicability; construction and completion reuse their existing evidence without a separate finishing load. Native roles own review methods; documentation-only reviewers use their document guidance. Other document triggers remain in the client standing file. |
@@ -34,7 +34,7 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `AGENTS.md`
 - `CLAUDE.md` (symlink to root `AGENTS.md`, not to `.claude/CLAUDE.md`)
 - `CONTEXT-*.md`
-- `.codex/config.toml` (base prompt, compaction prompt, and client settings)
+- `.codex/config.toml` (compaction prompt and client settings)
 - `.codex/AGENTS.md`
 - `.codex/GITHUB.md` (client-neutral; `.claude/instructions/GITHUB.md` symlinks to it)
 - `.codex/FRONTEND.md` (client-neutral; `.claude/instructions/FRONTEND.md` symlinks to it)
@@ -50,7 +50,6 @@ generated consumers, and reference evidence; they are not an additional set of w
 - `.codex/DOCS.md` (client-neutral; `.claude/instructions/DOCS.md` symlinks to it)
 - `.codex/INSTRUCTION-AUTHORING.md`
 - `.codex/SKILL-AUTHORING.md`
-- `.codex/overridden_base_instructions.md`
 - `.skills-mgr/.skills-mgr.json` (managed skill registry)
 - `.skills-mgr/skills/*/SKILL.md` and their resource files
 - `.codex/agents/*.toml`

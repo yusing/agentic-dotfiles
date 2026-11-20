@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "432f72b49d664b91c212e8b04047755c5b9c2cce",
+  "sourceCommit": "f3c2b53330fc672e8ddb628d5209b4a9be03fd93",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -152,7 +152,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "aff9c209fe12f602ea7bb1cac0c831b7a5dffd3dbf475a7ee5605ad501585ad4",
+      "sha256": "6f0f969910b88c724a40afbb9a093dc192446039659b494c673e6acdb2307bef",
       "executable": false
     },
     {
@@ -200,7 +200,7 @@
     {
       "path": ".codex/config.toml",
       "kind": "file",
-      "sha256": "ebcf3ec0b908d0bb14bf14c4d07615957f5da5cfc92588e12c0895c35b2a2e70",
+      "sha256": "1990636ac4f1bfbfed1d9f59ee7415cc85e58ebe08ddb8b072c70bdee919a278",
       "executable": false
     },
     {
@@ -224,13 +224,13 @@
     {
       "path": ".codex/FRONTEND.md",
       "kind": "file",
-      "sha256": "e379954f72ab5e7a1d49ded982c3fa9b4649cf632505bd8b419f12022592df07",
+      "sha256": "2961df1b6eabdecef90ad06d11ed34bb5b0eb32be43c16669702dfad5f52c6ef",
       "executable": false
     },
     {
       "path": ".codex/GITHUB.md",
       "kind": "file",
-      "sha256": "731994d33ab29cb2382976f8a04700aec11d9acc8317ecf3d2525f407af8157b",
+      "sha256": "609b080be48bdecf6f3785151a1bb98e3e04745716fe082ba338c2618d3489ef",
       "executable": false
     },
     {
@@ -368,7 +368,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "4814643c1bc328fdf0a7a6eb34e47c40d7fe2263196f1d797765fe60538f13c9",
+      "sha256": "676ae274431706f3ea64b92a76761822a7bf638d78f610cce26777057a05730b",
       "executable": false
     },
     {
@@ -380,19 +380,13 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "29edafd5e6b8bc6781b2556a9652c42eeae4020b12abad4e968860cc7347d992",
+      "sha256": "de9b5994d29def87098bbdfd35e15eb9a8048ec47ede39181c3418c46c727157",
       "executable": false
     },
     {
       "path": ".codex/MODEL-ROUTING.md",
       "kind": "file",
       "sha256": "198724d40495981f0640f649d6011da18cd2b665d6bdd76264c65d69fde0d8d1",
-      "executable": false
-    },
-    {
-      "path": ".codex/overridden_base_instructions.md",
-      "kind": "file",
-      "sha256": "f12a69ba2574bc0c7ccf6db06542280eddc28e18080be024a4ed99ac84bc7bba",
       "executable": false
     },
     {
@@ -452,13 +446,13 @@
     {
       "path": ".codex/TASK-FILE.md",
       "kind": "file",
-      "sha256": "0b9b756e172843480efeabf290f9ffd0ad925e0f6dae92e0247eeabb3032f348",
+      "sha256": "1263fe273c0a563f7b23651ce3ca5adbb33aefdb16cfc64cc4dffd752acb2a1b",
       "executable": false
     },
     {
       "path": ".codex/TESTING.md",
       "kind": "file",
-      "sha256": "ea87be60cf481890baebf87763f8d4de957f37ab11d7bf48652c17556b7d3a02",
+      "sha256": "ee89d91ee9657b0280bef8df3c1a68ba220a54b2f146fffd6e5f35797d4c7968",
       "executable": false
     },
     {
@@ -704,7 +698,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "c106369f33904a6f02dd7b1d49783bdbe60ae1fcb1929cd8cee604cb59828b8f",
+      "sha256": "0c25ce2f7435f1ae076bc1444033341dd575ea2fef778ffb8462827e348fa110",
       "executable": false
     },
     {
@@ -716,7 +710,7 @@
     {
       "path": ".grok/AGENTS.md",
       "kind": "file",
-      "sha256": "8da998a6b09a3b3d576a5348526ab939e803c2d975e96a37d2d02b9c82381aed",
+      "sha256": "cec5240f9cccb50995a59758ed568aa76a40b1fcec8c7b6b8aaf5687e72844cf",
       "executable": false
     },
     {
@@ -865,13 +859,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "b0687645d9341235459957d07ae33d340d9270835a3fe52603a31da4d6282c1e",
+      "sha256": "ad9dabe57b706a657aa8f739456c581b45b1983a6e683c05807d2fba72c8f095",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "7b89a67ea3339895ddb16d26cb065cf98f06590bbb8a56213e9f796cda4aa7f0",
+      "sha256": "73fe403dd60519fd2c00cc4f9c86cd586ac09a8e5f2bdc2e7557710c13e9c99a",
       "executable": true
     },
     {
@@ -1506,13 +1500,13 @@
     {
       "path": "CONTEXT-CODEX-LIFECYCLE.md",
       "kind": "file",
-      "sha256": "a535d8f09f659faf7de72b7ece97dfd83df0daa33bf555286455caf2a1ec29f3",
+      "sha256": "6924391dd6c85a61af453fe544ece716f30cd726dc526d2547d9e00255ae6da1",
       "executable": false
     },
     {
       "path": "CONTEXT-GROK-HOOK-PORT.md",
       "kind": "file",
-      "sha256": "b01461e6fc462c18473ca5b8ea4551ffdceb840ebf5ea8dc7aae6b3a676e7337",
+      "sha256": "b63f21bc300dcad61cc4b877bb3772bbb3becccf239de0880c97268e824a51dc",
       "executable": false
     },
     {
@@ -1536,7 +1530,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "60fdf33ddba18bc3e41899a72ed52ef3c05ace9586353ceee419cff2a04f0a29",
+      "sha256": "d5d0fea893c76cdf6db7a7adc502200ac3542de46d358fe802151d7fa0df0574",
       "executable": false
     },
     {
@@ -1560,7 +1554,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "9ae47f761e7f1e4bdeb4dda2f997e12e133cafcbcc6cdad5458bdef0991e2e94",
+      "sha256": "bc9d9bf0da88c5ebc44fedeb065fcb06a163bee0f3331712d79ba523ddf93930",
       "executable": false
     },
     {

@@ -21,13 +21,10 @@ not attach that event output to the model.
 The adapter and detached baseline wrapper remain available for re-enabling.
 
 Port coverage is limited to what a registered hook owns. Deletion policy has no registered
-hook, so no event-scoped owner exists to carry it. Grok receives general authorization and
-user-work preservation guidance from the shared `.codex/AGENTS.md` surface, which does not
-contain the detailed destructive-action procedure. That procedure in
-`.codex/overridden_base_instructions.md` stays Codex-only, because that file is Codex's
-`model_instructions_file` and the port supplies no equivalent. That remaining gap is
-accepted. Closing it requires a separately authorized instruction or enforcement change;
-registering a deletion guard would add a new hook rather than port an existing one.
+hook, so no event-scoped owner exists to carry it. Grok receives general authorization,
+user-work preservation, and destructive-action safety guidance from the shared `.codex/AGENTS.md`
+surface through `.grok/rules/AGENTS.md`. Registering a deletion guard would add a new hook rather
+than port an existing one.
 
 `.codex/hooks/bin/subagent_exec_guard` remains registered in Grok's explicit port configuration,
 even though Codex removed its own registration. It acts only on the running agent's own
@@ -56,7 +53,8 @@ Grok loads shared standing guidance from `.grok/rules/AGENTS.md`, a symlink to
 shared file into the Grok extra file. Codex relies on the host's skill catalog;
 Claude registers `.codex/hooks/bin/skills_mgr_inventory`.
 Both use `.codex/hooks/bin/check_project` for project reporting.
-Its skill-access section makes the shared `skills-mgr` commands explicit for Grok.
+Its skill-access section makes the `skills-mgr` commands and non-Codex standing rules explicit for
+Grok.
 
 When an instruction changes, edit only its owner. Supporting the same policy in
 multiple clients means sharing or porting the owner, not copying its text into

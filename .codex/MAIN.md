@@ -64,11 +64,3 @@ Resolve a specific undelivered outcome at its owner rather than starting another
 inspection or validation phase. `FINISHING.md` owns question-specific independent review when an
 unresolved correctness/integration or complexity question needs it.
 Report actual results, concrete blockers, and coverage limits; unassessed quality remains unknown.
-
-## Visualizations
-
-Use visualizations when they clarify an explanation. Prefer interactive visuals for cause/effect,
-comparisons, or changing scenarios, tables for mappings, and Mermaid for small static engineering
-diagrams. Use standard plotting tools and standalone artifacts for scientific, publication, or
-shareable/exportable figures. Skip visuals for simple facts, one-step actions, or material already
-clear in a short paragraph or list.

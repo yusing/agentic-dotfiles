@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.42
+
+Stop publishing the retired Codex base instruction override and
+`model_instructions_file`.
+
 ## 1.3.41
 
 Stop publishing Herdr TUI configuration, the status helper, and the

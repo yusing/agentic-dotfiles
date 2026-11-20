@@ -15,8 +15,8 @@ Resolve code/test conflicts by ledger outcomes; consult history only when intent
 Change the workflow when tests, builds, polling, or other non-implementation work consume most of
 the task's time and resources. A common cause is an edit-test-edit-test loop that validates each
 small change before making the next: settle the coupled changes, make them together, and validate
-the batch. Continue independent work while long checks or delegates run, and wait for their
-completion signal rather than polling them. `TESTING.md` owns check selection.
+the batch. Continue independent work while long checks or delegates run. `TESTING.md` owns check
+selection.
 
 Defer source formatting until the code changes are settled, before final checks that depend on
 it. Run a formatter earlier only when its changes are needed to unblock the next step.
@@ -36,9 +36,7 @@ without sharing side effects.
 Route and validate by domain meaning. Decode each representation at its owner, preserving distinctions
 needed for identity, trust, and ownership; pass typed results inward rather than reinterpret transformed
 content. For mutations, establish ownership and validate new input and retained metadata before
-publication. Rejection preserves prior state. For supported stored data and mutation paths,
-preserve the required state if an operation fails partway, is retried, or overlaps another
-supported operation. Classify recoverable conditions at the boundary that
+publication. Rejection preserves prior state. Classify recoverable conditions at the boundary that
 knows their meaning; permission, validation, and trust failures do not become absence.
 
 Prefer failure prevention through types, ownership, and ordering. Keep error handling where external

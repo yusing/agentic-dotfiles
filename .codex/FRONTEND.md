@@ -16,8 +16,8 @@ review. Explicit review requests keep their scope.
 | Interaction states (loading, empty, error, disabled), accessibility, responsive behavior, stack-specific implementation, and reviewing finished UI code for them | `ui-ux-pro-max` |
 
 Where `design-taste-frontend` applies, it decides visual tokens. Take colours, typefaces, and
-spacing from its dealt style, not from `ui-ux-pro-max` style, palette, or font recommendations, so
-the two never compete for the same decision.
+spacing from its dealt style, overriding default model font lists and `ui-ux-pro-max` style,
+palette, or font recommendations, so they never compete for the same decision.
 
 For component-only changes, match the surrounding design.
 
@@ -29,9 +29,9 @@ Prefer elevation and visual separation without borders or large gaps.
 - "Load More": Loading should be automatic when near the edge.
 - "Loading" text: Use skeleton to represent loading instead.
 - Periodic fetch (polling): UI states should be server-pushed, not client pulled.
-- UI clutter: small secondary text scattered across a screen, and sentences that describe what the
-  screen is or is not ("These are", "are not", "does not"). Use one body text size, and add a
-  label, badge, or caveat only where the user acts on it.
+- UI clutter: small secondary text scattered across a screen, sentences that describe what the
+  screen is or is not ("These are", "are not", "does not"), and unsolicited lists of what the app
+  does not require or support. Use one body text size.
 - Implementation details in the UI: internal names, pipeline stages, and data-source mechanics.
 
 ## Content discipline
@@ -40,8 +40,6 @@ Prefer elevation and visual separation without borders or large gaps.
   validation caveats, or absent features into prominent UI sections.
 - A result view states what happened, how well or badly it went, and why, with the supporting
   evidence beside it. Figures alone leave the user to work that out.
-- Keep copy that helps users decide or act. Remove narration of obvious interface structure,
-  redundant headings, and unsolicited lists of what the app does not require or support.
 - Put detailed methodology and assumptions behind a clearly named disclosure or documentation
   link. Keep material limitations visible beside the affected result, stated briefly.
 - Place explanations at the relevant interaction: file-handling information by the file picker,

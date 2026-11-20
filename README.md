@@ -24,7 +24,7 @@ preferences.
 | If you want to adapt… | Start with |
 | --- | --- |
 | The shared agent workflow | [`.codex/AGENTS.md`](.codex/AGENTS.md) |
-| Codex | [`.codex/config.toml`](.codex/config.toml), [base instructions](.codex/overridden_base_instructions.md), [agents](.codex/agents/), [hook registration](.codex/hooks.json), and [hook implementations](.codex/hooks/) |
+| Codex | [`.codex/config.toml`](.codex/config.toml), [agents](.codex/agents/), [hook registration](.codex/hooks.json), and [hook implementations](.codex/hooks/) |
 | Claude Code | [`.claude/settings.json`](.claude/settings.json), [instructions](.claude/CLAUDE.md), and [agents](.claude/agents/) |
 | Grok | [`.grok/config.toml`](.grok/config.toml), [instructions](.grok/AGENTS.md), and [hooks](.grok/hooks/) |
 | Reusable agent skills | [skill configuration](.skills-mgr/.skills-mgr.json) and [shared skill sources](.skills-mgr/skills/) |
@@ -160,8 +160,6 @@ described above.
 
 Start with the instruction stack before copying client settings:
 
-- [`.codex/overridden_base_instructions.md`](.codex/overridden_base_instructions.md)
-  defines the Codex harness behavior selected by [`.codex/config.toml`](.codex/config.toml).
 - [`.codex/AGENTS.md`](.codex/AGENTS.md) defines the shared working principles used
   by Codex, Claude Code, and Grok.
 - [`AGENTS.md`](AGENTS.md) is this checkout's repository-level agent file, not the

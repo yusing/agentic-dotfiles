@@ -29,7 +29,7 @@ so keep what a later session needs in its lines and `resume` rather than in a se
 tracker item governs the task, each of its open outcomes has a line.
 
 Mark the task blocked with the concrete blocker when it cannot proceed. For a needed user
-decision, put the question and recommendation in the note and ask in chat. Mark the task or a line
+decision, put the question and recommendation in the note and ask the user. Mark the task or a line
 done only after its applicable validation, recorded as the line's evidence. Record canceled or
 superseded work as blocked with the stopped reason as evidence, not as done; delete task files only
 when authorized.
