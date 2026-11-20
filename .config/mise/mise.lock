@@ -46,27 +46,27 @@ url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagge
 url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050832"
 
 [[tools."aqua:trufflesecurity/trufflehog"]]
-version = "3.99.9"
+version = "3.100.0"
 backend = "aqua:trufflesecurity/trufflehog"
 specifiers = ["latest"]
 
 [tools."aqua:trufflesecurity/trufflehog"."platforms.linux-arm64"]
-checksum = "sha256:778b1913196dc9b9234e8fd366f64387efeb08c01930a1d2110dcb2ffd07e68b"
+checksum = "sha256:aa61657049229ae523e8455fcbba87dff57b0a2ba6bdb391a38cf75e6d4016dd"
 checksum_source = "mise-versions"
-url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.9/trufflehog_3.99.9_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/741127612"
+url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.100.0/trufflehog_3.100.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/769530312"
 
 [tools."aqua:trufflesecurity/trufflehog"."platforms.linux-x64"]
-checksum = "sha256:12050095c8063bf4d34f9f6cbce6ba9fa8d0deea9d503d0570364feba093658e"
+checksum = "sha256:b2d85eba59865e98f45c9fc9f77d2c6d62df529fdd5755af121304ea5a7cecbb"
 checksum_source = "mise-versions"
-url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.9/trufflehog_3.99.9_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/741127614"
+url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.100.0/trufflehog_3.100.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/769530307"
 
 [tools."aqua:trufflesecurity/trufflehog"."platforms.macos-arm64"]
-checksum = "sha256:1d85e5c9c7eddbf12ae2714eb89317ba2cbbbf59be4e161e4b2ff396adbaa3a8"
+checksum = "sha256:fb326527959216a858636640adcfb93720bb09a7d7e727237c1244cdb3af4ac3"
 checksum_source = "mise-versions"
-url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.9/trufflehog_3.99.9_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/741127610"
+url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.100.0/trufflehog_3.100.0_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/trufflesecurity/trufflehog/releases/assets/769530304"
 
 [[tools."cargo:cargo-sweep"]]
 version = "0.8.0"
@@ -173,27 +173,27 @@ url = "https://github.com/tonistiigi/binfmt/releases/download/deploy/v10.2.3-68/
 url_api = "https://api.github.com/repos/tonistiigi/binfmt/releases/assets/441599094"
 
 [[tools."github:yusing/skills-mgr"]]
-version = "0.4.0"
+version = "0.4.2"
 backend = "github:yusing/skills-mgr"
 specifiers = ["latest"]
 
 [tools."github:yusing/skills-mgr"."platforms.linux-arm64"]
-checksum = "sha256:00ea190d3c106a5c336bd73cd2d45eabdfcf455a8f215e751f5c1b2c90d5da47"
+checksum = "sha256:4391c34c99af499c1fdaa674d1eff11fa897a106578a7c640f14e7721c73643b"
 checksum_source = "mise-versions"
-url = "https://github.com/yusing/skills-mgr/releases/download/v0.4.0/skills-mgr-linux-aarch64.tar.gz"
-url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/763010488"
+url = "https://github.com/yusing/skills-mgr/releases/download/v0.4.2/skills-mgr-linux-aarch64.tar.gz"
+url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/766386276"
 
 [tools."github:yusing/skills-mgr"."platforms.linux-x64"]
-checksum = "sha256:684f50b85c31c0521d2069d52bcc9644d5fd95cb9f7232fe2779386956c221fe"
+checksum = "sha256:b58453427a586b85c02c6e5bfea795efe17b64864f158a15a26884a540fac932"
 checksum_source = "mise-versions"
-url = "https://github.com/yusing/skills-mgr/releases/download/v0.4.0/skills-mgr-linux-x86_64.tar.gz"
-url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/763010486"
+url = "https://github.com/yusing/skills-mgr/releases/download/v0.4.2/skills-mgr-linux-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/766386271"
 
 [tools."github:yusing/skills-mgr"."platforms.macos-arm64"]
-checksum = "sha256:fbe3311b5edf37b76dbd031ee2b8145710e0f5b148c3658cfd4812894c300c61"
+checksum = "sha256:e5be2a6cf3f9c0764dc034ee26f20c89b7bb79a453d570d8341d1e393814d162"
 checksum_source = "mise-versions"
-url = "https://github.com/yusing/skills-mgr/releases/download/v0.4.0/skills-mgr-darwin-aarch64.tar.gz"
-url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/763010489"
+url = "https://github.com/yusing/skills-mgr/releases/download/v0.4.2/skills-mgr-darwin-aarch64.tar.gz"
+url_api = "https://api.github.com/repos/yusing/skills-mgr/releases/assets/766386269"
 
 [[tools."go:github.com/icholy/gomajor"]]
 version = "0.15.0"
@@ -216,7 +216,7 @@ backend = "go:github.com/yusing/shadowtree/cmd/shadowtree-lsp"
 specifiers = ["latest"]
 
 [[tools."go:golang.org/x/tools/cmd/deadcode"]]
-version = "0.52.0"
+version = "0.53.0"
 backend = "go:golang.org/x/tools/cmd/deadcode"
 specifiers = ["latest"]
 
@@ -246,7 +246,7 @@ backend = "npm:ccstatusline"
 specifiers = ["latest"]
 
 [[tools."npm:ctx7"]]
-version = "0.11.1"
+version = "0.12.2"
 backend = "npm:ctx7"
 specifiers = ["latest"]
 
@@ -276,10 +276,10 @@ backend = "npm:vite"
 specifiers = ["latest"]
 
 [[tools."pipx:graphifyy"]]
-version = "0.9.111"
+version = "0.9.113"
 backend = "pipx:graphifyy"
 specifiers = ["latest"]
-uv = { path = "locks/pipx-graphifyy/0.9.111~9b8b8ad0", digest = "sha256:da362f0e2c56c067431e10b5af233458fe4fae02ef9d2681e47fb1e1c5bb9beb" }
+uv = { path = "locks/pipx-graphifyy/0.9.113~9b8b8ad0", digest = "sha256:c4479764c607bea9abb590e25102d1cd9ec9479b58ef7b48a16c79ada00279f0" }
 
 [tools."pipx:graphifyy".options]
 extras = "sql"
