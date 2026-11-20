@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.10.11
+
+Stop installing standalone Codex through setup. Mekugi is installed separately.
+
 ## 2.10.10
 
 Accept version-only Cargo backend locks during setup validation, including

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.0
+
+Take base prompt snapshots from Mekugi's installed model catalog instead
+of the standalone Codex cache.
+
 ## 1.4.0
 
 Commit per-model base prompt snapshots from the local Codex cache on the

@@ -1,5 +1,5 @@
 import { spawn, type ChildProcess } from "node:child_process";
-import { access, lstat, mkdir, open, readFile, unlink, writeFile } from "node:fs/promises";
+import { access, lstat, mkdir, open, readFile, realpath, unlink, writeFile } from "node:fs/promises";
 import { dlopen, read } from "bun:ffi";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -7,7 +7,7 @@ import { createInterface } from "node:readline";
 import type { Readable } from "node:stream";
 import { openaiDocsUpdatePrompt, repairPrompt } from "./repair-prompt";
 
-export const VERSION = "1.4.0";
+export const VERSION = "1.5.0";
 const roots = [".agents/skills", ".claude/skills"];
 const disappeared = /does not contain skill|0 matching skills|remote skill name .+ does not match SKILL\.md name|remote skill .+ (?:is missing|has invalid) SKILL\.md|repository not found|repository .+ not found|\b(?:404|410)\b/i;
 const stalePatch = /remote skill patch no longer applies/i;
@@ -115,26 +115,25 @@ async function commitBaseInstructions(cwd: string, env: NodeJS.ProcessEnv): Prom
 	};
 	const tracked = new Set((await git("ls-files", "-z", "--", owner)).split("\0").filter(Boolean));
 	if (!tracked.size) return; // The public projection does not track the snapshots.
-	let cached: string;
-	try { cached = await readFile(join(cwd, ".codex/models_cache.json"), "utf8"); } catch (error) {
-		if ((error as NodeJS.ErrnoException).code === "ENOENT") return;
-		throw error;
-	}
+	const mekugi = Bun.which("mekugi", { PATH: env.PATH });
+	if (!mekugi) return;
+	const catalog = join(dirname(await realpath(mekugi)), "mekugi-models.json");
 	let models: unknown;
-	try { models = JSON.parse(cached)?.models; } catch {
-		throw new Error("Model cache is not valid JSON.");
+	const body = await readFile(catalog, "utf8");
+	try { models = JSON.parse(body)?.models; } catch {
+		throw new Error("Mekugi model catalog is not valid JSON.");
 	}
 	const validSlug = /^[a-z0-9][a-z0-9._-]*$/i;
-	if (!Array.isArray(models) || !models.length) throw new Error("Model cache contains no models.");
+	if (!Array.isArray(models) || !models.length) throw new Error("Mekugi model catalog contains no models.");
 	const desired = new Map<string, string>();
 	for (const model of models) {
 		const slug = model?.slug;
-		const body = model?.model_messages?.instructions_template ?? model?.base_instructions;
+		const body = model?.model_messages?.instructions_template;
 		if (typeof slug !== "string" || !validSlug.test(slug) || typeof body !== "string" || !body.length) {
-			throw new Error("Model cache contains an invalid slug or missing instruction template.");
+			throw new Error("Mekugi model catalog contains an invalid slug or missing instruction template.");
 		}
 		const path = `${owner}/${slug}.md`;
-		if (desired.has(path)) throw new Error("Model cache contains duplicate slugs.");
+		if (desired.has(path)) throw new Error("Mekugi model catalog contains duplicate slugs.");
 		desired.set(path, body);
 	}
 	const status = await git("status", "--porcelain=v1", "--untracked-files=all", "--ignored=matching", "--", owner);
