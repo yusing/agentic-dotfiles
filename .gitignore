@@ -104,10 +104,6 @@ __pycache__
 !/.config/gh/config.yml
 !/.config/ghostty/
 !/.config/ghostty/config
-!/.config/herdr/
-!/.config/herdr/config.toml
-!/.config/herdr/status.changelog.md
-!/.config/herdr/status.sh
 !/.config/hunk/
 !/.config/hunk/config.toml
 !/.config/kaku/
@@ -195,9 +191,6 @@ __pycache__
 !/.local/lib/graphify-report/CHANGELOG.md
 !/.local/lib/graphify-report/graphify-report.ts
 !/.local/lib/graphify-report/workspace.ts
-!/.local/lib/herdr-ai-usage/
-!/.local/lib/herdr-ai-usage/CHANGELOG.md
-!/.local/lib/herdr-ai-usage/herdr-ai-usage.ts
 !/.local/lib/project-public-config/
 !/.local/lib/project-public-config/CHANGELOG.md
 !/.local/lib/project-public-config/project-public-config.ts
@@ -288,11 +281,6 @@ __pycache__
 !/.skills-mgr/skills/juststore-rendering-optimizer/references/
 !/.skills-mgr/skills/juststore-rendering-optimizer/references/juststore-rendering-patterns.md
 !/.skills-mgr/skills/juststore-rendering-optimizer/SKILL.md
-!/.skills-mgr/skills/new-agent-session/
-!/.skills-mgr/skills/new-agent-session/scripts/
-!/.skills-mgr/skills/new-agent-session/scripts/preflight.py
-!/.skills-mgr/skills/new-agent-session/scripts/test_preflight.py
-!/.skills-mgr/skills/new-agent-session/SKILL.md
 !/.skills-mgr/skills/postgres-17-18-features/
 !/.skills-mgr/skills/postgres-17-18-features/agents/
 !/.skills-mgr/skills/postgres-17-18-features/agents/openai.yaml

@@ -136,9 +136,6 @@
         "locator": "googlechrome/modern-web-guidance/modern-web-guidance"
       }
     },
-    "new-agent-session": {
-      "enabled": true
-    },
     "openai-docs": {
       "enabled": true
     },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "36ef6b8584518b3102d7b277b6640a12e2405735",
+  "sourceCommit": "2d93fd08381afa5252af1e5e431529440affa185",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -492,24 +492,6 @@
       "executable": false
     },
     {
-      "path": ".config/herdr/config.toml",
-      "kind": "file",
-      "sha256": "1bc8983cd12d1918ba8d6a00add99345934ce566ed49764c231b6be83a1c4847",
-      "executable": false
-    },
-    {
-      "path": ".config/herdr/status.changelog.md",
-      "kind": "file",
-      "sha256": "83013547fe641a3506bb97ba9f619c3c3a1d1b50888d998a503826da91b62e6c",
-      "executable": false
-    },
-    {
-      "path": ".config/herdr/status.sh",
-      "kind": "file",
-      "sha256": "b0744222aadd6dcccc5acf74697dfd6748c12bc0892c261639a347be02b64a32",
-      "executable": true
-    },
-    {
       "path": ".config/hunk/config.toml",
       "kind": "file",
       "sha256": "0522864ce2c8ed71e17edcc8a52296aea853ee6a0d8ed301503e125a574ba0f3",
@@ -722,7 +704,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "436da014851128b4a0ed03e760791d250ecffc19dff2fe8adeb272ce75860e0c",
+      "sha256": "c106369f33904a6f02dd7b1d49783bdbe60ae1fcb1929cd8cee604cb59828b8f",
       "executable": false
     },
     {
@@ -881,18 +863,6 @@
       "executable": false
     },
     {
-      "path": ".local/lib/herdr-ai-usage/CHANGELOG.md",
-      "kind": "file",
-      "sha256": "c187d575122090ead28512ca358e5f12684a2c267fd5a845a7866aa57d5f92aa",
-      "executable": false
-    },
-    {
-      "path": ".local/lib/herdr-ai-usage/herdr-ai-usage.ts",
-      "kind": "file",
-      "sha256": "92348dede18c88a997afde28ccc6f40ac266244d2aa957e46589402f43d5de86",
-      "executable": false
-    },
-    {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
       "sha256": "6ff26b8301ec9407efc2300980bc2fc938e1fa3dcd5a3c7dccbcd43ba1d9a997",
@@ -1003,7 +973,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "1be8fb92eca3288bca64b807f55d1b6b06c7c0f435998673eed9d18b39615dd3",
+      "sha256": "8f044399a27e26b59e4993492b590f7b51df0b4fc21a8200e8e1ebc49784c664",
       "executable": false
     },
     {
@@ -1232,24 +1202,6 @@
       "path": ".skills-mgr/skills/juststore-rendering-optimizer/SKILL.md",
       "kind": "file",
       "sha256": "97953bd845fffba5404aa143b30e61d4da1ae1385a27fb5207d16ac6bbfb36ed",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/new-agent-session/scripts/preflight.py",
-      "kind": "file",
-      "sha256": "c207fd7c5f4f1160d179aa91b267664db84691eef7fa6f8c4326f5f126be2bce",
-      "executable": true
-    },
-    {
-      "path": ".skills-mgr/skills/new-agent-session/scripts/test_preflight.py",
-      "kind": "file",
-      "sha256": "40330aa0cdd80dfdef6ea0121abb5b77bfb8d28c071b9c511706d4a7f25f5a75",
-      "executable": false
-    },
-    {
-      "path": ".skills-mgr/skills/new-agent-session/SKILL.md",
-      "kind": "file",
-      "sha256": "ba29a28c96bd687d543c42161a95b074aecf35eff509b232a42a4fffde8bc54f",
       "executable": false
     },
     {
