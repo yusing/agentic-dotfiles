@@ -62,11 +62,7 @@ if _zfm_command_exists toe && _zfm_command_exists tput; then
     _zfm_term_program=${${TERM_PROGRAM:-}:l}
     _zfm_term_family=
 
-    if [[ ${HERDR_ENV:-} == 1 ]]; then
-        if [[ -z ${TERM+x} || $TERM == xterm || $TERM == xterm-256color ]]; then
-            _zfm_term_family=ghostty
-        fi
-    elif [[ -z ${TERM+x} ]]; then
+    if [[ -z ${TERM+x} ]]; then
         if [[ -n ${GHOSTTY_RESOURCES_DIR+x} || $_zfm_term_program == *ghostty* ]]; then
             _zfm_term_family=ghostty
         elif [[ -n ${ALACRITTY_WINDOW_ID+x} || -n ${ALACRITTY_SOCKET+x} \
@@ -216,13 +212,9 @@ if [[ -o interactive ]]; then
     _zfm_command_exists codex && eval "$(codex completion zsh)"
     _zfm_command_exists grok && eval "$(grok completions zsh)"
     _zfm_command_exists gh && eval "$(gh completion --shell zsh)"
-    _zfm_command_exists herdr && eval "$(herdr completion zsh)"
     _zfm_command_exists shadowtree && eval "$(shadowtree completion zsh)"
     if (( $+functions[compdef] )); then
         _zfm_command_exists golangci-lint && eval "$(golangci-lint completion zsh)"
-    fi
-    # live cwd from Herdr. Load it only outside Herdr panes.
-    if [[ ${HERDR_ENV:-} != 1 ]]; then
     fi
     _zfm_command_exists fastfetch && fastfetch
 fi

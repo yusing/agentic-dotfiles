@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.41
+
+Stop publishing Herdr TUI configuration, the status helper, and the
+TUI-specific agent session skill.
+
 ## 1.3.40
 
 Project the consolidated agent port generator and its changelog.

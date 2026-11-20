@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3fd2b70847e63e2d6cf1a82a4662a0e49b0769aa",
+  "sourceCommit": "8124a366d05b82a878c78e6cd112ad68a7f59755",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -476,7 +476,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "30e058280b2eab27cbe76565744876788108c87783bb4c7584b00f304e3f26bc",
+      "sha256": "07cef31e12d8ea2e0ff80911947fa169b81640a501178af04e4016d556bae837",
       "executable": false
     },
     {
@@ -805,13 +805,13 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "67608933b4ff64750836e96db73ffbf6913749ef8aba460c5aa13d4aa6cc5b14",
+      "sha256": "7dcac17044088ba1d894a0d8cd264e7a7d728dc8e2827d0b6a615278ca0a3a19",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "48452e896e5848d8d95ff6fabe0cbdaf0e76602ee862132c977a4c163d61a5b7",
+      "sha256": "515fbac4974565704e2522f0d7b6d4ac9561a363a1f3545815d52b7f692520bf",
       "executable": false
     },
     {
@@ -865,13 +865,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "6ff26b8301ec9407efc2300980bc2fc938e1fa3dcd5a3c7dccbcd43ba1d9a997",
+      "sha256": "b0687645d9341235459957d07ae33d340d9270835a3fe52603a31da4d6282c1e",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "67f4a175b49805332d91cdb02f7c579c09f33c12f0b1aa40aeb5800470af1db7",
+      "sha256": "7b89a67ea3339895ddb16d26cb065cf98f06590bbb8a56213e9f796cda4aa7f0",
       "executable": true
     },
     {
@@ -1477,7 +1477,7 @@
     {
       "path": ".zsh/fish-mirror.zsh",
       "kind": "file",
-      "sha256": "c727b2eada953003a182037692549cb32442e2d8cdadd33ed187ae218c4f395d",
+      "sha256": "c707bb3f06522b5147065bede2b582e2ea37e6fb51cfaf8f4be4f4c6ca46eb73",
       "executable": false
     },
     {
@@ -1512,13 +1512,13 @@
     {
       "path": "CONTEXT-GROK-HOOK-PORT.md",
       "kind": "file",
-      "sha256": "715974137ed7a5e47efab2e2cffc4d587e360502c17173ede0f998e54b769f73",
+      "sha256": "b01461e6fc462c18473ca5b8ea4551ffdceb840ebf5ea8dc7aae6b3a676e7337",
       "executable": false
     },
     {
       "path": "CONTEXT-HELPER-HOOKS.md",
       "kind": "file",
-      "sha256": "bf36e67693ab38a3fc8488841b1411fe22dc9a3ad70a5c49fd9fa6f4324d514f",
+      "sha256": "794307c864463adc6e73b56957812da1f5a10b14b3225a30991ec65a081978b0",
       "executable": false
     },
     {
@@ -1572,7 +1572,7 @@
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "cafba43dca478c03093c00b7e618e11db188110a34948b08f8cbc3656a4148fa",
+      "sha256": "fb35f626b6a8996f29575c977c4af98f738459d5e4e5a14ea35aaab4071fd071",
       "executable": false
     },
     {

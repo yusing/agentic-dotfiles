@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.31
+
+Stop building the retired Herdr TUI status helper.
+
 ## 1.0.30
 
 Build one agent port generator in place of the Claude and Kilo helpers.

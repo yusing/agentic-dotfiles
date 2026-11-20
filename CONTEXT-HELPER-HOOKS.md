@@ -3,8 +3,6 @@
 This file owns the implementation form of user-owned helpers and hooks. Load it
 when adding, changing, compiling, versioning, or reviewing one.
 
-Herdr-installed hooks are outside this file. Leave them as Herdr writes them.
-
 ## Allowed forms
 
 A user-owned helper or hook is one of:

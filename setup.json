@@ -211,8 +211,7 @@
     "mosh": {"label": "Mosh fork", "path": ".local/opt/mosh/bin/mosh", "url": "https://raw.githubusercontent.com/yusing/mosh/master/install-mosh.sh", "shell": "sh", "env": {"CPPFLAGS": "-I/home/linuxbrew/.linuxbrew/opt/zlib/include -I/opt/homebrew/opt/zlib/include -I/usr/local/opt/zlib/include", "LDFLAGS": "-L/home/linuxbrew/.linuxbrew/opt/zlib/lib -L/opt/homebrew/opt/zlib/lib -L/usr/local/opt/zlib/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/lib -L/home/linuxbrew/.linuxbrew/opt/openssl@3/lib -L/opt/homebrew/opt/openssl@3/lib -L/usr/local/opt/openssl@3/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/openssl@3/lib"}},
     "claude": {"label": "Claude Code", "path": ".local/bin/claude", "url": "https://claude.ai/install.sh", "shell": "bash", "update": ["update"]},
     "codex": {"label": "Codex", "path": ".local/bin/codex", "url": "https://chatgpt.com/codex/install.sh", "shell": "sh", "env": {"CODEX_NON_INTERACTIVE": "1"}, "legacy_mise": ["aqua:openai/codex", "github:openai/codex"]},
-    "grok": {"label": "Grok CLI", "path": ".grok/bin/grok", "url": "https://x.ai/cli/install.sh", "shell": "bash", "update": ["update"]},
-    "herdr": {"label": "herdr", "path": ".local/bin/herdr", "url": "https://herdr.dev/install.sh", "shell": "sh"}
+    "grok": {"label": "Grok CLI", "path": ".grok/bin/grok", "url": "https://x.ai/cli/install.sh", "shell": "bash", "update": ["update"]}
   },
   "legacy": {
     "wrk": {"packages": {"apt": ["wrk"], "pacman": ["wrk"]}},
@@ -287,7 +286,6 @@
     "gitleaks": {"packages": {"brew": ["gitleaks"], "apt": ["gitleaks"], "pacman": ["gitleaks"]}, "files": [{"path": "go/bin/gitleaks", "command": "gitleaks"}, {"path": ".local/bin/gitleaks", "command": "gitleaks"}]},
     "go": {"packages": {"brew": ["go"], "apt": ["golang-go", "golang"], "pacman": ["go"]}, "files": [{"path": ".local/bin/go", "command": "go"}, {"path": ".local/bin/gofmt", "command": "gofmt"}], "directories": [{"path": ".local/opt/go", "executable": "bin/go"}]},
     "golangci-lint": {"packages": {"brew": ["golangci-lint"], "apt": ["golangci-lint"], "pacman": ["golangci-lint"]}, "files": [{"path": "go/bin/golangci-lint", "command": "golangci-lint"}, {"path": ".local/bin/golangci-lint", "command": "golangci-lint"}]},
-    "herdr": {"packages": {"brew": ["herdr"]}},
     "hadolint": {"packages": {"brew": ["hadolint"], "apt": ["hadolint"], "pacman": ["hadolint"]}, "files": [{"path": ".local/bin/hadolint", "command": "hadolint"}]},
     "hyperfine": {"packages": {"brew": ["hyperfine"], "apt": ["hyperfine"], "pacman": ["hyperfine"]}, "files": [{"path": ".local/bin/hyperfine", "command": "hyperfine"}]},
     "jq": {"packages": {"brew": ["jq"], "apt": ["jq"], "pacman": ["jq"]}, "files": [{"path": ".local/bin/jq", "command": "jq"}]},

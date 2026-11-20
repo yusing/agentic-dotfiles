@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.40";
+export const VERSION = "1.3.41";
 
 type TreeEntry = {
 	mode: string;
@@ -181,11 +181,6 @@ const EXACT_PATHS = new Set([
 	".config/ghostty/config",
 	".config/kaku/kaku.lua",
 	".config/wezterm/wezterm.lua",
-	".config/herdr/config.toml",
-	".config/herdr/status.sh",
-	".config/herdr/status.changelog.md",
-	".local/lib/herdr-ai-usage/herdr-ai-usage.ts",
-	".local/lib/herdr-ai-usage/CHANGELOG.md",
 	".config/hunk/config.toml",
 	".config/lazygit/config.yml",
 	".config/micro/bindings.json",
@@ -257,7 +252,6 @@ const PROJECTED_SKILL_NAMES = [
 	"human-flavoured-writing",
 	"instruction-audit",
 	"juststore-rendering-optimizer",
-	"new-agent-session",
 	"new-project",
 	"postgres-17-18-features",
 	"rust-reliability",
@@ -785,7 +779,8 @@ function transformText(path: string, text: string, privateHomes: string[]): stri
 		if (registry.skills !== undefined) {
 			const skills = objectValue(registry.skills, `${path} skills`);
 			registry.skills = Object.fromEntries(
-				Object.entries(skills).filter(([name]) => !["plane", "plane-body-editing", "i-want"].includes(name)),
+				Object.entries(skills).filter(([name]) =>
+					!["plane", "plane-body-editing", "i-want", "new-agent-session"].includes(name)),
 			);
 		}
 		projected = encodeJson(registry);

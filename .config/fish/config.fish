@@ -60,13 +60,7 @@ end
 if type -q toe; and type -q tput
     set -l term_family
 
-    if set -q HERDR_ENV; and test "$HERDR_ENV" = 1
-        if not set -q TERM
-            set term_family ghostty
-        else if contains -- "$TERM" xterm xterm-256color
-            set term_family ghostty
-        end
-    else if not set -q TERM
+    if not set -q TERM
         set -l term_program
         set -q TERM_PROGRAM; and set term_program (string lower -- "$TERM_PROGRAM")
 
@@ -231,9 +225,6 @@ if status is-interactive
     check-command fzf; and fzf --fish | source
     check-command zoxide; and zoxide init fish | source
     # CLI completions are generated on demand by completions/<command>.fish.
-    # live cwd from Herdr. Load it only outside Herdr panes.
-    # if test "$HERDR_ENV" != 1
-    # end
 end
 
 

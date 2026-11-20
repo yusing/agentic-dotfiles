@@ -10,9 +10,8 @@ matchers and event placement, extending the Claude matchers (`Bash`, `Edit`, `Wr
 `run_terminal_command`, `search_replace`, `write_file`, and `MultiEdit`. The Bash PreToolUse group
 runs `subagent_exec_guard` in-process. Grok uses camelCase event fields
 and `{"decision":"deny","reason":...}` denials. The adapter maps failed result events, and
-aliases the `run_terminal_command` tool name to `Bash` because Codex policy branches on it. Herdr
-session reporting remains
-client-managed and is not part of the port.
+aliases the `run_terminal_command` tool name to `Bash` because Codex policy
+branches on it.
 
 
 SessionStart project report and skill inventory are not ported: Grok does
