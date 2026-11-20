@@ -139,6 +139,9 @@
     "openai-docs": {
       "enabled": true
     },
+    "orchestrate": {
+      "enabled": true
+    },
     "postgres-17-18-features": {
       "enabled": "lang postgres"
     },

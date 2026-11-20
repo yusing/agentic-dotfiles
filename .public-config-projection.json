@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f3c2b53330fc672e8ddb628d5209b4a9be03fd93",
+  "sourceCommit": "58a1b060a015eedccde709f011305ea0da7acf9d",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -200,7 +200,7 @@
     {
       "path": ".codex/config.toml",
       "kind": "file",
-      "sha256": "1990636ac4f1bfbfed1d9f59ee7415cc85e58ebe08ddb8b072c70bdee919a278",
+      "sha256": "8bd1a30740ba898402657a3d86a87bcf303fe1790d12e9fae31e6dcc240f4db6",
       "executable": false
     },
     {
@@ -967,7 +967,7 @@
     {
       "path": ".skills-mgr/.skills-mgr.json",
       "kind": "file",
-      "sha256": "8f044399a27e26b59e4993492b590f7b51df0b4fc21a8200e8e1ebc49784c664",
+      "sha256": "ca1a9bea89281f0c16a0dfaec90ac89e2fcfaca841f57c1e0a36380a2c505aed",
       "executable": false
     },
     {
