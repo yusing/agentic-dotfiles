@@ -152,6 +152,10 @@ label = "UI review pass"
 input = "Review every PR, explain each: what it was trying to solve, what was the design choice, what was the approach, whether the PR is implemented correctly (correct approach and correct code), whether it is merge ready."
 label = "Review and Explain PRs"
 
+["tui".presets.8]
+input = "Work independently and cherry pick back with new worktree removed and issue closed."
+label = "Independent work"
+
 ["features"]
 "responses_websockets_v2" = true
 "terminal_resize_reflow" = true
