@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0
+
+Commit per-model base prompt snapshots from the local Codex cache on the
+existing hourly schedule. The snapshot step makes no model calls and leaves
+local edits and unrelated staged changes alone.
+
 ## 1.3.0
 
 Remove update dispatch, version tracking, and placeholder handling for the uninstalled

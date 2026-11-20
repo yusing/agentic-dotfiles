@@ -1,5 +1,5 @@
 import { spawn, type ChildProcess } from "node:child_process";
-import { access, mkdir, open, readFile, unlink, writeFile } from "node:fs/promises";
+import { access, lstat, mkdir, open, readFile, unlink, writeFile } from "node:fs/promises";
 import { dlopen, read } from "bun:ffi";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -7,7 +7,7 @@ import { createInterface } from "node:readline";
 import type { Readable } from "node:stream";
 import { openaiDocsUpdatePrompt, repairPrompt } from "./repair-prompt";
 
-export const VERSION = "1.3.0";
+export const VERSION = "1.4.0";
 const roots = [".agents/skills", ".claude/skills"];
 const disappeared = /does not contain skill|0 matching skills|remote skill name .+ does not match SKILL\.md name|remote skill .+ (?:is missing|has invalid) SKILL\.md|repository not found|repository .+ not found|\b(?:404|410)\b/i;
 const stalePatch = /remote skill patch no longer applies/i;
@@ -106,6 +106,65 @@ async function placeholderChanges(cwd: string, env: NodeJS.ProcessEnv) {
 		.filter(row => /^\.[^/]+\/skills\/[^/]+\/(SKILL\.md|\.skills-mgr-placeholder)$/.test(row.path));
 }
 
+async function commitBaseInstructions(cwd: string, env: NodeJS.ProcessEnv): Promise<void> {
+	const owner = ".codex/base-instructions";
+	const git = async (...args: string[]) => {
+		const result = await run(cwd, env, ["git", ...args]);
+		if (result.status) throw new Error(result.stderr || result.stdout);
+		return result.stdout;
+	};
+	const tracked = new Set((await git("ls-files", "-z", "--", owner)).split("\0").filter(Boolean));
+	if (!tracked.size) return; // The public projection does not track the snapshots.
+	let cached: string;
+	try { cached = await readFile(join(cwd, ".codex/models_cache.json"), "utf8"); } catch (error) {
+		if ((error as NodeJS.ErrnoException).code === "ENOENT") return;
+		throw error;
+	}
+	let models: unknown;
+	try { models = JSON.parse(cached)?.models; } catch {
+		throw new Error("Model cache is not valid JSON.");
+	}
+	const validSlug = /^[a-z0-9][a-z0-9._-]*$/i;
+	if (!Array.isArray(models) || !models.length) throw new Error("Model cache contains no models.");
+	const desired = new Map<string, string>();
+	for (const model of models) {
+		const slug = model?.slug;
+		const body = model?.model_messages?.instructions_template ?? model?.base_instructions;
+		if (typeof slug !== "string" || !validSlug.test(slug) || typeof body !== "string" || !body.length) {
+			throw new Error("Model cache contains an invalid slug or missing instruction template.");
+		}
+		const path = `${owner}/${slug}.md`;
+		if (desired.has(path)) throw new Error("Model cache contains duplicate slugs.");
+		desired.set(path, body);
+	}
+	const status = await git("status", "--porcelain=v1", "--untracked-files=all", "--ignored=matching", "--", owner);
+	if (status) throw new Error("Base instruction snapshots have local changes; preserving them.");
+	if (!(await lstat(join(cwd, owner))).isDirectory()) {
+		throw new Error("Base instruction snapshot path is not a directory.");
+	}
+	// Check every existing entry before replacing or removing any of them.
+	const updated = new Map<string, string>();
+	for (const path of tracked) {
+		const name = path.slice(owner.length + 1);
+		const absolute = join(cwd, path);
+		if (!name.endsWith(".md") || !validSlug.test(name.slice(0, -3)) || !(await lstat(absolute)).isFile()) {
+			throw new Error("Base instruction snapshots contain an unexpected tracked path.");
+		}
+		const body = desired.get(path);
+		if (body !== undefined && body !== await readFile(absolute, "utf8")) updated.set(path, body);
+	}
+	const added = [...desired.keys()].filter(path => !tracked.has(path));
+	const removed = [...tracked].filter(path => !desired.has(path));
+	const paths = [...updated.keys(), ...added, ...removed];
+	if (!paths.length) return;
+	for (const path of added) await writeFile(join(cwd, path), desired.get(path)!, { flag: "wx" });
+	for (const [path, body] of updated) await writeFile(join(cwd, path), body);
+	for (const path of removed) await unlink(join(cwd, path));
+	if (added.length) await git("add", "--intent-to-add", "--", ...added);
+	await git("commit", "--only", "-m", "chore(codex): refresh base instruction snapshots", "--", ...paths);
+	console.log(`Committed ${paths.length} base instruction snapshot change(s).`);
+}
+
 async function commitPlaceholders(cwd: string, env: NodeJS.ProcessEnv, names: Set<string>, protectedDirectories: Set<string>): Promise<void> {
 	const git = (...args: string[]) => run(cwd, env, ["git", ...args]);
 	const rows = await placeholderChanges(cwd, env);
@@ -199,13 +258,17 @@ export async function maintain(cwd = homedir()): Promise<void> {
 			}
 			throw new Error(`Finish Git ${state} before skills maintenance.`);
 		}
+		let failed = false;
+		try { await commitBaseInstructions(cwd, env); } catch (error) {
+			failed = true;
+			console.error(`Base instruction refresh unresolved: ${(error as Error).message}`);
+		}
 		for (const { path } of await placeholderChanges(cwd, env)) {
 			const absolute = join(cwd, path);
 			snapshots.set(path, await Bun.file(absolute).exists() ? await readFile(absolute, "utf8") : null);
 		}
 		const registry = JSON.parse(await readFile(join(cwd, ".skills-mgr/.skills-mgr.json"), "utf8"));
 		const names = Object.entries(registry.skills).filter(([, selection]) => (selection as { remote?: unknown }).remote).map(([name]) => name);
-		let failed = false;
 		let managedReady = false;
 		try { managedReady = await updateOpenaiDocs(cwd, env); } catch (error) {
 			failed = true;
