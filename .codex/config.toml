@@ -165,13 +165,6 @@ label = "Independent work"
 "hooks" = true
 "workspace_dependencies" = false
 
-# [features.rollout_budget]
-# enabled = true
-# limit_tokens = 300000
-# sampling_token_weight = 1.0
-# prefill_token_weight = 0.2
-# reminder_at_remaining_tokens = [50000, 25000, 10000, 5000]
-
 ["features"."multi_agent_v2"]
 "enabled" = true
 "max_concurrent_threads_per_session" = 9
@@ -186,6 +179,3 @@ url = "https://developers.openai.com/mcp"
 "hide_rate_limit_model_nudge" = true
 "hide_full_access_warning" = true
 "fast_default_opt_out" = true
-
-["notice"."model_migrations"]
-"gpt-5.4" = "gpt-5.5"
