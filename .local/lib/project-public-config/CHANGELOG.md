@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.44
+
+Publish `capture_result_gate`, `graphify_update`, and `ledger_stop_gate` hook
+sources and changelogs referenced by `.codex/hooks.json` and
+`.claude/settings.json`.
+
 ## 1.3.43
 
 Publish `.zshenv` and `.zprofile` alongside `.zshrc` and `.bash_profile`.

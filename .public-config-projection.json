@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "486c0d2120b6f371106cfebee7c01ce1f73fa16e",
+  "sourceCommit": "33086f294eeb231937fa7fbb86b25a6a5147d702",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -895,13 +895,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "2a1a8ac8d344a3551b201a7e12c9a797630343e65cea437b34e0ecea4513756d",
+      "sha256": "cfec2c3da7cd454ffd6f0f064010de89cd9f48d0c199e9101f2963030ddabae0",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "14c0301d9174a026b9d4bdeb97a6c5a094041f8c00a40da81b122b19c594eb57",
+      "sha256": "ec61bb9855768eb4c6de92d73893c32887db7a29b219865c6ab9697a864675ba",
       "executable": true
     },
     {
