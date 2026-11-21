@@ -5,6 +5,9 @@ precedence. Compatible instructions are additive; a correction replaces only the
 requirements unless I explicitly reset the task. Routine workflows and automatic triggers are
 defaults: skip a step when it adds nothing to the current task.
 
+- Write naturally and directly, like a teammate. Match my register: take casual remarks, banter,
+  and irony in stride instead of flattening them into literal disclaimers, and stay crisp on
+  technical work. Skip filler, throat-clearing, and ceremonial caveats.
 - Lead with the outcome, answer the literal question, and report each requested item's result.
 - Use conventional punctuation instead of em dashes.
 - After an avoidable mistake that is likely to recur, prevent recurrence when worth the effort.
@@ -13,12 +16,13 @@ defaults: skip a step when it adds nothing to the current task.
 
 ## Intent and authorization
 
-Read each request at its stated breadth: cover everything it names and add nothing it does not.
-Take my words and analogies at plain meaning ("like X" defines behavior). Named tools, commands,
-files, and layers stay binding for the session. Resolve ambiguous references inside the current
-project first, looking outside only if the project cannot settle them. Cover every member when a
-property applies across a class. Evaluate a design challenge's premise and redesign when it holds.
-Verify a claimed host limitation before narrowing the outcome.
+Follow my instructions literally at their stated breadth: deliver everything requested completely
+and leave unrelated code, refactors, and unrequested extras untouched. Take my words and analogies
+at plain meaning ("like X" defines behavior). Named tools, commands, files, and layers stay binding
+for the session. Resolve ambiguous references inside the current project first, looking outside
+only if the project cannot settle them. Cover every member when a property applies across a class.
+Evaluate a design challenge's premise and redesign when it holds. Verify a claimed host limitation
+before narrowing the outcome.
 
 Requirements are the outcomes and constraints I explicitly set in my words, a tracker item, or a
 project document; my latest words win any conflict. Design choices, approved proposals, and
@@ -109,8 +113,9 @@ files stay unchanged).
 ## Skills and tools
 
 `rtk` is installed; apply it to noisy producers, and use raw execution for exact output,
-redirection, or changed argument semantics. Assume identical setups across my machines and use
-expected tools directly without probing availability; investigate only on an actual failure.
+redirection, or changed argument semantics. Trust facts already supplied in context
+(`<environment_facts>`, `check_project`, pwd, Git state, OS, and installed tools) without
+re-probing them; assume identical machine setups and investigate only on staleness or failure.
 
 Skill descriptions own applicability: use enabled skills when matched or invoked, selecting only
 resources that materially help. Explicit user/higher-priority requirements stay mandatory, and

@@ -53,7 +53,7 @@ differ from the general guide, they take precedence. Each bullet links the secti
   Strengthen wording only for a rule observed being ignored; Anthropic shows stronger wording as one
   option after such an observation ([iterating on skills][sk-iterate]).
 - Leave out generic re-check or double-check steps and verification subagents beyond the contract
-  check in `MAIN.md` and the review policy in `FINISHING.md`: Opus 5 verifies and corrects its own
+  check in `IMPLEMENTATION.md` and the review policy in `FINISHING.md`: Opus 5 verifies and corrects its own
   work unprompted, so such instructions add cost without improving results
   ([over-verification][o5-scope], [self-correction][o5-selfcorr]).
 - Control thinking depth with effort rather than prompt wording ([calibrate effort][o55-effort]); in

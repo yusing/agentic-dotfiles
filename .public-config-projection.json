@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ab26c575f2f47cf419b91e5684734be4f2bd8c86",
+  "sourceCommit": "5ae487e7af31e4c0719762b31f9c04a766563f11",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -65,7 +65,7 @@
     {
       "path": ".claude/CLAUDE.md",
       "kind": "file",
-      "sha256": "073c8b58ec4cf4051e812a056672fb8965ef4b4c537fcc6863edd6e7e0cd7dee",
+      "sha256": "d56e1fee9bd26da5f72beaecc12c36c429dee93acc3b0bab0ec89ed88bb0dfcb",
       "executable": false
     },
     {
@@ -102,7 +102,7 @@
     {
       "path": ".claude/instructions/INSTRUCTION-AUTHORING.md",
       "kind": "file",
-      "sha256": "231b559ebfecfde1784d0af0909186c161950db3f12fd6edf1503aefa2630d42",
+      "sha256": "e26cf13b8819b961825d29641ffdc657127d9ccebdf01dfe7661a3a0c4e1b401",
       "executable": false
     },
     {
@@ -152,7 +152,7 @@
     {
       "path": ".codex/AGENTS.md",
       "kind": "file",
-      "sha256": "84db68608ca631ac16ea037674bd4d54a820a6cebba87adaa735f0bddafad40f",
+      "sha256": "cb2224dc8f96e9dee2e6b4287d8db497f675168a7c712087690ba20eef7594d1",
       "executable": false
     },
     {
@@ -404,7 +404,7 @@
     {
       "path": ".codex/IMPLEMENTATION.md",
       "kind": "file",
-      "sha256": "676ae274431706f3ea64b92a76761822a7bf638d78f610cce26777057a05730b",
+      "sha256": "78646a074f53480011e45434d350cd89aab007e766a313ebe9a5a99377d09b15",
       "executable": false
     },
     {
@@ -416,7 +416,7 @@
     {
       "path": ".codex/MAIN.md",
       "kind": "file",
-      "sha256": "de9b5994d29def87098bbdfd35e15eb9a8048ec47ede39181c3418c46c727157",
+      "sha256": "3cd0568625cdcc13ff5870ac9c4121f7ce23168e668b8e657b3127fdc9484cfc",
       "executable": false
     },
     {
