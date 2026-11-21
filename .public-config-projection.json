@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6ff9fa881af69c8216b908df8c932648a210516a",
+  "sourceCommit": "486c0d2120b6f371106cfebee7c01ce1f73fa16e",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -240,6 +240,18 @@
       "executable": false
     },
     {
+      "path": ".codex/hooks/capture_result_gate.changelog.md",
+      "kind": "file",
+      "sha256": "d1b9249a4f2349b552c5e75516dcc98af96311d6ed7996a86150d16555f8475f",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/capture_result_gate.ts",
+      "kind": "file",
+      "sha256": "22cd1f5330463db0353a70c663bc8e0b0500da7880a98227f11733b24721275a",
+      "executable": false
+    },
+    {
       "path": ".codex/hooks/check_project.changelog.md",
       "kind": "file",
       "sha256": "f55ed47056b9e1ef8e259985ed8a92e93de8e81e50bb94175a38a119cfb54332",
@@ -261,6 +273,30 @@
       "path": ".codex/hooks/go_quality.ts",
       "kind": "file",
       "sha256": "007d31455e03d5e200b1d60da8856d3012f4c2ba1d5910b03cf7c98045453b28",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/graphify_update.CHANGELOG.md",
+      "kind": "file",
+      "sha256": "d7a76d27b111115284295f1ebf1bdeed6f4e5d7cb8f5caa70d4440ee2faa612d",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/graphify_update.ts",
+      "kind": "file",
+      "sha256": "717788ecb6f1363e0ed0cf27f74b0c7de01c847b2594023a47f7f96263bd526b",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/ledger_stop_gate.changelog.md",
+      "kind": "file",
+      "sha256": "7007e8392e1ac1174db4b00696251a98259fad15904bd6cc1ef3eca12d79c15b",
+      "executable": false
+    },
+    {
+      "path": ".codex/hooks/ledger_stop_gate.ts",
+      "kind": "file",
+      "sha256": "9288d67275f02fe4fac5069c6fda3df4c44e400a26f8acb8d007ab2052b2248f",
       "executable": false
     },
     {
@@ -698,7 +734,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "c134e05a4862614a9db08525b0830ed5be26db7f665b5d54201572357166406b",
+      "sha256": "67a4592f8ff23f583ac6a67326905e573fb0d482a25d8e01c7f1fb467d09f6c9",
       "executable": false
     },
     {
