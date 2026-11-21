@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.45
+
+Publish `devin_work_sync` hook source and changelog.
+
 ## 1.3.44
 
 Publish `capture_result_gate`, `graphify_update`, and `ledger_stop_gate` hook

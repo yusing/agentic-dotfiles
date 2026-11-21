@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.32
+
+Build the Devin todo Work pane sync hook (`devin_work_sync`).
+
 ## 1.0.31
 
 Stop building the retired Herdr TUI status helper.

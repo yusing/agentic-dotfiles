@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.31";
+const VERSION = "1.0.32";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -246,6 +246,7 @@ function main(): void {
     "ledger_stop_gate",
     "capture_result_gate",
     "graphify_update",
+    "devin_work_sync",
   ]) {
     compileHook(join(codexHooks, `${name}.ts`), codexBin);
   }
