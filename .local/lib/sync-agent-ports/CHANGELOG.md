@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.0
+
+- Pin matched multi-provider Devin CLI models (`model:`) in generated `.config/devin/agents/*.md`
+  role profiles instead of falling back to the default subagent router.
+
 ## 2.1.1
 
 - Align Kilo `investigator` effort (`variant: high`) with `.codex/MODEL-ROUTING.md`.

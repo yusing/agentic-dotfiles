@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "2.1.1";
+export const VERSION = "2.2.0";
 const READ_TOOLS = "Read, Grep, Glob, Bash, Write, TodoWrite";
 const CLAUDE_METADATA: Record<string, { color: string; tools: string }> = {
   "council-investigator": { color: "yellow", tools: READ_TOOLS },
@@ -32,6 +32,15 @@ const KILO_METADATA: Record<string, { color: string; model: string; variant?: st
   "review-correctness": { model: "kilo/openai/gpt-6.2-sol", variant: "high", color: "#EF4444", permission: READ_PERMISSION },
   "review-simplify": { model: "kilo/openai/gpt-6.2-sol", variant: "high", color: "#22C55E", permission: READ_PERMISSION },
   "ui-reviewer": { model: "kilo/openai/gpt-6.2-astra", variant: "high", color: "#A855F7", permission: READ_PERMISSION },
+};
+const DEVIN_METADATA: Record<string, { model: string }> = {
+  "council-investigator": { model: "gpt-6-2-astra-high" },
+  "council-member": { model: "claude-fable-5-2-high" },
+  explorer: { model: "swe-2-high" },
+  investigator: { model: "gpt-6-2-sol-high" },
+  "review-correctness": { model: "gpt-6-2-astra-high" },
+  "review-simplify": { model: "claude-opus-5-5-high" },
+  "ui-reviewer": { model: "claude-opus-5-5-high" },
 };
 
 export function adaptText(text: string): string {
@@ -68,7 +77,7 @@ export function renderRole(
   options: { guard?: string; subagent?: string } = {},
 ): string {
   const metadata = CLAUDE_METADATA[role];
-  if (!metadata || (client === "kilo" && !KILO_METADATA[role])) {
+  if (!metadata || (client === "kilo" && !KILO_METADATA[role]) || (client === "devin" && !DEVIN_METADATA[role])) {
     throw new Error(`${role}: missing ${PORTS[client].label} metadata`);
   }
   if (config.name !== role) {
@@ -121,6 +130,8 @@ export function renderRole(
       if (!options.subagent?.trim()) {
         throw new Error("Devin requires nonempty subagent guidance");
       }
+      const devin = DEVIN_METADATA[role];
+      fields.push(`model: ${devin.model}`);
       const tools = hasShell
         ? ["read", "grep", "glob", "exec", "get_output", "write_to_process", "kill_shell", "write", "todo_write"]
         : ["read", "write", "todo_write"];
@@ -151,7 +162,9 @@ function expectedPorts(home: string, client: Client): Map<string, string> {
   const source = join(home, ".codex/agents");
   const roles = roleNames(source, ".toml");
   const output = join(home, PORTS[client].directory);
-  const known = Object.keys(client === "kilo" ? KILO_METADATA : CLAUDE_METADATA).sort();
+  const known = Object.keys(
+    client === "kilo" ? KILO_METADATA : client === "devin" ? DEVIN_METADATA : CLAUDE_METADATA,
+  ).sort();
   const missing = known.filter(role => !roles.includes(role));
   const extra = roles.filter(role => !known.includes(role));
   if (missing.length || extra.length) {

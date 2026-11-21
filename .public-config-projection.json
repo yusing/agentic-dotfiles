@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "64a8fe0c353985f0401f5e736667180b0851cf7f",
+  "sourceCommit": "1c7bdabc3b5ad1361cc334735cd390384d500308",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -967,13 +967,13 @@
     {
       "path": ".local/lib/sync-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "dd0fb8b9f65bf6510b357e9a87d77374479a2e9ff017f41616b09cbe4f7c6e00",
+      "sha256": "a7a3c3ec61f264077905697e1e676a6398f29438d0d1f6590008b3f914495c87",
       "executable": false
     },
     {
       "path": ".local/lib/sync-agent-ports/sync-agent-ports.ts",
       "kind": "file",
-      "sha256": "fee01ce2c4270d763131f8816bdd40ff2bdd6c8e3856b69c26169622b2315d2b",
+      "sha256": "9658ca795c4fcfa8fe8600991de628ddb628cde23f39d72b95daba6bbefb3504",
       "executable": false
     },
     {
