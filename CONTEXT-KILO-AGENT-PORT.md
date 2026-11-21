@@ -11,8 +11,8 @@ mode reports drift without writing.
 Field mapping is the helper's concern. Codex roles omit `model` and
 `model_reasoning_effort` because the spawning agent chooses them through
 `.codex/MODEL-ROUTING.md`, so each Kilo role's `model` and `variant` come from
-the helper's Kilo metadata: Terra/xhigh for the explorer, Sol/medium for the
-investigator, Sol/high for correctness and simplification review, and
+the helper's Kilo metadata: Terra/xhigh for the explorer, Sol/high for the
+investigator and correctness/simplification reviews, and
 Astra/high for UI review, under `kilo/openai/`. Council roles omit both
 generated fields so Kilo continues to inherit its parent settings. A new Codex
 role without Kilo metadata, or a Codex role that sets `model` or

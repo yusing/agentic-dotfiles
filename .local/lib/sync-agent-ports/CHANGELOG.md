@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- Align Kilo `investigator` effort (`variant: high`) with `.codex/MODEL-ROUTING.md`.
+
 ## 2.1.0
 
 - Add Devin CLI role generation (`sync-agent-ports devin`) writing `.config/devin/agents/*.md`
