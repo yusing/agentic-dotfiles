@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.13
+# version: 2.10.14
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -516,6 +516,27 @@ try:
         require(type(entry.get("optional", False)) is bool, "optional must be boolean")
         if "brew_prefix" in entry:
             string(entry["brew_prefix"])
+    # On Arch, each logical tool must pick either brew or pacman, never both.
+    arch_command_managers = {}
+    arch_entries = {}
+    for name, entry in config["native"].items():
+        if "linux" not in entry.get("os", ["linux", "macos"]):
+            continue
+        arch_mgr = "pacman" if entry["packages"].get("pacman") else entry.get("manager", "pacman")
+        if not entry["packages"].get(arch_mgr):
+            continue
+        arch_entries[name] = arch_mgr
+        for command in entry.get("commands", []):
+            previous = arch_command_managers.get(command)
+            require(previous in (None, arch_mgr),
+                    f"Arch duplicates {command} across {previous} and {arch_mgr}")
+            arch_command_managers[command] = arch_mgr
+    for name, arch_mgr in arch_entries.items():
+        if name.startswith("system-"):
+            target = name[len("system-"):]
+            if target in arch_entries:
+                require(arch_entries[target] == arch_mgr,
+                        f"Arch duplicates {target} across {arch_mgr} and {arch_entries[target]}")
     for command in config["mise_commands"].values():
         string(command)
     obj(config.get("mise"), ("settings", "tools"), "mise")
@@ -671,7 +692,7 @@ try:
         elif query_action.startswith("native-"):
             native = native_map()
             def manager(entry):
-                # Arch packages take precedence over the cross-platform Brew fallback.
+                # On Arch, use declared pacman packages (system-depended tools); otherwise prefer Brew.
                 return "pacman" if pm == "pacman" and entry["packages"].get("pacman") else entry.get("manager", pm)
             def selected(entry):
                 return entry["packages"].get(manager(entry), []) if platform in entry.get("os", ["linux", "macos"]) else []

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.10.14
+
+Prefer Homebrew on Arch for standalone tools (including rustup, rust-analyzer,
+sccache, Go, Bun, Fish, Zsh and its plugins, PostgreSQL 18, and CLI utilities)
+while keeping pacman for packages depended on by other Arch system packages.
+Remove `system-time` from Arch pacman selection so `time` is not installed by
+both managers, and reject Arch configs that split a command or `system-<name>`
+pair across pacman and Homebrew.
+
 ## 2.10.13
 
 Skip the trailing interactive `devin setup` wizard when running the Devin CLI

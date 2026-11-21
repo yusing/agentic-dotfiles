@@ -96,19 +96,22 @@ bash setup.sh --upgrade
 
 ### Tool sources
 
-Arch uses pacman for declared native packages, including Go, Bun, Node.js,
-Fish, LLVM/Clang, Python, and rustup. Homebrew remains the fallback for tools
-without a declared Arch package. Other platforms retain their Homebrew sources.
-Formulae follow Brew's stable channel. Brew uses available prebuilt bottles; mcdu uses its upstream tap's
-checksummed prebuilt archives.
+Arch prefers Homebrew for standalone tools (including Go, Bun, Fish, rustup,
+rust-analyzer, sccache, Zsh plugins, PostgreSQL 18, and CLI utilities) and uses
+pacman only for packages depended on by other Arch system packages (such as
+Python, Node.js, LLVM/Clang, Git, Bash, Curl, OpenSSH, Docker, core build
+tools, and Chromium/WebKitGTK libraries). Other platforms retain their Homebrew
+sources. Formulae follow Brew's stable channel. Brew uses available prebuilt
+bottles; mcdu uses its upstream tap's checksummed prebuilt archives.
 
 npm packages retain their npm source through Mise, including agent-browser and
 markdownlint-cli. Bun performs npm installation. Mise also supplies tools
 without a compatible current Brew source, including gh-dash and go-swagger,
-plus pinned scriptc 0.4.5 and Lightpanda 1.0.0. The shells select Chrome as
+plus pinned scriptc 0.4.10 and Lightpanda 1.0.0. The shells select Chrome as
 agent-browser's default engine.
 
-Pacman supplies rustup on Arch; Brew supplies it on other platforms. Manage Rust toolchains and targets separately with rustup.
+Brew supplies rustup across platforms. Manage Rust toolchains and targets
+separately with rustup.
 
 With the supplied shell configuration, Cargo keeps each workspace checkout's default build output
 under `~/.cache/rust/targets/`. New Git worktrees copy compatible registry and Git dependency libraries from the main
@@ -119,9 +122,9 @@ Explicit Cargo target directories still take precedence.
 Arch uses OpenBSD netcat and system Chromium/WebKitGTK 4.1 libraries.
 Other Linux distributions retain GNU netcat and Brew browser libraries. WebKitGTK 6 and
 Bazelisk are excluded. macOS uses its system netcat and WebKit framework.
-Arch uses the distribution PostgreSQL package; other platforms use PostgreSQL 18
-with a separate Brew data directory. Setup does not migrate or delete existing
-databases. Switching package sources requires a separate database migration.
+PostgreSQL 18 comes from Homebrew with a separate Brew data directory. Setup
+does not migrate or delete existing databases. Switching package sources
+requires a separate database migration.
 Mosh, Claude Code, Grok, Antigravity, and Devin CLI use their declared vendor installers.
 Install Mekugi separately. Setup does not install standalone Codex.
 Antigravity CLI installs as `agy` and prompts for Google sign-in on first run.
@@ -129,11 +132,11 @@ Devin CLI installs as `devin`; run `devin auth login` on first use.
 
 ### Native installation
 
-Arch prefers explicitly mapped pacman packages, using Homebrew for remaining
-tools. Other Linux distributions use Homebrew plus host bootstrap prerequisites;
-macOS needs Xcode
-Command Line Tools. Setup configures the host Fish shell and compiles managed
-helpers. Open a new terminal after installation.
+Arch prefers Homebrew for standalone tools and uses pacman for system-depended
+packages, never both for the same tool. Other Linux distributions use Homebrew
+plus host bootstrap prerequisites; macOS needs Xcode Command Line Tools. Setup
+configures the host Fish shell and compiles managed helpers. Open a new
+terminal after installation.
 
 ```sh
 bash setup.sh                      # install missing tools
