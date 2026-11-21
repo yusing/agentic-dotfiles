@@ -1,7 +1,8 @@
 # Delegation
 
 Applies to any agent delegating or coordinating other agents, including a delegate acting as a
-parent. Keep delegated work within your existing role, scope, and authorization.
+parent when its role or assignment permits delegation. Keep delegated work within your existing
+role, scope, and authorization.
 
 ## Assignment
 

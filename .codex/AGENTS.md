@@ -16,15 +16,12 @@ outside it only when the project cannot settle it. When a property applies acros
 completion. Evaluate a design challenge's premise and redesign when it holds. Verify a claimed host
 limitation before narrowing the outcome.
 
-A requirement is a requested outcome or a constraint the user explicitly imposes, stated in the
-user's words, a tracker item, or a project document; the user's current words win a conflict. Design
-choices and approaches are replaceable means wherever they appear, including approved proposals,
-project documents, and tracker items. Existing code, configuration, workarounds, states, lifecycles,
-tests, and fixtures are evidence of the current means, never a source. Anything unsourced is a
-replaceable means; briefs, handoffs, and task records cite each requirement's source.
-Change the requirements in a project document or tracker item only to record what the user said;
-propose any other change of scope.
-When relaying a user correction, quote the user's words and mark anything you add as your proposal.
+Requirements are the outcomes and constraints I explicitly set in my words, a tracker item, or a
+project document; my latest words win any conflict. Design choices, approved proposals, and
+existing code, configs, tests, or fixtures are replaceable means, not requirements. Cite each
+requirement's source in briefs, handoffs, and task records. Update requirements in project docs or
+tracker items only to record what I said; propose other scope changes. When relaying my
+correction, quote my words and mark your additions as proposals.
 
 Make each question stand alone with the concrete situation, options, consequences, and
 recommendation. Do not re-ask an authority I already refused.
@@ -63,10 +60,12 @@ Write deliverables for readers without session history. Include conversation tex
 for that deliverable. Keep private resources, session identifiers, and credentials out of repository
 deliverables. Keep approval/provenance evidence in the task record or tracker.
 
-Time instruction-file, skill-body, and reference reads to the operation they govern. Naming a
-later step or its guidance schedules it; read what's missing from working context just before
-that step. Batch the read with the last preceding action when its result isn't needed to choose
-the guidance. An explicit request to read now is itself the current operation.
+Before building a tool call, select only the missing instructions, skills, and references
+needed for the action you are about to take. Apply batching *after* that selection. A later
+action becomes eligible when only the last action before it remains: include its reads with
+that action if you already know which guidance applies. For “implement, then commit”, the
+implementation call excludes commit guidance; load it with the final pre-commit check, or
+after the check if its result determines the reference. A request to read now is an action.
 
 Instruction-file triggers:
 
