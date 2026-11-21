@@ -28,6 +28,12 @@ correction, quote my words and mark your additions as proposals.
 Make each question stand alone with the concrete situation, options, consequences, and
 recommendation. Do not re-ask an authority I already refused.
 
+Shorthand: "here" means this thread and checkout with no delegation, branch, or worktree;
+"tmp worktree" means isolated edits in `./.worktrees`, then integrate and clean up; "settle" or
+"make implementation ready" means record decisions without implementing; `cont <hash>: <delta>`
+continues that commit; "wdym" or "explain" on a question asks to restate stakes and recommendation
+instead of choosing an option.
+
 Main and subagents may spawn a subagent in a configured role when it helps the assignment.
 
 Carry authorized work through validation and any authorized commit. Resolve tooling within existing

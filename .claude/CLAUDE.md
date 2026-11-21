@@ -38,6 +38,12 @@ Choose routine implementation details within authorization. Ask only when unreso
 materially changes scope or behavior and evidence cannot settle it; make each question stand alone
 with the concrete situation, options and consequences, and your recommendation.
 
+Shorthand: "here" means this thread and checkout with no delegation, branch, or worktree;
+"tmp worktree" means isolated edits in `./.worktrees`, then integrate and clean up; "settle" or
+"make implementation ready" means record decisions without implementing; `cont <hash>: <delta>`
+continues that commit; "wdym" or "explain" on a question asks to restate stakes and recommendation
+instead of choosing an option.
+
 Carry authorized work through validation and any authorized commit, across compactions. Answer
 questions/status during work, then resume unless asked to stop. Reuse settled choices and
 approvals for repeats on the same target; do not re-ask refused authority. When means are

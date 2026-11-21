@@ -27,7 +27,7 @@ fullscreen_transcript = true
 
 ["tui".presets.2]
 input = """
-$i-want you to sweep the target below for removable complexity, overhead, and avoidable failures, then fix what you confirm. Use $commit for all commits.
+I want you to sweep the target below for removable complexity, overhead, and avoidable failures, then fix what you confirm. Use $commit for all commits.
 
 ## Sweep
 
@@ -74,7 +74,7 @@ label = "Sweep, deslop, optimize"
 
 ["tui".presets.3]
 input = """
-$i-want you to diagnose the agent behavior in the evidence below and fix its causes. Use $commit for all commits.
+I want you to diagnose the agent behavior in the evidence below and fix its causes. Use $commit for all commits.
 
 ## Diagnose
 
@@ -101,7 +101,7 @@ label = "Diagnose sessions"
 
 ["tui".presets.4]
 input = """
-$i-want you to review my unpushed work and fix what the review confirms.
+I want you to review my unpushed work and fix what the review confirms.
 
 * Review unpushed commits and uncommitted changes against their intent through reviewer delegates by role, including slop and unrequested changes.
 
@@ -118,7 +118,7 @@ label = "Review and fixup unpushed"
 
 ["tui".presets.5]
 input = """
-$i-want you to refresh the README with $writing-readme. Use $commit for the commit.
+I want you to refresh the README with $writing-readme. Use $commit for the commit.
 
 * Find what shipped since the README was last updated, including notable additions worth mentioning, and add what readers need from it.
 
@@ -131,7 +131,7 @@ label = "Refresh README"
 
 ["tui".presets.6]
 input = """
-$i-want you to review and polish the UI below until it holds up next to mainstream apps. Use $commit for all commits.
+I want you to review and polish the UI below until it holds up next to mainstream apps. Use $commit for all commits.
 
 * Run the real UI and judge it from the rendered result, not the source.
 

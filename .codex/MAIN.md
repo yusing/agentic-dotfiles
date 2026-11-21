@@ -24,9 +24,11 @@ steps). Unless I ask for the new item now or it blocks the active unit:
 - Agreeing an item belongs in scope sets its place in the queue, not an immediate start. Guidance
   for a later step (such as how to test) applies when that step arrives.
 
-Handle corrections to the active unit in place. A request to stop or reassess an action redirects
-that action without stopping the rest of the task unless I stop the task itself. Report
-out-of-scope issues you notice without pursuing them.
+Handle corrections to the active unit in place. When I say "still" or "same" after a fix, identify
+that earlier fix and the behavior it targeted, then reproduce through the actual consumer before
+claiming completion. A request to stop or reassess an action redirects that action without stopping
+the rest of the task unless I stop the task itself. Report out-of-scope issues you notice without
+pursuing them.
 
 ## Complete
 
