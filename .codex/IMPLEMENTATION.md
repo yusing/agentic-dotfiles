@@ -15,22 +15,22 @@ Resolve code/test conflicts by ledger outcomes; consult history only when intent
 For a multi-step unit, order its outcomes by dependency and identify the normal consumer, the
 responsible owner, and the next unresolved decision. Read the relevant contracts, consumer tests,
 and implementation code directly (use outlines only to locate bodies, not as proof of behavior).
-Carry read ranges forward and follow references for affected shared interfaces; expand only for a
-real dependency, compatibility promise, or concrete failure, not a broad subsystem tour. Before
-building supporting machinery for a new or disputed design, make its smallest real consumer path
-pass.
+Carry read ranges forward; on return to an owner, read only missing or changed ranges. Follow
+references for affected shared interfaces; expand only for a real dependency, compatibility
+promise, or concrete failure, not a broad subsystem tour. Before building supporting machinery for
+a new or disputed design, make its smallest real consumer path pass.
 
-When a multi-part change must keep public entry points aligned or mutates stored data, run one
-independent contract check before the first shared-owner edit. Give the reviewer the request
-sources, ledger, and proposed observable cases (each citing its ledger line) and ask which expected
-results are wrong, which cases lack a ledger line, which outcomes are missing, and which cases
-check the wrong observation. If independent review is unavailable or disallowed, check the cases
-locally and report that limit (ask first if I required independence). Reuse settled results unless
-new evidence reopens them.
+When a multi-part change must keep public entry points aligned or mutates stored data, main obtains
+one independent contract check before the first shared-owner edit; delegates reuse that result.
+Give the reviewer the request sources, ledger, and proposed observable cases (each citing its
+ledger line) and ask which expected results are wrong, which cases lack a ledger line, which
+outcomes are missing, and which cases check the wrong observation. If independent review is
+unavailable or disallowed, check the cases locally and report that limit (ask first if I required
+independence). Reuse settled results unless new evidence reopens them.
 
-Share a decision brief only when a consequential choice needs explaining or resolving (outcome,
-ledger lines, approach, tradeoffs, and acceptance evidence). Do not re-render a complete request or
-settled choice.
+Main shares a decision brief only when a consequential choice needs explaining or resolving
+(outcome, ledger lines, approach, tradeoffs, and acceptance evidence). Do not re-render a complete
+request or settled choice.
 
 Change the workflow when tests, builds, polling, or other non-implementation work consume most of
 the task's time and resources. A common cause is an edit-test-edit-test loop that validates each

@@ -35,10 +35,10 @@
    runtime that explicitly selects it, with a runtime-specific user-message boundary. Its
    interruption and continuation rules do not establish delivery by the current runtime.
    After handoff, the reloaded shared instructions recover the active
-   scope and reread only the guidance needed for remaining work. `MAIN.md` sequences working-path
-   implementation and delivery. `IMPLEMENTATION.md` supplies early structural constraints;
-   main or an assigned coordinator reads `FINISHING.md` for an unresolved question needing
-   independent review, not for routine delivery.
+   scope and reread only the guidance needed for remaining work. `MAIN.md` coordinates outcome-level
+   delivery and mid-turn work. `IMPLEMENTATION.md` sequences multi-step working-path planning,
+   contract checks, and early structural constraints; main or an assigned coordinator reads
+   `FINISHING.md` for an unresolved question needing independent review, not for routine delivery.
    Routine local work does not require task-size documents.
    No hook-specific state rotation runs at compaction.
 

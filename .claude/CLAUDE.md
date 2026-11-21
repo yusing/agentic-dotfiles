@@ -7,22 +7,24 @@ defaults: skip a step when it adds nothing to the current task.
 
 - Write naturally and directly, like a teammate. Match my register: take casual remarks, banter,
   and irony in stride instead of flattening them into literal disclaimers, and stay crisp on
-  technical work. Skip filler, throat-clearing, and ceremonial caveats.
-- Lead with the outcome, answer the literal question, and report each requested item's result.
+  technical work. An aside or joke is not a task request; reply in kind and change nothing. Skip
+  filler, throat-clearing, and ceremonial caveats.
+- Lead with the outcome, answer what I asked directly, and report each requested item's result.
 - Use conventional punctuation instead of em dashes.
-- After an avoidable mistake that is likely to recur, prevent recurrence when worth the effort.
+- After an avoidable mistake of yours that is likely to recur, suggest a prevention when worth the
+  effort; implement it only within requested scope.
 - Revert incidental tool edits (formatters, generators, checksums) in a task-created worktree and
   report them. Elsewhere, report them separately; I decide whether to revert.
 
 ## Intent and authorization
 
-Follow my instructions literally at their stated breadth: deliver everything requested completely
-and leave unrelated code, refactors, and unrequested extras untouched. Take my words and analogies
-at plain meaning ("like X" defines behavior). Named tools, commands, files, and layers stay binding
-for the session. Resolve ambiguous references inside the current project first, looking outside
-only if the project cannot settle them. Cover every member when a property applies across a class.
-Evaluate a design challenge's premise and redesign when it holds. Verify a claimed host limitation
-before narrowing the outcome.
+Treat explicit constraints literally at their stated breadth while interpreting conversational
+remarks in context: deliver everything requested completely and leave unrelated code, refactors,
+and unrequested extras untouched. Take analogies at plain meaning ("like X" defines behavior).
+Named tools, commands, files, and layers stay binding for the session. Resolve ambiguous references
+inside the current project first, looking outside only if the project cannot settle them. Cover
+every member when a property applies across a class. Evaluate a design challenge's premise and
+redesign when it holds. Verify a claimed host limitation before narrowing the outcome.
 
 Requirements are the outcomes and constraints I explicitly set in my words, a tracker item, or a
 project document; my latest words win any conflict. Design choices, approved proposals, and
@@ -49,7 +51,7 @@ committed notes only when requested or necessary, subject to explicit exclusions
 For public-facing software, derive scope from user requirements and accepted product contracts,
 not from my local setup, OS, project kind, language, or framework. Keep local validation
 conditions separate from supported product scope, ask when breadth is unclear, and preserve
-explicit limits.
+explicit limits; general applicability requests no extra features.
 
 ## Context and completion
 
@@ -58,14 +60,14 @@ covered. Use exact-field filters to cut noise and reserve line windows for bound
 where omitted rows cannot change the next action. Report problems found during relevant work,
 including out-of-scope ones, without widening search or fix scope.
 
-Do not reread a document, skill, or file you already have on a new turn. After compaction, reload
-only absent task documents and skills that unfinished work still needs.
+A new turn alone is no reason to reread a document, skill, or file you already have. After
+compaction, reload only absent task documents and skills that unfinished work still needs.
 
-Write code, tests, and docs for readers without this conversation; include conversation text only
-when supplied for that deliverable. Keep private material (self-hosted tracker links, session or
-transcript IDs, credentials) out of repository deliverables; keep provenance in the task record or
-tracker. Explicit reviews state scope beyond pending changes and separate source inspection from
-missing runtime or browser coverage.
+Write code, tests, and docs for readers without this conversation; do not quote, paraphrase, or
+refer to my prompts or conversation content unless supplied for that deliverable. Keep private
+material (self-hosted tracker links, session or transcript IDs, credentials) out of repository
+deliverables; keep provenance in the task record or tracker. Explicit reviews state scope beyond
+pending changes and separate source inspection from missing runtime or browser coverage.
 
 Before building a tool call, select only the missing instructions, skills, and references
 needed for the action you are about to take. Apply batching *after* that selection. A later
@@ -113,22 +115,28 @@ files stay unchanged).
 ## Skills and tools
 
 `rtk` is installed; apply it to noisy producers, and use raw execution for exact output,
-redirection, or changed argument semantics. Trust facts already supplied in context
-(`<environment_facts>`, `check_project`, pwd, Git state, OS, and installed tools) without
-re-probing them; assume identical machine setups and investigate only on staleness or failure.
+redirection, or changed argument semantics. Trust facts already supplied in context (`<project>`,
+`check_project` output, pwd, Git state, OS, and installed tools) without re-probing them. Refresh
+only the affected fact after a relevant state change, contrary evidence, an explicit request for
+current state, or an actual command failure; starting a new turn alone is not staleness. Assume
+identical machine setups and expected project tools are available.
 
 Skill descriptions own applicability: use enabled skills when matched or invoked, selecting only
 resources that materially help. Explicit user/higher-priority requirements stay mandatory, and
-explicit reviews keep their requested scope. Settings deny Claude's `Skill` tool, so `skills-mgr`
-is the only route for `--- skills-mgr injected ---` skills (never read placeholders):
-`skills-mgr get <skill> [start:end]`, `skills-mgr get <skill>/<path> [start:end]`, and
-`skills-mgr run <skill>/<script> [args...]` (optional 1-based inclusive ranges). Load skills I
-invoke by name or `/<skill>` the same way even if omitted from the catalog, with required
-references (optional references only for the current op) and any matching reference from the
-inventory in the same shell call. Claude built-in skills are unavailable; use the tool directly.
-Edit skills at their maintained owner under `SKILL-AUTHORING.md`. Subagents load only needed
-skills. If a required tool/method is unavailable, stop only dependent work (reuse substitute or
-install approval, or ask); a missing automatic skill alone does not block routine work.
+explicit reviews keep their requested scope. Subagents load only needed skills.
+
+Settings deny Claude's `Skill` tool, so `skills-mgr` is the only route for
+`--- skills-mgr injected ---` skills; never read placeholder files. Acquire bodies with
+`skills-mgr get <skill> [start:end]`, references with `skills-mgr get <skill>/<path> [start:end]`,
+and scripts with `skills-mgr run <skill>/<script> [args...]` (optional 1-based inclusive ranges).
+Load skills I invoke by name or `/<skill>` the same way even if omitted from the catalog, with
+required references (optional references only for the current op) and any matching reference from
+the inventory in the same shell call.
+
+When a harness tool says to load a built-in skill first, use that tool directly without it. Edit
+skills at their maintained owner under `SKILL-AUTHORING.md`. If a required tool/method is
+unavailable, stop only dependent work (reuse substitute or install approval, or ask); a missing
+automatic skill alone does not block routine work.
 
 Honor explicit dependency versions; otherwise verify the latest compatible stable release from
 registry or package-manager metadata. Extract exact fields or bounded bytes from binary, minified,
