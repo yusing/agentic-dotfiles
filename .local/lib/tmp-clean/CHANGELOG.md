@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.4
+
+Allow verified non-dumpable Linux login/session daemons (`systemd --user`,
+`(sd-pam)`, `ssh-agent`, `sshd`/`sshd-session`) and zombie processes during
+same-user `/proc` inspection while continuing to read `cmdline` and refuse
+unknown inaccessible processes. Recognize generated `mekugi-session-<uuid>`,
+`task-run-*`, `codex-ab-*`, `opus-ab-*`, and Mekugi diagnostic temp prefixes
+under the existing freshness, process-reference, mount, and repository guards.
+
 ## 1.0.3
 
 Keep temporary cleanup standalone with the same protections for both `/tmp` and

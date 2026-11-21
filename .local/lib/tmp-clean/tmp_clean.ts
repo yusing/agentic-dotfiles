@@ -3,8 +3,8 @@ import { join } from "node:path";
 
 import { intersectsMounts } from "../cleanup-safety";
 
-const VERSION = "1.0.3";
-const recognized = /^(go-build\d+|gopls-tempmod\d+|mekugi-tools-\d+-[a-f0-9]+|mekugi-native-trace-\d+|mekugi-proxy-tests-\d+|mekugi-exec-test-\d+|mekugi-test-state-\d+|TestNativeExecResultFinalizesAfterReplayProxyReconstruction\d+|mekugi-host-perf\.[A-Za-z0-9]+|mekugi-sustained(?:-(?:before|after))?\.[A-Za-z0-9]+|agent-tools-(?:published-runtime|login-fixture)\.[A-Za-z0-9]+|sidebar-baseline-[A-Za-z0-9]+)$/;
+const VERSION = "1.0.4";
+const recognized = /^(go-build\d+|gopls-tempmod\d+|mekugi-tools-\d+-[a-f0-9]+|mekugi-native-trace-\d+|mekugi-proxy-tests-\d+|mekugi-exec-test-\d+|mekugi-test-state-\d+|mekugi-session-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|mekugi-(?:prefork|sol|gap|workflow|sccache|uninstall-checks|frozen-checks)[A-Za-z0-9._-]+|TestNativeExecResultFinalizesAfterReplayProxyReconstruction\d+|mekugi-host-perf\.[A-Za-z0-9]+|mekugi-sustained(?:-(?:before|after))?\.[A-Za-z0-9]+|agent-tools-(?:published-runtime|login-fixture)\.[A-Za-z0-9]+|sidebar-baseline-[A-Za-z0-9]+|task-run-[A-Za-z0-9]+|codex-ab-[A-Za-z0-9._-]+|opus-ab-[A-Za-z0-9._-]+)$/;
 
 export function cleanupUid(): number {
   const uid = process.getuid!();
@@ -21,25 +21,68 @@ function vanished(error: unknown): boolean {
   return (error as NodeJS.ErrnoException).code === "ENOENT" || (error as NodeJS.ErrnoException).code === "ESRCH";
 }
 
+function procInfo(base: string): { state: string; ppid: number } | null {
+  const stat = readFileSync(join(base, "stat"), "utf8");
+  const end = stat.lastIndexOf(")");
+  if (end < 0) return null;
+  const fields = stat.slice(end + 2).split(" ");
+  const ppid = Number(fields[1]);
+  return fields[0] && Number.isSafeInteger(ppid) ? { state: fields[0], ppid } : null;
+}
+
+function isUserSystemd(pid: number): boolean {
+  const base = join("/proc", String(pid));
+  if (procInfo(base)?.ppid !== 1) return false;
+  if (readFileSync(join(base, "comm"), "utf8").trim() !== "systemd") return false;
+  const cmd = readFileSync(join(base, "cmdline"), "utf8");
+  return cmd.startsWith("/usr/lib/systemd/systemd\0--user") || cmd.startsWith("/lib/systemd/systemd\0--user");
+}
+
+function isIgnorableInaccessible(pid: number, base: string, cmdline: string): boolean {
+  try {
+    const info = procInfo(base);
+    if (!info) return false;
+    if (info.state === "Z" || info.state === "X") return true;
+    const comm = readFileSync(join(base, "comm"), "utf8").trim();
+    if (isUserSystemd(pid)) return true;
+    if (comm === "(sd-pam)" && cmdline === "(sd-pam)\0" && isUserSystemd(info.ppid)) return true;
+    const argv0 = cmdline.split("\0", 1)[0];
+    if (comm === "ssh-agent" && (argv0 === "ssh-agent" || argv0.endsWith("/ssh-agent")) && (info.ppid === 1 || isUserSystemd(info.ppid))) return true;
+    if ((comm === "sshd-session" || comm === "sshd")
+      && (cmdline.startsWith("sshd-session:") || cmdline.startsWith("sshd:"))
+      && lstatSync(join("/proc", String(info.ppid))).uid === 0) return true;
+    return false;
+  } catch (error) {
+    if (vanished(error)) return true;
+    return false;
+  }
+}
+
 export function processReferences(): string[] {
   const refs: string[] = [];
   const uid = cleanupUid();
   let inaccessible = 0;
   for (const pid of readdirSync("/proc").filter(p => /^\d+$/.test(p))) {
     const base = join("/proc", pid);
+    let cmdline = "";
     try {
       if (process.getuid!() !== 0 && lstatSync(base).uid !== uid) continue;
+      try {
+        cmdline = readFileSync(join(base, "cmdline"), "utf8");
+        refs.push(cmdline);
+      } catch (error) { if (!vanished(error)) throw error; }
       for (const file of ["cwd", "exe", ...readdirSync(join(base, "fd")).map(fd => `fd/${fd}`)]) {
         try { refs.push(readlinkSync(join(base, file))); }
         catch (error) { if (!vanished(error)) throw error; }
       }
-      for (const file of ["cmdline", "environ", "maps"]) {
+      for (const file of ["environ", "maps"]) {
         try { refs.push(readFileSync(join(base, file), "utf8")); }
         catch (error) { if (!vanished(error)) throw error; }
       }
     } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "EACCES" || (error as NodeJS.ErrnoException).code === "EPERM") inaccessible++;
-      else if (!vanished(error)) throw error;
+      if ((error as NodeJS.ErrnoException).code === "EACCES" || (error as NodeJS.ErrnoException).code === "EPERM") {
+        if (!isIgnorableInaccessible(Number(pid), base, cmdline)) inaccessible++;
+      } else if (!vanished(error)) throw error;
     }
   }
   if (inaccessible) throw new Error(`${inaccessible} processes could not be inspected; temporary cleanup refused.`);
