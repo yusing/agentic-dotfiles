@@ -10,8 +10,10 @@ put required versions in a tracked Mise configuration before cleaning.
 
 Temporary cleanup runs separately. See [temporary cleanup](../../../README.md#temporary-cleanup).
 
-Rust cleanup discovers marked Cargo target directories under `~/projects`, including
-worktrees and cross-target/custom profiles. It removes only recognized unfinished
+Rust cleanup discovers Cargo target directories under `~/projects` and
+`~/.cache/rust/targets`, including pre-created targets identified by
+`.rustc_info.json` plus a profile `.cargo-lock`, worktrees, and
+cross-target/custom profiles. It removes only recognized unfinished
 `-working` sessions untouched for two hours, holding the existing rustc-compatible
 exclusive lock until removal finishes. Finalized caches, locked sessions, symlinks,
 foreign owners, and mounted children are retained. Missing or indeterminate locks
@@ -22,10 +24,11 @@ On Linux, the helper sweeps recognized artifacts in the retired shared target at
 skips profiles if their existing Cargo locks cannot be held or their layout
 cannot be safely inspected.
 Do not start new builds against this retired path or use its outputs during cleanup.
-Under `~/.cache/rust/targets`, cleanup removes a registered worktree target only when
-its checkout path no longer exists and the wrapper is not using the target. A missing
-manifest inside a live checkout does not qualify. Old targets without a worktree
-record and the shared sccache are retained. Dry-runs acquire existing locks without creating lock files or deleting data.
+Under `~/.cache/rust/targets`, cleanup removes a registered worktree target when
+its checkout path or `.git` marker no longer exists and the wrapper is not using
+the target. A missing manifest inside a live Git checkout does not qualify. Old
+targets without a worktree record and the shared sccache are retained. Dry-runs
+acquire existing locks without creating lock files or deleting data.
 
 Go caches are retained by default. On Linux, after permanently retiring an older
 compiler release, preview and remove only its package archives:

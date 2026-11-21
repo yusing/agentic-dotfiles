@@ -22,10 +22,17 @@ function hasCacheTag(path: string): boolean {
     && readFileSync(tag, "utf8").startsWith(signature);
 }
 
+function hasProfileLock(path: string): boolean {
+  const first = directories(path);
+  return [...first, ...first.flatMap(directories)].some(profile =>
+    lstatSync(join(profile, ".cargo-lock"), { throwIfNoEntry: false })?.isFile() === true
+  );
+}
+
 export function cargoTarget(path: string): boolean {
   try {
     return lstatSync(join(path, ".rustc_info.json")).isFile()
-      && hasCacheTag(path);
+      && (hasCacheTag(path) || hasProfileLock(path));
   } catch (error) {
     if (["ENOENT", "ENOTDIR"].includes((error as NodeJS.ErrnoException).code ?? "")) return false;
     throw error;
@@ -34,6 +41,11 @@ export function cargoTarget(path: string): boolean {
 
 function directories(path: string): string[] {
   return readdirSync(path, { withFileTypes: true }).filter(entry => entry.isDirectory()).map(entry => join(path, entry.name));
+}
+
+export function discoverManagedRustTargets(root: string): string[] {
+  if (!lstatSync(root, { throwIfNoEntry: false })?.isDirectory() || realpathSync(root) !== resolve(root)) return [];
+  return directories(root).filter(cargoTarget);
 }
 
 export function discoverRustTargets(projects: string): string[] {
@@ -126,7 +138,10 @@ export function sweepLegacyCargoTarget(target: string, dryRun: boolean): void {
         const key = /^[\w-]+-([0-9a-f]{16})$/.exec(entry.name)?.[1];
         if (key && entry.isDirectory()) {
           const path = join(fingerprint, entry.name);
-          if (!lstatSync(join(path, "invoked.timestamp"), { throwIfNoEntry: false })?.isFile()) continue;
+          const invoked = lstatSync(join(path, "invoked.timestamp"), { throwIfNoEntry: false })?.isFile()
+            || (lstatSync(join(profile, "build", entry.name, "invoked.timestamp"), { throwIfNoEntry: false })?.isFile()
+              && readdirSync(path).some(name => name.startsWith("run-build-script-") && lstatSync(join(path, name), { throwIfNoEntry: false })?.isFile()));
+          if (!invoked) continue;
           const group = groups.get(key);
           if (group) group.push(path);
           else groups.set(key, [path]);
@@ -219,8 +234,11 @@ export function cleanOrphanWorktrees(root: string, dryRun: boolean): void {
         || !owner.manifest.startsWith(owner.worktree + "/") || basename(owner.manifest) !== "Cargo.toml"
         || targetKey(owner.manifest) !== key) continue;
       function gone(): boolean {
-        try { lstatSync(owner.worktree); return false; }
-        catch (error) { return (error as NodeJS.ErrnoException).code === "ENOENT"; }
+        try {
+          lstatSync(owner.worktree);
+          lstatSync(join(owner.worktree, ".git"));
+          return false;
+        } catch (error) { return (error as NodeJS.ErrnoException).code === "ENOENT"; }
       }
       if (!gone()) continue;
       const safe = (path: string): boolean => readdirSync(path, { withFileTypes: true }).every(entry => {

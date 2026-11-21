@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.1
+
+Detect pre-created Cargo targets lacking `CACHEDIR.TAG` via `.rustc_info.json`
+and a profile `.cargo-lock`, and scan `~/.cache/rust/targets` for abandoned
+`-working` sessions. Treat linked worktree targets as orphaned when their
+checkout's `.git` marker is gone even if untracked leftovers remain. Sweep
+legacy `run-build-script-*` fingerprints whose `invoked.timestamp` sits under
+`build/<entry>/`.
+
 ## cargo-worktree 1.0.1
 
 Resolve the primary source checkout when Git stores its directory separately,
