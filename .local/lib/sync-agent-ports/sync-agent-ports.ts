@@ -1,7 +1,7 @@
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "2.0.0";
+export const VERSION = "2.1.0";
 const READ_TOOLS = "Read, Grep, Glob, Bash, Write, TodoWrite";
 const CLAUDE_METADATA: Record<string, { color: string; tools: string }> = {
   "council-investigator": { color: "yellow", tools: READ_TOOLS },
@@ -48,12 +48,13 @@ export function adaptText(text: string): string {
   return text.trim();
 }
 
-export type Client = "claude" | "kilo" | "agy";
+export type Client = "claude" | "kilo" | "agy" | "devin";
 
 const PORTS = {
   claude: { label: "Claude", directory: ".claude/agents" },
   kilo: { label: "Kilo", directory: ".config/kilo/agent" },
   agy: { label: "Antigravity", directory: ".gemini/config/agents" },
+  devin: { label: "Devin", directory: ".config/devin/agents" },
 };
 
 export function renderDisabled(): string {
@@ -116,6 +117,15 @@ export function renderRole(
       fields.push("mainAgent: false", "subagent: true", "tools:",
         ...tools.map(tool => `  - ${tool}`));
       body = `${options.subagent.trim()}\n\n${body}`;
+    } else if (client === "devin") {
+      if (!options.subagent?.trim()) {
+        throw new Error("Devin requires nonempty subagent guidance");
+      }
+      const tools = hasShell
+        ? ["read", "grep", "glob", "exec", "get_output", "write_to_process", "kill_shell", "write", "todo_write"]
+        : ["read", "write", "todo_write"];
+      fields.push("allowed-tools:", ...tools.map(tool => `  - ${tool}`));
+      body = `${options.subagent.trim()}\n\n${body}`;
     } else {
       fields.push(`color: ${metadata.color}`, `tools: ${metadata.tools}`);
       if (hasShell) {
@@ -150,7 +160,10 @@ function expectedPorts(home: string, client: Client): Map<string, string> {
   const options = {
     guard: join(home, ".codex/hooks/bin/subagent_exec_guard"),
     subagent: client === "agy"
-      ? readFileSync(join(home, ".gemini/SUBAGENT.md"), "utf8") : undefined,
+      ? readFileSync(join(home, ".gemini/SUBAGENT.md"), "utf8")
+      : client === "devin"
+        ? readFileSync(join(home, ".config/devin/SUBAGENT.md"), "utf8")
+        : undefined,
   };
   const ports = new Map(roles.map(role => {
     const config = Bun.TOML.parse(readFileSync(join(source, `${role}.toml`), "utf8"));
@@ -220,7 +233,7 @@ export function syncPorts(home: string, client: Client, check: boolean): number 
 }
 
 if (import.meta.main) {
-  const usage = "Usage: sync-agent-ports <claude|kilo|agy> [--check]";
+  const usage = "Usage: sync-agent-ports <claude|kilo|agy|devin> [--check]";
   try {
     const [client, ...flags] = process.argv.slice(2);
     if (!flags.length && client === "--version") {
@@ -228,7 +241,7 @@ if (import.meta.main) {
     } else if (!flags.length && (client === "-h" || client === "--help")) {
       console.log(usage);
     } else {
-      if ((client !== "claude" && client !== "kilo" && client !== "agy") ||
+      if ((client !== "claude" && client !== "kilo" && client !== "agy" && client !== "devin") ||
           flags.length > 1 || (flags.length === 1 && flags[0] !== "--check")) {
         throw new Error(usage);
       }

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0
+
+Deliver project facts, the skills inventory, and main-agent guidance through
+Devin CLI's `SessionStart` and `PostCompaction` `additionalContext` envelope,
+skipping project and skill refresh on `resume`.
+
 ## 1.2.0
 
 Deliver project facts and the skills inventory through Antigravity's native

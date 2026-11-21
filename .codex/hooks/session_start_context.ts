@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import { isAbsolute, join } from "path";
+import { additionalContext } from "./lib/hook_response.ts";
 import {
   asString,
   handleVersion,
@@ -10,7 +11,7 @@ import {
   writeJson,
 } from "./lib/hook_runtime.ts";
 
-export const VERSION = "1.2.0";
+export const VERSION = "1.3.0";
 const MAX_TRANSCRIPT_BYTES = 256 * 1024;
 
 function inheritedStartup(event: unknown): boolean {
@@ -145,10 +146,45 @@ function antigravityContext(event: unknown): number {
   return 0;
 }
 
+function devinContext(event: unknown): number {
+  const home = process.env.HOME;
+  const eventName = (isRecord(event) ? asString(event.hook_event_name) : undefined) ?? "SessionStart";
+  const source = isRecord(event) ? asString(event.source) : undefined;
+  const projectDir = process.env.DEVIN_PROJECT_DIR;
+  const cwd = projectDir && isAbsolute(projectDir) ? projectDir : process.cwd();
+  const sections: string[] = [];
+  if (home) {
+    const isResume = eventName === "SessionStart" && source === "resume";
+    if (!isResume && cwd && isAbsolute(cwd)) {
+      const bin = join(home, ".codex/hooks/bin");
+      for (const name of ["check_project", "skills_mgr_inventory"]) {
+        const result = runCommand([join(bin, name)], { cwd });
+        process.stderr.write(result.stderr);
+        if (result.error) process.stderr.write(`${name}: ${result.error.message}\n`);
+        if (result.status === 0 && result.stdout.trim()) {
+          sections.push(result.stdout.trimEnd());
+        }
+      }
+    }
+    const mainDoc = join(home, ".config/devin/MAIN.md");
+    try {
+      const text = fs.readFileSync(mainDoc, "utf8").trim();
+      if (text) sections.push(text);
+    } catch {
+      // Missing main document still allows project and skill delivery.
+    }
+  }
+  if (sections.length > 0) {
+    writeJson(additionalContext(`${sections.join("\n\n")}\n`, eventName));
+  }
+  return 0;
+}
+
 function main(): number {
   if (handleVersion(VERSION)) return 0;
   const command = programArgs();
   if (command[0] === "--antigravity") return antigravityContext(readEvent());
+  if (command[0] === "--devin") return devinContext(readEvent());
   if (command.length === 0) {
     process.stderr.write("session_start_context: expected a context command\n");
     return 2;

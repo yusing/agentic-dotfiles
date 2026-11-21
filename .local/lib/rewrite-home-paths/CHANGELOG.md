@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.5
+
+Expand portable home paths in Devin CLI configuration during setup and
+checkout.
+
 ## 1.0.4
 
 Expand portable home paths in Antigravity CLI settings during setup and checkout.

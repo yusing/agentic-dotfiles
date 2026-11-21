@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.12
+# version: 2.10.13
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1867,10 +1867,18 @@ install_vendor() {
       fi
     fi
     info "installing/updating $label"
-    curl -fsSL "$url" | env ${environment[@]+"${environment[@]}"} "$shell"
+    if [ "$url" = https://cli.devin.ai/install.sh ]; then
+      # Upstream install.sh ends with an interactive `devin setup` wizard that
+      # exits non-zero without a TTY after installation succeeds.
+      curl -fsSL "$url" \
+        | sed -E 's#^("\$VERSION_DIR/bin/\$COMPILED_BIN_NAME"|"\$TARGET_BIN") setup$#: #' \
+        | env ${environment[@]+"${environment[@]}"} "$shell" || return
+    else
+      curl -fsSL "$url" | env ${environment[@]+"${environment[@]}"} "$shell" || return
+    fi
   elif [ "$UPGRADE" -eq 1 ]; then
     info "updating $label"
-    "$path" "${updates[@]}"
+    "$path" "${updates[@]}" || return
   fi
   [ -x "$path" ] || die "$label is unavailable at $path"
 

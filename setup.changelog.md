@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.10.13
+
+Skip the trailing interactive `devin setup` wizard when running the Devin CLI
+vendor installer non-interactively, and propagate vendor installer/updater
+failures cleanly.
+
 ## 2.10.12
 
 Register Git home filters without double-quoting Git's pathname placeholder,

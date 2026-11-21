@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0
+
+- Add Devin CLI role generation (`sync-agent-ports devin`) writing `.config/devin/agents/*.md`
+  with native `allowed-tools` and embedded `.config/devin/SUBAGENT.md` guidance.
+
 ## 2.0.0
 
 - Use one generator for Claude, Kilo, and Antigravity role files.

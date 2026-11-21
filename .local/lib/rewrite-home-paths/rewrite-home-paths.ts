@@ -3,14 +3,15 @@ import { resolve, extname } from "node:path";
 import { parseTOML, type AST } from "toml-eslint-parser";
 import { parseTree, createScanner, SyntaxKind, type Node, type ParseError } from "jsonc-parser";
 
-export const VERSION = "1.0.4";
+export const VERSION = "1.0.5";
 type Value = { raw: string } | Map<string, Value> | Value[];
 type Edit = { start: number; end: number; text: string };
 const quote = (s: string) => JSON.stringify(s).replaceAll("\x7f", "\\u007f");
 const antigravitySettings = ".gemini/antigravity-cli/settings.json";
+const devinConfig = ".config/devin/config.json";
 
 export function expandsHome(name: string): boolean {
-  return name === ".gitconfig" || name === antigravitySettings || /^\.(cargo|claude|codex|grok)\//.test(name);
+  return name === ".gitconfig" || name === antigravitySettings || name === devinConfig || /^\.(cargo|claude|codex|grok)\//.test(name);
 }
 
 export function homeReplacer(home: string, expandHome: boolean) {

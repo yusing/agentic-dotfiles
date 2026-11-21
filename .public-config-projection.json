@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6fec35645996b4000ef83782bc48a88f3eb51f41",
+  "sourceCommit": "6ff9fa881af69c8216b908df8c932648a210516a",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -332,13 +332,13 @@
     {
       "path": ".codex/hooks/session_start_context.changelog.md",
       "kind": "file",
-      "sha256": "60fadd5444ebb8b7d9197da2bfdae7f6ff4defb3b71a5c58225cbe0a5b4ecc94",
+      "sha256": "999c5121f0c64a2cf10ce9ef41dc2fb1180407e7eacfd742361804f48dfabb3c",
       "executable": false
     },
     {
       "path": ".codex/hooks/session_start_context.ts",
       "kind": "file",
-      "sha256": "54aba9f20e6b59595c067648a101b60dd35c1dddf88ff3210d9eb52e1b3ebb94",
+      "sha256": "fe6a010588ad23dd61670a661d8158e7905567cd58e553c846e45075020dc325",
       "executable": false
     },
     {
@@ -877,7 +877,7 @@
     {
       "path": ".local/lib/rewrite-home-paths/CHANGELOG.md",
       "kind": "file",
-      "sha256": "1636cc0d295ce4ffa6293e6a1a8db8f403f77ad53bb83c936470def505d529d9",
+      "sha256": "900b2b4c4ba03953bac37ba378e4ebe170be7a941ba7ea81e5ae91fe32364caa",
       "executable": false
     },
     {
@@ -889,7 +889,7 @@
     {
       "path": ".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
       "kind": "file",
-      "sha256": "25ee5b78e1b30bd424fff62867f38bb30dcc36896618acad9e98ef34acbe1589",
+      "sha256": "0f87bb1793adf2b829d770f017100d5ba5a6eda33cbeff9f4c5badf0dbde8c41",
       "executable": false
     },
     {
@@ -931,13 +931,13 @@
     {
       "path": ".local/lib/sync-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "c63360614031c8b12571143faccaf1c7b6ab180916114c433d1bbfc1a40c2c27",
+      "sha256": "8b18dcbd43a616d7a84f1b49f0af7fe56fdf2cfe7858f2515f7d3031168703f0",
       "executable": false
     },
     {
       "path": ".local/lib/sync-agent-ports/sync-agent-ports.ts",
       "kind": "file",
-      "sha256": "a358c711aa5ebc9e2b98fd8c48fff0239bc86bab15228aa96d5cc754c21baa71",
+      "sha256": "88f98ef0404a53f2b14ac93876fbc2cfa610099b11a087e1ffa9eb1011142e9c",
       "executable": false
     },
     {
@@ -1566,25 +1566,25 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "bc9d9bf0da88c5ebc44fedeb065fcb06a163bee0f3331712d79ba523ddf93930",
+      "sha256": "0be28c247686c59e03433913fd370bd750b4705733c9f1a04a21443fdd9ef301",
       "executable": false
     },
     {
       "path": "setup.changelog.md",
       "kind": "file",
-      "sha256": "64cf8e8cdbedc9f6574c937d57575cff44413d7ffb677a37bc7ef74e3b74ef63",
+      "sha256": "a0c04aea45ef73ea2d8d1e1d55f9356c9a4c80f9d40122ee56755375be771e63",
       "executable": false
     },
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "3dab4ec604cf9a3a410604d4a8f53a42e676bcff89574a0c4305322c1316bcb4",
+      "sha256": "d6dbfc28eafdbe3bb23f220d070749064894fe99e95b710118e7e5e31b25e20d",
       "executable": false
     },
     {
       "path": "setup.sh",
       "kind": "file",
-      "sha256": "c69bc8ec423d6dbfe77a14e5223be405c4b5f9687c4702c0c87ed4d55e983385",
+      "sha256": "cb72f83ebea9b4e7ede525c3fb77debd0d4ce234b517b9dbdcdfb81e805a0683",
       "executable": true
     }
   ]

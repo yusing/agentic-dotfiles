@@ -122,9 +122,10 @@ Bazelisk are excluded. macOS uses its system netcat and WebKit framework.
 Arch uses the distribution PostgreSQL package; other platforms use PostgreSQL 18
 with a separate Brew data directory. Setup does not migrate or delete existing
 databases. Switching package sources requires a separate database migration.
-Mosh, Claude Code, Grok, and Antigravity use their declared vendor installers.
+Mosh, Claude Code, Grok, Antigravity, and Devin CLI use their declared vendor installers.
 Install Mekugi separately. Setup does not install standalone Codex.
 Antigravity CLI installs as `agy` and prompts for Google sign-in on first run.
+Devin CLI installs as `devin`; run `devin auth login` on first use.
 
 ### Native installation
 
