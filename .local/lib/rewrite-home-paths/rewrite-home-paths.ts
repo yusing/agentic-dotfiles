@@ -3,13 +3,14 @@ import { resolve, extname } from "node:path";
 import { parseTOML, type AST } from "toml-eslint-parser";
 import { parseTree, createScanner, SyntaxKind, type Node, type ParseError } from "jsonc-parser";
 
-export const VERSION = "1.0.3";
+export const VERSION = "1.0.4";
 type Value = { raw: string } | Map<string, Value> | Value[];
 type Edit = { start: number; end: number; text: string };
 const quote = (s: string) => JSON.stringify(s).replaceAll("\x7f", "\\u007f");
+const antigravitySettings = ".gemini/antigravity-cli/settings.json";
 
 export function expandsHome(name: string): boolean {
-  return name === ".gitconfig" || /^\.(cargo|claude|codex|grok)\//.test(name);
+  return name === ".gitconfig" || name === antigravitySettings || /^\.(cargo|claude|codex|grok)\//.test(name);
 }
 
 export function homeReplacer(home: string, expandHome: boolean) {
@@ -182,6 +183,7 @@ export function rewriteConfig(text: string, format: string, home: string, expand
 }
 
 function isRuntimeConfig(name: string): boolean {
+  if (name === antigravitySettings) return true;
   if ([".cargo/config.toml", ".claude/settings.json", ".codex/config.toml", ".codex/hooks.json", ".config/fish/config.fish", ".gitconfig", ".grok/config.toml", ".bashrc", ".zsh/fish-mirror.zsh", ".zshrc"].includes(name)) return true;
   if (name.startsWith(".claude/agents/")) return extname(name) === ".md";
   if (name.startsWith(".codex/agents/")) return extname(name) === ".toml";

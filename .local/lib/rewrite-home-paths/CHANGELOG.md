@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+Expand portable home paths in Antigravity CLI settings during setup and checkout.
+
 ## 1.0.3
 
 Expand portable `$HOME` paths in Git configuration during setup and checkout so Git
