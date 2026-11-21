@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.10.12
+
+Register Git home filters without double-quoting Git's pathname placeholder,
+so checkout expands portable home paths in client configuration.
+
 ## 2.10.11
 
 Stop installing standalone Codex through setup. Mekugi is installed separately.

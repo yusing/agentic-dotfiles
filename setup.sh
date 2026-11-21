@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.11
+# version: 2.10.12
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -1159,6 +1159,13 @@ rewrite_home_paths() {
   "${LOCAL_BIN}/rewrite-home-paths"
 }
 
+apply_git_home_filters() {
+  # Git already shell-quotes %f when it substitutes the pathname.
+  git config --local filter.home.clean 'bun "$HOME/.local/lib/rewrite-home-paths/git-home-filter.ts" clean %f'
+  git config --local filter.home.smudge 'bun "$HOME/.local/lib/rewrite-home-paths/git-home-filter.ts" smudge %f'
+  git config --local filter.home.required true
+}
+
 # ---------------------------------------------------------------------------
 # Cross-platform tools managed by mise
 # ---------------------------------------------------------------------------
@@ -2251,9 +2258,7 @@ main() {
   rewrite_home_paths
 
   STEP="apply git filters"
-  git config --local filter.home.clean 'bun "$HOME/.local/lib/rewrite-home-paths/git-home-filter.ts" clean "%f"'
-  git config --local filter.home.smudge 'bun "$HOME/.local/lib/rewrite-home-paths/git-home-filter.ts" smudge "%f"'
-  git config --local filter.home.required true
+  apply_git_home_filters
 
   STEP="set login shell"
   ensure_fish_login_shell
