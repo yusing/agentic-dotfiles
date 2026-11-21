@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "aad08f2929a7b7f118c1080752cf4d3cc754ca18",
+  "sourceCommit": "437dc0ec7b8a22db4c165c4ba219d4411c2a8337",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -578,7 +578,7 @@
     {
       "path": ".config/kilo/agent/investigator.md",
       "kind": "file",
-      "sha256": "97d9555205a38011db564db740488897a93e785625c291ed9330ae97a885bc82",
+      "sha256": "b424408cb7200d7987a080e4ee08f90d9b66b7a35a434d987b9738f583742ad1",
       "executable": false
     },
     {
