@@ -147,7 +147,6 @@
     "watchexec": {"packages": {"brew": ["watchexec"]}, "commands": ["watchexec"], "manager": "brew", "brew_prefix": "watchexec", "legacy_mise": ["aqua:watchexec/watchexec"]},
     "zoxide": {"packages": {"brew": ["zoxide"]}, "commands": ["zoxide"], "manager": "brew", "brew_prefix": "zoxide", "legacy_mise": ["aqua:ajeetdsouza/zoxide"]},
     "yazi": {"packages": {"brew": ["yazi"]}, "commands": ["yazi"], "manager": "brew", "brew_prefix": "yazi", "legacy_mise": ["aqua:sxyazi/yazi"]},
-    "hunk": {"packages": {"brew": ["hunk"]}, "commands": ["hunk"], "manager": "brew", "brew_prefix": "hunk", "legacy_mise": ["aqua:modem-dev/hunk"]},
     "oxfmt": {"packages": {"brew": ["oxfmt"]}, "commands": ["oxfmt"], "manager": "brew", "brew_prefix": "oxfmt", "legacy_mise": ["aqua:oxc-project/oxc/oxfmt"]},
     "oxlint": {"packages": {"brew": ["oxlint"]}, "commands": ["oxlint"], "manager": "brew", "brew_prefix": "oxlint", "legacy_mise": ["aqua:oxc-project/oxc/oxlint"]},
     "pnpm": {"packages": {"brew": ["pnpm"]}, "commands": ["pnpm"], "manager": "brew", "brew_prefix": "pnpm", "legacy_mise": ["aqua:pnpm/pnpm"]},
