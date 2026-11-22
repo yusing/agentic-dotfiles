@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.33
+
+Restore building `herdr-ai-usage` for the Herdr app status bar helper.
+
 ## 1.0.32
 
 Build the Devin todo Work pane sync hook (`devin_work_sync`).
