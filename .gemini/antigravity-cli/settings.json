@@ -1,0 +1,30 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/settings.json",
+  "colorScheme": "tokyo night",
+  "permissions": {
+    "allow": [
+      "read_file($HOME/.codex/AGENTS.md)",
+      "read_file($HOME/.codex/DELEGATION.md)",
+      "read_file($HOME/.codex/DOCS.md)",
+      "read_file($HOME/.codex/FINISHING.md)",
+      "read_file($HOME/.codex/FRONTEND.md)",
+      "read_file($HOME/.codex/GITHUB.md)",
+      "read_file($HOME/.codex/IMPLEMENTATION.md)",
+      "read_file($HOME/.codex/INSTRUCTION-AUTHORING.md)",
+      "read_file($HOME/.codex/MAIN.md)",
+      "read_file($HOME/.codex/MODEL-ROUTING.md)",
+      "read_file($HOME/.codex/REFACTOR.md)",
+      "read_file($HOME/.codex/SKILL-AUTHORING.md)",
+      "read_file($HOME/.codex/SUBAGENT.md)",
+      "read_file($HOME/.codex/TASK-FILE.md)",
+      "read_file($HOME/.codex/TESTING.md)",
+      "read_file($HOME/.gemini/AGENTS.md)",
+      "read_file($HOME/.gemini/DELEGATION.md)",
+      "read_file($HOME/.gemini/MAIN.md)",
+      "read_file($HOME/.gemini/SUBAGENT.md)"
+    ]
+  },
+  "trustedWorkspaces": [
+    "$HOME"
+  ]
+}

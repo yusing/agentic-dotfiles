@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "2fa6b2678036342897ca8d898ada83df8a27de81",
+  "sourceCommit": "488cd62bbf54d73971a5b25799099759757bcd90",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -18,6 +18,12 @@
       "path": ".bunfig.toml",
       "kind": "file",
       "sha256": "77b43cf26cfb7fb6e3e793f61bff1baac87e000690e6a090827c48117bf76dc6",
+      "executable": false
+    },
+    {
+      "path": ".cargo/config.toml",
+      "kind": "file",
+      "sha256": "3aca7b8318aafd2fceea4a0deb1a8c941c2c22db76d9c85c87f7bfc0f5d29102",
       "executable": false
     },
     {
@@ -516,9 +522,158 @@
       "executable": false
     },
     {
+      "path": ".config/devin/AGENTS.md",
+      "kind": "file",
+      "sha256": "23b5295697b9779c18d381de9f25727a6ea8463abd79c435aed3b93c4a533ff3",
+      "executable": false
+    },
+    {
+      "path": ".config/devin/agents/council-investigator.md",
+      "kind": "file",
+      "sha256": "0e00520ffd9faad52b25559b2c436c44e620ac2feb74e41c072d24f7111b7028",
+      "executable": false
+    },
+    {
+      "path": ".config/devin/agents/council-member.md",
+      "kind": "file",
+      "sha256": "008d029fba537c1a7640fa48d6bceef8ce99a42e7b1178c50ea2f4b09fdd70d9",
+      "executable": false
+    },
+    {
+      "path": ".config/devin/agents/explorer.md",
+      "kind": "file",
+      "sha256": "ab71db05898aaedca7b745edc7c36536b369dc3f606b3f8aa44ef09992945294",
+      "executable": false
+    },
+    {
+      "path": ".config/devin/agents/investigator.md",
+      "kind": "file",
+      "sha256": "bfc0961e4e12933828be4ecb19b2f0cc5d827e5506c2d27f5a2d7f49df4a99e3",
+      "executable": false
+    },
+    {
+      "path": ".config/devin/agents/review-correctness.md",
+      "kind": "file",
+      "sha256": "9d64c1b6d24e493a0c0c2bcbca270416a60ba86b0ab55083417bbdc66a5a6518",
+      "executable": false
+    },
+    {
+      "path": ".config/devin/agents/review-simplify.md",
+      "kind": "file",
+      "sha256": "c682b31b3500a40618648bbd2a9ac7a8cb2f3b25d755522b4b7fae96fdbca602",
+      "executable": false
+    },
+    {
+      "path": ".config/devin/agents/ui-reviewer.md",
+      "kind": "file",
+      "sha256": "b8c1d487499322aae2557866a1269c98c691e8ed3936aaa8f08fae122cfc989c",
+      "executable": false
+    },
+    {
+      "path": ".config/devin/config.json",
+      "kind": "file",
+      "sha256": "d520a2b844f04b97714469d5b6b88cb2e280bf9dd718f067bb8bbc0b641a5885",
+      "executable": false
+    },
+    {
+      "path": ".config/devin/DELEGATION.md",
+      "kind": "file",
+      "sha256": "f5a875849d3bb3ec937e98f73273ceb65e42d1387d1db4ef3a95a06139d77f1d",
+      "executable": false
+    },
+    {
+      "path": ".config/devin/MAIN.md",
+      "kind": "symlink",
+      "target": "../../.codex/MAIN.md"
+    },
+    {
+      "path": ".config/devin/SUBAGENT.md",
+      "kind": "file",
+      "sha256": "7ca6e84b8c7b549d5ebe711abc1357afe1fe848b002978d2c61dda932f5638d8",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/completions/codex.fish",
+      "kind": "file",
+      "sha256": "6ae4373c54bceb809a2235ad79946d55e58cc5a7dee64e59a10c19ed23b0165b",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/completions/gh.fish",
+      "kind": "file",
+      "sha256": "b0158a58ec1bed551ccb5be828e3e7a948a8fa31766d0b496523f4e774c41237",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/completions/git-agent.fish",
+      "kind": "file",
+      "sha256": "4bbb8fc8ebc29364d323bc2eb905a5e9297d4f959a37c69abececceea01bcc57",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/completions/golangci-lint.fish",
+      "kind": "file",
+      "sha256": "aa63de2c3dc4190aa60c70749febbb48212092ed4e42e5f1a19ed77d28e6a725",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/completions/nvm.fish",
+      "kind": "file",
+      "sha256": "75b5b7e36083f6649fcad578798fcc6d23c189e86f19aca9bee2296e26415853",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/completions/shadowtree.fish",
+      "kind": "file",
+      "sha256": "8db6364823df7a59c78d0a0c741edb70f3b575a8c8b4985a786f9893de9fb87f",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/completions/skills-mgr.fish",
+      "kind": "file",
+      "sha256": "fae36451809708db83fe113e3be115fb06fede00d17d5e362736a17976fd9600",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/conf.d/gen_commit_msg.fish",
+      "kind": "file",
+      "sha256": "2f88f2a18df3e9dc666d0dbcebc0434675be8a6bd6271f3c5212154b144a7841",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/conf.d/gen_release_note.fish",
+      "kind": "file",
+      "sha256": "06078bce194e180fb5d48b2dd339cd6bf0fe92731cb354874c99a2e93ccd13a1",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/conf.d/nvm.fish",
+      "kind": "file",
+      "sha256": "28a058e877d82c68ad0c65fa69fc392daacab66bf15539d0051e6b48b6dee8d4",
+      "executable": false
+    },
+    {
       "path": ".config/fish/config.fish",
       "kind": "file",
       "sha256": "07cef31e12d8ea2e0ff80911947fa169b81640a501178af04e4016d556bae837",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/functions/_gen_normalize_prompt.fish",
+      "kind": "file",
+      "sha256": "090c87987d2807d0df41c2a5ba93497320650e0732b3edaac2be5cd79c1c7ede",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/functions/gen_commit_msg.fish",
+      "kind": "file",
+      "sha256": "7e7ca4d0ee5c7543711310a610cd7fd3f7f353a6dcd073eb3080c8a10e72a58c",
+      "executable": false
+    },
+    {
+      "path": ".config/fish/functions/gen_release_note.fish",
+      "kind": "file",
+      "sha256": "c2cba596aca1a4e69a915bd1953df107bb206efb5a66efda6679f7f30681bf97",
       "executable": false
     },
     {
@@ -531,6 +686,12 @@
       "path": ".config/ghostty/config",
       "kind": "file",
       "sha256": "95dac332a8db0aa3f37b0e8fb9408e831d886f1e52c5584b9ea4527bde7752b7",
+      "executable": false
+    },
+    {
+      "path": ".config/gopls/config.json",
+      "kind": "file",
+      "sha256": "5af00887785e9cd2f63180837ffc168f4bb478763e89379680bdc4143ddbde24",
       "executable": false
     },
     {
@@ -738,21 +899,122 @@
       "executable": false
     },
     {
+      "path": ".gemini/AGENTS.md",
+      "kind": "file",
+      "sha256": "abd728c2249936a4ba47b6268c85c3238d0fbe2de37146fffae1a16b074d7e86",
+      "executable": false
+    },
+    {
+      "path": ".gemini/antigravity-cli/settings.json",
+      "kind": "file",
+      "sha256": "630890f93ed763eb0fb4a1a4ccb05a84412cea67de75717934afa8ab0bcfdf36",
+      "executable": false
+    },
+    {
+      "path": ".gemini/config/agents/council-investigator.md",
+      "kind": "file",
+      "sha256": "ee5c085dc0f97e75bd8651cf633d49b0ecce2d7215888ea4fa6355c476640825",
+      "executable": false
+    },
+    {
+      "path": ".gemini/config/agents/council-member.md",
+      "kind": "file",
+      "sha256": "6bb9d94979c17dab7c889d21993dfda9d92f88052478fc46738e80d5f5d60efb",
+      "executable": false
+    },
+    {
+      "path": ".gemini/config/agents/explorer.md",
+      "kind": "file",
+      "sha256": "8d9b09df7939ce26e3b0c26485ddc319e29cae8b087b5c6793fb055297603f4f",
+      "executable": false
+    },
+    {
+      "path": ".gemini/config/agents/investigator.md",
+      "kind": "file",
+      "sha256": "8ea8ce8c23df95dd41306a9e33d399067499bb2a449199976d645a5f473f72b7",
+      "executable": false
+    },
+    {
+      "path": ".gemini/config/agents/review-correctness.md",
+      "kind": "file",
+      "sha256": "13e84d9f8b537a6a698dafc10240df8ca305a35da05affb6cd7cadd6a425027a",
+      "executable": false
+    },
+    {
+      "path": ".gemini/config/agents/review-simplify.md",
+      "kind": "file",
+      "sha256": "686287682f331e7e81c00d2b7cd029bf4d58a80c13a8d3df0cb5352a77e2d39a",
+      "executable": false
+    },
+    {
+      "path": ".gemini/config/agents/ui-reviewer.md",
+      "kind": "file",
+      "sha256": "c7f2f7ae1e7f420b1c12edd9b2db9a1bc7f9eb31b3ee774c45facaa53a6c2c6d",
+      "executable": false
+    },
+    {
+      "path": ".gemini/config/hooks.json",
+      "kind": "file",
+      "sha256": "63bcd288ef3219ad8ba84318da1c99afd5238b813fe73adc89f78e92b38122e1",
+      "executable": false
+    },
+    {
+      "path": ".gemini/DELEGATION.md",
+      "kind": "file",
+      "sha256": "dd4aa7163227940690ec67dc6955d5027bc585065cb80ecfe172d8ee3ea03440",
+      "executable": false
+    },
+    {
+      "path": ".gemini/MAIN.md",
+      "kind": "symlink",
+      "target": "../.codex/MAIN.md"
+    },
+    {
+      "path": ".gemini/SUBAGENT.md",
+      "kind": "file",
+      "sha256": "61fdd0c42aed6610eaaef068f6c0ae332f928ea3cd3bb70e799610cc40002a8b",
+      "executable": false
+    },
+    {
+      "path": ".gitattributes",
+      "kind": "file",
+      "sha256": "1ff30da6d521984be2e328830c8e262757d3c8b7db06bd6ea91f7684b0ed13c3",
+      "executable": false
+    },
+    {
       "path": ".gitconfig",
       "kind": "file",
       "sha256": "74e0b8760751957e859e8d4759f5bd0ee354bbea53f80c9e5d1e0404def59c8a",
       "executable": false
     },
     {
+      "path": ".githooks/post-merge",
+      "kind": "file",
+      "sha256": "a79673f2d69c55b9d7044a434fb767a49ee58b307d2a9ddb6be912306fa3d771",
+      "executable": true
+    },
+    {
+      "path": ".githooks/post-merge.changelog.md",
+      "kind": "file",
+      "sha256": "6602dc111b19758870c99f866923e1551e0e1087043bec60e4e39498843373f4",
+      "executable": false
+    },
+    {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "ed3d31b8685b89b361fd473e83750fb68dd2d500b772e9ed92e9e23546bb8408",
+      "sha256": "7e7ed59c11ebc7c78ef99e34786e21cc8ae80e955b2f735fe512e8098c631882",
       "executable": false
     },
     {
       "path": ".gitignore_global",
       "kind": "file",
       "sha256": "ca0433170f597fd75a93ff96bfbfe44bd792742cf7d1982693604ec1fb18607e",
+      "executable": false
+    },
+    {
+      "path": ".golangci.yml",
+      "kind": "file",
+      "sha256": "197f01d46cc61d40acaaba2e7872557a6e11ccdc0a173964dd669fe2823a692a",
       "executable": false
     },
     {
@@ -778,6 +1040,18 @@
       "kind": "file",
       "sha256": "023bcb743305583e0438fd6e2d6ba0206111f29d4b8fd63d903ce0c50f972c82",
       "executable": false
+    },
+    {
+      "path": ".grok/hooks/background_hook.changelog.md",
+      "kind": "file",
+      "sha256": "a47e4af449f4edfa3ee829e526a2fd7baf9355b1c6ca86ecd43809f8d13e411f",
+      "executable": false
+    },
+    {
+      "path": ".grok/hooks/background_hook.sh",
+      "kind": "file",
+      "sha256": "151af2b86e67d59af8bb29c7713796c5b564230381bda10626dacb5427a6f343",
+      "executable": true
     },
     {
       "path": ".grok/hooks/codex-port.json",
@@ -809,6 +1083,30 @@
       "target": "../../.codex/AGENTS.md"
     },
     {
+      "path": ".local/bin/cargo",
+      "kind": "file",
+      "sha256": "3d2c29a51453d3fc577cecacc75e2ebd4b03e41229b91a071cd6b019f36bb4ad",
+      "executable": true
+    },
+    {
+      "path": ".local/bin/cargo-sccache",
+      "kind": "file",
+      "sha256": "3becc38b76c095754e3be56a77d80270d42060443b7e24725a490fd28150493d",
+      "executable": true
+    },
+    {
+      "path": ".local/bin/cargo-sccache.changelog.md",
+      "kind": "file",
+      "sha256": "8c9f1509f9eb69b715d90f00f4a54b7f644b6bb5c2192a6a22e344bbe973be78",
+      "executable": false
+    },
+    {
+      "path": ".local/bin/cargo.changelog.md",
+      "kind": "file",
+      "sha256": "89e9d48941bd0bf12a9d80b17e2ed4f84381c57d13ca25a0ec320d97504e9bff",
+      "executable": false
+    },
+    {
       "path": ".local/bin/check_project",
       "kind": "file",
       "sha256": "7a005aa3f2b68787044fd65ec36ef8151e385fad655fb104de91e668c67970bc",
@@ -819,6 +1117,12 @@
       "kind": "file",
       "sha256": "e466721d380eb50bebdd7589d6de98a8c4f339ce2f1129c155c7bfe444b74184",
       "executable": false
+    },
+    {
+      "path": ".local/bin/claude-config-helper",
+      "kind": "file",
+      "sha256": "20fc6ac1a0d83ed1483ff5f66a571b1810dfc14d79637843589046773bb98e5b",
+      "executable": true
     },
     {
       "path": ".local/bin/compile-agent-tools",
@@ -839,6 +1143,12 @@
       "executable": true
     },
     {
+      "path": ".local/bin/svn-merge.changelog.md",
+      "kind": "file",
+      "sha256": "62a0beb9b4c7dd3f9debd086055a88d7dce0c212ed0f4ed9bb41458269677eec",
+      "executable": false
+    },
+    {
       "path": ".local/lib/cleanup-safety.ts",
       "kind": "file",
       "sha256": "d0efb01c2ad6841dcf352e4f0fae99bfef45fd0e4cfdcd95f387f4a06fc0027f",
@@ -854,6 +1164,12 @@
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
       "sha256": "67524377cb6571288bc3a54bb158e9927eacf1d3b0935f8cc4d10c317fc2ef3e",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/disk-clean/cargo-worktree.ts",
+      "kind": "file",
+      "sha256": "43634483d044f58c981d216d86087d5ef951a72029bd5b8be4aaa75ac3fa5aea",
       "executable": false
     },
     {
@@ -926,6 +1242,12 @@
       "path": ".local/lib/rewrite-home-paths/CHANGELOG.md",
       "kind": "file",
       "sha256": "900b2b4c4ba03953bac37ba378e4ebe170be7a941ba7ea81e5ae91fe32364caa",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/rewrite-home-paths/git-home-filter.ts",
+      "kind": "file",
+      "sha256": "328d7ebadb4ffe6b5a284161ef0f9413511981e3373fb36f6cc8135ab9370932",
       "executable": false
     },
     {
@@ -1136,6 +1458,12 @@
       "path": ".skills-mgr/skills/deslop/SKILL.md",
       "kind": "file",
       "sha256": "1f9c8fff56aabdd2b1fc70fbacfa4689076d98c5c0d59098fcbaa1d9f6dfe23b",
+      "executable": false
+    },
+    {
+      "path": ".skills-mgr/skills/find-skills/SKILL.md",
+      "kind": "file",
+      "sha256": "88bbe166085c7715c3676ce4e770a287aeb40d2c83b96bdf263ab5bc2ad90e42",
       "executable": false
     },
     {

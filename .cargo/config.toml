@@ -1,0 +1,13 @@
+# Shared defaults; project configuration and environment can override these.
+[build]
+rustc-wrapper = ".local/bin/cargo-sccache"
+
+[profile.dev]
+# Keep sccache by default without blocking project-level package overrides.
+incremental = false
+
+[env]
+SCCACHE_DIR = { value = ".cache/rust/sccache", relative = true }
+SCCACHE_CACHE_SIZE = "100G"
+# Permit projects opting into incremental builds to compile without caching them.
+SCCACHE_ALLOW_INCREMENTAL = "1"

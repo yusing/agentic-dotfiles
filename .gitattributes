@@ -1,0 +1,22 @@
+.gitconfig filter=home
+
+.config/zed/settings.json filter=home
+
+.claude/settings.json filter=home
+.claude/agents/*.md filter=home
+
+.codex/config.toml filter=home
+.codex/hooks.json filter=home
+.codex/agents/*.toml filter=home
+
+.gemini/antigravity-cli/settings.json filter=home
+
+.config/devin/config.json filter=home
+
+.grok/config.toml filter=home
+.grok/hooks/*.json filter=home
+.grok/hooks/*.toml filter=home
+.grok/hooks/*.yaml filter=home
+.grok/hooks/*.yml filter=home
+
+.cargo/config.toml filter=home

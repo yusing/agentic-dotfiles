@@ -1,0 +1,64 @@
+#!/bin/sh
+# version: 1.1.1
+# Give each Cargo workspace checkout its own target directory.
+
+cargo="$HOME/.cargo/bin/cargo"
+if [ ! -x "$cargo" ]; then
+    rustup=$(command -v rustup) || { echo 'cargo: rustup not found' >&2; exit 127; }
+    cargo="${rustup%/*}/cargo"
+fi
+
+workspace_manifest() {
+    [ -z "${CARGO_TARGET_DIR+x}${CARGO_BUILD_TARGET_DIR+x}" ] || return 1
+    toolchain='' manifest='' subcommand=''
+    case ${1-} in +*) toolchain=$1; shift ;; esac
+    while [ "$#" -gt 0 ]; do
+        case $1 in
+            --) break ;;
+            --target-dir|--target-dir=*|--version|-V|--list|--help|-h|-C*) return 1 ;;
+            --manifest-path|-m) shift; [ "$#" -gt 0 ] || return 1; manifest=$1 ;;
+            --manifest-path=*|-m=*) manifest=${1#*=} ;;
+            --config|--color|-Z) shift; [ "$#" -gt 0 ] || return 1 ;;
+            -*) ;;
+            *) [ -n "$subcommand" ] || subcommand=$1 ;;
+        esac
+        shift
+    done
+    case $subcommand in
+        ''|help|version|locate-project|install|uninstall|new|init|search|info|login|logout|owner|yank) return 1 ;;
+    esac
+
+    # "version" merges configuration without consuming the target directory;
+    # locate-project now validates its type even in an unconfigured checkout.
+    set -- --config 'build.target-dir=[]' version
+    [ -z "$toolchain" ] || set -- "$toolchain" "$@"
+    "$cargo" "$@" >/dev/null 2>&1 || return 1
+    set -- locate-project --workspace --message-format plain
+    [ -z "$manifest" ] || set -- "$@" --manifest-path "$manifest"
+    [ -z "$toolchain" ] || set -- "$toolchain" "$@"
+    "$cargo" "$@" 2>/dev/null
+}
+
+if manifest=$(workspace_manifest "$@") && [ -n "$manifest" ]; then
+    root=${manifest%/*}
+    root=$(CDPATH='' cd -P "${root:-/}" && pwd -P) || exec "$cargo" "$@"
+    manifest="${root%/}/${manifest##*/}"
+    if command -v sha256sum >/dev/null 2>&1; then
+        digest=$(printf '%s' "$manifest" | sha256sum)
+    else
+        digest=$(printf '%s' "$manifest" | shasum -a 256)
+    fi
+    if [ -n "$digest" ]; then
+        target="$HOME/.cache/rust/targets/${digest%% *}"
+        mkdir -p "$target" || exit 1
+        exec 9<"$target"
+        config=$("${0%/*}/cargo-worktree" "$manifest") || exit 1
+        # Keep checkout-specific paths out of sccache's CARGO_* environment.
+        # Later --config options still take precedence; rustup's selector goes first.
+        case ${1-} in
+            +*) toolchain=$1; shift; set -- "$toolchain" --config "$config" "$@" ;;
+            *) set -- --config "$config" "$@" ;;
+        esac
+    fi
+fi
+exec "$cargo" "$@"

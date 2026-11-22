@@ -1,0 +1,6 @@
+{
+  "analyses": {"fillreturns": false, "shadow": false},
+  "staticcheck": false,
+  "build.experimentalWorkspaceModule": true,
+  "semanticTokens": true
+}

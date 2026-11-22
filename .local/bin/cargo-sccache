@@ -1,0 +1,14 @@
+#!/bin/sh
+# version: 1.0.0
+# Both libraries include a generated private module by absolute path. Keep its
+# source name stable in the metadata sccache hashes for downstream crates.
+case ${CARGO_PKG_NAME-}:${CARGO_CRATE_NAME-}:${OUT_DIR-} in
+    serde:serde:/*|serde_core:serde_core:/*)
+        package="$CARGO_PKG_NAME-${CARGO_PKG_VERSION-}"
+        if [ -n "${CARGO_PKG_VERSION-}" ] &&
+            [ "${CARGO_MANIFEST_DIR-}" = "${CARGO_HOME:-$HOME/.cargo}/registry/src/index.crates.io-1949cf8c6b5b557f/$package" ]; then
+            compiler=$1; shift
+            set -- "$compiler" --remap-path-prefix "$OUT_DIR=/cargo-generated/$package" "$@"
+        fi ;;
+esac
+exec sccache "$@"

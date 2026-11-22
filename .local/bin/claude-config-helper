@@ -1,0 +1,189 @@
+#!/usr/bin/env python3
+"""Manage Claude's main settings and active profile without duplicating shell logic."""
+
+from __future__ import annotations
+
+import json
+import os
+import shlex
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+from typing import Any
+
+CONFIG_DIR = Path.home() / ".claude"
+MAIN_PATH = CONFIG_DIR / "settings.json"
+ACTIVE_PATH = CONFIG_DIR / ".active-settings-profile"
+
+
+class ConfigError(Exception):
+    pass
+
+
+def load_object(path: Path) -> dict[str, Any]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ConfigError(f"no such file {path}") from exc
+    except json.JSONDecodeError as exc:
+        raise ConfigError(f"invalid JSON in {path}: {exc}") from exc
+    except OSError as exc:
+        raise ConfigError(f"cannot read {path}: {exc}") from exc
+
+    if not isinstance(value, dict):
+        raise ConfigError(f"expected a JSON object in {path}")
+    return value
+
+
+def encode_object(value: dict[str, Any]) -> bytes:
+    return (json.dumps(value, indent=2, ensure_ascii=False) + "\n").encode()
+
+
+def atomic_write(path: Path, data: bytes) -> None:
+    mode = path.stat().st_mode if path.exists() else 0o600
+    fd, temporary_name = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    temporary_path = Path(temporary_name)
+    try:
+        os.fchmod(fd, mode)
+        with os.fdopen(fd, "wb") as output:
+            output.write(data)
+            output.flush()
+            os.fsync(output.fileno())
+        os.replace(temporary_path, path)
+    except BaseException:
+        temporary_path.unlink(missing_ok=True)
+        raise
+
+
+def profile_path(name: str) -> Path:
+    if not name or Path(name).name != name or name in {".", ".."}:
+        raise ConfigError("profile must be a name, not a path")
+    return CONFIG_DIR / f"{name}.settings.json"
+
+
+def select_profile(name: str) -> None:
+    profile = load_object(profile_path(name))
+    if profile.get("env") is None:
+        raise ConfigError(f"no env in {profile_path(name)}")
+
+    main = load_object(MAIN_PATH)
+    updated = {**main, "env": profile["env"]}
+    atomic_write(MAIN_PATH, encode_object(updated))
+    atomic_write(ACTIVE_PATH, f"{name}\n".encode())
+
+
+def active_profile() -> tuple[str, Path]:
+    try:
+        name = ACTIVE_PATH.read_text(encoding="utf-8").strip()
+    except FileNotFoundError as exc:
+        raise ConfigError("no active profile; run claude-use <profile> first") from exc
+    except OSError as exc:
+        raise ConfigError(f"cannot read {ACTIVE_PATH}: {exc}") from exc
+    return name, profile_path(name)
+
+
+def run_editor(path: Path) -> int:
+    editor = os.environ.get("EDITOR_INTERACTIVE") or os.environ.get("EDITOR")
+    if not editor:
+        raise ConfigError("EDITOR_INTERACTIVE or EDITOR must be set")
+    try:
+        command = shlex.split(editor)
+    except ValueError as exc:
+        raise ConfigError(f"invalid editor command: {exc}") from exc
+    if not command:
+        raise ConfigError("editor command is empty")
+    try:
+        return subprocess.run([*command, str(path)], check=False).returncode
+    except OSError as exc:
+        raise ConfigError(f"cannot run editor: {exc}") from exc
+
+
+def write_edited(
+    main: dict[str, Any], profile: dict[str, Any], edited: dict[str, Any]
+) -> None:
+    profile_keys = set(profile)
+
+    updated_main = {
+        key: value
+        for key, value in edited.items()
+        if key not in profile_keys
+    }
+    updated_main.update({
+        key: value
+        for key, value in main.items()
+        if key in profile_keys
+    })
+    updated_profile = {
+        key: edited[key]
+        for key in profile
+        if key in edited
+    }
+
+    main_changed = updated_main != main
+    profile_changed = updated_profile != profile
+    if not main_changed and not profile_changed:
+        return
+
+    _, selected_path = active_profile()
+    old_profile = selected_path.read_bytes()
+
+    if profile_changed:
+        atomic_write(selected_path, encode_object(updated_profile))
+    try:
+        if main_changed:
+            atomic_write(MAIN_PATH, encode_object(updated_main))
+    except BaseException:
+        if profile_changed:
+            atomic_write(selected_path, old_profile)
+        raise
+
+
+def edit_merged() -> int:
+    _, selected_path = active_profile()
+    main = load_object(MAIN_PATH)
+    profile = load_object(selected_path)
+    merged = {**main, **profile}
+
+    CONFIG_DIR.mkdir(mode=0o700, parents=True, exist_ok=True)
+    fd, temporary_name = tempfile.mkstemp(
+        prefix="claude-settings-",
+        suffix=".json",
+    )
+    temporary_path = Path(temporary_name)
+    try:
+        with os.fdopen(fd, "wb") as output:
+            output.write(encode_object(merged))
+        editor_status = run_editor(temporary_path)
+        if editor_status:
+            return editor_status
+        edited = load_object(temporary_path)
+        write_edited(main, profile, edited)
+        return 0
+    finally:
+        temporary_path.unlink(missing_ok=True)
+
+
+def main() -> int:
+    if len(sys.argv) == 3 and sys.argv[1] == "use":
+        select_profile(sys.argv[2])
+        return 0
+    if len(sys.argv) == 2 and sys.argv[1] == "edit":
+        return edit_merged()
+
+    print(
+        "usage: claude-config-helper use <profile> | claude-config-helper edit",
+        file=sys.stderr,
+    )
+    return 2
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except ConfigError as exc:
+        print(f"claude-config-helper: {exc}", file=sys.stderr)
+        raise SystemExit(1)
+    except OSError as exc:
+        print(f"claude-config-helper: {exc}", file=sys.stderr)
+        raise SystemExit(1)

@@ -1,0 +1,166 @@
+version: "2"
+linters:
+  default: all
+  enable:
+    - gomodguard_v2
+  disable:
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - cyclop
+    - depguard
+    - dogsled
+    - dupl
+    - err113
+    - exhaustive
+    - exhaustruct
+    - forcetypeassert
+    - funcorder
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - gocyclo
+    - godox
+    - godot
+    - gomoddirectives
+    - gosec
+    - gosmopolitan
+    - ireturn
+    - lll
+    - maintidx
+    - makezero
+    - mnd
+    - nakedret
+    - nestif
+    - nilnil
+    - nlreturn
+    - noctx
+    - noinlineerr
+    - nonamedreturns
+    - paralleltest
+    - prealloc
+    - rowserrcheck
+    - sqlclosecheck
+    - tagliatelle
+    - testpackage
+    - tparallel
+    - varnamelen
+    - wrapcheck
+    - wsl
+    - wsl_v5
+  settings:
+    forbidigo:
+      forbid:
+        - pattern: ^print(ln)?$
+    funlen:
+      lines: -1
+      statements: 120
+    gocyclo:
+      min-complexity: 14
+    godox:
+      keywords:
+        - FIXME
+        - TODO
+    gomoddirectives:
+      replace-allow-list: []
+    govet:
+      disable:
+        - shadow
+        - fieldalignment
+      enable-all: true
+    misspell:
+      locale: US
+    revive:
+      rules:
+        - name: struct-tag
+        - name: blank-imports
+        - name: context-as-argument
+        - name: context-keys-type
+        - name: error-return
+        - name: error-strings
+        - name: error-naming
+        - name: exported
+          disabled: true
+        - name: if-return
+        - name: increment-decrement
+        - name: var-naming
+        - name: var-declaration
+        - name: package-comments
+          disabled: true
+        - name: range
+        - name: receiver-naming
+        - name: time-naming
+        - name: unexported-return
+        - name: indent-error-flow
+        - name: errorf
+        - name: empty-block
+        - name: superfluous-else
+        - name: unused-parameter
+          disabled: true
+        - name: unreachable-code
+        - name: redefines-builtin-id
+    staticcheck:
+      checks:
+        - all
+        - -SA1019
+    tagalign:
+      align: false
+      sort: true
+      order:
+        - description
+        - json
+        - toml
+        - yaml
+        - yml
+        - label
+        - label-slice-as-struct
+        - file
+        - kv
+        - export
+    testifylint:
+      disable:
+        - suite-dont-use-pkg
+        - require-error
+        - go-require
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+      - web/config$
+      - web/uc/types$
+    rules:
+      - linters: [errcheck]
+        source: '^\s*defer\s+.*\.Close\(\)'
+      - linters: [errcheck]
+        path: '_test\.go$'
+        source: '^\s*defer\s+'
+      - linters: [errcheck]
+        path: '_test\.go$'
+        source: '^\s*fmt\.Fprint(?:f|ln)?\('
+      - linters: [unqueryvet]
+        path: '_test\.go$'
+      - linters: [ineffassign]
+        path: '_test\.go$'
+      - linters: [perfsprint]
+        source: 'fmt\.Errorf\('
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+      - web/config$
+      - web/uc/types$

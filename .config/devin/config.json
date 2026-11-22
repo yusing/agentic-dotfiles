@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "shell": {
+    "setup_complete": true
+  },
+  "theme_mode": "dark",
+  "attribution": false,
+  "permission_mode": "smart",
+  "agent": {
+    "model": "gemini-4-neon-high",
+    "preferred_family_models": {
+      "gemini-4-neon": "gemini-4-neon-high",
+      "fusion": "fusion-claude-fable-5-2-medium-sidekick-swe-2-medium"
+    },
+    "compaction_threshold_tokens": 300000
+  },
+  "permissions": {
+    "allow": [
+      "Exec(git status)",
+      "Exec(git diff)",
+      "Exec(git log)",
+      "Exec(git show)",
+      "Exec(git stash list)",
+      "Exec(git check-ignore)",
+      "Exec(git ls-files)",
+      "Exec(git grep)",
+      "Exec(git blame)",
+      "Exec(git rev-parse)",
+      "Exec(skills-mgr list)",
+      "Exec(skills-mgr get)",
+      "Exec(skills-mgr run)",
+      "Exec(rtk)",
+      "Exec(graphify query)",
+      "Exec(graphify path)",
+      "Exec(graphify explain)"
+    ],
+    "ask": [
+      "Exec(skills-mgr delete)"
+    ]
+  },
+  "read_config_from": {
+    "agents_standard": true,
+    "cursor": false,
+    "windsurf": false,
+    "claude": false,
+    "copilot": false,
+    "codex": false,
+    "kiro": false,
+    "opencode": false,
+    "zed": false
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/session_start_context --devin",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostCompaction": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/session_start_context --devin",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "^ask_user_question$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/devin_work_sync",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/devin_work_sync",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^(exec|edit|write|apply_patch|notebook_edit)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/graphify_update --devin",
+            "timeout": 600
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/devin_work_sync",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.codex/hooks/bin/devin_work_sync",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "theme_auto_detect": "always",
+  "otel": {
+    "enabled": false
+  },
+  "auto_update": true
+}
