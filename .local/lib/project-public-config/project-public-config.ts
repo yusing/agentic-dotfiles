@@ -17,7 +17,7 @@ import {
 import { homedir, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
-export const VERSION = "1.3.45";
+export const VERSION = "1.3.46";
 
 type TreeEntry = {
 	mode: string;
@@ -76,9 +76,11 @@ const TEXT_PATHS_WITHOUT_STANDARD_EXTENSIONS = new Set([
 	"LICENSE",
 	".bash_profile",
 	".bashrc",
+	".gitattributes",
 	".gitconfig",
 	".gitignore",
 	".gitignore_global",
+	".githooks/post-merge",
 	".tmux.conf",
 	".yabairc",
 	".zshenv",
@@ -110,9 +112,14 @@ const EXACT_PATHS = new Set([
 	".bash_profile",
 	".bashrc",
 	".bunfig.toml",
+	".cargo/config.toml",
+	".gitattributes",
 	".gitconfig",
+	".githooks/post-merge",
+	".githooks/post-merge.changelog.md",
 	".gitignore",
 	".gitignore_global",
+	".golangci.yml",
 	".skills-mgr/.skills-mgr.json",
 	".tmux.conf",
 	".yabairc",
@@ -184,12 +191,31 @@ const EXACT_PATHS = new Set([
 	".codex/hooks/lib/shell_command.changelog.md",
 	".config/atuin/config.toml",
 	".config/ccstatusline/settings.json",
+	".config/devin/AGENTS.md",
+	".config/devin/DELEGATION.md",
+	".config/devin/MAIN.md",
+	".config/devin/SUBAGENT.md",
+	".config/devin/config.json",
 	// ".config/fish/completions/bun.fish", // bun installed
 	// ".config/fish/completions/grok.fish", // grok installed
+	".config/fish/completions/codex.fish",
+	".config/fish/completions/gh.fish",
+	".config/fish/completions/git-agent.fish",
+	".config/fish/completions/golangci-lint.fish",
+	".config/fish/completions/nvm.fish",
+	".config/fish/completions/shadowtree.fish",
+	".config/fish/completions/skills-mgr.fish",
+	".config/fish/conf.d/gen_commit_msg.fish",
+	".config/fish/conf.d/gen_release_note.fish",
+	".config/fish/conf.d/nvm.fish",
 	".config/fish/config.fish",
+	".config/fish/functions/_gen_normalize_prompt.fish",
+	".config/fish/functions/gen_commit_msg.fish",
+	".config/fish/functions/gen_release_note.fish",
 	".config/oh-my-posh/catppuccin_macchiato.omp.json",
 	".config/gh/config.yml",
 	".config/ghostty/config",
+	".config/gopls/config.json",
 	".config/kaku/kaku.lua",
 	".config/wezterm/wezterm.lua",
 	".config/hunk/config.toml",
@@ -203,23 +229,38 @@ const EXACT_PATHS = new Set([
 	".config/zed/keymap.json",
 	".config/zed/settings.json",
 	".config/zed/snippets/go.json",
+	".gemini/AGENTS.md",
+	".gemini/DELEGATION.md",
+	".gemini/MAIN.md",
+	".gemini/SUBAGENT.md",
+	".gemini/antigravity-cli/settings.json",
+	".gemini/config/hooks.json",
 	".grok/AGENTS.md",
 	".grok/rules/AGENTS.md",
 	".grok/config.toml",
 	".grok/hooks/adapt_codex_hook.ts",
 	".grok/hooks/adapt_codex_hook.changelog.md",
+	".grok/hooks/background_hook.sh",
+	".grok/hooks/background_hook.changelog.md",
 	".grok/hooks/codex-port.json",
 	".grok/hooks/skills-path-guard.json",
 	".grok/hooks/skills_path_guard.ts",
 	".grok/hooks/skills_path_guard.changelog.md",
+	".local/bin/cargo",
+	".local/bin/cargo.changelog.md",
+	".local/bin/cargo-sccache",
+	".local/bin/cargo-sccache.changelog.md",
 	".local/bin/check_project",
 	".local/bin/check_project.changelog.md",
+	".local/bin/claude-config-helper",
 	".local/bin/svn-merge",
+	".local/bin/svn-merge.changelog.md",
 	".local/lib/compile-agent-tools/compile-agent-tools.ts",
 	".local/lib/compile-agent-tools/CHANGELOG.md",
 	".local/lib/cleanup-safety.ts",
 	".local/lib/tmp-clean/tmp_clean.ts",
 	".local/lib/tmp-clean/CHANGELOG.md",
+	".local/lib/disk-clean/cargo-worktree.ts",
 	".local/lib/disk-clean/disk-clean.ts",
 	".local/lib/disk-clean/rust-cache.ts",
 	".local/lib/disk-clean/go-cache.ts",
@@ -238,6 +279,7 @@ const EXACT_PATHS = new Set([
 	".local/lib/update-oh-my-posh-theme/CHANGELOG.md",
 	".local/bin/compile-agent-tools",
 	".local/bin/compile-agent-tools.changelog.md",
+	".local/lib/rewrite-home-paths/git-home-filter.ts",
 	".local/lib/rewrite-home-paths/rewrite-home-paths.ts",
 	".local/lib/rewrite-home-paths/package.json",
 	".local/lib/rewrite-home-paths/bun.lock",
@@ -256,6 +298,7 @@ const PROJECTED_SKILL_NAMES = [
 	"council",
 	"deliver-vertical-slice",
 	"deslop",
+	"find-skills",
 	"go-json-v2",
 	"go-microoptimizations",
 	"golang-best-practices",
@@ -278,11 +321,13 @@ const PROJECTED_SKILL_NAMES = [
 const TREE_PREFIXES = [
 	".claude/agents",
 	".codex/agents",
+	".config/devin/agents",
 	".config/kilo/agent",
 	".config/mise/locks",
 	".codex/skills/dump-last-response",
 	".codex/skills/session-usage",
 	".config/micro/colorschemes",
+	".gemini/config/agents",
 	".skills-mgr/skills/.remote-patches",
 	...PROJECTED_SKILL_NAMES.map(name => `.skills-mgr/skills/${name}`),
 ];
@@ -491,6 +536,24 @@ function projectClaudeSettings(text: string): string {
 	output.skillOverrides = Object.fromEntries(Object.entries(overrides).filter(([name]) => SKILL_NAMES.has(name)));
 	if (source.hooks !== undefined) output.hooks = removeGeneratedHooks(source.hooks);
 	return encodeJson(output);
+}
+
+function projectDevinConfig(text: string): string {
+	const source = objectValue(JSON.parse(text), ".config/devin/config.json");
+	delete source.devin;
+	if (source.permissions !== undefined) {
+		const permissions = objectValue(source.permissions, ".config/devin/config.json permissions");
+		if (Array.isArray(permissions.allow)) {
+			permissions.allow = permissions.allow.filter(
+				item => typeof item === "string"
+					&& item !== "Exec(plane)"
+					&& !PRIVATE_LINE_TOKENS.some(token => item.includes(token)),
+			);
+		}
+		source.permissions = permissions;
+	}
+	if (source.hooks !== undefined) source.hooks = removeGeneratedHooks(source.hooks);
+	return encodeJson(source);
 }
 
 function projectZedSettings(text: string): string {
@@ -784,6 +847,7 @@ function transformText(path: string, text: string, privateHomes: string[]): stri
 	if (path === ".codex/config.toml") projected = projectCodexConfig(projected);
 	else if (path === ".grok/config.toml") projected = projectGrokConfig(projected);
 	else if (path === ".claude/settings.json") projected = projectClaudeSettings(projected);
+	else if (path === ".config/devin/config.json") projected = projectDevinConfig(projected);
 	else if (path === ".skills-mgr/.skills-mgr.json") {
 		const registry = objectValue(JSON.parse(projected), path);
 		if (registry.skills !== undefined) {

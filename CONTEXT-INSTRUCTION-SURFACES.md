@@ -79,6 +79,38 @@ consumers when removing or replacing a managed skill, alongside selection and pl
 Remove a retired skill's dedicated updater and prompt with its owner, while retaining historical
 maintenance records.
 
+### Antigravity and Devin
+
+Antigravity loads its own standing guidance from `.gemini/AGENTS.md`. It routes
+only the main agent to `.gemini/MAIN.md`, a symlink to the shared main guidance.
+The generator embeds `.gemini/SUBAGENT.md` in the named subagent prompts, not
+in the standing instructions or session hook. Delegation guidance lives in
+`.gemini/DELEGATION.md` and uses the native invocation contract. CLI preferences
+live in `.gemini/antigravity-cli/settings.json`; provider and permission settings
+remain client-specific.
+
+Generate the Antigravity roles with
+`.local/bin/sync-agent-ports agy`; append `--check` to detect
+drift. The generator adapts the native role bodies and tool lists for
+Antigravity. The roles cannot delegate through native tools, and the brief-only
+council role has no terminal tool. Claude's per-role shell guard does not port:
+the remaining shell boundary is expressed in the role prompt. Antigravity's
+global discovery folder can also be read by the Antigravity App.
+
+Devin CLI loads its standing guidance from `.config/devin/AGENTS.md` and
+disables Claude/Codex/Cursor/Windsurf/Copilot/Kiro/OpenCode/Zed config imports
+in `.config/devin/config.json` while keeping standard project `AGENTS.md`
+discovery enabled. `SessionStart` and `PostCompaction` hooks deliver
+`.config/devin/MAIN.md` (a symlink to `.codex/MAIN.md`), project facts, and
+the `skills-mgr` inventory; `.config/devin/DELEGATION.md` owns Devin
+subagent delegation guidance. Generate the Devin custom subagent profiles in
+`.config/devin/agents/*.md` with `.local/bin/sync-agent-ports devin` (append
+`--check` to detect drift). The generator embeds `.config/devin/SUBAGENT.md`
+in each role body (Devin CLI has no `SubagentStart` hook), sets native
+`allowed-tools` without edit/subagent/skill tools, pins matched multi-provider
+`model:` values per role so `run_subagent` does not fall back to the default
+subagent router, and leaves the shell command boundary in the role prompt.
+
 
 ## Generated and imported surfaces
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7cc1d9f186bf8b249d0fb4e282626b48685307c1",
+  "sourceCommit": "257c9b22cea51fc797cec5503676acae4318d7de",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1223,13 +1223,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "f5f78e82238b813524135297a7300a483b240d7155ccb9caf68914284b2b39d4",
+      "sha256": "817f7e06b061875f28a72e2a69bc7ecea30084fe6d82dd6971cbda085a09a6f0",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "a661c55fc70413b6798e70fd38ce18c11bb4a60fb9736101929978e3d73bccf3",
+      "sha256": "cb595b7dd973f51e890f09e73b154929c23ba97371ceac216d121dff1f2b3da5",
       "executable": true
     },
     {
@@ -1918,7 +1918,7 @@
     {
       "path": "CONTEXT-INSTRUCTION-SURFACES.md",
       "kind": "file",
-      "sha256": "d5d0fea893c76cdf6db7a7adc502200ac3542de46d358fe802151d7fa0df0574",
+      "sha256": "228b0ba4adef68bcf36b46f9ad587f263cb15e9f289e1bbeab32e8caf88fded4",
       "executable": false
     },
     {

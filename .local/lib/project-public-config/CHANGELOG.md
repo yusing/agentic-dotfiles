@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.46
+
+Publish safe agent and development configurations: Devin CLI instructions, roles,
+and filtered config (omitting `devin.org_id` and `Exec(plane)`); Antigravity
+instructions, roles, hooks, and CLI settings; Grok `background_hook.sh`;
+`find-skills`; Cargo/sccache/worktree caching wrappers and config; Go linter and
+`gopls` config; `.gitattributes`, `git-home-filter.ts`, `.githooks/post-merge`,
+`claude-config-helper`, `svn-merge.changelog.md`, and Fish dev helpers and
+completions.
+
 ## 1.3.45
 
 Publish `devin_work_sync` hook source and changelog.
