@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.11.2
+
+Stop installing APT's `build-essential`, including during Homebrew bootstrap.
+Use Brew LLVM, Binutils, and Make for Debian and Ubuntu build groups. Keep the
+host C/C++ SDK for linking, and expose Clang as `cc` and `c++` when those
+local command paths are free.
+
+Keep git-delta in `shell`, shadowtree-lsp in `dev-tui`, and Linux Chromium
+runtime libraries in `chromium`. The `dev` and `full` profiles retain
+these tools; headless agent setups no longer select them implicitly.
+
 ## 2.11.1
 
 Keep Linux WebKitGTK and its dependencies out of the Chrome-oriented

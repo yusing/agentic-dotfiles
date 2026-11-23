@@ -104,6 +104,10 @@ tools, and Chromium/WebKitGTK libraries). Other platforms retain their Homebrew
 sources. Formulae follow Brew's stable channel. Brew uses available prebuilt
 bottles; mcdu uses its upstream tap's checksummed prebuilt archives.
 
+On Debian and Ubuntu, setup uses Homebrew LLVM, Binutils, and Make for
+selected build groups instead of APT's `build-essential`. APT still supplies
+the host C/C++ headers and runtime libraries needed to link native binaries.
+
 npm packages retain their npm source through Mise, including agent-browser and
 markdownlint-cli. Bun performs npm installation. Mise also supplies tools
 without a compatible current Brew source, including gh-dash and go-swagger,
@@ -155,8 +159,10 @@ base). Use `agent` plus language groups (such as `--tools=agent,rust` or
 `--tools=agent,rust,browser`) in headless agent sandboxes to install hooks,
 `skills-mgr`, `graphify`, `scriptc`, and linters while skipping interactive
 shells (`shell`), host clipboards (`clipboard`), `mosh`, and vendor agent CLIs
-(`agent-clis`). The `browser` group includes Chromium libraries on Linux;
-add `webkit` if you need WebKitGTK. Unselected native packages, Mise tools,
+(`agent-clis`). The `browser` group installs agent-browser and Lightpanda,
+not the Linux Chromium libraries. Add `chromium` for those libraries or
+`webkit` for WebKitGTK. To provision local Chrome on x86-64 Ubuntu, run
+`agent-browser install --with-deps`. Unselected native packages, Mise tools,
 vendors, and Fish login shell setup are skipped. Helper compilation requires
 both `bun` and `scriptc`. The tracked `.config/mise/config.toml` and
 `mise.lock` keep their full inventory. Package managers still install

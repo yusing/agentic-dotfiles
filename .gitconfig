@@ -12,10 +12,10 @@
 [init]
   defaultBranch = main
 [core]
-  pager = delta
+  pager = "if command -v delta >/dev/null 2>&1; then exec delta; else exec less; fi"
   excludesfile = $HOME/.gitignore_global
 [interactive]
-  diffFilter = delta --color-only --show-syntax-themes
+  diffFilter = "if command -v delta >/dev/null 2>&1; then exec delta --color-only --show-syntax-themes; else exec cat; fi"
 [diff]
   algorithm = histogram
   colorMoved = zebra

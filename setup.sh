@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.11.1
+# version: 2.11.2
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -134,7 +134,7 @@ load_brew_env() {
 
 # Keg-only Homebrew formulae are not on PATH. Add each declared prefix.
 load_brew_prefix_env() {
-  local name prefix dir staged_paths paths=""
+  local name prefix dir driver command staged_paths paths=""
   have brew || return 0
   while IFS= read -r name; do
     [ -n "$name" ] || continue
@@ -150,6 +150,17 @@ load_brew_prefix_env() {
     done
     if [ -d "$prefix/lib/pkgconfig" ]; then
       export PKG_CONFIG_PATH="$prefix/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+    fi
+    if [ "$PM" = apt ] && [ "$name" = clang ]; then
+      # Cargo and other build systems look for cc even on hosts without GCC.
+      for command in cc c++; do
+        driver=clang
+        if [ "$command" = c++ ]; then driver=clang++; fi
+        if [ -x "$prefix/bin/$driver" ] && [ ! -e "$LOCAL_BIN/$command" ] &&
+          [ ! -L "$LOCAL_BIN/$command" ]; then
+          ln -sT "$prefix/bin/$driver" "$LOCAL_BIN/$command"
+        fi
+      done
     fi
   done < <(setup_config native-required; setup_config native-optional)
   export PATH
@@ -169,7 +180,7 @@ ensure_brew() {
     case "$PM" in
       apt)
         refresh_pm
-        pm_install_batch build-essential procps curl file git ca-certificates
+        pm_install_batch procps curl file git ca-certificates
         ;;
       pacman) pm_install_batch base-devel procps-ng curl file git ca-certificates ;;
     esac
@@ -299,7 +310,24 @@ INSTALL
 
 # Prints one or more package-manager names for a logical package, or an empty
 # line if this manager has nothing to install for it.
-mapped_pkgs() { setup_config native-packages "$1"; }
+mapped_pkgs() {
+  local packages
+  packages="$(setup_config native-packages "$1")" || return 1
+  if [ "$PM" = apt ] && [ "$packages" = libstdc++-dev ]; then
+    # Resolve the virtual SDK package to the distribution's default GCC ABI.
+    LC_ALL=C apt-cache depends gcc | awk '
+      $1 == "Depends:" && $2 ~ /^gcc-[0-9]+$/ {
+        sub(/^gcc-/, "", $2)
+        print "libstdc++-" $2 "-dev"
+        found = 1
+        exit
+      }
+      END { if (!found) exit 1 }
+    '
+  elif [ -n "$packages" ]; then
+    printf '%s\n' "$packages"
+  fi
+}
 pkg_cmd() { setup_config native-command "$1"; }
 
 # A mise shim for a tool this operating system does not install is not the
@@ -442,10 +470,10 @@ prepare_setup_config_cache() {
 }
 
 setup_config() {
-  local cache_status
+  local cache_status config_pm="${SETUP_CONFIG_PM:-$PM}"
   if [ -n "${SETUP_CONFIG_CACHE:-}" ] \
     && [ "$SETUP_CONFIG" = "${SETUP_CONFIG_CACHE_CONFIG:-}" ] \
-    && [ "$PM" = "${SETUP_CONFIG_CACHE_PM:-}" ] \
+    && [ "$config_pm" = "${SETUP_CONFIG_CACHE_PM:-}" ] \
     && [ "$OS" = "${SETUP_CONFIG_CACHE_OS:-}" ] \
     && [ "${SETUP_TOOLS:-full}" = "${SETUP_CONFIG_CACHE_TOOLS:-}" ]; then
     if setup_config_cached "$@"; then
@@ -455,7 +483,7 @@ setup_config() {
       [ "$cache_status" -eq 2 ] || return "$cache_status"
     fi
   fi
-  SETUP_PM="$PM" SETUP_OS="$OS" SETUP_TOOLS="${SETUP_TOOLS:-full}" \
+  SETUP_PM="$config_pm" SETUP_OS="$OS" SETUP_TOOLS="${SETUP_TOOLS:-full}" \
     py - "$SETUP_CONFIG" "$@" <<'PY'
 import json
 import math
@@ -541,8 +569,10 @@ try:
         return value
 
     for name, entry in config["native"].items():
-        obj(entry, ("packages", "commands", "optional", "brew_prefix", "manager", "os", "legacy_mise", "groups"), "native package")
+        obj(entry, ("packages", "commands", "optional", "brew_prefix", "manager", "os", "legacy_mise", "groups", "apt_groups"), "native package")
         validate_entry_groups(entry.get("groups"), f"native.{name}")
+        if "apt_groups" in entry:
+            validate_entry_groups(entry["apt_groups"], f"native.{name}.apt_groups")
         strings(entry.get("legacy_mise", []))
         require(all(not x.startswith("-") for x in entry.get("legacy_mise", [])), "invalid legacy mise tool")
         packages(entry.get("packages"))
@@ -758,7 +788,10 @@ try:
         return select_all or bool(set(entry_groups) & selected_groups)
 
     def native_groups(key, entry):
-        return mise_native_groups.get(key) if key in mise_native_groups else entry.get("groups", ["core"])
+        if key in mise_native_groups:
+            return mise_native_groups[key]
+        groups = entry.get("groups") or ["core"]
+        return groups + (entry.get("apt_groups") or []) if pm == "apt" else groups
 
     def query(query_action, query_arguments):
         name = query_arguments[0] if query_arguments else ""
@@ -953,6 +986,8 @@ install_configured_packages() {
   install_packages "${native_names[@]}" || return 1
   if [ "${#brew_names[@]}" -gt 1 ]; then
     ensure_brew || return 1
+    # Run Brew without changing which host's groups are enabled.
+    local SETUP_CONFIG_PM="$PM"
     (PM=brew install_packages "${brew_names[@]}") || return 1
   fi
 }
@@ -1027,7 +1062,8 @@ apt_pkg_available() {
 # Exit 0 with empty output if this package manager has nothing to install.
 # Exit 1 if every mapped name lacks an install candidate.
 select_mapped_pkg() {
-  local name="$1" pkg any=0
+  local name="$1" pkg candidates any=0
+  candidates="$(mapped_pkgs "$name")" || return 1
   while IFS= read -r pkg; do
     [ -n "$pkg" ] || continue
     any=1
@@ -1039,9 +1075,7 @@ select_mapped_pkg() {
       printf '%s\n' "$pkg"
       return 0
     fi
-  done <<EOF
-$(mapped_pkgs "$name")
-EOF
+  done <<<"$candidates"
   [ "$any" -eq 0 ]
 }
 
@@ -2232,7 +2266,7 @@ Mise declarations also live in setup.json; .config/mise/config.toml is generated
     agents - agent-core + agent-clis
     core   - minimal non-interactive base (git, curl, bash, search, JSON/YAML, rtk)
   Groups (e.g. --tools=agent,rust or --tools=go,rust) always include core; repeat --tools or separate with commas.
-  The browser group skips WebKitGTK on Linux; add webkit if you need it.
+  On Linux, add chromium or webkit to install the respective runtime libraries.
   SETUP_TOOLS is the environment equivalent.
 --config selects another JSON file; SETUP_CONFIG is the environment equivalent.
 --check-config validates JSON and --tools only, without downloads, installs, or checkout changes.
