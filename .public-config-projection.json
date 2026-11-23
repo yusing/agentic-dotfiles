@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "aaa0ce1d274ae72112ef30147a5cad502af91508",
+  "sourceCommit": "19fb8ed6484ea0dc5d7cdd3dfc1dc8c7d4542b25",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -907,7 +907,7 @@
     {
       "path": ".gemini/antigravity-cli/settings.json",
       "kind": "file",
-      "sha256": "630890f93ed763eb0fb4a1a4ccb05a84412cea67de75717934afa8ab0bcfdf36",
+      "sha256": "e5846a95c8f91f3135da4043cbbd9c913d2b99cbe34000a023c1cfafa4dcae96",
       "executable": false
     },
     {
