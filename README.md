@@ -206,30 +206,41 @@ instructions and conditions. Local sources live under
 
 ### Automated maintenance
 
-`compile-agent-tools` builds [skills-maintenance](.local/lib/skills-maintenance/skills-maintenance.ts).
-It requires Git, skills-mgr, Mekugi, Codex authentication, and the normal commit-hook
-dependencies. It can launch paid model sessions with full local repair and commit permissions.
-For hourly maintenance, merge this entry into the user's existing cron schedule:
+`compile-agent-tools` builds
+[skills-maintenance](.local/lib/skills-maintenance/skills-maintenance.ts). It
+requires Git, `skills-mgr`, and at least one configured agent backend: Codex
+via Mekugi, Claude Code with a `gemini-web` profile at
+`~/.claude/gemini-web.settings.json`, or Devin CLI (`devin`), plus the normal
+commit-hook dependencies. It can launch paid model sessions with full local
+repair and commit permissions. For hourly maintenance across multiple machines,
+pin one leader host with `--leader <host>` in the user's cron schedule:
 
 ```cron
-17 * * * * "$HOME/.local/bin/mise" exec -- "$HOME/.local/bin/skills-maintenance"
+17 * * * * "$HOME/.local/bin/mise" exec -- "$HOME/.local/bin/skills-maintenance" --leader <host>
 ```
 
-Run `mise exec -- skills-maintenance` for an immediate cycle.
+Non-leader hosts exit without modifying the repository or starting agents. Run
+`mise exec -- skills-maintenance` without `--leader` for an immediate local
+cycle on any machine.
 
-The worker uses skills-mgr's refresh runner and three-hour remote cache lifetime,
-then synchronizes placeholders and checks every globally registered remote patch,
-including conditionally enabled skills. Unavailable upstream manifests and stale patches
-start serial `gpt-6.1-terra` headless Mekugi sessions. A repair agent verifies the cause,
-preserves local customizations and activation conditions, validates its handling, and
-commits its authored changes. Network and authentication failures remain unresolved.
+The worker uses skills-mgr's refresh runner and three-hour remote cache
+lifetime, then synchronizes placeholders and checks every globally registered
+remote patch, including conditionally enabled skills. Unavailable upstream
+manifests and stale patches start serial headless sessions using the first
+available backend in order (`codex` -> `claude` with `gemini-web` -> `devin`),
+falling back to the next backend if a run fails without modifying repository
+state. A repair agent verifies the cause, preserves local customizations and
+activation conditions, validates its handling, and commits its authored
+changes. Network and authentication failures remain unresolved.
 
-When the managed OpenAI Docs override is installed, each cycle also checks its directory
-in [openai/codex](https://github.com/openai/codex/tree/main/codex-rs/skills/src/assets/samples/openai-docs)
-using the GitHub CLI (`gh`). A changed upstream tree starts a Terra update session to merge
-the complete skill while retaining local-first guidance and adapted references. The agent
-validates and commits the skill with its upstream baseline. Uncommitted skill edits defer
-that update; upstream failures leave independent remote maintenance running.
+When the managed OpenAI Docs override is installed, each cycle also checks its
+directory in
+[openai/codex](https://github.com/openai/codex/tree/main/codex-rs/skills/src/assets/samples/openai-docs)
+using the GitHub CLI (`gh`). A changed upstream tree dispatches the same agent
+fallback chain to merge the complete skill while retaining local-first guidance
+and adapted references. The agent validates and commits the skill with its
+upstream baseline. Uncommitted skill edits defer that update; upstream failures
+leave independent remote maintenance running.
 
 Repair authors maintain one local newest-first, 100-entry rolling log at
 `.skills-mgr/MAINTENANCE.md`. The activity log stays outside the public projection.

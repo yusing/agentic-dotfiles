@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.6.0
+
+Add static leader selection (`--leader <host>`) so shared multi-machine
+schedules act on one designated host while omitting the flag still runs
+locally on demand. Fall back across available maintenance agent backends
+in order: Codex (`mekugi`), Claude Code with the `gemini-web` profile
+(`~/.claude/gemini-web.settings.json`), and Devin CLI (`devin`), stopping
+fallback if a failed run already modified repository state.
+
 ## 1.5.0
 
 Take base prompt snapshots from Mekugi's installed model catalog instead

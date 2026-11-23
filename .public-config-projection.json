@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "19fb8ed6484ea0dc5d7cdd3dfc1dc8c7d4542b25",
+  "sourceCommit": "ac296cce12513d611d353c71ea12319331b793a9",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1283,7 +1283,7 @@
     {
       "path": ".local/lib/skills-maintenance/CHANGELOG.md",
       "kind": "file",
-      "sha256": "1a69a27c7d302f0a26d197136b64d10cad4dcf6dce6cf86f435862216822736f",
+      "sha256": "ccc58ee5c53da33408c0ffbbf5ce9563e2be4fa63cf1aafea1a3f86b1bc01e0f",
       "executable": false
     },
     {
@@ -1295,7 +1295,7 @@
     {
       "path": ".local/lib/skills-maintenance/skills-maintenance.ts",
       "kind": "file",
-      "sha256": "9cd9019bdca58687536c3e8d2a85c88ba7d6dca5ce49d3def6bea5f4284f4c78",
+      "sha256": "20713cd544f8eff847812314f95c9da1ba0f758cb9ae678850a911d0d4ad33ee",
       "executable": false
     },
     {
@@ -1942,7 +1942,7 @@
     {
       "path": "README.md",
       "kind": "file",
-      "sha256": "9a94e18831054ab6c9156b693e59a62d02092e3bf5d85d93427af0965040380e",
+      "sha256": "6f9b320420b2dfed15ceb81acc59b92b55a035f10924a9ccb521eb176fc31106",
       "executable": false
     },
     {

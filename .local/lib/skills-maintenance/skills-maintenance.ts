@@ -1,23 +1,41 @@
 import { spawn, type ChildProcess } from "node:child_process";
 import { access, lstat, mkdir, open, readFile, realpath, unlink, writeFile } from "node:fs/promises";
 import { dlopen, read } from "bun:ffi";
-import { homedir } from "node:os";
+import { homedir, hostname } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { createInterface } from "node:readline";
 import type { Readable } from "node:stream";
 import { openaiDocsUpdatePrompt, repairPrompt } from "./repair-prompt";
 
-export const VERSION = "1.5.0";
+export const VERSION = "1.6.0";
 const roots = [".agents/skills", ".claude/skills"];
+const claudeProfile = "gemini-web";
 const disappeared = /does not contain skill|0 matching skills|remote skill name .+ does not match SKILL\.md name|remote skill .+ (?:is missing|has invalid) SKILL\.md|repository not found|repository .+ not found|\b(?:404|410)\b/i;
 const stalePatch = /remote skill patch no longer applies/i;
 let active: ChildProcess | undefined;
 let stopped = false;
 
+type AgentBackend =
+	| { kind: "codex"; label: string }
+	| { kind: "claude"; label: string; settingsPath: string }
+	| { kind: "devin"; label: string };
+
+function normalizeHost(name: string): string {
+	return name.trim().replace(/\.+$/, "").toLowerCase();
+}
+
+function matchesLeader(current: string, leader: string): boolean {
+	const actual = normalizeHost(current);
+	const expected = normalizeHost(leader);
+	if (!actual || !expected) return false;
+	if (actual === expected) return true;
+	return !expected.includes(".") && actual.split(".")[0] === expected;
+}
+
 function schedulerEnvironment(): NodeJS.ProcessEnv {
 	const env: NodeJS.ProcessEnv = { ...process.env, SKILLS_MGR_NO_REFRESH: "1", GIT_TERMINAL_PROMPT: "0" };
 	for (const key of Object.keys(env)) {
-		if (key.startsWith("MEKUGI_") || /^(CODEX_THREAD_ID|CODEX_SESSION_ID|CODEX_TOOL_CALL_ID|CODEX_ROLLOUT_TRACE_ROOT)$/.test(key)) delete env[key];
+		if (key.startsWith("MEKUGI_") || /^(CODEX_THREAD_ID|CODEX_SESSION_ID|CODEX_TOOL_CALL_ID|CODEX_ROLLOUT_TRACE_ROOT|CLAUDECODE|CLAUDE_CODE_ENTRYPOINT|DEVIN_SESSION_ID|DEVIN_TRACEPARENT|DEVIN_PROJECT_DIR)$/.test(key)) delete env[key];
 	}
 	if (process.env.MEKUGI_EXEC_TRACK) {
 		delete env.BASH_ENV;
@@ -30,7 +48,15 @@ function schedulerEnvironment(): NodeJS.ProcessEnv {
 	return env;
 }
 
-async function run(cwd: string, env: NodeJS.ProcessEnv, args: string[], prompt?: string) {
+function claudeEnvironment(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
+	const next: NodeJS.ProcessEnv = { ...env };
+	for (const key of Object.keys(next)) {
+		if (key.startsWith("ANTHROPIC_")) delete next[key];
+	}
+	return next;
+}
+
+async function run(cwd: string, env: NodeJS.ProcessEnv, args: string[], options?: { stdin?: string; mekugiHeadless?: boolean }) {
 	if (stopped) throw new Error("maintenance interrupted");
 	const child = spawn(args[0], args.slice(1), { cwd, env, stdio: ["pipe", "pipe", "pipe"] });
 	active = child;
@@ -61,8 +87,8 @@ async function run(cwd: string, env: NodeJS.ProcessEnv, args: string[], prompt?:
 		return output;
 	};
 	child.stdin!.on("error", () => {}); // A rejected launch can close stdin before reading the prompt.
-	child.stdin!.end(prompt);
-	const [status, stdout, stderr] = await Promise.all([done, collect(child.stdout!, prompt !== undefined), collect(child.stderr!)]);
+	child.stdin!.end(options?.stdin);
+	const [status, stdout, stderr] = await Promise.all([done, collect(child.stdout!, options?.mekugiHeadless), collect(child.stderr!)]);
 	active = undefined;
 	return { status, stdout, stderr, completed };
 }
@@ -72,6 +98,102 @@ async function readOptional(path: string): Promise<string> {
 		if ((error as NodeJS.ErrnoException).code === "ENOENT") return "";
 		throw error;
 	}
+}
+
+async function hasClaudeProfile(path: string): Promise<boolean> {
+	const raw = await readOptional(path);
+	if (!raw) return false;
+	try {
+		const parsed = JSON.parse(raw);
+		return typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)
+			&& typeof parsed.env === "object" && parsed.env !== null && !Array.isArray(parsed.env);
+	} catch { return false; }
+}
+
+async function availableAgents(env: NodeJS.ProcessEnv): Promise<AgentBackend[]> {
+	const backends: AgentBackend[] = [];
+	if (Bun.which("mekugi", { PATH: env.PATH })) backends.push({ kind: "codex", label: "codex (gpt-6.1-terra)" });
+	const settingsPath = join(homedir(), ".claude", `${claudeProfile}.settings.json`);
+	if (Bun.which("claude", { PATH: env.PATH }) && await hasClaudeProfile(settingsPath)) {
+		backends.push({ kind: "claude", label: `claude (${claudeProfile})`, settingsPath });
+	}
+	if (Bun.which("devin", { PATH: env.PATH })) backends.push({ kind: "devin", label: "devin" });
+	return backends;
+}
+
+function parseClaudeResult(stdout: string): { completed: boolean; answer?: string; error?: string } {
+	const trimmed = stdout.trim();
+	const candidates = trimmed ? [trimmed, ...trimmed.split("\n").reverse().map(line => line.trim()).filter(Boolean)] : [];
+	for (const candidate of candidates) {
+		try {
+			const parsed = JSON.parse(candidate);
+			if (parsed && typeof parsed === "object" && parsed.type === "result") {
+				const result = typeof parsed.result === "string" ? parsed.result.trim() : "";
+				const ok = parsed.is_error === false && (!parsed.subtype || parsed.subtype === "success");
+				return ok ? { completed: true, answer: result } : { completed: false, error: result || String(parsed.subtype ?? "claude error") };
+			}
+		} catch { /* Try next line. */ }
+	}
+	return { completed: false, error: "missing claude JSON result" };
+}
+
+async function runAgent(cwd: string, env: NodeJS.ProcessEnv, backend: AgentBackend, prompt: string) {
+	if (backend.kind === "codex") {
+		return run(cwd, env, ["mekugi", "codex", "headless", "--yolo", "-m", "gpt-6.1-terra"], { stdin: prompt, mekugiHeadless: true });
+	}
+	if (backend.kind === "claude") {
+		const result = await run(
+			cwd, claudeEnvironment(env),
+			["claude", "-p", "--dangerously-skip-permissions", "--no-session-persistence", "--output-format", "json", "--settings", backend.settingsPath],
+			{ stdin: prompt },
+		);
+		if (result.status) return { ...result, completed: false };
+		const parsed = parseClaudeResult(result.stdout);
+		if (parsed.completed) {
+			if (parsed.answer) console.log(parsed.answer);
+			return { ...result, completed: true };
+		}
+		return { ...result, completed: false, stderr: [result.stderr.trim(), parsed.error].filter(Boolean).join("\n") };
+	}
+	const result = await run(cwd, env, ["devin", "-p", "--permission-mode", "dangerous", "--respect-workspace-trust=false", "--", prompt]);
+	const completed = result.status === 0;
+	if (completed && result.stdout.trim()) console.log(result.stdout.trim());
+	return { ...result, completed };
+}
+
+async function repoSnapshot(cwd: string, env: NodeJS.ProcessEnv): Promise<string> {
+	const head = await run(cwd, env, ["git", "rev-parse", "HEAD"]);
+	const status = await run(cwd, env, ["git", "status", "--porcelain=v1", "--untracked-files=all"]);
+	if (head.status || status.status) throw new Error(head.stderr || status.stderr || "failed to inspect repository state");
+	return `${head.stdout.trim()}\n${status.stdout}`;
+}
+
+async function dispatchAgent(cwd: string, env: NodeJS.ProcessEnv, taskLabel: string, prompt: string) {
+	const backends = await availableAgents(env);
+	if (!backends.length) {
+		return {
+			status: 1, stdout: "", completed: false,
+			stderr: `No maintenance agent backend available (checked codex/mekugi, claude with ${claudeProfile} profile, devin).`,
+		};
+	}
+	const before = await repoSnapshot(cwd, env);
+	let last = { status: 1, stdout: "", stderr: "", completed: false };
+	for (let i = 0; i < backends.length; i++) {
+		if (stopped) throw new Error("maintenance interrupted");
+		const backend = backends[i];
+		console.log(`Starting ${backend.label} ${taskLabel}.`);
+		last = await runAgent(cwd, env, backend, prompt);
+		if (!last.status && last.completed) return last;
+		if (stopped) throw new Error("maintenance interrupted");
+		if (i + 1 < backends.length) {
+			if (await repoSnapshot(cwd, env) !== before) {
+				console.error(`${backend.label} failed after modifying repository state; skipping fallback to ${backends[i + 1].label}.`);
+				return last;
+			}
+			console.error(`${backend.label} failed (exit ${last.status}, completed=${last.completed}); falling back to ${backends[i + 1].label}.`);
+		}
+	}
+	return last;
 }
 
 async function lock(path: string): Promise<(() => Promise<void>) | undefined> {
@@ -211,9 +333,11 @@ async function updateOpenaiDocs(cwd: string, env: NodeJS.ProcessEnv): Promise<bo
 	const target = upstream.stdout.trim();
 	if (!/^[a-f0-9]{40}$/.test(target)) throw new Error("openai-docs upstream directory missing or invalid; preserving managed skill.");
 	if (target !== previous) {
-		console.log(`Starting gpt-6.1-terra upstream update for openai-docs (${previous.slice(0, 12)} -> ${target.slice(0, 12)}).`);
-		const result = await run(cwd, env, ["mekugi", "codex", "headless", "--yolo", "-m", "gpt-6.1-terra"],
-			`${openaiDocsUpdatePrompt}\nPrevious upstream tree: ${previous}\nTarget upstream tree: ${target}\n`);
+		const result = await dispatchAgent(
+			cwd, env,
+			`upstream update for openai-docs (${previous.slice(0, 12)} -> ${target.slice(0, 12)})`,
+			`${openaiDocsUpdatePrompt}\nPrevious upstream tree: ${previous}\nTarget upstream tree: ${target}\n`,
+		);
 		if (result.status || !result.completed) throw new Error(`openai-docs update failed (exit ${result.status}, completed=${result.completed}). ${result.stderr}`);
 		const committed = await run(cwd, env, ["git", "show", `HEAD:${marker}`]);
 		const pending = await run(cwd, env, ["git", "status", "--porcelain=v1", "--untracked-files=all", "--", owner]);
@@ -228,7 +352,14 @@ async function updateOpenaiDocs(cwd: string, env: NodeJS.ProcessEnv): Promise<bo
 }
 
 
-export async function maintain(cwd = homedir()): Promise<void> {
+export async function maintain(cwd = homedir(), options: { leader?: string } = {}): Promise<void> {
+	if (options.leader !== undefined) {
+		const current = hostname();
+		if (!matchesLeader(current, options.leader)) {
+			console.log(`Skipping skills maintenance on ${current} (leader is ${options.leader}).`);
+			return;
+		}
+	}
 	const env = schedulerEnvironment();
 	const cache = join(process.platform === "darwin" ? join(homedir(), "Library/Caches") : process.env.XDG_CACHE_HOME || join(homedir(), ".cache"), "skills-mgr");
 	const release = await lock(join(cache, "maintenance.lock"));
@@ -307,8 +438,11 @@ export async function maintain(cwd = homedir()): Promise<void> {
 			if (error) failures.set(name, [failures.get(name), error].filter(Boolean).join("\n"));
 		}
 		for (const [name, diagnostic] of failures) {
-			console.log(`Starting gpt-6.1-terra repair for ${name}.`);
-			const result = await run(cwd, env, ["mekugi", "codex", "headless", "--yolo", "-m", "gpt-6.1-terra"], `${repairPrompt}\nSkill: ${JSON.stringify(name)}\nDiagnostic: ${JSON.stringify(diagnostic)}\n`);
+			const result = await dispatchAgent(
+				cwd, env,
+				`repair for ${name}`,
+				`${repairPrompt}\nSkill: ${JSON.stringify(name)}\nDiagnostic: ${JSON.stringify(diagnostic)}\n`,
+			);
 			if (result.status || !result.completed) {
 				failed = true;
 				console.error(`Repair failed for ${name} (exit ${result.status}, completed=${result.completed}). ${result.stderr}`);
@@ -332,11 +466,32 @@ export async function maintain(cwd = homedir()): Promise<void> {
 	}
 }
 
+function parseArgs(argv: string[]): { version?: boolean; leader?: string } | null {
+	if (argv.length === 1 && argv[0] === "--version") return { version: true };
+	let leader: string | undefined;
+	for (let i = 0; i < argv.length; i++) {
+		const arg = argv[i];
+		if (arg === "--leader") {
+			if (leader !== undefined || i + 1 >= argv.length) return null;
+			leader = argv[++i].trim();
+			if (!leader) return null;
+		} else if (arg.startsWith("--leader=")) {
+			if (leader !== undefined) return null;
+			leader = arg.slice("--leader=".length).trim();
+			if (!leader) return null;
+		} else return null;
+	}
+	return { leader };
+}
+
 if (import.meta.main) {
-	if (process.argv[2] === "--version") console.log(VERSION);
-	else if (process.argv.length > 2) { console.error("Usage: skills-maintenance [--version]"); process.exitCode = 2; }
+	const parsed = parseArgs(process.argv.slice(2));
+	if (!parsed) {
+		console.error("Usage: skills-maintenance [--leader <host>] [--version]");
+		process.exitCode = 2;
+	} else if (parsed.version) console.log(VERSION);
 	else {
 		for (const signal of ["SIGINT", "SIGTERM"] as const) process.once(signal, () => { stopped = true; active?.kill(signal); });
-		try { await maintain(); } catch (error) { console.error(`skills-maintenance: ${(error as Error).message}`); process.exitCode = 1; }
+		try { await maintain(homedir(), { leader: parsed.leader }); } catch (error) { console.error(`skills-maintenance: ${(error as Error).message}`); process.exitCode = 1; }
 	}
 }
