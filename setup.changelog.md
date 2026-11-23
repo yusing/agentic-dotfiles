@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.11.0
+
+Add `--tools=SPEC` (and `SETUP_TOOLS`) to install or upgrade a subset of
+declared tools via profiles (`full`, `dev`, `agent`, `agents`, `core`) or
+comma-separated tool groups (such as `--tools=agent,rust` or
+`--tools=go,rust`). Split minimal non-interactive `core` from interactive
+`shell`, `clipboard`, `dev-tui`, headless `agent-core`, vendor `agent-clis`,
+and `lint` so agent sandboxes can skip human shell/desktop tools and other
+agent CLIs. Specific groups always include `core`, preserve the full tracked
+Mise config and lockfile, and skip unselected native packages, Mise tools,
+vendors, and optional helper steps.
+
 ## 2.10.14
 
 Prefer Homebrew on Arch for standalone tools (including rustup, rust-analyzer,

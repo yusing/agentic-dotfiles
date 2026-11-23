@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.10.14
+# version: 2.11.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -25,6 +25,8 @@ SETUP_ROOT_HELPER=""
 # Tool names given to --upgrade; resolved to mise tool identifiers.
 UPGRADE_NAMES=()
 UPGRADE_TOOLS=()
+SETUP_TOOLS="${SETUP_TOOLS:-full}"
+SETUP_TOOLS_EXPLICIT=0
 SETUP_CONFIG_EXPLICIT="${SETUP_CONFIG:+1}"
 SETUP_CONFIG="${SETUP_CONFIG:-$(cd "$(dirname "${BASH_SOURCE[0]:-$HOME/setup.sh}")" && pwd)/setup.json}"
 
@@ -436,6 +438,7 @@ prepare_setup_config_cache() {
   SETUP_CONFIG_CACHE_CONFIG="$SETUP_CONFIG"
   SETUP_CONFIG_CACHE_PM="$PM"
   SETUP_CONFIG_CACHE_OS="$OS"
+  SETUP_CONFIG_CACHE_TOOLS="${SETUP_TOOLS:-full}"
 }
 
 setup_config() {
@@ -443,7 +446,8 @@ setup_config() {
   if [ -n "${SETUP_CONFIG_CACHE:-}" ] \
     && [ "$SETUP_CONFIG" = "${SETUP_CONFIG_CACHE_CONFIG:-}" ] \
     && [ "$PM" = "${SETUP_CONFIG_CACHE_PM:-}" ] \
-    && [ "$OS" = "${SETUP_CONFIG_CACHE_OS:-}" ]; then
+    && [ "$OS" = "${SETUP_CONFIG_CACHE_OS:-}" ] \
+    && [ "${SETUP_TOOLS:-full}" = "${SETUP_CONFIG_CACHE_TOOLS:-}" ]; then
     if setup_config_cached "$@"; then
       return 0
     else
@@ -451,7 +455,7 @@ setup_config() {
       [ "$cache_status" -eq 2 ] || return "$cache_status"
     fi
   fi
-  SETUP_PM="$PM" SETUP_OS="$OS" \
+  SETUP_PM="$PM" SETUP_OS="$OS" SETUP_TOOLS="${SETUP_TOOLS:-full}" \
     py - "$SETUP_CONFIG" "$@" <<'PY'
 import json
 import math
@@ -495,15 +499,50 @@ def unique_object(pairs):
 
 try:
     config = json.loads(Path(sys.argv[1]).read_text(), object_pairs_hook=unique_object)
-    obj(config, ("version", "native", "mise", "mise_commands", "vendors", "legacy"), "setup")
+    obj(config, ("version", "groups", "profiles", "native", "mise", "mise_commands", "mise_groups", "vendors", "legacy"), "setup")
     require(type(config.get("version")) is int and config["version"] == 2, "unsupported setup config version")
     for section in ("native", "mise_commands", "vendors", "legacy"):
         require(isinstance(config.get(section), dict), f"{section} must be an object")
         for name in config[section]:
             string(name)
             require(not name.startswith("-"), "names must not start with -")
-    for entry in config["native"].values():
-        obj(entry, ("packages", "commands", "optional", "brew_prefix", "manager", "os", "legacy_mise"), "native package")
+    has_groups = "groups" in config or "profiles" in config or "mise_groups" in config
+    groups_map = config.get("groups", {})
+    profiles_map = config.get("profiles", {})
+    mise_groups = config.get("mise_groups", {})
+    if has_groups:
+        require(isinstance(groups_map, dict) and groups_map, "groups must be a non-empty object")
+        require("core" in groups_map, "groups must declare core")
+        for gname, desc in groups_map.items():
+            string(gname)
+            require(not gname.startswith("-") and gname != "*" and "," not in gname, f"invalid group name: {gname}")
+            string(desc)
+        require(isinstance(profiles_map, dict) and profiles_map, "profiles must be a non-empty object")
+        for pname, members in profiles_map.items():
+            string(pname)
+            require(not pname.startswith("-") and pname != "*" and "," not in pname, f"invalid profile name: {pname}")
+            strings(members)
+            require(bool(members), f"profile {pname} must not be empty")
+            if "*" in members:
+                require(members == ["*"], f"wildcard profile {pname} must be ['*']")
+            else:
+                for member in members:
+                    require(member in groups_map, f"profile {pname} references unknown group: {member}")
+        require(isinstance(mise_groups, dict), "mise_groups must be an object")
+
+    def validate_entry_groups(value, where):
+        if value is None:
+            return ["core"]
+        strings(value)
+        require(bool(value), f"{where} groups must not be empty")
+        if has_groups:
+            for member in value:
+                require(member in groups_map, f"{where} references unknown group: {member}")
+        return value
+
+    for name, entry in config["native"].items():
+        obj(entry, ("packages", "commands", "optional", "brew_prefix", "manager", "os", "legacy_mise", "groups"), "native package")
+        validate_entry_groups(entry.get("groups"), f"native.{name}")
         strings(entry.get("legacy_mise", []))
         require(all(not x.startswith("-") for x in entry.get("legacy_mise", [])), "invalid legacy mise tool")
         packages(entry.get("packages"))
@@ -545,12 +584,18 @@ try:
     # A mise tool may declare the package-manager source used where that tool
     # does not apply. The field stays in JSON; generated mise TOML never sees it.
     mise_native = {}
+    mise_native_groups = {}
     mise_native_records = []
+    if has_groups:
+        for tool, groups in mise_groups.items():
+            string(tool)
+            validate_entry_groups(groups, f"mise_groups.{tool}")
     for tool, declaration in config["mise"]["tools"].items():
         string(tool)
         require(not tool.startswith("-"), "invalid mise tool name")
         require(isinstance(declaration, (str, dict)), "mise tool must be a version string or options object")
         string(declaration if isinstance(declaration, str) else declaration.get("version"))
+        tool_groups = validate_entry_groups(mise_groups.get(tool), f"mise.{tool}")
         if not isinstance(declaration, dict) or "native" not in declaration:
             continue
         entry = declaration["native"]
@@ -585,6 +630,7 @@ try:
         require(not name.startswith("-"), "names must not start with -")
         require(name not in config["native"] and name not in mise_native, f"native package duplicates mise source: {name}")
         mise_native[name] = entry
+        mise_native_groups[name] = tool_groups
         mise_native_records.append((tool, name, "1" if align else "0", version_command, brew_pkgs[0] if brew_pkgs else ""))
 
     def native_map():
@@ -639,8 +685,9 @@ try:
             if entry.get("version") != selector:
                 return False
         return True
-    for entry in config["vendors"].values():
-        obj(entry, ("label", "path", "url", "shell", "update", "env", "legacy_mise"), "vendor")
+    for vname, entry in config["vendors"].items():
+        obj(entry, ("label", "path", "url", "shell", "update", "env", "legacy_mise", "groups"), "vendor")
+        validate_entry_groups(entry.get("groups"), f"vendors.{vname}")
         for field in ("label", "url", "shell"):
             string(entry.get(field))
         relative(entry.get("path"))
@@ -682,6 +729,36 @@ try:
     arguments = sys.argv[3:]
     pm = os.environ["SETUP_PM"]
     platform = {"Darwin": "macos", "Linux": "linux"}.get(os.environ["SETUP_OS"])
+    tools_spec = os.environ.get("SETUP_TOOLS", "full")
+    select_all = False
+    selected_groups = set()
+    if not tools_spec:
+        raise ValueError("SETUP_TOOLS must not be empty")
+    tokens = tools_spec.split(",")
+    require(all(tokens), f"invalid --tools value: {tools_spec}")
+    if has_groups:
+        selected_groups.add("core")
+        available = sorted(set(profiles_map) | set(groups_map))
+        for token in tokens:
+            if token in profiles_map:
+                if profiles_map[token] == ["*"]:
+                    select_all = True
+                else:
+                    selected_groups.update(profiles_map[token])
+            elif token in groups_map:
+                selected_groups.add(token)
+            else:
+                raise ValueError(f"unknown tool profile or group: {token} (available: {', '.join(available)})")
+    else:
+        for token in tokens:
+            require(token == "full", f"unknown tool profile or group: {token} (config does not declare groups)")
+        select_all = True
+
+    def entry_selected(entry_groups):
+        return select_all or bool(set(entry_groups) & selected_groups)
+
+    def native_groups(key, entry):
+        return mise_native_groups.get(key) if key in mise_native_groups else entry.get("groups", ["core"])
 
     def query(query_action, query_arguments):
         name = query_arguments[0] if query_arguments else ""
@@ -689,22 +766,24 @@ try:
         status = 0
         if query_action == "validate":
             pass
+        elif query_action == "tools-is-full":
+            status = 0 if select_all else 1
         elif query_action.startswith("native-"):
             native = native_map()
             def manager(entry):
                 # On Arch, use declared pacman packages (system-depended tools); otherwise prefer Brew.
                 return "pacman" if pm == "pacman" and entry["packages"].get("pacman") else entry.get("manager", pm)
-            def selected(entry):
-                return entry["packages"].get(manager(entry), []) if platform in entry.get("os", ["linux", "macos"]) else []
+            def selected(key, entry):
+                return entry["packages"].get(manager(entry), []) if platform in entry.get("os", ["linux", "macos"]) and entry_selected(native_groups(key, entry)) else []
             if query_action in ("native-required", "native-optional"):
                 output = [key for key, entry in native.items()
-                          if selected(entry) and entry.get("optional", False) == (query_action == "native-optional")]
+                          if selected(key, entry) and entry.get("optional", False) == (query_action == "native-optional")]
             elif query_action == "native-enabled":
-                status = 0 if name in native and selected(native[name]) else 1
+                status = 0 if name in native and selected(name, native[name]) else 1
             else:
                 entry = native[name]
                 if query_action == "native-packages":
-                    output = selected(entry)
+                    output = selected(name, entry)
                 elif query_action == "native-manager":
                     output = [manager(entry)]
                 elif query_action == "native-command":
@@ -723,12 +802,14 @@ try:
                 return value.get("os", ["linux", "macos"]) if isinstance(value, dict) else ["linux", "macos"]
             if query_action == "mise-records":
                 for tool in tools:
+                    if not entry_selected(mise_groups.get(tool, ["core"])):
+                        continue
                     command = config["mise_commands"].get(tool, tool.rsplit(":", 1)[-1].rsplit("/", 1)[-1])
                     string(tool)
                     string(command)
                     output.append(f"{tool}|{command}")
             elif query_action == "mise-applies":
-                status = 0 if name in tools and platform in platforms(tools[name]) else 1
+                status = 0 if name in tools and platform in platforms(tools[name]) and entry_selected(mise_groups.get(name, ["core"])) else 1
             elif query_action == "mise-has":
                 status = 0 if name in tools else 1
             elif query_action == "mise-native":
@@ -736,7 +817,8 @@ try:
             else:
                 raise ValueError(f"unknown action: {query_action}")
         elif query_action == "vendors":
-            output = [f"{key}|{entry['label']}" for key, entry in config["vendors"].items()]
+            output = [f"{key}|{entry['label']}" for key, entry in config["vendors"].items()
+                      if entry_selected(entry.get("groups", ["core"]))]
         elif query_action == "vendor-field":
             value = config["vendors"][name].get(query_arguments[1], [])
             output = value if isinstance(value, list) else [value]
@@ -827,7 +909,7 @@ try:
         cache = Path(arguments[0])
         require(not cache.exists(), "setup config cache already exists")
         cache.mkdir(mode=0o700)
-        queries = [("native-required",), ("native-optional",), ("mise-render",), ("mise-records",), ("mise-native",), ("vendors",)]
+        queries = [("tools-is-full",), ("native-required",), ("native-optional",), ("mise-render",), ("mise-records",), ("mise-native",), ("vendors",)]
         native = native_map()
         for name in native:
             queries.extend((query_action, name) for query_action in
@@ -1245,6 +1327,15 @@ install_mise() {
 mise_tool_records() { setup_config mise-records; }
 mise_tool_applies() { setup_config mise-applies "$1"; }
 
+any_selected_mise_tools() {
+  local tool _
+  while IFS='|' read -r tool _; do
+    [ -n "$tool" ] || continue
+    mise_tool_applies "$tool" && return 0
+  done < <(mise_tool_records)
+  return 1
+}
+
 # Go commands must come from their own package, not a stray toolchain binary.
 mise_tool_path() {
   local tool="$1" cmd="$2" root
@@ -1275,7 +1366,8 @@ validate_mise_tool() {
 }
 
 install_locked_mise_tools() {
-  local tool cmd path missing records remaining=0 changed=0 proxy_selected=0
+  local tool cmd path missing selected_missing="" records changed=0 proxy_selected=0
+  local remaining_tools=()
   # Use mise's locked version inventory, not command presence: a working older
   # version must not hide a newly locked version that still needs installation.
   records="$(mise_cmd ls --current --missing --json --locked)" || return 1
@@ -1285,10 +1377,15 @@ for tool, versions in json.load(sys.stdin).items():
     if versions:
         print(tool)
 ')" || return 1
-  if [ -n "$missing" ]; then
+  while IFS= read -r tool; do
+    [ -n "$tool" ] || continue
+    mise_tool_applies "$tool" || continue
+    selected_missing="${selected_missing}${tool}"$'\n'
+  done <<<"$missing"
+  if [ -n "$selected_missing" ]; then
     proxy_selected=1
     for tool in go bun; do
-      if grep -Fxq "$tool" <<<"$missing"; then
+      if grep -Fxq "$tool" <<<"$selected_missing"; then
         info "installing the locked $tool runtime"
         mise_cmd install --locked "$tool"
         validate_mise_tool "$tool" "$tool"
@@ -1296,11 +1393,15 @@ for tool, versions in json.load(sys.stdin).items():
       fi
     done
     while IFS= read -r tool; do
-      case "$tool" in go|bun|'') ;; *) remaining=1 ;; esac
-    done <<<"$missing"
-    if [ "$remaining" -eq 1 ]; then
+      case "$tool" in go|bun|'') ;; *) remaining_tools+=("$tool") ;; esac
+    done <<<"$selected_missing"
+    if [ "${#remaining_tools[@]}" -gt 0 ]; then
       info "installing missing locked tools in parallel"
-      mise_cmd install --locked
+      if setup_config tools-is-full; then
+        mise_cmd install --locked
+      else
+        mise_cmd install --locked "${remaining_tools[@]}"
+      fi
       changed=1
     fi
   else
@@ -1568,8 +1669,19 @@ refresh_mise_lock() (
     cp -R "$locks_dir" "$tmp/.config/mise/locks"
   fi
   cp "$desired_config" "$tmp/desired.toml"
-  [ "${#UPGRADE_TOOLS[@]}" -eq 0 ] || printf '%s\n' "${UPGRADE_TOOLS[@]}" >"$tmp/upgrade-tools"
-  setup_config mise-plan "$tmp" "$upgrade" || return 1
+  local plan_upgrade="$upgrade"
+  if [ "${#UPGRADE_TOOLS[@]}" -gt 0 ]; then
+    printf '%s\n' "${UPGRADE_TOOLS[@]}" >"$tmp/upgrade-tools"
+  elif [ "$upgrade" = 1 ] && ! setup_config tools-is-full; then
+    plan_upgrade=0
+    local selected_tool _
+    while IFS='|' read -r selected_tool _; do
+      [ -n "$selected_tool" ] || continue
+      mise_tool_applies "$selected_tool" || continue
+      printf '%s\n' "$selected_tool" >>"$tmp/upgrade-tools"
+    done < <(mise_tool_records)
+  fi
+  setup_config mise-plan "$tmp" "$plan_upgrade" || return 1
   : >"$tmp/mise-lock.log"
 
   if [ -s "$tmp/changed-tools" ]; then
@@ -2104,7 +2216,7 @@ verify_setup() {
 
 usage() {
   cat <<'EOF'
-Usage: setup.sh [--upgrade [TOOL...]] [--config PATH] [--check-config]
+Usage: setup.sh [--tools=SPEC] [--upgrade [TOOL...]] [--config PATH] [--check-config]
 
 Linux and macOS install tools natively. Run bash setup.sh --upgrade for full upgrades.
 Homebrew confirmation is disabled. Setup installs a root-owned sudo helper;
@@ -2112,8 +2224,17 @@ its first installation or update may require authentication, then reruns reuse i
 
 Package choices and vendor installers live in setup.json beside this script.
 Mise declarations also live in setup.json; .config/mise/config.toml is generated.
+--tools selects a comma-separated list of profiles or tool groups (default: full).
+  Built-in profiles:
+    full   - everything declared in setup.json
+    dev    - interactive workstation (core, shell, clipboard, agents, lint, dev-tui, build/c/go/rust/js/python, browser, mosh)
+    agent  - headless agent sandbox (core, agent-core, lint; combine with langs e.g. --tools=agent,rust)
+    agents - agent-core + agent-clis
+    core   - minimal non-interactive base (git, curl, bash, search, JSON/YAML, rtk)
+  Groups (e.g. --tools=agent,rust or --tools=go,rust) always include core; repeat --tools or separate with commas.
+  SETUP_TOOLS is the environment equivalent.
 --config selects another JSON file; SETUP_CONFIG is the environment equivalent.
---check-config validates JSON only, without downloads, installs, or checkout changes.
+--check-config validates JSON and --tools only, without downloads, installs, or checkout changes.
 Removing an entry stops managing it; it does not uninstall existing software.
 
 Install missing native and locked cross-platform tools, then check the
@@ -2138,6 +2259,17 @@ the locked mise version.
 EOF
 }
 
+append_tools_spec() {
+  local spec="$1"
+  [ -n "$spec" ] || die "--tools needs a non-empty profile or group list"
+  if [ "$SETUP_TOOLS_EXPLICIT" -eq 0 ]; then
+    SETUP_TOOLS="$spec"
+    SETUP_TOOLS_EXPLICIT=1
+  else
+    SETUP_TOOLS="${SETUP_TOOLS},${spec}"
+  fi
+}
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -2149,6 +2281,14 @@ main() {
       -h|--help)
         usage
         return 0
+        ;;
+      --tools=*)
+        append_tools_spec "${1#--tools=}"
+        ;;
+      --tools)
+        [ "$#" -ge 2 ] || die "--tools needs a value"
+        append_tools_spec "$2"
+        shift
         ;;
       --upgrade)
         UPGRADE=1
@@ -2243,20 +2383,29 @@ main() {
   have curl || die "curl is required"
   load_brew_prefix_env
 
-  STEP="ensure TOML parser"
-  ensure_toml_parser
-
   STEP="setup home git repository"
   setup_home_repo
 
-  STEP="validate mise inventory"
-  setup_config mise-records >/dev/null
+  local has_mise_tools=0
+  if any_selected_mise_tools; then
+    has_mise_tools=1
+  fi
 
-  STEP="install mise"
-  install_mise
+  if [ "$has_mise_tools" -eq 1 ]; then
+    STEP="ensure TOML parser"
+    ensure_toml_parser
 
-  STEP="sync mise configuration and lock"
-  sync_mise_config
+    STEP="validate mise inventory"
+    setup_config mise-records >/dev/null
+
+    STEP="install mise"
+    install_mise
+
+    STEP="sync mise configuration and lock"
+    sync_mise_config
+  else
+    info "no mise tools selected; skipping mise setup"
+  fi
 
   STEP="upgrade setup-owned native packages"
   if [ "$PM" = pacman ]; then
@@ -2265,11 +2414,13 @@ main() {
     upgrade_configured_packages
   fi
 
-  STEP="install cross-platform tools"
-  if [ "$UPGRADE" -eq 1 ] || [ "${MISE_ALIGNED_CHANGED:-0}" -eq 1 ]; then
-    upgrade_mise_tools
-  else
-    install_locked_mise_tools
+  if [ "$has_mise_tools" -eq 1 ]; then
+    STEP="install cross-platform tools"
+    if [ "$UPGRADE" -eq 1 ] || [ "${MISE_ALIGNED_CHANGED:-0}" -eq 1 ]; then
+      upgrade_mise_tools
+    else
+      install_locked_mise_tools
+    fi
   fi
 
   STEP="install additional tools"
@@ -2280,17 +2431,33 @@ main() {
 
   STEP="compile user-owned helpers and hooks"
   if [ -x "${LOCAL_BIN}/compile-agent-tools" ]; then
-    SETUP_CONFIG="$SETUP_CONFIG" UPGRADE="$UPGRADE" "${LOCAL_BIN}/compile-agent-tools"
+    if setup_config native-enabled bun && mise_tool_applies npm:scriptc; then
+      SETUP_CONFIG="$SETUP_CONFIG" UPGRADE="$UPGRADE" "${LOCAL_BIN}/compile-agent-tools"
+    else
+      info "skipping helper compilation (bun or scriptc not selected)"
+    fi
   fi
 
   STEP="resolve home paths in configuration"
-  rewrite_home_paths
+  if { setup_config native-enabled bun && mise_tool_applies npm:scriptc; } || [ -x "${LOCAL_BIN}/rewrite-home-paths" ]; then
+    rewrite_home_paths
+  else
+    info "skipping home-path rewriting (rewrite-home-paths not available)"
+  fi
 
   STEP="apply git filters"
-  apply_git_home_filters
+  if setup_config native-enabled bun; then
+    apply_git_home_filters
+  else
+    info "skipping git home filters (bun not selected)"
+  fi
 
   STEP="set login shell"
-  ensure_fish_login_shell
+  if setup_config native-enabled fish; then
+    ensure_fish_login_shell
+  else
+    info "skipping login shell setup (fish not selected)"
+  fi
 
   STEP="configure image paste"
   configure_image_paste
@@ -2308,8 +2475,10 @@ main() {
   hash -r 2>/dev/null || true
   verify_setup
 
-  info "cross-platform tool versions"
-  mise_cmd ls --global
+  if [ "$has_mise_tools" -eq 1 ]; then
+    info "cross-platform tool versions"
+    mise_cmd ls --global
+  fi
 
   info "setup complete"
   log "open a new shell session to activate the mise-managed tools"

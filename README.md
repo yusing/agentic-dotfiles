@@ -139,13 +139,28 @@ configures the host Fish shell and compiles managed helpers. Open a new
 terminal after installation.
 
 ```sh
-bash setup.sh                      # install missing tools
+bash setup.sh                      # install missing tools (default: --tools=full)
+bash setup.sh --tools=dev          # interactive workstation (shell + agents + main langs + browser)
+bash setup.sh --tools=agent,rust   # headless agent sandbox (core + agent-core + lint + Rust)
+bash setup.sh --tools=go,rust      # minimal core + Go and Rust toolchains only
 bash setup.sh --upgrade            # upgrade managed tools
-bash setup.sh --upgrade git-agent   # upgrade only a named Mise tool
+bash setup.sh --upgrade git-agent  # upgrade only a named Mise tool
 ```
 
-Normal setup retains installed versions. Full upgrades refresh declared Brew,
-Mise, and vendor tools. Named upgrades accept a Mise identifier or command
+Normal setup retains installed versions. Use `--tools=SPEC` (or `SETUP_TOOLS`)
+to select a profile (`full`, `dev`, `agent`, `agents`, `core`) or
+comma-separated tool groups declared in [setup.json](setup.json). Specific
+groups always include `core` (minimal non-interactive Git, search, and CLI
+base). Use `agent` plus language groups (such as `--tools=agent,rust` or
+`--tools=agent,rust,browser`) in headless agent sandboxes to install hooks,
+`skills-mgr`, `graphify`, `scriptc`, and linters while skipping interactive
+shells (`shell`), host clipboards (`clipboard`), `mosh`, and vendor agent CLIs
+(`agent-clis`). Unselected native packages, Mise tools, vendors, Fish login
+shell setup, and helper compilation (when `bun` or `scriptc` is unselected) are
+skipped while keeping the tracked `.config/mise/config.toml` and `mise.lock`
+intact. Full upgrades refresh declared Brew,
+Mise, and vendor tools (or only the selected subset when combined with
+`--tools`). Named upgrades accept a Mise identifier or command
 name and skip Brew, vendors, helpers, and final verification.
 Full setup configures the `sbx_cloud` SSH alias in your user SSH configuration
 when Docker Sandboxes is managed. If you upgrade only `sbx`, rerun
