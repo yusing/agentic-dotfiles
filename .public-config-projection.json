@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "257c9b22cea51fc797cec5503676acae4318d7de",
+  "sourceCommit": "aaa0ce1d274ae72112ef30147a5cad502af91508",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -961,7 +961,7 @@
     {
       "path": ".gemini/DELEGATION.md",
       "kind": "file",
-      "sha256": "dd4aa7163227940690ec67dc6955d5027bc585065cb80ecfe172d8ee3ea03440",
+      "sha256": "2bd7c541c7c4a721c98f4c90b69824cbc5a441c8608b73ac9fd21f3291fdd505",
       "executable": false
     },
     {

@@ -12,9 +12,19 @@ independent review or investigation, give the questions and evidence without
 steering the answer. Do not repeat guidance already supplied by native roles
 or standing instructions.
 
-Use Flash for bounded lookup or straightforward work and Pro for
-implementation, investigation, and independent review when invocation exposes
-the tier. Otherwise inherit the session's model and reasoning settings.
+Model selection (override `invoke_subagent`'s `inherit` default where noted):
+- Lightweight one-off exploration or straightforward lookup: use
+  `invoke_subagent` with `TypeName: "explorer"` and `Model: "flash"` (or
+  `"flash_lite"` for trivial lookups).
+- Substantial or reusable exploration when `swarm` is available: spawn a
+  `swarm` worker (`workspace: "inherit"`) pinned to `gemini-4-hydrogen-medium`
+  (or `gemini-4-hydrogen-high` for deeper traces). State the read-only
+  exploration boundary in the brief, since `swarm` does not apply `explorer`'s
+  role prompt or tool restrictions, and `kill` the worker once exploration
+  finishes.
+- Implementation, investigation, and independent review: use `Model: "pro"`
+  when invocation exposes the tier; otherwise inherit the session's model and
+  reasoning settings.
 
 Keep concurrent edits off the same paths and contracts. Use the same
 workspace unless the task authorizes isolation and its worktree location
