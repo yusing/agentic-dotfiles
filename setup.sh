@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.11.0
+# version: 2.11.1
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -2232,6 +2232,7 @@ Mise declarations also live in setup.json; .config/mise/config.toml is generated
     agents - agent-core + agent-clis
     core   - minimal non-interactive base (git, curl, bash, search, JSON/YAML, rtk)
   Groups (e.g. --tools=agent,rust or --tools=go,rust) always include core; repeat --tools or separate with commas.
+  The browser group skips WebKitGTK on Linux; add webkit if you need it.
   SETUP_TOOLS is the environment equivalent.
 --config selects another JSON file; SETUP_CONFIG is the environment equivalent.
 --check-config validates JSON and --tools only, without downloads, installs, or checkout changes.
@@ -2475,7 +2476,7 @@ main() {
   hash -r 2>/dev/null || true
   verify_setup
 
-  if [ "$has_mise_tools" -eq 1 ]; then
+  if [ "$has_mise_tools" -eq 1 ] && setup_config tools-is-full; then
     info "cross-platform tool versions"
     mise_cmd ls --global
   fi

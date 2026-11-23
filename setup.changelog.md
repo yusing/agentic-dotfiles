@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.11.1
+
+Keep Linux WebKitGTK and its dependencies out of the Chrome-oriented
+`browser` group. Select `webkit` to install it explicitly; `full` still
+includes it. Filtered setup reports the Mise tools it verified without
+listing unselected tools as missing.
+
 ## 2.11.0
 
 Add `--tools=SPEC` (and `SETUP_TOOLS`) to install or upgrade a subset of

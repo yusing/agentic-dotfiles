@@ -155,10 +155,12 @@ base). Use `agent` plus language groups (such as `--tools=agent,rust` or
 `--tools=agent,rust,browser`) in headless agent sandboxes to install hooks,
 `skills-mgr`, `graphify`, `scriptc`, and linters while skipping interactive
 shells (`shell`), host clipboards (`clipboard`), `mosh`, and vendor agent CLIs
-(`agent-clis`). Unselected native packages, Mise tools, vendors, Fish login
-shell setup, and helper compilation (when `bun` or `scriptc` is unselected) are
-skipped while keeping the tracked `.config/mise/config.toml` and `mise.lock`
-intact. Full upgrades refresh declared Brew,
+(`agent-clis`). The `browser` group includes Chromium libraries on Linux;
+add `webkit` if you need WebKitGTK. Unselected native packages, Mise tools,
+vendors, and Fish login shell setup are skipped. Helper compilation requires
+both `bun` and `scriptc`. The tracked `.config/mise/config.toml` and
+`mise.lock` keep their full inventory. Package managers still install
+dependencies of selected tools. Full upgrades refresh declared Brew,
 Mise, and vendor tools (or only the selected subset when combined with
 `--tools`). Named upgrades accept a Mise identifier or command
 name and skip Brew, vendors, helpers, and final verification.
