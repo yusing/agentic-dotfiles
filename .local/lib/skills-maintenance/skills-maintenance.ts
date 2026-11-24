@@ -1,13 +1,13 @@
 import { spawn, type ChildProcess } from "node:child_process";
-import { access, lstat, mkdir, open, readFile, realpath, unlink, writeFile } from "node:fs/promises";
+import { access, lstat, mkdir, mkdtemp, open, readFile, realpath, rm, unlink, writeFile } from "node:fs/promises";
 import { dlopen, read } from "bun:ffi";
-import { homedir, hostname } from "node:os";
+import { homedir, hostname, tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { createInterface } from "node:readline";
 import type { Readable } from "node:stream";
-import { openaiDocsUpdatePrompt, repairPrompt } from "./repair-prompt";
+import { openaiDocsUpdatePrompt, repairPrompt, scriptcUpdatePrompt } from "./repair-prompt";
 
-export const VERSION = "1.6.0";
+export const VERSION = "1.7.0";
 const roots = [".agents/skills", ".claude/skills"];
 const claudeProfile = "gemini-web";
 const disappeared = /does not contain skill|0 matching skills|remote skill name .+ does not match SKILL\.md name|remote skill .+ (?:is missing|has invalid) SKILL\.md|repository not found|repository .+ not found|\b(?:404|410)\b/i;
@@ -351,6 +351,81 @@ async function updateOpenaiDocs(cwd: string, env: NodeJS.ProcessEnv): Promise<bo
 	return true;
 }
 
+async function updateScriptc(cwd: string, env: NodeJS.ProcessEnv): Promise<boolean> {
+	const name = "scriptc-compiler";
+	const owner = `.skills-mgr/skills/${name}`;
+	const tool = "npm:scriptc";
+	const config = ".config/mise/config.toml";
+	const lock = ".config/mise/mise.lock";
+	const references = ["references/cli.md", "references/ffi.md", "references/limitations.md"];
+	const owned = ["setup.json", config, lock, owner];
+	if (!await Bun.file(join(cwd, owner, "SKILL.md")).exists()) return false;
+
+	async function requireClean(): Promise<void> {
+		const dirty = await run(cwd, env, ["git", "status", "--porcelain=v1", "--untracked-files=all", "--", ...owned]);
+		if (dirty.status) throw new Error(dirty.stderr);
+		if (dirty.stdout) throw new Error("scriptc setup or skill has working-tree or index changes; preserving them.");
+	}
+	const stable = /^\d+\.\d+\.\d+$/;
+	async function readVersions() {
+		const read = (path: string) => readFile(join(cwd, path), "utf8");
+		const setup = JSON.parse(await read("setup.json")).mise?.tools?.[tool]?.version;
+		const skill = (await read(`${owner}/SKILL.md`)).match(/\bcontract targets scriptc (\d+\.\d+\.\d+)\b/i)?.[1];
+		if (typeof setup !== "string" || !stable.test(setup) || !skill) {
+			throw new Error("Missing or invalid scriptc setup pin or managed skill version.");
+		}
+		const rendered = Bun.TOML.parse(await read(config)) as { tools?: Record<string, { version?: string }> };
+		const locked = Bun.TOML.parse(await read(lock)) as { tools?: Record<string, { version?: string; specifiers?: string[] }[]> };
+		const entry = locked.tools?.[tool];
+		const consumers = [
+			rendered.tools?.[tool]?.version, entry?.length === 1 ? entry[0].version : undefined,
+			entry?.length === 1 && entry[0].specifiers?.length === 1 ? entry[0].specifiers[0] : undefined,
+			skill,
+			...await Promise.all(references.map(async path =>
+				(await read(`${owner}/${path}`)).match(/^Contract: scriptc (\d+\.\d+\.\d+)\b/m)?.[1])),
+		];
+		return { setup, skill, consumers };
+	}
+
+	await requireClean();
+	const current = await readVersions();
+	const registry = await run(cwd, env, ["bun", "info", "scriptc@latest", "version"]);
+	if (registry.status) throw new Error(`scriptc npm lookup failed: ${registry.stderr || registry.stdout}`);
+	const latest = registry.stdout.trim();
+	if (!stable.test(latest)) throw new Error("scriptc npm latest did not resolve to a stable version.");
+	const target = Bun.semver.order(latest, current.setup) > 0 ? latest : current.setup;
+	const needsUpdate = current.setup !== target || current.consumers.some(version => version !== target);
+	if (needsUpdate) {
+		const result = await dispatchAgent(cwd, env, `scriptc release maintenance (${current.setup} -> ${target})`,
+			`${scriptcUpdatePrompt}\nCurrent setup pin: ${current.setup}\nCurrent scriptc skill version: ${current.skill}\nTarget scriptc release: ${target}\n`);
+		if (result.status || !result.completed) {
+			throw new Error(`scriptc update failed (exit ${result.status}, completed=${result.completed}). ${result.stderr}`);
+		}
+		await requireClean();
+		const tracked = await run(cwd, env, ["git", "ls-files", "--error-unmatch", "--",
+			"setup.json", config, lock, `${owner}/SKILL.md`, ...references.map(path => `${owner}/${path}`)]);
+		const updated = await readVersions();
+		if (tracked.status || updated.setup !== target || updated.consumers.some(version => version !== target)) {
+			throw new Error(`scriptc update did not commit setup, lock, and skill for ${target}.`);
+		}
+	}
+	// Cron's original mise exec can leave the old version first on PATH.
+	const installed = await run(cwd, env, ["mise", "exec", "--", "scriptc", "--version"]);
+	if (installed.status || installed.stdout.trim() !== target) {
+		throw new Error(`mise did not run scriptc ${target}: ${installed.stderr || installed.stdout}`);
+	}
+	// The shared skill is enabled only in TypeScript projects.
+	const project = await mkdtemp(join(tmpdir(), "scriptc-skill-check-"));
+	try {
+		await writeFile(join(project, "tsconfig.json"), "{}\n");
+		const checked = await run(project, env, ["skills-mgr", "check", name, ...references.map(path => `${name}/${path}`)]);
+		if (checked.status) throw new Error(`scriptc skill resource check failed: ${checked.stderr || checked.stdout}`);
+	} finally { await rm(project, { recursive: true, force: true }); }
+	console.log(needsUpdate
+		? `scriptc ${target} upgrade and skill maintenance committed and checked.`
+		: `scriptc ${target} and its skill are current and checked.`);
+	return true;
+}
 
 export async function maintain(cwd = homedir(), options: { leader?: string } = {}): Promise<void> {
 	if (options.leader !== undefined) {
@@ -403,6 +478,11 @@ export async function maintain(cwd = homedir(), options: { leader?: string } = {
 		try { managedReady = await updateOpenaiDocs(cwd, env); } catch (error) {
 			failed = true;
 			console.error(`Managed upstream update unresolved: ${(error as Error).message}`);
+		}
+		let scriptcReady = false;
+		try { scriptcReady = await updateScriptc(cwd, env); } catch (error) {
+			failed = true;
+			console.error(`scriptc maintenance unresolved: ${(error as Error).message}`);
 		}
 		console.log("Refreshing remote skills (skills-mgr owns cache expiry).");
 		const started = Date.now();
@@ -457,7 +537,11 @@ export async function maintain(cwd = homedir(), options: { leader?: string } = {
 		if (!finalSync.status) {
 			const updated = JSON.parse(await readFile(join(cwd, ".skills-mgr/.skills-mgr.json"), "utf8"));
 			const updatedNames = Object.entries(updated.skills).filter(([, selection]) => (selection as { remote?: unknown }).remote).map(([name]) => name);
-			await commitPlaceholders(cwd, env, new Set([...names, ...updatedNames, ...(managedReady ? ["openai-docs"] : [])]), protectedDirectories);
+			const managedNames = [
+				...(managedReady ? ["openai-docs"] : []),
+				...(scriptcReady ? ["scriptc-compiler"] : []),
+			];
+			await commitPlaceholders(cwd, env, new Set([...names, ...updatedNames, ...managedNames]), protectedDirectories);
 		}
 		if (failed || finalSync.status) throw new Error(finalSync.stderr || "Skills maintenance remains unresolved; see diagnostics above.");
 		console.log("Skills maintenance complete.");

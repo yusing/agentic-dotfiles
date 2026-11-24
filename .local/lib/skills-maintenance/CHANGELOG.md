@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.0
+
+Check npm for stable scriptc releases and dispatch upgrades with matching
+compiler-skill updates. Verify the committed pins, installed compiler and
+served resources without blocking independent skill maintenance on failure.
+
 ## 1.6.0
 
 Add static leader selection (`--leader <host>`) so shared multi-machine

@@ -265,9 +265,16 @@ and adapted references. The agent validates and commits the skill with its
 upstream baseline. Uncommitted skill edits defer that update; upstream failures
 leave independent remote maintenance running.
 
+When the managed scriptc skill is installed, the same cycle checks npm for a
+new stable release. A newer release or a pin and skill mismatch dispatches
+maintenance of the compiler and the skill together. The agent reads the release
+notes, runs the named setup upgrade, and rebuilds the helpers before committing.
+Local edits to the pin, mise files or skill defer the upgrade. The worker checks
+the resulting pins, installed compiler and skill resources.
+
 Repair authors maintain one local newest-first, 100-entry rolling log at
 `.skills-mgr/MAINTENANCE.md`. The activity log stays outside the public projection.
-Generated remote and managed OpenAI Docs placeholder changes are
+Generated remote and managed skill placeholder changes are
 committed separately without log entries. Manual placeholder edits are preserved when sync
 would overwrite them; unrelated staged changes and staged placeholder edits stay outside
 automatic placeholder commits. Concurrent maintenance invocations skip
