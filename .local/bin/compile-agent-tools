@@ -1,5 +1,5 @@
 #!/bin/sh
-# version: 1.1.1
+# version: 1.2.0
 # Rebuild changed user-owned helper and hook binaries for this machine.
 
 set -eu
@@ -18,16 +18,16 @@ if ! command -v bun >/dev/null 2>&1 || ! command -v scriptc >/dev/null 2>&1; the
 	PATH=$PATH:$tool_home/.local/share/mise/shims:$local_bin
 	export PATH
 fi
-bun_path=$(command -v bun)
-bun_identity=$("$bun_path" -p 'process.execPath'):$("$bun_path" --version)
+scriptc_path=$(command -v scriptc)
+scriptc_identity=$(realpath "$scriptc_path"):$("$scriptc_path" --version)
 target_identity=$(uname -s)-$(uname -m)
 mkdir -p "$cache_root"
 state=$cache_root/bootstrap.digest
 digest=$(
 	{
-		printf '%s\n' "bun=$bun_identity target=$target_identity flags=build--compile"
+		printf '%s\n' "scriptc=$scriptc_identity target=$target_identity flags=--no-keep-llvm --node-islands=off"
+		printf '%s\n' "${SCRIPTC_TARGET:-}" "${SCRIPTC_CC:-}" "${SCRIPTC_LINKER:-}" "${SCRIPTC_RUNTIME_PACK:-}"
 		git hash-object "$wrapper" "$engine_source"
-		[ ! -f "$tool_home/.bunfig.toml" ] || git hash-object "$tool_home/.bunfig.toml"
 	} | git hash-object --stdin
 )
 
@@ -42,7 +42,7 @@ if [ ! -x "$engine" ] || [ "$stored" != "$digest" ]; then
 		rm -f "$build_temp" "$state_temp"
 	}
 	trap cleanup EXIT HUP INT TERM
-	"$bun_path" build --compile --outfile="$build_temp" "$engine_source"
+	"$scriptc_path" build "$engine_source" -o "$build_temp" --no-keep-llvm --node-islands=off
 	chmod 755 "$build_temp"
 	mv -f "$build_temp" "$engine"
 	build_temp=

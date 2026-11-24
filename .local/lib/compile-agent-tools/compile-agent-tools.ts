@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.0.33";
+const VERSION = "1.1.0";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -115,7 +115,7 @@ function saveDigest(state: string, digest: string): void {
   }
 }
 
-function run(command: string, args: string[], cwd?: string): void {
+function run(command: string, args: string[], cwd = process.cwd()): void {
   const result = spawnSync(command, args, { cwd, stdio: "inherit" });
   if (result.error) {
     throw new Error(`compile-agent-tools: failed to run ${command}: ${result.error.message}`);
@@ -127,12 +127,11 @@ function buildAtomically(
   output: string,
   command: string,
   args: (temporary: string) => string[],
-  cwd?: string,
 ): void {
   const temporary = `${output}.compile-agent-tools.${process.pid}`;
   try {
     if (existsSync(temporary)) unlinkSync(temporary);
-    run(command, args(temporary), cwd);
+    run(command, args(temporary));
     chmodSync(temporary, 0o755);
     renameSync(temporary, output);
   } finally {
@@ -170,13 +169,16 @@ function main(): void {
 
   const scriptc = commandPath("scriptc");
   const bun = commandPath("bun");
-  const target = [
-    `${platform()}-${arch()}`,
+  const host = `${platform()}-${arch()}`;
+  const scriptcIdentity = [
+    `${realpathSync(scriptc)}:${commandVersion(scriptc)} target=${host}`,
     `SCRIPTC_TARGET=${process.env.SCRIPTC_TARGET ?? ""}`,
     `SCRIPTC_CC=${process.env.SCRIPTC_CC ?? ""}`,
+    `SCRIPTC_LINKER=${process.env.SCRIPTC_LINKER ?? ""}`,
+    `SCRIPTC_RUNTIME_PACK=${process.env.SCRIPTC_RUNTIME_PACK ?? ""}`,
   ].join(" ");
-  const scriptcIdentity = `${realpathSync(scriptc)}:${commandVersion(scriptc)} linker=${process.env.SCRIPTC_LINKER ?? ""}`;
   const bunIdentity = `${realpathSync(bun)}:${commandVersion(bun)}`;
+  const flockManifest = join(codexHooks, "lib", "flock.ffi.json");
   const sharedHookInputs = join(codexHooks, "lib");
   const sharedHookDigest = digestInputs("shared-hook-inputs", [sharedHookInputs]);
   const sharedUsesFfi = usesFfi([sharedHookInputs]);
@@ -185,10 +187,10 @@ function main(): void {
     const name = basename(source, ".ts");
     const output = join(outputDirectory, name);
     const ffi = sharedUsesFfi || usesFfi([source, ...extraInputs])
-      ? join(codexHooks, "lib", "flock.ffi.json")
+      ? flockManifest
       : "";
     const digest = digestInputs(
-      `scriptc=${scriptcIdentity} target=${target} shared=${sharedHookDigest} ffi=${ffi} flags=--no-keep-llvm`,
+      `scriptc=${scriptcIdentity} shared=${sharedHookDigest} ffi=${ffi} flags=--no-keep-llvm`,
       [source, ...extraInputs],
     );
     const state = join(cacheRoot, `${name}.digest`);
@@ -205,7 +207,7 @@ function main(): void {
   function ensureHelperDependencies(directory: string): void {
     const state = join(cacheRoot, `${basename(directory)}.dependencies.digest`);
     const digest = digestInputs(
-      `bun=${bunIdentity} target=${target} flags=install--frozen-lockfile--ignore-scripts`,
+      `bun=${bunIdentity} target=${host} flags=install--frozen-lockfile--ignore-scripts`,
       [join(directory, "package.json"), join(directory, "bun.lock"), bunConfig],
     );
     if (existsSync(join(directory, "node_modules")) && storedDigest(state) === digest) return;
@@ -213,27 +215,39 @@ function main(): void {
     saveDigest(state, digest);
   }
 
-  function compileHelper(source: string, required = false): void {
+  function compileHelper(source: string, compiler: "scriptc" | "bun", required = false): void {
     if (!existsSync(source)) {
       if (required) throw new Error(`compile-agent-tools: missing source: ${source}`);
       return;
     }
     const name = basename(source, ".ts");
     const output = join(localBin, name);
+    const directory = dirname(source);
+    const inputs = [directory];
+    const hasDependencies = existsSync(join(directory, "package.json"));
+    if (["disk-clean", "cargo-worktree", "tmp_clean"].includes(name)) {
+      inputs.push(join(localLib, "cleanup-safety.ts"));
+    }
+    if (compiler === "bun" || hasDependencies) inputs.push(bunConfig);
+    const flags = compiler === "scriptc" ? ["--no-keep-llvm", "--node-islands=off"] : ["--compile"];
+    if (name === "disk-clean" || name === "cargo-worktree") {
+      flags.push("--ffi", flockManifest);
+      inputs.push(flockManifest);
+    }
+    const identity = compiler === "scriptc" ? scriptcIdentity : `${bunIdentity} target=${host}`;
+    const dependencyCompiler = hasDependencies ? ` bun-install=${bunIdentity}` : "";
     const digest = digestInputs(
-      `bun=${bunIdentity} target=${target} flags=build--compile`,
-      [dirname(source), bunConfig, ...(["disk-clean", "cargo-worktree", "tmp_clean"].includes(name) ? [join(localLib, "cleanup-safety.ts")] : [])],
+      `${compiler}=${identity}${dependencyCompiler} flags=${flags.join(" ")}`, inputs,
     );
     const state = join(cacheRoot, `${name}.digest`);
     if (isExecutable(output) && storedDigest(state) === digest) return;
 
-    if (existsSync(join(dirname(source), "package.json"))) ensureHelperDependencies(dirname(source));
-    buildAtomically(output, bun, (temporary) => [
-      "build",
-      "--compile",
-      `--outfile=${temporary}`,
-      source,
-    ]);
+    if (hasDependencies) ensureHelperDependencies(directory);
+    if (compiler === "scriptc") {
+      buildAtomically(output, scriptc, (temporary) => ["build", source, "-o", temporary, ...flags]);
+    } else {
+      buildAtomically(output, bun, (temporary) => ["build", ...flags, `--outfile=${temporary}`, source]);
+    }
     saveDigest(state, digest);
   }
 
@@ -257,10 +271,9 @@ function main(): void {
   compileHook(join(grokHooks, "skills_path_guard.ts"), grokBin);
 
   if (existsSync(join(localLib, "rewrite-home-paths", "package.json"))) {
-    compileHelper(join(localLib, "rewrite-home-paths", "rewrite-home-paths.ts"), true);
+    compileHelper(join(localLib, "rewrite-home-paths", "rewrite-home-paths.ts"), "bun", true);
   }
   for (const [directory, name] of [
-    ["plane", "plane"],
     ["herdr-ai-usage", "herdr-ai-usage"],
     ["agent-work", "agent-work-watch"],
     ["tmp-clean", "tmp_clean"],
@@ -268,18 +281,23 @@ function main(): void {
     ["disk-clean", "cargo-worktree"],
     ["scc-prod", "scc-prod"],
     ["scc-prod", "git-diffstat"],
-    ["graphify-report", "graphify-report"],
     ["sync-agent-ports", "sync-agent-ports"],
+    ["update-oh-my-posh-theme", "update-oh-my-posh-theme"],
+  ]) {
+    compileHelper(join(localLib, directory, `${name}.ts`), "scriptc");
+  }
+  for (const [directory, name] of [
+    ["plane", "plane"],
+    ["graphify-report", "graphify-report"],
     ["claude-config-helper", "claude-config-helper"],
     ["patch-bitwarden-cli-fast-exit", "patch-bitwarden-cli-fast-exit"],
     ["svn-merge", "svn-merge"],
     ["deltapath-wifi-routes", "deltapath-wifi-routes"],
-    ["update-oh-my-posh-theme", "update-oh-my-posh-theme"],
     ["skills-maintenance", "skills-maintenance"],
   ]) {
-    compileHelper(join(localLib, directory, `${name}.ts`));
+    compileHelper(join(localLib, directory, `${name}.ts`), "bun");
   }
-  compileHelper(join(localLib, "project-public-config", "project-public-config.ts"), true);
+  compileHelper(join(localLib, "project-public-config", "project-public-config.ts"), "bun", true);
 }
 
 try {

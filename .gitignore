@@ -281,7 +281,9 @@ __pycache__
 !/.local/lib/skills-maintenance/repair-prompt.ts
 !/.local/lib/skills-maintenance/skills-maintenance.ts
 !/.local/lib/sync-agent-ports/
+!/.local/lib/sync-agent-ports/bun.lock
 !/.local/lib/sync-agent-ports/CHANGELOG.md
+!/.local/lib/sync-agent-ports/package.json
 !/.local/lib/sync-agent-ports/sync-agent-ports.ts
 !/.local/lib/tmp-clean/
 !/.local/lib/tmp-clean/CHANGELOG.md

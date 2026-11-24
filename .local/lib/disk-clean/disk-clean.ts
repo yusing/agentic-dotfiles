@@ -1,11 +1,11 @@
 import { spawnSync } from "node:child_process";
-import { statfsSync } from "node:fs";
+import { accessSync, constants, statSync, statfsSync } from "node:fs";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { delimiter, join } from "node:path";
 import { cleanOrphanWorktrees, cleanRustWorkingSessions, discoverManagedRustTargets, discoverRustTargets, sweepLegacyCargoTarget } from "./rust-cache";
 import { cleanRetiredGoArchives, retiredGoCache } from "./go-cache";
 
-const VERSION = "1.2.1";
+const VERSION = "1.2.2";
 const help = `disk-clean [--dry-run] [--retired-go goX.Y.Z]
 Remove obsolete tool versions, garbage-collect npm's cache, and clean abandoned
 Rust working sessions, orphan worktree targets and unused legacy Cargo artifacts.
@@ -26,6 +26,18 @@ function availableBytes(): bigint {
 
 function gib(bytes: bigint): string {
   return `${(Number(bytes) / 1024 ** 3).toFixed(2)} GiB`;
+}
+
+function commandAvailable(command: string): boolean {
+  return (process.env.PATH ?? "").split(delimiter).some(directory => {
+    const path = join(directory, command);
+    try {
+      accessSync(path, constants.X_OK);
+      return statSync(path).isFile();
+    } catch {
+      return false;
+    }
+  });
 }
 
 function main(): number {
@@ -54,7 +66,7 @@ function main(): number {
     return failures ? 1 : 0;
   }
   function run(command: string, commandArgs: string[]): void {
-    if (!Bun.which(command)) {
+    if (!commandAvailable(command)) {
       console.log(`Skipped unavailable tool: ${command}`);
       return;
     }

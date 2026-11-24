@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.47
+
+Publish the agent port generator's locked TOML parser build inputs.
+
 ## 1.3.46
 
 Publish safe agent and development configurations: Devin CLI instructions, roles,

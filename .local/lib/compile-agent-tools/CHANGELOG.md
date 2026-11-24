@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0
+
+Build the Herdr usage and task helpers, disk and temporary cleaners, Cargo
+worktree helper, source-count and Git diff helpers, agent port generator, and
+theme updater as native scriptc executables.
+Keep separate build identities for scriptc and the remaining Bun targets.
+
 ## 1.0.33
 
 Restore building `herdr-ai-usage` for the Herdr app status bar helper.

@@ -4,7 +4,7 @@ import { homedir } from "node:os";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { cargoTarget, targetKey, ownerFile, targetFlock } from "./rust-cache";
 
-const VERSION = "1.0.1";
+const VERSION = "1.0.2";
 
 function directories(path: string): string[] {
   return readdirSync(path, { withFileTypes: true }).filter(entry => entry.isDirectory()).map(entry => join(path, entry.name));

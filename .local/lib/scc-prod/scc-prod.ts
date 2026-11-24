@@ -1,8 +1,9 @@
+import { spawn } from "node:child_process";
 import { mkdtemp, open, rm } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { constants, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-const VERSION = "1.0.1";
+const VERSION = "1.0.2";
 export const SOURCE_EXTENSIONS = "c,h,cc,cpp,cxx,hpp,cs,go,java,js,mjs,cjs,jsx,ts,tsx,py,rb,php,rs,kt,kts,swift,scala,dart,vue,svelte,m,mm,sh,sql,lua,ex,exs,zig";
 const EXCLUDED_DIRS = ".git,.hg,.svn,vendor,node_modules,dist,build,out,target,coverage,.venv,venv,third_party,Pods,__pycache__,.gradle,bower_components";
 const EXCLUDED_PATH = String.raw`(^|/)(_?tests?|__tests__|spec|fixtures|mocks?|testdata|__mocks__|benches|benchmarks?|examples?|samples?|e2e|integration[-_]?tests?|test[-_](utils|support|helpers)|generated|__generated__)(/|$)|(^|/)_?tests?([_-][^/]*)?\.[^/]+$|(_tests?|\.tests?|\.spec|_spec|_bench|\.bench|\.benchmark)\.|\.(gen|generated|min)\.[^/]*$|\.pb\.(go|cc|h)$`;
@@ -98,12 +99,22 @@ function parseArgs(args: string[], help: string): { options: string[]; discovery
 }
 
 async function execute(args: string[], capture = false): Promise<{ status: number; output: string }> {
-  const child = Bun.spawn(["scc", ...args], { stdin: capture ? "ignore" : "inherit", stdout: capture ? "pipe" : "inherit", stderr: "inherit" });
-  const interrupt = () => child.kill("SIGINT"), terminate = () => child.kill("SIGTERM");
+  const child = spawn("scc", args, {
+    stdio: [capture ? "ignore" : "inherit", capture ? "pipe" : "inherit", "inherit"],
+  });
+  const interrupt = () => { child.kill("SIGINT"); };
+  const terminate = () => { child.kill("SIGTERM"); };
   process.on("SIGINT", interrupt); process.on("SIGTERM", terminate);
   try {
-    const output = capture ? await new Response(child.stdout as ReadableStream).text() : "";
-    return { status: await child.exited, output };
+    let output = "";
+    child.stdout?.setEncoding("utf8").on("data", (chunk: string) => { output += chunk; });
+    const status = await new Promise<number>((resolve, reject) => {
+      child.once("error", reject);
+      child.once("close", (code, signal) => {
+        resolve(code ?? (signal ? 128 + constants.signals[signal as keyof typeof constants.signals] : 1));
+      });
+    });
+    return { status, output };
   } finally {
     process.off("SIGINT", interrupt); process.off("SIGTERM", terminate);
   }

@@ -1,5 +1,9 @@
 # Changelog
 
+## git-diffstat 1.0.2 / scc-prod 1.0.2
+
+Build both commands with scriptc using the Node child-process API.
+
 ## git-diffstat 1.0.1
 
 Keep unstaged deletions visible while including untracked files.

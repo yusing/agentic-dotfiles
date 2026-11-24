@@ -20,7 +20,9 @@ compiled path. Do not register Python, and do not register `bun`, `node`, or
 
 Each user-owned hook must finish its own work in under 10ms on a 2-core ARM
 machine of Oracle_US class. Use `scriptc` for hooks so startup stays inside
-that budget. `bun build --compile` is for helpers that have no 10ms budget.
+that budget. Use scriptc for helpers where it preserves the existing behavior.
+Keep Bun builds for helpers that need Bun-only APIs or dependencies scriptc
+cannot yet run compatibly.
 
 Required calls to tools the hook exists to run (`git`, `skills-mgr`, a
 guidelines binary) sit outside the 10ms budget. Do not add other work that

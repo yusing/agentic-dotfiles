@@ -1,16 +1,12 @@
 import { createHash } from "node:crypto";
-import { dlopen, FFIType } from "bun:ffi";
-import { spawnSync } from "node:child_process";
 import { closeSync, constants, fstatSync, lstatSync, openSync, readFileSync, readdirSync, realpathSync, rmSync, statfsSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { intersectsMounts } from "../cleanup-safety";
 
 export const ownerFile = ".cargo-worktree-owner";
 export const targetKey = (manifest: string) => createHash("sha256").update(manifest).digest("hex");
-const libc = dlopen(process.platform === "darwin" ? "/usr/lib/libSystem.B.dylib" : "libc.so.6", {
-  flock: { args: [FFIType.i32, FFIType.i32], returns: FFIType.i32 },
-});
-export const targetFlock = (fd: number, operation: number) => libc.symbols.flock(fd, operation) === 0;
+declare function flock(fd: number, operation: number): number;
+export const targetFlock = (fd: number, operation: number) => flock(fd, operation) === 0;
 
 const signature = "Signature: 8a477f597d28d172789f06886806bc55";
 const sessionName = /^s-[a-z0-9]+-[a-z0-9]+-working$/;
@@ -84,9 +80,7 @@ function lockFile(path: string, uid: number, device: number): number | undefined
   try {
     const stat = fstatSync(fd);
     if (!stat.isFile() || stat.uid !== uid || stat.dev !== device) return;
-    // The child locks the inherited open-file description; we keep it open.
-    const result = spawnSync("flock", ["--exclusive", "--nonblock", "3"], { stdio: ["ignore", "pipe", "pipe", fd] });
-    if (result.error || result.status !== 0) return;
+    if (!targetFlock(fd, 2 | 4)) return;
     const current = lstatSync(path);
     if (current.ino !== stat.ino || current.dev !== stat.dev) return;
     held = true;
@@ -226,17 +220,20 @@ export function cleanOrphanWorktrees(root: string, dryRun: boolean): void {
     try {
       const dir = fstatSync(fd);
       if (dir.uid !== uid || !targetFlock(fd, 2 | 4)) continue; // busy, including a build in a just-removed checkout
-      let owner;
-      try { owner = JSON.parse(readFileSync(marker, "utf8")); }
+      let value: unknown;
+      try { value = JSON.parse(readFileSync(marker, "utf8")); }
       catch (error) { if (error instanceof SyntaxError) continue; throw error; }
-      if (!owner || typeof owner.worktree !== "string" || typeof owner.manifest !== "string"
+      if (typeof value !== "object" || value === null || Array.isArray(value)) continue;
+      const owner = value as Record<string, unknown>;
+      if (typeof owner.worktree !== "string" || typeof owner.manifest !== "string"
         || resolve(owner.worktree) !== owner.worktree || resolve(owner.manifest) !== owner.manifest
         || !owner.manifest.startsWith(owner.worktree + "/") || basename(owner.manifest) !== "Cargo.toml"
         || targetKey(owner.manifest) !== key) continue;
+      const worktree = owner.worktree;
       function gone(): boolean {
         try {
-          lstatSync(owner.worktree);
-          lstatSync(join(owner.worktree, ".git"));
+          lstatSync(worktree);
+          lstatSync(join(worktree, ".git"));
           return false;
         } catch (error) { return (error as NodeJS.ErrnoException).code === "ENOENT"; }
       }

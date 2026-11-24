@@ -1,7 +1,8 @@
+import { parse } from "smol-toml";
 import { chmodSync, closeSync, existsSync, fsyncSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-export const VERSION = "2.2.0";
+export const VERSION = "2.2.1";
 const READ_TOOLS = "Read, Grep, Glob, Bash, Write, TodoWrite";
 const CLAUDE_METADATA: Record<string, { color: string; tools: string }> = {
   "council-investigator": { color: "yellow", tools: READ_TOOLS },
@@ -179,7 +180,7 @@ function expectedPorts(home: string, client: Client): Map<string, string> {
         : undefined,
   };
   const ports = new Map(roles.map(role => {
-    const config = Bun.TOML.parse(readFileSync(join(source, `${role}.toml`), "utf8"));
+    const config = parse(readFileSync(join(source, `${role}.toml`), "utf8"));
     return [join(output, `${role}.md`), renderRole(client, role, config, options)];
   }));
   if (client === "kilo") {

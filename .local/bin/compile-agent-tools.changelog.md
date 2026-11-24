@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+Build the compiler engine with scriptc. Cache it by compiler, target, linker,
+runtime pack, and source inputs.
+
 ## 1.1.1
 
 Use Bun's executable identity rather than its PATH spelling in the bootstrap

@@ -1,9 +1,10 @@
+import { spawnSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdtempSync, openSync, readSync, closeSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { extname, join, resolve } from "node:path";
 import { excludedPath, generatedHeader, SOURCE_EXTENSIONS } from "./scc-prod";
 
-const VERSION = "1.0.1";
+const VERSION = "1.0.2";
 const extensions = new Set(SOURCE_EXTENSIONS.split(","));
 
 function main(): void {
@@ -16,12 +17,13 @@ function main(): void {
   }
   const cwd = resolve(process.cwd(), process.env.GIT_PREFIX || ".");
   const env = { ...process.env };
-  function git(args: string[], directory = cwd, allowDifference = false, stdin?: Uint8Array): string {
-    const child = Bun.spawnSync(["git", ...args], { cwd: directory, env, stdin, stdout: "pipe", stderr: "pipe" });
-    if (child.exitCode !== 0 && !(allowDifference && child.exitCode === 1)) {
-      throw new Error(child.stderr.toString().trim() || `git exited with status ${child.exitCode}`);
+  function git(args: string[], directory = cwd, allowDifference = false, input = ""): string {
+    const child = spawnSync("git", args, { cwd: directory, env, input, encoding: "utf8" });
+    if (child.error) throw child.error;
+    if (child.status !== 0 && !(allowDifference && child.status === 1)) {
+      throw new Error(child.stderr.trim() || `git exited with status ${child.status}`);
     }
-    return child.stdout.toString();
+    return child.stdout;
   }
   const root = git(["rev-parse", "--show-toplevel"]).trim();
   const separator = args.indexOf("--");
@@ -33,7 +35,7 @@ function main(): void {
     return separator < 0 ? [...format, ...input] : [...input, ...format, "--", ...paths];
   }
   const revisions = git(["rev-parse", "--revs-only", ...args]).trim().split("\n").filter(Boolean);
-  const leadingCommit = args[0] && Bun.spawnSync(["git", "rev-parse", "--verify", "--end-of-options", `${args[0]}^{commit}`], { cwd, env, stdout: "ignore", stderr: "ignore" }).exitCode === 0;
+  const leadingCommit = args[0] && spawnSync("git", ["rev-parse", "--verify", "--end-of-options", `${args[0]}^{commit}`], { cwd, env, stdio: "ignore" }).status === 0;
   const staged = options.some(arg => arg === "--cached" || arg === "--staged");
   const show = leadingCommit && revisions.length === 1 && !staged;
   const comparesWorktree = !show && !staged && revisions.length < 2;
@@ -67,7 +69,7 @@ function main(): void {
           if (!/^0+$/.test(oid)) {
             if (comparesWorktree && !deleted) {
               // Rename detection can hash worktree files without storing the blob.
-              const blob = git(["cat-file", "--batch=%(objecttype)"], cwd, false, Buffer.from(oid + "\n"));
+              const blob = git(["cat-file", "--batch=%(objecttype)"], cwd, false, oid + "\n");
               if (blob.startsWith("blob\n")) source = blob.slice(5, -1).slice(0, 16384);
               else if (blob !== oid + " missing\n") throw new Error(`expected a blob at ${oid}`);
             } else source = git(["cat-file", "blob", oid]).slice(0, 16384);
@@ -87,8 +89,9 @@ function main(): void {
         }
       }
     }
-    const child = Bun.spawnSync(["git", ...command, ...diffArgs(["--numstat", "--shortstat"]), ...exclusions], { cwd, env, stdin: "inherit", stdout: "inherit", stderr: "inherit" });
-    process.exitCode = child.exitCode;
+    const child = spawnSync("git", [...command, ...diffArgs(["--numstat", "--shortstat"]), ...exclusions], { cwd, env, stdio: "inherit" });
+    if (child.error) throw child.error;
+    process.exitCode = child.status ?? 0;
   } finally { if (temporary) rmSync(temporary, { recursive: true, force: true }); }
 }
 

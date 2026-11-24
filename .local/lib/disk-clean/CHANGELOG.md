@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.2 / cargo-worktree 1.0.2
+
+Build both helpers with scriptc. Acquire Cargo cache locks through the
+link-time flock binding while retaining the open file descriptor.
+
 ## 1.2.1
 
 Detect pre-created Cargo targets lacking `CACHEDIR.TAG` via `.rustc_info.json`

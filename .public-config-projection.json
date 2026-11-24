@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "bec7bd9d0673373228116020cefcf29a8e1f5601",
+  "sourceCommit": "eb338a796ae6898ad8596b884336944127ce45a3",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -1002,7 +1002,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "621cf07049f164824809dd0a54bc59335cadddb110ae899a47d3909234580683",
+      "sha256": "65dc3893b7dff23c13843872e6e03483b9604006f8cf18f36b0d0027a243edb4",
       "executable": false
     },
     {
@@ -1127,13 +1127,13 @@
     {
       "path": ".local/bin/compile-agent-tools",
       "kind": "file",
-      "sha256": "de946a375da14b7db1078049f286767d4e070a36a1adc47e28186356698df5d5",
+      "sha256": "7f091ba123ea48f3551ae02db3d38f69d96d8f6b7f6153afd8e5e248b83b73cb",
       "executable": true
     },
     {
       "path": ".local/bin/compile-agent-tools.changelog.md",
       "kind": "file",
-      "sha256": "0d2fd3d6c974a5ebbdba92cd73dd14d38a18b13907ce0cd51029c207bddf31df",
+      "sha256": "16fd0bd23bc7786ed12d6fbbcde69f53346f7f51b1ddb1327b97cf98fa7f01d1",
       "executable": false
     },
     {
@@ -1157,31 +1157,31 @@
     {
       "path": ".local/lib/compile-agent-tools/CHANGELOG.md",
       "kind": "file",
-      "sha256": "bebde40d5231a35e0fd66753bf9db75cd54abe1992bbe99f8d9d763d5c14d9f1",
+      "sha256": "547a07bc7ed78912ad78760120e99ca6eea91dd21c63f783f3cd0b6aebf2be13",
       "executable": false
     },
     {
       "path": ".local/lib/compile-agent-tools/compile-agent-tools.ts",
       "kind": "file",
-      "sha256": "2f81609d6d9d9ac347093687927e50b5eee53f469ef2f88838bb146b8da1ec31",
+      "sha256": "d77f142ff4eba2ad297fab82131d44f8e425e1452f11b41a2719d2b1b64630fe",
       "executable": false
     },
     {
       "path": ".local/lib/disk-clean/cargo-worktree.ts",
       "kind": "file",
-      "sha256": "43634483d044f58c981d216d86087d5ef951a72029bd5b8be4aaa75ac3fa5aea",
+      "sha256": "2847fad6b9a38701c270daa4073b031ffaea9dc26e68e7cf70c4fb66ec7fa0c4",
       "executable": false
     },
     {
       "path": ".local/lib/disk-clean/CHANGELOG.md",
       "kind": "file",
-      "sha256": "c1252137ba035d94d92a8fb30ba6c895a64c2ee706af402765079eb30dcee8ac",
+      "sha256": "28f4befcc88b4b9f7e4e62ff423ab7e08d50fad0e263c4f2e5f02282ae3f0df1",
       "executable": false
     },
     {
       "path": ".local/lib/disk-clean/disk-clean.ts",
       "kind": "file",
-      "sha256": "064caed45b3bdf35e29e63a8790b1d1134c4f9da96c546fd19de895f2c59e82a",
+      "sha256": "a5adbd1c576eaab48de2f8abcb8b7aa8a4834288d3b68cea18ed2554cfc41c96",
       "executable": false
     },
     {
@@ -1199,7 +1199,7 @@
     {
       "path": ".local/lib/disk-clean/rust-cache.ts",
       "kind": "file",
-      "sha256": "2175f367701e5244ef038b53c684546824dd2e5e43204eded3adfa80f6542390",
+      "sha256": "3133a85dab5cb55b9122a8b27cf640318f895aea1b95796209b37dbb466f7002",
       "executable": false
     },
     {
@@ -1223,13 +1223,13 @@
     {
       "path": ".local/lib/project-public-config/CHANGELOG.md",
       "kind": "file",
-      "sha256": "817f7e06b061875f28a72e2a69bc7ecea30084fe6d82dd6971cbda085a09a6f0",
+      "sha256": "31e6d3c814d94379289c32624a286362544a8159197dfa12c3d65093d1d65473",
       "executable": false
     },
     {
       "path": ".local/lib/project-public-config/project-public-config.ts",
       "kind": "file",
-      "sha256": "cb595b7dd973f51e890f09e73b154929c23ba97371ceac216d121dff1f2b3da5",
+      "sha256": "3e0fe745d3982add0b34aef03fca63938dcbd61407ca39cb3ceda2b349c8a620",
       "executable": true
     },
     {
@@ -1265,19 +1265,19 @@
     {
       "path": ".local/lib/scc-prod/CHANGELOG.md",
       "kind": "file",
-      "sha256": "3af1f7b3c7eeac7a89050450ee360269a89e674527384aa0c389b786a0ddf457",
+      "sha256": "e83354656f9a6fa679a0c5a6a10f103a3a65b1fc47b6421d4825aadc50a0b340",
       "executable": false
     },
     {
       "path": ".local/lib/scc-prod/git-diffstat.ts",
       "kind": "file",
-      "sha256": "345bbd7013d52d28a4da42dcce06ec4d988551b6c85bb5bd9327ebc891928c31",
+      "sha256": "c7b3b42aa202956fd3549f0731b4a312b8a1d47ebfb68c6add76973f82279246",
       "executable": false
     },
     {
       "path": ".local/lib/scc-prod/scc-prod.ts",
       "kind": "file",
-      "sha256": "3715041186c0f936033a3b055fced1c859bdd5953cea4c835f416258248d7a84",
+      "sha256": "cc2aef3b0aaac2bb40dc1e69c4c911bb4a470a5e643c6b444d15e2dd2c7937c8",
       "executable": false
     },
     {
@@ -1299,15 +1299,27 @@
       "executable": false
     },
     {
+      "path": ".local/lib/sync-agent-ports/bun.lock",
+      "kind": "file",
+      "sha256": "c40b7a935e2c6d0a561b856d8bf074e86a5ec1fff8509d555aa255ecc4397842",
+      "executable": false
+    },
+    {
       "path": ".local/lib/sync-agent-ports/CHANGELOG.md",
       "kind": "file",
-      "sha256": "a7a3c3ec61f264077905697e1e676a6398f29438d0d1f6590008b3f914495c87",
+      "sha256": "736d7cd72be046e958552aa32698bcc690c1f7c148c35ea5224f75d923240e15",
+      "executable": false
+    },
+    {
+      "path": ".local/lib/sync-agent-ports/package.json",
+      "kind": "file",
+      "sha256": "e4eeb40ee4a611500fe14c924a0f70b264056b1e1785e7cf2298f268cffd8fe6",
       "executable": false
     },
     {
       "path": ".local/lib/sync-agent-ports/sync-agent-ports.ts",
       "kind": "file",
-      "sha256": "9658ca795c4fcfa8fe8600991de628ddb628cde23f39d72b95daba6bbefb3504",
+      "sha256": "1a6be1b1125040aa620233a6057b75998e4e1be626125c426beba64949d3c33b",
       "executable": false
     },
     {
@@ -1900,7 +1912,7 @@
     {
       "path": "CONTEXT-HELPER-HOOKS.md",
       "kind": "file",
-      "sha256": "794307c864463adc6e73b56957812da1f5a10b14b3225a30991ec65a081978b0",
+      "sha256": "ecc8fcd9edcb2bbfdbf26db1313558a57caef71d2038f0d7987a3be8bb10d3b5",
       "executable": false
     },
     {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+Build with scriptc and parse role TOML using the locked smol-toml dependency.
+
 ## 2.2.0
 
 - Pin matched multi-provider Devin CLI models (`model:`) in generated `.config/devin/agents/*.md`
