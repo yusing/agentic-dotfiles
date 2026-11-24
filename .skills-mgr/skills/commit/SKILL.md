@@ -20,7 +20,11 @@ disable-model-invocation: false
   not a routine status, branch, index, diff, or history checklist.
 - Fold corrections into their unpublished target commits, including pending `fixup!`/`amend!`
   markers, before completion. Use a separate commit for a distinct change or a published target.
-  Rewriting published or shared history requires explicit authorization.
+  Rewriting published or shared history requires explicit authorization. A commit is published
+  when any remote branch contains it, not only the current upstream, because work can be pushed
+  to a different branch than the one tracked. Before a rewrite, fetch and check every
+  remote-tracking branch (`git branch -r --contains <oldest rewritten commit>`), and start the
+  rewrite above the newest published commit.
 - Keep configured signing. Report signing failures as blockers rather than bypassing signing.
   Successful commit output confirms completion unless hooks or unexpected results require more.
 - Push only when requested, to the current branch's existing upstream. Tags, new remote branches,
