@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3bd5b4c6b72216687f72569d4424e6dba35bcddc",
+  "sourceCommit": "2c66f8ca7d8c777926d7c0588c22b5cf8666e82c",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -835,25 +835,25 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "4f3803a90121961492a5d7961182fb01598a73a3941517312fe3c7efac22ba1a",
+      "sha256": "6283ec11877b7a1fae278ccbf93051c2e65c60a10afeca4e35da39634c815724",
       "executable": false
     },
     {
-      "path": ".config/mise/locks/pipx-graphifyy/0.9.118~9b8b8ad0/pyproject.toml",
+      "path": ".config/mise/locks/pipx-graphifyy/0.9.118~d9f7bf8b/pyproject.toml",
       "kind": "file",
-      "sha256": "c478c27886fa8c4838f4de26428d2862144de2a68b8cd18d5fa730c99cb0c305",
+      "sha256": "f8668aefd520456cc9842d165bcd50605b6153f3127b5986f8220899fc0075b0",
       "executable": false
     },
     {
-      "path": ".config/mise/locks/pipx-graphifyy/0.9.118~9b8b8ad0/uv.lock",
+      "path": ".config/mise/locks/pipx-graphifyy/0.9.118~d9f7bf8b/uv.lock",
       "kind": "file",
-      "sha256": "a950b5db920a9bae1d3ef421e9f9ed757aab0f35bc80e7948923ebe09daaad01",
+      "sha256": "83ea08f29131270e0bfd7002b14ec325e5bc2a6ab5c727d9440125db6473b6b1",
       "executable": false
     },
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "c244571b1f1c96cce94c6b47e71d53f0ec72761e62116feca911e506ece39701",
+      "sha256": "a35260ca2ba4dacfaa25e44a3fc86fd5a7c27d1fc194fc10adde94b05f0cd164",
       "executable": false
     },
     {
@@ -1002,7 +1002,7 @@
     {
       "path": ".gitignore",
       "kind": "file",
-      "sha256": "d1c58ceebe84f2ff20b35a663e54f0fb8972c589d23ff90c11506f92a68fe091",
+      "sha256": "621cf07049f164824809dd0a54bc59335cadddb110ae899a47d3909234580683",
       "executable": false
     },
     {
@@ -1954,7 +1954,7 @@
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "a059a8d8895d4c2a35d8893289c4731961505e99e03c43714387e2068d1ec657",
+      "sha256": "a8dc0c04baf9ef59b623ac10a33ea2ceb4101b293695f9b30db0ee376c772375",
       "executable": false
     },
     {
