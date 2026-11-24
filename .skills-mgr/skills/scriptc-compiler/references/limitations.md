@@ -1,6 +1,6 @@
 # scriptc limitations
 
-Contract: scriptc 0.4.10. Sources: [version-tagged limitations](https://github.com/vercel-labs/scriptc/blob/v0.4.10/docs/content/docs/limitations.mdx) and its [included sections](https://github.com/vercel-labs/scriptc/tree/v0.4.10/docs/content/limitations). Use `scriptc coverage` and a compiled reproduction for the concrete entry; support is operation-specific.
+Contract: scriptc 0.4.16. Sources: [version-tagged limitations](https://github.com/vercel-labs/scriptc/blob/v0.4.16/docs/content/docs/limitations.mdx) and its [included sections](https://github.com/vercel-labs/scriptc/tree/v0.4.16/docs/content/limitations). Use `scriptc coverage` and a compiled reproduction for the concrete entry; support is operation-specific.
 
 ## Compile fences
 
@@ -18,10 +18,19 @@ Contract: scriptc 0.4.10. Sources: [version-tagged limitations](https://github.c
 - Supported array holes, missing reads, empty `pop()` / `shift()`, and missing dictionary keys return `undefined`. A missing value stored where `undefined` cannot fit throws `TypeError`; statically typed out-of-range ordinary array reads can still hard-trap. Preserve bounds checks unless the actual compiled path proves they are unnecessary. Hard traps cannot be caught; supported parsing, cast, filesystem, regex, and user-thrown errors can.
 - `JSON.parse(s) as T` and conversions from checked values validate at runtime. Invalid shapes throw a path-specific error. Non-null assertions extracting a non-nullable value can also throw. Node's TypeScript assertions do not perform these checks.
 - Converting records between field shapes can copy. Supported records, arrays, classes, and handles retain identity through checked storage. `SC6001` flags observable copy differences.
-- Key enumeration follows source creation order where tracked. `SC6002` flags cases where only declaration order can be retained, including untracked spreads or too many possible orders. Checked JSON records retain extra keys; copying to another record layout can discard them.
+- Key enumeration follows source creation order where tracked, including
+  supported spreads into declared records. `SC6002` flags cases where only
+  declaration order can be retained. `SC6014` flags types whose key order is
+  observed but not always tracked; it does not prove an output difference.
+  Checked JSON records retain extra keys; copying layouts can discard them.
 - Strings use UTF-16 semantics, including relational comparisons and lone surrogates. String-pattern split/replace does not match half a surrogate pair; encoded output substitutes U+FFFD for lone surrogates.
 - `sort` / `toSorted` use stable natural merge sort; explicit comparator call order may differ from Node. `localeCompare` supports default root collation for Latin-script text and falls back to code-point order outside it; locales/options are unsupported (`SC6003` warns for relevant literals).
-- `process.argv[0]` is `"scriptc"`, `argv[1]` is the executable path. Uncaught errors start with `Uncaught <value>`. Release programs reading `Error.stack` retain function/file frames; unstripped `dev` builds also retain source positions in functions that can raise errors. Async/generator frames stop at that function, not its awaiters. Runtime errors expose typed `message` and `code`; additional Node error properties are available through an untyped view.
+- `process.argv[0]` is `"scriptc"`, `argv[1]` is the executable path. Uncaught
+  errors start with `Uncaught <value>`. Release stack frames record call and
+  throw positions, and `Error.prepareStackTrace` works as program state.
+  Async/generator frames stop at that function, not its awaiters. Runtime
+  errors expose typed `message` and `code`; further properties require an
+  untyped view.
 - Memory is reference-counted. Do not infer garbage-collector behavior from Node.
 
 ## Packages and runtime evaluation
@@ -30,7 +39,7 @@ Native-compiled code uses no embedded engine. `--dynamic` and the quickjs-ng eng
 
 In native-compiled code, runtime source evaluation (`eval`, `Function`) throws a catchable `EvalError`; `vm` is refused. Build-time evaluation is a separate experimental facility. npm native addons require supported static bindings or replacement, not ordinary dynamic loading.
 
-Across native/island boundaries, event ordering, timer turns, object conversions and machine-dependent module initialization have documented differences. Inspect the [version-tagged boundary limits](https://github.com/vercel-labs/scriptc/tree/v0.4.10/docs/content/limitations/runtime-differences-from-node-js) before depending on shared identity or scheduling.
+Across native/island boundaries, event ordering, timer turns, object conversions and machine-dependent module initialization have documented differences. Inspect the [version-tagged boundary limits](https://github.com/vercel-labs/scriptc/tree/v0.4.16/docs/content/limitations/runtime-differences-from-node-js) before depending on shared identity or scheduling.
 
 ## WASI
 
