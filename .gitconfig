@@ -25,6 +25,10 @@
   tabs = 4
   keep-plus-minus-markers = true
   features = catppuccin-mocha
+[hook "subject-length"]
+	# Config-defined, so it runs beside each repository's own commit-msg hook.
+	event = commit-msg
+	command = $HOME/.local/bin/git-subject-length
 [alias]
 	# Per-file statistics and totals; a single leading revision shows that commit.
 	diffstat = !git-diffstat
