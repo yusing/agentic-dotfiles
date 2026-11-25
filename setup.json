@@ -76,6 +76,7 @@
     "rustup": {"packages": {"brew": ["rustup"]}, "commands": ["rustup", "rustc", "cargo"], "manager": "brew", "brew_prefix": "rustup", "legacy_mise": ["rust", "aqua:rust-lang/rustup"], "groups": ["rust"]},
     "rust-analyzer": {"packages": {"brew": ["rust-analyzer"]}, "commands": ["rust-analyzer"], "manager": "brew", "brew_prefix": "rust-analyzer", "groups": ["rust"]},
     "sccache": {"packages": {"brew": ["sccache"]}, "commands": ["sccache"], "manager": "brew", "brew_prefix": "sccache", "groups": ["rust"]},
+    "mold": {"packages": {"brew": ["mold"]}, "commands": ["mold", "ld.mold"], "manager": "brew", "brew_prefix": "mold", "os": ["linux"], "groups": ["rust"]},
     "ca-certificates": {"packages": {"apt": ["ca-certificates"], "pacman": ["ca-certificates"], "brew": []}, "commands": [], "groups": ["core"]},
     "make": {"packages": {"brew": ["make"], "pacman": ["make"]}, "commands": ["make"], "manager": "brew", "brew_prefix": "make", "groups": ["build", "mosh"], "apt_groups": ["c", "rust"]},
     "autoconf": {"packages": {"brew": ["autoconf"], "pacman": ["autoconf"]}, "commands": ["autoconf"], "manager": "brew", "brew_prefix": "autoconf", "groups": ["build", "mosh"]},

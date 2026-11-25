@@ -6,6 +6,9 @@ rustc-wrapper = ".local/bin/cargo-sccache"
 # Keep sccache by default without blocking project-level package overrides.
 incremental = false
 
+[target.'cfg(all(target_os = "linux", target_env = "gnu"))']
+rustflags = ["-C", "link-arg=-fuse-ld=mold"]
+
 [env]
 SCCACHE_DIR = { value = ".cache/rust/sccache", relative = true }
 SCCACHE_CACHE_SIZE = "100G"
