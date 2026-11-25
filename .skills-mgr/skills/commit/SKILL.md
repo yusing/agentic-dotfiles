@@ -25,6 +25,12 @@ disable-model-invocation: false
   to a different branch than the one tracked. Before a rewrite, fetch and check every
   remote-tracking branch (`git branch -r --contains <oldest rewritten commit>`), and start the
   rewrite above the newest published commit.
+- When a commit-msg hook rejects `fixup!`/`amend!` subjects, commit the correction under its final
+  message and fold it with a scripted rebase todo line `fixup -C <correction>` placed after the
+  target, since `--autosquash` needs those subjects to find the target.
+- When rewriting a commit at a rebase `edit` stop, commit it yourself before
+  `git rebase --continue`, because the sequencer commits staged changes without running the
+  pre-commit hook.
 - Keep configured signing. Report signing failures as blockers rather than bypassing signing.
   Successful commit output confirms completion unless hooks or unexpected results require more.
 - Push only when requested, to the current branch's existing upstream. Tags, new remote branches,
