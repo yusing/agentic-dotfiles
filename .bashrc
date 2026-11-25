@@ -18,6 +18,10 @@ unset brew_bin brew_path
 
 # Keep the Cargo launcher ahead of Homebrew's rustup proxies.
 export PATH="$HOME/.local/bin:$PATH"
+case ":$PATH:" in
+  *":$HOME/.cargo/bin:"*) ;;
+  *) export PATH="$PATH:$HOME/.cargo/bin" ;;
+esac
 command -v mise >/dev/null 2>&1 && eval "$(mise activate bash)"
 
 

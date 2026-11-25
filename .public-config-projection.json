@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f4d453e1e3fa70668ebc57379bff4322394563ec",
+  "sourceCommit": "7d870dc5df388d227766065942ee7089e7f138ea",
   "outputs": [
     {
       "path": ".bash_profile",
       "kind": "file",
-      "sha256": "2093bebafab9ae75ba3ac6296def81556d1d4c0874e1f1cd33c8fdb51a667b1e",
+      "sha256": "f35c7676031f18641db8dbcc6de481305312129238cc82faec82e94ecec6b86c",
       "executable": false
     },
     {
       "path": ".bashrc",
       "kind": "file",
-      "sha256": "45592abd01735a89f1071a0138f60ba1f2365a2b8922baacdf16bc45f5158d07",
+      "sha256": "58ad24153c2912ca3383bc4db17bdc9a9eff7e9795aa63555849f2d9fddf9364",
       "executable": false
     },
     {
@@ -655,7 +655,7 @@
     {
       "path": ".config/fish/config.fish",
       "kind": "file",
-      "sha256": "07cef31e12d8ea2e0ff80911947fa169b81640a501178af04e4016d556bae837",
+      "sha256": "a08fa26e89921dd78d1b72bd2981060bb0e5f60a90a85a2a383a25a369f083bd",
       "executable": false
     },
     {
