@@ -17,7 +17,7 @@ import {
 import { arch, platform } from "node:os";
 import { basename, delimiter, dirname, extname, join, resolve } from "node:path";
 
-const VERSION = "1.1.0";
+const VERSION = "1.1.1";
 const SOURCE_EXTENSIONS = new Set([".ts", ".json", ".lock", ".toml"]);
 
 class BuildFailure {
@@ -29,10 +29,18 @@ function commandPath(name: string): string {
     const candidate = resolve(directory || ".", name);
     try {
       accessSync(candidate, constants.X_OK);
-      return candidate;
     } catch {
       // Keep searching caller PATH in order.
+      continue;
     }
+    const executable = realpathSync(candidate);
+    // Mise shims resolve to mise itself, not to the selected compiler.
+    if (basename(executable) !== "mise") return executable;
+    const result = spawnSync(executable, ["which", name], { encoding: "utf8" });
+    if (result.status !== 0 || result.error) {
+      throw new Error(`compile-agent-tools: cannot resolve mise compiler: ${name}`);
+    }
+    return realpathSync(result.stdout.trim());
   }
   throw new Error(`compile-agent-tools: command not found: ${name}`);
 }

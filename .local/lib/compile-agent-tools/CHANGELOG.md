@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+
+Resolve Mise compiler shims before fingerprinting and building, avoiding
+rebuilds when switching between shim and activated shell paths.
+
 ## 1.1.0
 
 Build the Herdr usage and task helpers, disk and temporary cleaners, Cargo

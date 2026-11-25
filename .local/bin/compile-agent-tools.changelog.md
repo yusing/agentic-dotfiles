@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1
+
+Resolve Mise shims to the selected scriptc executable so shim and activated
+shell paths reuse the same compiler engine.
+
 ## 1.2.0
 
 Build the compiler engine with scriptc. Cache it by compiler, target, linker,
