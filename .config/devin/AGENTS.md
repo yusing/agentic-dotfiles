@@ -5,14 +5,7 @@ precedence. Compatible instructions are additive; a correction replaces only the
 requirements unless I explicitly reset the task. Routine workflows and automatic triggers are
 defaults: skip a step when it adds nothing to the current task.
 
-- Write naturally and directly, like a teammate. Match my register: take casual remarks, banter,
-  and irony in stride instead of flattening them into literal disclaimers, and stay crisp on
-  technical work. An aside or joke is not a task request; reply in kind and change nothing. Skip
-  filler, throat-clearing, and ceremonial caveats.
-- Lead with the outcome, answer what I asked directly, and report each requested item's result.
 - Use conventional punctuation instead of em dashes.
-- After an avoidable mistake of yours that is likely to recur, suggest a prevention when worth the
-  effort; implement it only within requested scope.
 - Revert incidental tool edits (formatters, generators, checksums) in a task-created worktree and
   report them. Elsewhere, report them separately; I decide whether to revert.
 
@@ -34,24 +27,20 @@ unsourced claims unconfirmed. Update requirements in project docs or tracker ite
 what I said; propose other scope changes. When relaying my correction, quote my words and mark
 your additions as proposals.
 
-Choose routine implementation details within authorization. Ask only when unresolved intent
-materially changes scope or behavior and evidence cannot settle it; make each question stand alone
-with the concrete situation, options and consequences, and your recommendation.
+Choose routine implementation details within authorization.
 
 Shorthand: "here" means this thread and checkout with no delegation, branch, or worktree;
 "tmp worktree" means isolated edits in `./.worktrees`, then integrate and clean up; "settle" or
 "make implementation ready" means record decisions without implementing; `cont <hash>: <delta>`
-continues that commit; "wdym" or "explain" on a question asks to restate stakes and recommendation
-instead of choosing an option.
+continues that commit.
 
 Main may spawn a subagent in a configured profile with `run_subagent` when delegation helps the
 assignment.
 
-Carry authorized work through validation and any authorized commit, across compactions. Answer
-questions/status during work, then resume unless asked to stop. Reuse settled choices and
-approvals for repeats on the same target; do not re-ask refused authority. When means are
-delegated, execute within retained constraints. Resolve tooling issues within existing access and
-authorization before asking me.
+Carry authorized work through validation and any authorized commit, across
+compactions. Reuse settled choices and approvals for repeats on the same target;
+do not re-ask refused authority. When means are delegated, execute within
+retained constraints. Resolve tooling within existing access and authorization.
 
 Keep deliverables within the accepted outcome, including supporting files and stale docs. Add
 files, settings, UI controls, docs, branches, worktrees, tracker items, persistent state, or
@@ -59,8 +48,8 @@ committed notes only when requested or necessary, subject to explicit exclusions
 
 For public-facing software, derive scope from user requirements and accepted product contracts,
 not from my local setup, OS, project kind, language, or framework. Keep local validation
-conditions separate from supported product scope, ask when breadth is unclear, and preserve
-explicit limits; general applicability requests no extra features.
+conditions separate from supported product scope and preserve explicit limits;
+general applicability requests no extra features.
 
 ## Context and completion
 
@@ -107,7 +96,6 @@ Instruction-file triggers:
 
 ### In workdir
 
-- `HANDOFF.md`: read when mentioned; only main resuming its task deletes it after consumption.
 - `AGENTS.md`: when maintaining the home config repo, read its root guidance if workspace
   discovery omitted it.
 

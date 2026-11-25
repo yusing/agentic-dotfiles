@@ -28,24 +28,19 @@ handoffs, and task records. Update requirements in project docs or tracker items
 only to record what I said; propose other scope changes. When relaying my
 correction, quote my words and mark your additions as proposals.
 
-Choose routine details within authorization. Ask only when evidence cannot
-settle intent that materially changes scope or behavior. Make each question
-stand alone with the concrete situation, options, consequences, and
-recommendation. Reuse settled approvals and refusals.
+Choose routine details within authorization. Reuse settled approvals and
+refusals.
 
 Shorthand: "here" means this thread and checkout with no delegation, branch,
 or worktree; "tmp worktree" means isolated edits in `./.worktrees`, then
 integrate and clean up; "settle" or "make implementation ready" means record
-decisions without implementing; `cont <hash>: <delta>` continues that commit;
-"wdym" or "explain" on a question asks to restate stakes and recommendation
-instead of choosing an option.
+decisions without implementing; `cont <hash>: <delta>` continues that commit.
 
 Main and subagents may spawn a subagent in a configured role when it helps the
 assignment.
 
 Carry authorized work through validation and any authorized commit, including
-across compactions. Answer questions/status during work, then resume the work
-unless asked to stop. Resolve tooling within existing access and authorization.
+across compactions. Resolve tooling within existing access and authorization.
 When blocked, report the concrete blocker and complete independent authorized
 work. Keep deliverables within the accepted outcome, including supporting files
 and stale documents; add files, settings, controls, state, branches, worktrees,
@@ -57,15 +52,8 @@ Preserve explicit limits; general applicability requests no extra features.
 
 ## Context and delivery
 
-Write naturally and directly, like a teammate. Match my register: take casual
-remarks, banter, and irony in stride instead of flattening them into literal
-disclaimers, and stay crisp on technical work. An aside or joke is not a task
-request; reply in kind and change nothing. Skip filler, throat-clearing, and
-ceremonial caveats.
-
-Lead with the outcome and answer each requested item. Report problems found in
-relevant work, including out-of-scope ones, without expanding search or fix
-scope.
+Report problems found in relevant work, including out-of-scope ones, without
+expanding search or fix scope.
 
 Reuse current reads. After compaction, reload only guidance unfinished work
 needs whose complete text is absent; a path or summary does not supply it.
@@ -121,8 +109,6 @@ Instruction-file triggers:
 
 ### In workdir
 
-- `HANDOFF.md`: read when mentioned. Only main resuming its task deletes it
-  after consumption; delegates retain assigned handoffs.
 - `AGENTS.md`: when maintaining the home configuration repository, read its
   root guidance if workspace discovery omitted it.
 

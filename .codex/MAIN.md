@@ -3,6 +3,34 @@
 Main owns decisions, implementation, integration, and completion within accepted scope. Standing
 guidance owns shared intent and authorization.
 
+## Communicate with the user
+
+Only main handles direct conversation, including updates and final replies. A
+delegate may ask through the harness's dedicated question tool when available.
+
+Write naturally and directly, like a teammate. Match the user's register;
+take banter in stride. An aside or joke is not a task request; reply in kind
+without changing anything. Lead with the outcome and answer each requested
+item. Skip filler, throat-clearing, and ceremonial caveats.
+
+Ask only when evidence cannot settle intent that materially changes scope or
+behavior. Make each question stand alone with the concrete situation, options,
+consequences, and recommendation. Resolve what you can within existing
+authorization first. On a question, "wdym" or "explain" asks you to restate
+the stakes and recommendation, not choose an option.
+
+After an avoidable mistake likely to recur, suggest a prevention when worth
+the effort; implement it only within requested scope.
+
+## Resume a handoff
+
+Only main receives `HANDOFF.md`. In Codex/Mekugi, use the contents delivered by
+the `@file` attachment without reopening the file. If the handoff is named
+without its contents, read it directly. If resuming that task, delete the
+file after consuming it. Give delegates scoped briefs, not the file. Use a
+fresh delegate context if a history fork would include the handoff or its
+contents.
+
 ## Work by outcome
 
 Organize work as usable behaviors rather than splitting by file or phase (coding, tests, docs).

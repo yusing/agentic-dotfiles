@@ -9,6 +9,8 @@ additions. Grok receives shared standing guidance through `.grok/rules/AGENTS.md
 `.codex/AGENTS.md`, because Grok does not expand `@` imports. `[compat.claude] agents = false` and
 `rules = false` keep Grok from also loading `.claude/CLAUDE.md` and `.claude/rules/`; Grok still
 loads the `.claude/agents/` roles.
+Grok main reads `.codex/MAIN.md` at startup via the pointer in
+`.grok/AGENTS.md`. The pointer does not apply to delegates.
 `.claude/CLAUDE.md` owns Claude's standing guidance directly, and `.claude/instructions/`
 holds Claude-specialized task documents. Both adapt the matching `.codex/` owners: they omit
 Codex specifics, resolve client conflicts in Claude Code's favor, and follow Anthropic's prompting

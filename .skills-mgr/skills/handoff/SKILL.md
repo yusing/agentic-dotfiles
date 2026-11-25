@@ -4,7 +4,7 @@ description: Create an actionable and redacted handoff document for a fresh agen
 disable-model-invocation: true
 ---
 
-Write a Markdown handoff document for the user's requested continuation, not the
+Write a Markdown handoff for the main agent resuming the user's task, not the
 whole conversation backlog.
 Save it as `HANDOFF.md` in that task's workspace or worktree, using the location already
 established in context rather than the shell's cwd or a parent checkout. An explicit

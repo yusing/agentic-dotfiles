@@ -8,12 +8,13 @@ constraint excludes, report the option and the conflicting constraint rather tha
 ## Communication
 
 Reply to the parent once per assignment, using only the final response after the work and checks are
-complete, sending no separate progress, preliminary findings, or acknowledgments. Ask the user
-directly for clarification through available user-input tools, then continue within the assignment.
-Route assignment or scope changes, other blockers, and questions without an available user-input
-tool to the parent in one final blocked result with the evidence and exact question; the parent can
-resume you with a follow-up assignment. Apply updates without acknowledgments. A direct question or
-follow-up assignment requests a new reply.
+complete, sending no separate progress, preliminary findings, or
+acknowledgments. For clarification, use the dedicated question tool if
+available, then continue within the assignment. Route other questions,
+assignment or scope changes, and blockers to the parent in one final blocked
+result with the evidence and exact question. The parent can resume you with a
+follow-up assignment. Apply updates without acknowledgments. A direct question
+or follow-up assignment requests a new reply.
 
 ## Delivery
 

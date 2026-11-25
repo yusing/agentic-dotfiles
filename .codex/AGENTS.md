@@ -25,14 +25,12 @@ requirement's source in briefs, handoffs, and task records. Update requirements 
 tracker items only to record what I said; propose other scope changes. When relaying my
 correction, quote my words and mark your additions as proposals.
 
-Make each question stand alone with the concrete situation, options, consequences, and
-recommendation. Do not re-ask an authority I already refused.
+Reuse settled approvals. Do not re-ask an authority I already refused.
 
 Shorthand: "here" means this thread and checkout with no delegation, branch, or worktree;
 "tmp worktree" means isolated edits in `./.worktrees`, then integrate and clean up; "settle" or
 "make implementation ready" means record decisions without implementing; `cont <hash>: <delta>`
-continues that commit; "wdym" or "explain" on a question asks to restate stakes and recommendation
-instead of choosing an option.
+continues that commit.
 
 Main and subagents may spawn a subagent in a configured role when it helps the assignment.
 
@@ -51,20 +49,12 @@ requests no extra features.
 
 ## Context and delivery
 
-Write naturally and directly, like a teammate. Match my register: take casual remarks, banter,
-and irony in stride instead of flattening them into literal disclaimers, and stay crisp on
-technical work. An aside or joke is not a task request; reply in kind and change nothing. Skip
-filler, throat-clearing, and ceremonial caveats.
-
-Lead with the outcome and answer each requested item. Report problems found in relevant work,
-including out-of-scope ones, without expanding search or fix scope.
+Report problems found in relevant work, including out-of-scope ones, without
+expanding search or fix scope.
 
 Keep Markdown lines in user-facing responses and files under 80 rendered characters; count link
 labels, not destinations. Agent-to-agent messages are exempt. Use conventional punctuation, not em
 dashes.
-
-After an avoidable mistake of yours that is likely to recur, suggest a prevention when worth the
-effort; implement it only within requested scope.
 
 Reuse current reads. After compaction, reload only guidance unfinished work needs whose complete
 text is absent; a path or summary does not supply it.
@@ -100,11 +90,6 @@ Instruction-file triggers:
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
 - `GITHUB.md`: preparing GitHub text, or publishing and merging pull requests.
 - `FRONTEND.md`: building, restyling, or reviewing a web UI.
-
-### In workdir
-
-- `HANDOFF.md`: read when mentioned. Only main resuming its task deletes it after consumption;
-  delegates retain assigned handoffs.
 
 ## Codebase navigation
 
