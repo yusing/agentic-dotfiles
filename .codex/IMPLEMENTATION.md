@@ -8,7 +8,10 @@ that use one; elsewhere use the current request and settled decisions without cr
 artifact. Delegates work from the assigned outcomes and report changes to main. A correction
 changes only the affected outcomes.
 
-Resolve code/test conflicts by ledger outcomes; consult history only when intent is unclear.
+Resolve code/test conflicts by ledger outcomes. When an outcome refers to prior
+behavior, establish what the user could do through the affected consumer at
+the relevant revision. An internal handler alone does not establish that
+interaction. The user's latest decision sets the target.
 
 ## Workflow
 
