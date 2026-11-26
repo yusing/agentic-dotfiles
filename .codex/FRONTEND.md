@@ -23,6 +23,27 @@ For component-only changes, match the surrounding design.
 
 Prefer elevation and visual separation without borders or large gaps.
 
+## Reviewable states
+
+Make every condition a UI can show reachable on its own, so the user and agents can review and
+live-edit it without clicking through the app, running a backend, or mocking the network. Use
+Storybook's Component Story Format (CSF), the industry standard for this; choose another CSF tool
+only when Storybook does not support the project's stack or build versions.
+
+- Drive what a component renders from props. When state, data fetching, or API calls decide which
+  condition shows, split a container that owns them from a presentational view that receives each
+  condition as a prop; a condition reachable only through interaction cannot be a story.
+- Write one story per real condition (loading, empty, error, each mode, each step of a flow), named
+  for the condition, with args editable through Controls. Supply data as fixtures at the story
+  boundary, such as a seeded query cache, rather than as network mocks.
+- Run stories as render tests in the project's test command (Storybook's Vitest addon), so reviewed
+  states are tested states, and enable Storybook's MCP addon so agents can list and preview them.
+- Check a state by opening its story (a story URL carrying `args` and `globals`, or the MCP addon)
+  rather than by scripting clicks through the app.
+- Update a condition's stories in the change that adds or alters it. Set Storybook up when starting
+  a web UI project; in an existing project without it, set it up with the first task that builds or
+  restructures a component with conditional states. A small fix does not trigger the setup.
+
 ## Unaccepted UI approaches
 
 - Refresh buttons: Keep displayed data up to date automatically; do not make users click to refresh.
