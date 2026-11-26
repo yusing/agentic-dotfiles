@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "c7623b8a2eb54523f1fa95711d3e4c172a79c52f",
+  "sourceCommit": "2b745bc1dacc7a2cf4ca2de623b68bc22e168f8d",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -47,7 +47,7 @@
     {
       "path": ".claude/agents/investigator.md",
       "kind": "file",
-      "sha256": "604d2767f6daf93f2a8a215c7da221ea5ecad04444864764b562206465407468",
+      "sha256": "c83d593708cfd0bc9dd2aed3399ad2d9b4f7e19a78d58a85929317caca9277c5",
       "executable": false
     },
     {
@@ -548,7 +548,7 @@
     {
       "path": ".config/devin/agents/investigator.md",
       "kind": "file",
-      "sha256": "bfc0961e4e12933828be4ecb19b2f0cc5d827e5506c2d27f5a2d7f49df4a99e3",
+      "sha256": "add026fc92e43303f38086b89938eedb5d20c432905fc1a3d911254b37296b59",
       "executable": false
     },
     {
@@ -751,7 +751,7 @@
     {
       "path": ".config/kilo/agent/investigator.md",
       "kind": "file",
-      "sha256": "b424408cb7200d7987a080e4ee08f90d9b66b7a35a434d987b9738f583742ad1",
+      "sha256": "c9aab26579615115094e02373eb94f5548d1dba33eefe0abc85aa11077f83ad6",
       "executable": false
     },
     {
@@ -931,7 +931,7 @@
     {
       "path": ".gemini/config/agents/investigator.md",
       "kind": "file",
-      "sha256": "8ea8ce8c23df95dd41306a9e33d399067499bb2a449199976d645a5f473f72b7",
+      "sha256": "5a997115155a8b519a179889ca2cb250470cb2f5180083602f1270e802c3067c",
       "executable": false
     },
     {
