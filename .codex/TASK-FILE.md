@@ -24,9 +24,12 @@ in a handoff.
 
 A session continuing an earlier task adopts that task's file: copy it to this session's path and
 keep its lines, their order, and their statuses, changing a status only on new evidence. A line
-recovered without a recorded status returns as `pending`. The task file is the task's only record,
-so keep what a later session needs in its lines and `resume` rather than in a second file. When a
-tracker item governs the task, each of its open outcomes has a line.
+recovered without a recorded status returns as `pending`. Keep task state in
+this file rather than starting a second log. When the user requests a decision
+artifact, update its affected entry as each decision changes. Track remaining
+work here and point to the artifact instead of copying its decisions. Replace
+superseded resume notes. When a tracker item governs the task, each of its
+open outcomes has a line.
 
 Mark the task blocked with the concrete blocker when it cannot proceed. For a needed user
 decision, put the question and recommendation in the note and ask the user. Mark the task or a line
