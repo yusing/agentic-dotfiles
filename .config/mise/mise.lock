@@ -100,7 +100,7 @@ url = "https://github.com/dlvhdr/gh-dash/releases/download/v4.26.3/gh-dash_v4.26
 url_api = "https://api.github.com/repos/dlvhdr/gh-dash/releases/assets/744393137"
 
 [[tools."github:docker/sbx-releases"]]
-version = "0.54.0"
+version = "0.54.1"
 backend = "github:docker/sbx-releases"
 specifiers = ["latest"]
 
@@ -108,22 +108,22 @@ specifiers = ["latest"]
 matching_regex = '^DockerSandboxes-(linux-(amd64|arm64)|darwin)\.tar\.gz$'
 
 [tools."github:docker/sbx-releases"."platforms.linux-arm64"]
-checksum = "sha256:40498341fd6b7f67d8f6ff4b1a17c73f516811fc6184a3bd554f9b3442a91115"
+checksum = "sha256:9b7e4788a8ef8304a2bf5c781adb0aa5b6542c6f9d6318a53bd476e1e0998bf2"
 checksum_source = "mise-versions"
-url = "https://github.com/docker/sbx-releases/releases/download/v0.54.0/DockerSandboxes-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/docker/sbx-releases/releases/assets/754498210"
+url = "https://github.com/docker/sbx-releases/releases/download/v0.54.1/DockerSandboxes-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/docker/sbx-releases/releases/assets/787432995"
 
 [tools."github:docker/sbx-releases"."platforms.linux-x64"]
-checksum = "sha256:eded29017121a857c98d4a91cad593f6a9e00f4010e830679bd385f4a5edba4d"
+checksum = "sha256:98ebf37efac8def632439ae54a90a8cb76bd602ec470e839779487828857aeae"
 checksum_source = "mise-versions"
-url = "https://github.com/docker/sbx-releases/releases/download/v0.54.0/DockerSandboxes-linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/docker/sbx-releases/releases/assets/754497980"
+url = "https://github.com/docker/sbx-releases/releases/download/v0.54.1/DockerSandboxes-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/docker/sbx-releases/releases/assets/787432774"
 
 [tools."github:docker/sbx-releases"."platforms.macos-arm64"]
-checksum = "sha256:e9112415d8945c2dad2cb2ee269e1ad2e9fed36f6465c3046bac626c8a5249c4"
+checksum = "sha256:0427308faacebf36c32bc7deb3d658e535ce82af818f8f39a7544284f604db52"
 checksum_source = "mise-versions"
-url = "https://github.com/docker/sbx-releases/releases/download/v0.54.0/DockerSandboxes-darwin.tar.gz"
-url_api = "https://api.github.com/repos/docker/sbx-releases/releases/assets/754497751"
+url = "https://github.com/docker/sbx-releases/releases/download/v0.54.1/DockerSandboxes-darwin.tar.gz"
+url_api = "https://api.github.com/repos/docker/sbx-releases/releases/assets/787432445"
 
 [[tools."github:lightpanda-io/browser"]]
 version = "1.0.0"
@@ -236,7 +236,7 @@ backend = "npm:@trunkio/launcher"
 specifiers = ["latest"]
 
 [[tools."npm:agent-browser"]]
-version = "0.44.0"
+version = "0.45.0"
 backend = "npm:agent-browser"
 specifiers = ["latest"]
 
@@ -246,7 +246,7 @@ backend = "npm:ccstatusline"
 specifiers = ["latest"]
 
 [[tools."npm:ctx7"]]
-version = "0.12.2"
+version = "0.13.1"
 backend = "npm:ctx7"
 specifiers = ["latest"]
 
@@ -256,7 +256,7 @@ backend = "npm:markdownlint-cli"
 specifiers = ["latest"]
 
 [[tools."npm:oxlint-tsgolint"]]
-version = "7.0.2008"
+version = "7.0.2009"
 backend = "npm:oxlint-tsgolint"
 specifiers = ["latest"]
 
@@ -271,15 +271,15 @@ backend = "npm:scriptc"
 specifiers = ["0.4.16"]
 
 [[tools."npm:vite"]]
-version = "8.3.8"
+version = "8.4.0"
 backend = "npm:vite"
 specifiers = ["latest"]
 
 [[tools."pipx:graphifyy"]]
-version = "0.9.118"
+version = "0.9.120"
 backend = "pipx:graphifyy"
 specifiers = ["latest"]
-uv = { path = "locks/pipx-graphifyy/0.9.118~d9f7bf8b", digest = "sha256:83ea08f29131270e0bfd7002b14ec325e5bc2a6ab5c727d9440125db6473b6b1" }
+uv = { path = "locks/pipx-graphifyy/0.9.120~d9f7bf8b", digest = "sha256:201ecf1a932debc5fd0bdc255a80a6fd331e68de9052b4c2e42dfbe94f9aecc9" }
 
 [tools."pipx:graphifyy".options]
 extras = "sql,mcp"
@@ -291,16 +291,16 @@ backend = "core:python"
 specifiers = ["3.14"]
 
 [tools.python."platforms.linux-arm64"]
-checksum = "sha256:f1641401210144ca2eeb2774ee531f8bf903fd7f05d198b7feed62b40cbf4ba8"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261123/cpython-3.14.10+20261123-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
+checksum = "sha256:2f5df923b202f9054b665c4b4c6ee3fc08bf1ec46cc640bb68ec52aecc658d30"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261124/cpython-3.14.10+20261124-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.linux-x64"]
-checksum = "sha256:92102b15f5149d124b5b4b2f00f1ff2f827cf1a99dc1a22447ad52861bd80ace"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261123/cpython-3.14.10+20261123-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
+checksum = "sha256:73ee0629c19e9f87077f318cd50d7e703137c274479ce8e8fd5723e75c86c9bc"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261124/cpython-3.14.10+20261124-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.macos-arm64"]
-checksum = "sha256:f4b4683e628b86490baccd466d9fb9d4f1e73d57c96690634b6a1c0e91f3c5f7"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261123/cpython-3.14.10+20261123-aarch64-apple-darwin-install_only_stripped.tar.gz"
+checksum = "sha256:81fca81fcc8a715288fd12286b66bbdaaf4a0db6818bc91826ddbcffae2ac2cf"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261124/cpython-3.14.10+20261124-aarch64-apple-darwin-install_only_stripped.tar.gz"
 provenance = "github-attestations"

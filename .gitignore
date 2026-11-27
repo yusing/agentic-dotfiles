@@ -179,9 +179,9 @@ __pycache__
 !/.config/mise/config.toml
 !/.config/mise/locks/
 !/.config/mise/locks/pipx-graphifyy/
-!/.config/mise/locks/pipx-graphifyy/0.9.118~d9f7bf8b/
-!/.config/mise/locks/pipx-graphifyy/0.9.118~d9f7bf8b/pyproject.toml
-!/.config/mise/locks/pipx-graphifyy/0.9.118~d9f7bf8b/uv.lock
+!/.config/mise/locks/pipx-graphifyy/0.9.120~d9f7bf8b/
+!/.config/mise/locks/pipx-graphifyy/0.9.120~d9f7bf8b/pyproject.toml
+!/.config/mise/locks/pipx-graphifyy/0.9.120~d9f7bf8b/uv.lock
 !/.config/mise/mise.lock
 !/.config/oh-my-posh/
 !/.config/oh-my-posh/catppuccin_macchiato.omp.json
