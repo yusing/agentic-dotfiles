@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.12.0
+
+Add the `lean` tool group, which installs Brew's `elan-init` for `elan`,
+`lean`, and `lake`. The `dev` and `full` profiles include it.
+
 ## 2.11.2
 
 Stop installing APT's `build-essential`, including during Homebrew bootstrap.

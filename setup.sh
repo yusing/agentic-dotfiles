@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 2.11.2
+# version: 2.12.0
 # Bootstrap this home directory as a checkout of yusing/agentic-dotfiles and
 # install the packages and tools the shell configuration expects.
 #
@@ -2261,7 +2261,7 @@ Mise declarations also live in setup.json; .config/mise/config.toml is generated
 --tools selects a comma-separated list of profiles or tool groups (default: full).
   Built-in profiles:
     full   - everything declared in setup.json
-    dev    - interactive workstation (core, shell, clipboard, agents, lint, dev-tui, build/c/go/rust/js/python, browser, mosh)
+    dev    - interactive workstation (core, shell, clipboard, agents, lint, dev-tui, build/c/go/rust/lean/js/python, browser, mosh)
     agent  - headless agent sandbox (core, agent-core, lint; combine with langs e.g. --tools=agent,rust)
     agents - agent-core + agent-clis
     core   - minimal non-interactive base (git, curl, bash, search, JSON/YAML, rtk)

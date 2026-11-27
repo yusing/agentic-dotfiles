@@ -12,6 +12,7 @@
     "c": "C/C++, LLVM/Clang, Meson, Tree-sitter, and Bazel",
     "go": "Go toolchain, linters, and Go development tools",
     "rust": "Rust toolchain (rustup), rust-analyzer, sccache, and cargo-sweep",
+    "lean": "Lean 4 toolchain manager (elan) with Lean and Lake",
     "js": "JavaScript/TypeScript runtimes (Bun, Node, pnpm) and linters",
     "python": "Python, uv, ruff, pyright, and rich",
     "php": "PHP and Composer",
@@ -31,7 +32,7 @@
     "core": ["core"],
     "agent": ["core", "agent-core", "lint"],
     "agents": ["agent-core", "agent-clis"],
-    "dev": ["core", "shell", "clipboard", "agent-core", "agent-clis", "lint", "dev-tui", "build", "c", "go", "rust", "js", "python", "browser", "chromium", "mosh"],
+    "dev": ["core", "shell", "clipboard", "agent-core", "agent-clis", "lint", "dev-tui", "build", "c", "go", "rust", "lean", "js", "python", "browser", "chromium", "mosh"],
     "full": ["*"]
   },
   "native": {
@@ -74,6 +75,7 @@
     "unzip": {"packages": {"apt": ["unzip"], "brew": ["unzip"]}, "commands": ["unzip"], "manager": "brew", "brew_prefix": "unzip", "groups": ["core"]},
     "python3": {"packages": {"apt": ["python3"], "pacman": ["python"], "brew": ["python"]}, "commands": ["python3", "python"], "manager": "brew", "brew_prefix": "python", "groups": ["core"]},
     "rustup": {"packages": {"brew": ["rustup"]}, "commands": ["rustup", "rustc", "cargo"], "manager": "brew", "brew_prefix": "rustup", "legacy_mise": ["rust", "aqua:rust-lang/rustup"], "groups": ["rust"]},
+    "elan": {"packages": {"brew": ["elan-init"]}, "commands": ["elan", "lean", "lake"], "manager": "brew", "brew_prefix": "elan-init", "groups": ["lean"]},
     "rust-analyzer": {"packages": {"brew": ["rust-analyzer"]}, "commands": ["rust-analyzer"], "manager": "brew", "brew_prefix": "rust-analyzer", "groups": ["rust"]},
     "sccache": {"packages": {"brew": ["sccache"]}, "commands": ["sccache"], "manager": "brew", "brew_prefix": "sccache", "groups": ["rust"]},
     "mold": {"packages": {"brew": ["mold"]}, "commands": ["mold", "ld.mold"], "manager": "brew", "brew_prefix": "mold", "os": ["linux"], "groups": ["rust"]},

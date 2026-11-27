@@ -117,6 +117,9 @@ agent-browser's default engine.
 Brew supplies rustup across platforms. Manage Rust toolchains and targets
 separately with rustup.
 
+Brew supplies elan across platforms in the `lean` group. Manage Lean
+toolchains separately with elan.
+
 With the supplied shell configuration, Cargo keeps each workspace checkout's default build output
 under `~/.cache/rust/targets/`. New Git worktrees copy compatible registry and Git dependency libraries from the main
 checkout's default target without taking its build lock. Workspace code, build scripts and procedural macros rebuild locally,
