@@ -72,7 +72,7 @@
     "docker": {"packages": {"brew": ["docker"], "pacman": ["docker"]}, "commands": ["docker"], "manager": "brew", "brew_prefix": "docker", "os": ["linux"], "groups": ["docker"]},
     "curl": {"packages": {"brew": ["curl"], "pacman": ["curl"]}, "commands": ["curl"], "manager": "brew", "brew_prefix": "curl", "groups": ["core"]},
     "unzip": {"packages": {"apt": ["unzip"], "brew": ["unzip"]}, "commands": ["unzip"], "manager": "brew", "brew_prefix": "unzip", "groups": ["core"]},
-    "python3": {"packages": {"apt": ["python3"], "pacman": ["python"], "brew": ["python"]}, "commands": ["python3", "python"], "manager": "brew", "brew_prefix": "python", "legacy_mise": ["python"], "groups": ["core"]},
+    "python3": {"packages": {"apt": ["python3"], "pacman": ["python"], "brew": ["python"]}, "commands": ["python3", "python"], "manager": "brew", "brew_prefix": "python", "groups": ["core"]},
     "rustup": {"packages": {"brew": ["rustup"]}, "commands": ["rustup", "rustc", "cargo"], "manager": "brew", "brew_prefix": "rustup", "legacy_mise": ["rust", "aqua:rust-lang/rustup"], "groups": ["rust"]},
     "rust-analyzer": {"packages": {"brew": ["rust-analyzer"]}, "commands": ["rust-analyzer"], "manager": "brew", "brew_prefix": "rust-analyzer", "groups": ["rust"]},
     "sccache": {"packages": {"brew": ["sccache"]}, "commands": ["sccache"], "manager": "brew", "brew_prefix": "sccache", "groups": ["rust"]},
