@@ -1,7 +1,7 @@
 # scriptc CLI
 
-Contract: scriptc 0.4.16. Sources: [version-tagged CLI](https://github.com/vercel-labs/scriptc/blob/v0.4.16/docs/content/docs/cli.mdx),
-[coverage](https://github.com/vercel-labs/scriptc/blob/v0.4.16/docs/content/docs/coverage.mdx),
+Contract: scriptc 0.4.17. Sources: [version-tagged CLI](https://github.com/vercel-labs/scriptc/blob/v0.4.17/docs/content/docs/cli.mdx),
+[coverage](https://github.com/vercel-labs/scriptc/blob/v0.4.17/docs/content/docs/coverage.mdx),
 and installed `scriptc --help`. The live website can describe a newer version.
 
 ## Build and run
@@ -14,13 +14,13 @@ Without `-o`, artifacts go under `.scriptc/` beside the entry. `--keep-llvm` (de
 
 ## Coverage and automation
 
-`scriptc coverage entry.ts` analyzes without linking. `--print=diagnostics` emits a versioned JSON document for build or coverage. Coverage gates are `--fail-on=blockers`, `divergences`, and `dynamic`; the last also rejects `SC6101` warnings for likely-hot untyped code, not all checked-value operations.
+`scriptc coverage entry.ts` analyzes without linking. `--print=diagnostics` emits a versioned JSON document for build or coverage. Coverage gates are `--fail-on=blockers`, `divergences`, and `dynamic`; the last also rejects `SC6101` warnings for likely-hot untyped code, not all checked-value operations. SC6101 is one line by default; the detailed function list appears in JSON diagnostics and `coverage --explain-dynamic`.
 
 `--explain-dynamic[=<name>]` identifies native dynamic-tier functions and unsupported constructs that a future dynamic tier could accept. `--tier=static-only` prevents such future demotions; it currently behaves like `auto`, retaining existing checked-value code. `--no-dynamic-tier-warning` suppresses `SC6101` and conflicts with `--fail-on=dynamic`.
 
 `--external-types specifier=file.d.ts` is repeatable and coverage-only. It supplies types for an embedder module; runtime imports remain explicit `SC1010` blockers. Files must end in `.d.ts`, `.d.mts`, or `.d.cts`.
 
-Node islands can load Node.js in-process and run unsupported packages since 0.4.6. `--node-islands=auto|explicit|off`, `--node-island=<package-or-path>`, `--native=<package>` and `--explain-island=<package>` select or inspect boundaries. The installed 0.4.16 help still calls several island flags report-only, while its release notes and coverage docs describe working islands. Check the actual entry and dependency at build and runtime; do not infer native-only startup or package support from help alone. Island gates include `node-islands`, `eager-node-islands`, and `island-gaps`.
+Node islands can load Node.js in-process and run unsupported packages since 0.4.6. `--node-islands=auto|explicit|off`, `--node-island=<package-or-path>`, `--native=<package>` and `--explain-island=<package>` select or inspect boundaries. The installed 0.4.17 help still calls several island flags report-only, while its release notes and coverage docs describe working islands. Check the actual entry and dependency at build and runtime; do not infer native-only startup or package support from help alone. An island build needs the matching target libnode pack; coverage does not. Native bindings also need their package install scripts. Island gates include `node-islands`, `eager-node-islands`, and `island-gaps`.
 
 `--fail-on=dynamic-slots` also rejects `SC6104` slots; `--fail-on=type-claims` rejects conversions trusting unverified types. `--coverage=reached` skips analysis of unreached code, so totals differ from full coverage. It cannot be combined with `--explain-dynamic`.
 
@@ -51,7 +51,7 @@ Eligible npm dependencies compile automatically. `--npm-static=<pkg[,pkg…]|aut
 - `SCRIPTC_NO_CACHE=1` or an explicitly empty cache directory variable bypasses cache reads/writes. `SCRIPTC_CACHE_MAX_MB` defaults to 4096.
 - `SCRIPTC_CC`: C compiler for sanitizer builds; `zigcc` selects zig's `cc`.
 - `SCRIPTC_LINKER`: executable linker driver. Default clang on macOS/glibc Linux, zig elsewhere.
-- `SCRIPTC_TARGET`: cross-compilation triple. Install the matching-version `@scriptc/runtime-<target>` pack and zig. `SCRIPTC_RUNTIME_PACK` overrides the pack directory.
+- `SCRIPTC_TARGET`: cross-compilation triple. Install zig and the matching-version runtime pack for the target platform; its name may differ from the triple (for example, `x86_64-windows-gnu` uses `@scriptc/runtime-win32-x64-msvc`). See the [target-to-pack table](https://github.com/vercel-labs/scriptc/blob/v0.4.17/docs/content/docs/platforms.mdx). `SCRIPTC_RUNTIME_PACK` overrides the pack directory.
 - `SCRIPTC_CHECKER=tsc-ts|tsgo`: TypeScript 7 checker; both ship with scriptc and produce the same diagnostics/code. Linux and macOS builds use a shared tsc-ts checker server by default outside CI. Set `SCRIPTC_CHECKER_SERVER=0` to disable it or `1` to enable it in CI. It falls back to a per-build checker if unavailable, exits after ten idle minutes, and retires after a build above 2048 MB resident memory (`TSC_TS_LISTEN_MEMORY` changes the limit).
 
 ## Declaration repair and compiler tooling

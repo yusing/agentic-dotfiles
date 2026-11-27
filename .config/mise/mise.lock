@@ -266,9 +266,9 @@ backend = "npm:pyright"
 specifiers = ["latest"]
 
 [[tools."npm:scriptc"]]
-version = "0.4.16"
+version = "0.4.17"
 backend = "npm:scriptc"
-specifiers = ["0.4.16"]
+specifiers = ["0.4.17"]
 
 [[tools."npm:vite"]]
 version = "8.4.0"

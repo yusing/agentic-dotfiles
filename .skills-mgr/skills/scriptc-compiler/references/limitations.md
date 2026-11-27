@@ -1,6 +1,6 @@
 # scriptc limitations
 
-Contract: scriptc 0.4.16. Sources: [version-tagged limitations](https://github.com/vercel-labs/scriptc/blob/v0.4.16/docs/content/docs/limitations.mdx) and its [included sections](https://github.com/vercel-labs/scriptc/tree/v0.4.16/docs/content/limitations). Use `scriptc coverage` and a compiled reproduction for the concrete entry; support is operation-specific.
+Contract: scriptc 0.4.17. Sources: [version-tagged limitations](https://github.com/vercel-labs/scriptc/blob/v0.4.17/docs/content/docs/limitations.mdx) and its [included sections](https://github.com/vercel-labs/scriptc/tree/v0.4.17/docs/content/limitations). Use `scriptc coverage` and a compiled reproduction for the concrete entry; support is operation-specific.
 
 ## Compile fences
 
@@ -31,15 +31,17 @@ Contract: scriptc 0.4.16. Sources: [version-tagged limitations](https://github.c
   Async/generator frames stop at that function, not its awaiters. Runtime
   errors expose typed `message` and `code`; further properties require an
   untyped view.
+- On 64-bit native targets, async fibers use an 8 MiB stack; WASI and
+  32-bit fibers use 512 KiB. Stack exhaustion behavior depends on target.
 - Memory is reference-counted. Do not infer garbage-collector behavior from Node.
 
 ## Packages and runtime evaluation
 
-Native-compiled code uses no embedded engine. `--dynamic` and the quickjs-ng engine were removed in 0.3, but Node islands introduced in 0.4.6 can load Node.js in-process for unsupported modules. This changes startup and deployment assumptions. Installed 0.4.10 help retains stale report-only labels; verify the concrete package through build and execution. Coverage describes the islands a build proves, and `--native=<package>` requires native compilation.
+Native-compiled code uses no embedded engine. `--dynamic` and the quickjs-ng engine were removed in 0.3, but Node islands introduced in 0.4.6 can load Node.js in-process for unsupported modules. This changes startup and deployment assumptions. Installed 0.4.17 help retains stale report-only labels; verify the concrete package through build and execution. An island build requires the matching target libnode pack, and native bindings need their install scripts. Coverage describes the islands a build selects, and `--native=<package>` requires native compilation.
 
 In native-compiled code, runtime source evaluation (`eval`, `Function`) throws a catchable `EvalError`; `vm` is refused. Build-time evaluation is a separate experimental facility. npm native addons require supported static bindings or replacement, not ordinary dynamic loading.
 
-Across native/island boundaries, event ordering, timer turns, object conversions and machine-dependent module initialization have documented differences. Inspect the [version-tagged boundary limits](https://github.com/vercel-labs/scriptc/tree/v0.4.16/docs/content/limitations/runtime-differences-from-node-js) before depending on shared identity or scheduling.
+Across native/island boundaries, event ordering, timer turns, object conversions and machine-dependent module initialization have documented differences. Inspect the [version-tagged boundary limits](https://github.com/vercel-labs/scriptc/tree/v0.4.17/docs/content/limitations/runtime-differences-from-node-js) before depending on shared identity or scheduling.
 
 ## WASI
 

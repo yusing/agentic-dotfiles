@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "30e7217534c05db987d8b8f8934a9895b5d31c03",
+  "sourceCommit": "0e87134ab60a2b8219a9511ec44bf6e10040d71f",
   "outputs": [
     {
       "path": ".bash_profile",
@@ -835,7 +835,7 @@
     {
       "path": ".config/mise/config.toml",
       "kind": "file",
-      "sha256": "62455e2fb1be86d8e75fa0ba68502207783be4fa8290b9c5c6ffeb514ee300e5",
+      "sha256": "107a65aa9fdee291990330585934257918ced282adc4ffb14e9feff90362f5a9",
       "executable": false
     },
     {
@@ -853,7 +853,7 @@
     {
       "path": ".config/mise/mise.lock",
       "kind": "file",
-      "sha256": "0ba4eeb5ddc22c7dbe17dd09e98a688a54359611d5bf64ab7a9e1cd953512dad",
+      "sha256": "2469ebb2c00bfa5bccaef06eed26efb6c66c2a710608e62ab854883e5cd0623b",
       "executable": false
     },
     {
@@ -1631,25 +1631,25 @@
     {
       "path": ".skills-mgr/skills/scriptc-compiler/references/cli.md",
       "kind": "file",
-      "sha256": "3a08980d3ea46c2ee24938f3d0fd97dab596aaad81910075e5387b1a7d240e06",
+      "sha256": "76db90d962d477a27af7dbfbebcb0f018c5dff833edda71e25a90d6bb0864363",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/scriptc-compiler/references/ffi.md",
       "kind": "file",
-      "sha256": "f699be66628b58e07a2d0f4ef7a0843a0dc25a464a94265cdff52e1bd68b5702",
+      "sha256": "b9904e59232c641c196eafca6270d21916713302d598d9abec3ceb55f630dc5b",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/scriptc-compiler/references/limitations.md",
       "kind": "file",
-      "sha256": "0b505a892a296b016dcc54e826be3c1672d7420cc4623d828e970c9a3d93cee9",
+      "sha256": "ff8e6f7acfc3f78900c48984fa268f34cfae34f78f882b985c3bf44dd737fd33",
       "executable": false
     },
     {
       "path": ".skills-mgr/skills/scriptc-compiler/SKILL.md",
       "kind": "file",
-      "sha256": "9e0398a443296e7f036fd0e63393bb0a9d28f99fe60fa4144348223e95042e24",
+      "sha256": "f00755d917e669eac61ce6c243e27266c88cbbc9e43dba6521e5fd62c5dbfea2",
       "executable": false
     },
     {
@@ -1966,7 +1966,7 @@
     {
       "path": "setup.json",
       "kind": "file",
-      "sha256": "257c8615a11cbf192d0634216689825b4b10d4b343a6afd19fbb83bd8f337037",
+      "sha256": "d2b33bf2737b8fdfd9a66102ef57d842a6062151eeab3896d8e4ee3507c2abec",
       "executable": false
     },
     {

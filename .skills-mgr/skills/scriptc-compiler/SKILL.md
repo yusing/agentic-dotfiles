@@ -7,14 +7,16 @@ description: scriptc compiler documentation. Use when compiling with scriptc, or
 
 scriptc compiles TypeScript and JavaScript to native code. Native-only programs
 embed no JavaScript engine; Node islands load Node.js in-process for selected
-modules. This contract targets scriptc 0.4.16 with TypeScript 7.1, `es2025`,
+modules. This contract targets scriptc 0.4.17 with TypeScript 7.1, `es2025`,
 scriptc's ambient declarations, and the nearest `tsconfig.json`. Unsupported
 operations produce `SC` diagnostics. `SC6012` and `SC6015` identify cases that can
 build but throw when reached.
 
 Use matching compiler and runtime packs. The
 [0.4.16 release](https://github.com/vercel-labs/scriptc/releases/tag/v0.4.16)
-fixes the incompatible packs shipped to npm for 0.4.15 (`SC3003`).
+fixed incompatible packs shipped for 0.4.15 (`SC3003`). See the
+[0.4.17 release](https://github.com/vercel-labs/scriptc/releases/tag/v0.4.17)
+for the current release notes.
 
 Published docs: [scriptc.dev](https://scriptc.dev/docs). References link the version-tagged sources because the website can describe newer releases. Load a reference only for details outside this body. Check the installed `--version`, `--help`, and `coverage` / `build` on the actual entry file before relying on a capability.
 
@@ -38,7 +40,7 @@ Cross-compilation uses `SCRIPTC_TARGET=<triple>`, zig, and a matching-version ta
 
 Typed operations use native layouts. Supported `any`, untyped JavaScript, and runtime-typed values use native checked storage, called the **dynamic tier**; it is not an embedded engine. Prefer concrete types in hot loops. `--explain-dynamic` locates dynamic operations; `SC6101` warns about likely-hot untyped functions. `--tier=static-only` prevents future demotions of unsupported constructs, but currently behaves like `auto` and does not eliminate existing checked-value code.
 
-npm dependencies compile natively at build time when eligible. Packages with their own declarations or DefinitelyTyped types are selected automatically; `--npm-static=<pkg>` can select an untyped direct dependency, and `pkg...` selects its dependency closure. Unsupported packages produce diagnostics. `--provenance-sources` is experimental. Since 0.4.6, Node islands can run packages the compiler cannot lower by loading Node.js in-process. Keep latency-sensitive hooks native-only. The 0.4.16 help still labels island flags report-only, contrary to release notes and coverage documentation; verify the actual package build and execution rather than trusting either summary. In native-compiled code, `eval`, `Function`, and `vm` cannot execute JavaScript source at runtime.
+npm dependencies compile natively at build time when eligible. Packages with their own declarations or DefinitelyTyped types are selected automatically; `--npm-static=<pkg>` can select an untyped direct dependency, and `pkg...` selects its dependency closure. Unsupported packages produce diagnostics. `--provenance-sources` is experimental. Since 0.4.6, Node islands can run packages the compiler cannot lower by loading Node.js in-process. Keep latency-sensitive hooks native-only. The 0.4.17 help still labels island flags report-only, contrary to release notes and coverage documentation; verify the actual package build and execution rather than trusting either summary. In native-compiled code, `eval`, `Function`, and `vm` cannot execute JavaScript source at runtime.
 
 ## Divergences that change code
 
@@ -58,8 +60,9 @@ Language fences, property-order warnings, and further runtime differences: [refe
 Native targets support subsets of `fs` (sync and promises), `path`, `process`, `child_process`, `os`, `crypto`, `url`/`URL`, `zlib`, timers and signals, `net` / `http` / `https` / `tls` / `dgram` / `dns` / `readline`, streams, and workers. Support is API- and overload-specific; use coverage before replacing a workaround. `spawnSync` now accepts typed `input` and `cwd` options, removing the need for stdin temp files or parent `chdir`. Verify optional values through a compiled run; concrete defaults avoid checked-conversion failures at this boundary.
 
 Recheck older workarounds for numeric fs flags, bigint stats, child-process
-stdio, and streams. This release also covers parts of `node:sqlite` and
-`node:http2`. Bun globals and built-in modules such as `bun:ffi` are not Node
+stdio, and streams. The release expands `node:http2`, streams, child
+processes, cluster, and WebCrypto support, alongside parts of `node:sqlite`.
+Bun globals and built-in modules such as `bun:ffi` are not Node
 APIs. Use `--node-islands=off` and run the resulting binary when evaluating
 a native-only migration.
 
@@ -72,7 +75,9 @@ WASI (`SCRIPTC_TARGET=wasm32-wasi`): no sockets/fetch, child processes, signals,
 - `--fail-on=blockers` fails for reachable build blockers; `divergences` also fails for Node differences, and `dynamic` also fails for `SC6101` hot-code warnings.
 - `--fail-on=dynamic-slots` rejects dynamic slots (`SC6104`); `--fail-on=type-claims` rejects conversions that trust unverifiable declarations or assertions. Inspect a claim before patching its type.
 - `--coverage=reached` skips unreached code for large programs; its totals cannot be compared with full coverage and it conflicts with `--explain-dynamic`.
-- `--print=diagnostics` emits versioned JSON suitable for automation.
+- `--print=diagnostics` emits versioned JSON suitable for automation. SC6101
+  is one line by default; use JSON diagnostics or `--explain-dynamic` for
+  the function list.
 
 Coverage is analysis, not runtime acceptance. Compile and exercise the real consumer after a migration.
 
