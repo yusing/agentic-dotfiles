@@ -1,6 +1,15 @@
 # GitHub
 
-Read when preparing GitHub text or publishing and merging pull requests.
+Read when preparing GitHub text or opening, clearing, publishing, or merging
+pull requests.
+
+## Pull request clearance
+
+When I ask for a new PR or to clear an existing PR, ask whether I want FULL or
+HALF unless I already specified it for that PR. Both mean babysit the PR, fix
+findings worth addressing, resolve the rest with a concrete reason, and fix CI
+failures until the checks are green. FULL then means merge. HALF stops before
+merge so I can review.
 
 ## Pull request publication
 

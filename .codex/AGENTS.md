@@ -88,7 +88,7 @@ Instruction-file triggers:
 - `FINISHING.md`: coordinating question-specific independent review.
 - `TESTING.md`: tests, fixtures, and validation selection; projects own runner details.
 - `DOCS.md`: writing, integrating, or reviewing reader documents.
-- `GITHUB.md`: preparing GitHub text, or publishing and merging pull requests.
+- `GITHUB.md`: preparing GitHub text, or opening, clearing, publishing, or merging pull requests.
 - `FRONTEND.md`: building, restyling, or reviewing a web UI.
 
 ## Codebase navigation
